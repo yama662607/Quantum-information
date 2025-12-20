@@ -21,9 +21,26 @@
 - **計算式**: `物理ページ` = `本の表記ページ` + `8`。
 - **リンク形式**: `[📄 p.9](Quantum_Information.pdf#page=17)` （例: 本のページが9の場合、物理ページ17へリンク）。
 
-## 🔄 ワークフロー
+## コンテンツ作成ワークフロー (Content Creation Workflow)
 
-### 新しいノートのセクションを追加する
+**重要: ノートを作成する前に、必ず元のPDFを読み込んでください。**
+
+AIエージェントとして新しいノートを作成または編集する場合は、以下の手順を厳守してください。
+
+1.  **原文の読解 (Read the Source)**:
+    `extract_pdf.py` ツールを使用して、対応するPDFのテキストを抽出・読解します。
+    推測で書くのではなく、必ず教科書の記述に基づいてください。
+
+    ```bash
+    # ページ範囲を指定して抽出 (例: 5ページから10ページ)
+    uv run python extract_pdf.py docs/divided/Chapter3_Distance.pdf --start 5 --end 10
+    ```
+
+2.  **内容の反映**:
+    抽出したテキストに基づき、正確な数式や定義をノートに反映してください。
+    OCRの誤認識（文字化け）がある場合は、文脈から正しい数式を推測して修正してください。
+
+## ノートの追加 (Adding New Notes)
 1.  **断片ファイルの作成**: `docs/notes/chapterX/_new-section.qmd` を作成します。
 2.  **インクルード**: `docs/notes.qmd` の適切な場所に `{{< include notes/chapterX/_new-section.qmd >}}` を追加します。
 3.  **ロードマップの更新**: `docs/index.qmd` の表に行を追加します。
