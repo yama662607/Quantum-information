@@ -1,5 +1,5 @@
 
-## 量子状態の識別 (Quantum state discrimination) {#quantum-state-discrimination}
+## 量子状態の識別 (Quantum state discrimination) [📄 p.124](Quantum_Information.pdf#page=132) {#quantum-state-discrimination}
 
 この節では、与えられた量子状態が、既知の複数の候補のうちのどれであるかを特定する問題、すなわち「量子状態の識別」について扱います。
 

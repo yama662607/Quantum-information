@@ -1,6 +1,6 @@
-## Linear algebra {#linear-algebra}
+## Linear algebra [📄 p.1](Quantum_Information.pdf#page=9) {#linear-algebra}
 
-### Complex Euclidean spaces (複素ユークリッド空間) {#complex-euclidean-spaces}
+### Complex Euclidean spaces (複素ユークリッド空間) [📄 p.1](Quantum_Information.pdf#page=9) {#complex-euclidean-spaces}
 
 量子情報の理論において、**複素ユークリッド空間** (Complex Euclidean Space) は最も基本的な数学的構造です。
 本書では、複素ユークリッド空間を、ある有限のアルファベット（シンボル集合）$\Sigma$ から複素数体 $\mathbb{C}$ への関数全体の集合として定義します。
@@ -35,7 +35,7 @@ $$ \langle u, v \rangle = \sum_{a \in \Sigma} \overline{u(a)} v(a) $$
 **ユークリッドノルム** (Euclidean Norm) は内積を用いて $\|u\| = \sqrt{\langle u, u \rangle}$ と定義されます。
 これは物理的には状態ベクトルの「大きさ」に対応し、量子状態を表すベクトルは通常 $\|u\|=1$ の正規化条件を満たします。
 
-### Linear operators (線形演算子) {#linear-operators}
+### Linear operators (線形演算子) [📄 p.8](Quantum_Information.pdf#page=16) {#linear-operators}
 
 ::: {#def-linear-operator}
 ## 線形演算子 (Linear Operator)
@@ -54,7 +54,7 @@ $$ A(a, b) = \langle e_a, A e_b \rangle $$
 $$ \langle u, A v \rangle = \langle A^\dagger u, v \rangle \quad (\forall u \in \mathcal{Y}, v \in \mathcal{X}) $$
 これを $A$ の**随伴演算子** (Adjoint Operator)、またはエルミート共役と呼びます。行列表示では、転置行列の複素共役に相当します。
 
-### Operator decompositions and norms (演算子の分解とノルム) {#operator-decompositions-and-norms}
+### Operator decompositions and norms (演算子の分解とノルム) [📄 p.24](Quantum_Information.pdf#page=32) {#operator-decompositions-and-norms}
 
 量子情報の解析において極めて重要な、演算子の分解定理とノルムについてまとめます。
 
