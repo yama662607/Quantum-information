@@ -10,6 +10,25 @@
 **問題設定:**
 アリスは確率 $p_0$ で状態 $\rho_0$ を、確率 $p_1$ ($= 1 - p_0$) で状態 $\rho_1$ を選び、ボブに送ります。
 ボブは2値の測定（POVM $\{M_0, M_1\}$）を行い、送られてきた状態がどちらであるかを推測します。
+このプロセスは以下のように図示できます。
+
+```{mermaid}
+%%| fig-cap: "量子状態識別のプロセス"
+sequenceDiagram
+    participant Alice
+    participant Bob
+
+    Note over Alice: Coin flip (probability p0, p1)
+
+    alt Result = 0
+        Alice->>Bob: Sends state ρ0
+    else Result = 1
+        Alice->>Bob: Sends state ρ1
+    end
+
+    Note over Bob: Measurement {M0, M1}
+    Bob--)Bob: Guess 0 if M0 clicks<br/>Guess 1 if M1 clicks
+```
 
 ボブが正しく状態を識別できる確率は次のように表されます：
 $$ P_{\text{correct}} = p_0 \langle M_0, \rho_0 \rangle + p_1 \langle M_1, \rho_1 \rangle $$
