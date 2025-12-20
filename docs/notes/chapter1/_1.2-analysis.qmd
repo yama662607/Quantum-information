@@ -1,10 +1,93 @@
 ## Analysis, convexity, and probability theory {#analysis-convexity-probability}
 
-### Analysis and convexity {#analysis-and-convexity}
-（内容は準備中です）
+### Analysis and convexity (解析学と凸性) {#analysis-and-convexity}
 
-### Probability theory {#probability-theory}
-（内容は準備中です）
+量子情報の解析に必要な、解析学と凸解析の基本的な概念をまとめます。
 
-### Semidefinite programming {#semidefinite-programming}
-（内容は準備中です）
+#### 開集合・閉集合・コンパクト集合
+
+ノルム空間 $\mathcal{V}$ において、以下の位相的性質が定義されます。
+
+*   **開集合 (Open Set)**: 集合 $\mathcal{A} \subseteq \mathcal{V}$ が開であるとは、任意の $u \in \mathcal{A}$ に対し、ある $\varepsilon > 0$ が存在して、$\varepsilon$-近傍が $\mathcal{A}$ に含まれることを言います。
+*   **閉集合 (Closed Set)**: 補集合 $\mathcal{V} \setminus \mathcal{A}$ が開集合であるとき、$\mathcal{A}$ を閉集合と呼びます。
+*   **コンパクト集合 (Compact Set)**: 有限次元ベクトル空間において、閉かつ有界な集合はコンパクトです（ハイネ・ボレルの被覆定理）。コンパクト集合上の連続関数は、必ず最大値と最小値を持ちます。
+
+#### 凸集合と分離定理
+
+::: {#def-convex-set}
+## 凸集合 (Convex Set)
+集合 $\mathcal{C} \subseteq \mathcal{V}$ が**凸 (Convex)** であるとは、任意の $u, v \in \mathcal{C}$ と $\lambda \in [0, 1]$ に対して、$\lambda u + (1-\lambda)v \in \mathcal{C}$ が成り立つことです。
+:::
+
+凸集合に関する重要な定理として、以下があります。
+
+::: {#thm-separating-hyperplane}
+## 分離超平面定理 (Separating Hyperplane Theorem)
+2つの交じり合わない凸集合 $\mathcal{C}, \mathcal{D}$ （少なくとも一方はコンパクト、他方は閉など条件あり）に対し、それらを分離する超平面が存在します。
+:::
+
+::: {#thm-sion-minimax}
+## シオンのミニマックス定理 (Sion's Min-Max Theorem)
+$\mathcal{A}$ をコンパクト凸集合、$\mathcal{B}$ を凸集合とし、関数 $f: \mathcal{A} \times \mathcal{B} \to \mathbb{R}$ が
+1.  各 $v \in \mathcal{B}$ に対し $u \mapsto f(u, v)$ が上半連続かつ準凹 (quasi-concave)
+2.  各 $u \in \mathcal{A}$ に対し $v \mapsto f(u, v)$ が下半連続かつ準凸 (quasi-convex)
+であるとき、以下が成立します。
+$$ \max_{u \in \mathcal{A}} \min_{v \in \mathcal{B}} f(u, v) = \min_{v \in \mathcal{B}} \max_{u \in \mathcal{A}} f(u, v) $$
+:::
+
+### Probability theory (確率論) {#probability-theory}
+
+本書では、測度論に基づく確率論の定義を採用します。
+
+*   **ボレル集合 (Borel Sets)**: ベクトル空間内の開集合全体から生成される $\sigma$-加法族の要素。
+*   **測度 (Measure)**: ボレル集合上に定義された非負の関数 $\mu$ で、$\sigma$-加法性（互いに素な集合列の和集合の測度が、各測度の和になる性質）を満たすもの。
+*   **確率測度 (Probability Measure)**: 全空間の測度が 1 である測度。$\mu(\mathcal{V}) = 1$。
+
+### Semidefinite programming (半正定値計画法) {#semidefinite-programming}
+
+半正定値計画法 (SDP) は、線形計画法 (LP) を半正定値行列の空間へと拡張した最適化問題であり、量子情報の多くの問題（状態識別、通信路容量など）において中心的な役割を果たします。
+
+::: {#def-sdp}
+## 半正定値計画問題 (Semidefinite Program)
+SDPは、以下の3つ組 $(\Phi, A, B)$ によって定義されます。
+1.  **保存写像**: $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ （エルミート保存写像）
+2.  **制約演算子**: $A \in \mathrm{Herm}(\mathcal{X})$
+3.  **定数演算子**: $B \in \mathrm{Herm}(\mathcal{Y})$
+
+これに対し、以下の2つの最適化問題が随伴します。
+
+**主問題 (Primal Problem):**
+$$
+\begin{align}
+\text{maximize} \quad & \langle A, X \rangle \\
+\text{subject to} \quad & \Phi(X) = B, \\
+& X \in \mathrm{Pos}(\mathcal{X})
+\end{align}
+$$
+
+**双対問題 (Dual Problem):**
+$\Phi^*$ を $\Phi$ の随伴写像 ($\langle Y, \Phi(X) \rangle = \langle \Phi^*(Y), X \rangle$) として：
+$$
+\begin{align}
+\text{minimize} \quad & \langle B, Y \rangle \\
+\text{subject to} \quad & \Phi^*(Y) \geq A, \\
+& Y \in \mathrm{Herm}(\mathcal{Y})
+\end{align}
+$$
+:::
+
+#### 双対性とスレーターの定理
+
+主問題の最適値を $\alpha$、双対問題の最適値を $\beta$ とすると、常に **$\alpha \leq \beta$ (弱双対性)** が成り立ちます。
+さらに、以下の条件（スレーター条件）が満たされるとき、**$\alpha = \beta$ (強双対性)** が保証されます。
+
+::: {#thm-slater}
+## スレーターの定理 (Slater's Theorem for SDP)
+以下のいずれかの条件が満たされるとき、強双対性 ($\alpha = \beta$) が成立し、かつ最適解が存在します。
+1.  **主問題の正則性**: 主問題実行可能領域に正定値演算子 $X > 0$ が存在する（かつ双対問題が有界）。
+2.  **双対問題の正則性**: 双対問題実行可能領域に狭義不等式 $\Phi^*(Y) > A$ を満たす $Y$ が存在する（かつ主問題が有界）。
+:::
+
+#### 相補性 (Complementary Slackness)
+主問題の実行可能解 $X$ と双対問題の実行可能解 $Y$ がともに最適解であるための必要十分条件は、以下が成り立つことです。
+$$ \Phi^*(Y) X = A X \quad (\iff \langle X, \Phi^*(Y) - A \rangle = 0) $$
