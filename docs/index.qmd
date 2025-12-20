@@ -7,7 +7,7 @@ toc: false
 
 | 項目名 | 原文 PDF | 学習ノート |
 | :--- | :--: | :--: |
-| **Chapter 1: Mathematical Preliminaries** | [📄 PDF](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#chapter-1) |
+| **Chapter 1: Mathematical Preliminaries** | [📄 p.1](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#chapter-1) |
 | 　**1.1** Linear algebra | [📄 p.9](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#linear-algebra) |
 | 　　**1.1.1** Complex Euclidean spaces | [📄 p.9](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#complex-euclidean-spaces) |
 | 　　**1.1.2** Linear operators | [📄 p.16](Quantum_Information.pdf#page=16) | [📝 Note](notes.qmd#linear-operators) |
@@ -17,7 +17,7 @@ toc: false
 | 　　**1.2.2** Probability theory | [📄 p.55](Quantum_Information.pdf#page=55) | [📝 Note](notes.qmd#probability-theory) |
 | 　　**1.2.3** Semidefinite programming | [📄 p.61](Quantum_Information.pdf#page=61) | [📝 Note](notes.qmd#semidefinite-programming) |
 | | | |
-| **Chapter 2: Basic Notions** | [📄 PDF](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#chapter-2) |
+| **Chapter 2: Basic notions of quantum information** | [📄 p.58](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#chapter-2) |
 | 　**2.1** Registers and states | [📄 p.66](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#registers-and-states) |
 | 　　**2.1.1** Registers and classical state sets | [📄 p.66](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#registers-and-classical-state-sets) |
 | 　　**2.1.2** Quantum states of registers | [📄 p.69](Quantum_Information.pdf#page=69) | [📝 Note](notes.qmd#quantum-states-of-registers) |
@@ -31,3 +31,6 @@ toc: false
 | 　　**2.3.1** Two equivalent definitions | [📄 p.108](Quantum_Information.pdf#page=108) | [📝 Note](notes.qmd#two-equivalent-definitions) |
 | 　　**2.3.2** Basic notions concerning measurements | [📄 p.113](Quantum_Information.pdf#page=113) | [📝 Note](notes.qmd#basic-notions-concerning-measurements) |
 | 　　**2.3.3** Extremal measurements and ensembles | [📄 p.121](Quantum_Information.pdf#page=121) | [📝 Note](notes.qmd#extremal-measurements-and-ensembles) |
+| | | |
+| **Chapter 3: Similarity and distance among states and channels** | [📄 p.124](Quantum_Information.pdf#page=132) | [📝 Note](notes.qmd#chapter-3) |
+| 　**3.1** Quantum state discrimination | [📄 p.124](Quantum_Information.pdf#page=132) | [📝 Note](notes.qmd#quantum-state-discrimination) |

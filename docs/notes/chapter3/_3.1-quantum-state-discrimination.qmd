@@ -1,0 +1,16 @@
+
+## 量子状態の識別 (Quantum state discrimination)
+
+### 2つの量子状態間の識別 (Discriminating between pairs of quantum states)
+
+::: {#def-state-discrimination}
+## 状態の識別
+量子状態の識別問題 (**State Discrimination**) とは、ある量子系が既知の量子状態のセットのうちどれにあるかを、系に対する測定を行うことで特定するタスクのことです。
+:::
+
+### アンサンブルの量子状態の識別 (Discriminating quantum states of an ensemble)
+
+::: {.callout-note}
+## 重要概念 (Key Concept)
+アンサンブルの状態識別は、2つの状態の識別問題を、事前確率を持つ複数の状態へと一般化したものです。
+:::
