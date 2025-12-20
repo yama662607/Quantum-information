@@ -1,16 +1,66 @@
 
-## 量子状態の識別 (Quantum state discrimination)
+## 量子状態の識別 (Quantum state discrimination) {#quantum-state-discrimination}
+
+この節では、与えられた量子状態が、既知の複数の候補のうちのどれであるかを特定する問題、すなわち「量子状態の識別」について扱います。
 
 ### 2つの量子状態間の識別 (Discriminating between pairs of quantum states)
 
-::: {#def-state-discrimination}
-## 状態の識別
-量子状態の識別問題 (**State Discrimination**) とは、ある量子系が既知の量子状態のセットのうちどれにあるかを、系に対する測定を行うことで特定するタスクのことです。
+最も基本的な設定は、2つの量子状態 $\rho_0$ と $\rho_1$ の間の識別です。
+
+**問題設定:**
+アリスは確率 $p_0$ で状態 $\rho_0$ を、確率 $p_1$ ($= 1 - p_0$) で状態 $\rho_1$ を選び、ボブに送ります。
+ボブは2値の測定（POVM $\{M_0, M_1\}$）を行い、送られてきた状態がどちらであるかを推測します。
+
+ボブが正しく状態を識別できる確率は次のように表されます：
+$$ P_{\text{correct}} = p_0 \langle M_0, \rho_0 \rangle + p_1 \langle M_1, \rho_1 \rangle $$
+
+この最大識別確率は、2つの状態間の「距離」と深く関係しています。
+
+::: {#thm-holevo-helstrom}
+## ホレボ・ヘルストローム定理 (Holevo-Helstrom Theorem)
+2つの量子状態 $\rho_0, \rho_1$ を事前確率 $p_0, p_1$ で識別する際の最適な成功確率は以下で与えられます。
+
+$$ P_{\text{opt}} = \frac{1}{2} + \frac{1}{2} \| p_0 \rho_0 - p_1 \rho_1 \|_1 $$
+
+ここで、$\| \cdot \|_1$ はトレースノルム（$\|A\|_1 = \text{Tr}(\sqrt{A^\dagger A})$）を表します。
 :::
 
 ### アンサンブルの量子状態の識別 (Discriminating quantum states of an ensemble)
 
-::: {.callout-note}
-## 重要概念 (Key Concept)
-アンサンブルの状態識別は、2つの状態の識別問題を、事前確率を持つ複数の状態へと一般化したものです。
+より一般的な設定として、複数の状態のアンサンブルからの識別問題を考えます。
+
+**問題設定:**
+状態のアンサンブル $\{ (p_a, \rho_a) : a \in \Sigma \}$ が与えられています。
+ここで $\Sigma$ は有限のアルファベット、$p_a$ は事前確率、$\rho_a$ は対応する量子状態です。
+
+ボブは量子状態を受け取り、測定 $\{ M_a : a \in \Sigma \}$ を行って、インデックス $a$ を特定しようとします。
+識別の成功確率は次のようになります：
+$$ P_{\text{success}} = \sum_{a \in \Sigma} p_a \langle M_a, \rho_a \rangle $$
+
+この最適化問題は、**半正定値計画法 (SDP)** として定式化できます。
+
+::: {#def-state-discrimination-sdp}
+## 最適状態識別のSDP
+最適な識別確率は、以下のSDPの解として与えられます。
+
+**主問題 (Primal):**
+$$
+\begin{align}
+\text{maximize} \quad & \sum_{a \in \Sigma} p_a \langle M_a, \rho_a \rangle \\
+\text{subject to} \quad & \sum_{a \in \Sigma} M_a = \mathbb{I}, \\
+& M_a \geq 0 \quad (\forall a \in \Sigma)
+\end{align}
+$$
+
+**双対問題 (Dual):**
+$$
+\begin{align}
+\text{minimize} \quad & \text{Tr}(Y) \\
+\text{subject to} \quad & Y \geq p_a \rho_a \quad (\forall a \in \Sigma)
+\end{align}
+$$
 :::
+
+主問題と双対問題の最適値は一致し（強双対性）、最適解 $( \{M_a\}, Y )$ は以下の条件を満たします：
+$$ Y = \sum_{a \in \Sigma} p_a M_a \rho_a $$
+$$ M_a (Y - p_a \rho_a) = 0 \quad (\forall a \in \Sigma) $$
