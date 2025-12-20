@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: ../_output
+  resources:
+    - "*.pdf"
+    - "divided/*.pdf"
 
 website:
   title: "Quantum Information"
@@ -22,10 +25,8 @@ website:
             - index.qmd
             - section: "学習ノート"
               contents:
-                - section: "Chapter 1"
-                  contents:
-                    - notes/chapter1/1.1-linear-algebra.qmd
-                    - notes/chapter1/1.2-analysis.qmd
+                - text: "Lecture Notes (All Chapters)"
+                  href: notes.qmd
             - section: "PDFライブラリ"
               contents:
                 - divided/index.qmd

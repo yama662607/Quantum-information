@@ -1,0 +1,13 @@
+## Quantum channels {#quantum-channels}
+
+### Definitions and basic notions {#definitions-and-basic-notions}
+（内容は準備中です）
+
+### Representations and characterizations {#representations-and-characterizations}
+（内容は準備中です）
+
+### Examples of channels {#examples-of-channels}
+（内容は準備中です）
+
+### Extremal channels {#extremal-channels}
+（内容は準備中です）

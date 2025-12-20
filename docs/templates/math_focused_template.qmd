@@ -8,6 +8,7 @@ format:
     toc: true
     toc-depth: 3
     number-sections: true
+    number-offset: [0, 0]
     code-fold: true
     theme: cosmo
     smooth-scroll: true
@@ -24,9 +25,9 @@ bibliography: references.bib
 3. **構造の把握**: [Z] という概念が、線形代数のどの性質に基づいているか説明できる。
 :::
 
-# 定義と概念 (Definitions)
+## [節のタイトル]
 
-## [概念名]
+### [項のタイトル]
 
 ::: {#def-main}
 ## [概念の名称]

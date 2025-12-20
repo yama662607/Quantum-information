@@ -1,0 +1,10 @@
+## Linear algebra {#linear-algebra}
+
+### Complex Euclidean spaces {#complex-euclidean-spaces}
+（内容は準備中です）
+
+### Linear operators {#linear-operators}
+（内容は準備中です）
+
+### Operator decompositions and norms {#operator-decompositions-and-norms}
+（内容は準備中です）
