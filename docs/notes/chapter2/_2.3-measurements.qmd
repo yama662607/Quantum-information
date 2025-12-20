@@ -1,10 +1,45 @@
-## Measurements {#measurements}
+## Measurements [📄 p.100](Quantum_Information.pdf#page=108) {#measurements}
 
-### Two equivalent definitions {#two-equivalent-definitions}
-（内容は準備中です）
+測定（Measurement）は、量子状態から古典情報を抽出するための数学的メカニズムを提供します。
 
-### Basic notions concerning measurements {#basic-notions-concerning-measurements}
-（内容は準備中です）
+### Two equivalent definitions (2つの等価な定義) [📄 p.100](Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
 
-### Extremal measurements and ensembles {#extremal-measurements-and-ensembles}
-（内容は準備中です）
+量子情報の文脈では、測定は通常、以下の POVM (Positive Operator-Valued Measure) として定義されます。
+
+::: {#def-measurement}
+## 測定 (Measurement)
+
+有限集合（アルファベット）$\Sigma$ を測定結果の集合とする。
+演算子の族 $\mu = \{ M_a : a \in \Sigma \} \subset \mathrm{Pos}(\mathcal{X})$ がレジスタ $X$ 上の**測定**であるとは、以下の完全性条件を満たすことである。
+
+$$ \sum_{a \in \Sigma} M_a = \mathbb{I}_{\mathcal{X}} $$
+:::
+
+#### 確率規則（ボルンの規則）
+状態 $\rho$ に対して測定 $\mu$ を行ったとき、結果 $a \in \Sigma$ が得られる確率は以下で与えられます。
+$$ p(a) = \mathrm{Tr}(M_a \rho) $$
+
+### Basic notions concerning measurements (測定に関する基本概念) [📄 p.105](Quantum_Information.pdf#page=113) {#basic-notions-concerning-measurements}
+
+#### ナイマルクの定理
+一般の POVM は、射影測定（各 $M_a$ が射影演算子である測定）ほど単純に見えないかもしれませんが、より大きな空間を考えることで、常に射影測定として実現可能です。
+
+::: {#thm-naimark}
+## ナイマルクの定理 (Naimark's Theorem)
+
+任意の測定 $\mu = \{ M_a : a \in \Sigma \}$ に対し、ある補助空間 $\mathcal{Y}$、等長写像 $A \in \mathrm{U}(\mathcal{X}, \mathcal{Y})$、および $\mathcal{Y}$ 上の射影測定 $\{ \Pi_a : a \in \Sigma \}$ が存在して、以下が成り立つ。
+
+$$ M_a = A^\dagger \Pi_a A $$
+:::
+
+### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
+
+測定全体の集合もまた凸集合を形成します。
+
+::: {#thm-extremal-measurement}
+## 極値的な測定 (Extremal Measurement)
+
+測定 $\mu = \{ M_a \}$ が極値的であるための必要十分条件は、$\{ M_a \}$ の線形独立性に関する特定の条件（詳細は教科書参照）を満たすことである。
+:::
+
+特に、**射影測定 (Projective Measurement)**、すなわちすべての $M_a$ が射影演算子 ($M_a^2 = M_a$) である測定は、常に極値的です。これは量子観測における最も鋭い測定に対応します。

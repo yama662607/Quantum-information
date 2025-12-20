@@ -1,0 +1,82 @@
+## Registers and states [📄 p.58](Quantum_Information.pdf#page=66) {#registers-and-states}
+
+### Registers and classical state sets (レジスタと古典状態集合) [📄 p.58](Quantum_Information.pdf#page=66) {#registers-and-classical-state-sets}
+
+量子情報の理論において、「レジスタ (Register)」は情報を保存・操作する物理的デバイスの抽象化です。
+最も基本的な概念として、レジスタには対応する有限の「古典状態集合 (Classical State Set)」が存在します。
+
+::: {#def-register}
+## レジスタ (Register)
+
+ある有限集合（アルファベット）$\Sigma$ に対し、$\Sigma$ の要素を古典的な状態として持つシステムを、古典状態集合 $\Sigma$ を伴う**レジスタ**と呼びます。
+:::
+
+複数のレジスタ $X_1, \dots, X_n$ （それぞれの古典状態集合を $\Sigma_1, \dots, \Sigma_n$ とする）をまとめて1つの複合レジスタとみなす場合、その古典状態集合は直積 $\Sigma_1 \times \dots \times \Sigma_n$ となります。
+
+### Quantum states of registers (レジスタの量子状態) [📄 p.61](Quantum_Information.pdf#page=69) {#quantum-states-of-registers}
+
+ある瞬間のレジスタの量子力学的な記述を「量子状態 (Quantum State)」と呼びます。
+レジスタ $X$ に対応する複素ユークリッド空間を $\mathcal{X} = \mathbb{C}^\Sigma$ とします。
+
+::: {#def-density-operator}
+## 密度演算子 (Density Operator)
+
+レジスタ $X$ の量子状態は、$\mathcal{X}$ 上の**密度演算子** $\rho \in \mathrm{D}(\mathcal{X})$ によって記述されます。
+密度演算子とは、以下の条件を満たす線形演算子のことです。
+
+1.  **半正定値性 (Positive Semidefinite)**: $\rho \geq 0$ （すなわち $\rho \in \mathrm{Pos}(\mathcal{X})$）
+2.  **正規化 (Normalization)**: $\mathrm{Tr}(\rho) = 1$
+
+$\mathcal{X}$ 上の密度演算子全体の集合を $\mathrm{D}(\mathcal{X})$ と表記します。
+:::
+
+#### 純粋状態 (Pure States)
+密度演算子 $\rho$ がランク1であるとき、すなわちある単位ベクトル $u \in \mathcal{X}$ ($\|u\|=1$) を用いて
+$$ \rho = u u^\dagger $$
+と書けるとき、この状態を**純粋状態** (Pure State) と呼びます。
+物理学の文脈では、この $u$ を状態ベクトル（$|u\rangle$）と呼び、$\rho = |u\rangle\langle u|$ と表記します。
+
+#### 凸結合 (Convex Combinations)
+一般の密度演算子（混合状態）は、純粋状態の確率的な混合として表現できます。
+$$ \rho = \sum_k p_k u_k u_k^\dagger $$
+ここで $\{p_k\}$ は確率分布（$\sum p_k = 1, p_k \geq 0$）、$\{u_k\}$ は単位ベクトルです。
+
+### Reductions and purifications of quantum states (量子状態の縮約と純粋化) [📄 p.67](Quantum_Information.pdf#page=75) {#reductions-and-purifications-of-quantum-states}
+
+複合システムの量子状態解析において、部分系への縮約と、逆に部分系を大きな系の純粋状態の一部とみなす純粋化は、極めて強力なツールです。
+
+#### 縮約 (Reductions)
+
+複合レジスタ $(\mathrm{X}, \mathrm{Y})$ の状態 $\rho \in \mathrm{D}(\mathcal{X} \otimes \mathcal{Y})$ に対し、レジスタ $\mathrm{X}$ の状態への**縮約**は、部分トレース (Partial Trace) によって得られます。
+
+$$ \rho^{\mathrm{X}} = \mathrm{Tr}_{\mathcal{Y}}(\rho) $$
+
+::: {#def-partial-trace}
+## 部分トレース (Partial Trace)
+
+写像 $\mathrm{Tr}_{\mathcal{Y}}: \mathrm{L}(\mathcal{X} \otimes \mathcal{Y}) \to \mathrm{L}(\mathcal{X})$ は、以下の関係式を満たす唯一の線形写像です（すべての $X \in \mathrm{L}(\mathcal{X}), Y \in \mathrm{L}(\mathcal{Y})$ に対して）：
+
+$$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
+:::
+
+#### 純粋化 (Purifications)
+
+逆に、与えられた混合状態 $\rho \in \mathrm{D}(\mathcal{X})$ を、補助系 $\mathrm{Y}$ を加えた複合系 $\mathcal{X} \otimes \mathcal{Y}$ 上の純粋状態 $u \in \mathcal{X} \otimes \mathcal{Y}$ の縮約として表現することを**純粋化**と呼びます。
+
+::: {#def-purification}
+## 純粋化 (Purification)
+
+状態 $\rho \in \mathrm{D}(\mathcal{X})$ に対し、ベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ が $\rho$ の純粋化であるとは、以下が成り立つことを言います。
+
+$$ \mathrm{Tr}_{\mathcal{Y}}(u u^\dagger) = \rho $$
+
+純粋化が存在するための必要十分条件は、補助系の次元について $\dim(\mathcal{Y}) \geq \mathrm{rank}(\rho)$ が成り立つことです。
+:::
+
+::: {#thm-unitary-equivalence-purification}
+## 純粋化のユニタリ同値性 (Unitary Equivalence of Purifications)
+
+同じ状態 $\rho$ に対する2つの純粋化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のユニタリ変換 $U \in \mathrm{U}(\mathcal{Y})$ によって互いに移り変わることができます。
+
+$$ v = (\mathbb{I}_{\mathcal{X}} \otimes U) u $$
+:::

@@ -1,0 +1,66 @@
+## Quantum channels [📄 p.72](Quantum_Information.pdf#page=80) {#quantum-channels}
+
+### Definitions and basic notions (定義と基本概念) [📄 p.72](Quantum_Information.pdf#page=80) {#definitions-and-basic-notions}
+
+**量子チャネル (Quantum Channel)** は、レジスタの状態変化（量子物理的に実現可能なあらゆる操作）を表す数学的モデルです。これには、量子計算のステップや、通信におけるノイズの影響などが含まれます。
+
+::: {#def-quantum-channel}
+## 量子チャネル (Quantum Channel)
+
+写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ が**量子チャネル**であるとは、以下の2つの条件を満たすことである：
+
+1.  **完全正 (Completely Positive, CP)**: 任意の複素ユークリッド空間 $\mathcal{Z}$ に対し、拡大写像 $\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{Z})}$ が正写像である（正定値演算子を正定値演算子に移す）。
+2.  **トレース保存 (Trace Preserving, TP)**: 任意の $X \in \mathrm{L}(\mathcal{X})$ に対し、$\mathrm{Tr}(\Phi(X)) = \mathrm{Tr}(X)$。
+:::
+
+### Representations and characterizations (表現と特徴付け) [📄 p.77](Quantum_Information.pdf#page=85) {#representations-and-characterizations}
+
+量子チャネルは、いくつかの等価な表現形式を持ちます。これらは解析において非常に強力なツールとなります。
+
+#### Choi-Jamiolkowski表現
+
+チャネル $\Phi$ と、ある特定の演算子（Choi行列）の間の全単射な対応関係です。
+
+::: {#thm-choi}
+## Choiの定理 (Choi's Theorem)
+
+写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ が完全正であるための必要十分条件は、その **Choi 表現** $J(\Phi)$ が正定値であることである。
+
+$$ J(\Phi) = \sum_{a, b \in \Sigma} \Phi(E_{a,b}) \otimes E_{a,b} \in \mathrm{Pos}(\mathcal{Y} \otimes \mathcal{X}) $$
+:::
+
+#### クラウス表現 (Kraus Representation)
+
+::: {#thm-kraus}
+## クラウス表現定理 (Kraus Representation Theorem)
+
+写像 $\Phi$ が量子チャネルであるための必要十分条件は、ある演算子の集合 $\{A_k\} \subset \mathrm{L}(\mathcal{X}, \mathcal{Y})$ （**クラウス演算子**と呼ばれる）が存在して、以下のように書けることである。
+
+$$ \Phi(X) = \sum_k A_k X A_k^\dagger $$
+
+このとき、トレース保存条件は $\sum_k A_k^\dagger A_k = \mathbb{I}_{\mathcal{X}}$ と等価である。
+:::
+
+#### スタインスプリング表現 (Stinespring Representation)
+
+チャネルを、環境系（補助系）との相互作用として物理的に解釈する表現です。
+
+::: {#thm-stinespring}
+## スタインスプリング表現 (Stinespring Representation)
+
+任意の量子チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ に対し、ある補助空間 $\mathcal{Z}$ と等長写像 $A \in \mathrm{U}(\mathcal{X}, \mathcal{Y} \otimes \mathcal{Z})$ が存在して、以下のように書ける。
+
+$$ \Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger) $$
+:::
+
+### Examples of channels (チャネルの例) [📄 p.91](Quantum_Information.pdf#page=99) {#examples-of-channels}
+
+*   **恒等チャネル (Identity Channel)**: $\mathbb{I}(X) = X$。ノイズのない理想的な通信。
+*   **置換チャネル (Replacement Channel)**: どんな入力を与えても、特定の固定された状態 $\sigma$ に置き換えるチャネル。$\Phi(X) = \mathrm{Tr}(X) \sigma$。
+*   **脱分極チャネル (Depolarizing Channel)**: 確率 $p$ で入力をそのまま通し、確率 $1-p$ で完全にランダムな状態（最大混合状態）に置き換えるモデル。
+    $$ \Delta_p(X) = p X + (1-p) \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
+
+### Extremal channels (極値的なチャネル) [📄 p.96](Quantum_Information.pdf#page=104) {#extremal-channels}
+
+量子チャネルの集合は凸集合をなします。その端点（極値点）であるチャネルは、数学的に興味深い性質を持ちます。
+Choiの定理により、チャネル $\Phi$ が極値的であるための必要十分条件は、そのクラウス演算子の集合 $\{A_k\}$ に対応する行列族 $\{ A_k^\dagger A_l \}_{k,l}$ が線形独立であることなどが知られています。
