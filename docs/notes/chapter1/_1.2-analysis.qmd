@@ -16,6 +16,7 @@
 
 ::: {#def-convex-set}
 ## 凸集合 (Convex Set)
+
 集合 $\mathcal{C} \subseteq \mathcal{V}$ が**凸 (Convex)** であるとは、任意の $u, v \in \mathcal{C}$ と $\lambda \in [0, 1]$ に対して、$\lambda u + (1-\lambda)v \in \mathcal{C}$ が成り立つことです。
 :::
 
@@ -23,11 +24,13 @@
 
 ::: {#thm-separating-hyperplane}
 ## 分離超平面定理 (Separating Hyperplane Theorem)
+
 2つの交じり合わない凸集合 $\mathcal{C}, \mathcal{D}$ （少なくとも一方はコンパクト、他方は閉など条件あり）に対し、それらを分離する超平面が存在します。
 :::
 
 ::: {#thm-sion-minimax}
 ## シオンのミニマックス定理 (Sion's Min-Max Theorem)
+
 $\mathcal{A}$ をコンパクト凸集合、$\mathcal{B}$ を凸集合とし、関数 $f: \mathcal{A} \times \mathcal{B} \to \mathbb{R}$ が
 1.  各 $v \in \mathcal{B}$ に対し $u \mapsto f(u, v)$ が上半連続かつ準凹 (quasi-concave)
 2.  各 $u \in \mathcal{A}$ に対し $v \mapsto f(u, v)$ が下半連続かつ準凸 (quasi-convex)
@@ -49,6 +52,7 @@ $$ \max_{u \in \mathcal{A}} \min_{v \in \mathcal{B}} f(u, v) = \min_{v \in \math
 
 ::: {#def-sdp}
 ## 半正定値計画問題 (Semidefinite Program)
+
 SDPは、以下の3つ組 $(\Phi, A, B)$ によって定義されます。
 1.  **保存写像**: $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ （エルミート保存写像）
 2.  **制約演算子**: $A \in \mathrm{Herm}(\mathcal{X})$
@@ -83,6 +87,7 @@ $$
 
 ::: {#thm-slater}
 ## スレーターの定理 (Slater's Theorem for SDP)
+
 以下のいずれかの条件が満たされるとき、強双対性 ($\alpha = \beta$) が成立し、かつ最適解が存在します。
 1.  **主問題の正則性**: 主問題実行可能領域に正定値演算子 $X > 0$ が存在する（かつ双対問題が有界）。
 2.  **双対問題の正則性**: 双対問題実行可能領域に狭義不等式 $\Phi^*(Y) > A$ を満たす $Y$ が存在する（かつ主問題が有界）。
