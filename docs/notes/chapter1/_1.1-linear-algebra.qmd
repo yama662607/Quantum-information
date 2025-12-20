@@ -1,10 +1,100 @@
 ## Linear algebra {#linear-algebra}
 
-### Complex Euclidean spaces {#complex-euclidean-spaces}
-（内容は準備中です）
+### Complex Euclidean spaces (複素ユークリッド空間) {#complex-euclidean-spaces}
 
-### Linear operators {#linear-operators}
-（内容は準備中です）
+量子情報の理論において、**複素ユークリッド空間** (Complex Euclidean Space) は最も基本的な数学的構造です。
+本書では、複素ユークリッド空間を、ある有限のアルファベット（シンボル集合）$\Sigma$ から複素数体 $\mathbb{C}$ への関数全体の集合として定義します。
 
-### Operator decompositions and norms {#operator-decompositions-and-norms}
-（内容は準備中です）
+::: {#def-complex-euclidean-space}
+## 複素ユークリッド空間
+有限集合（アルファベット）$\Sigma$ に対し、$\Sigma$ 上の複素ユークリッド空間 $\mathbb{C}^\Sigma$ は以下のように定義されます。
+$$ \mathbb{C}^\Sigma = \{ u : \Sigma \to \mathbb{C} \} $$
+:::
+
+#### ベクトルと基底
+この空間の要素を**ベクトル**と呼びます。$\Sigma$ の各要素 $a$ に対して、**標準基底ベクトル** (Standard Basis Vector) $e_a \in \mathbb{C}^\Sigma$ は次のように定義されます。
+
+$$
+e_a(b) = \begin{cases} 1 & \text{if } a = b \\ 0 & \text{if } a \neq b \end{cases}
+$$
+
+任意のベクトル $u \in \mathbb{C}^\Sigma$ は、標準基底の線形結合として一意に表せます。
+$$ u = \sum_{a \in \Sigma} u(a) e_a $$
+
+物理学（特に量子力学）の文脈では、これを**ブラケット記法**を用いて $|u\rangle = \sum_a u(a) |a\rangle$ と書くことが一般的ですが、本書では数学的な関数の記法を主に使用します。
+
+#### 内積とノルム (Inner Products and Norms)
+
+::: {#def-inner-product}
+## 内積 (Inner Product)
+2つのベクトル $u, v \in \mathbb{C}^\Sigma$ の内積 $\langle u, v \rangle$ は以下で定義されます。
+$$ \langle u, v \rangle = \sum_{a \in \Sigma} \overline{u(a)} v(a) $$
+:::
+※ 本書では物理学の慣例に従い、**第1引数に対して反線形 (conjugate-linear)**、第2引数に対して線形 (linear) である定義を採用しています。
+
+**ユークリッドノルム** (Euclidean Norm) は内積を用いて $\|u\| = \sqrt{\langle u, u \rangle}$ と定義されます。
+これは物理的には状態ベクトルの「大きさ」に対応し、量子状態を表すベクトルは通常 $\|u\|=1$ の正規化条件を満たします。
+
+### Linear operators (線形演算子) {#linear-operators}
+
+::: {#def-linear-operator}
+## 線形演算子 (Linear Operator)
+2つの複素ユークリッド空間 $\mathcal{X}, \mathcal{Y}$ に対し、写像 $A: \mathcal{X} \to \mathcal{Y}$ が線形性を満たすとき、これを**線形演算子**と呼びます。
+$$ A(\alpha u + \beta v) = \alpha A(u) + \beta A(v) $$
+$\mathcal{X}$ から $\mathcal{Y}$ への線形演算子全体の集合を $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ と表記します。$\mathcal{X} = \mathcal{Y}$ の場合は単に $\mathrm{L}(\mathcal{X})$ と書きます。
+:::
+
+#### 行列表示 (Matrix Representation)
+線形演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ は、基底を選ぶことで行列として表現できます。
+$$ A(a, b) = \langle e_a, A e_b \rangle $$
+これにより、演算子の作用 $v = Au$ は、行列とベクトルの積として具体的に計算できます。
+
+#### 随伴演算子 (Adjoint Operator)
+任意の $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、以下の内積の等式を満たす一意の演算子 $A^\dagger \in \mathrm{L}(\mathcal{Y}, \mathcal{X})$ が存在します。
+$$ \langle u, A v \rangle = \langle A^\dagger u, v \rangle \quad (\forall u \in \mathcal{Y}, v \in \mathcal{X}) $$
+これを $A$ の**随伴演算子** (Adjoint Operator)、またはエルミート共役と呼びます。行列表示では、転置行列の複素共役に相当します。
+
+### Operator decompositions and norms (演算子の分解とノルム) {#operator-decompositions-and-norms}
+
+量子情報の解析において極めて重要な、演算子の分解定理とノルムについてまとめます。
+
+#### スペクトル定理と特異値分解
+
+::: {#thm-spectral-theorem}
+## スペクトル定理 (Spectral Theorem)
+正規演算子 $X \in \mathrm{L}(\mathcal{X})$ （すなわち $XX^\dagger = X^\dagger X$ を満たす演算子）に対し、ある正規直交基底 $\{x_1, \dots, x_n\}$ と複素数 $\lambda_1, \dots, \lambda_n$ が存在して、以下のように分解できます。
+$$ X = \sum_{k=1}^n \lambda_k x_k x_k^\dagger $$
+:::
+物理的には、エルミート演算子（物理量）が実数の固有値を持つことの基礎となります。
+
+::: {#thm-svd}
+## 特異値分解 (Singular Value Decomposition, SVD)
+任意の非ゼロ演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ （ランク $r$）に対し、正規直交系 $\{x_1, \dots, x_r\} \subset \mathcal{X}$ と $\{y_1, \dots, y_r\} \subset \mathcal{Y}$、および正の実数 $s_1 \geq \dots \geq s_r > 0$ が存在して、以下のように書けます。
+$$ A = \sum_{k=1}^r s_k y_k x_k^\dagger $$
+正の実数 $s_k$ を**特異値** (Singular Values) と呼びます。
+:::
+
+#### その他の重要な分解
+
+*   **極分解 (Polar Decomposition)**: 任意の正方演算子 $X$ は、ユニタリ演算子 $W$ と半正定値演算子 $P$ を用いて $X=WP$ （または $X=PW'$）と分解できます。
+*   **シュミット分解 (Schmidt Decomposition)**: 複合系のベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ に対する分解です。エンタングルメントの解析に不可欠です。
+    $$ u = \sum_{k=1}^r s_k x_k \otimes z_k $$
+
+#### シャッテン $p$-ノルム (Schatten $p$-norms)
+
+演算子の大きさを測る指標として、特異値ベクトル $s(A)$ の $p$-ノルムとして定義されます。
+
+$$ \|A\|_p = \left( \sum_k s_k(A)^p \right)^{1/p} = \left[ \mathrm{Tr}( (A^\dagger A)^{p/2} ) \right]^{1/p} $$
+
+特に以下の3つが重要です。
+
+| 名称 | 記号 | 定義 ($p$) | 意味 |
+| :--- | :--- | :--- | :--- |
+| **トレースノルム** | $\|A\|_1$ | $p=1$ | 量子状態間の距離、識別容易性 |
+| **フロベニウスノルム** | $\|A\|_2$ | $p=2$ | ヒルベルト・シュミット内積から誘導されるノルム |
+| **スペクトルノルム** | $\|A\|_\infty$ | $p=\infty$ | 最大特異値。作用素ノルムと一致 |
+
+::: {.callout-note}
+## 重要概念 (Key Concept)
+特に**トレースノルム** $\| \cdot \|_1$ は、前述の「量子状態の識別」問題における成功確率と直接結びついており、量子情報理論で最も頻繁に用いられる距離尺度の一つです。
+:::
