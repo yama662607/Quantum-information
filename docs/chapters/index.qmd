@@ -1,0 +1,15 @@
+---
+title: "各章の解説"
+---
+
+ここでは、教科書の各章に基づいた詳細な解説と実装をまとめていきます。
+
+## 各章リスト
+
+- [Chapter 1: Mathematical Preliminaries](chapter1.qmd)
+- [Chapter 2: Basic Notions of Quantum Information](chapter2.qmd)
+
+::: {.callout-note}
+## 教科書について
+使用している教科書は `docs/divided/` ディレクトリに分割して保存されています。
+:::

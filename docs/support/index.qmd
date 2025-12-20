@@ -1,0 +1,31 @@
+---
+title: "サポート & ガイド"
+---
+
+プロジェクトの運用や環境構築に関するドキュメントと、学習用テンプレートをまとめています。
+
+## 学習テンプレート
+
+以下のリンクからテンプレートのプレビューを確認できます。
+ソースコードを確認・コピーしたい場合は、各ページ右上の **`</> Code`** ボタンをクリックしてください。
+
+### 📐 数理特化テンプレート
+数学的な定義、定理、証明のロジックに重点を置いたテンプレートです。John Watrous本の学習に最適化されています。
+
+[👉 テンプレートを開く (Preview)](../templates/math_focused_template.qmd){.btn .btn-success}
+
+### 🔄 V-S-V テンプレート
+Visual (可視化) → Scratch (実装) → Verify (検証) のサイクルを回すための汎用テンプレートです。
+
+[👉 テンプレートを開く (Preview)](../templates/theory_template.qmd){.btn .btn-info}
+
+---
+
+## 運用ガイド
+
+このプロジェクトの環境構築やコマンドの使い方に関するドキュメントです。
+
+- [**Justfile 活用ガイド**](./justfile-migration-guide.md)
+  - `just check` や `just docs` などのコマンドリファレンス。
+- [**Quarto 環境構築ガイド**](./quarto-migration-guide.md)
+  - ドキュメント生成環境の仕組みと設定方法。

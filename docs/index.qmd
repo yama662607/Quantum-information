@@ -1,0 +1,44 @@
+---
+title: "The Theory of Quantum Information"
+subtitle: "Study Notes & Roadmap"
+page-layout: full
+toc: false
+---
+
+## 学習状況ダッシュボード
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-8}
+### 現在のフォーカス: Chapter 1
+数学的基礎（線形代数、スペクトル分解、ノルム）の再確認を行っています。
+
+[👉 Chapter 1 のノートを開く](chapters/chapter1.qmd){.btn .btn-primary .btn-lg}
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.callout-note}
+## 進捗率
+- **Chapter 1**: 🚧 10%
+- **Chapter 2**: 🌑 0%
+- **...**
+:::
+:::
+
+:::
+
+## 教科書目次と学習ノート
+
+| Chapter | Title | PDF (Original) | Notes (解説) | Status |
+| :--- | :--- | :--: | :--: | :--: |
+| **0** | Front Matter | [📄 PDF](../divided/Chapter0_FrontMatter.pdf) | - | ✅ |
+| **1** | Mathematical Preliminaries | [📄 PDF](../divided/Chapter1_Math.pdf) | [📝 Note](chapters/chapter1.qmd) | 🚧 |
+| **2** | Basic Notions of Quantum Information | [📄 PDF](../divided/Chapter2_Basic.pdf) | [📝 Note](chapters/chapter2.qmd) | 🌑 |
+| **3** | Similarity and Distance | [📄 PDF](../divided/Chapter3_Distance.pdf) | - | 🌑 |
+| **4** | Unital Channels and Majorization | [📄 PDF](../divided/Chapter4_Unital.pdf) | - | 🌑 |
+| **5** | Quantum Entropy and Source Coding | [📄 PDF](../divided/Chapter5_Entropy.pdf) | - | 🌑 |
+| **6** | Bipartite Entanglement | [📄 PDF](../divided/Chapter6_Entanglement.pdf) | - | 🌑 |
+| **7** | Permutation Invariance | [📄 PDF](../divided/Chapter7_Permutation.pdf) | - | 🌑 |
+| **8** | Quantum Channel Capacities | [📄 PDF](../divided/Chapter8_Capacity.pdf) | - | 🌑 |
+
+: 学習進捗一覧 {#tbl-progress}

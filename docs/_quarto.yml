@@ -1,0 +1,60 @@
+project:
+  type: website
+  output-dir: ../_output
+
+website:
+  title: "Quantum Information"
+  navbar:
+    left:
+      - text: "ホーム"
+        href: index.qmd
+    right:
+      - text: "サポート"
+        href: support/index.qmd
+    search: true
+    sidebar:
+      style: "docked"
+      search: true
+      collapse-level: 4
+      contents:
+        - section: "量子情報"
+          contents:
+            - index.qmd
+            - section: "基礎編"
+              contents:
+                - chapters/index.qmd
+            - section: "PDFライブラリ"
+              contents:
+                - divided/index.qmd
+        - section: "サポート"
+          contents:
+            - support/index.qmd
+
+  page-navigation: true
+
+  page-footer:
+    left: "© 2025 Quantum Information Study Project"
+    right:
+      - text: "ホーム"
+        href: index.qmd
+
+lang: ja
+
+format:
+  html:
+    theme: cosmo
+    css: templates/styles.css
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    link-external-newwindow: true
+    smooth-scroll: true
+    anchor-sections: true
+    fig-cap-location: bottom
+    tbl-cap-location: top
+
+execute:
+  freeze: auto
