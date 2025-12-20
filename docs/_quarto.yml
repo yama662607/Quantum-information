@@ -20,9 +20,12 @@ website:
         - section: "量子情報"
           contents:
             - index.qmd
-            - section: "基礎編"
+            - section: "学習ノート"
               contents:
-                - chapters/index.qmd
+                - section: "Chapter 1"
+                  contents:
+                    - notes/chapter1/1.1-linear-algebra.qmd
+                    - notes/chapter1/1.2-analysis.qmd
             - section: "PDFライブラリ"
               contents:
                 - divided/index.qmd
