@@ -23,6 +23,7 @@ bibliography: references.bib
 1. **定義の理解**: [XX] の数学的定義を正確に記述できる。
 2. **定理の証明**: Theorem [Y] の証明の核心（トリック的な部分）を再現できる。
 3. **構造の把握**: [Z] という概念が、線形代数のどの性質に基づいているか説明できる。
+
 :::
 
 ## [節のタイトル]
@@ -35,6 +36,7 @@ $$
 \rho \in \mathcal{D}(\mathcal{X}) \iff \rho \geq 0, \text{Tr}(\rho) = 1
 $$
 定義 @def-main は、量子状態の数学的な要件を定めています。
+
 :::
 
 ### 定義の背景・モチベーション
@@ -49,6 +51,7 @@ $$
 ::: {#thm-main}
 ## [定理名]
 任意のユニタリ行列 $U$ に対しても $U^\dagger U = I$ が成り立つ。
+
 :::
 
 > 定理 @thm-main は量子ゲートの可逆性を保証します。
@@ -64,6 +67,7 @@ $$
    \| A \|_1 \leq \dots
    $$ {#eq-bound}
 3. したがって、...となる。 $\square$
+
 :::
 
 ### 証明のポイント (Key Insights)
@@ -94,11 +98,13 @@ print(f"固有値: {eigenvalues}")
 ::: {#lem-helper}
 ## 補題 (Lemma)
 定理の証明に使われる補助的な命題。
+
 :::
 
 ::: {#cor-result}
 ## 系 (Corollary)
 定理から直ちに導かれる結果。
+
 :::
 
 ## 可換図式 (Commutative Diagrams)

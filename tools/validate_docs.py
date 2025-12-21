@@ -102,14 +102,15 @@ def check_fenced_divs(filepath: str, lines: List[str]) -> List[str]:
             continue
 
         if stripped_line.startswith(":::"):
-            if re.match(r"^:{3,}\s*$", stripped_line):
-                continue
             if i > 0:
                 prev_line = lines[i - 1].strip()
                 if prev_line and prev_line != "---":
+                    # We allow consecutive ::: for nested divs if desired,
+                    # but typically Quarto/Pandoc prefer blank lines between them too.
+                    # For now, let's at least catch the case where it follows content.
                     if not prev_line.startswith(":::"):
                         errors.append(
-                            f"[Style] Line {i + 1}: Fenced div ':::' must be preceded by a blank line."
+                            f"[Style] Line {i + 1}: Fenced div boundary ':::' must be preceded by a blank line."
                         )
     return errors
 

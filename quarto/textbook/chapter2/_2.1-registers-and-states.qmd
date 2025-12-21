@@ -6,14 +6,17 @@
 
 **レジスタ (Register)** は、物理的なデバイス（コンピュータのメモリ、量子ビット、あるいは通信媒体など）の抽象化です。
 
+レジスタは、量子情報を格納する物理デバイスの数学的抽象化です。複数のレジスタをまとめて1つの新しいレジスタとして扱うことができるため、レジスタの構造は自然に**木構造**（Figure 2.1 参照）として理解されます。
+
 ::: {#def-register}
 ## レジスタ (Register)
+レジスタ $X$ は、以下のいずれかのオブジェクトとして帰納的に定義されます：
+1.  **単純レジスタ (Simple Register)**: 有限のアルファベット $\Sigma$。
+2.  **複合レジスタ (Compound Register)**: レジスタの $n$ 組 $(Y_1, \dots, Y_n)$。
 
-レジスタ $X$ は、以下のいずれかとして帰納的に定義されます。
-
-1.  **単純レジスタ (Simple Register)**: 有限集合（アルファベット） $\Sigma$。
-2.  **複合レジスタ (Compound Register)**: レジスタの $n$ 個の組 $X = (Y_1, \dots, Y_n)$。
 :::
+
+単純レジスタは木構造の「葉」に対応し、複合レジスタはサブレジスタを子に持つ親ノードに対応します。
 
 レジスタには、それが保持しうる古典的な情報の集合である**古典状態集合 (Classical State Set)** が対応します。
 
@@ -21,7 +24,12 @@
 ## 古典状態集合
 
 1.  単純レジスタ $X = \Sigma$ の古典状態集合は $\Sigma$ である。
-2.  複合レジスタ $X = (Y_1, \dots, Y_n)$ の古典状態集合は、各 $Y_k$ の古典状態集合 $\Gamma_k$ の直積 $\Sigma = \Gamma_1 \times \dots \times \Gamma_n$ である。
+2.  複合レジスタ $X = (Y_1, \dots, Y_n)$ の古典状態集合は、各 $Y_k$ の古典状態集合 $\Gamma_k$ の直積 $\Sigma = \Gamma_1 \times \dots \times \Gamma_n$ である（式2.2）。
+
+複合レジスタの各古典状態 $a = (b_1, \dots, b_n)$ は、各サブレジスタ $Y_k$ の古典状態 $b_k \in \Gamma_k$ を一意に決定します。逆に、すべての単純なサブレジスタの古典状態が定まれば、親レジスタの古典状態も一意に定まります。
+
+古典状態集合が単一の要素のみを持つレジスタを**些細なレジスタ (Trivial Register)** と呼びます。また、定義により古典状態集合が空集合（$\Sigma = \emptyset$）になることは許容されません。これは物理的なシステムがいかなる状態も持たないことはあり得ないという直感に基づいています。
+
 :::
 
 #### レジスタの階層構造
@@ -52,6 +60,7 @@ graph TD
 
 レジスタ $X$ の古典状態集合が $\Sigma$ であるとき、これに対応する複素ユークリッド空間を $\mathcal{X} = \mathbb{C}^\Sigma$ と定義します。
 複合システム $X = (Y_1, \dots, Y_n)$ の場合、対応する空間はテンソル積 $\mathcal{X} = \mathcal{Y}_1 \otimes \dots \otimes \mathcal{Y}_n$ となります。
+
 :::
 
 ::: {#def-density-operator}
@@ -61,7 +70,11 @@ graph TD
 
 1.  **半正定値性 (Positive Semidefinite)**: $\rho \geq 0$
 2.  **正規化 (Trace 1)**: $\mathrm{Tr}(\rho) = 1$
+
 :::
+
+#### 確率的状態との対比
+量子状態は、古典的な**確率的状態 (Probabilistic State)** の量子版とみなせます。確率的状態が古典状態集合 $\Sigma$ 上の確率ベクトル $p \in \mathrm{P}(\Sigma)$ で表されるのに対し、量子状態は密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ で表されます。
 
 #### 純粋状態、平坦状態、および混合状態
 - **純粋状態 (Pure States)**: ランク1の密度演算子。ある単位ベクトル $u$ を用いて $\rho = u u^\dagger$ と書けます。
@@ -71,7 +84,7 @@ graph TD
 #### 凸結合とアンサンブル
 量子状態の集合 $\mathrm{D}(\mathcal{X})$ は凸集合であり、複数の状態の確率的な混合もまた量子状態となります。
 $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
-関数 $\eta: \Gamma \to \mathrm{Pos}(\mathcal{X})$ で $\mathrm{Tr}(\sum \eta(a)) = 1$ を満たすものを**アンサンブル (Ensemble)** と呼びます。
+関数 $\eta: \Gamma \to \mathrm{Pos}(\mathcal{X})$ で $\mathrm{Tr}(\sum \eta(a)) = 1$ を満たすものを**アンサンブル (Ensemble)** と呼びます。アンサンブルにおいて、$\eta(a)$ は「確率 $p(a) = \mathrm{Tr}(\eta(a))$」と「その時に選ばれる量子状態 $\rho_a = \eta(a)/\mathrm{Tr}(\eta(a))$」を同時に表現しています。
 
 #### 独立性と相関
 複合レジスタの状態 $\rho \in \mathrm{D}(\mathcal{Y} \otimes \mathcal{Z})$ が $\rho = \sigma \otimes \tau$ と書けるとき、レジスタ $\mathrm{Y}$ と $\mathrm{Z}$ は**独立 (Independent)** であると言います。そうでない場合は**相関 (Correlated)** しており、特に量子特有の強い相関を**エンタングルメント (Entanglement)** と呼びます。
@@ -86,6 +99,7 @@ $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
 
 写像 $\mathrm{Tr}_{\mathcal{Y}}: \mathrm{L}(\mathcal{X} \otimes \mathcal{Y}) \to \mathrm{L}(\mathcal{X})$ は、以下の関係式をすべての $X, Y$ に対して満たす唯一の線形写像です。
 $$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
+
 :::
 
 複合系 $(X, Y)$ の状態 $\rho$ から $X$ だけを取り出した状態は $\rho^X = \mathrm{Tr}_{\mathcal{Y}}(\rho)$ と書かれます。
@@ -96,19 +110,25 @@ $$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
 ::: {#def-purification}
 ## 純粋化 (Purification)
 
-状態 $P \in \mathrm{Pos}(\mathcal{X})$ に対し、ベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ が $P$ の純粋化であるとは、次が成り立つことを言います。
-$$ \mathrm{Tr}_{\mathcal{Y}}(u u^\dagger) = P $$
+ベクトル密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ の**浄化** (Purification) とは、$\mathrm{Tr}_{\mathcal{Y}}(|u\rangle\langle u|) = \rho$ を満たす拡大系 $\mathcal{X} \otimes \mathcal{Y}$ 上のベクトル $u$ のことです。
+
 :::
 
-::: {#thm-existence-purification}
-## 純粋化の存在条件
+::: {#thm-purification-existence}
+## 浄化の存在条件 (Theorem 2.10)
+密度演算子 $\rho$ に対し、浄化 $u \in \mathcal{X} \otimes \mathcal{Y}$ が存在するための必要十分条件は $\mathrm{dim}(\mathcal{Y}) \geq \mathrm{rank}(\rho)$ です。
 
-$P$ の純粋化 $u \in \mathcal{X} \otimes \mathcal{Y}$ が存在するための必要十分条件は、$\dim(\mathcal{Y}) \geq \mathrm{rank}(P)$ です。
 :::
 
-::: {#thm-unitary-equivalence-purification}
-## 純粋化のユニタリ同値性 (Unitary Equivalence of Purifications)
+**証明の概略 (p.71)**:
+$\rho$ のスペクトル分解を $\rho = \sum \lambda_k x_k x_k^*$ とします。$\mathcal{Y}$ の正規直交集合 $\{y_k\}$ を用いて $A = \sum \sqrt{\lambda_k} x_k y_k^*$ と定義すれば、$u = \mathrm{vec}(A)$ が求める浄化になります。実際、$\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(A)^*) = AA^* = \rho$ となり、浄化の条件を満たします。
 
-同じ演算子 $P$ に対する2つの純粋化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のユニタリ変換 $U$ を用いて次のように結ばれます。
-$$ v = (\mathbb{I}_{\mathcal{X}} \otimes U) u $$
+また、2つの浄化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のあるユニタリ $U$ によって $v = (\mathbb{I}_{\mathcal{X}} \otimes U)u$ と結ばれます（**浄化のユニタリ同値性**、Theorem 2.12）。
+
+::: {#exm-maximally-entangled}
+## 最大絡み合い状態 (Maximally Entangled State)
+空間 $\mathcal{X} \otimes \mathcal{Y}$（$\mathcal{X}, \mathcal{Y} \cong \mathbb{C}^\Sigma$）上の状態
+$$ u = \frac{1}{\sqrt{|\Sigma|}} \sum_{a \in \Sigma} e_a \otimes e_a $$
+は、どちらかの系をトレースアウトすると完全に混合した状態 $1/|\Sigma| \mathbb{I}$ になる、最大絡み合い状態の典型的な例です（式2.35）。
+
 :::

@@ -2,35 +2,89 @@
 
 測定（Measurement）は、量子状態から古典情報を抽出するための数学的メカニズムを提供します。
 
+線形写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ は、文脈に応じていくつかの等価な形式で表現されます。
+
+::: {#prop-representation-equivalence}
+## 表現の等価性 (Proposition 2.20)
+以下の4つの表現は等価であり、相互に変換可能です：
+
+1.  **自然表現 (Natural Representation)**: $K(\Phi) = \sum A_a \otimes \overline{B}_a$
+2.  **Choi 表現 (Choi Representation)**: $J(\Phi) = \sum \mathrm{vec}(A_a) \mathrm{vec}(B_a)^*$
+3.  **Kraus 表現 (Kraus Representation)**: $\Phi(X) = \sum A_a X B_a^*$
+4.  **Stinespring 表現 (Stinespring Representation)**: $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^*)$
+
+:::
+
+特に、$\Phi$ が完全正値であるとき、およびそのときに限り $J(\Phi) \geq 0$ であり、$B_a = A_a$ かつ $B = A$ と選ぶことができます（Theorem 2.22）。
+状態 $\rho$ に対して出力 $a$ が得られる確率は $p(a) = \langle \mu(a), \rho \rangle$ です。
+
 ### Two equivalent definitions (2つの等価な定義) [📄 p.100](Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
 
 量子情報の文脈では、測定は通常、以下の POVM (Positive Operator-Valued Measure) として定義されます。
 
 ::: {#def-measurement}
 ## 測定 (Measurement)
+レジスタ $X$（空間 $\mathcal{X}$）上の**測定** $\mu$ は、有限集合 $\Sigma$ 上の関数 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ であり、以下の条件を満たします。
+$$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 
-有限集合（アルファベット）$\Sigma$ を測定結果の集合とする。
-演算子の族 $\mu = \{ M_a : a \in \Sigma \} \subset \mathrm{Pos}(\mathcal{X})$ がレジスタ $X$ 上の**測定**であるとは、以下の完全性条件を満たすことである。
-
-$$ \sum_{a \in \Sigma} M_a = \mathbb{I}_{\mathcal{X}} $$
 :::
 
-#### 確率規則（ボルンの規則）
-状態 $\rho$ に対して測定 $\mu$ を行ったとき、結果 $a \in \Sigma$ が得られる確率は以下で与えられます。
-$$ p(a) = \mathrm{Tr}(M_a \rho) $$
+### Measurements as channels (チャネルとしての測定) [📄 p.102](Quantum_Information.pdf#page=110) {#measurements-as-channels}
 
-### Basic notions concerning measurements (測定に関する基本概念) [📄 p.105](Quantum_Information.pdf#page=113) {#basic-notions-concerning-measurements}
+測定は、量子情報を古典情報に変換する**量子から古典へのチャネル** (Quantum-to-classical channel) としても定義できます。
 
-#### ナイマルクの定理
-一般の POVM は、射影測定（各 $M_a$ が射影演算子である測定）ほど単純に見えないかもしれませんが、より大きな空間を考えることで、常に射影測定として実現可能です。
+::: {#def-qc-channel}
+## 量子から古典へのチャネル (Definition 2.35)
+チャネル $\Phi \in \mathrm{C}(\mathcal{X}, \mathcal{Y})$ が量子から古典へのチャネルであるとは、$\Phi = \Delta \Phi$ を満たすことを言います。ここで $\Delta$ は完全に脱位相させるチャネル（すべてを対角化する写像）です。
+
+:::
+
+この写像は、ある一意な測定 $\mu$ を用いて $\Phi(X) = \sum_a \langle \mu(a), X \rangle E_{a,a}$ と書け、測定の物理的な解釈と数学的に一致します（Theorem 2.37）。
+
+### Projective measurements (射影測定) [📄 p.105](Quantum_Information.pdf#page=113) {#projective-measurements}
+
+測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。
+
+::: {#thm-projective-orthogonality}
+## 射影演算子の直交性
+射影測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ の各演算子は、互いに直交します。すなわち、$a \neq b$ に対して以下が成り立ちます。
+$$ \mu(a) \mu(b) = 0 $$
+
+:::
+
+### Naimark の定理 [📄 p.109](Quantum_Information.pdf#page=117) {#naimarks-theorem}
+
+任意の測定は、補助系を含む拡大された系における射影測定の一部とみなすことができます。
 
 ::: {#thm-naimark}
-## ナイマルクの定理 (Naimark's Theorem)
+## Naimark の定理 (Theorem 2.42)
+測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ に対し、等長写像 $A: \mathcal{X} \to \mathcal{X} \otimes \mathcal{Y}$（ただし $\mathcal{Y} = \mathbb{C}^\Sigma$）が存在して、次が成り立ちます。
+$$ \mu(a) = A^\dagger (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
 
-任意の測定 $\mu = \{ M_a : a \in \Sigma \}$ に対し、ある補助空間 $\mathcal{Y}$、等長写像 $A \in \mathrm{U}(\mathcal{X}, \mathcal{Y})$、および $\mathcal{Y}$ 上の射影測定 $\{ \Pi_a : a \in \Sigma \}$ が存在して、以下が成り立つ。
-
-$$ M_a = A^\dagger \Pi_a A $$
 :::
+
+### Information-complete measurements (情報完全測定) [📄 p.110](Quantum_Information.pdf#page=118) {#information-complete-measurements}
+
+測定統計から元の量子状態を一意に特定できる測定を**情報完全測定**と呼びます。
+
+::: {#def-information-complete}
+## 情報完全測定
+測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ が情報完全であるとは、その測定演算子の集合 $\{\mu(a) : a \in \Sigma\}$ が演算子空間 $\mathrm{L}(\mathcal{X})$ 全体を張ることを言います。
+$$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
+
+:::
+
+### Quantum instruments (量子インストルメント) [📄 p.112](Quantum_Information.pdf#page=120) {#quantum-instruments}
+
+測定によってレジスタが破壊されず、結果 $a$ に応じて状態が変化するプロセスを**量子インストルメント**（あるいは単にインストルメント）と呼びます。
+
+::: {#def-instrument}
+## インストルメント
+アルファベット $\Sigma$ へのインストルメントは、完全正値写像の集合 $\{\mathcal{A}_a \in \mathrm{CP}(\mathcal{X}, \mathcal{Y}) : a \in \Sigma\}$ であり、それらの和 $\sum_{a \in \Sigma} \mathcal{A}_a$ がチャネル（トレース保存）となるものです。
+
+:::
+
+状態 $\rho$ にインストルメントを適用すると、確率 $p(a) = \mathrm{Tr}(\mathcal{A}_a(\rho))$ で結果 $a$ が得られ、その時の事後状態は $\mathcal{A}_a(\rho) / p(a)$ となります。
 
 ### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
 
@@ -40,6 +94,7 @@ $$ M_a = A^\dagger \Pi_a A $$
 ## 極値的な測定 (Extremal Measurement)
 
 測定 $\mu = \{ M_a \}$ が極値的であるための必要十分条件は、$\{ M_a \}$ の線形独立性に関する特定の条件（詳細は教科書参照）を満たすことである。
+
 :::
 
 特に、**射影測定 (Projective Measurement)**、すなわちすべての $M_a$ が射影演算子 ($M_a^2 = M_a$) である測定は、常に極値的です。これは量子観測における最も鋭い測定に対応します。
