@@ -1,4 +1,4 @@
-## The fidelity function (フィデリティ関数) [📄 p.139](Quantum_Information.pdf#page=147) {#fidelity-function}
+## The fidelity function (フィデリティ関数) [📄 p.139](assets/Quantum_Information.pdf#page=147) {#fidelity-function}
 
 **フィデリティ**（忠実度）は、2つの量子状態（あるいはより一般に半正定値演算子）の間の「重なり」の度合いを測る尺度です。
 
@@ -11,7 +11,7 @@ $$ F(P, Q) = \mathrm{Tr}\left(\sqrt{\sqrt{Q} P \sqrt{Q}}\right) $$
 
 :::
 
-### Elementary properties of the fidelity function [📄 p.140](Quantum_Information.pdf#page=148) {#elementary-properties-fidelity}
+### Elementary properties of the fidelity function [📄 p.140](assets/Quantum_Information.pdf#page=148) {#elementary-properties-fidelity}
 
 ::: {#prop-fidelity-properties}
 ## フィデリティの基本的性質 (Proposition 3.12)
@@ -24,14 +24,14 @@ $$ F(P, Q) = \mathrm{Tr}\left(\sqrt{\sqrt{Q} P \sqrt{Q}}\right) $$
 
 :::
 
-### Pure states and simple cases [📄 p.142](Quantum_Information.pdf#page=150) {#fidelity-simple-cases}
+### Pure states and simple cases [📄 p.142](assets/Quantum_Information.pdf#page=150) {#fidelity-simple-cases}
 
 一方が純粋状態 $P = |u\rangle\langle u|$ の場合、フィデリティは非常に単純な形になります。
 $$ F(|u\rangle\langle u|, Q) = \sqrt{\langle u | Q | u \rangle} $$
 特に2つの純粋状態に対しては、その内積の絶対値に一致します。
 $$ F(|u\rangle\langle u|, |v\rangle\langle v|) = |\langle u | v \rangle| $$
 
-### Winter's gentle measurement lemma [📄 p.143](Quantum_Information.pdf#page=151) {#gentle-measurement-lemma}
+### Winter's gentle measurement lemma [📄 p.143](assets/Quantum_Information.pdf#page=151) {#gentle-measurement-lemma}
 
 測定によって状態がほとんど変化しないことを保証する補題です。
 

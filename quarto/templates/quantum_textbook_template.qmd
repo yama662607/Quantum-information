@@ -32,8 +32,7 @@ bibliography: references.bib
 
 数学的な記述に入る前に、概念の直感的なイメージを整理します。
 
-::: {.physics-notes}
-### 物理学の視点 (Physics Perspective)
+::: {.physics-notes title="物理学の視点 (Physics Perspective)"}
 量子力学の標準的な教科書（例：サクライ等）では、この概念は**[用語]**として知られています。
 記法としては、状態 $| \psi \rangle$ に対して...のように記述されることが多いですが、本書（Watrous）では線形代数的側面を強調するため、演算子 $\rho$ を中心に議論を進めます。
 

@@ -192,7 +192,7 @@ Essential requirement details.
 ## Custom Styles (Physics & Points)
 このセクションでは、`styles.css` に定義したプロジェクト独自のカスタムコールアウトを表示します。
 
-::: {.physics-notes}
+::: {.physics-notes title="Physics Perspective"}
 In standard physics textbooks, this is often written using Ket notation as $| \psi \rangle$.
 
 :::
