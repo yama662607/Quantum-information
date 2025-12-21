@@ -2,8 +2,8 @@ project:
   type: website
   output-dir: ../_output
   resources:
-    - "*.pdf"
-    - "divided/*.pdf"
+    - "assets/*.pdf"
+    - "assets/*.png"
 
 website:
   title: "Quantum Information"
