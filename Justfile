@@ -20,10 +20,12 @@ default: check
 setup:
     @echo "📦 Setting up environment..."
     uv sync --all-extras
+    npm install
     @echo "✅ Environment setup complete!"
 
 # 全体品質検証: コードを変更せずに品質を検証 (CIゲート)
-check: fmt-check lint typecheck validate-mermaid test
+check: fmt-check lint typecheck validate-docs test
+    @echo "✅ All quality checks passed!"
     @echo "✅ All quality checks passed!"
 
 # 自動修正: フォーマットとLint修正を適用 (Agentの第一手)
@@ -96,24 +98,17 @@ app path:
     @echo "🚀 Starting Streamlit app: {{path}}"
     {{python}} -m streamlit run {{path}}
 
-# Mermaid図の構文検証（時間がかかるため必要な時のみ実行）
-validate-mermaid:
-    @echo "🔍 Validating all Mermaid diagrams..."
-    @if command -v mmdc >/dev/null 2>&1; then \
-        {{python}} mermaid_validator.py docs/; \
-    else \
-        echo "❌ mmdc not found. Install with:"; \
-        echo "   npm install -g @mermaid-js/mermaid-cli"; \
-        exit 1; \
-    fi
+# 統合ドキュメント検証 (Quarto, Mermaid, LaTeX)
+validate-docs:
+    @echo "🔍 Running integrated document validation..."
+    {{python}} tools/validate_docs.py docs/
 
-# 特定のQuartoファイルのみMermaid検証
-validate-mermaid-file file:
-    @echo "🔍 Validating Mermaid in: {{file}}"
-    @if command -v mmdc >/dev/null 2>&1; then \
-        {{python}} mermaid_validator.py {{file}}; \
-    else \
-        echo "❌ mmdc not found. Install with:"; \
-        echo "   npm install -g @mermaid-js/mermaid-cli"; \
-        exit 1; \
-    fi
+# 検証キャッシュのクリア
+clear-validation-cache:
+    @echo "🧹 Clearing document validation cache..."
+    {{python}} tools/validate_docs.py --clear-cache
+
+# PDFテキスト抽出
+extract-pdf pdf_path *args="":
+    @echo "📄 Extracting text from: {{pdf_path}}"
+    {{python}} tools/extract_pdf.py {{pdf_path}} {{args}}

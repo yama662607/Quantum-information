@@ -27,10 +27,15 @@ def extract_pdf_text(pdf_path, start_page=None, end_page=None):
                 end_idx = min(total_pages, end_page)
 
             if start_idx >= total_pages:
-                print(f"Error: Start page {start_page} is out of range (Total pages: {total_pages})", file=sys.stderr)
+                print(
+                    f"Error: Start page {start_page} is out of range (Total pages: {total_pages})",
+                    file=sys.stderr,
+                )
                 return
 
-            print(f"--- Extracting from {pdf_path} (Pages {start_idx + 1}-{end_idx}) ---\n")
+            print(
+                f"--- Extracting from {pdf_path} (Pages {start_idx + 1}-{end_idx}) ---\n"
+            )
 
             for i in range(start_idx, end_idx):
                 print(f"--- Page {i + 1} ---")
