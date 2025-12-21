@@ -1,66 +1,145 @@
 ## Quantum channels [📄 p.72](Quantum_Information.pdf#page=80) {#quantum-channels}
 
-### Definitions and basic notions (定義と基本概念) [📄 p.72](Quantum_Information.pdf#page=80) {#definitions-and-basic-notions}
+量子チャネルは、物理的に実現可能な量子状態の変化（操作）を数学的にモデル化したものです。
 
-**量子チャネル (Quantum Channel)** は、レジスタの状態変化（量子物理的に実現可能なあらゆる操作）を表す数学的モデルです。これには、量子計算のステップや、通信におけるノイズの影響などが含まれます。
+### Definitions and basic notions (定義と基本概念) [📄 p.72](Quantum_Information.pdf#page=80) {#definitions-and-basic-notions}
 
 ::: {#def-quantum-channel}
 ## 量子チャネル (Quantum Channel)
 
-写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ が**量子チャネル**であるとは、以下の2つの条件を満たすことである：
+写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ が**量子チャネル**であるとは、以下の2つの条件を満たすこと（CPTP）を言います。
 
-1.  **完全正 (Completely Positive, CP)**: 任意の複素ユークリッド空間 $\mathcal{Z}$ に対し、拡大写像 $\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{Z})}$ が正写像である（正定値演算子を正定値演算子に移す）。
+1.  **完全正 (Completely Positive, CP)**: 任意の複素ユークリッド空間 $\mathcal{Z}$ に対し、拡大写像 $\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{Z})}$ が正写像である。
 2.  **トレース保存 (Trace Preserving, TP)**: 任意の $X \in \mathrm{L}(\mathcal{X})$ に対し、$\mathrm{Tr}(\Phi(X)) = \mathrm{Tr}(X)$。
 :::
 
+#### 基本的なチャネルの例
+- **ユニタリチャネル (Unitary Channel)**: $\Phi(X) = UXU^\dagger$。理想的な時間発展や操作。
+- **置換チャネル (Replacement Channel)**: $\Phi(X) = \mathrm{Tr}(X)\sigma$。入力を捨てて固定の状態 $\sigma$ を出力する。
+- **恒等チャネル (Identity Channel)**: $\mathbb{I}(X) = X$。何もしない操作。
+- **トレース写像 (Trace Map)**: $\mathrm{Tr}: \mathrm{L}(\mathcal{X}) \to \mathbb{C}$。レジスタの廃棄。
+
 ### Representations and characterizations (表現と特徴付け) [📄 p.77](Quantum_Information.pdf#page=85) {#representations-and-characterizations}
 
-量子チャネルは、いくつかの等価な表現形式を持ちます。これらは解析において非常に強力なツールとなります。
+線形写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ は、文脈に応じていくつかの等価な形式で表現されます。
 
-#### Choi-Jamiolkowski表現
+#### 1. 自然表現 (Natural Representation)
+演算子とベクトルの対応関係 ($vec$ 写像) を用いた、$\Phi$ の線形写像としての直接的な表現です。
+$$ K(\Phi) \mathrm{vec}(X) = \mathrm{vec}(\Phi(X)) $$
+ここで $K(\Phi) \in \mathrm{L}(\mathcal{X} \otimes \mathcal{X}, \mathcal{Y} \otimes \mathcal{Y})$ は一意に決まり、写像 $\Phi \mapsto K(\Phi)$ は線形単射です。また、随伴写像については $K(\Phi^\dagger) = (K(\Phi))^\dagger$ が成り立ちます。
 
-チャネル $\Phi$ と、ある特定の演算子（Choi行列）の間の全単射な対応関係です。
+#### 2. Choi表現 (Choi Representation)
+チャネルの完全正性を判定するのに極めて重要な表現です。
 
-::: {#thm-choi}
-## Choiの定理 (Choi's Theorem)
-
-写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ が完全正であるための必要十分条件は、その **Choi 表現** $J(\Phi)$ が正定値であることである。
-
-$$ J(\Phi) = \sum_{a, b \in \Sigma} \Phi(E_{a,b}) \otimes E_{a,b} \in \mathrm{Pos}(\mathcal{Y} \otimes \mathcal{X}) $$
+::: {#def-choi-representation}
+## Choi表現
+$$ J(\Phi) = (\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{X})}) (\mathrm{vec}(\mathbb{I}_{\mathcal{X}}) \mathrm{vec}(\mathbb{I}_{\mathcal{X}})^\dagger) = \sum_{a,b \in \Sigma} \Phi(E_{a,b}) \otimes E_{a,b} $$
 :::
 
-#### クラウス表現 (Kraus Representation)
+$\Phi$ が完全正であるための必要十分条件は $J(\Phi) \in \mathrm{Pos}(\mathcal{Y} \otimes \mathcal{X})$ であることです。また、$\Phi(X) = \mathrm{Tr}_{\mathcal{X}}(J(\Phi)(\mathbb{I}_{\mathcal{Y}} \otimes X^T))$ によって元の写像を復元できます。
+
+#### 3. クラウス表現 (Kraus Representation)
 
 ::: {#thm-kraus}
-## クラウス表現定理 (Kraus Representation Theorem)
-
-写像 $\Phi$ が量子チャネルであるための必要十分条件は、ある演算子の集合 $\{A_k\} \subset \mathrm{L}(\mathcal{X}, \mathcal{Y})$ （**クラウス演算子**と呼ばれる）が存在して、以下のように書けることである。
-
-$$ \Phi(X) = \sum_k A_k X A_k^\dagger $$
-
-このとき、トレース保存条件は $\sum_k A_k^\dagger A_k = \mathbb{I}_{\mathcal{X}}$ と等価である。
+## クラウス表現
+演算子集合 $\{A_a\}, \{B_a\} \subset \mathrm{L}(\mathcal{X}, \mathcal{Y})$ を用いて、次のように書ける表現です。
+$$ \Phi(X) = \sum_{a \in \Sigma} A_a X B_a^\dagger $$
+特に $\Phi$ が完全正であるとき（かつそのときに限り）、$A_a = B_a$ となる最小限の集合（$|\Sigma| = \mathrm{rank}(J(\Phi))$）が存在します。
 :::
 
-#### スタインスプリング表現 (Stinespring Representation)
-
-チャネルを、環境系（補助系）との相互作用として物理的に解釈する表現です。
+#### 4. スタインスプリング表現 (Stinespring Representation)
+チャネルを、環境（補助系）との相互作用およびその後の廃棄として物理的に解釈する表現です。
 
 ::: {#thm-stinespring}
-## スタインスプリング表現 (Stinespring Representation)
-
-任意の量子チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ に対し、ある補助空間 $\mathcal{Z}$ と等長写像 $A \in \mathrm{U}(\mathcal{X}, \mathcal{Y} \otimes \mathcal{Z})$ が存在して、以下のように書ける。
-
-$$ \Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger) $$
+## スタインスプリング表現
+$$ \Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger) $$
+ここで $A, B \in \mathrm{L}(\mathcal{X}, \mathcal{Y} \otimes \mathcal{Z})$ です。完全正写像の場合は $A = B$ となり、$A$ が等長写像（$A^\dagger A = \mathbb{I}_{\mathcal{X}}$）であればトレース保存（チャネル）となります。
 :::
 
-### Examples of channels (チャネルの例) [📄 p.91](Quantum_Information.pdf#page=99) {#examples-of-channels}
+#### 各表現の相互関係
 
-*   **恒等チャネル (Identity Channel)**: $\mathbb{I}(X) = X$。ノイズのない理想的な通信。
-*   **置換チャネル (Replacement Channel)**: どんな入力を与えても、特定の固定された状態 $\sigma$ に置き換えるチャネル。$\Phi(X) = \mathrm{Tr}(X) \sigma$。
-*   **脱分極チャネル (Depolarizing Channel)**: 確率 $p$ で入力をそのまま通し、確率 $1-p$ で完全にランダムな状態（最大混合状態）に置き換えるモデル。
-    $$ \Delta_p(X) = p X + (1-p) \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
+::: {#prp-representations-relations}
+## 表現間の関係 (Proposition 2.20)
+以下の4つの記述は等価です：
+
+1. $K(\Phi) = \sum_{a \in \Sigma} A_a \otimes \overline{B_a}$
+2. $J(\Phi) = \sum_{a \in \Sigma} \mathrm{vec}(A_a) \mathrm{vec}(B_a)^\dagger$
+3. $\Phi(X) = \sum_{a \in \Sigma} A_a X B_a^\dagger$
+4. $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger)$ （ただし $A = \sum_{a \in \Sigma} A_a \otimes e_a, B = \sum_{a \in \Sigma} B_a \otimes e_a$）
+:::
+
+::: {.proof}
+3と4の等価性は直接的な計算から従います。
+1と3の等価性は、恒等式 $\mathrm{vec}(A_a X B_a^\dagger) = (A_a \otimes \overline{B_a}) \mathrm{vec}(X)$ から従います。
+最後に、2と3の等価性は、式 $(A_a \otimes \mathbb{I}_{\mathcal{X}}) \mathrm{vec}(\mathbb{I}_{\mathcal{X}}) = \mathrm{vec}(A_a)$ および $\mathrm{vec}(\mathbb{I}_{\mathcal{X}})^\dagger (B_a^\dagger \otimes \mathbb{I}_{\mathcal{X}}) = \mathrm{vec}(B_a)^\dagger$ から従います。
+:::
+
+### Characterizations (写像の分類と特徴付け)
+
+線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ の性質は、その表現を用いることで以下のように一意に特徴付けられます。
+
+#### 完全正写像 (Completely Positive Maps)
+
+::: {#thm-cp-characterization}
+## 完全正写像の等価条件 (Theorem 2.22)
+1. $\Phi$ は完全正である。
+2. $J(\Phi) \in \mathrm{Pos}(\mathcal{Y} \otimes \mathcal{X})$。
+3. クラウス表現において $\Phi(X) = \sum A_a X A_a^\dagger$ と書ける。
+4. スタインスプリング表現において $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger)$ と書ける。
+:::
+
+::: {.proof}
+証明は $(1) \Rightarrow (2) \Rightarrow (3) \Rightarrow (4) \Rightarrow (1)$ の順で行います。
+
+*   $(1) \Rightarrow (2)$: 定義より、$\Phi$ が完全正ならば $\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{X})}$ は正写像です。$J(\Phi) = (\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{X})})(\mathrm{vec}(\mathbb{I}_{\mathcal{X}}) \mathrm{vec}(\mathbb{I}_{\mathcal{X}})^\dagger)$ であり、入力は正定値なので、出力 $J(\Phi)$ も正定値となります。
+*   $(2) \Rightarrow (3)$: スペクトル定理より、$J(\Phi) = \sum_a u_a u_a^\dagger$ と分解できます。$\mathrm{vec}(A_a) = u_a$ と置けば、Prop 2.20 より $\Phi(X) = \sum A_a X A_a^\dagger$ となります。
+*   $(3) \Rightarrow (4)$: $A = \sum A_a \otimes e_a$ と置けば、Prop 2.20 より直ちに従います。
+*   $(4) \Rightarrow (1)$: $\Phi(X \otimes W) = \mathrm{Tr}_{\mathcal{Z}}((A \otimes \mathbb{I}_W) (X \otimes W) (A^\dagger \otimes \mathbb{I}_W))$ の形になり、これは正定値性を保つため、完全正となります。
+:::
+
+#### エルミート保存写像 (Hermitian-preserving Maps)
+
+::: {#thm-hermitian-preserving}
+## エルミート保存写像 (Theorem 2.25)
+$\Phi(H)$ がすべてのエルミート演算子 $H$ に対してエルミートである写像は、以下と等価です。
+- $J(\Phi) = J(\Phi)^\dagger$。
+- 2つの完全正写像 $\Phi_0, \Phi_1$ の差 $\Phi = \Phi_0 - \Phi_1$ として書ける。
+:::
+
+::: {.proof}
+まず、$\Phi$ がエルミート保存ならば $X = H + iK$ 分解を用いて $\Phi(X)^\dagger = \Phi(X^\dagger)$ が示せます。
+これより $J(\Phi)^\dagger = J(\Phi)$ が導かれます。
+逆に $J(\Phi)$ がエルミートであれば、Jordan-Hahn分解 $J(\Phi) = P_0 - P_1$ を用いて、$P_0, P_1$ に対応する完全正写像 $\Phi_0, \Phi_1$ を構成でき、$\Phi = \Phi_0 - \Phi_1$ となります。
+:::
+
+#### トレース保存写像 (Trace-preserving Maps)
+
+::: {#thm-tp-characterization}
+## トレース保存写像 (Theorem 2.26)
+1. $\mathrm{Tr}(\Phi(X)) = \mathrm{Tr}(X)$。
+2. 随伴写像 $\Phi^\dagger$ が単位的 (unital) である（$\Phi^\dagger(\mathbb{I}_{\mathcal{Y}}) = \mathbb{I}_{\mathcal{X}}$）。
+3. $\mathrm{Tr}_{\mathcal{Y}}(J(\Phi)) = \mathbb{I}_{\mathcal{X}}$。
+4. クラウス演算子が $\sum A_a^\dagger B_a = \mathbb{I}_{\mathcal{X}}$ を満たす。
+:::
+
+::: {.proof}
+$(1) \Leftrightarrow (2)$: トレースの内積表現 $\langle \mathbb{I}, \Phi(X) \rangle = \langle \Phi^\dagger(\mathbb{I}), X \rangle$ より、$\mathrm{Tr}(\Phi(X)) = \mathrm{Tr}(X)$ は $\langle \mathbb{I}, \Phi(X) \rangle = \langle \mathbb{I}, X \rangle$ と等価であり、これは $\Phi^\dagger(\mathbb{I}) = \mathbb{I}$ と等価です。
+$(2) \Leftrightarrow (4)$: $\Phi^\dagger(Y) = \sum A_a^\dagger Y B_a$ であるため、$Y = \mathbb{I}_{\mathcal{Y}}$ を代入すれば $\sum A_a^\dagger B_a = \mathbb{I}_{\mathcal{X}}$ が得られます。
+$(1) \Leftrightarrow (3)$: $\mathrm{Tr}_{\mathcal{Y}}(J(\Phi))$ を計算することで直接示されます。
+:::
+
+#### 量子チャネル (Quantum Channels)
+
+::: {#cor-channel-characterization}
+## 量子チャネルの条件 (Corollary 2.27)
+$\Phi$ が量子チャネル（CPTP写像）であることは、$J(\Phi) \geq 0$ かつ $\mathrm{Tr}_{\mathcal{Y}}(J(\Phi)) = \mathbb{I}_{\mathcal{X}}$ と等価です。
+:::
 
 ### Extremal channels (極値的なチャネル) [📄 p.96](Quantum_Information.pdf#page=104) {#extremal-channels}
 
-量子チャネルの集合は凸集合をなします。その端点（極値点）であるチャネルは、数学的に興味深い性質を持ちます。
-Choiの定理により、チャネル $\Phi$ が極値的であるための必要十分条件は、そのクラウス演算子の集合 $\{A_k\}$ に対応する行列族 $\{ A_k^\dagger A_l \}_{k,l}$ が線形独立であることなどが知られています。
+チャネルの集合 $\mathrm{C}(\mathcal{X}, \mathcal{Y})$ はコンパクト凸集合であり、あるチャネルが他のチャネルの凸結合として書けないとき、それを極値チャネルと呼びます。
+
+::: {#thm-choi-extremality}
+## Choiの極値性条件 (Theorem 2.31)
+線形独立なクラウス演算子の集合 $\{A_a\}$ を持つチャネル $\Phi$ が極値的であるための必要十分条件は、演算子集合 $\{ A_a^\dagger A_b \}_{a,b}$ が線形独立であることである。
+:::

@@ -8,29 +8,29 @@ toc: false
 | 項目名 | 原文 PDF | 学習ノート |
 | :--- | :--: | :--: |
 | **Chapter 1: Mathematical Preliminaries** | [📄 p.1](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#chapter-1) |
-| 　**1.1** Linear algebra | [📄 p.9](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#linear-algebra) |
-| 　　**1.1.1** Complex Euclidean spaces | [📄 p.9](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#complex-euclidean-spaces) |
-| 　　**1.1.2** Linear operators | [📄 p.16](Quantum_Information.pdf#page=16) | [📝 Note](notes.qmd#linear-operators) |
-| 　　**1.1.3** Operator decompositions and norms | [📄 p.32](Quantum_Information.pdf#page=32) | [📝 Note](notes.qmd#operator-decompositions-and-norms) |
-| 　**1.2** Analysis, convexity, and probability theory | [📄 p.43](Quantum_Information.pdf#page=43) | [📝 Note](notes.qmd#analysis-convexity-probability) |
-| 　　**1.2.1** Analysis and convexity | [📄 p.43](Quantum_Information.pdf#page=43) | [📝 Note](notes.qmd#analysis-and-convexity) |
-| 　　**1.2.2** Probability theory | [📄 p.55](Quantum_Information.pdf#page=55) | [📝 Note](notes.qmd#probability-theory) |
-| 　　**1.2.3** Semidefinite programming | [📄 p.61](Quantum_Information.pdf#page=61) | [📝 Note](notes.qmd#semidefinite-programming) |
+| 　**1.1** Linear algebra | [📄 p.1](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#linear-algebra) |
+| 　　**1.1.1** Complex Euclidean spaces | [📄 p.1](Quantum_Information.pdf#page=9) | [📝 Note](notes.qmd#complex-euclidean-spaces) |
+| 　　**1.1.2** Linear operators | [📄 p.8](Quantum_Information.pdf#page=16) | [📝 Note](notes.qmd#linear-operators) |
+| 　　**1.1.3** Operator decompositions and norms | [📄 p.24](Quantum_Information.pdf#page=32) | [📝 Note](notes.qmd#operator-decompositions-and-norms) |
+| 　**1.2** Analysis, convexity, and probability theory | [📄 p.35](Quantum_Information.pdf#page=43) | [📝 Note](notes.qmd#analysis-convexity-probability) |
+| 　　**1.2.1** Analysis and convexity | [📄 p.35](Quantum_Information.pdf#page=43) | [📝 Note](notes.qmd#analysis-and-convexity) |
+| 　　**1.2.2** Probability theory | [📄 p.47](Quantum_Information.pdf#page=55) | [📝 Note](notes.qmd#probability-theory) |
+| 　　**1.2.3** Semidefinite programming | [📄 p.53](Quantum_Information.pdf#page=61) | [📝 Note](notes.qmd#semidefinite-programming) |
 | | | |
 | **Chapter 2: Basic notions of quantum information** | [📄 p.58](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#chapter-2) |
-| 　**2.1** Registers and states | [📄 p.66](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#registers-and-states) |
-| 　　**2.1.1** Registers and classical state sets | [📄 p.66](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#registers-and-classical-state-sets) |
-| 　　**2.1.2** Quantum states of registers | [📄 p.69](Quantum_Information.pdf#page=69) | [📝 Note](notes.qmd#quantum-states-of-registers) |
-| 　　**2.1.3** Reductions and purifications of quantum states | [📄 p.75](Quantum_Information.pdf#page=75) | [📝 Note](notes.qmd#reductions-and-purifications-of-quantum-states) |
-| 　**2.2** Quantum channels | [📄 p.80](Quantum_Information.pdf#page=80) | [📝 Note](notes.qmd#quantum-channels) |
-| 　　**2.2.1** Definitions and basic notions | [📄 p.80](Quantum_Information.pdf#page=80) | [📝 Note](notes.qmd#definitions-and-basic-notions) |
-| 　　**2.2.2** Representations and characterizations | [📄 p.85](Quantum_Information.pdf#page=85) | [📝 Note](notes.qmd#representations-and-characterizations) |
-| 　　**2.2.3** Examples of channels | [📄 p.99](Quantum_Information.pdf#page=99) | [📝 Note](notes.qmd#examples-of-channels) |
-| 　　**2.2.4** Extremal channels | [📄 p.104](Quantum_Information.pdf#page=104) | [📝 Note](notes.qmd#extremal-channels) |
-| 　**2.3** Measurements | [📄 p.108](Quantum_Information.pdf#page=108) | [📝 Note](notes.qmd#measurements) |
-| 　　**2.3.1** Two equivalent definitions | [📄 p.108](Quantum_Information.pdf#page=108) | [📝 Note](notes.qmd#two-equivalent-definitions) |
-| 　　**2.3.2** Basic notions concerning measurements | [📄 p.113](Quantum_Information.pdf#page=113) | [📝 Note](notes.qmd#basic-notions-concerning-measurements) |
-| 　　**2.3.3** Extremal measurements and ensembles | [📄 p.121](Quantum_Information.pdf#page=121) | [📝 Note](notes.qmd#extremal-measurements-and-ensembles) |
+| 　**2.1** Registers and states | [📄 p.58](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#registers-and-states) |
+| 　　**2.1.1** Registers and classical state sets | [📄 p.58](Quantum_Information.pdf#page=66) | [📝 Note](notes.qmd#registers-and-classical-state-sets) |
+| 　　**2.1.2** Quantum states of registers | [📄 p.61](Quantum_Information.pdf#page=69) | [📝 Note](notes.qmd#quantum-states-of-registers) |
+| 　　**2.1.3** Reductions and purifications of quantum states | [📄 p.67](Quantum_Information.pdf#page=75) | [📝 Note](notes.qmd#reductions-and-purifications-of-quantum-states) |
+| 　**2.2** Quantum channels | [📄 p.72](Quantum_Information.pdf#page=80) | [📝 Note](notes.qmd#quantum-channels) |
+| 　　**2.2.1** Definitions and basic notions | [📄 p.72](Quantum_Information.pdf#page=80) | [📝 Note](notes.qmd#definitions-and-basic-notions) |
+| 　　**2.2.2** Representations and characterizations | [📄 p.77](Quantum_Information.pdf#page=85) | [📝 Note](notes.qmd#representations-and-characterizations) |
+| 　　**2.2.3** Examples of channels | [📄 p.91](Quantum_Information.pdf#page=99) | [📝 Note](notes.qmd#examples-of-channels) |
+| 　　**2.2.4** Extremal channels | [📄 p.96](Quantum_Information.pdf#page=104) | [📝 Note](notes.qmd#extremal-channels) |
+| 　**2.3** Measurements | [📄 p.100](Quantum_Information.pdf#page=108) | [📝 Note](notes.qmd#measurements) |
+| 　　**2.3.1** Two equivalent definitions | [📄 p.100](Quantum_Information.pdf#page=108) | [📝 Note](notes.qmd#two-equivalent-definitions) |
+| 　　**2.3.2** Basic notions concerning measurements | [📄 p.105](Quantum_Information.pdf#page=113) | [📝 Note](notes.qmd#basic-notions-concerning-measurements) |
+| 　　**2.3.3** Extremal measurements and ensembles | [📄 p.113](Quantum_Information.pdf#page=121) | [📝 Note](notes.qmd#extremal-measurements-and-ensembles) |
 | | | |
 | **Chapter 3: Similarity and distance among states and channels** | [📄 p.124](Quantum_Information.pdf#page=132) | [📝 Note](notes.qmd#chapter-3) |
 | 　**3.1** Quantum state discrimination | [📄 p.124](Quantum_Information.pdf#page=132) | [📝 Note](notes.qmd#quantum-state-discrimination) |

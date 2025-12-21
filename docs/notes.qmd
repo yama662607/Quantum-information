@@ -1,6 +1,7 @@
 ---
 title: "The Theory of Quantum Information: Notes"
 number-sections: true
+number-depth: 3
 toc: true
 toc-depth: 3
 ---
@@ -13,9 +14,9 @@ toc-depth: 3
 
 # Chapter 2: Basic Notions {#chapter-2}
 
-{{< include notes/chapter2/_2.1-registers.qmd >}}
+{{< include notes/chapter2/_2.1-registers-and-states.qmd >}}
 
-{{< include notes/chapter2/_2.2-channels.qmd >}}
+{{< include notes/chapter2/_2.2-quantum-channels.qmd >}}
 
 {{< include notes/chapter2/_2.3-measurements.qmd >}}
 
