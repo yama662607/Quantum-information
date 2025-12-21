@@ -12,3 +12,5 @@ wheels/
 # Quarto-generated files
 _output/
 docs/_freeze
+tools/.validation_cache.json
+node_modules/

@@ -1,0 +1,30 @@
+{
+  "name": "quantum-information",
+  "version": "1.0.0",
+  "description": "このリポジトリは、John Watrous 教授の著作 \"The Theory of Quantum Information\" をベースにした学習ノートとリソースを管理しています。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yama662607/Quantum-information.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yama662607/Quantum-information/issues"
+  },
+  "homepage": "https://github.com/yama662607/Quantum-information#readme",
+  "dependencies": {
+    "dompurify": "^3.3.1",
+    "jsdom": "^27.3.0",
+    "mermaid": "^11.12.2"
+  }
+}
