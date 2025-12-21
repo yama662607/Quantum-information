@@ -78,9 +78,13 @@ def check_quarto_structure(filepath: str) -> List[str]:
     return errors
 
 
-def check_fenced_divs(filepath: str, lines: List[str]) -> List[str]:
-    """Checks for blank lines before fences."""
+def check_fenced_divs(
+    filepath: str, lines: List[str], do_fix: bool = False
+) -> Dict[str, Any]:
+    """Checks for blank lines before fences. Returns results and fixed lines if requested."""
     errors = []
+    fixed_lines = list(lines)
+    offset = 0
     in_code_block = False
     in_frontmatter = False
 
@@ -107,12 +111,14 @@ def check_fenced_divs(filepath: str, lines: List[str]) -> List[str]:
                 if prev_line and prev_line != "---":
                     # We allow consecutive ::: for nested divs if desired,
                     # but typically Quarto/Pandoc prefer blank lines between them too.
-                    # For now, let's at least catch the case where it follows content.
                     if not prev_line.startswith(":::"):
                         errors.append(
                             f"[Style] Line {i + 1}: Fenced div boundary ':::' must be preceded by a blank line."
                         )
-    return errors
+                        if do_fix:
+                            fixed_lines.insert(i + offset, "")
+                            offset += 1
+    return {"errors": errors, "fixed_lines": fixed_lines if do_fix else None}
 
 
 def check_latex(filepath: str, content: str) -> List[str]:
@@ -164,9 +170,15 @@ def collect_mermaid_blocks(filepath: str, content: str) -> List[Dict[str, Any]]:
     return blocks
 
 
-def validate_file(filepath: str) -> Dict[str, Any]:
+def validate_file(filepath: str, do_fix: bool = False) -> Dict[str, Any]:
     """Runs Python-side checks and returns mermaid blocks for batching."""
-    results = {"file": filepath, "errors": [], "mermaid_blocks": [], "hash": None}
+    results = {
+        "file": filepath,
+        "errors": [],
+        "mermaid_blocks": [],
+        "hash": None,
+        "fixed": False,
+    }
 
     try:
         results["hash"] = get_file_hash(filepath)
@@ -178,7 +190,25 @@ def validate_file(filepath: str) -> Dict[str, Any]:
         return results
 
     results["errors"].extend(check_quarto_structure(filepath))
-    results["errors"].extend(check_fenced_divs(filepath, lines))
+
+    # Fenced div check with optional fix
+    div_results = check_fenced_divs(filepath, lines, do_fix=do_fix)
+    results["errors"].extend(div_results["errors"])
+
+    if (
+        do_fix
+        and div_results["fixed_lines"] is not None
+        and len(div_results["errors"]) > 0
+    ):
+        try:
+            with open(filepath, "w", encoding="utf-8") as f:
+                f.write("\n".join(div_results["fixed_lines"]) + "\n")
+            results["fixed"] = True
+            # Re-read content for other checks if needed, but here we just update results
+            content = "\n".join(div_results["fixed_lines"])
+        except Exception as e:
+            results["errors"].append(f"[System] Could not write fix to file: {e}")
+
     results["errors"].extend(check_latex(filepath, content))
     results["mermaid_blocks"] = collect_mermaid_blocks(filepath, content)
 
@@ -227,6 +257,9 @@ def main():
     )
     parser.add_argument(
         "--clear-cache", action="store_true", help="Clear validation cache"
+    )
+    parser.add_argument(
+        "--fix", action="store_true", help="Automatically fix style issues"
     )
     args = parser.parse_args()
 
@@ -285,13 +318,15 @@ def main():
     # Phase 1: Parallel File Processing (Python checks)
     with ThreadPoolExecutor() as executor:
         future_to_file = {
-            executor.submit(validate_file, f): f for f in files_to_validate
+            executor.submit(validate_file, f, args.fix): f for f in files_to_validate
         }
         for future in concurrent.futures.as_completed(future_to_file):
             filename = future_to_file[future]
             try:
                 res = future.result()
                 file_results[filename] = res
+                if res["fixed"]:
+                    print(f"  ✨ Fixed style issues in {filename}")
                 if res["errors"]:
                     file_errors[filename] = res["errors"]
                 if res["mermaid_blocks"]:

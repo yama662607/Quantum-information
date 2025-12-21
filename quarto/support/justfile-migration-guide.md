@@ -22,7 +22,7 @@
 これらは、プロジェクトの健全性を保つための「入り口」となるコマンドです。
 - `just setup`: 依存関係のインストールと環境構築 (`uv sync`)。
 - `just check`: コードを変更せずに品質を検証（フォーマット、Lint、テストを一括実行）。CIでも使用可能。
-- `just fix`: フォーマット修正やLintの自動修正を適用。開発の「最初の一手」として最適。
+- `just fix`: フォーマット修正、Lintの自動修正、およびドキュメントのスタイル修正を適用。開発の「最初の一手」として最適。
 
 ### 🧪 テスト・品質管理
 - `just test`: 全テストの実行。`just test tests/specific_test.py` のように引数パススルーも可能。
@@ -33,6 +33,7 @@
 - `just docs`: Quarto ドキュメントのローカルプレビュー。
 - `just app [path]`: Streamlit アプリケーションの起動。
 - `just validate-docs`: ドキュメント（Quarto, Mermaid, LaTeX）の統合検証。
+- `just validate-docs-fix`: ドキュメントのスタイル（空行不足など）を自動修正。
 
 ---
 
@@ -74,6 +75,7 @@ fix:
     @echo "✨ Fixing..."
     {{pm}} run ruff format
     {{pm}} run ruff check --fix
+    {{python}} tools/validate_docs.py quarto/ --fix
 ```
 
 ### ステップ 3: ツール設定との同期
@@ -87,7 +89,7 @@ fix:
 `test *args=""` のように定義することで、`just test -v -k "my_function"` のような複雑な引数を内部の `pytest` にそのまま渡せるようになっています。
 
 ### 🔍 ドキュメントバリデーターの統合
-`validate-docs` コマンドのように、ドキュメントの品質（Quarto構造、Mermaid、LaTeXなど）までタスクランナーに組み込むことで、ドキュメントとコードの乖離を防ぎ、爆速な検証（ハッシュキャッシュ）を実現しています。
+`validate-docs` コマンドのように、ドキュメントの品質（Quarto構造、Mermaid、LaTeXなど）までタスクランナーに組み込むことで、ドキュメントとコードの乖離を防ぎ、爆速な検証（ハッシュキャッシュ）を実現しています。また、`--fix` フラグによる自動修正機能を備えており、`just fix` から透過的に利用できます。
 
 ### 🧹 クリーンアップ
 `just clean` によって、Python特有のキャッシュファイル（`__pycache__`, `.pytest_cache`）を一括削除できるため、環境が不安定になった際の復旧が容易です。

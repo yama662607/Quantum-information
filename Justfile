@@ -29,7 +29,7 @@ check: fmt-check lint typecheck validate-docs test
     @echo "✅ All quality checks passed!"
 
 # 自動修正: フォーマットとLint修正を適用 (Agentの第一手)
-fix: fmt lint-fix
+fix: fmt lint-fix validate-docs-fix
     @echo "✨ Auto-fixes applied!"
 
 # =============================================================================
@@ -102,6 +102,11 @@ app path:
 validate-docs:
     @echo "🔍 Running integrated document validation..."
     {{python}} tools/validate_docs.py quarto/
+
+# 統合ドキュメント自動修正
+validate-docs-fix:
+    @echo "🧹 Automatically fixing document style issues..."
+    {{python}} tools/validate_docs.py quarto/ --fix
 
 # 検証キャッシュのクリア
 clear-validation-cache:
