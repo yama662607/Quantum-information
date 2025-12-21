@@ -23,13 +23,10 @@ website:
         - section: "量子情報"
           contents:
             - index.qmd
-            - section: "学習ノート"
+            - section: "数理解説 (Theory)"
               contents:
-                - text: "Lecture Notes (All Chapters)"
-                  href: notes.qmd
-            - section: "PDFライブラリ"
-              contents:
-                - divided/index.qmd
+                - text: "Lecture Theory (All Chapters)"
+                  href: theory.qmd
         - section: "サポート"
           contents:
             - support/index.qmd

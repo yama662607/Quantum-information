@@ -32,7 +32,7 @@
 ### 📚 プロジェクト固有タスク
 - `just docs`: Quarto ドキュメントのローカルプレビュー。
 - `just app [path]`: Streamlit アプリケーションの起動。
-- `just validate-mermaid`: ドキュメント内の Mermaid 図の一括構文チェック。
+- `just validate-docs`: ドキュメント（Quarto, Mermaid, LaTeX）の統合検証。
 
 ---
 
@@ -86,8 +86,8 @@ fix:
 ### 🔧 引数パススルー (`*args`)
 `test *args=""` のように定義することで、`just test -v -k "my_function"` のような複雑な引数を内部の `pytest` にそのまま渡せるようになっています。
 
-### 🔍 Mermaid バリデーターの統合
-`validate-mermaid` コマンドのように、ドキュメントの品質（図の構文など）までタスクランナーに組み込むことで、ドキュメントとコードの乖離を防いでいます。
+### 🔍 ドキュメントバリデーターの統合
+`validate-docs` コマンドのように、ドキュメントの品質（Quarto構造、Mermaid、LaTeXなど）までタスクランナーに組み込むことで、ドキュメントとコードの乖離を防ぎ、爆速な検証（ハッシュキャッシュ）を実現しています。
 
 ### 🧹 クリーンアップ
 `just clean` によって、Python特有のキャッシュファイル（`__pycache__`, `.pytest_cache`）を一括削除できるため、環境が不安定になった際の復旧が容易です。
