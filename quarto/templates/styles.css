@@ -18,49 +18,76 @@
  * 上下の余白を調整して、読みやすさを向上させます
  */
 .callout {
-  margin-top: 1.5rem; /* 上余白：1.5文字分 */
-  margin-bottom: 1.5rem; /* 下余余白：1.5文字分 */
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left-width: 5px;
 }
 
-/* 将来的な拡張用のスタイル定義（コメントアウト）
- * ========================================
- * プロジェクトの進展に応じて、以下のスタイルを有効化できます
- */
+/* 物理学的記法/注釈用のカスタムスタイル */
+.physics-notes {
+  background-color: rgba(6, 78, 59, 0.05); /* 深緑の極めて薄い背景 */
+  border-left: 5px solid #064e3b;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
 
-/*
- * コードブロックの強調表示
- * .code-block {
- *     border-left: 4px solid #007bff;
- *     background-color: #f8f9fa;
- *     padding: 1rem;
- *     border-radius: 0.25rem;
- * }
- */
+.physics-notes::before {
+  content: "⚛️ Physics Perspective";
+  display: block;
+  font-weight: bold;
+  font-family: 'Outfit', sans-serif;
+  color: #064e3b;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
 
-/*
- * マージンノートのスタイル調整
- * .aside {
- *     background-color: #e9ecef;
- *     padding: 0.5rem;
- *     border-radius: 0.25rem;
- *     font-size: 0.9em;
- * }
- */
+/* 重要ポイント強調 */
+.important-point {
+  background-color: rgba(185, 28, 28, 0.05); /* 赤系の薄い背景 */
+  border-left: 5px solid #b91c1c;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
 
-/*
- * タブセットのカスタムスタイル
- * .panel-tabset > .panel {
- *     border: 1px solid #dee2e6;
- *     border-radius: 0.25rem;
- *     padding: 1rem;
- * }
- */
+.important-point::before {
+  content: "💡 Key Point";
+  display: block;
+  font-weight: bold;
+  font-family: 'Outfit', sans-serif;
+  color: #b91c1c;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
 
-/*
- * グリッドレイアウトのレスポンシブ対応
- * @media (max-width: 768px) {
- *     .grid {
- *         grid-template-columns: 1fr !important;
- *     }
- * }
- */
+/* マージンノートのプレミアム化 */
+.aside {
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.4;
+  border-left: 2px solid #e5e7eb;
+  padding-left: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* 数式参照のスタイル */
+.quarto-figure-center > figure > p {
+  text-align: center;
+}
+
+/* タイポグラフィ（モダンフォントへのフォールバック） */
+body {
+  font-family: 'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* 証明ブロックの記号 */
+.proof::after {
+  content: "■";
+  float: right;
+  color: #9ca3af;
+}
