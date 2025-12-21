@@ -4,22 +4,22 @@
 
 ## 🏗️ アーキテクチャと規約
 
-### 1. 信頼できる唯一の情報源 (`notes.qmd`)
-- **ルール**: すべての講義ノートは、単一のファイル `docs/notes.qmd` に統合されています。
-- **制約**: 新しい親ファイル（例: `chapterX.qmd`）を作成**しないでください**。すべての章は `notes.qmd` 内のレベル1見出し（`#`）として定義されます。
-- **インクルード**: コンテンツを取り込む際は、Quartoの `{{< include path/to/_file.qmd >}}` を使用してください。
+### 1. 信頼できる唯一の情報源 (`textbook.qmd`)
+- **ルール**: すべての教科書解説は、単一のファイル `quarto/textbook.qmd` に統合されています。
+- **制約**: 新しい親ファイル（例: `chapterX.qmd`）を作成**しないでください**。すべての章は `textbook.qmd` 内のレベル1見出し（`#`）として定義されます。
+- **インクルード**: コンテンツを取り込む際は、Quartoの `{{< include textbook/path/to/_file.qmd >}}` を使用してください。
 
 ### 2. パーシャル（断片）ファイル (`_*.qmd`)
-- **場所**: `docs/notes/chapterX/`
+- **場所**: `quarto/textbook/chapterX/`
 - **命名**: 必ずアンダースコアで始めてください（例: `_1.1-linear-algebra.qmd`）。
 - **内容**: 純粋な Markdown/Quarto コンテンツのみ。**YAMLヘッダーを含めてはいけません**（親ドキュメントのビルドが壊れるため）。
 - **見出しレベル**: 節（Section）はレベル2（`##`）、項（Sub-section）はレベル3（`###`）から始めてください。
 
 ### 3. PDFリンク戦略
-- **ファイル**: `docs/Quantum_Information.pdf` （スペルに注意: `Quantum`）。
+- **ファイル**: `quarto/assets/Quantum_Information.pdf`。
 - **ロジック**: PDFへのリンクは「物理ページ番号」を使用します。
 - **計算式**: `物理ページ` = `本の表記ページ` + `8`。
-- **リンク形式**: `[📄 p.9](Quantum_Information.pdf#page=17)` （例: 本のページが9の場合、物理ページ17へリンク）。
+- **リンク形式**: `[📄 p.9](assets/Quantum_Information.pdf#page=17)` （例: 本のページが9の場合、物理ページ17へリンク）。
 
 ## 💎 ノート品質ガイドライン (Quality Standards)
 
@@ -39,6 +39,10 @@
     - すべてのセクション（`##`）およびサブセクション（`###`）の見出しには、必ず対応するPDFページへのリンクを付与してください。
     - 形式: `## 見出し [📄 p.XX](Quantum_Information.pdf#page=YY) {#anchor}`
     - ページ番号 `XX` と `YY` の対応は `index.qmd` を確認してください。
+
+5.  **Fenced Div の書式 (Style)**:
+    - `:::` による囲み（Definition, Theorem 等）を使用する場合、**閉じ括弧の直前には必ず空行を挿入**してください。
+    - これを怠ると Quarto/Pandoc のパースに失敗する場合があります。`just fix` で自動修正可能です。
 
 
 ## コンテンツ作成ワークフロー (Content Creation Workflow)
@@ -60,12 +64,12 @@ AIエージェントとして新しいノートを作成または編集する場
     抽出したテキストに基づき、正確な数式や定義をノートに反映してください。
     OCRの誤認識（文字化け）がある場合は、文脈から正しい数式を推測して修正してください。
 
-## ノートの追加 (Adding New Notes)
-1.  **断片ファイルの作成**: `docs/notes/chapterX/_new-section.qmd` を作成します。
-2.  **インクルード**: `docs/notes.qmd` の適切な場所に `{{< include notes/chapterX/_new-section.qmd >}}` を追加します。
-3.  **ロードマップの更新**: `docs/index.qmd` の表に行を追加します。
-    - カラム構成: `| 項目名 | 原文 PDF | 学習ノート |`
-    - 学習ノートへのリンクは `[📝 Note](notes.qmd#new-anchor)` とします。
+## 教科書解説の追加 (Adding New Textbook Content)
+1.  **断片ファイルの作成**: `quarto/textbook/chapterX/_new-section.qmd` を作成します。
+2.  **インクルード**: `quarto/textbook.qmd` の適切な場所に `{{< include textbook/chapterX/_new-section.qmd >}}` を追加します。
+3.  **ロードマップの更新**: `quarto/index.qmd` の表に行を追加します。
+    - カラム構成: `| 項目名 | 原文 PDF | 教科書解説 |`
+    - 教科書解説へのリンクは `[📖 Textbook](textbook.qmd#new-anchor)` とします。
 
 ### トップページ (`index.qmd`) の修正
 - デザインはシンプルに保つ: カラムは3つだけです。
@@ -73,9 +77,10 @@ AIエージェントとして新しいノートを作成または編集する場
 - 「項目名」カラムの階層インデントには、全角スペース（`　`）を使用してください（レンダリング安定のため）。
 
 ## 🛑 よくある間違い（禁止事項）
-- ❌ `docs/notes/chapter1.qmd` を作成しないでください（採番の統一のために削除しました）。
+- ❌ `quarto/textbook/chapter1.qmd` を作成しないでください。
 - ❌ `_*.qmd` ファイルに `title: ...` 等の YAML を追加しないでください。
 - ❌ `pip install` を提案しないでください。`uv sync` または `uv add` を使用してください。
+- ❌ `:::` の閉じ括弧の前に空行を忘れないでください。
 
 ## 🤖 Justfile ガイド (AIエージェント用)
 
@@ -83,7 +88,7 @@ AIエージェントとして新しいノートを作成または編集する場
 
 | コマンド | 用途 | エージェントへの指示 |
 | :--- | :--- | :--- |
-| `just check` | **全体検証** | コードを変更した後は必ず実行してください。Lint, Formatチェック, Mermaid検証が走ります。 |
-| `just fix` | **自動修正** | Lintエラーやフォーマット違反がある場合、まずこれを試してください。 |
+| `just check` | **全体検証** | コードを変更した後は必ず実行してください。Lint, Format, Quarto構造, Mermaid, LaTeXが検証されます。 |
+| `just fix` | **自動修正** | Lint, Formatに加え、**ドキュメントの空行不足等の構造エラーも自動修正**します。まずこれを試してください。 |
 | `just docs` | **プレビュー** | ドキュメントのレンダリングを確認する際に使用します（サーバーが起動します）。 |
-| `just validate-mermaid` | **図の検証** | Mermaid図を追加・修正した際は、必ずこのコマンドで構文エラーがないか確認してください。 |
+| `just validate-docs` | **ドキュメント検証** | Quarto/Mermaid/LaTeX の統合検証を手動で実行します。 |
