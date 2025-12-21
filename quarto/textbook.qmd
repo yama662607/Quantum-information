@@ -12,6 +12,7 @@ toc-depth: 3
 
 {{< include textbook/chapter1/_1.2-analysis.qmd >}}
 
+
 # Chapter 2: Basic Notions {#chapter-2}
 
 {{< include textbook/chapter2/_2.1-registers-and-states.qmd >}}

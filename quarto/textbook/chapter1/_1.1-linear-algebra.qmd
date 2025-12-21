@@ -1,9 +1,21 @@
-## Linear algebra [📄 p.1](Quantum_Information.pdf#page=9) {#linear-algebra}
+## Linear algebra [📄 p.1](assets/Quantum_Information.pdf#page=9) {#linear-algebra}
 
-### Complex Euclidean spaces (複素ユークリッド空間) [📄 p.1](Quantum_Information.pdf#page=9) {#complex-euclidean-spaces}
+::: {.callout-note appearance="simple" title="この節の学習目標"}
+1. **複素ユークリッド空間**の定義と、量子情報での役割を把握する。
+2. **線形演算子・行列表示・随伴**の対応を明確にする。
+3. **テンソル積・直和・基底**が物理記法（ブラケット記法）とどう対応するかを整理する。
+
+:::
+
+### Complex Euclidean spaces (複素ユークリッド空間) [📄 p.1](assets/Quantum_Information.pdf#page=9) {#complex-euclidean-spaces}
 
 量子情報の理論において、**複素ユークリッド空間** (Complex Euclidean Space) は最も基本的な数学的構造です。
 本書では、複素ユークリッド空間を、ある有限のアルファベット（シンボル集合）$\Sigma$ から複素数体 $\mathbb{C}$ への関数全体の集合（$\mathbb{C}^\Sigma$）として定義します。
+
+::: {.physics-notes title="Physics Perspective: Hilbert space との関係"}
+物理の量子力学では **Hilbert space（ヒルベルト空間）** という呼び方が一般的ですが、本書は**有限次元**に限定しているため「complex Euclidean space」を用います。有限次元では両者はほぼ同じ対象として扱えます。
+
+:::
 
 ::: {#def-complex-euclidean-space}
 ## 複素ユークリッド空間
@@ -13,8 +25,17 @@ $$ \mathbb{C}^\Sigma = \{ u : \Sigma \to \mathbb{C} \} $$
 
 この集合は、以下の標準的な定義による加法とスカラー倍のもとで、複素数体 $\mathbb{C}$ 上のベクトル空間を形成します。
 
-1. **加法 (Addition)**: $u, v \in \mathbb{C}^\Sigma$ に対し、$(u+v)(a) = u(a) + v(a) \ (\forall a \in \Sigma)$。
-2. **スカラー倍 (Scalar Multiplication)**: $u \in \mathbb{C}^\Sigma$ と $\alpha \in \mathbb{C}$ に対し、$(\alpha u)(a) = \alpha u(a) \ (\forall a \in \Sigma)$。
+1. **加法 (Addition)**: $u, v \in \mathbb{C}^\Sigma$ に対し、
+$$
+(u+v)(a) = u(a) + v(a) \ (\forall a \in \Sigma)
+$$
+
+2. **スカラー倍 (Scalar Multiplication)**: $u \in \mathbb{C}^\Sigma$ と $\alpha \in \mathbb{C}$ に対し、
+
+$$
+(\alpha u)(a) = \alpha u(a) \ (\forall a \in \Sigma)
+$$
+
 
 :::
 
@@ -30,6 +51,22 @@ $$ u = \sum_{a \in \Sigma} u(a) e_a $$
 
 物理学（特に量子力学）の文脈では、これを**ブラケット記法**を用いて $|u\rangle = \sum_a u(a) |a\rangle$ と書くことが一般的ですが、本書では数学的な関数の記法を主に使用します。
 
+::: {.callout-note title="記法対応（数学 ↔ 物理）"}
+| Watrous（数学的記法） | 物理のブラケット記法 | 意味 |
+| :--- | :--- | :--- |
+| $u \in \mathbb{C}^\Sigma$ | $|u\rangle$ | 状態ベクトル |
+| $u(a)$ | $\langle a|u\rangle$ | 成分（振幅） |
+| $e_a$ | $|a\rangle$ | 標準基底 |
+| $\langle u, v \rangle$ | $\langle u|v\rangle$ | 内積 |
+| $u v^\dagger$ | $|u\rangle\langle v|$ | ランク1演算子 |
+| $E_{a,b}$ | $|a\rangle\langle b|$ | 行列単位 |
+
+: 記法対応表 {#tbl-notation-mapping-1-1-1}
+
+:::
+
+
+
 #### 内積とノルム (Inner Products and Norms)
 
 ::: {#def-inner-product}
@@ -41,10 +78,124 @@ $$ \langle u, v \rangle = \sum_{a \in \Sigma} \overline{u(a)} v(a) $$
 :::
 ※ 本書では物理学の慣例に従い、**第1引数に対して反線形 (conjugate-linear)**、第2引数に対して線形 (linear) である定義を採用しています。
 
+内積は以下の基本性質を満たします。
+
+1. **第2引数の線形性**:
+   $$ \langle u, \alpha v + \beta w \rangle = \alpha \langle u, v \rangle + \beta \langle u, w \rangle $$ {#eq-inner-linearity}
+
+2. **共役対称性**:
+   $$ \langle u, v \rangle = \overline{\langle v, u \rangle} $$ {#eq-inner-conjugate}
+
+3. **正定値性**:
+   $$ \langle u, u \rangle \ge 0 \quad \text{かつ} \quad \langle u, u \rangle = 0 \iff u = 0 $$ {#eq-inner-positive}
+
 **ユークリッドノルム** (Euclidean Norm) は内積を用いて $\|u\| = \sqrt{\langle u, u \rangle}$ と定義されます。
 これは物理的には状態ベクトルの「大きさ」に対応し、量子状態を表すベクトルは通常 $\|u\|=1$ の正規化条件を満たします。
 
-### Linear operators (線形演算子) [📄 p.8](Quantum_Information.pdf#page=16) {#linear-operators}
+**ノルムの性質**（正定値性・斉次性・三角不等式）は $\|u\|$ に対して成立します。特に**コーシー・シュワルツ不等式**が成り立ちます。
+$$ |\langle u, v \rangle| \le \|u\| \, \|v\| $$
+
+単位ベクトル全体は**単位球** $S(\mathcal{X})$ と書きます。
+$$ S(\mathcal{X}) = \{ u \in \mathcal{X} : \|u\| = 1 \} $$
+
+さらに $p$-ノルムは次で定義されます。
+$$
+\|u\|_p =
+\left( \sum_{a \in \Sigma} |u(a)|^p \right)^{1/p} \quad (p < \infty),
+$$ {#eq-p-norm}
+$$
+\|u\|_\infty = \max\{ |u(a)| : a \in \Sigma \}.
+$$ {#eq-p-norm-inf}
+
+::: {.physics-notes title="ブラケット記法での読み替え"}
+$\langle u, v \rangle$ は物理では $\langle u|v\rangle$ と書きます。
+また、$\|u\|=1$ は「状態が正規化されている」ことを意味します。
+
+:::
+
+#### 直交性と正規直交性 (Orthogonality and Orthonormality)
+
+2つのベクトル $u, v \in \mathbb{C}^\Sigma$ が**直交**するとは $\langle u, v \rangle = 0$ を満たすことです（$u \perp v$ とも書く）。
+集合 $A \subseteq \mathbb{C}^\Sigma$ に対して $u \perp A$ は、$A$ の任意の要素と直交することを意味します。
+
+添字集合 $\Gamma$ で添字付けられたベクトル族 $\{u_a : a \in \Gamma\}$ は、
+
+$$
+\langle u_a, u_b \rangle = 0 \quad (a \ne b)
+$$
+
+を満たすとき**直交族**です。各 $u_a$ が単位ベクトルであれば**正規直交族**となり、さらに基底を成せば**正規直交基底**となります。
+標準基底 $\{e_a : a \in \Sigma\}$ は $\mathbb{C}^\Sigma$ の正規直交基底であり、
+$$
+e_a(b) =
+\begin{cases}
+1 & (a=b) \\
+0 & (a \ne b)
+\end{cases}
+$$ {#eq-standard-basis}
+で定義されます。
+
+#### 直和 (Direct Sums)
+
+複素ユークリッド空間 $\mathcal{X}_k = \mathbb{C}^{\Sigma_k}$ に対し、直和は
+$$
+\mathcal{X}_1 \oplus \cdots \oplus \mathcal{X}_n = \mathbb{C}^{\Sigma_1 \sqcup \cdots \sqcup \Sigma_n}
+$$ {#eq-direct-sum-def}
+と定義されます。
+ベクトル $u_k \in \mathcal{X}_k$ に対して
+$$
+(u_1 \oplus \cdots \oplus u_n)(k,a) = u_k(a)
+$$ {#eq-direct-sum-entry}
+が成り立ちます。内積は成分ごとの和になります。
+$$
+\langle u_1 \oplus \cdots \oplus u_n,\, v_1 \oplus \cdots \oplus v_n \rangle
+= \sum_{k=1}^n \langle u_k, v_k \rangle
+$$
+
+#### テンソル積 (Tensor Products)
+
+テンソル積は
+$$
+\mathcal{X}_1 \otimes \cdots \otimes \mathcal{X}_n
+= \mathbb{C}^{\Sigma_1 \times \cdots \times \Sigma_n}
+$$ {#eq-tensor-def}
+として定義されます。
+ベクトル $u_k \in \mathcal{X}_k$ に対して
+$$
+(u_1 \otimes \cdots \otimes u_n)(a_1,\dots,a_n)
+= u_1(a_1)\cdots u_n(a_n)
+$$ {#eq-tensor-entry}
+となります。この形のベクトルは**初等テンソル**と呼ばれますが、一般のベクトルは初等テンソルの線形結合です。
+
+内積は積に分解されます。
+$$
+\langle u_1 \otimes \cdots \otimes u_n,\,
+v_1 \otimes \cdots \otimes v_n \rangle
+= \prod_{k=1}^n \langle u_k, v_k \rangle
+$$ {#eq-tensor-inner}
+
+::: {.callout-note title="物理での対応"}
+直和は「排他的な選択（古典的な分岐）」の記述に対応し、  
+テンソル積は「複合系の合成（多体系）」に対応します。
+
+:::
+
+#### テンソル積の普遍性 (Universal Property)
+
+多重線形写像 $\Phi:\mathcal{X}_1 \times \cdots \times \mathcal{X}_n \to \mathcal{Y}$ に対し、
+一意な線形写像 $A:\mathcal{X}_1 \otimes \cdots \otimes \mathcal{X}_n \to \mathcal{Y}$ が存在して
+$$
+\Phi(u_1,\dots,u_n) = A(u_1 \otimes \cdots \otimes u_n)
+$$
+が成立します（命題1.1）。これがテンソル積の抽象的な定義の核心です。
+
+#### 実ユークリッド空間 (Real Euclidean Spaces)
+
+実数体 $\mathbb{R}$ を用いて同様に定義したものが**実ユークリッド空間**です。
+複素共役は自明になるため多くの式が簡略化されますが、本書の主対象は複素の場合です。
+
+
+### Linear operators (線形演算子) [📄 p.8](assets/Quantum_Information.pdf#page=16) {#linear-operators}
 
 ::: {#def-linear-operator}
 ## 線形演算子 (Linear Operator)
@@ -55,30 +206,83 @@ $\mathcal{X}$ から $\mathcal{Y}$ への線形演算子全体の集合を $\mat
 
 :::
 
+線形演算子は加法とスカラー倍でベクトル空間をなします。  
+また、$\dim(\mathrm{L}(\mathcal{X}, \mathcal{Y})) = \dim(\mathcal{X}) \dim(\mathcal{Y})$ が成り立ちます。
+
 #### 行列表示 (Matrix Representation)
 線形演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ は、基底を選ぶことで行列として表現できます。
 $$ A(a, b) = \langle e_a, A e_b \rangle $$
 これにより、演算子の作用 $v = Au$ は、行列とベクトルの積として具体的に計算できます。
 
+行列の加法・スカラー倍・積は、成分表示で次のように定義されます。
+
+1. **加法**:
+   $$ (M+N)(a,b) = M(a,b)+N(a,b) $$ {#eq-matrix-add}
+2. **スカラー倍**:
+   $$ (\alpha M)(a,b) = \alpha M(a,b) $$ {#eq-matrix-scale}
+3. **行列積**:
+   $$ (MN)(a,b) = \sum_{c} M(a,c)N(c,b) $$ {#eq-matrix-mul}
+
+この対応により、**行列積は演算子合成に一致**します。
+
+::: {.callout-note title="記法対応（行列要素）"}
+| Watrous（数学的記法） | 物理のブラケット記法 | 意味 |
+| :--- | :--- | :--- |
+| $A(a,b)$ | $\langle a|A|b\rangle$ | 行列要素 |
+| $Au$ | $A|u\rangle$ | 作用 |
+
+:::
+
 #### 随伴演算子 (Adjoint Operator)
 任意の $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、以下の内積の等式を満たす一意の演算子 $A^\dagger \in \mathrm{L}(\mathcal{Y}, \mathcal{X})$ が存在します。
-$$ \langle u, A v \rangle = \langle A^\dagger u, v \rangle \quad (\forall u \in \mathcal{Y}, v \in \mathcal{X}) $$
+$$ \langle u, A v \rangle = \langle A^\dagger u, v \rangle \quad (\forall u \in \mathcal{Y}, v \in \mathcal{X}) $$ {#eq-adjoint-def}
 これらを $A$ の**随伴演算子** (Adjoint Operator)、またはエルミート共役と呼びます。行列表示では、転置行列の複素共役に相当します。すなわち、
-$$ A^\dagger = \overline{A}^T $$
+$$ A^\dagger = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
 となります。ここで $\overline{A}$ は成分ごとの複素共役、$A^T$ は転置を表します。
 
+成分表示での定義は次の通りです。
+
+1. **成分ごとの複素共役**:
+   $$ \overline{A}(a,b) = \overline{A(a,b)} $$ {#eq-adjoint-conj}
+2. **転置**:
+   $$ A^T(b,a) = A(a,b) $$ {#eq-adjoint-transpose}
+3. **随伴**:
+   $$ A^\dagger = \overline{A}^T $$ {#eq-adjoint-adjoint}
+
+::: {.physics-notes title="記法の注意"}
+本書では随伴を $A^*$ と書く流儀ですが、物理では $A^\dagger$ が標準です。  
+内容は同一で、$A^* = \overline{A}^T$ です。
+
+:::
+
 #### 演算子の直和とテンソル積 (Direct Sums and Tensor Products of Operators)
-空間 $\mathcal{X}_1 \oplus \dots \oplus \mathcal{X}_n$ から $\mathcal{Y}_1 \oplus \dots \oplus \mathcal{Y}_m$ への演算子 $A$ は、ブロック行列として一意に表現されます（式1.64）。
-$$ A = \begin{pmatrix} A_{1,1} & \dots & A_{1,n} \\ \vdots & \ddots & \vdots \\ A_{m,1} & \dots & A_{m,n} \end{pmatrix} $$
+空間 $\mathcal{X}_1 \oplus \dots \oplus \mathcal{X}_n$ から $\mathcal{Y}_1 \oplus \dots \oplus \mathcal{Y}_m$ への演算子 $A$ は、ブロック行列として一意に表現されます。
+$$ A = \begin{pmatrix} A_{1,1} & \dots & A_{1,n} \\ \vdots & \ddots & \vdots \\ A_{m,1} & \dots & A_{m,n} \end{pmatrix} $$ {#eq-block-matrix}
+
+各成分は
+$$
+A_{j,k}(a,b) = A((j,a),(k,b))
+$$ {#eq-block-entry}
+で定まり、ベクトル $u_1 \oplus \cdots \oplus u_n$ に作用させると
+$$
+v_j = \sum_{k=1}^n A_{j,k} u_k
+$$ {#eq-block-action}
+が成り立ちます。
 
 また、演算子の**テンソル積** $A_1 \otimes \dots \otimes A_n$ は、次を満たす唯一の演算子として定義されます。
-$$ (A_1 \otimes \dots \otimes A_n)(u_1 \otimes \dots \otimes u_n) = (A_1 u_1) \otimes \dots \otimes (A_n u_n) $$
-行列成分では $(A_1 \otimes \dots \otimes A_n)((a_1, \dots, a_n), (b_1, \dots, b_n)) = A_1(a_1, b_1) \dots A_n(a_n, b_n)$ となります（式1.69）。
+$$ (A_1 \otimes \dots \otimes A_n)(u_1 \otimes \dots \otimes u_n) = (A_1 u_1) \otimes \dots \otimes (A_n u_n) $$ {#eq-operator-tensor}
+行列成分では
+$$
+(A_1 \otimes \dots \otimes A_n)((a_1, \dots, a_n), (b_1, \dots, b_n)) = A_1(a_1, b_1) \dots A_n(a_n, b_n)
+$$ {#eq-operator-tensor-components}
+となります。
 
 #### 標準基底演算子 (Standard Basis of Operators)
 空間 $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ には、直感的な標準基底が存在します。シンボル $a \in \Gamma$ と $b \in \Sigma$ に対し、演算子 $E_{a,b} \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ を次のように定義します。
 $$ E_{a,b} u = u(b) e_a $$
 これは、入力ベクトルの $b$ 成分を抽出し、$a$ 番目の標準基底ベクトル $e_a$ にマップする演算子です。集合 $\{E_{a,b} : a \in \Gamma, b \in \Sigma\}$ は $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ の基底をなします。
+
+物理記法では $E_{a,b} = |a\rangle\langle b|$ に対応します。
 
 #### カーネル、像、およびランク (Kernel, Image, and Rank)
 
@@ -93,83 +297,91 @@ $$ E_{a,b} u = u(b) e_a $$
 :::
 
 特に、任意のベクトル $u \in \mathcal{X}$ と $v \in \mathcal{Y}$ に対して定義される演算子 $v u^\dagger$ は、ランクが1（$u, v \neq 0$ の場合）であり、次のように作用します。
-$$ (v u^\dagger) w = \langle u, w \rangle v $$
+$$ (v u^\dagger) w = \langle u, w \rangle v $$ {#eq-rank-one}
 すべてのランク1演算子はこの形式で記述できます。
 
-### Trace and Determinant (トレースと行列式) [📄 p.15](Quantum_Information.pdf#page=23) {#trace-and-determinant}
+さらに、任意の演算子 $A$ に対して
+$$
+\ker(A) = \ker(A^\dagger A), \qquad \mathrm{im}(A) = \mathrm{im}(A A^\dagger),
+$$ {#eq-kernel-image}
+$$
+\dim(\ker(A)) + \dim(\mathrm{im}(A)) = \dim(\mathcal{X}),
+$$ {#eq-rank-dim}
+が成り立ちます。
+
+### Trace and Determinant (トレースと行列式) [📄 p.15](assets/Quantum_Information.pdf#page=23) {#trace-and-determinant}
 
 #### トレース (Trace)
 正方演算子 $X \in \mathrm{L}(\mathcal{X})$ の**トレース** $\mathrm{Tr}(X)$ は、対角成分の和 $\sum_a X(a, a)$ です。また、以下を満たす唯一の線形関数としても定義されます。
-$$ \mathrm{Tr}(u v^\dagger) = \langle v, u \rangle $$
+$$ \mathrm{Tr}(u v^\dagger) = \langle v, u \rangle $$ {#eq-trace-uv}
 トレースは**サイクリック性** ($\mathrm{Tr}(AB) = \mathrm{Tr}(BA)$) を持ち、これを用いて演算子空間の内積を $\langle A, B \rangle = \mathrm{Tr}(A^\dagger B)$ と定義できます。
 
 #### 行列式 (Determinant)
-正方演算子 $X \in \mathrm{L}(\mathcal{X})$ の**行列式** $\mathrm{Det}(X)$ は、以下のように定義されます（式1.84）。
-$$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \prod_{a \in \Sigma} X(a, \pi(a)) $$
+正方演算子 $X \in \mathrm{L}(\mathcal{X})$ の**行列式** $\mathrm{Det}(X)$ は、以下のように定義されます。
+$$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \prod_{a \in \Sigma} X(a, \pi(a)) $$ {#eq-determinant}
 
-### Operator decompositions and norms (演算子の分解とノルム) [📄 p.24](Quantum_Information.pdf#page=32) {#operator-decompositions-and-norms}
+### Operator decompositions and norms (演算子の分解とノルム) [📄 p.24](assets/Quantum_Information.pdf#page=32) {#operator-decompositions-and-norms}
 
-#### 演算子とベクトルの対応 (Operator-Vector Correspondence) [📄 p.23](Quantum_Information.pdf#page=31)
-空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間には、同型写像 **vec** が存在します。
+量子情報で頻出の「分解」と「ノルム」をまとめます。
+
+#### 演算子とベクトルの対応 (Operator-Vector Correspondence) [📄 p.23](assets/Quantum_Information.pdf#page=31)
+空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間には、同型写像 **$\mathrm{vec}$** が存在します。
 $$ \mathrm{vec}(E_{a,b}) = e_a \otimes e_b $$
-この写像に関して、以下の重要な恒等式が成立します（式1.132-1.134）。
-1.  $(A \otimes B) \mathrm{vec}(X) = \mathrm{vec}(AXB^T)$
-2.  $\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A) \mathrm{vec}(B)^*) = AB^*$
-3.  $\mathrm{Tr}_{\mathcal{X}}(\mathrm{vec}(A) \mathrm{vec}(B)^*) = A^T \overline{B}$
+この写像について以下が成り立ちます。
+1. 
+   $$ (A \otimes B)\,\mathrm{vec}(X) = \mathrm{vec}(A X B^T) $$ {#eq-vec-axb}
+2. 
+   $$ \mathrm{Tr}_{\mathcal{Y}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A B^\dagger $$ {#eq-vec-try}
+3. 
+   $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A^T \overline{B} $$ {#eq-vec-trx}
 
-#### スペクトル定理 (Spectral Theorem) [📄 p.25](Quantum_Information.pdf#page=33)
-正規演算子 $X \in \mathrm{L}(\mathcal{X})$ は、固有値 $\lambda_k$ とそれに対応する直交射影 $\Pi_k$ を用いて以下のように分解できます。
-$$ X = \sum_{k=1}^m \lambda_k \Pi_k $$
-
-#### Schatten ノルム (Schatten p-norms) [📄 p.32](Quantum_Information.pdf#page=40)
-演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、**Schatten $p$-ノルム** は特異値 $s(A)$ の $p$-ノルムとして定義されます。
-$$ \|A\|_p = \left( \mathrm{Tr}( (A^* A)^{p/2} ) \right)^{1/p} $$
-特に $p=1$ は**トレースノルム**、 $p=2$ は**フロベニウスノルム**、 $p=\infty$ は**スペクトルノルム**と呼ばれます。
-
-量子情報の解析において極めて重要な、演算子の分解定理とノルムについてまとめます。
-
-#### スペクトル定理と特異値分解
+#### スペクトル定理 (Spectral Theorem) [📄 p.25](assets/Quantum_Information.pdf#page=33)
 
 ::: {#thm-spectral-theorem}
 ## スペクトル定理 (Spectral Theorem)
-
-正規演算子 $X \in \mathrm{L}(\mathcal{X})$ （すなわち $XX^\dagger = X^\dagger X$ を満たす演算子）に対し、ある正規直交基底 $\{x_1, \dots, x_n\}$ と複素数 $\lambda_1, \dots, \lambda_n$ が存在して、以下のように分解できます。
-$$ X = \sum_{k=1}^n \lambda_k x_k x_k^\dagger $$
-
-:::
-物理的には、エルミート演算子（物理量）が実数の固有値を持つことの基礎となります。
-
-::: {#thm-svd}
-## 特異値分解 (Singular Value Decomposition, SVD)
-
-任意の非ゼロ演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ （ランク $r$）に対し、正規直交系 $\{x_1, \dots, x_r\} \subset \mathcal{X}$ と $\{y_1, \dots, y_r\} \subset \mathcal{Y}$、および正の実数 $s_1 \geq \dots \geq s_r > 0$ が存在して、以下のように書けます。
-$$ A = \sum_{k=1}^r s_k y_k x_k^\dagger $$
-正の実数 $s_k$ を**特異値** (Singular Values) と呼びます。
+正規演算子 $X \in \mathrm{L}(\mathcal{X})$（$XX^\dagger = X^\dagger X$）に対し、正規直交基底 $\{x_k\}$ と固有値 $\{\lambda_k\}$ が存在して
+$$
+X = \sum_{k} \lambda_k x_k x_k^\dagger
+$$
+と分解できる。
 
 :::
+
+エルミート演算子では $\lambda_k \in \mathbb{R}$ となり、物理量の実固有値性に対応します。
+
+#### 特異値分解 (Singular Value Decomposition, SVD)
+
+任意の $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、正規直交系 $\{x_k\} \subset \mathcal{X}$、$\{y_k\} \subset \mathcal{Y}$ と特異値 $s_k \ge 0$ が存在し、
+$$
+A = \sum_{k=1}^r s_k\, y_k x_k^\dagger
+$$
+と表されます。$r$ はランクです。
 
 #### その他の重要な分解
 
-*   **極分解 (Polar Decomposition)**: 任意の正方演算子 $X$ は、ユニタリ演算子 $W$ と半正定値演算子 $P$ を用いて $X=WP$ （または $X=PW'$）と分解できます。
-*   **シュミット分解 (Schmidt Decomposition)**: 複合系のベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ に対する分解です。エンタングルメントの解析に不可欠です。
-    $$ u = \sum_{k=1}^r s_k x_k \otimes z_k $$
+* **極分解 (Polar Decomposition)**: $X = W P$（$W$ ユニタリ、$P$ 半正定値）。
+* **シュミット分解 (Schmidt Decomposition)**: $u \in \mathcal{X}\otimes\mathcal{Y}$ に対して
+  $$
+  u = \sum_{k=1}^r s_k\, x_k \otimes z_k
+  $$
+  と表せ、エンタングルメントの解析に直接使われます。
 
-#### シャッテン $p$-ノルム (Schatten $p$-norms)
+#### シャッテン $p$-ノルム (Schatten $p$-norms) [📄 p.32](assets/Quantum_Information.pdf#page=40)
 
-演算子の大きさを測る指標として、特異値ベクトル $s(A)$ の $p$-ノルムとして定義されます。
+特異値列 $s(A)$ の $p$-ノルムとして
+$$
+\|A\|_p = \left( \sum_k s_k(A)^p \right)^{1/p}
+= \left[\mathrm{Tr}\!\left((A^\dagger A)^{p/2}\right)\right]^{1/p}
+$$
+で定義されます。
 
-$$ \|A\|_p = \left( \sum_k s_k(A)^p \right)^{1/p} = \left[ \mathrm{Tr}( (A^\dagger A)^{p/2} ) \right]^{1/p} $$
-
-特に以下の3つが重要です。
-
-| 名称 | 記号 | 定義 ($p$) | 意味 |
+| 名称 | 記号 | $p$ | 意味 |
 | :--- | :--- | :--- | :--- |
-| **トレースノルム** | $\|A\|_1$ | $p=1$ | 量子状態間の距離、識別容易性 |
-| **フロベニウスノルム** | $\|A\|_2$ | $p=2$ | ヒルベルト・シュミット内積から誘導されるノルム |
-| **スペクトルノルム** | $\|A\|_\infty$ | $p=\infty$ | 最大特異値。作用素ノルムと一致 |
+| トレースノルム | $\|A\|_1$ | 1 | 状態間距離・識別 |
+| フロベニウスノルム | $\|A\|_2$ | 2 | Hilbert–Schmidt ノルム |
+| スペクトルノルム | $\|A\|_\infty$ | $\infty$ | 最大特異値 |
 
-::: {.callout-note}
-## 重要概念 (Key Concept)
-特に**トレースノルム** $\| \cdot \|_1$ は、前述の「量子状態の識別」問題における成功確率と直接結びついており、量子情報理論で最も頻繁に用いられる距離尺度の一つです。
+::: {.callout-note title="重要概念"}
+トレースノルム $\| \cdot \|_1$ は、量子状態の識別や距離尺度の議論に直結します。
 
 :::

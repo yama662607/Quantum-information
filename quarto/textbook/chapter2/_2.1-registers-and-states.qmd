@@ -1,41 +1,34 @@
-## Registers and states [📄 p.58](Quantum_Information.pdf#page=66) {#registers-and-states}
+## Registers and states [📄 p.58](assets/Quantum_Information.pdf#page=66) {#registers-and-states}
 
 この節では、量子情報の基本的な器である「レジスタ」と、その中に保存される「状態」について定義します。
 
-### Registers and classical state sets (レジスタと古典状態集合) [📄 p.58](Quantum_Information.pdf#page=66) {#registers-and-classical-state-sets}
+::: {.callout-note appearance="simple" title="この節の学習目標"}
+1. レジスタの再帰的定義と古典状態集合を理解する
+2. 密度演算子による量子状態の表現と純粋化の考え方を把握する
+3. 古典・確率的・量子状態の対応と相関／独立の違いを整理する
+
+:::
+
+### Registers and classical state sets (レジスタと古典状態集合) [📄 p.58](assets/Quantum_Information.pdf#page=66) {#registers-and-classical-state-sets}
 
 **レジスタ (Register)** は、物理的なデバイス（コンピュータのメモリ、量子ビット、あるいは通信媒体など）の抽象化です。
 
-レジスタは、量子情報を格納する物理デバイスの数学的抽象化です。複数のレジスタをまとめて1つの新しいレジスタとして扱うことができるため、レジスタの構造は自然に**木構造**（Figure 2.1 参照）として理解されます。
-
 ::: {#def-register}
-## レジスタ (Register)
+## レジスタ (Definition 2.1)
 レジスタ $X$ は、以下のいずれかのオブジェクトとして帰納的に定義されます：
 1.  **単純レジスタ (Simple Register)**: 有限のアルファベット $\Sigma$。
-2.  **複合レジスタ (Compound Register)**: レジスタの $n$ 組 $(Y_1, \dots, Y_n)$。
+2.  **複合レジスタ (Compound Register)**: $n$ 個のレジスタの組 $(Y_1, \dots, Y_n)$、ここで $n$ は正の整数。
 
 :::
 
 単純レジスタは木構造の「葉」に対応し、複合レジスタはサブレジスタを子に持つ親ノードに対応します。
 
-レジスタには、それが保持しうる古典的な情報の集合である**古典状態集合 (Classical State Set)** が対応します。
-
-::: {#def-classical-state-set}
-## 古典状態集合
-
-1.  単純レジスタ $X = \Sigma$ の古典状態集合は $\Sigma$ である。
-2.  複合レジスタ $X = (Y_1, \dots, Y_n)$ の古典状態集合は、各 $Y_k$ の古典状態集合 $\Gamma_k$ の直積 $\Sigma = \Gamma_1 \times \dots \times \Gamma_n$ である（式2.2）。
-
-複合レジスタの各古典状態 $a = (b_1, \dots, b_n)$ は、各サブレジスタ $Y_k$ の古典状態 $b_k \in \Gamma_k$ を一意に決定します。逆に、すべての単純なサブレジスタの古典状態が定まれば、親レジスタの古典状態も一意に定まります。
-
-古典状態集合が単一の要素のみを持つレジスタを**些細なレジスタ (Trivial Register)** と呼びます。また、定義により古典状態集合が空集合（$\Sigma = \emptyset$）になることは許容されません。これは物理的なシステムがいかなる状態も持たないことはあり得ないという直感に基づいています。
-
-:::
-
-#### レジスタの階層構造
-レジスタは木構造として捉えることができます。あるレジスタが別のレジスタの一部であるとき、それを**サブレジスタ (Subregister)** と呼びます。
+#### Example 2.2: Register Tree
+式 (2.1) で定義されるレジスタの構造を図示します。
 
 ```{mermaid}
+%%| label: fig-register-tree
+%%| fig-cap: "The tree associated with the registers described in Example 2.2"
 graph TD
     X["X = (Y0, Y1)"]
     Y0["Y0 = {1, 2, 3, 4}"]
@@ -44,38 +37,61 @@ graph TD
     Z2["Z2 = {0, 1}"]
     Z3["Z3 = {0, 1}"]
 
-    X --> Y0
-    X --> Y1
-    Y1 --> Z1
+    X -- Y0 is a subregister of X --> Y0
+    X -- Y1 is a subregister of X --> Y1
+    Y1 -- Z1 is a subregister of Y1 --> Z1
     Y1 --> Z2
     Y1 --> Z3
 ```
 
-### Quantum states of registers (レジスタの量子状態) [📄 p.61](Quantum_Information.pdf#page=69) {#quantum-states-of-registers}
+::: {#def-classical-state-set}
+## 古典状態集合 (Definition 2.3)
+レジスタ $X$ の **古典状態集合 (Classical State Set)** は以下のように決定されます：
 
-量子状態は、複素ユークリッド空間上の演算子（密度演算子）として記述されます。
-
-::: {#def-register-space}
-## レジスタに対応する空間
-
-レジスタ $X$ の古典状態集合が $\Sigma$ であるとき、これに対応する複素ユークリッド空間を $\mathcal{X} = \mathbb{C}^\Sigma$ と定義します。
-複合システム $X = (Y_1, \dots, Y_n)$ の場合、対応する空間はテンソル積 $\mathcal{X} = \mathcal{Y}_1 \otimes \dots \otimes \mathcal{Y}_n$ となります。
+1.  $X = \Sigma$ が単純レジスタの場合、その古典状態集合は $\Sigma$ である。
+2.  $X = (Y_1, \dots, Y_n)$ が複合レジスタの場合、その古典状態集合は各 $Y_k$ の古典状態集合 $\Gamma_k$ の直積 $\Sigma = \Gamma_1 \times \dots \times \Gamma_n$ である。
 
 :::
 
-::: {#def-density-operator}
-## 密度演算子 (Density Operator)
+### Quantum states of registers (レジスタの量子状態) [📄 p.61](assets/Quantum_Information.pdf#page=69) {#quantum-states-of-registers}
 
-レジスタ $X$ の量子状態は、$\mathcal{X}$ 上の**密度演算子** $\rho \in \mathrm{D}(\mathcal{X})$ によって記述されます。これは以下の条件を満たす $\rho \in \mathrm{L}(\mathcal{X})$ です。
+量子状態は、複素ユークリッド空間上の演算子（密度演算子）として記述されます。ここで、本教科書（Watrous）の重要な数学的抽象化として、古典状態集合 $\Sigma$ に対応する複素ユークリッド空間 $\mathcal{X} = \mathbb{C}^\Sigma$ が導入されます。
 
-1.  **半正定値性 (Positive Semidefinite)**: $\rho \geq 0$
-2.  **正規化 (Trace 1)**: $\mathrm{Tr}(\rho) = 1$
+::: {#def-quantum-state}
+## 量子状態 (Definition 2.5)
+レジスタ $X$ の **量子状態 (Quantum State)** とは、対応する複素ユークリッド空間 $\mathcal{X}$ 上の密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ のことです。
 
 :::
+
+#### Notation Mapping (記法の対応) {#mapping-states}
+
+物理学の標準的な記法（ブラケット記法）と、本書（Watrous）の線形代数的な記法の対応を以下に示します。
+
+| 概念 | Watrous (数学的記法) | 標準的な物理学 (ブラケット記法) | 補足 |
+| :--- | :--- | :--- | :--- |
+| **空間** | $\mathcal{X} = \mathbb{C}^\Sigma$ | ヒルベルト空間 $\mathcal{H}$ | 一般に $\dim(\mathcal{H}) = |\Sigma|$ |
+| **ベクトル** | $u \in \mathcal{X}$ | ケット $| \psi \rangle$ | 列ベクトル |
+| **共役転置** | $u^*$ | ブラ $\langle \psi |$ | 行ベクトル |
+| **内積** | $\langle u, v \rangle = u^* v$ | $\langle \psi | \phi \rangle$ | スカラー |
+| **外積** | $u v^*$ | $| \psi \rangle \langle \phi |$ | 演算子 |
+| **密度演算子** | $\rho = \sum p_k u_k u_k^*$ | $\hat{\rho} = \sum p_k | \psi_k \rangle \langle \psi_k |$ | 混合状態 |
+| **標準基底** | $e_a$ ($a \in \Sigma$) | $| a \rangle$ ($a \in \Sigma$) | 計算基底 |
+
+: 記法対応表 {#tbl-notation-mapping-states}
 
 #### 確率的状態との対比
+
 量子状態は、古典的な**確率的状態 (Probabilistic State)** の量子版とみなせます。確率的状態が古典状態集合 $\Sigma$ 上の確率ベクトル $p \in \mathrm{P}(\Sigma)$ で表されるのに対し、量子状態は密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ で表されます。
 
+::: {.callout-note title="状態表現の対応"}
+| 種別 | 表現 | 説明 |
+| :--- | :--- | :--- |
+| 古典状態 | $a \in \Sigma$ | 確定した状態 |
+| 確率的状態 | $p \in P(\Sigma)$ | 確率分布（ベクトル） |
+| 量子状態 | $\rho \in D(\mathcal{X})$ | 密度演算子 |
+
+:::
+aiueo
 #### 純粋状態、平坦状態、および混合状態
 - **純粋状態 (Pure States)**: ランク1の密度演算子。ある単位ベクトル $u$ を用いて $\rho = u u^\dagger$ と書けます。
 - **平坦状態 (Flat States)**: ある部分空間への射影演算子 $\Pi$ を用いて $\rho = \frac{\Pi}{\mathrm{Tr}(\Pi)}$ と書ける状態。
@@ -89,10 +105,10 @@ $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
 #### 独立性と相関
 複合レジスタの状態 $\rho \in \mathrm{D}(\mathcal{Y} \otimes \mathcal{Z})$ が $\rho = \sigma \otimes \tau$ と書けるとき、レジスタ $\mathrm{Y}$ と $\mathrm{Z}$ は**独立 (Independent)** であると言います。そうでない場合は**相関 (Correlated)** しており、特に量子特有の強い相関を**エンタングルメント (Entanglement)** と呼びます。
 
-### Reductions and purifications of quantum states (量子状態の縮約と純粋化) [📄 p.67](Quantum_Information.pdf#page=75) {#reductions-and-purifications-of-quantum-states}
+### Reductions and purifications of quantum states (量子状態の縮約と純粋化) [📄 p.67](assets/Quantum_Information.pdf#page=75) {#reductions-and-purifications-of-quantum-states}
 
 #### 縮約 (Reductions)
-複合系から一部のレジスタを取り除いたときの残りの系の状態は、**部分トレース (Partial Trace)** によって得られます。
+複合系 $(X, Y)$ の状態 $\rho$ から、部分系 $X$ の状態を得る操作を **縮約 (Reduction)** と呼び、数理的には **部分トレース (Partial Trace)** で記述されます。
 
 ::: {#def-partial-trace}
 ## 部分トレース (Partial Trace)
@@ -105,25 +121,30 @@ $$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
 複合系 $(X, Y)$ の状態 $\rho$ から $X$ だけを取り出した状態は $\rho^X = \mathrm{Tr}_{\mathcal{Y}}(\rho)$ と書かれます。
 
 #### 純粋化 (Purifications)
-任意の混合状態は、より大きな系の純粋状態の一部とみなすことができます。
 
 ::: {#def-purification}
-## 純粋化 (Purification)
-
-ベクトル密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ の**浄化** (Purification) とは、$\mathrm{Tr}_{\mathcal{Y}}(|u\rangle\langle u|) = \rho$ を満たす拡大系 $\mathcal{X} \otimes \mathcal{Y}$ 上のベクトル $u$ のことです。
+## 純粋化 (Definition 2.9)
+$\mathcal{X}, \mathcal{Y}$ を複素ユークリッド空間、 $P \in \mathrm{Pos}(\mathcal{X})$ を半正定値演算子とします。ベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ が $P$ の **純粋化 (Purification)** であるとは、以下を満たすことです：
+$$
+\mathrm{Tr}_{\mathcal{Y}}(u u^*) = P
+$$
 
 :::
+
+物理学的には、これは「混合状態 $P$ を、より大きな系（環境系 $\mathcal{Y}$ を含む）の純粋状態 $u$ の一部として解釈する」ことに相当します。
 
 ::: {#thm-purification-existence}
-## 浄化の存在条件 (Theorem 2.10)
-密度演算子 $\rho$ に対し、浄化 $u \in \mathcal{X} \otimes \mathcal{Y}$ が存在するための必要十分条件は $\mathrm{dim}(\mathcal{Y}) \geq \mathrm{rank}(\rho)$ です。
+## 純粋化の存在 (Theorem 2.10)
+$P \in \mathrm{Pos}(\mathcal{X})$ に対して、純粋化 $u \in \mathcal{X} \otimes \mathcal{Y}$ が存在するための必要十分条件は、
+$$ \dim(\mathcal{Y}) \geq \mathrm{rank}(P) $$
+です。
 
 :::
 
-**証明の概略 (p.71)**:
-$\rho$ のスペクトル分解を $\rho = \sum \lambda_k x_k x_k^*$ とします。$\mathcal{Y}$ の正規直交集合 $\{y_k\}$ を用いて $A = \sum \sqrt{\lambda_k} x_k y_k^*$ と定義すれば、$u = \mathrm{vec}(A)$ が求める浄化になります。実際、$\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(A)^*) = AA^* = \rho$ となり、浄化の条件を満たします。
+**証明の概略**:
+$\rho$ のスペクトル分解を $\rho = \sum \lambda_k x_k x_k^*$ とします。$\mathcal{Y}$ の正規直交集合 $\{y_k\}$ を用いて $A = \sum \sqrt{\lambda_k} x_k y_k^*$ と定義すれば、$u = \mathrm{vec}(A)$ が求める純粋化になります。実際、$\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(A)^*) = AA^* = \rho$ となり、条件を満たします。
 
-また、2つの浄化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のあるユニタリ $U$ によって $v = (\mathbb{I}_{\mathcal{X}} \otimes U)u$ と結ばれます（**浄化のユニタリ同値性**、Theorem 2.12）。
+また、2つの純粋化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のあるユニタリ $U$ によって $v = (\mathbb{I}_{\mathcal{X}} \otimes U)u$ と結ばれます（**純粋化のユニタリ同値性**、Theorem 2.12）。
 
 ::: {#exm-maximally-entangled}
 ## 最大絡み合い状態 (Maximally Entangled State)

@@ -1,26 +1,18 @@
-## Measurements [📄 p.100](Quantum_Information.pdf#page=108) {#measurements}
+## Measurements [📄 p.100](assets/Quantum_Information.pdf#page=108) {#measurements}
 
 測定（Measurement）は、量子状態から古典情報を抽出するための数学的メカニズムを提供します。
 
-線形写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ は、文脈に応じていくつかの等価な形式で表現されます。
-
-::: {#prop-representation-equivalence}
-## 表現の等価性 (Proposition 2.20)
-以下の4つの表現は等価であり、相互に変換可能です：
-
-1.  **自然表現 (Natural Representation)**: $K(\Phi) = \sum A_a \otimes \overline{B}_a$
-2.  **Choi 表現 (Choi Representation)**: $J(\Phi) = \sum \mathrm{vec}(A_a) \mathrm{vec}(B_a)^*$
-3.  **Kraus 表現 (Kraus Representation)**: $\Phi(X) = \sum A_a X B_a^*$
-4.  **Stinespring 表現 (Stinespring Representation)**: $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^*)$
+::: {.callout-note appearance="simple" title="この節の学習目標"}
+1. POVM と量子→古典チャネルの2つの定義を往復できる
+2. 射影測定・情報完全測定・Naimark の定理の要点を説明できる
+3. 測定とアンサンブルの凸構造、極値性の条件を理解する
 
 :::
 
-特に、$\Phi$ が完全正値であるとき、およびそのときに限り $J(\Phi) \geq 0$ であり、$B_a = A_a$ かつ $B = A$ と選ぶことができます（Theorem 2.22）。
-状態 $\rho$ に対して出力 $a$ が得られる確率は $p(a) = \langle \mu(a), \rho \rangle$ です。
-
-### Two equivalent definitions (2つの等価な定義) [📄 p.100](Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
+### Two equivalent definitions (2つの等価な定義) [📄 p.100](assets/Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
 
 量子情報の文脈では、測定は通常、以下の POVM (Positive Operator-Valued Measure) として定義されます。
+
 
 ::: {#def-measurement}
 ## 測定 (Measurement)
@@ -29,9 +21,17 @@ $$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 
 :::
 
-### Measurements as channels (チャネルとしての測定) [📄 p.102](Quantum_Information.pdf#page=110) {#measurements-as-channels}
+
+::: {.physics-notes title="Born 則との対応"}
+効果演算子 $\mu(a)$ は、物理で使うブラケット記法なら $\Pr[a] = \langle \psi | \mu(a) | \psi \rangle$ に対応します。$|\psi\rangle$ の代わりに密度演算子 $\rho$ を使うと $\Pr[a] = \operatorname{Tr}(\mu(a)\rho)$ が得られ、どちらの表記でも同じボルン則を表現しています。
+
+:::
+
+
+### Measurements as channels (チャネルとしての測定) [📄 p.102](assets/Quantum_Information.pdf#page=110) {#measurements-as-channels}
 
 測定は、量子情報を古典情報に変換する**量子から古典へのチャネル** (Quantum-to-classical channel) としても定義できます。
+
 
 ::: {#def-qc-channel}
 ## 量子から古典へのチャネル (Definition 2.35)
@@ -39,22 +39,30 @@ $$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 
 :::
 
-この写像は、ある一意な測定 $\mu$ を用いて $\Phi(X) = \sum_a \langle \mu(a), X \rangle E_{a,a}$ と書け、測定の物理的な解釈と数学的に一致します（Theorem 2.37）。
+基底 $\{\lvert a \rangle : a \in \Sigma\}$ に沿った完全脱位相チャネルを $\Delta(Z) = \sum_{a} E_{a,a} Z E_{a,a}$ とすると、任意の量子→古典チャネルは一意な測定 $\mu$ を用いて
+$$ \Phi(X) = \sum_{a \in \Sigma} \langle \mu(a), X \rangle E_{a,a} $$
+と書けます（Theorem 2.37）。測定は「確率付け」、チャネル表現は「回路実装」の観点を与え、二つの定義が同じ物理操作を記述していることがわかります。
 
-### Projective measurements (射影測定) [📄 p.105](Quantum_Information.pdf#page=113) {#projective-measurements}
 
-測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。
-
-::: {#thm-projective-orthogonality}
-## 射影演算子の直交性
-射影測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ の各演算子は、互いに直交します。すなわち、$a \neq b$ に対して以下が成り立ちます。
-$$ \mu(a) \mu(b) = 0 $$
+::: {.physics-notes title="物理的イメージ"}
+POVM は「効果演算子」で確率を与える道具、チャネル表現は「計算手順」としての実装。どちらも同じ物理操作を別視点で記述しています。
 
 :::
 
-### Naimark の定理 [📄 p.109](Quantum_Information.pdf#page=117) {#naimarks-theorem}
+### Projective measurements (射影測定) [📄 p.105](assets/Quantum_Information.pdf#page=113) {#projective-measurements}
+
+測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。互いに直交するため $a \neq b$ で $\mu(a)\mu(b)=0$ となり、可観測量 $H = \sum_a \lambda_a \mu(a)$ のスペクトル分解に一致します。ブラケット表記では基底ベクトル $|a\rangle$ への射影 $|a\rangle\langle a|$ が各アウトカムに対応します。
+
+
+::: {.physics-notes title="射影測定の物理像"}
+固有状態 $|a\rangle$ を測れば結果は必ず $a$ で、測定後の状態も $|a\rangle$ に「射影」されます。数学では $\mu(a)$ が射影であることと、物理の「状態が崩壊して固有状態になる」描像が1対1で対応します。
+
+:::
+
+### Naimark の定理 [📄 p.109](assets/Quantum_Information.pdf#page=117) {#naimarks-theorem}
 
 任意の測定は、補助系を含む拡大された系における射影測定の一部とみなすことができます。
+
 
 ::: {#thm-naimark}
 ## Naimark の定理 (Theorem 2.42)
@@ -63,9 +71,18 @@ $$ \mu(a) = A^\dagger (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
 
 :::
 
-### Information-complete measurements (情報完全測定) [📄 p.110](Quantum_Information.pdf#page=118) {#information-complete-measurements}
+等長写像 $A$ は $\mu(a)$ の平方根を並べた「測定行列」$A = \sum_a \sqrt{\mu(a)} \otimes |a\rangle$ と書けます。$\mathcal{Y}$ の次元はアウトカム数 $|\Sigma|$ で十分であり、最小の補助次元を与える「最小拡大」によって、任意の POVM を物理的に射影測定として実装できることを示します。
+
+
+::: {.important-point}
+Naimark の構成は「測定をユニタリ＋射影＋部分トレース」の形で実装できることを保証します。回路設計では、POVM を補助キュービットと制御ユニタリに分解する際の理論的裏付けになります。
+
+:::
+
+### Information-complete measurements (情報完全測定) [📄 p.110](assets/Quantum_Information.pdf#page=118) {#information-complete-measurements}
 
 測定統計から元の量子状態を一意に特定できる測定を**情報完全測定**と呼びます。
+
 
 ::: {#def-information-complete}
 ## 情報完全測定
@@ -74,9 +91,18 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 
 :::
 
-### Quantum instruments (量子インストルメント) [📄 p.112](Quantum_Information.pdf#page=120) {#quantum-instruments}
+次元 $d = \dim \mathcal{X}$ の場合、少なくとも $d^2$ 個のアウトカムが必要で、等間隔なフレーム（例: SIC-POVM や Pauli 行列に基づく 4 点 POVM）が典型例です。測定結果から線形再構成を行うことで、状態トモグラフィーが可能になります。
+
+
+::: {.physics-notes title="物理記法での例"}
+1量子ビットなら $\{I, X, Y, Z\}$ の射影を平均0.25で測る POVM が情報完全です。得られた確率 $p_i = \operatorname{Tr}(\rho M_i)$ から Bloch ベクトル $(\langle X \rangle, \langle Y \rangle, \langle Z \rangle)$ を再構成できます。
+
+:::
+
+### Quantum instruments (量子インストルメント) [📄 p.112](assets/Quantum_Information.pdf#page=120) {#quantum-instruments}
 
 測定によってレジスタが破壊されず、結果 $a$ に応じて状態が変化するプロセスを**量子インストルメント**（あるいは単にインストルメント）と呼びます。
+
 
 ::: {#def-instrument}
 ## インストルメント
@@ -84,17 +110,25 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 
 :::
 
-状態 $\rho$ にインストルメントを適用すると、確率 $p(a) = \mathrm{Tr}(\mathcal{A}_a(\rho))$ で結果 $a$ が得られ、その時の事後状態は $\mathcal{A}_a(\rho) / p(a)$ となります。
+状態 $\rho$ にインストルメントを適用すると、確率 $p(a) = \mathrm{Tr}(
 
-### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
+インストルメントは Kraus 演算子族 $\{A_{a,j}\}$ を用いて
+$$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^\dagger, \qquad M_a = \sum_j A_{a,j}^\dagger A_{a,j} $$
+と書け、$\{M_a\}$ が対応する POVM です。測定と同時に「その後の量子状態」を記述できるため、フィードバックを伴う量子回路のモデル化に不可欠です。
+
+### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](assets/Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
 
 測定全体の集合もまた凸集合を形成します。
 
 ::: {#thm-extremal-measurement}
 ## 極値的な測定 (Extremal Measurement)
 
-測定 $\mu = \{ M_a \}$ が極値的であるための必要十分条件は、$\{ M_a \}$ の線形独立性に関する特定の条件（詳細は教科書参照）を満たすことである。
+測定 $\mu = \{ M_a \}$ が極値的であるのは、ゼロでない補助演算子族 $\{\Delta_a\}$ で
+$$
+\sum_a \Delta_a = 0,\qquad \mathrm{im}(\Delta_a)\subseteq \mathrm{im}(M_a)
+$$
+を同時に満たすものが存在しない場合に限ります（Parthasarathy 条件）。
 
 :::
 
-特に、**射影測定 (Projective Measurement)**、すなわちすべての $M_a$ が射影演算子 ($M_a^2 = M_a$) である測定は、常に極値的です。これは量子観測における最も鋭い測定に対応します。
+言い換えると、各 $M_a$ の像にサポートをもつ非自明な摂動を加えても POVM の条件を保てないとき、測定は凸集合の端点です。ランク1の POVM で、$\{M_a\}$ のサポートが線形独立なら自動的に極値的になります。逆に、サポートが重なる場合は別の測定との凸結合として書け、実装の揺らぎ（クラシカルランダム化）の自由度を示します。特に射影測定 ($M_a^2 = M_a$) は常に極値的で、量子観測の最も「鋭い」ケースに対応します。

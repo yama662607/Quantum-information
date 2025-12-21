@@ -1,6 +1,13 @@
-## Analysis, convexity, and probability theory [📄 p.35](Quantum_Information.pdf#page=43) {#analysis-convexity-probability}
+## Analysis, convexity, and probability theory [📄 p.35](assets/Quantum_Information.pdf#page=43) {#analysis-convexity-probability}
 
-### Analysis and convexity (解析学と凸性) [📄 p.35](Quantum_Information.pdf#page=43) {#analysis-and-convexity}
+::: {.callout-note appearance="simple" title="この節の学習目標"}
+1. **解析・測度**の基本語彙（ボレル集合、測度、積分）を整理する。
+2. **凸集合・凸関数**と分離定理が最適化にどう使われるかを理解する。
+3. **確率論とSDP**の定義を明確にし、量子情報への接続を見通す。
+
+:::
+
+### Analysis and convexity (解析学と凸性) [📄 p.35](assets/Quantum_Information.pdf#page=43) {#analysis-and-convexity}
 
 量子情報の解析に必要な、解析学と凸解析の基本的な概念をまとめます。
 
@@ -12,6 +19,25 @@
 *   **閉集合 (Closed Set)**: 補集合 $\mathcal{V} \setminus \mathcal{A}$ が開集合であるとき、$\mathcal{A}$ を閉集合と呼びます。
 *   **コンパクト集合 (Compact Set)**: 有限次元ベクトル空間において、閉かつ有界な集合はコンパクトです（ハイネ・ボレルの被覆定理）。コンパクト集合上の連続関数は、必ず最大値と最小値を持ちます。
 
+#### ボレル集合と測度 (Borel sets and measures)
+
+* **ボレル集合** $\mathrm{Borel}(\mathcal{A})$: 開集合から生成される $\sigma$-加法族。
+* **測度** $\mu$: 非負で $\sigma$-加法性を満たす写像 $\mu:\mathrm{Borel}(\mathcal{A}) \to [0,\infty]$。
+* **確率測度**: $\mu(\mathcal{A})=1$ を満たす測度。
+
+#### 積分の基本性質 (Integration)
+
+積分は測度と可積分関数 $f:\mathcal{A}\to\mathbb{R}$ に対して定義され、特に次が重要です。
+
+1. **線形性**:
+   $$ \int (\alpha f + \beta g)\,d\mu = \alpha \int f\,d\mu + \beta \int g\,d\mu $$ {#eq-int-linearity}
+2. **標準ボレル測度の省略記法**:
+   $$ \int f(\alpha)\,d\alpha = \int f(\alpha)\,d\lambda(\alpha) $$ {#eq-int-standard}
+3. **部分集合での積分**:
+   $$ \int_C f\,d\mu = \int f\,\mathbf{1}_C\,d\mu $$ {#eq-int-subset}
+4. **Fubini の定理**:
+   $$ \int\!\left(\int f(u,v)\,d\mu_0(u)\right)\!d\mu_1(v) = \int f(u,v)\,d(\mu_0\otimes\mu_1)(u,v) $$ {#eq-int-fubini}
+
 #### 凸集合と分離定理
 
 ::: {#def-convex-set}
@@ -21,27 +47,78 @@
 
 :::
 
+#### 凸錐・凸関数
+
+* **円錐 (Cone)**: $K \subseteq \mathcal{V}$ が $u\in K,\,\lambda\ge 0$ なら $\lambda u\in K$ を満たすとき、$K$ は円錐。
+* **凸錐 (Convex cone)**: 円錐かつ凸集合。
+* **凸関数** $f:\mathcal{C}\to\mathbb{R}$:  
+  $$ f(\lambda u + (1-\lambda)v) \le \lambda f(u) + (1-\lambda) f(v). $$
+  連続な中点凸関数は凸関数と一致します。
+
+#### 凸包と確率ベクトル
+
+アルファベット $\Sigma$ に対し、確率ベクトル $p \in \mathbb{R}^\Sigma$ は
+$$
+p(a)\ge 0,\quad \sum_{a\in\Sigma} p(a)=1
+$$ {#eq-prob-vector}
+を満たすものです。
+
+集合 $A \subseteq \mathcal{V}$ の**凸包**は
+$$
+\mathrm{conv}(A) = \left\{\sum_{a\in\Sigma} p(a)u_a : p\in P(\Sigma),\, u_a\in A\right\}
+$$ {#eq-convex-combination}
+で与えられます。
+
+#### カラテオドリとミンコフスキー
+
+::: {#thm-caratheodory}
+## Carathéodory の定理
+次元 $n$ のアフィン部分空間に含まれる集合 $A$ に対して、任意の $v\in \mathrm{conv}(A)$ は高々 $n+1$ 個の点の凸結合で表せる。
+
+:::
+
+::: {#thm-minkowski}
+## Minkowski の定理
+有限次元のコンパクト凸集合 $C$ は、その極点集合 $A$ の凸包で表される：$C=\mathrm{conv}(A)$。
+
+:::
+
+#### 代表例（極点の例）
+
+1. **スペクトルノルム単位球**: $\{X : \|X\|\le 1\}$ の極点はユニタリ演算子。
+2. **トレースノルム単位球**: 極点はランク1演算子 $u v^\dagger$。
+3. **密度演算子の集合** $\mathrm{D}(\mathcal{X})$: 極点は純粋状態 $|u\rangle\langle u|$。
+4. **確率単体** $P(\Sigma)$: 極点は標準基底 $e_a$。
+
 凸集合に関する重要な定理として、以下があります。
 
 ::: {#thm-separating-hyperplane}
 ## 分離超平面定理 (Separating Hyperplane Theorem)
 
-2つの交じり合わない凸集合 $\mathcal{C}, \mathcal{D}$ （少なくとも一方はコンパクト、他方は閉など条件あり）に対し、それらを分離する超平面が存在します。
+実ベクトル空間 $V$ の閉凸集合 $\mathcal{C}$ と点 $u\notin \mathcal{C}$ に対し、ある $v\in V$ と $\alpha\in\mathbb{R}$ が存在して
+$$
+\langle v, u\rangle < \alpha \le \langle v, w\rangle \quad (\forall w\in\mathcal{C})
+$$ {#eq-separating-hyperplane}
+が成り立つ。特に $\mathcal{C}$ が円錐なら $\alpha=0$ を選べます。
 
 :::
 
 ::: {#thm-sion-minimax}
 ## シオンのミニマックス定理 (Sion's Min-Max Theorem)
 
-$\mathcal{A}$ をコンパクト凸集合、$\mathcal{B}$ を凸集合とし、関数 $f: \mathcal{A} \times \mathcal{B} \to \mathbb{R}$ が
-1.  各 $v \in \mathcal{B}$ に対し $u \mapsto f(u, v)$ が上半連続かつ準凹 (quasi-concave)
-2.  各 $u \in \mathcal{A}$ に対し $v \mapsto f(u, v)$ が下半連続かつ準凸 (quasi-convex)
-であるとき、以下が成立します。
-$$ \max_{u \in \mathcal{A}} \min_{v \in \mathcal{B}} f(u, v) = \min_{v \in \mathcal{B}} \max_{u \in \mathcal{A}} f(u, v) $$
+$\mathcal{A}$ をコンパクト凸集合、$\mathcal{B}$ を凸集合とし、$f:\mathcal{A}\times\mathcal{B}\to\mathbb{R}$ が
+1. $u\mapsto f(u,v)$ は凸（各 $v$ 固定）、  
+2. $v\mapsto f(u,v)$ は凹（各 $u$ 固定）、  
+かつ適当な連続性条件を満たすとき、
+$$
+\inf_{u\in\mathcal{A}} \max_{v\in\mathcal{B}} f(u,v)
+= \max_{v\in\mathcal{B}} \inf_{u\in\mathcal{A}} f(u,v)
+$$ {#eq-sion-minimax}
+が成り立つ。
 
 :::
 
-### Probability theory (確率論) [📄 p.47](Quantum_Information.pdf#page=55) {#probability-theory}
+### Probability theory (確率論) [📄 p.47](assets/Quantum_Information.pdf#page=55) {#probability-theory}
 
 本書では、測度論に基づく確率論の定義を採用します。
 
@@ -49,7 +126,62 @@ $$ \max_{u \in \mathcal{A}} \min_{v \in \mathcal{B}} f(u, v) = \min_{v \in \math
 *   **測度 (Measure)**: ボレル集合上に定義された非負の関数 $\mu$ で、$\sigma$-加法性（互いに素な集合列の和集合の測度が、各測度の和になる性質）を満たすもの。
 *   **確率測度 (Probability Measure)**: 全空間の測度が 1 である測度。$\mu(\mathcal{V}) = 1$。
 
-### Semidefinite programming (半正定値計画法) [📄 p.53](Quantum_Information.pdf#page=61) {#semidefinite-programming}
+#### ランダム変数と期待値
+
+確率測度 $\mu$ に従う**ランダム変数**は可積分な Borel 関数 $X:\mathcal{A}\to\mathbb{R}$ であり、
+$$
+\Pr(X\in B)=\mu(\{u\in\mathcal{A}:X(u)\in B\})
+$$ {#eq-rv-prob}
+と定義されます。期待値は
+$$
+\mathbb{E}(X)=\int X(u)\,d\mu(u)
+$$ {#eq-expectation}
+で与えられます。
+
+有限集合 $\Sigma$ と確率ベクトル $p$ に対しては
+$$
+\Pr(X\in S)=\sum_{a\in S}p(a),\qquad
+\mathbb{E}(X)=\sum_{a\in\Sigma}p(a)X(a)
+$$ {#eq-discrete-prob-expect}
+となります。
+
+#### 基本的な不等式と定理
+
+* **Union bound**:
+  $$\Pr(X\in B_1\cup\cdots\cup B_n)\le \sum_{k=1}^n \Pr(X\in B_k).$$
+
+* **Markov の不等式**:
+  $$\Pr(X\ge a)\le \frac{\mathbb{E}(X)}{a}\quad(a>0).$$ {#eq-markov}
+
+* **Jensen の不等式**:
+  $$f(\mathbb{E}(X))\le \mathbb{E}(f(X)) \quad (f:\text{凸関数}).$$ {#eq-jensen}
+
+* **弱法則（LLN）**:
+  $$\frac{1}{n}\sum_{k=1}^n X_k \to \mathbb{E}(X) \quad (n\to\infty).$$ {#eq-lln}
+
+* **Hoeffding の不等式**:
+  $$\Pr\!\left(\left|\frac{1}{n}\sum_{k=1}^n X_k-\mu\right|\ge \varepsilon\right)\le 2e^{-2n\varepsilon^2}.$$ {#eq-hoeffding}
+
+#### 正規分布とガウス測度
+
+標準ガウス測度は
+$$
+\gamma(A)=\frac{1}{\sqrt{2\pi}}\int_A e^{-x^2/2}\,dx
+$$ {#eq-gaussian-measure}
+で定義されます。多変量版は積測度 $\gamma^n$ として定義され、直交変換に対して不変です。
+
+$$
+\gamma^n(UA) = \gamma^n(A)
+$$ {#eq-gaussian-invariance}
+
+::: {.physics-notes title="量子情報との接続"}
+確率ベクトル $p$ は古典状態の集合 $P(\Sigma)$ を与え、  
+密度演算子の集合と同様に凸集合を成します。  
+この凸構造が「混合状態」や「アンサンブル」の解析で重要になります。
+
+:::
+
+### Semidefinite programming (半正定値計画法) [📄 p.53](assets/Quantum_Information.pdf#page=61) {#semidefinite-programming}
 
 半正定値計画法 (SDP) は、線形計画法 (LP) を半正定値行列の空間へと拡張した最適化問題であり、量子情報の多くの問題（状態識別、通信路容量など）において中心的な役割を果たします。
 
@@ -61,9 +193,11 @@ SDPは、以下の3つ組 $(\Phi, A, B)$ によって定義されます。
 2.  **制約演算子**: $A \in \mathrm{Herm}(\mathcal{X})$
 3.  **定数演算子**: $B \in \mathrm{Herm}(\mathcal{Y})$
 
-これに対し、以下の**実行可能集合 (Feasible Sets)** を定義します（式1.281）。
-- **主実行可能集合**: $\mathcal{A} = \{ X \in \mathrm{Pos}(\mathcal{X}) : \Phi(X) = B \}$
-- **双対実行可能集合**: $\mathcal{B} = \{ Y \in \mathrm{Herm}(\mathcal{Y}) : \Phi^*(Y) \geq A \}$
+これに対し、以下の**実行可能集合 (Feasible Sets)** を定義します。
+- **主実行可能集合**:
+  $$ \mathcal{A} = \{ X \in \mathrm{Pos}(\mathcal{X}) : \Phi(X) = B \} $$ {#eq-sdp-primal-feasible}
+- **双対実行可能集合**:
+  $$ \mathcal{B} = \{ Y \in \mathrm{Herm}(\mathcal{Y}) : \Phi^*(Y) \geq A \} $$ {#eq-sdp-dual-feasible}
 
 **最適値 (Optimum Values)** は以下で与えられます。
 - **主最適値**: $\alpha = \sup \{ \langle A, X \rangle : X \in \mathcal{A} \}$
@@ -83,6 +217,25 @@ $$ \text{maximize} \quad \frac{1}{2}\langle K, Z \rangle + \frac{1}{2}\langle K^
 
 **双対問題**:
 $$ \text{minimize} \quad \frac{1}{2}\mathrm{Tr}(X) + \frac{1}{2}\mathrm{Tr}(Y) \quad \text{subject to} \quad \begin{pmatrix} X & -K^\dagger \\ -K & Y \end{pmatrix} \geq 0, \ X \geq 0, Y \geq 0 $$
+
+:::
+
+::: {#exm-inequality-sdp}
+## 不等式制約付きSDP (Example 1.21)
+
+線形写像 $\Phi:\mathrm{L}(\mathcal{X})\to \mathrm{L}(\mathcal{Y})$ と $\Psi:\mathrm{L}(\mathcal{X})\to \mathrm{L}(\mathcal{Z})$ に対し、次の形式の SDP を考えます。
+
+**主問題**:
+$$
+\text{maximize } \langle A, X\rangle \quad
+\text{subject to } \Phi(X)=B,\ \Psi(X)\le C,\ X\ge 0
+$$
+
+**双対問題**:
+$$
+\text{minimize } \langle B, Y\rangle + \langle C, Z\rangle \quad
+\text{subject to } \Phi^*(Y)+\Psi^*(Z)\ge A,\ Y\in \mathrm{Herm}(\mathcal{Y}),\ Z\ge 0
+$$
 
 :::
 
