@@ -20,6 +20,12 @@
 - **ロジック**: PDFへのリンクは「物理ページ番号」を使用します。
 - **計算式**: `物理ページ` = `本の表記ページ` + `8`。
 - **リンク形式**: `[📄 p.9](assets/Quantum_Information.pdf#page=17)` （例: 本のページが9の場合、物理ページ17へリンク）。
+### 4. テンプレート・システム (Templates)
+執筆の効率と品質を維持するために、2種類の標準テンプレートを用意しています。
+- **場所**: `quarto/templates/`
+- **実戦用**: `quantum_textbook_template.qmd` (章や節の新規作成時にコピーして使用)
+- **部品集**: `quarto_feature_showcase.qmd` (複雑なレイアウトやパーツの書き方を確認・コピーする際に使用)
+- **ルール**: 新しくノートを作成する際は、必ず `quantum_textbook_template.qmd` の構成（PDFリンク、対応表、ポイント等）をベースにしてください。
 
 ## 💎 ノート品質ガイドライン (Quality Standards)
 
@@ -58,15 +64,19 @@ AIエージェントとして新しいノートを作成または編集する場
     ```bash
     # ページ範囲を指定して抽出 (例: 5ページから10ページ)
     uv run python extract_pdf.py docs/divided/Chapter3_Distance.pdf --start 5 --end 10
-    ```
+## Content Creation Workflow
 
-2.  **内容の反映**:
-    抽出したテキストに基づき、正確な数式や定義をノートに反映してください。
-    OCRの誤認識（文字化け）がある場合は、文脈から正しい数式を推測して修正してください。
+1.  **PDF Extraction**:
+    - Use both `tools/extract_pdf.py` (for searchable text) and the `view_file` tool (for high-fidelity visual check of formulas, diagrams, and layout).
+    - Meticulously cross-reference both outputs to ensure technical terms and mathematical symbols are transcribed exactly.
+2.  **Modular QMD Creation**: Create or update partial files (`_*.qmd`) in `quarto/textbook/chapter[N]/`.
+3.  **Cross-linking**: Maintain absolute links to the source PDF and relative links between textbook/notes.
+4.  **Verification**: Always run `just check` to ensure formatting, math, and Mermaid validity.
 
 ## 教科書解説の追加 (Adding New Textbook Content)
-1.  **断片ファイルの作成**: `quarto/textbook/chapterX/_new-section.qmd` を作成します。
-2.  **インクルード**: `quarto/textbook.qmd` の適切な場所に `{{< include textbook/chapterX/_new-section.qmd >}}` を追加します。
+1.  **テンプレートの準備**: `quarto/templates/quantum_textbook_template.qmd` の内容をコピーし、新しい断片ファイル `quarto/textbook/chapterX/_new-section.qmd` を作成します。
+2.  **YAMLの削除**: **重要: 断片ファイルからは必ず YAML ヘッダーを削除してください。**
+3.  **インクルード**: `quarto/textbook.qmd` の適切な場所に `{{< include textbook/chapterX/_new-section.qmd >}}` を追加します。
 3.  **ロードマップの更新**: `quarto/index.qmd` の表に行を追加します。
     - カラム構成: `| 項目名 | 原文 PDF | 教科書解説 |`
     - 教科書解説へのリンクは `[📖 Textbook](textbook.qmd#new-anchor)` とします。
