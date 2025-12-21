@@ -83,6 +83,64 @@
 /* タイポグラフィ（モダンフォントへのフォールバック） */
 body {
   font-family: 'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.7;
+}
+
+/* ドキュメント全体の余白調整 */
+.quarto-title,
+.quarto-title-meta,
+.quarto-title-block {
+  margin-bottom: 2rem;
+}
+
+/* パラグラフの間隔 */
+p {
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+}
+
+/* リストの間隔 */
+ul, ol {
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* コンテンツブロックの間隔 */
+div.cell, div.section {
+  margin-bottom: 2rem;
+}
+
+/* 表の余白 */
+table {
+  margin: 1.5rem 0;
+}
+
+/* 数式の余白 */
+.math-display {
+  margin: 1.5rem 0;
+}
+
+/* 見出しの可読性を軽く改善 */
+h1,
+h2,
+h3 {
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #111827;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+/* レベル4見出しを強調 */
+h4 {
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #374151;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  font-weight: 600;
 }
 
 /* 証明ブロックの記号 */
@@ -90,4 +148,35 @@ body {
   content: "■";
   float: right;
   color: #9ca3af;
+}
+
+.scenario-note {
+  position: relative;
+  border-left: 4px solid #2563eb;
+  background: #eff6ff;
+  padding: 1rem 1.2rem 0.9rem 1.2rem;
+  border-radius: 0.35rem;
+  margin: 1.25rem 0;
+}
+
+.scenario-note::before {
+  content: "📘 " attr(title);
+  font-weight: 700;
+  color: #1d4ed8;
+  display: block;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.01em;
+}
+
+/* 見出し番号: レベル1は表示のみ隠す（番号自体は維持） */
+h1 .header-section-number {
+  display: none;
+}
+
+#TOC li.toc-level-1 > a > span.toc-section-number {
+  display: none;
+}
+
+#TOC li.toc-level-1 > a {
+  padding-left: 0;
 }

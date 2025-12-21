@@ -91,7 +91,7 @@ clean:
 # Quarto文書のプレビュー
 docs:
     @echo "📖 Starting Quarto preview..."
-    {{pm}} run quarto preview quarto/
+    {{pm}} run quarto preview quarto/ --port 4312 --render html
 
 # Streamlitアプリの起動
 app path:

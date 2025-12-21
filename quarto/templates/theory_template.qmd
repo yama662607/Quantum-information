@@ -220,7 +220,7 @@ plt.show()
 : 対応表 {#tbl-mapping}
 <!-- 表に参照ラベルを付与 -->
 
-表 @tbl-mapping を参照してください。
+<!-- 表を参照する場合は @tbl-mapping のように記述します -->
 <!-- @tbl-XXX で表を参照 -->
 
 ## 確認クイズ (Check)
