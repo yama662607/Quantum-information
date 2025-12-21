@@ -9,13 +9,13 @@
 
 このプロジェクトの Quarto 活用において、特に流用価値の高いコア要素は以下の通りです。
 
-### 1.1 `docs/_quarto.yml` (統合設定)
+### 1.1 `quarto/_quarto.yml` (統合設定)
 Quarto の挙動を定義するプロジェクト全体の設計図です。
 - **マルチフォーマット対応**: モダンな HTML テーマ (`cosmo`)、サイドバーナビゲーション、目次（TOC）の自動生成。
 - **日本語対応**: `lang: ja` 設定による UI の日本語化。
 - **高度な MD 機能**: コードの折りたたみ (`code-fold: true`)、コードツール、外部リンクの別窓表示、スムーズスクロール。
 
-### 1.2 `docs/templates/theory_template.qmd` (理論用テンプレート)
+### 1.2 `quarto/templates/theory_template.qmd` (理論用テンプレート)
 学習・解説ドキュメントの質を担保する強力なボイラープレートです。
 - **Mermaid 統合**: フローチャートやシーケンス図をテキストベースで記述可能。
 - **Python コード実行**: ドキュメント内で Python を実行し、結果やグラフを直接埋め込み。
@@ -32,14 +32,14 @@ Quarto の挙動を定義するプロジェクト全体の設計図です。
 ## 2. 他プロジェクトへの導入ステップ
 
 ### ステップ 1: Quarto のインストール
-事前に [Quarto 公式サイト](https://quarto.org/docs/get-started/) から CLI をインストールしてください。
+事前 [Quarto 公式サイト](https://quarto.org/docs/get-started/) から CLI をインストールしてください。
 
 ### ステップ 2: ディレクトリ構造のコピー
 以下の構造をプロジェクト内に作成することをお勧めします。
 
 ```bash
 .
-├── docs/                # Quarto ドキュメントのメインディレクトリ
+├── quarto/                # Quarto ドキュメントのメインディレクトリ
 │   ├── _quarto.yml     # プロジェクト設定
 │   ├── index.qmd       # トップページ
 │   ├── templates/      # 今回の templates/theory_template.qmd をここに配置
@@ -51,11 +51,11 @@ Quarto の挙動を定義するプロジェクト全体の設計図です。
 ```
 
 ### ステップ 3: 設定ファイルの編集
-`docs/_quarto.yml` をコピーし、プロジェクトに合わせて以下の項目を編集します。
+`quarto/_quarto.yml` をコピーし、プロジェクトに合わせて以下の項目を編集します。
 - `project > output-dir`: ビルド結果の出力先。
 - `website > navbar`: 上部ナビゲーション。
 - `website > sidebar > contents`: サイドメニューの構成。
-- `format > html > css`: カスタムスタイル（`docs/templates/styles.css` を参照）。
+- `format > html > css`: カスタムスタイル（`quarto/templates/styles.css` を参照）。
 
 ---
 
@@ -68,7 +68,7 @@ Quarto の挙動を定義するプロジェクト全体の設計図です。
 これにより、環境が変わってもドキュメントの再レンダリングが高速化され、再現性が保たれます。
 
 ### 🎨 カスタム CSS による装飾
-`docs/templates/styles.css` を通じて、標準の Quarto には無いスタイルを適用しています。
+`quarto/templates/styles.css` を通じて、標準の Quarto には無いスタイルを適用しています。
 - **Callout ボックスの調整**: ヒントや警告の余白を最適化。
 - **コード強調**: フォントや背景色の微調整。
 
@@ -94,9 +94,9 @@ dependencies = [
 
 ## まとめ：何を持ち出すべきか？
 
-1.  **`docs/_quarto.yml`**: プロジェクト全体の見た目と構造を一瞬で整えるため。
-2.  **`docs/templates/theory_template.qmd`**: 質の高いドキュメントを量産する「型」として。
-3.  **`docs/templates/styles.css`**: デザインの微調整を継承するため。
+1.  **`quarto/_quarto.yml`**: プロジェクト全体の見た目と構造を一瞬で整えるため。
+2.  **`quarto/templates/theory_template.qmd`**: 質の高いドキュメントを量産する「型」として。
+3.  **`quarto/templates/styles.css`**: デザインの微調整を継承するため。
 4.  **`templates/apps/visualization/`**: 可視化コードをドキュメントとアプリで共有するアーキテクチャ。
 
 これらを流用することで、どのプロジェクトでも「見てわかる、動かしてわかる」高品質なドキュメント環境を数分で構築できます。

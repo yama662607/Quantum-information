@@ -91,7 +91,7 @@ clean:
 # Quarto文書のプレビュー
 docs:
     @echo "📖 Starting Quarto preview..."
-    {{pm}} run quarto preview docs/
+    {{pm}} run quarto preview quarto/
 
 # Streamlitアプリの起動
 app path:
@@ -101,7 +101,7 @@ app path:
 # 統合ドキュメント検証 (Quarto, Mermaid, LaTeX)
 validate-docs:
     @echo "🔍 Running integrated document validation..."
-    {{python}} tools/validate_docs.py docs/
+    {{python}} tools/validate_docs.py quarto/
 
 # 検証キャッシュのクリア
 clear-validation-cache:

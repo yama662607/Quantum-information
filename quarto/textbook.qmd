@@ -1,0 +1,25 @@
+---
+title: "The Theory of Quantum Information: Notes"
+number-sections: true
+number-depth: 3
+toc: true
+toc-depth: 3
+---
+
+# Chapter 1: Mathematical Preliminaries {#chapter-1}
+
+{{< include textbook/chapter1/_1.1-linear-algebra.qmd >}}
+
+{{< include textbook/chapter1/_1.2-analysis.qmd >}}
+
+# Chapter 2: Basic Notions {#chapter-2}
+
+{{< include textbook/chapter2/_2.1-registers-and-states.qmd >}}
+
+{{< include textbook/chapter2/_2.2-quantum-channels.qmd >}}
+
+{{< include textbook/chapter2/_2.3-measurements.qmd >}}
+
+# Chapter 3: Similarity and distance among states and channels {#chapter-3}
+
+{{< include textbook/chapter3/_3.1-quantum-state-discrimination.qmd >}}

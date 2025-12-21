@@ -13,7 +13,7 @@ from typing import List, Dict, Any
 # --- Configuration ---
 NODE_SCRIPT_PATH = os.path.join(os.path.dirname(__file__), "mermaid_parser.js")
 CACHE_FILE = os.path.join(os.path.dirname(__file__), ".validation_cache.json")
-DOCS_DIR = "docs"
+DOCS_DIR = "quarto"
 MERMAID_PATTERN = re.compile(r"```\{mermaid\}(.*?)```", re.DOTALL | re.IGNORECASE)
 LATEX_INLINE_PATTERN = re.compile(r"(?<!\\)\$(?!\$)(.*?)(?<!\\)\$", re.DOTALL)  # $...$
 LATEX_BLOCK_PATTERN = re.compile(r"\$\$(.*?)\$\$", re.DOTALL)  # $$...$$

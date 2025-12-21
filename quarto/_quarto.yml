@@ -23,10 +23,10 @@ website:
         - section: "量子情報"
           contents:
             - index.qmd
-            - section: "数理解説 (Theory)"
+            - section: "教科書解説 (Textbook)"
               contents:
-                - text: "Lecture Theory (All Chapters)"
-                  href: theory.qmd
+                - text: "Textbook Theory (All Chapters)"
+                  href: textbook.qmd
         - section: "サポート"
           contents:
             - support/index.qmd
