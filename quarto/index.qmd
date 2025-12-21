@@ -1,18 +1,12 @@
 ---
 title: "The Theory of Quantum Information"
-subtitle: "数学的基礎から量子情報の本質へ"
+subtitle: "John Watrous『The Theory of Quantum Information』学習ロードマップ"
 page-layout: full
 toc: true
-title-block-banner: true
-description: "John Watrous『The Theory of Quantum Information』の学習ロードマップと詳細解説。"
 ---
 
-::: {.column-screen}
-![Quantum Information Explorer](assets/hero.png){fig-alt="Quantum Information Abstract Visualization" style="width: 100%; height: 350px; object-fit: cover; filter: brightness(0.8);"}
-:::
-
 ::: {.callout-note appearance="simple"}
-John Watrous『The Theory of Quantum Information』の内容を数学的に厳密、かつ視覚的に理解するためのパーソナル学習・解説リサーチ環境です。
+John Watrous『The Theory of Quantum Information』の内容を数学的に厳密、かつ視覚的に理解するための学習・解説リサーチ環境です。
 :::
 
 ## 🗺️ ロードマップ (Textbook Roadmap)
