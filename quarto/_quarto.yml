@@ -27,9 +27,13 @@ website:
               contents:
                 - text: "Textbook Theory (All Chapters)"
                   href: textbook.qmd
-        - section: "サポート"
+        - section: "サポート (Support)"
           contents:
             - support/index.qmd
+            - text: "Quarto機能ショーケース"
+              href: templates/quarto_feature_showcase.qmd
+            - text: "教科書テンプレート"
+              href: templates/quantum_textbook_template.qmd
 
   page-navigation: true
 

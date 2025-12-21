@@ -4,20 +4,25 @@ title: "サポート & ガイド"
 
 プロジェクトの運用や環境構築に関するドキュメントと、学習用テンプレートをまとめています。
 
-## 学習テンプレート
+## 学習テンプレート (Templates)
 
-以下のリンクからテンプレートのプレビューを確認できます。
-ソースコードを確認・コピーしたい場合は、各ページ右上の **`</> Code`** ボタンをクリックしてください。
+新しい章の作成や機能の確認に使用できるテンプレートです。各ページ右上の **`</> Code`** ボタンからソースをコピーできます。
 
-### 📐 数理特化テンプレート
-数学的な定義、定理、証明のロジックに重点を置いたテンプレートです。John Watrous本の学習に最適化されています。
+### 📘 量子情報教科書テンプレート (Textbook Template)
+**本プロジェクトの執筆に特化**した実戦用テンプレートです。物理学との対応表、重要ポイント、PDFリンクの標準化などが含まれています。
 
-[👉 テンプレートを開く (Preview)](../templates/math_focused_template.qmd){.btn .btn-success}
+[👉 テンプレートを開く (Preview)](../templates/quantum_textbook_template.qmd){.btn .btn-primary}
 
-### 🔄 V-S-V テンプレート
-Visual (可視化) → Scratch (実装) → Verify (検証) のサイクルを回すための汎用テンプレートです。
+### 🎡 Quarto 機能ショーケース (Feature Showcase)
+Quarto の**全機能を網羅した部品集**です。マージンノート、複合図表、コード注釈などの書き方を確認・コピペする際に便利です。
 
-[👉 テンプレートを開く (Preview)](../templates/theory_template.qmd){.btn .btn-info}
+[👉 ショーケースを開く (Preview)](../templates/quarto_feature_showcase.qmd){.btn .btn-success}
+
+### 📐 数理・理論テンプレート (Legacy)
+過去に作成された数理・理論学習用のテンプレートです。
+
+*   [数理特化テンプレート](../templates/math_focused_template.qmd)
+*   [V-S-V 理論テンプレート](../templates/theory_template.qmd)
 
 ---
 
