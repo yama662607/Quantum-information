@@ -69,4 +69,4 @@ format:
       gutter-width: 1.5rem
 
 execute:
-  freeze: false
+  freeze: auto
