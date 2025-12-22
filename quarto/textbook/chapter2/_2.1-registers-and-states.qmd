@@ -123,6 +123,168 @@ $$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
 
 複合系 $(X, Y)$ の状態 $\rho$ から $X$ だけを取り出した状態は $\rho^X = \mathrm{Tr}_{\mathcal{Y}}(\rho)$ と書かれます。
 
+
+::: {#exm-maximally-entangled}
+## 最大絡み合い状態 (Maximally Entangled State)
+空間 $\mathcal{X} \otimes \mathcal{Y}$（$\mathcal{X}, \mathcal{Y} \cong \mathbb{C}^\Sigma$）上の状態
+$$ u = \frac{1}{\sqrt{|\Sigma|}} \sum_{a \in \Sigma} e_a \otimes e_a $$
+は、どちらかの系をトレースアウトすると完全に混合した状態 $1/|\Sigma| \mathbb{I}$ になる、最大絡み合い状態の典型的な例です（式2.35）。
+
+**詳細な計算：2量子ビット系（$|\Sigma|=2$）**
+
+まず、計算基底（標準基底）を明示します。
+$$
+e_0 = \begin{pmatrix} 1 \\ 0 \end{pmatrix},\qquad
+e_1 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+$$
+
+Example 2.8（式 2.35）で与えられる状態は
+$$
+u = \frac{1}{\sqrt{2}} \sum_{a\in\{0,1\}} e_a \otimes e_a
+= \frac{1}{\sqrt{2}} \left( e_0 \otimes e_0 + e_1 \otimes e_1 \right)
+$$
+と書けるので、各テンソル積を列ベクトルとして具体的に評価します。
+$$
+e_0 \otimes e_0 =
+\begin{pmatrix} 1 \\ 0 \end{pmatrix} \otimes \begin{pmatrix} 1 \\ 0 \end{pmatrix}
+= \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix},
+\qquad
+e_1 \otimes e_1 =
+\begin{pmatrix} 0 \\ 1 \end{pmatrix} \otimes \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+= \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \end{pmatrix}
+$$
+
+1.  **全体系の状態ベクトル**:
+    $$ u = \frac{1}{\sqrt{2}} \left( e_0 \otimes e_0 + e_1 \otimes e_1 \right) = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 0 \\ 0 \\ 1 \end{pmatrix} $$
+
+2.  **密度演算子 $\rho$ の導出（2通りの方法）**
+
+    **方法A：ベクトル積としての計算**
+    列ベクトル $u$ と行ベクトル $u^*$ の積（外積）を直接計算します。まず、
+    $$
+    u = \frac{1}{\sqrt{2}}
+    \begin{pmatrix}
+    1 \\ 0 \\ 0 \\ 1
+    \end{pmatrix},
+    \qquad
+    u^* = \frac{1}{\sqrt{2}}
+    \begin{pmatrix}
+    1 & 0 & 0 & 1
+    \end{pmatrix}
+    $$
+    となるので、
+    $$
+    \rho = uu^* = \frac{1}{2}
+    \begin{pmatrix}
+    1 \\ 0 \\ 0 \\ 1
+    \end{pmatrix}
+    \begin{pmatrix}
+    1 & 0 & 0 & 1
+    \end{pmatrix}
+    = \frac{1}{2}
+    \begin{pmatrix}
+    1 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    1 & 0 & 0 & 1
+    \end{pmatrix}
+    $$
+    行列の各要素は、$u$ の第 $i$ 成分と $u^*$ の第 $j$ 成分の積 $u_i \overline{u_j}$ として得られます。したがって非零成分は $(i,j) \in \{(1,1),(1,4),(4,1),(4,4)\}$ の4箇所だけになり、ブロック $\begin{psmallmatrix}1 & 1 \\ 1 & 1\end{psmallmatrix}$ が 2×2 のブロック対角に現れる形で $\rho$ が完成します。
+
+    **方法B：テンソル積展開による計算**
+
+    $$
+    uu^*=\frac{1}{2}\sum_{a,b\in\{0,1\}} \left(|e_a\rangle\langle e_b|\otimes |e_a\rangle\langle e_b|\right)
+    $$
+
+    まず、$|e_a\rangle\langle e_b|$ の $2\times 2$ 行列表現を
+    $$
+    E_{a,b} = |e_a\rangle\langle e_b| =
+    \begin{cases}
+    \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, & (a,b)=(0,0) \\
+    \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, & (a,b)=(0,1) \\
+    \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}, & (a,b)=(1,0) \\
+    \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}, & (a,b)=(1,1)
+    \end{cases}
+    $$
+    と整理します。テンソル積は「左行列の各成分に右行列全体を掛ける」ことで計算でき、4つの項は次のようになります。
+
+    1.  **$(a,b)=(0,0)$**：
+        $$
+        E_{0,0}\otimes E_{0,0}=
+        \begin{pmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0
+        \end{pmatrix}
+        $$
+
+    2.  **$(a,b)=(0,1)$**：
+        $$
+        E_{0,1}\otimes E_{0,1}=
+        \begin{pmatrix}
+        0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0
+        \end{pmatrix}
+        $$
+
+    3.  **$(a,b)=(1,0)$**：
+        $$
+        E_{1,0}\otimes E_{1,0}=
+        \begin{pmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        1 & 0 & 0 & 0
+        \end{pmatrix}
+        $$
+
+    4.  **$(a,b)=(1,1)$**：
+        $$
+        E_{1,1}\otimes E_{1,1}=
+        \begin{pmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1
+        \end{pmatrix}
+        $$
+
+    以上を足し合わせて $\frac{1}{2}$ を掛けると、
+
+    $$
+    uu^*=\frac{1}{2}\begin{pmatrix}
+    1 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    1 & 0 & 0 & 1
+    \end{pmatrix}
+    $$
+
+    となり、**方法Aの結果と完全に一致します**。行列の四隅に $1$ が現れる様子が、$\sum_{a,b}$ の各項で順に埋まっていくと解釈できます。
+
+3.  **部分トレース（縮約）**
+    レジスタ $Z$ をトレースアウトします（行列を $2 \times 2$ ブロックに分割して対角和をとります）。
+    $$
+    \rho^Y = \mathrm{Tr}_Z(\rho) =
+    \begin{pmatrix}
+    \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}\right] & \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}\right] \\
+    \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}\right] & \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}\right]
+    \end{pmatrix}
+    = \begin{pmatrix} 1/2 & 0 \\ 0 & 1/2 \end{pmatrix}
+    $$
+
+4.  **結果とランクによる考察**
+
+    *   **元の状態（全体系）**: ベクトル $u$ で記述できるため、ランクは **1** です（純粋状態）。
+    *   **縮約後の状態（部分系）**: 結果は $\rho^Y = \frac{1}{2}\mathbb{I}$ であり、固有値は $1/2, 1/2$ です。したがってランクは **2** となります（混合状態）。
+
+    ランクが 1 から 2 へと増加したことは、縮約操作によって「純粋性が失われた（混合状態になった）」ことを数学的に示しています。これはエンタングルメントによって情報が全体系の相関の中に分散してしまい、部分系だけを見ても完全な情報が得られないことを意味します。
+
+:::
 ::: {.callout-note}
 ## 直感的な理解：情報の破棄
 
@@ -164,66 +326,35 @@ $$ \dim(\mathcal{Y}) \geq \mathrm{rank}(P) $$
 
 :::
 
-**証明の概略**:
-$\rho$ のスペクトル分解を $\rho = \sum \lambda_k x_k x_k^*$ とします。$\mathcal{Y}$ の正規直交集合 $\{y_k\}$ を用いて $A = \sum \sqrt{\lambda_k} x_k y_k^*$ と定義すれば、$u = \mathrm{vec}(A)$ が求める純粋化になります。実際、$\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(A)^*) = AA^* = \rho$ となり、条件を満たします。
+**証明**:
 
-また、2つの純粋化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のあるユニタリ $U$ によって $v = (\mathbb{I}_{\mathcal{X}} \otimes U)u$ と結ばれます（**純粋化のユニタリ同値性**、Theorem 2.12）。
+1.  **スペクトル分解**:
+    $P$ は半正定値演算子なので、スペクトル分解可能です。ランクを $r = \mathrm{rank}(P)$ とすると、正の固有値 $\lambda_1, \dots, \lambda_r$ と対応する正規直交固有ベクトル $x_1, \dots, x_r \in \mathcal{X}$ を用いて次のように書けます。
+    $$ P = \sum_{k=1}^r \lambda_k x_k x_k^* $$
 
-::: {#exm-maximally-entangled}
-## 最大絡み合い状態 (Maximally Entangled State)
-空間 $\mathcal{X} \otimes \mathcal{Y}$（$\mathcal{X}, \mathcal{Y} \cong \mathbb{C}^\Sigma$）上の状態
-$$ u = \frac{1}{\sqrt{|\Sigma|}} \sum_{a \in \Sigma} e_a \otimes e_a $$
-は、どちらかの系をトレースアウトすると完全に混合した状態 $1/|\Sigma| \mathbb{I}$ になる、最大絡み合い状態の典型的な例です（式2.35）。
+2.  **補助系の準備と純粋化の構成**:
+    条件 $\dim(\mathcal{Y}) \ge \mathrm{rank}(P) = r$ より、補助系 $\mathcal{Y}$ の中に $r$ 個の正規直交系 $\{y_1, \dots, y_r\}$ を取ることができます。これを用いて、複合系 $\mathcal{X} \otimes \mathcal{Y}$ のベクトル $u$ を次のように定義します。
+    $$ u = \sum_{k=1}^r \sqrt{\lambda_k} x_k \otimes y_k $$
 
-**詳細な計算：2量子ビット系（$|\Sigma|=2$）**
-
-1.  **全体系の状態ベクトル**:
-    $$ u = \frac{1}{\sqrt{2}} (|00\rangle + |11\rangle) = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 0 \\ 0 \\ 1 \end{pmatrix} $$
-
-2.  **密度演算子 $\rho$ の導出（2通りの方法）**
-
-    **方法A：ベクトル積としての計算**
-    列ベクトル $u$ と行ベクトル $u^*$ の積を直接計算します。
-    $$
-    \rho = uu^* = \left[ \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 0 \\ 0 \\ 1 \end{pmatrix} \right] \left[ \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 0 & 0 & 1 \end{pmatrix} \right] = \frac{1}{2} \begin{pmatrix} 1 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 1 \end{pmatrix}
-    $$
-
-    **方法B：テンソル積展開による計算**
-    定義式 $\rho = \frac{1}{|\Sigma|} \sum_{a,b} |e_a\rangle\langle e_b| \otimes |e_a\rangle\langle e_b|$ を展開して計算します。$|\Sigma|=2$ なので、$(a,b)$ の組み合わせは4通りです。
+3.  **部分トレースによる検証**:
+    この $u$ が $P$ の純粋化になっていることを確認します。まず、全体系の密度演算子 $uu^*$ を計算します。
     $$
     \begin{aligned}
-    \rho &= \frac{1}{2} \Big( (|0\rangle\langle 0| \otimes |0\rangle\langle 0|) + (|0\rangle\langle 1| \otimes |0\rangle\langle 1|) \\
-         & \quad \quad + (|1\rangle\langle 0| \otimes |1\rangle\langle 0|) + (|1\rangle\langle 1| \otimes |1\rangle\langle 1|) \Big) \\
-         &= \frac{1}{2} \left[
-         \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} +
-         \begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} +
-         \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} +
-         \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}
-         \right] \\
-         &= \frac{1}{2} \begin{pmatrix} 1 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \quad (\text{注：左下・右上の位置修正})
+    uu^* &= \left( \sum_{j=1}^r \sqrt{\lambda_j} x_j \otimes y_j \right) \left( \sum_{k=1}^r \sqrt{\lambda_k} x_k \otimes y_k \right)^* \\
+    &= \sum_{j,k=1}^r \sqrt{\lambda_j \lambda_k} (x_j x_k^*) \otimes (y_j y_k^*)
     \end{aligned}
     $$
-    ※ テンソル積の定義 $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \otimes M = \begin{pmatrix} aM & bM \\ cM & dM \end{pmatrix}$ に従うと、
-    $|0\rangle\langle 1| \otimes |0\rangle\langle 1| = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \otimes \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$ （右上隅）
-    $|1\rangle\langle 0| \otimes |1\rangle\langle 0| = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} \otimes \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{pmatrix}$ （左下隅）
-    となるため、方法Aの結果と完全に一致します。
-
-3.  **部分トレース（縮約）**
-    レジスタ $Z$ をトレースアウトします（行列を $2 \times 2$ ブロックに分割して対角和をとります）。
+    ここで、補助系 $\mathcal{Y}$ について部分トレースを取ります。
     $$
-    \rho^Y = \mathrm{Tr}_Z(\rho) =
-    \begin{pmatrix}
-    \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}\right] & \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}\right] \\
-    \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}\right] & \mathrm{Tr}\left[\frac{1}{2}\begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}\right]
-    \end{pmatrix}
-    = \begin{pmatrix} 1/2 & 0 \\ 0 & 1/2 \end{pmatrix}
+    \begin{aligned}
+    \mathrm{Tr}_{\mathcal{Y}}(uu^*) &= \sum_{j,k=1}^r \sqrt{\lambda_j \lambda_k} (x_j x_k^*) \underbrace{\mathrm{Tr}(y_j y_k^*)}_{\delta_{jk}} \\
+    &= \sum_{k=1}^r \lambda_k x_k x_k^* \\
+    &= P
+    \end{aligned}
     $$
+    $\{y_k\}$ が正規直交系であることを利用しました（$\mathrm{Tr}(y_j y_k^*) = \langle y_k, y_j \rangle = \delta_{jk}$）。これにより、$\mathrm{Tr}_{\mathcal{Y}}(uu^*) = P$ が満たされることが示されました。
 
-4.  **結果とランクによる考察**
+逆に、$\dim(\mathcal{Y}) < \mathrm{rank}(P)$ の場合、シュミット分解の性質よりランク $r$ のベクトルを作ることができないため、純粋化は存在しません。
 
-    *   **元の状態（全体系）**: ベクトル $u$ で記述できるため、ランクは **1** です（純粋状態）。
-    *   **縮約後の状態（部分系）**: 結果は $\rho^Y = \frac{1}{2}\mathbb{I}$ であり、固有値は $1/2, 1/2$ です。したがってランクは **2** となります（混合状態）。
 
-    ランクが 1 から 2 へと増加したことは、縮約操作によって「純粋性が失われた（混合状態になった）」ことを数学的に示しています。これはエンタングルメントによって情報が全体系の相関の中に分散してしまい、部分系だけを見ても完全な情報が得られないことを意味します。
-
-:::
+また、2つの純粋化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のあるユニタリ $U$ によって $v = (\mathbb{I}_{\mathcal{X}} \otimes U)u$ と結ばれます（**純粋化のユニタリ同値性**、Theorem 2.12）。
