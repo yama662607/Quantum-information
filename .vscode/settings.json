@@ -2,9 +2,9 @@
     "runOnSave.commands": [
         {
             "globMatch": "quarto/**/_*.qmd",
-            "command": "touch ${workspaceFolder}/quarto/textbook.qmd",
+            "command": "echo ' ' >> ${workspaceFolder}/quarto/textbook.qmd && sed -i '' '$d' ${workspaceFolder}/quarto/textbook.qmd",
             "runIn": "backend",
-            "runningStatusMessage": "Refreshing Quarto preview...",
+            "runningStatusMessage": "Forcing Quarto preview refresh...",
             "finishStatusMessage": "Preview refreshed"
         }
     ]
