@@ -1,0 +1,10 @@
+{
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "quarto/.*_.*\\.qmd",
+                "cmd": "touch ${workspaceFolder}/quarto/textbook.qmd"
+            }
+        ]
+    }
+}
