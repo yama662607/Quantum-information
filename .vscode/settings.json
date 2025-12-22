@@ -1,10 +1,11 @@
 {
-    "emeraldwalk.runonsave": {
-        "commands": [
-            {
-                "match": "quarto/.*_.*\\.qmd",
-                "cmd": "touch ${workspaceFolder}/quarto/textbook.qmd"
-            }
-        ]
-    }
+    "runOnSave.commands": [
+        {
+            "globMatch": "quarto/**/_*.qmd",
+            "command": "touch ${workspaceFolder}/quarto/textbook.qmd",
+            "runIn": "backend",
+            "runningStatusMessage": "Refreshing Quarto preview...",
+            "finishStatusMessage": "Preview refreshed"
+        }
+    ]
 }
