@@ -107,7 +107,7 @@ def check_fenced_divs(
 
         if stripped_line.startswith(":::"):
             if i > 0:
-                prev_line = lines[i - 1].strip()
+                prev_line = fixed_lines[i + offset - 1].strip()
                 if prev_line and prev_line != "---":
                     # We allow consecutive ::: for nested divs if desired,
                     # but typically Quarto/Pandoc prefer blank lines between them too.
@@ -118,6 +118,47 @@ def check_fenced_divs(
                         if do_fix:
                             fixed_lines.insert(i + offset, "")
                             offset += 1
+            continue
+
+        # --- New check: lists inside fenced divs ---
+        # Detect if we are inside a fenced div block (roughly)
+        # We look for a line starting with list markers (1. , - , * )
+        # that is immediately preceded by a non-blank line that is not a list item.
+        if (
+            stripped_line.startswith("1. ")
+            or stripped_line.startswith("- ")
+            or stripped_line.startswith("* ")
+        ):
+            if i > 0:
+                # Check preceding line in fixed_lines (including potentially inserted lines)
+                prev_idx = i + offset - 1
+                if prev_idx >= 0:
+                    prev_line = fixed_lines[prev_idx].strip()
+                    # If the previous line is not blank AND not another list item AND not a fence separator
+                    # AND we are likely inside a block (heuristic: recent line was a ::: or a header)
+                    is_prev_list = (
+                        prev_line.startswith("1. ")
+                        or prev_line.startswith("- ")
+                        or prev_line.startswith("* ")
+                    )
+                    is_prev_fence = prev_line.startswith(":::")
+                    if prev_line and not is_prev_list and not is_prev_fence:
+                        # Specifically check if we are inside a definition/theorem block
+                        # by looking back a few lines for the opening ::: {#def or similar
+                        is_inside_block = False
+                        for j in range(max(0, i - 10), i):
+                            if lines[j].strip().startswith("::: {#"):
+                                is_inside_block = True
+                                break
+
+                        if is_inside_block:
+                            errors.append(
+                                f"[Style] Line {i + 1}: List item '{stripped_line[:3]}...' inside block should be preceded by a blank line for correct rendering."
+                            )
+                            if do_fix:
+                                fixed_lines.insert(i + offset, "")
+                                offset += 1
+
     return {"errors": errors, "fixed_lines": fixed_lines if do_fix else None}
 
 
