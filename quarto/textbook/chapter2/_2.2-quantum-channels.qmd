@@ -170,8 +170,11 @@ $$ B_a = \sum_b U(a, b) A_b $$
 
 ::: {#thm-hermitian-preserving}
 ## エルミート保存の同値条件 (Theorem 2.25)
+
 以下は同値である。
+
 1. $\Phi$ はエルミート保存である（$\Phi(H) \in \mathrm{Herm}(\mathcal{Y})$）。
+
 2. Choi 演算子がエルミートである: $J(\Phi) = J(\Phi)^\dagger$。
 3. 2つの完全正値写像 $\Phi_0, \Phi_1$ を用いて $\Phi = \Phi_0 - \Phi_1$ と書ける。
 
@@ -181,8 +184,11 @@ $$ B_a = \sum_b U(a, b) A_b $$
 
 ::: {#thm-trace-preserving}
 ## トレース保存の同値条件 (Theorem 2.26)
+
 以下は同値である。
+
 1. $\Phi$ はトレース保存である。
+
 2. 随伴写像 $\Phi^*$ が単位的 (Unital) である: $\Phi^*(\mathbb{I}_{\mathcal{Y}}) = \mathbb{I}_{\mathcal{X}}$。
 3. Kraus 表現において $\sum_a A_a^\dagger A_a = \mathbb{I}_{\mathcal{X}}$ を満たす。
 4. Stinespring 表現において $A^\dagger A = \mathbb{I}_{\mathcal{X}}$ を満たす（等長写像）。

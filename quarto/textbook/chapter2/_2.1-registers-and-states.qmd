@@ -15,8 +15,11 @@
 
 ::: {#def-register}
 ## レジスタ (Definition 2.1)
+
 レジスタ $X$ は、以下のいずれかのオブジェクトとして帰納的に定義されます：
+
 1.  **単純レジスタ (Simple Register)**: 有限のアルファベット $\Sigma$。
+
 2.  **複合レジスタ (Compound Register)**: $n$ 個のレジスタの組 $(Y_1, \dots, Y_n)$、ここで $n$ は正の整数。
 
 :::
@@ -91,7 +94,7 @@ graph TD
 | 量子状態 | $\rho \in D(\mathcal{X})$ | 密度演算子 |
 
 :::
-aiueo
+
 #### 純粋状態、平坦状態、および混合状態
 - **純粋状態 (Pure States)**: ランク1の密度演算子。ある単位ベクトル $u$ を用いて $\rho = u u^\dagger$ と書けます。
 - **平坦状態 (Flat States)**: ある部分空間への射影演算子 $\Pi$ を用いて $\rho = \frac{\Pi}{\mathrm{Tr}(\Pi)}$ と書ける状態。

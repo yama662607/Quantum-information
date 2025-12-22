@@ -175,7 +175,7 @@ v_1 \otimes \cdots \otimes v_n \rangle
 $$ {#eq-tensor-inner}
 
 ::: {.callout-note title="物理での対応"}
-直和は「排他的な選択（古典的な分岐）」の記述に対応し、  
+直和は「排他的な選択（古典的な分岐）」の記述に対応し、
 テンソル積は「複合系の合成（多体系）」に対応します。
 
 :::
@@ -206,7 +206,7 @@ $\mathcal{X}$ から $\mathcal{Y}$ への線形演算子全体の集合を $\mat
 
 :::
 
-線形演算子は加法とスカラー倍でベクトル空間をなします。  
+線形演算子は加法とスカラー倍でベクトル空間をなします。
 また、$\dim(\mathrm{L}(\mathcal{X}, \mathcal{Y})) = \dim(\mathcal{X}) \dim(\mathcal{Y})$ が成り立ちます。
 
 #### 行列表示 (Matrix Representation)
@@ -250,7 +250,7 @@ $$ A^\dagger = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
    $$ A^\dagger = \overline{A}^T $$ {#eq-adjoint-adjoint}
 
 ::: {.physics-notes title="記法の注意"}
-本書では随伴を $A^*$ と書く流儀ですが、物理では $A^\dagger$ が標準です。  
+本書では随伴を $A^*$ と書く流儀ですが、物理では $A^\dagger$ が標準です。
 内容は同一で、$A^* = \overline{A}^T$ です。
 
 :::
@@ -328,11 +328,11 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間には、同型写像 **$\mathrm{vec}$** が存在します。
 $$ \mathrm{vec}(E_{a,b}) = e_a \otimes e_b $$
 この写像について以下が成り立ちます。
-1. 
+1.
    $$ (A \otimes B)\,\mathrm{vec}(X) = \mathrm{vec}(A X B^T) $$ {#eq-vec-axb}
-2. 
+2.
    $$ \mathrm{Tr}_{\mathcal{Y}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A B^\dagger $$ {#eq-vec-try}
-3. 
+3.
    $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A^T \overline{B} $$ {#eq-vec-trx}
 
 #### スペクトル定理 (Spectral Theorem) [📄 p.25](assets/Quantum_Information.pdf#page=33)

@@ -3,8 +3,8 @@
 この節では、与えられた量子状態が、既知の複数の候補のうちのどれであるかを特定する問題、すなわち「量子状態の識別」について扱います。
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
-1. 2状態識別の最適成功確率（Holevo–Helstrom）を式で述べる  
-2. アンサンブル識別をSDPとして書く  
+1. 2状態識別の最適成功確率（Holevo–Helstrom）を式で述べる
+2. アンサンブル識別をSDPとして書く
 3. PGM（Pretty Good Measurement）の定義と使いどころを説明する
 
 :::
