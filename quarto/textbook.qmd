@@ -12,7 +12,6 @@ toc-depth: 3
 
 {{< include textbook/chapter1/_1.2-analysis.qmd >}}
 
-
 # Chapter 2: Basic Notions {#chapter-2}
 
 {{< include textbook/chapter2/_2.1-registers-and-states.qmd >}}
@@ -24,3 +23,4 @@ toc-depth: 3
 # Chapter 3: Similarity and distance among states and channels {#chapter-3}
 
 {{< include textbook/chapter3/_3.1-quantum-state-discrimination.qmd >}}
+
