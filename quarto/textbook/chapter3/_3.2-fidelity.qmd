@@ -15,10 +15,13 @@ $$ F(P, Q) = \mathrm{Tr}\left(\sqrt{\sqrt{Q} P \sqrt{Q}}\right) $$
 
 ::: {#prop-fidelity-properties}
 ## フィデリティの基本的性質 (Proposition 3.12)
+
 1.  **連続性**: $(P, Q)$ に関して連続。
+
 2.  **対称性**: $F(P, Q) = F(Q, P)$。
 3.  **非負性**: $F(P, Q) \geq 0$ であり、$F(P, Q) = 0 \iff PQ = 0$。
 4.  **有界性**: 密度演算子 $\rho, \sigma$ に対し $0 \leq F(\rho, \sigma) \leq 1$。
+
     - $F(\rho, \sigma) = 1 \iff \rho = \sigma$。
 5.  **テンソル積の乗法性**: $F(P_0 \otimes P_1, Q_0 \otimes Q_1) = F(P_0, Q_0) F(P_1, Q_1)$。
 
