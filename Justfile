@@ -3,7 +3,6 @@
 # =============================================================================
 
 set dotenv-load := true
-set shell := ["bash", "-c"]
 
 # Package manager and runtime
 pm := "uv"
@@ -19,13 +18,12 @@ default: check
 # 環境構築: 依存関係のインストール、ツールチェーンのセットアップ
 setup:
     @echo "📦 Setting up environment..."
-    uv sync --all-extras
+    {{pm}} sync --all-extras
     npm install
     @echo "✅ Environment setup complete!"
 
 # 全体品質検証: コードを変更せずに品質を検証 (CIゲート)
 check: fmt-check lint typecheck validate-docs test
-    @echo "✅ All quality checks passed!"
     @echo "✅ All quality checks passed!"
 
 # 自動修正: フォーマットとLint修正を適用 (Agentの第一手)
@@ -78,11 +76,7 @@ typecheck:
 
 # アーティファクト削除
 clean:
-    @echo "🗑️ Cleaning artifacts..."
-    rm -rf .pytest_cache .ruff_cache __pycache__ .mypy_cache
-    find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
-    find . -type f -name "*.pyc" -delete
-    @echo "✅ Cleanup complete!"
+    {{python}} tools/clean.py
 
 # =============================================================================
 # 📚 Project-Specific Tasks
@@ -90,8 +84,7 @@ clean:
 
 # Quarto文書のプレビュー
 docs:
-    @echo "📖 Starting Quarto preview..."
-    {{pm}} run quarto preview quarto/ --port 4312 --render html
+    {{python}} tools/dev_server.py
 
 # Streamlitアプリの起動
 app path:
