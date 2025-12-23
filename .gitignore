@@ -16,5 +16,7 @@ docs/_freeze/
 .quarto/
 quarto/textbook/*/*.html
 quarto/textbook/*/*_files/
+docs/*.html
+docs/*_files/
 tools/.validation_cache.json
 node_modules/
