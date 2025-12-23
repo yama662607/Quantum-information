@@ -23,6 +23,61 @@ just check
 - **Python (uv)**: 依存関係管理とスクリプティング。
 - **Just**: コマンド操作を標準化するためのタスクランナー。
 
+---
+
+## 🔧 Just のインストール
+
+コマンドライン・タスクランナーである「**just**」（Justfileを実行するためのツール）の各OSでのインストール方法をまとめました。
+
+### 1. macOS
+
+macOSでは **Homebrew** を使うのが最も一般的で簡単です。
+
+- **Homebrew:** `brew install just`
+- **MacPorts:** `sudo port install just`
+
+### 2. Windows
+
+Windowsでは、パッケージマネージャー（winget, Scoop, Chocolatey）のいずれかを使うのがスムーズです。
+
+- **winget** (Windows標準): `winget install casey.just`
+- **Scoop:** `scoop install just`
+- **Chocolatey:** `choco install just`
+
+### 3. Linux
+
+主要なディストリビューションの公式リポジトリに含まれています。
+
+- **Ubuntu / Debian / Mint:** `sudo apt install just`
+- **Fedora:** `sudo dnf install just`
+- **Arch Linux:** `sudo pacman -S just`
+- **Alpine Linux:** `apk add just`
+
+### 4. 言語系パッケージマネージャー
+
+特定の言語環境を構築している場合は、以下の方法でもインストール可能です。
+
+- **Rust (Cargo):** `cargo install just`
+- **Python (pip):** `pip install rust-just`
+- **Node.js (npm):** `npm install -g just-install`
+
+### 5. インストールの確認
+
+インストールが完了したら、以下のコマンドでバージョンが表示されるか確認してください。
+
+```bash
+just --version
+```
+
+### Tips: シェルの補完設定
+
+`just` は入力補完（Tabキーでの補完）を生成する機能を持っています。例えば、zshをお使いの場合は以下のように設定に追加できます。
+
+```bash
+# zshの場合（~/.zshrc に追記）
+source <(just --completions zsh)
+```
+
 ## 📂 ディレクトリ構成
 
 - `docs/`: Quarto ドキュメントのソースコード。
