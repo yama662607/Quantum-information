@@ -23,9 +23,39 @@ just check
 - **Python (uv)**: 依存関係管理とスクリプティング。
 - **Just**: コマンド操作を標準化するためのタスクランナー。
 
----
+## 🔧 セットアップガイド
 
-## 🔧 Just のインストール
+このリポジトリを動かすには、[uv](https://github.com/astral-sh/uv) と [Just](https://github.com/casey/just) のインストールが必要です。
+
+### 1. uv のインストール
+
+Pythonの超高速パッケージ・プロジェクト管理ツールである **uv** のインストール方法です。
+
+#### 推奨：スタンドアロン・インストーラー
+OSを問わず、最も速く最新版を導入できる推奨される方法です。
+
+- **macOS / Linux:**
+  ```bash
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
+- **Windows:**
+  ```powershell
+  powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+  ```
+
+#### パッケージマネージャー経由
+- **macOS (Homebrew):** `brew install uv`
+- **Windows (winget):** `winget install astral-sh.uv`
+- **Windows (Scoop):** `scoop install uv`
+- **Linux:** `apk add uv` (Alpine), `pacman -S uv` (Arch)
+
+#### 確認とアップデート
+```bash
+uv --version      # バージョン確認
+uv self update    # uv自体の更新
+```
+
+### 2. Just のインストール
 
 コマンドライン・タスクランナーである「**just**」（Justfileを実行するためのツール）の各OSでのインストール方法をまとめました。
 
