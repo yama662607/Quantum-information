@@ -12,11 +12,15 @@ python := "uv run python"
 # 🤖 Standard Interface (AI Agent Protocol)
 # =============================================================================
 
-# デフォルト: 読み取り専用の全体チェックを実行
+# デフォルト: 全体の品質チェックを実行
 default: check
 
-# 環境構築: 依存関係のインストール、ツールチェーンのセットアップ
-setup:
+# 環境の整合性チェック: 必要なツール (uv, just, quarto, npm) がインストールされているか確認
+check-env:
+    @{{python}} tools/check_env.py
+
+# 環境構築: 依存関係のインストールとツールチェーンのセットアップ
+setup: check-env
     @echo "📦 Setting up environment..."
     {{pm}} sync --all-extras
     npm install
@@ -26,7 +30,7 @@ setup:
 check: fmt-check lint typecheck validate-docs test
     @echo "✅ All quality checks passed!"
 
-# 自動修正: フォーマットとLint修正を適用 (Agentの第一手)
+# 自動修正: フォーマット、Lint、およびドキュメントの構造エラーを自動修正
 fix: fmt lint-fix validate-docs-fix
     @echo "✨ Auto-fixes applied!"
 
@@ -34,7 +38,7 @@ fix: fmt lint-fix validate-docs-fix
 # 🧪 Testing & Verification
 # =============================================================================
 
-# ユニット/統合テスト: 引数パススルー対応
+# ユニットテストの実行: pytest を使用
 test *args="":
     @echo "🧪 Running unit tests..."
     {{pm}} run pytest {{args}}
@@ -43,28 +47,27 @@ test *args="":
 # 🧩 Granular Tasks (Components of 'check' & 'fix')
 # =============================================================================
 
-# --- Format (整形) ---
-
+# コードの自動整形チェック (Ruff)
 fmt-check:
     @echo "📏 Checking formatting..."
     {{pm}} run ruff format --check
 
+# コードの自動整形 (Ruff)
 fmt:
     @echo "💅 Formatting code..."
     {{pm}} run ruff format
 
-# --- Lint (静的解析) ---
-
+# 静的解析 (Ruff)
 lint:
     @echo "🔍 Linting..."
     {{pm}} run ruff check
 
+# 静的解析による自動修正 (Ruff)
 lint-fix:
     @echo "🧹 Fixing lint errors..."
     {{pm}} run ruff check --fix
 
-# --- Typecheck (型検査) ---
-
+# 型検査 (mypy 等)
 typecheck:
     @echo "📐 Checking types..."
     @echo "⚠️  Type checking not configured yet. Consider adding mypy to dev dependencies."
@@ -74,7 +77,7 @@ typecheck:
 # 🛠️ Operations & Utilities
 # =============================================================================
 
-# アーティファクト削除
+# ビルド成果物やキャッシュの削除 (Cross-platform)
 clean:
     {{python}} tools/clean.py
 
@@ -82,7 +85,7 @@ clean:
 # 📚 Project-Specific Tasks
 # =============================================================================
 
-# Quarto文書のプレビュー
+# Quarto文書のリアルタイム・プレビュー起動 (自動更新機能付き)
 docs:
     {{python}} tools/dev_server.py
 
@@ -91,22 +94,22 @@ app path:
     @echo "🚀 Starting Streamlit app: {{path}}"
     {{python}} -m streamlit run {{path}}
 
-# 統合ドキュメント検証 (Quarto, Mermaid, LaTeX)
+# Quarto/Mermaid/LaTeX のドキュメント整合性検証
 validate-docs:
     @echo "🔍 Running integrated document validation..."
     {{python}} tools/validate_docs.py quarto/
 
-# 統合ドキュメント自動修正
+# ドキュメント整合性エラーの自動修正
 validate-docs-fix:
     @echo "🧹 Automatically fixing document style issues..."
     {{python}} tools/validate_docs.py quarto/ --fix
 
-# 検証キャッシュのクリア
+# バリデーション結果のキャッシュクリア
 clear-validation-cache:
     @echo "🧹 Clearing document validation cache..."
     {{python}} tools/validate_docs.py --clear-cache
 
-# PDFテキスト抽出
+# 教科書PDFからのテキスト抽出
 extract-pdf pdf_path *args="":
     @echo "📄 Extracting text from: {{pdf_path}}"
     {{python}} tools/extract_pdf.py {{pdf_path}} {{args}}
