@@ -4,13 +4,17 @@
 
 ## 🚀 クイックスタート (Quick Start)
 
-リポジリをクローンした後、以下の手順で環境を構築してプレビューを開始できます。
+リポジトリをクローンして、以下の手順で環境を構築・プレビューを開始できます。
 
 ```bash
-# 1. 依存関係のインストールとセットアップ
+# 1. リポジトリのクローン
+git clone https://github.com/yama662607/Quantum-information.git
+cd Quantum-information
+
+# 2. 依存関係のインストールとセットアップ
 just setup
 
-# 2. プレビューサーバーの起動
+# 3. プレビューサーバーの起動
 just docs
 ```
 
