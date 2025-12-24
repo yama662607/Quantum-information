@@ -4,127 +4,87 @@
 
 ## 🚀 クイックスタート (Quick Start)
 
-リポジトリをクローンして、以下の手順で環境を構築・プレビューを開始できます。
+このプロジェクトを動かすには **[uv](https://github.com/astral-sh/uv)** と **[Just](https://github.com/casey/just)** が必要です。
 
-```bash
-# 1. リポジトリのクローン
-git clone https://github.com/yama662607/Quantum-information.git
-cd Quantum-information
+1.  **ツールの準備**: 未インストールの方は [セットアップガイド](#-セットアップガイド) を参照してインストールしてください。
+2.  **プロジェクトの開始**:
+    ```bash
+    # リポジトリのクローン
+    git clone https://github.com/yama662607/Quantum-information.git
+    cd Quantum-information
 
-# 2. 依存関係のインストールとセットアップ
-just setup
+    # 依存関係のインストールと環境構築
+    just setup
 
-# 3. プレビューサーバーの起動
-just docs
-```
+    # プレビューサーバーの起動
+    just docs
+    ```
+3.  **プレビューの確認**: ブラウザで `http://localhost:4312` にアクセスしてください。
 
-ブラウザで `http://localhost:4312` にアクセスすると、編集内容がリアルタイムに反映されるプレビューを確認できます。
+---
 
 ## 🤝 共同開発ガイド (Collaboration)
 
 このプロジェクトは、人間とAIエージェントが協力して執筆することを前提に設計されています。
 
-- **クロスプラットフォーム対応**: macOS, Linux, Windows どの環境でも `just` コマンドだけで同じワークフローが再現可能です。
-- **環境チェック**: 何か問題が起きたら `just check-env` を実行してください。
-- **品質管理**: 変更をプッシュする前に `just check` を実行し、リンターやバリデーションをパスすることを確認してください。
-- **AIエージェントとの協調**: パートナーのAIエージェントにはまず [AGENTS.md](./AGENTS.md) を読むように指示してください。プロジェクト固有のルールや最新のワークフローが記載されています。
+-   **クロスプラットフォーム対応**: macOS, Linux, Windows どの環境でも `just` コマンドだけで共通のワークフローが実行可能です。
+-   **環境チェック**: 何か問題が起きたら `just check-env` を実行してください。必要なツールが揃っているか自動診断します。
+-   **品質管理**: パッチをプッシュする前に `just check` を実行し、リンターやバリデーションを通過することを確認してください。
+-   **AIエージェントとの協調**: パートナーのAIエージェントにはまず [AGENTS.md](./AGENTS.md) を読むように指示してください。
 
-## 🛠️ 技術スタック
+---
 
-- **[Quarto](https://quarto.org/)**: 技術文書の出版・ドキュメンテーションシステム。
-- **Python (uv)**: 依存関係管理とスクリプティング。
-- **Just**: コマンド操作を標準化するためのタスクランナー。
+## 🛠️ 技術スタック (Tech Stack)
 
-## 🔧 セットアップガイド
+| ツール | 用途 |
+| :--- | :--- |
+| **[Quarto](https://quarto.org/)** | 技術文書の出版・ドキュメンテーションシステム。 |
+| **[uv](https://github.com/astral-sh/uv)** | Python の超高速パッケージ管理・仮想環境制御。 |
+| **[Just](https://github.com/casey/just)** | コマンドライン操作を標準化するためのタスクランナー。 |
 
-このリポジトリを動かすには、[uv](https://github.com/astral-sh/uv) と [Just](https://github.com/casey/just) のインストールが必要です。
+---
+
+## 🔧 セットアップガイド (Setup Guide)
 
 ### 1. uv のインストール
 
-Pythonの超高速パッケージ・プロジェクト管理ツールである **uv** のインストール方法です。
+Python の環境構築を高速かつ確実に行うために使用します。
 
-#### 推奨：スタンドアロン・インストーラー
-OSを問わず、最も速く最新版を導入できる推奨される方法です。
-
-- **macOS / Linux:**
-  ```bash
-  curl -LsSf https://astral.sh/uv/install.sh | sh
-  ```
-- **Windows:**
-  ```powershell
-  powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-  ```
-
-#### パッケージマネージャー経由
-- **macOS (Homebrew):** `brew install uv`
-- **Windows (winget):** `winget install astral-sh.uv`
-- **Windows (Scoop):** `scoop install uv`
-- **Linux:** `apk add uv` (Alpine), `pacman -S uv` (Arch)
-
-#### 確認とアップデート
-```bash
-uv --version      # バージョン確認
-uv self update    # uv自体の更新
-```
+-   **macOS / Linux:**
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+-   **Windows:**
+    ```powershell
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    ```
+-   **その他パッケージマネージャー:**
+    -   macOS (Homebrew): `brew install uv`
+    -   Windows (winget): `winget install astral-sh.uv`
 
 ### 2. Just のインストール
 
-コマンドライン・タスクランナーである「**just**」（Justfileを実行するためのツール）の各OSでのインストール方法をまとめました。
+プロジェクト内の様々なコマンド（ビルド、チェック、サーバー起動など）を実行するために必要です。
 
-### 1. macOS
+-   **macOS (Homebrew):** `brew install just`
+*   **Windows (winget):** `winget install casey.just`
+*   **Linux (Ubuntu/Debian):** `sudo apt install just`
 
-macOSでは **Homebrew** を使うのが最も一般的で簡単です。
+> [!TIP]
+> インストール後、ターミナルを再起動して `just --version` および `uv --version` が動作することを確認してください。
 
-- **Homebrew:** `brew install just`
-- **MacPorts:** `sudo port install just`
-
-### 2. Windows
-
-Windowsでは、パッケージマネージャー（winget, Scoop, Chocolatey）のいずれかを使うのがスムーズです。
-
-- **winget** (Windows標準): `winget install casey.just`
-- **Scoop:** `scoop install just`
-- **Chocolatey:** `choco install just`
-
-### 3. Linux
-
-主要なディストリビューションの公式リポジトリに含まれています。
-
-- **Ubuntu / Debian / Mint:** `sudo apt install just`
-- **Fedora:** `sudo dnf install just`
-- **Arch Linux:** `sudo pacman -S just`
-- **Alpine Linux:** `apk add just`
-
-### 4. 言語系パッケージマネージャー
-
-特定の言語環境を構築している場合は、以下の方法でもインストール可能です。
-
-- **Rust (Cargo):** `cargo install just`
-- **Python (pip):** `pip install rust-just`
-- **Node.js (npm):** `npm install -g just-install`
-
-### 5. インストールの確認
-
-インストールが完了したら、以下のコマンドでバージョンが表示されるか確認してください。
-
-```bash
-just --version
-```
-
-### Tips: シェルの補完設定
-
-`just` は入力補完（Tabキーでの補完）を生成する機能を持っています。例えば、zshをお使いの場合は以下のように設定に追加できます。
-
-```bash
-# zshの場合（~/.zshrc に追記）
-source <(just --completions zsh)
-```
+---
 
 ## 📂 ディレクトリ構成
 
-- `docs/`: Quarto ドキュメントのソースコード。
-  - `notes.qmd`: **唯一のエントリーポイント**。すべての講義ノートはここに統合されています。
-  - `index.qmd`: 学習ロードマップを表示するトップページ。
-  - `notes/`: `notes.qmd` から include される分割ファイル（各章・節）。
-- `apps/`: 可視化用の Streamlit アプリケーション。
-- `notebooks/`: 実験用の Jupyter Notebook。
+-   `quarto/`: 学習ノートのソース（Quarto ファイル群）
+-   `tools/`: 開発支援スクリプト（監視ツール、環境チェック等）
+-   `tests/`: 品質の検証用スクリプト
+-   `AGENTS.md`: AIエージェントとの対話・ワークフローに関する詳細
+-   `Justfile`: 定義されている全コマンドの一覧
+
+---
+
+## 📈 デプロイ状況
+GitHub Pages への自動デプロイが設定されています。`master` ブランチへのプッシュにより、以下の URL が更新されます：
+`https://yama662607.github.io/Quantum-information/`
