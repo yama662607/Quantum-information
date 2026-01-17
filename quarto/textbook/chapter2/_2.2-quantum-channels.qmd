@@ -147,9 +147,21 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 :::
 
 
----
-
 ### Representations and characterizations (表現と特徴付け) [📄 p.77](assets/Quantum_Information.pdf#page=85) {#representations-and-characterizations}
+
+チャネル（線形写像）を具体的に計算したり、理論的に解析したりするためには、写像を「行列」や「状態（演算子）」として表現する必要があります。そのための基礎となるのが **ベクトル化 (Vectorization)** です。
+
+#### 準備：演算子のベクトル化 (Vectorization) [📄 p.23](assets/Quantum_Information.pdf#page=31) {#vectorization}
+
+チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ を行列として扱うためには、入力である「演算子（行列） $X$」を「ベクトル $\mathrm{vec}(X)$」に変換する **ベクトル化 (Vectorization)** という操作が必要になります。
+
+- **基本的な考え方**:
+  行列の各列を縦に積み重ねて1本の長い列ベクトルにする同型写像 $\mathrm{vec}: \mathrm{L}(\mathcal{X}) \to \mathcal{X} \otimes \mathcal{X}$ です。これにより、量子操作をベクトルに作用する通常の行列として記述可能になります。
+
+- **詳細な定義と視覚的イメージ**:
+  基礎となる数学的定義と図解については、[1.1節 演算子とベクトルの対応](../chapter1/_1.1-linear-algebra.qmd#vectorization) を参照してください。
+
+---
 
 線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ を記述するための4つの主要な表現を定義します。これらは数学的には等価ですが、用途に応じて使い分けられます。
 
@@ -236,32 +248,24 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 
 :::
 
-### Deep Dive: Natural Representation vs Matrix Representation (表現行列との関係)
+### Deep Dive: Natural Representation vs Choi Representation (表現行列 vs 状態双対)
 
-「量子チャネルの表現は、線形代数で習う『表現行列』と同じものですか？」
-この問いに対する答えは、**「はい、Natural Representation $K(\Phi)$ こそが、標準的な意味での表現行列です」** となります。
+「量子チャネルの表現が多すぎて混乱します。Natural Rep と Choi Rep は何が違うのですか？」
 
-具体例を用いて、段階的に見ていきましょう。
+この2つはどちらも $d^2 \times d^2$ の行列ですが、その**「役割」**が根本的に異なります。
 
-#### Step 1: 演算子のベクトル化 (Vectorization)
-線形代数では、線形写像 $L: V \to W$ は、基底を選ぶことで行列 $M$ として表現でき、$[L(v)] = M [v]$ と書けました。
-量子チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ も線形写像です。しかし、定義域 $\mathrm{L}(\mathcal{X})$ は「行列の空間」です。これを行列で扱うには、まず入力を**ベクトル**とみなす必要があります。
-
-演算子 $X = \sum_{i,j} X_{i,j} |i\rangle\langle j|$ を「列ごとに縦に積み重ねて」ベクトル化したものを $\mathrm{vec}(X)$ と書きます。
-
-$$ X = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \quad \xrightarrow{\mathrm{vec}} \quad \mathrm{vec}(X) = \begin{pmatrix} a \\ c \\ b \\ d \end{pmatrix} $$
-
-これで、演算子の空間 $\mathrm{L}(\mathcal{X})$ は $d^2$ 次元のベクトル空間と同一視できます。
-
-#### Step 2: 表現行列としての Natural Representation
-このベクトル化された入力に対して、掛け算として作用する行列が **Natural Representation** $K(\Phi)$ です。
-
+#### 1. 作用としての Natural Representation $K(\Phi)$
+Natural Representation は、線形代数学で習う「表現行列」そのものです。
 $$ \mathrm{vec}(\Phi(X)) = K(\Phi) \mathrm{vec}(X) $$
+数式が示す通り、$K(\Phi)$ は入力ベクトルに**左から掛かって出力を計算する**ための行列です。シミュレーションでチャネルを適用する際に直接使われるのはこちらです。
 
-つまり、$K(\Phi)$ は $d^2 \times d^2$ の巨大な行列であり、これがまさに「線形写像 $\Phi$ の表現行列」そのものです。
-Watrousの定義 $K(\Phi) = \sum A_a \otimes \overline{B}_a$ は、Kraus表現 $\sum A_a X B_a^\dagger$ をこの行列形式に変換した結果です（恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ を利用しています）。
+#### 2. 状態としての Choi Representation $J(\Phi)$
+Choi Representation は、チャネルの性質を**量子状態の形にパッケージ化**したものです。
+$$ J(\Phi) = \sum_{a,b} \Phi(|a\rangle\langle b|) \otimes |a\rangle\langle b| $$
+これは入力に作用させるための行列ではなく、それ自体が（正規化を除けば）密度演算子としての性質を持ちます。チャネルの「完全正値性」などを判定する際の理論的ツールとして強力です。
 
-#### Step 3: 具体例 (Bit Flip Channel)
+#### 具体例：ビット反転チャネルでの比較
+
 1量子ビットのビット反転チャネル $\Phi(X) = (1-p)X + p \sigma_x X \sigma_x$ （ただし $\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$）を考えます。
 
 1.  **Kraus表現**: $A_0 = \sqrt{1-p} I, \quad A_1 = \sqrt{p} \sigma_x$。

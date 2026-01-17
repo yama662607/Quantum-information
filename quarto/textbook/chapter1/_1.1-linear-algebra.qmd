@@ -324,16 +324,31 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 
 量子情報で頻出の「分解」と「ノルム」をまとめます。
 
-#### 演算子とベクトルの対応 (Operator-Vector Correspondence) [📄 p.23](assets/Quantum_Information.pdf#page=31)
-空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間には、同型写像 **$\mathrm{vec}$** が存在します。
-$$ \mathrm{vec}(E_{a,b}) = e_a \otimes e_b $$
-この写像について以下が成り立ちます。
-1.
+#### 演算子とベクトルの対応 (Operator-Vector Correspondence) [📄 p.23](assets/Quantum_Information.pdf#page=31) {#vectorization}
+
+線形演算子の空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と、テンソル積空間 $\mathcal{X} \otimes \mathcal{Y}$ の間には、非常に重要な同型対応が存在します。
+
+空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、行列単位 $E_{a,b} = |a\rangle\langle b|$ に対して次のように定義されます。
+$$ \mathrm{vec}(|a\rangle\langle b|) = |a\rangle \otimes |b\rangle $$
+
+::: {.physics-notes title="直感的イメージ：Column Stacking"}
+行列 $X$ を列ベクトル $\mathrm{vec}(X)$ に変換する操作は、行列の各列を左から順番に「縦に積み重ねて」1本の長いベクトルにする操作（Flatten）として視覚化できます。
+
+$$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{vec}} \quad \mathrm{vec}(X) = \begin{pmatrix} A \\ C \\ B \\ D \end{pmatrix} $$
+
+この対応により、**「行列の空間」を「ベクトルの空間」として扱う**ことが可能になり、線形写像（量子チャネル）をベクトルに作用する「通常の行列」として記述できるようになります。
+
+:::
+
+
+この写像について、以下の重要な恒等式が成り立ちます。
+
+1. **行列積のベクトル化**:
    $$ (A \otimes B)\,\mathrm{vec}(X) = \mathrm{vec}(A X B^T) $$ {#eq-vec-axb}
-2.
+2. **Choi演算子との関連 (部分トレース)**:
    $$ \mathrm{Tr}_{\mathcal{Y}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A B^\dagger $$ {#eq-vec-try}
 3.
-   $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A^T \overline{B} $$ {#eq-vec-trx}
+   $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A^T \overline{B}   $$ {#eq-vec-trx}
 
 #### スペクトル定理 (Spectral Theorem) [📄 p.25](assets/Quantum_Information.pdf#page=33)
 
