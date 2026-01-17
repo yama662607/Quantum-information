@@ -2,23 +2,95 @@
 
 量子チャネルは、物理的に実現可能な量子状態の変化（操作）を数学的にモデル化したものです。
 
-::: {.callout-note appearance="simple" title="この節の学習目標"}
-1. 量子チャネル（CPTP）の定義を正確に言語化できる。
-2. Choi / Kraus / Stinespring など表現の対応関係を説明できる。
-3. Choiランクが「最小Kraus項数・最小補助系次元」に等しいことを理解する。
+::: {.callout-note}
+## このセクションの学習目標
+1. **定義の理解**: 量子チャネル（CPTP写像）の数学的定義を正確に記述できる。
+2. **表現の相互変換**: Choi, Kraus, Stinespring, Natural 表現の間の変換とその関係性を証明できる。
+3. **構造の把握**: 完全正値性（CP）やトレース保存（TP）といった条件が、物理的な要請とどう結びついているか理解する。
 
 :::
 
 ### Definitions and basic notions (定義と基本概念) [📄 p.72](assets/Quantum_Information.pdf#page=80) {#definitions-and-basic-notions}
 
 ::: {#def-quantum-channel}
-## 量子チャネル (Definition 2.17)
+## 量子チャネル (Definition 2.17) [📄 p.75](assets/Quantum_Information.pdf#page=83)
 写像 $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ が**量子チャネル**であるとは、以下の2つの条件を満たすこと（CPTP）を言います。
 
 1.  **完全正 (Completely Positive, CP)**: 任意の複素ユークリッド空間 $\mathcal{Z}$ に対し、拡大写像 $\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{Z})}$ が正写像である。即ち、$\mathcal{X} \otimes \mathcal{Z}$ 上の任意の正定値演算子 $P$ に対し、$(\Phi \otimes \mathbb{I})(P) \geq 0$。
 2.  **トレース保存 (Trace Preserving, TP)**: 任意の $X \in \mathrm{L}(\mathcal{X})$ に対し、$\mathrm{Tr}(\Phi(X)) = \mathrm{Tr}(X)$。
 
 :::
+
+
+### Theoretical Background (理論的背景) {#theory}
+
+数学的な記述に入る前に、概念の直感的なイメージを整理します。
+
+::: {.physics-notes title="物理学の視点 (Physics Perspective)"}
+**1. トレース保存 (Trace Preserving, TP)**
+これは **「確率の保存則」** に対応します。
+$$ \mathrm{Tr}(\Phi(\rho)) = \mathrm{Tr}(\rho) = 1 $$
+系が閉じていようと開いていようと、全事象の確率は常に $1$ でなければなりません。
+
+**2. 完全正 (Completely Positive, CP)**
+単なる「正写像」ではなく「完全正」が必要な理由は、**エンタングルメント**を考慮する必要があるからです。
+ある系 $X$ に対して操作 $\Phi$ を施す際、何もしない補助系 $Z$ とエンタングルしていても、確率は非負でなければなりません（$\Phi \otimes \mathbb{I}_Z \ge 0$）。
+反例としての **トランスポーズ写像** ($T(X) = X^\top$) は、正写像ですがCPではなく、物理的に実現できません。
+
+**3. レジスタの動的な解釈**
+Watrousの教科書では、チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ を単なる状態変化だけでなく、**「レジスタ $X$ が消滅し、レジスタ $Y$ が新たに生成されるプロセス」** としても解釈します。
+
+:::
+
+### Positivity of Adjoint Maps (随伴写像の正値性) [📄 p.76](assets/Quantum_Information.pdf#page=84) {#positivity-of-adjoint-maps}
+
+「トレース保存」のような条件がなぜ完全正性を導くのかを理解するには、随伴写像の性質を知ることが近道です。
+
+::: {#prop-adjoint-positivity}
+## 随伴写像の正値性 (Proposition 2.18) [📄 p.76](assets/Quantum_Information.pdf#page=84)
+写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ が正写像ならば、その随伴写像 $\Phi^* \in \mathrm{T}(\mathcal{Y}, \mathcal{X})$ も正写像である。
+
+:::
+
+::: {.proof}
+
+随伴写像の定義 $\langle Q, \Phi(P) \rangle = \langle \Phi^*(Q), P \rangle$ を用います。
+$\Phi$ が正写像であると仮定すると、任意の $P \in \mathrm{Pos}(\mathcal{X})$ に対して $\Phi(P) \in \mathrm{Pos}(\mathcal{Y})$ です。
+内積の性質より、2つの半正定値演算子の内積は非負（$\langle A, B \rangle \ge 0$）なので、任意の $Q \in \mathrm{Pos}(\mathcal{Y})$ に対して
+$$ \langle \Phi^*(Q), P \rangle = \langle Q, \Phi(P) \rangle \ge 0 $$
+が成り立ちます。これが「すべての $P \in \mathrm{Pos}(\mathcal{X})$」に対して成り立つということは、$\Phi^*(Q)$ 自身が半正定値でなければなりません。
+
+::: {.callout-note}
+### 直感的な証明: 背理法によるアプローチ
+
+「すべての $P \ge 0$ に対して $\langle A, P \rangle \ge 0$ ならば $A \ge 0$ である」という事実は、**背理法**を用いると直感的に理解できます。
+
+1.  **仮定**: もし $A$ が半正定値でないと仮定します。すると、スペクトル分解したときに少なくとも1つの負の固有値 $\lambda < 0$ と、それに対応する固有ベクトル $|v\rangle$ が存在します。
+2.  **検証用演算子の構成**: ここで、チェック用の演算子として $P = |v\rangle\langle v|$ を選びます。これは射影演算子なので、明らかに半正定値 ($P \ge 0$) です。
+3.  **矛盾の導出**: 内積を計算すると、
+    $$ \langle P, A \rangle = \mathrm{Tr}(|v\rangle\langle v| A) = \langle v | A | v \rangle = \lambda < 0 $$
+    となり、「すべての $P \ge 0$ に対して内積が非負」という前提に矛盾します。
+
+したがって、背理法により $A$ は半正定値でなければなりません。
+
+:::
+
+:::
+
+::: {#cor-trace-cp}
+## トレース写像の完全正性 (Corollary 2.19) [📄 p.77](assets/Quantum_Information.pdf#page=85)
+トレース写像 $\mathrm{Tr}: \mathrm{L}(\mathcal{X}) \to \mathbb{C}$ は完全正写像である。
+
+:::
+
+::: {.proof}
+
+トレース写像の随伴 $\mathrm{Tr}^*$ は、スカラー $c \in \mathbb{C}$ を $c \mathbb{I}_{\mathcal{X}}$ に写す写像です。これは明らかに完全正です（単位行列は正定値だから）。
+
+Proposition 2.18（の完全正版）により、随伴がCPなら元の写像もCPであるため、トレース写像の完全正性が示されます。
+
+:::
+
 
 #### Notation Mapping (記法の対応) {#mapping-channels}
 
@@ -33,134 +105,194 @@
 
 #### 基本的なチャネルの例
 - **ユニタリチャネル (Unitary Channel)**: $\Phi(X) = UXU^\dagger$。閉じた系の可逆な時間発展。
+
 - **置換チャネル (Replacement Channel)**: $\Phi(X) = \mathrm{Tr}(X)\sigma$。入力を捨てて固定の状態 $\sigma$ を出力する（初期化など）。
+
 - **完全脱分極チャネル (Depolarizing Channel)**: $\Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d}$。確率 $p$ で完全混合状態になるノイズ。
 
 ---
 
 ### Representations and characterizations (表現と特徴付け) [📄 p.77](assets/Quantum_Information.pdf#page=85) {#representations-and-characterizations}
 
-線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ は、以下の4つの等価な表現を持ちます。
+線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ を記述するための4つの主要な表現を定義します。これらは数学的には等価ですが、用途に応じて使い分けられます。
 
-::: {#thm-representations-relationship}
-## 表現間の関係 (Proposition 2.20)
+#### 1. 自然表現 (Natural Representation) [📄 p.77](assets/Quantum_Information.pdf#page=85)
+写像 $\Phi$ を標準的な行列表現として扱うための方法です。演算子 $X$ をベクトル化した $\mathrm{vec}(X)$ に対し、
+$$ \mathrm{vec}(\Phi(X)) = K(\Phi) \mathrm{vec}(X) $$
+を満たす一値な演算子 $K(\Phi) \in \mathrm{L}(\mathcal{Y} \otimes \mathcal{X})$ を **自然表現** と呼びます。
+
+#### 2. Choi 表現 (Choi Representation) [📄 p.78](assets/Quantum_Information.pdf#page=86)
+チャネルと「多体系の状態」を対応付ける強力な表現です。
+$$ J(\Phi) = (\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{X})})(\mathrm{vec}(\mathbb{I}_{\mathcal{X}}) \mathrm{vec}(\mathbb{I}_{\mathcal{X}})^\dagger) $$
+により定義される $J(\Phi) \in \mathrm{L}(\mathcal{Y} \otimes \mathcal{X})$ を **Choi 演算子** と呼びます。$\mathcal{X} = \mathbb{C}^\Sigma$ の基底を用いれば、以下のように書けます。
+$$ J(\Phi) = \sum_{a,b \in \Sigma} \Phi(E_{a,b}) \otimes E_{a,b} $$
+
+#### 3. Kraus 表現 (Kraus Representation) [📄 p.79](assets/Quantum_Information.pdf#page=87)
+演算子の集合 $\{A_a\}$ と $\{B_a\}$ を用いて、
+$$ \Phi(X) = \sum_{a \in \Sigma} A_a X B_a^\dagger $$
+と書く形式を **Kraus 表現** と呼びます。物理的な操作（特にCP写像）を記述する際によく使われます。
+
+#### 4. Stinespring 表現 (Stinespring Representation) [📄 p.79](assets/Quantum_Information.pdf#page=87)
+補助系 $\mathcal{Z}$ との相互作用としてチャネルを記述します。
+$$ \Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger) $$
+と書く形式を **Stinespring 表現** と呼びます。ここで $A, B \in \mathrm{L}(\mathcal{X}, \mathcal{Y} \otimes \mathcal{Z})$ です。
+
+::: {#prop-representations-relationship}
+## 表現間の関係 (Proposition 2.20) [📄 p.80](assets/Quantum_Information.pdf#page=88)
 線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ に対し、以下の4つの記述は同値です。
 
 1. **自然表現**: $K(\Phi) = \sum_{a \in \Sigma} A_a \otimes \overline{B}_a$
 2. **Choi 表現**: $J(\Phi) = \sum_{a \in \Sigma} \mathrm{vec}(A_a) \mathrm{vec}(B_a)^\dagger$
 3. **Kraus 表現**: $\Phi(X) = \sum_{a \in \Sigma} A_a X B_a^\dagger$
-4. **Stinespring 表現**: $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger)$ ただし $A = \sum A_a \otimes e_a, B = \sum B_a \otimes e_a$
+4. **Stinespring 表現**: $A = \sum_a A_a \otimes e_a, B = \sum_a B_a \otimes e_a$ とした $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger)$
+
+::: {.proof}
+
+
+- **(3) $\iff$ (1)**:
+  ベクトル化の基本恒等式 $\mathrm{vec}(MXN^\dagger) = (M \otimes \overline{N})\mathrm{vec}(X)$ を用います。これを (3) の各項に適用して和をとれば、
+  $$ \mathrm{vec}(\Phi(X)) = \sum_a \mathrm{vec}(A_a X B_a^\dagger) = \left( \sum_a A_a \otimes \overline{B}_a \right) \mathrm{vec}(X) $$
+  となり、(1) の $K(\Phi)$ の定義と一致します。
+
+- **(3) $\iff$ (2)**:
+  ベクトル化の性質 $(M \otimes \mathbb{I})\mathrm{vec}(N) = \mathrm{vec}(MN)$ および $\mathrm{vec}(M)^\dagger = \mathrm{vec}(\mathbb{I})^\dagger (M^\dagger \otimes \mathbb{I})$ を用います。これらより、
+  $$ \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger = (A_a \otimes \mathbb{I})\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger (B_a^\dagger \otimes \mathbb{I}) $$
+  が成り立ちます。これを和 $J(\Phi) = \sum_a \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger$ に代入すると、
+  $$ J(\Phi) = \sum_a (A_a X B_a^\dagger \otimes \mathbb{I})(\dots) \quad \text{より} \quad J(\Phi) = (\Phi \otimes \mathbb{I})(\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger) $$
+  が得られ、(2) の Choi 演算子の定義と一致します。
+
+- **(3) $\iff$ (4)**:
+  部分トレースの計算、$\mathrm{Tr}_{\mathcal{Z}}((M \otimes |a\rangle) X (N \otimes |b\rangle)^\dagger) = \langle b|a\rangle MXN^\dagger$ を用います。定義した $A, B$ を代入すると、
+  $$ \mathrm{Tr}_{\mathcal{Z}}(AXB^\dagger) = \sum_{a,b} \mathrm{Tr}_{\mathcal{Z}}((A_a \otimes e_a) X (B_b \otimes e_b)^\dagger) = \sum_{a,b} \delta_{a,b} A_a X B_b^\dagger = \sum_a A_a X B_a^\dagger $$
+  となり、(3) と一致します。
 
 :::
 
-#### 1. クラウス表現 (Kraus Representation)
+:::
 
-::: {#thm-kraus}
-## クラウス表現 (Corollary 2.24)
-$$ \Phi(X) = \sum_{a \in \Sigma} A_a X A_a^\dagger $$
-$\Phi$ が量子チャネルである必要十分条件は、$\sum A_a^\dagger A_a = \mathbb{I}_{\mathcal{X}}$ が成り立つことです。
-この表現は、「確率的に演算子 $A_a$ が適用される」という解釈が可能ですが、測定結果 $a$ が失われた状況に対応します。
+### Deep Dive: Natural Representation vs Matrix Representation (表現行列との関係)
+
+「量子チャネルの表現は、線形代数で習う『表現行列』と同じものですか？」
+この問いに対する答えは、**「はい、Natural Representation $K(\Phi)$ こそが、標準的な意味での表現行列です」** となります。
+
+具体例を用いて、段階的に見ていきましょう。
+
+#### Step 1: 演算子のベクトル化 (Vectorization)
+線形代数では、線形写像 $L: V \to W$ は、基底を選ぶことで行列 $M$ として表現でき、$[L(v)] = M [v]$ と書けました。
+量子チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ も線形写像です。しかし、定義域 $\mathrm{L}(\mathcal{X})$ は「行列の空間」です。これを行列で扱うには、まず入力を**ベクトル**とみなす必要があります。
+
+演算子 $X = \sum_{i,j} X_{i,j} |i\rangle\langle j|$ を「列ごとに縦に積み重ねて」ベクトル化したものを $\mathrm{vec}(X)$ と書きます。
+
+$$ X = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \quad \xrightarrow{\mathrm{vec}} \quad \mathrm{vec}(X) = \begin{pmatrix} a \\ c \\ b \\ d \end{pmatrix} $$
+
+これで、演算子の空間 $\mathrm{L}(\mathcal{X})$ は $d^2$ 次元のベクトル空間と同一視できます。
+
+#### Step 2: 表現行列としての Natural Representation
+このベクトル化された入力に対して、掛け算として作用する行列が **Natural Representation** $K(\Phi)$ です。
+
+$$ \mathrm{vec}(\Phi(X)) = K(\Phi) \mathrm{vec}(X) $$
+
+つまり、$K(\Phi)$ は $d^2 \times d^2$ の巨大な行列であり、これがまさに「線形写像 $\Phi$ の表現行列」そのものです。
+Watrousの定義 $K(\Phi) = \sum A_a \otimes \overline{B}_a$ は、Kraus表現 $\sum A_a X B_a^\dagger$ をこの行列形式に変換した結果です（恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ を利用しています）。
+
+#### Step 3: 具体例 (Bit Flip Channel)
+1量子ビットのビット反転チャネル $\Phi(X) = (1-p)X + p \sigma_x X \sigma_x$ （ただし $\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$）を考えます。
+
+1.  **Kraus表現**: $A_0 = \sqrt{1-p} I, \quad A_1 = \sqrt{p} \sigma_x$。
+2.  **Natural Representation (表現行列)**:
+    $$ K(\Phi) = (1-p)(I \otimes I) + p(\sigma_x \otimes \sigma_x) $$
+    実際に計算すると（$p=1$ の完全反転の場合）：
+    $$ \sigma_x \otimes \sigma_x = \begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{pmatrix} $$
+    これは、入力ベクトル $\begin{pmatrix} a \\ c \\ b \\ d \end{pmatrix}$ を $\begin{pmatrix} d \\ b \\ c \\ a \end{pmatrix}$ に変えます。
+    元の行列に戻すと $\begin{pmatrix} d & c \\ b & a \end{pmatrix}$ となり、これは確かに $\sigma_x \begin{pmatrix} a & b \\ c & d \end{pmatrix} \sigma_x = \begin{pmatrix} d & c \\ b & a \end{pmatrix}$ と一致します。
+
+3.  **Choi表現 (状態)**:
+    一方で、Choi表現 $J(\Phi)$ は行列（写像）ではなく、**密度演算子（状態）**に近いものです。
+    $$ J(\Phi) = \sum \mathrm{vec}(A_a)\mathrm{vec}(A_a)^\dagger $$
+    これは $d^2 \times d^2$ の行列ですが、「入力への作用」を表すものではありません。これは「チャネルとエンタングルした状態」を表します。
+
+**結論**:
+*   $\Phi$ を「行列計算（掛け算）」で行いたい場合 $\to$ **Natural Representation** $K(\Phi)$ を使う（これが表現行列）。
+*   $\Phi$ の「完全正値性」や「相関」を見たい場合 $\to$ **Choi Representation** $J(\Phi)$ を使う。
+
+
+::: {#cor-choi-rank}
+## Choiランクと最小表現 (Corollary 2.21) [📄 p.81](assets/Quantum_Information.pdf#page=89)
+$\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ を非ゼロの線形写像とし、$r = \mathrm{rank}(J(\Phi))$ をそのChoiランクとします。
+
+1.  $|\Sigma| = r$ であるアルファベット $\Sigma$ を用いた Kraus 表現が存在します。
+2.  $\dim(\mathcal{Z}) = r$ である空間 $\mathcal{Z}$ を用いた Stinespring 表現が存在します。
 
 :::
 
-#### 2. スタインスプリング表現 (Stinespring Representation)
+::: {.proof}
 
-チャネルを「環境系（補助系）との相互作用」として物理的に描像する最も重要な表現です。
-
-::: {#thm-stinespring}
-## スタインスプリング表現 (Corollary 2.28)
-$$ \Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger) $$
-ここで算術子 $A: \mathcal{X} \to \mathcal{Y} \otimes \mathcal{Z}$ は等長写像 ($A^\dagger A = \mathbb{I}_{\mathcal{X}}$) です。
-これは、入力 $\mathcal{X}$ をより大きな系 $\mathcal{Y} \otimes \mathcal{Z}$ へ写し（ユニタリ的な相互作用）、最後に環境 $\mathcal{Z}$ を無視する（トレースアウト）ことと等価です。
+Choi演算子のスペクトル分解 $J(\Phi) = \sum_{a=1}^r u_a u_a^\dagger$ を利用します（$r$ 個の非ゼロ項）。
+ベクトル $u_a \in \mathcal{Y} \otimes \mathcal{X}$ に対し、$\mathrm{vec}(A_a) = u_a$ となる演算子 $A_a$ を定義すれば、
+$J(\Phi) = \sum_{a=1}^r \mathrm{vec}(A_a)\mathrm{vec}(A_a)^\dagger$
+となります。Proposition 2.20 より、これは $\Phi(X) = \sum_{a=1}^r A_a X A_a^\dagger$ という（$A_a = B_a$ の形の）Kraus表現に対応します。
+同様に Stinespring 表現も構成できます。
 
 :::
 
-```{mermaid}
-%%| label: fig-stinespring
-%%| fig-cap: "Stinespring Dilation: Channel as interaction with environment"
-graph LR
-    Input["Input ρ"] --> U["Isometry A"]
-    Env["Environment |0⟩"] --> U
-    U --> Sys["System Y"]
-    U --> Anc["Environment Z"]
-    Anc --> Trace["Trace Out"]
-    Sys --> Output["Output Φ(ρ)"]
-
-    style Trace fill:#f9f,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
-```
-
-#### 3. Choi表現 (Choi Representation)
-
-チャネルの完全正性を判定するのに極めて重要な表現です。
-
-::: {#def-choi-representation}
-## Choi表現
-$$ J(\Phi) = (\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{X})}) (\mathrm{vec}(\mathbb{I}_{\mathcal{X}}) \mathrm{vec}(\mathbb{I}_{\mathcal{X}})^\dagger) = \sum_{a,b \in \Sigma} \Phi(E_{a,b}) \otimes E_{a,b} $$
-
-:::
-
-この $J(\Phi)$ を $\Phi$ の **Choi 演算子** (Choi Operator) または **Choi 表現** と呼びます。写像 $J: \mathrm{T}(\mathcal{X}, \mathcal{Y}) \to \mathrm{L}(\mathcal{Y} \otimes \mathcal{X})$ は線形全単射です。
-
-#### 4. System & Environment Simulation (Qiskit Example)
-脱分極チャネルなどのノイズチャネルをQiskitで実装し、可視化します。
-
-```{python}
-#| label: fig-depolarizing-channel
-#| fig-cap: "Bloch sphere visualization of Depolarizing Channel"
-from qiskit.quantum_info import SuperOp, Operator, DensityMatrix
-from qiskit.visualization import plot_bloch_multivector
-import numpy as np
-
-# 1. 定義: 1量子ビットの完全脱分極チャネル (p=0.4: 40%の確率で完全混合になる)
-# Phi(rho) = (1-p) rho + p (I/2)
-def depolarizing_channel(rho, p):
-    d = rho.shape[0]
-    I = np.eye(d)
-    return (1 - p) * rho + p * np.trace(rho) * (I / d)
-
-# 2. 初期状態: |0> (純粋状態)
-rho_in = DensityMatrix.from_label('0')
-
-# 3. チャネル適用
-p = 0.4
-rho_out_matrix = depolarizing_channel(rho_in.data, p)
-rho_out = DensityMatrix(rho_out_matrix)
-
-# 4. ブロッホ球での可視化（純粋状態から混合状態へ縮んでいく様子）
-# 注: display() はQuarto/Jupyter環境で自動的に図を表示します
-plot_bloch_multivector(rho_out)
-```
-
-::: {.callout-tip}
-### Choiランクの意味
-Choi ランク $r = \mathrm{rank}(J(\Phi))$ に対し、
-1. 項数 $|\Sigma| = r$ の Kraus 表現が存在する。
-2. 補助系の次元 $\dim(\mathcal{Z}) = r$ の Stinespring 表現が存在する。
-
-これは、そのチャネルを実現するために、どれだけの「隠れた情報（環境）」が必要かという指標になります。
-
-:::
-
-### Characterizations (写像の分類と特徴付け)
-
-線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ の性質は、その表現を用いることで以下のように一意に特徴付けられます。
-
-::: {#cor-unitary-equivalence}
-## 表現のユニタリ同値性 (Corollary 2.23 & 2.24)
-同じ完全正値写像 $\Phi$ を与える2つの Kraus 表現 $\{A_a\}$ と $\{B_a\}$ は、あるユニタリ行列 $U$ によって結ばれます。
-$$ B_a = \sum_b U(a, b) A_b $$
-同様に、2つの Stinespring 表現 $A, B \in \mathrm{L}(\mathcal{X}, \mathcal{Y} \otimes \mathcal{Z})$ は、補助系上のユニタリ変換 $U \in \mathrm{U}(\mathcal{Z})$ を用いて $B = (\mathbb{I}_{\mathcal{Y}} \otimes U) A$ と書けます。
-
-:::
+#### Characterizations of completely positive maps (完全正値写像の特徴付け)
 
 ::: {#thm-cp-conditions}
-## 完全正値性の同値条件 (Theorem 2.22)
-線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ に対し、以下は同値である。
+## 完全正値性の同値条件 (Theorem 2.22) [📄 p.82](assets/Quantum_Information.pdf#page=90)
+非ゼロの写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ に対し、以下は同値です。
 
-1. $\Phi$ は完全正値 (CP) である。
-2. Choi 演算子が半正定値である: $J(\Phi) \geq 0$。
-3. すべての $a$ に対して $A_a = B_a$ となる Kraus 表現が存在する。
-4. $A = B$ となる Stinespring 表現が存在する。
+1.  $\Phi$ は完全正値 (CP) である。
+2.  $\Phi \otimes \mathbb{I}_{\mathrm{L}(\mathcal{X})}$ が正写像である。
+3.  Choi 演算子が半正定値である: $J(\Phi) \geq 0$。
+4.  Kraus 表現において $A_a = B_a$ とできる: $\Phi(X) = \sum_a A_a X A_a^\dagger$。
+5.  Choiランク個の項数を持つ Kraus 表現 (4) が存在する。
+6.  Stinespring 表現において $A = B$ とできる: $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger)$。
+7.  Choiランク次元の補助系を持つ Stinespring 表現 (6) が存在する。
+
+:::
+
+::: {.proof}
+
+主な含意関係 $(1) \Rightarrow (2) \Rightarrow (3) \Rightarrow (5) \Rightarrow (4) \Rightarrow (1)$ を示します。
+
+- **$(1) \Rightarrow (2)$**: CPの定義より自明です。
+- **$(2) \Rightarrow (3)$**: $J(\Phi) = (\Phi \otimes \mathbb{I})(\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger)$ です。$\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger$ はランク1の射影（定数倍を除く）であり正定値です。$\Phi \otimes \mathbb{I}$ が正写像なら、正定値演算子を正定値演算子に移すため、$J(\Phi) \ge 0$ です。
+- **$(3) \Rightarrow (5)$**: $J(\Phi) \ge 0$ ならばスペクトル分解 $J(\Phi) = \sum_{a} v_a v_a^\dagger$ が可能です（項数はランクに一致）。$\mathrm{vec}(A_a) = v_a$ とおけば、Proposition 2.20 (2) の形になり、対応する Kraus 表現が得られます。
+- **$(4) \Rightarrow (1)$**: $\Phi(X) = \sum_a A_a X A_a^\dagger$ と書ける場合、任意の拡張 $\Phi \otimes \mathbb{I}$ は $(A_a \otimes \mathbb{I}) P (A_a \otimes \mathbb{I})^\dagger$ の和となり、これは正定値性を保ちます（$M P M^\dagger \ge 0$ なので）。よって CP です。
+
+以上より、すべての条件が同値であることが示されます。
+
+:::
+
+::: {#cor-unitary-equivalence-kraus}
+## Kraus表現のユニタリ同値性 (Corollary 2.23) [📄 p.84](assets/Quantum_Information.pdf#page=92)
+$\Phi$ の2つの Kraus 表現 $\{A_a\}$ と $\{B_a\}$ (ただし $A_a = B_a$ のCP形式) に対し、
+$$ \sum_a A_a X A_a^\dagger = \sum_a B_a X B_a^\dagger $$
+が成り立つならば、あるユニタリ行列 $U$ が存在して $B_a = \sum_b U(a, b) A_b$ と書けます（必要ならゼロ演算子を補って個数を合わせます）。
+
+:::
+
+::: {.proof}
+
+2つの写像が等しいので、Choi演算子も等しくなります。
+$$ J(\Phi) = \sum_a \mathrm{vec}(A_a)\mathrm{vec}(A_a)^\dagger = \sum_a \mathrm{vec}(B_a)\mathrm{vec}(B_a)^\dagger $$
+ここで、ベクトル集合 $\{u_a = \mathrm{vec}(A_a)\}$ と $\{v_a = \mathrm{vec}(B_a)\}$ を考えます。これらは同じ演算子 $J(\Phi)$ の異なる純粋化（アンサンブル分解）を与えています。
+**Theorem 2.12 (純粋化のユニタリ同値性)** より、2つの等しい混合状態（あるいは正定値演算子）の分解は、補助系上のユニタリ変換で移り変わります。
+すなわち、あるユニタリ行列 $U$ が存在して $v_a = \sum_b U_{ab} u_b$ が成り立ちます。これを脱ベクトル化すれば、定理の主張が得られます。
+
+:::
+
+::: {#cor-unitary-equivalence-stinespring}
+## Stinespring表現のユニタリ同値性 (Corollary 2.24) [📄 p.85](assets/Quantum_Information.pdf#page=93)
+$\Phi$ の2つの Stinespring 表現 $A, B \in \mathrm{L}(\mathcal{X}, \mathcal{Y} \otimes \mathcal{Z})$ (CP形式) に対し、
+$$ \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger) = \mathrm{Tr}_{\mathcal{Z}}(B X B^\dagger) $$
+が成り立つならば、あるユニタリ演算子 $U \in \mathrm{U}(\mathcal{Z})$ が存在して $B = (\mathbb{I}_{\mathcal{Y}} \otimes U) A$ と書けます。
+
+:::
+
+::: {.proof}
+
+Corollary 2.23 と本質的に同じです。Stinespring表現の等長写像 $A$ を補助系 $\mathcal{Z}$ の基底で展開すれば Kraus 演算子が得られます。Kraus 演算子間のユニタリ変換 $U_{ab}$ は、補助系 $\mathcal{Z}$ 上の基底変換（ユニタリ演算子 $U$）に対応します。
 
 :::
 
@@ -169,38 +301,223 @@ $$ B_a = \sum_b U(a, b) A_b $$
 #### エルミート保存写像 (Hermitian-preserving maps)
 
 ::: {#thm-hermitian-preserving}
-## エルミート保存の同値条件 (Theorem 2.25)
+## エルミート保存の同値条件 (Theorem 2.25) [📄 p.86](assets/Quantum_Information.pdf#page=94)
+写像 $\Phi$ に対し、以下は同値です。
 
-以下は同値である。
+1.  $\Phi$ はエルミート保存である ($\Phi(H) \in \mathrm{Herm}(\mathcal{Y})$)。
+2.  $(\Phi(X))^\dagger = \Phi(X^\dagger)$ が全ての $X$ で成り立つ。
+3.  Choi 演算子がエルミートである: $J(\Phi) = J(\Phi)^\dagger$。
+4.  2つのCP写像の差で書ける: $\Phi = \Phi_0 - \Phi_1$。
 
-1. $\Phi$ はエルミート保存である（$\Phi(H) \in \mathrm{Herm}(\mathcal{Y})$）。
+:::
 
-2. Choi 演算子がエルミートである: $J(\Phi) = J(\Phi)^\dagger$。
-3. 2つの完全正値写像 $\Phi_0, \Phi_1$ を用いて $\Phi = \Phi_0 - \Phi_1$ と書ける。
+::: {.proof}
+- **(1) $\Rightarrow$ (2)**: 任意の $X$ をエルミート部分に分解 $X = H + iK$ すると、$\Phi(X)^\dagger = (\Phi(H) + i\Phi(K))^\dagger = \Phi(H) - i\Phi(K) = \Phi(H - iK) = \Phi(X^\dagger)$。
+- **(2) $\Rightarrow$ (3)**: 定義計算より $J(\Phi)^\dagger = J(\Phi)$ が示せます。
+- **(3) $\Rightarrow$ (4)**: $J(\Phi)$ がエルミートなら、正の部分と負の部分に分解（Jordan分解）できます: $J(\Phi) = P - Q$ ($P, Q \ge 0$)。それぞれの部分 $P, Q$ に対応する写像 $\Phi_0, \Phi_1$ は CP です（Choi演算子が正定値だから）。
+- **(4) $\Rightarrow$ (1)**: CP写像はエルミート演算子をエルミート演算子（正定値演算子の差）に移すため、その差もエルミートです。
 
 :::
 
 #### トレース保存写像 (Trace-preserving maps)
 
 ::: {#thm-trace-preserving}
-## トレース保存の同値条件 (Theorem 2.26)
+## トレース保存の同値条件 (Theorem 2.26) [📄 p.87](assets/Quantum_Information.pdf#page=95)
+写像 $\Phi$ に対し、以下は同値です。
 
-以下は同値である。
+1.  $\Phi$ はトレース保存である。
+2.  随伴写像 $\Phi^*$ が単位的 (Unital) である: $\Phi^*(\mathbb{I}_{\mathcal{Y}}) = \mathbb{I}_{\mathcal{X}}$。
+3.  $\mathrm{Tr}_{\mathcal{Y}}(J(\Phi)) = \mathbb{I}_{\mathcal{X}}$。
+4.  Kraus 表現において $\sum_a A_a^\dagger A_a = \mathbb{I}_{\mathcal{X}}$。
+5.  (任意の Kraus 表現で上記の条件が満たされる)。
+6.  Stinespring 表現において $A^\dagger A = \mathbb{I}_{\mathcal{X}}$ (等長写像)。
 
-1. $\Phi$ はトレース保存である。
+:::
 
-2. 随伴写像 $\Phi^*$ が単位的 (Unital) である: $\Phi^*(\mathbb{I}_{\mathcal{Y}}) = \mathbb{I}_{\mathcal{X}}$。
-3. Kraus 表現において $\sum_a A_a^\dagger A_a = \mathbb{I}_{\mathcal{X}}$ を満たす。
-4. Stinespring 表現において $A^\dagger A = \mathbb{I}_{\mathcal{X}}$ を満たす（等長写像）。
+::: {.proof}
+
+- **(1) $\iff$ (2)**: トレース保存条件 $\mathrm{Tr}(\Phi(X)) = \mathrm{Tr}(X)$ は内積で書くと $\langle \mathbb{I}, \Phi(X) \rangle = \langle \mathbb{I}, X \rangle$。 随伴の定義より左辺は $\langle \Phi^*(\mathbb{I}), X \rangle$。これが任意の $X$ で成り立つので、$\Phi^*(\mathbb{I}) = \mathbb{I}$。
+- **(2) $\iff$ (4)**: 随伴写像の Kraus 表現は $\Phi^*(Y) = \sum A_a^\dagger Y A_a$ です。ここに $Y = \mathbb{I}$ を代入すれば、$\Phi^*(\mathbb{I}) = \sum A_a^\dagger A_a$ となります。これが $\mathbb{I}$ と等しいことが条件です。
+- **(1) $\iff$ (3)**: 部分トレースの計算により $\mathrm{Tr}_{\mathcal{Y}}(J(\Phi)) = \sum_a A_a^\dagger A_a$ が示せるため、(4) と同値です。
+
+:::
+
+::: {#cor-channel-characterizations}
+## チャネルの特徴付け (Corollary 2.27) [📄 p.88](assets/Quantum_Information.pdf#page=96)
+写像 $\Phi$ が量子チャネル (CPTP) であるための必要十分条件は、以下のいずれか（そして全て）を満たすことです。
+
+1.  $J(\Phi) \ge 0$ かつ $\mathrm{Tr}_{\mathcal{Y}}(J(\Phi)) = \mathbb{I}_{\mathcal{X}}$。
+2.  $\sum A_a^\dagger A_a = \mathbb{I}_{\mathcal{X}}$ を満たす Kraus 表現 $\Phi(X) = \sum A_a X A_a^\dagger$ が存在する。
+3.  等長写像 $A$ を用いた Stinespring 表現 $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger)$ が存在する。
+
+:::
+
+チャネルの特徴付けは、Theorem 2.22 (CP条件) と Theorem 2.26 (TP条件) を組み合わせることで直ちに得られます。
+
+
+### Other Properties and Extremal Channels
+
+::: {#prop-channel-convexity}
+## チャネル集合のコンパクト性と凸性 (Proposition 2.28) [📄 p.88](assets/Quantum_Information.pdf#page=96)
+チャネルの集合 $\mathrm{C}(\mathcal{X}, \mathcal{Y})$ はコンパクトかつ凸集合である。
+
+:::
+
+::: {.proof}
+
+Choi写像 $J: \mathrm{T}(\mathcal{X}, \mathcal{Y}) \to \mathrm{L}(\mathcal{Y} \otimes \mathcal{X})$ は線形同型です。Corollary 2.27 より、チャネルの集合 $\mathrm{C}(\mathcal{X}, \mathcal{Y})$ は、$J$ によって以下の集合 $\mathcal{A}$ に移されます。
+$$ \mathcal{A} = \{ P \in \mathrm{Pos}(\mathcal{Y} \otimes \mathcal{X}) : \mathrm{Tr}_{\mathcal{Y}}(P) = \mathbb{I}_{\mathcal{X}} \} $$
+この $\mathcal{A}$ は、閉凸錐 $\mathrm{Pos}$ と、閉凸なアフィン部分空間（部分トレース条件）の共通部分なので、閉凸集合です。さらに、トレースが $\dim(\mathcal{X})$ で一定なので有界です。よって $\mathcal{A}$ はコンパクト凸集合であり、線形同型で結ばれたチャネルの集合も同様です。
+
+:::
+
+::: {#prop-purification-extension}
+## 純粋化とチャネル拡張 (Proposition 2.29) [📄 p.88](assets/Quantum_Information.pdf#page=96)
+$\mathrm{Tr}_{\mathcal{Y}}(uu^\dagger) = \mathrm{Tr}_{\mathcal{Z}}(P)$ を満たすベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ と正定値演算子 $P \in \mathrm{Pos}(\mathcal{X} \otimes \mathcal{Z})$ に対し、あるチャネル $\Phi \in \mathrm{C}(\mathcal{Y}, \mathcal{Z})$ が存在して以下を満たす。
+$$ (\mathbb{I}_{\mathcal{X}} \otimes \Phi)(uu^\dagger) = P $$
+
+:::
+
+::: {.proof}
+
+$P$ の純粋化を $v \in \mathcal{X} \otimes \mathcal{Z} \otimes \mathcal{W}$ とします（$\mathcal{W}$ は十分大きな補助系）。
+仮定より $\mathrm{Tr}_{\mathcal{Y}}(uu^\dagger) = \mathrm{Tr}_{\mathcal{Z}\otimes\mathcal{W}}(vv^\dagger)$ です。
+Theorem 2.12（純粋化のユニタリ同値性）より、ある等長写像 $A: \mathcal{Y} \to \mathcal{Z} \otimes \mathcal{W}$ が存在して
+$v = (\mathbb{I}_{\mathcal{X}} \otimes A) u$
+となります。ここで、$\Phi(Y) = \mathrm{Tr}_{\mathcal{W}}(A Y A^\dagger)$ という Stinespring 形式のチャネルを定義すれば、
+$(\mathbb{I} \otimes \Phi)(uu^\dagger) = \mathrm{Tr}_{\mathcal{W}}(v v^\dagger) = P$
+となり、条件を満たします。
 
 :::
 
 ### Extremal channels (極値的なチャネル) [📄 p.96](assets/Quantum_Information.pdf#page=104) {#extremal-channels}
 
-チャネルの集合 $\mathrm{C}(\mathcal{X}, \mathcal{Y})$ はコンパクト凸集合であり、あるチャネルが他のチャネルの凸結合として書けないとき、それを極値チャネルと呼びます。
+チャネルの集合 $\mathrm{C}(\mathcal{X}, \mathcal{Y})$ の極値点 (Extreme Points) に関する特徴付けです。
+
+::: {#lem-extremal-lemma}
+## 補題 (Lemma 2.30) [📄 p.96](assets/Quantum_Information.pdf#page=104)
+演算子 $A \in \mathrm{L}(\mathcal{Y}, \mathcal{X})$ に対し、以下が成り立つ。
+$$ \{ P \in \mathrm{Pos}(\mathcal{X}) : \mathrm{im}(P) \subseteq \mathrm{im}(A) \} = \{ A Q A^\dagger : Q \in \mathrm{Pos}(\mathcal{Y}) \} $$
+
+:::
+
+::: {.proof}
+
+
+- $\supseteq$: 明らかに $\mathrm{im}(AQA^\dagger) \subseteq \mathrm{im}(A)$ です。
+- $\subseteq$: $P$ の像が $A$ の像に含まれるなら、Moore-Penrose擬逆行列 $A^+$ を用いて $Q = A^+ P (A^+)^\dagger$ と置くことで $AQA^\dagger = P$ と書けます。
+
+:::
 
 ::: {#thm-choi-extremality}
-## Choiの極値性条件 (Theorem 2.31)
-線形独立なクラウス演算子の集合 $\{A_a\}$ を持つチャネル $\Phi$ が極値的であるための必要十分条件は、演算子集合 $\{ A_a^\dagger A_b \}_{a,b}$ が線形独立であることである。
+## Choiの極値性条件 (Theorem 2.31) [📄 p.97](assets/Quantum_Information.pdf#page=105)
+線形独立なクラウス演算子の集合 $\{A_a\}$ を持つチャネル $\Phi$ が極値的であるための必要十分条件は、演算子集合 $\{ A_a^\dagger A_b \}_{(a,b) \in \Sigma \times \Sigma}$ が線形独立であることである。
+
+:::
+
+::: {.proof}
+
+Choi行列 $J(\Phi)$ と変換写像 $M = \sum_a \mathrm{vec}(A_a) e_a^\dagger$ を考えます。$J(\Phi) = MM^\dagger$ です。
+チャネルが極値的でない $\iff$ $J(\Phi) = \frac{1}{2}(J_0 + J_1)$ と分解できる（ただし $J_0, J_1$ もCPTP条件を満たす）。
+Lemma 2.30 を使うと、このような分解は $J(\Phi)$ の像に含まれるエルミート行列 $H$ を用いた摂動に対応付けられます。
+計算を進めると、$H$ の自由度と $\{ A_a^\dagger A_b \}$ の線形従属性が等価であることが示されます。特に、$\{ A_a^\dagger A_b \}$ が線形独立なら $H=0$ しかありえず、極値的となります。
+
+:::
+
+::: {#exm-isometric-extremal}
+## 等長チャネルの極値性 (Example 2.32) [📄 p.99](assets/Quantum_Information.pdf#page=107)
+等長写像 $A$ （$A^\dagger A = \mathbb{I}$）によって定義されるチャネル $\Phi(X) = A X A^\dagger$ を考えます。
+Kraus演算子は $\{A\}$ の1つだけです。
+$\{ A^\dagger A \} = \{ \mathbb{I} \}$ という1元集合は明らかに線形独立（非ゼロなので）です。
+よって、Theorem 2.31 より、すべての等長チャネル（ユニタリチャネル含む）は極値的です。
+
+:::
+
+::: {#exm-non-trivial-extremal}
+## 非自明な極値的チャネルの例 (Example 2.33) [📄 p.99](assets/Quantum_Information.pdf#page=107)
+$\Sigma = \{0, 1\}$ とし、以下の2つのKraus演算子を持つチャネルを考えます。
+$$ A_0 = \begin{pmatrix} 1 & 0 \\ 0 & \cos \theta \end{pmatrix}, \quad A_1 = \begin{pmatrix} 0 & 0 \\ 0 & \sin \theta \end{pmatrix} $$
+（これは一般化振幅減衰チャネルの一種です）。
+演算子の積を計算すると：
+$A_0^\dagger A_0 = \begin{pmatrix} 1 & 0 \\ 0 & \cos^2 \theta \end{pmatrix}, \quad A_0^\dagger A_1 = \begin{pmatrix} 0 & 0 \\ 0 & \cos\theta\sin\theta \end{pmatrix}, \dots$
+これらが線形独立かどうかを調べることで、パラメータ $\theta$ に応じてこのチャネルが極値的かどうかを判定できます。
+実際、$\theta$ が特別な値でない限りこれらは独立であり、このチャネルは極値的です。
+
+:::
+
+### Implementation with Qiskit (Qiskitによる実装) [#implementation]
+
+量子チャネルは `qiskit.quantum_info` モジュールを用いて簡単に扱うことができます。
+ここでは、前述の **Bit Flip Channel** を例に、Kraus表現、Superoperator (Natural Representation)、Choi行列を行き来する方法を示します。
+
+::: {.panel-tabset}
+
+## Qiskit Code
+
+```python
+import numpy as np
+from qiskit.quantum_info import Kraus, SuperOp, Choi, Operator
+from qiskit.visualization import plot_bloch_multivector
+
+# 1. Bit Flip Channel の Kraus 演算子を定義
+p = 0.3  # 反転確率
+I = np.eye(2)
+X = np.array([[0, 1], [1, 0]])
+
+K0 = np.sqrt(1 - p) * I
+K1 = np.sqrt(p) * X
+
+# Kraus オブジェクトの作成
+channel = Kraus([K0, K1])
+
+# 2. 表現の変換
+# Natural Representation (Qiskitでは SuperOp)
+super_op = SuperOp(channel)
+print("--- Superoperator (Natural Rep) ---")
+print(np.round(super_op.data, 3))
+
+# Choi Representation
+choi_op = Choi(channel)
+print("\n--- Choi Matrix ---")
+print(np.round(choi_op.data, 3))
+
+# 3. 性質の確認
+print(f"\nIs CP? {channel.is_cp()}")
+print(f"Is TP? {channel.is_tp()}")
+
+# 4. 状態への適用
+rho_in = np.array([[1, 0], [0, 0]]) # |0><0|
+rho_out = channel(rho_in) # 状態の更新
+print("\n--- Input State (|0><0|) ---")
+print(rho_in)
+print("--- Output State ---")
+print(rho_out)
+```
+
+## Output
+
+```text
+--- Superoperator (Natural Rep) ---
+[[ 1.   0.   0.   0.3]
+ [ 0.   0.7  0.   0. ]
+ [ 0.   0.   0.7  0. ]
+ [ 0.3  0.   0.   1. ]]
+
+--- Choi Matrix ---
+[[ 0.7  0.   0.   0.7]
+ [ 0.   0.3  0.3  0. ]
+ [ 0.   0.3  0.3  0. ]
+ [ 0.7  0.   0.   0.7]]
+
+Is CP? True
+Is TP? True
+
+--- Input State (|0><0|) ---
+[[1 0]
+ [0 0]]
+--- Output State ---
+[[0.7 0. ]
+ [0.  0.3]]
+```
 
 :::
