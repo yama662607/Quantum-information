@@ -127,19 +127,25 @@ Watrousの教科書では、チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mat
 ## ユニタリチャネル (Example 2.14)
 $$ \Phi(X) = UXU^\dagger $$
 閉じた系の可逆な時間発展を記述します。$U$ はユニタリ演算子です。
+
 :::
+
 
 ::: {#exm-replacement-channel}
 ## 置換チャネル (Example 2.15)
 $$ \Phi(X) = \mathrm{Tr}(X)\sigma $$
 入力を捨てて、固定された状態 $\sigma$ を出力します（初期化やリセットに対応）。
+
 :::
+
 
 ::: {#exm-depolarizing-channel}
 ## 完全脱分極チャネル (Example 2.16)
 $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 確率 $p$ で完全混合状態になるノイズを記述します。
+
 :::
+
 
 ---
 
