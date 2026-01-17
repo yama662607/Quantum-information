@@ -225,13 +225,13 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 
 
 1.  **Kraus $\iff$ Natural**:
-    ベクトル化の恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ を利用します。
+    ベクトル化の恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ （[1.1節の恒等式 @eq-vec-axb] 参照）を利用します。
     Kraus表現 $\Phi(X) = \sum A_a X B_a^\dagger$ の両辺をベクトル化すると、線形性より
     $$ \mathrm{vec}(\Phi(X)) = \sum_a \mathrm{vec}(A_a X B_a^\dagger) = \left( \sum_a A_a \otimes \overline{B}_a \right) \mathrm{vec}(X) $$
     となります。係数行列 $\sum A_a \otimes \overline{B}_a$ が定義より自然表現 $K(\Phi)$ です。
 
 2.  **Kraus $\iff$ Choi**:
-    恒等式 $\mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (A \otimes \mathbb{I})\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger (B^\dagger \otimes \mathbb{I})$ を用います。
+    恒等式 $\mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (A \otimes \mathbb{I})\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger (B^\dagger \otimes \mathbb{I})$ （[@eq-vec-axb] の応用）を用います。
     Kraus表現の項の和を変換すると、
     $$ \sum_a \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger = \sum_a (A_a \otimes \mathbb{I}) \Omega (B_a^\dagger \otimes \mathbb{I}) $$
     となります（ここで $\Omega = \mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger$）。
@@ -240,7 +240,7 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
   が得られ、(2) の Choi 演算子の定義と一致します。
 
 3.  **Kraus $\iff$ Stinespring**:
-    部分トレースの計算、$\mathrm{Tr}_{\mathcal{Z}}((M \otimes |a\rangle) X (N \otimes |b\rangle)^\dagger) = \langle b|a\rangle MXN^\dagger$ を用います。定義した $A, B$ を代入すると、
+    部分トレースの計算、$\mathrm{Tr}_{\mathcal{Z}}((M \otimes |a\rangle) X (N \otimes |b\rangle)^\dagger) = \langle b|a\rangle MXN^\dagger$ （[1.1節の恒等式 @eq-vec-try] の関係）を用います。定義した $A, B$ を代入すると、
     $$ \mathrm{Tr}_{\mathcal{Z}}(AXB^\dagger) = \sum_{a,b} \mathrm{Tr}_{\mathcal{Z}}((A_a \otimes e_a) X (B_b \otimes e_b)^\dagger) = \sum_{a,b} \delta_{a,b} A_a X B_b^\dagger = \sum_a A_a X B_a^\dagger $$
     となり、(3) と一致します。
 
