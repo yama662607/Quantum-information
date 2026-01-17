@@ -1,13 +1,17 @@
 import subprocess
 import shutil
 import sys
-import os
+
 
 def check_command(cmd, name):
     path = shutil.which(cmd)
     if path:
         try:
-            version = subprocess.check_output([cmd, "--version"], stderr=subprocess.STDOUT).decode().strip()
+            version = (
+                subprocess.check_output([cmd, "--version"], stderr=subprocess.STDOUT)
+                .decode()
+                .strip()
+            )
             print(f"✅ {name:10} Found: {path}")
             print(f"   Version: {version.splitlines()[0]}")
             return True
@@ -17,6 +21,7 @@ def check_command(cmd, name):
     else:
         print(f"❌ {name:10} NOT FOUND. Please install it.")
         return False
+
 
 def main():
     print("🔍 Checking development environment...\n")
@@ -35,8 +40,11 @@ def main():
         print("\n✨ All systems go! You are ready to develop.")
         sys.exit(0)
     else:
-        print("\n❗ Some dependencies are missing. Please refer to README.md for installation instructions.")
+        print(
+            "\n❗ Some dependencies are missing. Please refer to README.md for installation instructions."
+        )
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

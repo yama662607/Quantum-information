@@ -1,9 +1,8 @@
 import subprocess
 import sys
-import os
-import signal
 import time
 from pathlib import Path
+
 
 def run_dev_server():
     project_root = Path(__file__).parent.parent.resolve()
@@ -18,19 +17,13 @@ def run_dev_server():
     try:
         # ウォッチャーの起動
         watcher_proc = subprocess.Popen(
-            watcher_cmd,
-            stdout=sys.stdout,
-            stderr=sys.stderr,
-            cwd=str(project_root)
+            watcher_cmd, stdout=sys.stdout, stderr=sys.stderr, cwd=str(project_root)
         )
         processes.append(watcher_proc)
 
         # Quartoの起動
         quarto_proc = subprocess.Popen(
-            quarto_cmd,
-            stdout=sys.stdout,
-            stderr=sys.stderr,
-            cwd=str(project_root)
+            quarto_cmd, stdout=sys.stdout, stderr=sys.stderr, cwd=str(project_root)
         )
         processes.append(quarto_proc)
 
@@ -61,6 +54,7 @@ def run_dev_server():
                 proc.kill()
 
     print("👋 Dev server stopped.")
+
 
 if __name__ == "__main__":
     run_dev_server()
