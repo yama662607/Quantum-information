@@ -328,27 +328,76 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 
 線形演算子の空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と、テンソル積空間 $\mathcal{X} \otimes \mathcal{Y}$ の間には、非常に重要な同型対応が存在します。
 
-空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、行列単位 $E_{a,b} = |a\rangle\langle b|$ に対して次のように定義されます。
+空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、行列単位 $|a\rangle\langle b|$ に対して次のように定義されます。
 $$ \mathrm{vec}(|a\rangle\langle b|) = |a\rangle \otimes |b\rangle $$
+
+::: {.callout-note title="定義式の意味"}
+この定義は、**「出力側（$\mathcal{X}$）の基底」と「入力側（$\mathcal{Y}$）の基底」のペア**で作られる演算子を、それらをそのまま並べたテンソル積状態に対応させていることを意味します。
+一般の演算子 $X = \sum_{a,b} X_{a,b} |a\rangle\langle b|$ に対しては、線形性から：
+$$ \mathrm{vec}(X) = \sum_{a,b} X_{a,b} (|a\rangle \otimes |b\rangle) $$
+となります。これは、行列としての成分 $X_{a,b}$ を、テンソル積空間の基底 $|a,b\rangle$ の係数としてそのまま「詰め替える」操作に他なりません。
+
+:::
+
 
 ::: {.physics-notes title="直感的イメージ：Row Stacking (行優先)"}
 行列 $X$ をベクトル $\mathrm{vec}(X)$ に変換する操作は、行列の各**行**を上から順番に並べて、1本の長い縦ベクトルにする操作（Flatten）として視覚化できます。
 
 $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{vec}} \quad \mathrm{vec}(X) = \begin{pmatrix} A \\ B \\ C \\ D \end{pmatrix} $$
 
-この対応により、**「行列の空間」を「ベクトルの空間」として扱う**ことが可能になり、線形写像（量子チャネル）をベクトルに作用する「通常の行列」として記述できるようになります。
+この操作により、$\mathrm{L}(\mathcal{Y}, \mathcal{X})$ という演算子の集合を、ベクトル空間として線形代数的に扱うことができるようになります。
 
 :::
 
-
 この写像について、以下の重要な恒等式が成り立ちます。
+
+::: {#thm-vec-identities}
+## ベクトル化に関する恒等式 (Identities 1.88, 1.91)
+
+演算子 $A, B, X, Y$ に対し、以下が成立する。
 
 1. **行列積のベクトル化**:
    $$ (A \otimes B)\,\mathrm{vec}(X) = \mathrm{vec}(A X B^T) $$ {#eq-vec-axb}
-2. **Choi演算子との関連 (部分トレース)**:
+
+2. **内積の保存**:
+   $$ \langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \mathrm{Tr}(X^\dagger Y) = \langle X, Y \rangle $$ {#eq-vec-inner}
+
+3. **部分トレースとの関係 (Choi表現の基礎)**:
    $$ \mathrm{Tr}_{\mathcal{Y}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A B^\dagger $$ {#eq-vec-try}
-3.
-   $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A^T \overline{B}   $$ {#eq-vec-trx}
+   $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A^T \overline{B} $$ {#eq-vec-trx}
+
+:::
+
+::: {.proof}
+
+1.  **Identity 1.88 (行列積)**:
+    線形性より $X = |i\rangle\langle j|$ の場合に示せば十分である。
+    まず左辺を計算する：
+    $$ (A \otimes B)\mathrm{vec}(|i\rangle\langle j|) = (A \otimes B)(|i\rangle \otimes |j\rangle) = (A|i\rangle) \otimes (B|j\rangle) $$
+    一方、右辺の中身は $A |i\rangle\langle j| B^T = (A|i\rangle) (B|j\rangle)^T$ である。
+    ブラケット記法において $|v\rangle^T = \langle \bar{v}|$ であることに注意すると、
+    これはランク1演算子 $(A|i\rangle) \langle \overline{B|j\rangle}|$ である。
+    これをベクトル化すると、定義 $\mathrm{vec}(|u\rangle\langle \bar{v}|) = |u\rangle \otimes |v\rangle$ （第2項の複素共役が相殺される）より：
+    $$ \mathrm{vec}((A|i\rangle) (B|j\rangle)^T) = (A|i\rangle) \otimes (B|j\rangle) $$
+    よって一致する。
+
+2.  **Identity 1.90 (内積)**:
+    $X = |i\rangle\langle j|, Y = |k\rangle\langle l|$ とすると、
+    $$ \langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \langle i \otimes j, k \otimes l \rangle = \langle i, k \rangle \langle j, l \rangle $$
+    一方で、
+    $$ \mathrm{Tr}(X^\dagger Y) = \mathrm{Tr}((|j\rangle\langle i|) (|k\rangle\langle l|)) = \mathrm{Tr}(\langle i, k \rangle |j\rangle\langle l|) = \langle i, k \rangle \langle l, j \rangle $$
+    Watrousの定義では内積が第1引数に対して反線形であり、$\langle l, j \rangle = \langle j, l \rangle$ （標準基底のときなど）となるため一致する。
+
+3.  **Identity 1.91 (部分トレース)**:
+    $A = |i\rangle\langle j|, B = |k\rangle\langle l|$ とする。
+    $$ \mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (|i\rangle \otimes |j\rangle) (\langle k| \otimes \langle l|) = (|i\rangle\langle k|) \otimes (|j\rangle\langle l|) $$
+    $\mathcal{Y}$ 系についてトレースをとると：
+    $$ \mathrm{Tr}_{\mathcal{Y}}(\dots) = (|i\rangle\langle k|) \cdot \mathrm{Tr}(|j\rangle\langle l|) = \langle l, j \rangle |i\rangle\langle k| $$
+    右辺は：
+    $$ AB^\dagger = (|i\rangle\langle j|) (|l\rangle\langle k|) = \langle j, l \rangle |i\rangle\langle k| $$
+    （Watrous の内積定義等に注意すれば、$\langle l, j \rangle = \langle j, l \rangle$ となり一致する）。
+
+:::
 
 #### スペクトル定理 (Spectral Theorem) [📄 p.25](assets/Quantum_Information.pdf#page=33)
 
