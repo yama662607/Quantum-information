@@ -156,7 +156,7 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ を行列として扱うためには、入力である「演算子（行列） $X$」を「ベクトル $\mathrm{vec}(X)$」に変換する **ベクトル化 (Vectorization)** という操作が必要になります。
 
 - **基本的な考え方**:
-  行列の各列を縦に積み重ねて1本の長い列ベクトルにする同型写像 $\mathrm{vec}: \mathrm{L}(\mathcal{X}) \to \mathcal{X} \otimes \mathcal{X}$ です。これにより、量子操作をベクトルに作用する通常の行列として記述可能になります。
+  行列の各**行**を上から順番に並べて1本の長い縦ベクトルにする同型写像 $\mathrm{vec}: \mathrm{L}(\mathcal{X}) \to \mathcal{X} \otimes \mathcal{X}$ です。これにより、量子操作をベクトルに作用する通常の行列として記述可能になります。
 
 - **詳細な定義と視覚的イメージ**:
   基礎となる数学的定義と図解については、[1.1節 演算子とベクトルの対応](../chapter1/_1.1-linear-algebra.qmd#vectorization) を参照してください。

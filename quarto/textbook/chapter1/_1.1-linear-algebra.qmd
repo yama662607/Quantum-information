@@ -331,10 +331,10 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、行列単位 $E_{a,b} = |a\rangle\langle b|$ に対して次のように定義されます。
 $$ \mathrm{vec}(|a\rangle\langle b|) = |a\rangle \otimes |b\rangle $$
 
-::: {.physics-notes title="直感的イメージ：Column Stacking"}
-行列 $X$ を列ベクトル $\mathrm{vec}(X)$ に変換する操作は、行列の各列を左から順番に「縦に積み重ねて」1本の長いベクトルにする操作（Flatten）として視覚化できます。
+::: {.physics-notes title="直感的イメージ：Row Stacking (行優先)"}
+行列 $X$ をベクトル $\mathrm{vec}(X)$ に変換する操作は、行列の各**行**を上から順番に並べて、1本の長い縦ベクトルにする操作（Flatten）として視覚化できます。
 
-$$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{vec}} \quad \mathrm{vec}(X) = \begin{pmatrix} A \\ C \\ B \\ D \end{pmatrix} $$
+$$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{vec}} \quad \mathrm{vec}(X) = \begin{pmatrix} A \\ B \\ C \\ D \end{pmatrix} $$
 
 この対応により、**「行列の空間」を「ベクトルの空間」として扱う**ことが可能になり、線形写像（量子チャネル）をベクトルに作用する「通常の行列」として記述できるようになります。
 
