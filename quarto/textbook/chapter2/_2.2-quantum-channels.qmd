@@ -231,11 +231,6 @@ graph LR
 
     OutA ---|Choi状態<br>J Phi| OutB
 
-    style A fill:#e1f5fe,stroke:#01579b
-    style B fill:#e1f5fe,stroke:#01579b
-    style Channel fill:#e8f5e9,stroke:#2e7d32
-    style OutA fill:#fff3e0,stroke:#ef6c00
-    style OutB fill:#fff3e0,stroke:#ef6c00
 ```
 
 #### 3. Kraus 表現 (Kraus Representation) [📄 p.79](assets/Quantum_Information.pdf#page=87)
@@ -281,11 +276,6 @@ graph LR
     Z_prime -.-> Trace[部分トレース]
     X_prime --> Output[出力状態]
 
-    style X fill:#e1f5fe,stroke:#01579b
-    style Z fill:#f3e5f5,stroke:#7b1fa2
-    style U fill:#e8f5e9,stroke:#2e7d32
-    style Output fill:#fff3e0,stroke:#ef6c00
-    style Trace stroke-dasharray: 5 5
 ```
 
 ::: {.callout-note title="視覚的ガイド: 2x2行列（1量子ビット）での表現の見た目" collapse="true"}
