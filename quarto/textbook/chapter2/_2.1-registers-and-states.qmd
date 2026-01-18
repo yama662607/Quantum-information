@@ -27,7 +27,7 @@
 単純レジスタは木構造の「葉」に対応し、複合レジスタはサブレジスタを子に持つ親ノードに対応します。
 
 #### Example 2.2: Register Tree
-式 (2.1) で定義されるレジスタの構造を図示します。
+式 (2.1) で定義されるレジスタの構造を @fig-register-tree に図示します。
 
 ```{mermaid}
 %%| label: fig-register-tree
@@ -98,7 +98,7 @@ graph TD
 
 #### 確率的状態との対比
 
-量子状態は、古典的な**確率的状態 (Probabilistic State)** の量子版とみなせます。確率的状態が古典状態集合 $\Sigma$ 上の確率ベクトル $p \in \mathrm{P}(\Sigma)$ で表されるのに対し、量子状態は密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ で表されます。
+量子状態は、古典的な **確率的状態 (@def-probabilistic-state)** の量子版とみなせます。確率的状態が古典状態集合 $\Sigma$ 上の確率ベクトル $p \in \mathrm{P}(\Sigma)$ で表されるのに対し、量子状態は密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ で表されます。
 
 ::: {.callout-note title="状態表現の対応"}
 | 種別 | 表現 | 説明 |
@@ -230,8 +230,8 @@ $$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
 ::: {#exm-maximally-entangled}
 ## 最大絡み合い状態 (Maximally Entangled State)
 空間 $\mathcal{X} \otimes \mathcal{Y}$（$\mathcal{X}, \mathcal{Y} \cong \mathbb{C}^\Sigma$）上の状態
-$$ u = \frac{1}{\sqrt{|\Sigma|}} \sum_{a \in \Sigma} e_a \otimes e_a $$
-は、どちらかの系をトレースアウトすると完全に混合した状態 $1/|\Sigma| \mathbb{I}$ になる、最大絡み合い状態の典型的な例です（式2.35）。
+$$ u = \frac{1}{\sqrt{|\Sigma|}} \sum_{a \in \Sigma} e_a \otimes e_a $$ {#eq-maximally-entangled}
+は、どちらかの系をトレースアウトすると完全に混合した状態 $1/|\Sigma| \mathbb{I}$ になる、最大絡み合い状態の典型的な例です（@eq-maximally-entangled）。
 
 **詳細な計算：2量子ビット系（$|\Sigma|=2$）**
 
@@ -414,7 +414,7 @@ $$
 $$ \rho = \begin{pmatrix} p & 0 \\ 0 & 1-p \end{pmatrix} = p |0\rangle\langle 0| + (1-p) |1\rangle\langle 1| $$
 これは「確率 $p$ で $|0\rangle$、確率 $1-p$ で $|1\rangle$」という状態です。
 
-これの純粋化を作るには、補助系（環境）$\mathcal{Y}$ を追加します。定理の証明（シュミット分解）に従って、$\sqrt{\text{固有値}}$ を係数に持つエンタングル状態を作ります。
+これの純粋化を作るには、補助系（環境）$\mathcal{Y}$ を追加します。後述する **@thm-purification-existence** の証明手順（シュミット分解）に従って、$\sqrt{\text{固有値}}$ を係数に持つエンタングル状態を作ります。
 $$ |u\rangle = \sqrt{p} |0\rangle_{\mathcal{X}} \otimes |0\rangle_{\mathcal{Y}} + \sqrt{1-p} |1\rangle_{\mathcal{X}} \otimes |1\rangle_{\mathcal{Y}} $$
 （物理ではしばしば $|00\rangle, |11\rangle$ と略記されます）
 
@@ -489,7 +489,7 @@ $$ \dim(\mathcal{Y}) \geq \mathrm{rank}(P) $$
 物理記法（ブラケット）で書くと、
 $$ |\psi\rangle = \sum_{k=1}^r \sqrt{\lambda_k} |x_k\rangle_{\mathcal{A}} \otimes |y_k\rangle_{\mathcal{B}} $$
 となります。ここで $\lambda_k$ は $P$ の固有値（＝シュミット係数の2乗）であり、$\{ |y_k\rangle \}$ は環境系 $\mathcal{B}$ の任意の正規直交基底です。
-環境系の基底の選び方に自由度があることが、純粋化のユニタリ自由度（Theorem 2.12）に対応します。
+環境系の基底の選び方に自由度があることが、後述する純粋化のユニタリ自由度（**@thm-unitary-equivalence**）に対応します。
 
 :::
 
@@ -546,7 +546,7 @@ $$ \rho = \sum_a p_a u_a u_a^* = \sum_b q_b v_b v_b^* $$
 ::: {.proof}
 それぞれのアンサンブルに対応する純粋化を考えます。
 $$ \psi_\eta = \sum_a \sqrt{p_a} u_a \otimes e_a, \quad \psi_\nu = \sum_b \sqrt{q_b} v_b \otimes e_b $$
-これらは共に部分トレースをとると $\rho$ になるため、Theorem 2.11 より、あるユニタリ $U$ で $\psi_\nu = (\mathbb{I} \otimes U) \psi_\eta$ と書けます。
+これらは共に部分トレースをとると $\rho$ になるため、**@thm-unitary-equivalence** より、あるユニタリ $U$ で $\psi_\nu = (\mathbb{I} \otimes U) \psi_\eta$ と書けます。
 この関係式を成分で書き下すことで、アンサンブル間の線形関係が導かれます。
 
 :::
