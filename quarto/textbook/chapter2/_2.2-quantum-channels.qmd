@@ -286,6 +286,20 @@ graph LR
     style Trace stroke-dasharray: 5 5
 ```
 
+::: {.callout-note title="表記法についての補足 (Notation Clarification)"}
+この命題で使われる記号の定義を確認します。
+
+1.  **$\mathrm{T}(\mathcal{X}, \mathcal{Y})$**:
+    演算子空間から演算子空間への線形写像の集合です。
+    $$ \Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y}) $$
+    Chapter 1 で定義した $\mathrm{L}(\mathcal{X}, \mathcal{Y})$（ベクトル空間間の写像）とは異なり、$\Phi$ は行列（演算子）を入力として行列（演算子）を出力する「超演算子 (Superoperator)」です。
+
+2.  **$A_a, B_a$**:
+    これらは $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ に属する演算子の集まり（族）を表しています。$a$ はある有限集合 $\Sigma$ の元（インデックス）です。
+    例えば $\Sigma = \{0, 1\}$ なら、$\{A_0, A_1\}$ という2つの行列のセットを指します。
+
+:::
+
 ::: {#prop-representations-relationship}
 ## 表現間の関係 (Proposition 2.20) [📄 p.80](assets/Quantum_Information.pdf#page=88)
 線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ に対し、以下の4つの記述は同値です。
