@@ -622,7 +622,28 @@ $(a_{11}x_{11} + a_{12}x_{21})b_{11} + (a_{11}x_{12} + a_{12}x_{22})b_{12} = a_{
 これは左辺の第1成分 $a_{11}b_{11}x_{11} + a_{11}b_{12}x_{12} + a_{12}b_{11}x_{21} + a_{12}b_{12}x_{22}$ と完全に一致します。
 （注: 項の順序を入れ替えると一致します）
 
-**2. 部分トレース $\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger) = AB^\dagger$ の確認**
+**2. 内積 $\langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \mathrm{Tr}(X^\dagger Y)$ の確認**
+
+**左辺**: ベクトルの内積（成分ごとの積の和）
+$$
+\begin{pmatrix} \overline{x_{11}} & \overline{x_{12}} & \overline{x_{21}} & \overline{x_{22}} \end{pmatrix}
+\begin{pmatrix} y_{11} \\ y_{12} \\ y_{21} \\ y_{22} \end{pmatrix}
+= \overline{x_{11}}y_{11} + \overline{x_{12}}y_{12} + \overline{x_{21}}y_{21} + \overline{x_{22}}y_{22}
+$$
+（注：行スタックの定義に従い、$x_{12}$ と $x_{21}$ の順序に注意）
+
+**右辺**: トレース
+$$
+\begin{aligned}
+X^\dagger Y &= \begin{pmatrix} \overline{x_{11}} & \overline{x_{21}} \\ \overline{x_{12}} & \overline{x_{22}} \end{pmatrix} \begin{pmatrix} y_{11} & y_{12} \\ y_{21} & y_{22} \end{pmatrix} \\
+&= \begin{pmatrix} \overline{x_{11}}y_{11} + \overline{x_{21}}y_{21} & \dots \\ \dots & \overline{x_{12}}y_{12} + \overline{x_{22}}y_{22} \end{pmatrix}
+\end{aligned}
+$$
+トレース（対角成分の和）をとると、
+$$ \mathrm{Tr}(X^\dagger Y) = (\overline{x_{11}}y_{11} + \overline{x_{21}}y_{21}) + (\overline{x_{12}}y_{12} + \overline{x_{22}}y_{22}) $$
+項を整理すると左辺と完全に一致します。
+
+**3. 部分トレース $\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger) = AB^\dagger$ の確認**
 
 $\mathrm{vec}(A) = (a_{11}, a_{12}, a_{21}, a_{22})^T$, $\mathrm{vec}(B)^\dagger = (\overline{b_{11}}, \overline{b_{12}}, \overline{b_{21}}, \overline{b_{22}})$ とします。
 外積行列 $M = \mathrm{vec}(A)\mathrm{vec}(B)^\dagger$ は以下のようになります（$4 \times 4$ 行列）。
