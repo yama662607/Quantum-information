@@ -474,6 +474,21 @@ $$ \mathrm{Tr}(u v^\dagger) = \langle v, u \rangle $$ {#eq-trace-uv}
 正方演算子 $X \in \mathrm{L}(\mathcal{X})$ の**行列式** $\mathrm{Det}(X)$ は、以下のように定義されます。
 $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \prod_{a \in \Sigma} X(a, \pi(a)) $$ {#eq-determinant}
 
+::: {.callout-tip title="物理学の視点（ブラケット記法）"}
+量子力学において、トレースと行列式は以下のように解釈されます。
+
+1.  **トレース (Trace)**:
+    正規直交基底 $\{|n\rangle\}$ を用いると、演算子 $A$ のトレースは対角成分（期待値）の和として表されます。
+    $$ \mathrm{Tr}(A) = \sum_n \langle n | A | n \rangle $$
+    この値は基底の取り方によりません。特に $A$ が密度演算子 $\rho$ の場合、$\mathrm{Tr}(\rho) = 1$ は全確率が1であることを意味します。
+
+2.  **行列式 (Determinant)**:
+    $A$ の固有値を $\lambda_i$ とすると、行列式は固有値の積になります。
+    $$ \mathrm{Det}(A) = \prod_i \lambda_i $$
+    物理的には、位相空間における「体積の拡大率」と解釈できます。
+
+:::
+
 ### Operator decompositions and norms (演算子の分解とノルム) [📄 p.24](assets/Quantum_Information.pdf#page=32) {#operator-decompositions-and-norms}
 
 量子情報で頻出の「分解」と「ノルム」をまとめます。
