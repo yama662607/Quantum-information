@@ -558,6 +558,28 @@ $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{v
 
 :::
 
+::: {.callout-note title="別証明：行列成分による計算（直感的アプローチ）" collapse="true"}
+抽象的な定義ではなく、行列の成分計算によっても確認できます。
+$\mathrm{vec}(X)$ を、「$X$ の列を縦に積み重ねたベクトル」とみなします。このとき、$\mathrm{vec}(X)$ の $((j-1)n + i)$ 番目の成分は $X_{i,j}$ です（$X$ が $n \times n$ 行列の場合）。
+
+恒等式 1: $(A \otimes B) \mathrm{vec}(X) = \mathrm{vec}(AXB^T)$
+
+左辺の作用を考えます。クロネッカー積の定義より、$(A \otimes B)$ は $A_{ik} B_{jl}$ のような成分を持ちます（インデックスの並び順に注意）。
+具体的には、$(A \otimes B)$ の $((i,j), (k,l))$ ブロック成分は $A_{ik} B_{jl}$ です。
+これを行列ベクトル積として計算すると、出力ベクトルの $(i,j)$ 成分（すなわち結果の行列の $i$ 行 $j$ 列目）は次のようになります：
+
+$$
+\sum_{k,l} (A \otimes B)_{(i,j), (k,l)} \cdot X_{k,l}
+= \sum_{k,l} A_{ik} B_{jl} X_{k,l}
+= \sum_{k} A_{ik} \left( \sum_{l} X_{k,l} (B^T)_{lj} \right)
+$$
+
+ここで $B_{jl} = (B^T)_{lj}$ を用いました。括弧の中身は行列積 $(XB^T)$ の $(k,j)$ 成分です。
+さらに $A$ との和をとると、これは $(A(XB^T))$ の $(i,j)$ 成分となります。
+すなわち、結果のベクトルは行列 $AXB^T$ の成分を並べたもの、つまり $\mathrm{vec}(AXB^T)$ と一致します。
+
+:::
+
 ::: {.callout-tip title="物理学の視点（ブラケット記法による証明）"}
 ブラケット記法を用いると、証明は以下のように記述されます。
 
