@@ -772,7 +772,7 @@ $$ \{ P \in \mathrm{Pos}(\mathcal{X}) : \mathrm{im}(P) \subseteq \mathrm{im}(A) 
 
 ::: {.proof}
 
-    Choi行列 $J(\Phi)$ と変換写像 $M = \sum_a \mathrm{vec}(A_a) e_a^\dagger$ を考えます。$J(\Phi) = MM^\dagger$ です。
+Choi行列 $J(\Phi)$ と変換写像 $M = \sum_a \mathrm{vec}(A_a) e_a^\dagger$ を考えます。$J(\Phi) = MM^\dagger$ です。
 
 2.  **極値性の条件**:
     チャネルが極値的でない必要十分条件は、$J(\Phi) = \frac{1}{2}(J_0 + J_1)$ と非自明に分解できることです。
