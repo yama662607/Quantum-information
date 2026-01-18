@@ -480,6 +480,9 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 1.  **トレース (Trace)**:
     正規直交基底 $\{|n\rangle\}$ を用いると、演算子 $A$ のトレースは対角成分（期待値）の和として表されます。
     $$ \mathrm{Tr}(A) = \sum_n \langle n | A | n \rangle $$
+    また、有用な恒等式として、**ケット・ブラ演算子のトレースは内積になる**という性質があります：
+    $$ \mathrm{Tr}(|u\rangle\langle v|) = \langle v | u \rangle $$
+    特に、正規直交基底 $\{|i\rangle\}$ に対しては、$\mathrm{Tr}(|i\rangle\langle j|) = \langle j | i \rangle = \delta_{ij}$（クロネッカーのデルタ）となります。
     この値は基底の取り方によりません。特に $A$ が密度演算子 $\rho$ の場合、$\mathrm{Tr}(\rho) = 1$ は全確率が1であることを意味します。
 
 2.  **行列式 (Determinant)**:
