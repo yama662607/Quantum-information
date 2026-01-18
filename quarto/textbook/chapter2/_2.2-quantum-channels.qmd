@@ -198,6 +198,9 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
   $K(\Phi)$ は、線形代数における「表現行列」そのものです。基底を固定すれば、写像 $\Phi$ と行列 $K(\Phi)$ は1対1に対応します。
 - **物理的意味**:
   計算機シミュレーションや数値計算を行う際、最も直接的に実装できる形式です（ベクトルに対する行列積として計算できるため）。
+- **Kraus表現との関係**:
+  後述の [Proposition 2.20](#prop-representations-relationship) で見るように、Kraus表現 $\Phi(X) = \sum A_a X B_a^\dagger$ を持つとき、自然表現は **$K(\Phi) = \sum A_a \otimes \overline{B}_a$** という具体的な形になります。
+  これは、線形代数の恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ から直ちに導かれます（$\overline{B}$ は複素共役）。
 
 #### 2. Choi 表現 (Choi Representation) [📄 p.78](assets/Quantum_Information.pdf#page=86)
 
@@ -210,6 +213,9 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
   「チャネル $\Phi$ の片割れに、最大エンタングル状態を通したときの出力状態」と解釈できます。つまり、チャネルの性質は出力される量子状態の性質に完全に転写されます。
 - **重要性**:
   「写像が完全正 (CP) であること」と「Choi演算子が半正定値 ($J(\Phi) \ge 0$) であること」は同値です（Choiの定理）。
+- **Kraus表現との関係**:
+  Kraus表現を用いると **$J(\Phi) = \sum \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger$** と書けます。
+  これは、恒等式 $\mathrm{vec}(A) = (A \otimes I)\mathrm{vec}(I)$ を使うことで導かれます。つまり、Choi状態は「Kraus演算子をベクトル化したもの」の重ね合わせ（ランク1行列の和）として理解できます。
 
 
 ```{mermaid}
