@@ -171,7 +171,7 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 
 チャネル（線形写像）を具体的に計算したり、理論的に解析したりするためには、写像を「行列」や「状態（演算子）」として表現する必要があります。そのための基礎となるのが **ベクトル化 (Vectorization)** です。
 
-#### 準備：演算子のベクトル化 (Vectorization) [📄 p.23](assets/Quantum_Information.pdf#page=31) {#vectorization}
+#### 準備：演算子のベクトル化 (Vectorization) [📄 p.23](assets/Quantum_Information.pdf#page=31) {#vectorization-channels}
 
 チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y})$ を行列として扱うためには、入力である「演算子（行列） $X$」を「ベクトル $\mathrm{vec}(X)$」に変換する **ベクトル化 (Vectorization)** という操作が必要になります。
 
@@ -294,6 +294,8 @@ graph LR
 2. **Choi 表現**: $J(\Phi) = \sum_{a \in \Sigma} \mathrm{vec}(A_a) \mathrm{vec}(B_a)^\dagger$
 3. **Kraus 表現**: $\Phi(X) = \sum_{a \in \Sigma} A_a X B_a^\dagger$
 4. **Stinespring 表現**: $A = \sum_a A_a \otimes e_a, B = \sum_a B_a \otimes e_a$ とした $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger)$
+
+:::
 
 ::: {.proof}
 
