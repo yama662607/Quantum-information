@@ -388,6 +388,30 @@ A = \begin{pmatrix} A_0 \\ A_1 \end{pmatrix} = \begin{pmatrix}
 $$
 入力（2次元）を環境込みの系（4次元）へ埋め込みます。
 
+**📝 導出の計算ステップ**
+
+これらの行列がどう導かれたか確認しましょう。$A_0 = \sqrt{1-p}I, A_1 = \sqrt{p}\sigma_x$ です。
+
+-   **Natural表現: $K(\Phi) = \sum A_a \otimes \overline{A}_a$**
+    $A_a$ は実数行列なので $\overline{A}_a = A_a$ です。
+    $$
+    \begin{aligned}
+    K(\Phi) &= A_0 \otimes A_0 + A_1 \otimes A_1 \\
+    &= (1-p)(I \otimes I) + p(\sigma_x \otimes \sigma_x) \\
+    &= (1-p) \begin{pmatrix} 1 & & & \\ & 1 & & \\ & & 1 & \\ & & & 1 \end{pmatrix} + p \begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{pmatrix}
+    \end{aligned}
+    $$
+    これらを足し合わせることで、上記の行列が得られます。
+
+-   **Choi表現: $J(\Phi) = \sum \mathrm{vec}(A_a)\mathrm{vec}(A_a)^\dagger$**
+    各Kraus演算子をベクトル化して、ランク1行列を作って足します。
+    $\mathrm{vec}(I) = (1, 0, 0, 1)^T$, $\mathrm{vec}(\sigma_x) = (0, 1, 1, 0)^T$ なので、
+    $$
+    J(\Phi) = (1-p) \begin{pmatrix} 1 \\ 0 \\ 0 \\ 1 \end{pmatrix} \begin{pmatrix} 1 & 0 & 0 & 1 \end{pmatrix} + p \begin{pmatrix} 0 \\ 1 \\ 1 \\ 0 \end{pmatrix} \begin{pmatrix} 0 & 1 & 1 & 0 \end{pmatrix}
+    $$
+    この2つの外積を計算して和をとると、上記の行列になります。
+
+
 :::
 
 ::: {.callout-tip title="物理学の視点"}
