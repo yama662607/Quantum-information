@@ -425,7 +425,18 @@ $$ A^* = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
 $$ E_{a,b} u = u(b) e_a $$
 これは、入力ベクトルの $b$ 成分を抽出し、$a$ 番目の標準基底ベクトル $e_a$ にマップする演算子です。集合 $\{E_{a,b} : a \in \Gamma, b \in \Sigma\}$ は $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ の基底をなします。
 
-物理記法では $E_{a,b} = |a\rangle\langle b|$ に対応します。
+::: {.callout-tip title="物理学の視点（ブラケット記法）"}
+この演算子 $E_{a,b}$ は、量子力学では **$|a\rangle\langle b|$** と表記されます。
+その作用は、任意のケットベクトル $|u\rangle$ に対して次のように理解できます。
+
+$$ (|a\rangle\langle b|) |u\rangle = |a\rangle (\langle b|u\rangle) = \langle b|u\rangle |a\rangle $$
+
+1.  **$\langle b|$ (Bra)**: 入力状態 $|u\rangle$ との内積（重なり）を取り、スカラ値 $\langle b|u\rangle$（振幅）を取り出します。
+2.  **$|a\rangle$ (Ket)**: その振幅を伴って、状態を $|a\rangle$ へと遷移させます。
+
+つまり、「状態 $|b\rangle$ から成分を吸い上げ、状態 $|a\rangle$ へ送り出す」ポンプのような役割を果たします。
+
+:::
 
 #### カーネル、像、およびランク (Kernel, Image, and Rank)
 
