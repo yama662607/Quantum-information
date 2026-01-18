@@ -325,27 +325,45 @@ $$ A^* = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
 
 :::
 
-#### 演算子の直和とテンソル積 (Direct Sums and Tensor Products of Operators)
-空間 $\mathcal{X}_1 \oplus \dots \oplus \mathcal{X}_n$ から $\mathcal{Y}_1 \oplus \dots \oplus \mathcal{Y}_m$ への演算子 $A$ は、ブロック行列として一意に表現されます。
+#### 演算子の直和 (Direct Sums of Operators)
+
+演算子の直和には、線形写像としての定義と、行列としての表現の2つの側面があります。これらは等価ですが、視点が異なります。
+
+1.  **線形演算子としての定義**:
+    $A_k \in \mathrm{L}(\mathcal{X}_k, \mathcal{Y}_k)$ に対し、直和空間 $\mathcal{X}_1 \oplus \dots \oplus \mathcal{X}_n$ 上のベクトル $u_1 \oplus \dots \oplus u_n$ に以下のように作用する演算子 $A = A_1 \oplus \dots \oplus A_n$ を定義します。
+    $$ (A_1 \oplus \dots \oplus A_n)(u_1 \oplus \dots \oplus u_n) = (A_1 u_1) \oplus \dots \oplus (A_n u_n) $$
+    つまり、各部分空間のベクトルに対して、対応する演算子が独立に作用します。
+
+2.  **行列としての表現**:
+    これを基底を用いて行列表示すると、対角ブロックに行列が並ぶ「ブロック対角行列」となります。
+    $$ A_1 \oplus \dots \oplus A_n = \begin{pmatrix} A_1 & 0 & \dots & 0 \\ 0 & A_2 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & A_n \end{pmatrix} $$
+    ここで、非対角ブロックはすべてゼロ行列です。
+
+より一般に、空間 $\mathcal{X}_1 \oplus \dots \oplus \mathcal{X}_n$ から $\mathcal{Y}_1 \oplus \dots \oplus \mathcal{Y}_m$ への任意の演算子 $A$ は、すべてのブロックが非ゼロになりうるブロック行列として一意に表現されます。
 $$ A = \begin{pmatrix} A_{1,1} & \dots & A_{1,n} \\ \vdots & \ddots & \vdots \\ A_{m,1} & \dots & A_{m,n} \end{pmatrix} $$ {#eq-block-matrix}
+このとき、ベクトル $u = u_1 \oplus \dots \oplus u_n$ に対する作用 $v = Au$ は、通常の行列とベクトルの積のルールに従って計算されます（$v_j = \sum_k A_{j,k} u_k$）。
 
-各成分は
-$$
-A_{j,k}(a,b) = A((j,a),(k,b))
-$$ {#eq-block-entry}
-で定まり、ベクトル $u_1 \oplus \cdots \oplus u_n$ に作用させると
-$$
-v_j = \sum_{k=1}^n A_{j,k} u_k
-$$ {#eq-block-action}
-が成り立ちます。
+#### 演算子のテンソル積 (Tensor Products of Operators)
 
-また、演算子の**テンソル積** $A_1 \otimes \dots \otimes A_n$ は、次を満たす唯一の演算子として定義されます。
-$$ (A_1 \otimes \dots \otimes A_n)(u_1 \otimes \dots \otimes u_n) = (A_1 u_1) \otimes \dots \otimes (A_n u_n) $$ {#eq-operator-tensor}
-行列成分では
-$$
-(A_1 \otimes \dots \otimes A_n)((a_1, \dots, a_n), (b_1, \dots, b_n)) = A_1(a_1, b_1) \dots A_n(a_n, b_n)
-$$ {#eq-operator-tensor-components}
-となります。
+テンソル積も同様に、演算子としての定義と行列表現（クロネッカー積）の2つを理解することが重要です。
+
+1.  **線形演算子としての定義**:
+    $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ と $B \in \mathrm{L}(\mathcal{W}, \mathcal{Z})$ に対し、テンソル積空間 $\mathcal{X} \otimes \mathcal{W}$ 上の初等テンソル $u \otimes v$ に以下のように作用する演算子 $A \otimes B$ が一意に存在します。
+    $$ (A \otimes B)(u \otimes v) = (Au) \otimes (Bv) $$ {#eq-operator-tensor}
+    一般のベクトル（初等テンソルの和）に対しては、線形性を使って計算します。物理的には、「系Aには $A$ を、系Bには $B$ を同時に（あるいは独立に）作用させる操作」に対応します。
+
+2.  **行列としての表現（クロネッカー積）**:
+    これを行列成分で書き下すと、以下のようになります。
+    $$ (A \otimes B)((a, \alpha), (b, \beta)) = A(a,b) B(\alpha, \beta) $$
+    これを行列の形に並べると、クロネッカー積 (Kronecker product) と呼ばれる形式になります。
+    $$
+    A \otimes B = \begin{pmatrix}
+    A(1,1) B & \dots & A(1,n) B \\
+    \vdots & \ddots & \vdots \\
+    A(m,1) B & \dots & A(m,n) B
+    \end{pmatrix}
+    $$
+    大きな行列の中に、行列 $A$ の各成分倍された行列 $B$ がブロックとして埋め込まれているイメージです。
 
 #### 標準基底演算子 (Standard Basis of Operators)
 空間 $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ には、直感的な標準基底が存在します。シンボル $a \in \Gamma$ と $b \in \Sigma$ に対し、演算子 $E_{a,b} \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ を次のように定義します。
