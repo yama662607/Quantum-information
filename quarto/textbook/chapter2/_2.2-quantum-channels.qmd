@@ -252,6 +252,18 @@ graph LR
 - **非一意性**:
   異なる Kraus 演算子の組が同じチャネルを表すことがあります（ユニタリ変換の自由度があります）。
 
+::: {.callout-note title="なぜ A_a, B_a で書けるのか？（存在の保証）" collapse="true"}
+「どんなチャネル（線形写像）でも、本当に $\sum A_a X B_a^\dagger$ の形に書けるの？」と疑問に思うかもしれません。**答えは Yes です。**
+
+これは線形代数の基本的な性質から導かれます：
+1.  まず、任意の線形写像 $\Phi$ は、自然表現 $K(\Phi)$ という1つの巨大な行列で表せます。
+2.  この行列 $K(\Phi)$（空間 $\mathcal{Y} \otimes \mathcal{X}$ 上の演算子）は、特異値分解（SVD）などを用いることで、必ず「ランク1の行列の和」に分解できます。つまり、テンソル積の和 $K(\Phi) = \sum_a A_a \otimes \overline{B}_a$ の形に書き下せます。
+3.  この「テンソル積の和」を元の写像の形に戻すと（ベクトル化の逆操作）、自動的に Kraus 表現 $\Phi(X) = \sum_a A_a X B_a^\dagger$ が得られます。
+
+つまり、$A_a, B_a$ は、**チャネルを表現する巨大な行列を成分分解したパーツ** だと言えます。Proposition 2.20 は、このパーツが他の表現（Choi, Natural）においてどのように配置されるかを示しているに過ぎません。
+
+:::
+
 #### 4. Stinespring 表現 (Stinespring Representation) [📄 p.79](assets/Quantum_Information.pdf#page=87)
 
 「開いた系」としてのチャネルの起源を明示する表現です。
