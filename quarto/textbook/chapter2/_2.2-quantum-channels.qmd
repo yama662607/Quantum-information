@@ -74,18 +74,27 @@ Watrousの教科書では、チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mat
 4.  **結論**:
     これが「すべての半正定値 $P$」に対して成り立つということは、自己随伴性の性質（または背理法）により、$\Phi^*(Q)$ 自身が半正定値でなければなりません。すなわち、$\Phi^*$ も正写像です。
 
+
 ::: {.callout-note}
 ### 直感的な証明: 背理法によるアプローチ
 
-「すべての $P \ge 0$ に対して $\langle A, P \rangle \ge 0$ ならば $A \ge 0$ である」という事実は、**背理法**を用いると直感的に理解できます。
+「すべての $P \ge 0$ に対して $\langle A, P \rangle \ge 0$ ならば $A \ge 0$ である」という事実（PSD錐の自己双対性）は、**背理法**を用いると直感的に理解できます。
 
-1.  **仮定**: もし $A$ が半正定値でないと仮定します。すると、スペクトル分解したときに少なくとも1つの負の固有値 $\lambda < 0$ と、それに対応する固有ベクトル $|v\rangle$ が存在します。
-2.  **検証用演算子の構成**: ここで、チェック用の演算子として $P = |v\rangle\langle v|$ を選びます。これは射影演算子なので、明らかに半正定値 ($P \ge 0$) です。
+1.  **仮定**: もし $A$ が半正定値でないと仮定します。すると、スペクトル分解したときに少なくとも1つの負の固有値 $\lambda < 0$ と、それに対応する正規化された固有ベクトル $u$ が存在します。
+2.  **検証用演算子の構成**: ここで、チェック用の演算子として $P = u u^\dagger$ （ランク1の射影）を選びます。これは明らかに半正定値 ($P \ge 0$) です。
 3.  **矛盾の導出**: 内積を計算すると、
-    $$ \langle P, A \rangle = \mathrm{Tr}(|v\rangle\langle v| A) = \langle v | A | v \rangle = \lambda < 0 $$
+    $$ \langle P, A \rangle = \mathrm{Tr}( (u u^\dagger)^\dagger A ) = \mathrm{Tr}(u u^\dagger A) = u^\dagger A u = \lambda < 0 $$
     となり、「すべての $P \ge 0$ に対して内積が非負」という前提に矛盾します。
 
 したがって、背理法により $A$ は半正定値でなければなりません。
+
+:::
+
+::: {.callout-tip title="物理学の視点（ブラケット記法）"}
+ブラケット記法では、固有ベクトルを $|u\rangle$、検証用演算子を $P = |u\rangle\langle u|$ と書きます。
+矛盾の導出は以下のようになります。
+$$ \langle P, A \rangle = \mathrm{Tr}(|u\rangle\langle u| A) = \langle u | A | u \rangle = \lambda < 0 $$
+期待値 $\langle A \rangle_u$ が負になる状態 $|u\rangle$ が存在すれば、演算子 $A$ は正定値ではない、ということです。
 
 :::
 
@@ -108,6 +117,12 @@ Watrousの教科書では、チャネル $\Phi: \mathrm{L}(\mathcal{X}) \to \mat
 
 3.  **結論**:
     Prop 2.18 の完全正写像への拡張により、随伴 $\Psi$ がCPならば元の写像 $\mathrm{Tr}$ もCPとなります。
+
+:::
+
+::: {.callout-tip title="物理学の視点（ブラケット記法）"}
+トレース保存 $\mathrm{Tr}(\mathcal{E}(\rho)) = \mathrm{Tr}(\rho)$ は、随伴写像（Heisenberg描像）では $\mathcal{E}^\dagger(\mathbb{I}) = \mathbb{I}$ （単位的）に対応します。
+証明中の内積計算 $\langle c \mathbb{I}, X \rangle$ は、物理記法でも同様に $\mathrm{Tr}((c\mathbb{I})^\dagger X)$ として扱われます。
 
 :::
 
@@ -226,24 +241,42 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 
 
 1.  **Kraus $\iff$ Natural**:
-    ベクトル化の恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ （[1.1節の恒等式 @eq-vec-axb] 参照）を利用します。
+    ベクトル化の恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ を利用します。
     Kraus表現 $\Phi(X) = \sum A_a X B_a^\dagger$ の両辺をベクトル化すると、線形性より
     $$ \mathrm{vec}(\Phi(X)) = \sum_a \mathrm{vec}(A_a X B_a^\dagger) = \left( \sum_a A_a \otimes \overline{B}_a \right) \mathrm{vec}(X) $$
     となります。係数行列 $\sum A_a \otimes \overline{B}_a$ が定義より自然表現 $K(\Phi)$ です。
 
 2.  **Kraus $\iff$ Choi**:
-    恒等式 $\mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (A \otimes \mathbb{I})\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger (B^\dagger \otimes \mathbb{I})$ （[@eq-vec-axb] の応用）を用います。
+    恒等式 $\mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (A \otimes \mathbb{I})\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger (B^\dagger \otimes \mathbb{I})$ を用います。
     Kraus表現の項の和を変換すると、
     $$ \sum_a \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger = \sum_a (A_a \otimes \mathbb{I}) \Omega (B_a^\dagger \otimes \mathbb{I}) $$
     となります（ここで $\Omega = \mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger$）。
     右辺は $(\Phi \otimes \mathbb{I})(\Omega)$ と見なせるため、Choi演算子の定義と一致します。
-  $$ J(\Phi) = \sum_a (A_a X B_a^\dagger \otimes \mathbb{I})(\dots) \quad \text{より} \quad J(\Phi) = (\Phi \otimes \mathbb{I})(\mathrm{vec}(\mathbb{I})\mathrm{vec}(\mathbb{I})^\dagger) $$
-  が得られ、(2) の Choi 演算子の定義と一致します。
 
 3.  **Kraus $\iff$ Stinespring**:
-    部分トレースの計算、$\mathrm{Tr}_{\mathcal{Z}}((M \otimes |a\rangle) X (N \otimes |b\rangle)^\dagger) = \langle b|a\rangle MXN^\dagger$ （[1.1節の恒等式 @eq-vec-try] の関係）を用います。定義した $A, B$ を代入すると、
-    $$ \mathrm{Tr}_{\mathcal{Z}}(AXB^\dagger) = \sum_{a,b} \mathrm{Tr}_{\mathcal{Z}}((A_a \otimes e_a) X (B_b \otimes e_b)^\dagger) = \sum_{a,b} \delta_{a,b} A_a X B_b^\dagger = \sum_a A_a X B_a^\dagger $$
+    部分トレースの計算、$\mathrm{Tr}_{\mathcal{Z}}((M \otimes e_a) X (N \otimes e_b)^\dagger) = (e_b^\dagger e_a) MXN^\dagger = \delta_{a,b} MXN^\dagger$ を用います。
+    定義した $A = \sum A_a \otimes e_a, B = \sum B_b \otimes e_b$ を代入すると、
+    $$ \begin{aligned}
+    \mathrm{Tr}_{\mathcal{Z}}(AXB^\dagger) &= \sum_{a,b} \mathrm{Tr}_{\mathcal{Z}} \left( (A_a \otimes e_a) X (B_b \otimes e_b)^\dagger \right) \\
+    &= \sum_{a,b} \delta_{a,b} A_a X B_b^\dagger \\
+    &= \sum_a A_a X B_a^\dagger
+    \end{aligned} $$
     となり、(3) と一致します。
+
+:::
+
+::: {.callout-tip title="物理学の視点（ブラケット記法）"}
+3番目の **Kraus $\iff$ Stinespring** の証明をブラケット記法で行うと、部分トレースは「環境系 $\mathcal{Z}$ の基底 $\{|k\rangle\}$ で挟んで和を取る」操作として記述されます。
+補助系を $|a\rangle, |b\rangle$ で張られる空間とし、$A = \sum_a A_a \otimes |a\rangle$ と置きます（ここでは $B=A$ とします）。
+$$
+\begin{aligned}
+\mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger) &= \sum_k (\mathbb{I} \otimes \langle k|) \left( \sum_{a,b} A_a X A_b^\dagger \otimes |a\rangle\langle b| \right) (\mathbb{I} \otimes |k\rangle) \\
+&= \sum_{a,b,k} A_a X A_b^\dagger \cdot \langle k|a\rangle\langle b|k\rangle \\
+&= \sum_{a,b,k} A_a X A_b^\dagger \delta_{k,a}\delta_{b,k} \\
+&= \sum_a A_a X A_a^\dagger
+\end{aligned}
+$$
+この計算は、直交基底の完全性 $\sum |k\rangle\langle k| = \mathbb{I}$ を利用する自然な流れとなります。
 
 :::
 
@@ -306,6 +339,12 @@ $J(\Phi) = \sum_{a=1}^r \mathrm{vec}(A_a)\mathrm{vec}(A_a)^\dagger$
 
 :::
 
+::: {.callout-tip title="物理学の視点"}
+Choiランク $r$ は、チャネルを実現するために必要な「最小の環境系の次元」に対応します。
+Kraus表現の項数（Kraus演算子の数）は一意には決まりませんが、その最小値は $r$ であり、環境を効率的にシミュレートする際の指標となります。
+
+:::
+
 #### Characterizations of completely positive maps (完全正値写像の特徴付け)
 
 ::: {#thm-cp-conditions}
@@ -345,6 +384,13 @@ $J(\Phi) = \sum_{a=1}^r \mathrm{vec}(A_a)\mathrm{vec}(A_a)^\dagger$
 
 :::
 
+::: {.callout-tip title="物理学の視点"}
+(3) の $J(\Phi) \ge 0$ という条件は、「チャネル・状態双対性」の核心です。
+正規化されていない最大エンタングル状態 $|\Gamma\rangle = \sum_i |i\rangle|i\rangle$ に対し、Choi演算子は $J(\Phi) = (\Phi \otimes \mathbb{I})(|\Gamma\rangle\langle\Gamma|)$ と書けます。
+CP性の条件は、**「もつれた状態の片側に作用させても、出力が負の確率（負の固有値）を持たない」** という物理的要請と等価です。
+
+:::
+
 ::: {#cor-unitary-equivalence-kraus}
 ## Kraus表現のユニタリ同値性 (Corollary 2.23) [📄 p.84](assets/Quantum_Information.pdf#page=92)
 $\Phi$ の2つの Kraus 表現 $\{A_a\}$ と $\{B_a\}$ (ただし $A_a = B_a$ のCP形式) に対し、
@@ -363,6 +409,13 @@ $$ J(\Phi) = \sum_a \mathrm{vec}(A_a)\mathrm{vec}(A_a)^\dagger = \sum_a \mathrm{
 
 :::
 
+::: {.callout-tip title="物理学の視点"}
+Kraus表現の非一意性は、**「環境系 $\mathcal{Z}$ の基底の選び方の自由度」** に由来します。
+環境は測定されずに捨てられる（トレースアウトされる）ため、環境の中でどのような直交基底をとっても、主系 $\mathcal{X}$ のダイナミクスには影響しません。
+この自由度が $B_a = \sum U_{ab} A_b$ というユニタリ変換として現れます。
+
+:::
+
 ::: {#cor-unitary-equivalence-stinespring}
 ## Stinespring表現のユニタリ同値性 (Corollary 2.24) [📄 p.85](assets/Quantum_Information.pdf#page=93)
 $\Phi$ の2つの Stinespring 表現 $A, B \in \mathrm{L}(\mathcal{X}, \mathcal{Y} \otimes \mathcal{Z})$ (CP形式) に対し、
@@ -374,6 +427,12 @@ $$ \mathrm{Tr}_{\mathcal{Z}}(A X A^\dagger) = \mathrm{Tr}_{\mathcal{Z}}(B X B^\d
 ::: {.proof}
 
 Corollary 2.23 と本質的に同じです。Stinespring表現の等長写像 $A$ を補助系 $\mathcal{Z}$ の基底で展開すれば Kraus 演算子が得られます。Kraus 演算子間のユニタリ変換 $U_{ab}$ は、補助系 $\mathcal{Z}$ 上の基底変換（ユニタリ演算子 $U$）に対応します。
+
+:::
+
+::: {.callout-tip title="物理学の視点"}
+Stinespring表現における等長写像 $A: \mathcal{X} \to \mathcal{Y} \otimes \mathcal{Z}$ は、主系から環境系への情報の流出を含めた全体系の発展を記述します。
+ここでのユニタリ自由度 $U \in \mathrm{U}(\mathcal{Z})$ は、環境系 $\mathcal{Z}$ 内での基底回転に対応し、観測者（主系）からは区別できません。
 
 :::
 
@@ -412,6 +471,12 @@ Corollary 2.23 と本質的に同じです。Stinespring表現の等長写像 $A
 
 :::
 
+::: {.callout-tip title="物理学の視点"}
+エルミート保存性は、**「観測量（エルミート演算子）が、チャンネルを通した後も観測量であり続ける」** という性質に対応します。
+物理的な写像であれば、観測可能量が非物理的な量（複素固有値を持つ演算子）に変わることはあってはならないため、これは基本的な要請です。
+
+:::
+
 #### トレース保存写像 (Trace-preserving maps)
 
 ::: {#thm-trace-preserving}
@@ -439,6 +504,13 @@ Corollary 2.23 と本質的に同じです。Stinespring表現の等長写像 $A
 
 3.  **$(1) \iff (3)$**:
     部分トレースの計算により $\mathrm{Tr}_{\mathcal{Y}}(J(\Phi)) = \sum_a A_a^\dagger A_a$ が示せるため、これと (4) は同値です。
+
+:::
+
+::: {.callout-tip title="物理学の視点"}
+(2) の $\Phi^*(\mathbb{I}) = \mathbb{I}$ （単位的）という条件は、**Heisenberg描像** における確率の保存を意味します。
+Schrödinger描像では状態 $\rho$ が $\Phi(\rho)$ に変化し、$\mathrm{Tr}(\Phi(\rho))=1$ が保たれます。
+一方、Heisenberg描像では観測量 $X$ が $\Phi^*(X)$ に変化します。全確率に対応する単位演算子 $\mathbb{I}$ が不変であること ($\Phi^*(\mathbb{I}) = \mathbb{I}$) が、物理法則の一貫性を保証しています。
 
 :::
 
@@ -471,6 +543,12 @@ $$ \mathcal{A} = \{ P \in \mathrm{Pos}(\mathcal{Y} \otimes \mathcal{X}) : \mathr
 
 :::
 
+::: {.callout-tip title="物理学の視点"}
+チャネルの集合が凸であることは、**「確率的な混合（コイン投げでチャネルを選ぶ操作）」** もまた有効な物理的操作であることを意味します。
+コンパクト性は、物理的に許される操作の極限列もまた物理的操作であることを保証します。
+
+:::
+
 ::: {#prop-purification-extension}
 ## 純粋化とチャネル拡張 (Proposition 2.29) [📄 p.88](assets/Quantum_Information.pdf#page=96)
 $\mathrm{Tr}_{\mathcal{Y}}(uu^\dagger) = \mathrm{Tr}_{\mathcal{Z}}(P)$ を満たすベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ と正定値演算子 $P \in \mathrm{Pos}(\mathcal{X} \otimes \mathcal{Z})$ に対し、あるチャネル $\Phi \in \mathrm{C}(\mathcal{Y}, \mathcal{Z})$ が存在して以下を満たす。
@@ -487,6 +565,12 @@ $v = (\mathbb{I}_{\mathcal{X}} \otimes A) u$
 となります。ここで、$\Phi(Y) = \mathrm{Tr}_{\mathcal{W}}(A Y A^\dagger)$ という Stinespring 形式のチャネルを定義すれば、
 $(\mathbb{I} \otimes \Phi)(uu^\dagger) = \mathrm{Tr}_{\mathcal{W}}(v v^\dagger) = P$
 となり、条件を満たします。
+
+:::
+
+::: {.callout-tip title="物理学の視点"}
+この命題は、Stinespringの定理の逆「チャネルの拡張可能性」を保証しています。
+状態空間上で整合性が取れている（部分トレースが一致する）ならば、必ず背後に物理的な結合系（等長写像）が存在するという、量子力学の無矛盾性を示しています。
 
 :::
 
@@ -527,6 +611,12 @@ $$ \{ P \in \mathrm{Pos}(\mathcal{X}) : \mathrm{im}(P) \subseteq \mathrm{im}(A) 
 3.  **線形独立性との関係**:
     計算を進めると、この摂動 $H$ の自由度（$\mathrm{Tr}_{\mathcal{Y}}(H)=0$ などの制約下での）がなくなる条件が、ちょうど $\{ A_a^\dagger A_b \}$ の線形独立性と一致します。
     特に、$\{ A_a^\dagger A_b \}$ が線形独立なら $H=0$ しかありえず、極値的となります。
+
+:::
+
+::: {.callout-tip title="物理学の視点"}
+極値的チャネルは、**「これ以上細かい操作の混合として記述できない純粋なプロセス」** です。
+ユニタリチャネルはその代表例ですが、ノイズがある系でも、これ以上分解できない「基本的なノイズ」が存在します。定理の条件は、その分解不可能性を代数的に判定するものです。
 
 :::
 
