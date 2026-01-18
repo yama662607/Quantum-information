@@ -58,11 +58,25 @@ graph TD
 
 ### Quantum states of registers (レジスタの量子状態) [📄 p.61](assets/Quantum_Information.pdf#page=69) {#quantum-states-of-registers}
 
+::: {#def-probabilistic-state}
+## 確率的状態 (Definition 2.4)
+レジスタ $X$ の **確率的状態 (Probabilistic State)** とは、その古典状態集合 $\Sigma$ 上の確率ベクトル $p \in \mathrm{P}(\Sigma)$ のことです。
+すなわち、すべての $a \in \Sigma$ について $p(a) \ge 0$ であり、$\sum_{a \in \Sigma} p(a) = 1$ を満たすベクトルです。
+
+:::
+
 量子状態は、複素ユークリッド空間上の演算子（密度演算子）として記述されます。ここで、本教科書（Watrous）の重要な数学的抽象化として、古典状態集合 $\Sigma$ に対応する複素ユークリッド空間 $\mathcal{X} = \mathbb{C}^\Sigma$ が導入されます。
 
 ::: {#def-quantum-state}
 ## 量子状態 (Definition 2.5)
 レジスタ $X$ の **量子状態 (Quantum State)** とは、対応する複素ユークリッド空間 $\mathcal{X}$ 上の密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ のことです。
+
+:::
+
+::: {.callout-note title="状態の識別可能性 (Distinguishability)"}
+古典的な状態（例えば $0$ と $1$）は、原理的に誤差なく完全に識別できます。
+しかし、量子状態のペア $| \psi \rangle$ と $| \phi \rangle$ が完全に識別できる（測定によって確実に区別できる）ための必要十分条件は、それらが **直交している (Orthogonal)** こと（$\langle \psi | \phi \rangle = 0$）です。
+一般の量子状態は必ずしも直交しないため、完全には識別できない場合があります。これは量子情報処理における最も顕著な制約の一つです（Chapter 3 で詳細に議論されます）。
 
 :::
 
