@@ -328,14 +328,21 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 
 線形演算子の空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と、テンソル積空間 $\mathcal{X} \otimes \mathcal{Y}$ の間には、非常に重要な同型対応が存在します。
 
-空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、行列単位 $|a\rangle\langle b|$ に対して次のように定義されます。
-$$ \mathrm{vec}(|a\rangle\langle b|) = |a\rangle \otimes |b\rangle $$
+空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、標準基底行列単位 $E_{a,b} = e_a e_b^\dagger$ に対して次のように定義されます。
+$$ \mathrm{vec}(E_{a,b}) = e_a \otimes e_b $$
 
 ::: {.callout-note title="定義式の意味"}
-この定義は、**「出力側（$\mathcal{X}$）の基底」と「入力側（$\mathcal{Y}$）の基底」のペア**で作られる演算子を、それらをそのまま並べたテンソル積状態に対応させていることを意味します。
-一般の演算子 $X = \sum_{a,b} X_{a,b} |a\rangle\langle b|$ に対しては、線形性から：
-$$ \mathrm{vec}(X) = \sum_{a,b} X_{a,b} (|a\rangle \otimes |b\rangle) $$
-となります。これは、行列としての成分 $X_{a,b}$ を、テンソル積空間の基底 $|a,b\rangle$ の係数としてそのまま「詰め替える」操作に他なりません。
+この定義は、**「出力側（$\mathcal{X}$）の基底」と「入力側（$\mathcal{Y}$）の基底」のペア**で作られる行列単位を、それらをそのまま並べたテンソル積状態に対応させていることを意味します。
+一般の演算子 $X = \sum_{a,b} X(a,b) E_{a,b}$ に対しては、線形性から：
+$$ \mathrm{vec}(X) = \sum_{a,b} X(a,b) (e_a \otimes e_b) $$
+となります。これは、行列としての成分 $X(a,b)$ を、テンソル積空間の基底 $e_a \otimes e_b$ の係数としてそのまま「詰め替える」操作に他なりません。
+
+:::
+
+::: {.callout-tip title="物理学の視点（ブラケット記法）"}
+ブラケット記法では、行列単位を $|a\rangle\langle b|$、基底ベクトルを $|a\rangle \otimes |b\rangle$ と書きます。
+$$ \mathrm{vec}(|a\rangle\langle b|) = |a\rangle \otimes |b\rangle $$
+これは「行ベクトル $\langle b|$ を転置してケケット $|b\rangle$ にし、列ベクトル $|a\rangle$ と結合する」操作に見えます。
 
 :::
 
@@ -371,31 +378,49 @@ $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{v
 ::: {.proof}
 
 1.  **Identity 1.88 (行列積)**:
-    線形性より $X = |i\rangle\langle j|$ の場合に示せば十分である。
+    線形性より $X = E_{a,b}$ の場合に示せば十分である。
     まず左辺を計算する：
-    $$ (A \otimes B)\mathrm{vec}(|i\rangle\langle j|) = (A \otimes B)(|i\rangle \otimes |j\rangle) = (A|i\rangle) \otimes (B|j\rangle) $$
-    一方、右辺の中身は $A |i\rangle\langle j| B^T = (A|i\rangle) (B|j\rangle)^T$ である。
-    ブラケット記法において $|v\rangle^T = \langle \bar{v}|$ であることに注意すると、
-    これはランク1演算子 $(A|i\rangle) \langle \overline{B|j\rangle}|$ である。
-    これをベクトル化すると、定義 $\mathrm{vec}(|u\rangle\langle \bar{v}|) = |u\rangle \otimes |v\rangle$ （第2項の複素共役が相殺される）より：
-    $$ \mathrm{vec}((A|i\rangle) (B|j\rangle)^T) = (A|i\rangle) \otimes (B|j\rangle) $$
+    $$ (A \otimes B)\mathrm{vec}(E_{a,b}) = (A \otimes B)(e_a \otimes e_b) = (Ae_a) \otimes (Be_b) $$
+    一方、右辺の中身は $A E_{a,b} B^T = A e_a e_b^\dagger B^T = (A e_a) (B e_b)^T$ である。
+    ここでランク1演算子のベクトル化 $\mathrm{vec}(u v^T) = u \otimes v$ を用いると：
+    $$ \mathrm{vec}((A e_a) (B e_b)^T) = (Ae_a) \otimes (Be_b) $$
     よって一致する。
 
 2.  **Identity 1.90 (内積)**:
-    $X = |i\rangle\langle j|, Y = |k\rangle\langle l|$ とすると、
-    $$ \langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \langle i \otimes j, k \otimes l \rangle = \langle i, k \rangle \langle j, l \rangle $$
+    $X = E_{a,b}, Y = E_{c,d}$ とすると、
+    $$ \langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \langle e_a \otimes e_b, e_c \otimes e_d \rangle = \langle e_a, e_c \rangle \langle e_b, e_d \rangle = \delta_{a,c} \delta_{b,d} $$
     一方で、
-    $$ \mathrm{Tr}(X^\dagger Y) = \mathrm{Tr}((|j\rangle\langle i|) (|k\rangle\langle l|)) = \mathrm{Tr}(\langle i, k \rangle |j\rangle\langle l|) = \langle i, k \rangle \langle l, j \rangle $$
-    Watrousの定義では内積が第1引数に対して反線形であり、$\langle l, j \rangle = \langle j, l \rangle$ （標準基底のときなど）となるため一致する。
+    $$ \mathrm{Tr}(X^\dagger Y) = \mathrm{Tr}(E_{b,a} E_{c,d}) = \delta_{a,c} \mathrm{Tr}(E_{b,d}) = \delta_{a,c} \delta_{b,d} $$
+    よって一致する。
 
 3.  **Identity 1.91 (部分トレース)**:
-    $A = |i\rangle\langle j|, B = |k\rangle\langle l|$ とする。
-    $$ \mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (|i\rangle \otimes |j\rangle) (\langle k| \otimes \langle l|) = (|i\rangle\langle k|) \otimes (|j\rangle\langle l|) $$
+    $A = E_{a,b}, B = E_{c,d}$ とする。
+    $$ \mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (e_a \otimes e_b) (e_c \otimes e_d)^\dagger = (e_a e_c^\dagger) \otimes (e_b e_d^\dagger) = E_{a,c} \otimes E_{b,d} $$
     $\mathcal{Y}$ 系についてトレースをとると：
-    $$ \mathrm{Tr}_{\mathcal{Y}}(\dots) = (|i\rangle\langle k|) \cdot \mathrm{Tr}(|j\rangle\langle l|) = \langle l, j \rangle |i\rangle\langle k| $$
+    $$ \mathrm{Tr}_{\mathcal{Y}}(E_{a,c} \otimes E_{b,d}) = E_{a,c} \mathrm{Tr}(E_{b,d}) = E_{a,c} \delta_{b,d} $$
     右辺は：
-    $$ AB^\dagger = (|i\rangle\langle j|) (|l\rangle\langle k|) = \langle j, l \rangle |i\rangle\langle k| $$
-    （Watrous の内積定義等に注意すれば、$\langle l, j \rangle = \langle j, l \rangle$ となり一致する）。
+    $$ AB^\dagger = E_{a,b} E_{c,d}^\dagger = E_{a,b} E_{d,c} = E_{a,c} \delta_{b,d} $$
+    よって一致する。
+
+:::
+
+::: {.callout-tip title="物理学の視点（ブラケット記法による証明）"}
+ブラケット記法を用いると、証明は以下のように記述されます。
+
+**1. 行列積**:
+$X = |i\rangle\langle j|$ に対し、
+$$ \text{LHS} = (A \otimes B)(|i\rangle \otimes |j\rangle) = A|i\rangle \otimes B|j\rangle $$
+$$ A X B^T = A |i\rangle\langle j| B^T = A|i\rangle (\overline{B}|j\rangle)^\dagger \xrightarrow{\mathrm{vec}} A|i\rangle \otimes \overline{B}|j\rangle $$
+（注：物理記法では $B^T$ の扱いに注意が必要です。通常は $\mathrm{vec}(AXB^\dagger) = (A \otimes B^*)\mathrm{vec}(X)$ の形がより自然です）
+
+**2. 内積**:
+$$ \langle \mathrm{vec}(|i\rangle\langle j|), \mathrm{vec}(|k\rangle\langle l|) \rangle = (\langle i| \otimes \langle j|) (|k\rangle \otimes |l\rangle) = \delta_{ik}\delta_{jl} $$
+$$ \mathrm{Tr}( (|i\rangle\langle j|)^\dagger (|k\rangle\langle l|) ) = \mathrm{Tr}( |j\rangle\langle i|k\rangle\langle l| ) = \delta_{ik} \mathrm{Tr}(|j\rangle\langle l|) = \delta_{ik}\delta_{jl} $$
+
+**3. 部分トレース**:
+$$ \mathrm{vec}(|i\rangle\langle j|) \mathrm{vec}(|k\rangle\langle l|)^\dagger = |i\rangle\langle k| \otimes |j\rangle\langle l| $$
+$$ \mathrm{Tr}_B(\dots) = |i\rangle\langle k| \cdot \mathrm{Tr}(|j\rangle\langle l|) = \delta_{jl} |i\rangle\langle k| $$
+$$ A B^\dagger = |i\rangle\langle j| (|k\rangle\langle l|)^\dagger = |i\rangle\langle j|l\rangle\langle k| = \delta_{jl} |i\rangle\langle k| $$
 
 :::
 
