@@ -191,7 +191,9 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 写像 $\Phi$ を「標準的な行列」として扱うための表現です。
 
 - **定義**:
-  演算子 $X$ を列ベクトル $\mathrm{vec}(X)$ に変換したとき、$\mathrm{vec}(\Phi(X)) = K(\Phi) \mathrm{vec}(X)$ を満たす一意な線形演算子 $K(\Phi) \in \mathrm{L}(\mathcal{Y} \otimes \mathcal{X})$ を **自然表現** と呼びます。
+  演算子 $X$ を列ベクトル $\mathrm{vec}(X)$ に変換したとき、
+  $$ \mathrm{vec}(\Phi(X)) = K(\Phi) \mathrm{vec}(X) $$
+  を満たす一意な線形演算子 $K(\Phi) \in \mathrm{L}(\mathcal{Y} \otimes \mathcal{X})$ を **自然表現** と呼びます。
 - **数学的性質**:
   $K(\Phi)$ は、線形代数における「表現行列」そのものです。基底を固定すれば、写像 $\Phi$ と行列 $K(\Phi)$ は1対1に対応します。
 - **物理的意味**:
@@ -215,19 +217,19 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
 %%| fig-cap: "Choi同型 (Channel-State Duality): 最大エンタングル状態 $|\\Gamma\\rangle$ の片割れにチャネル $\\Phi$ を適用することで、チャネルの情報をすべて含んだ量子状態 $J(\\Phi)$ （Choi状態）が得られます。"
 graph LR
     subgraph BellPair [Bell Pair]
-        A[System A]
-        B[System B]
+        A[系 A]
+        B[系 B]
     end
 
-    A ---|Entangled| B
+    A ---|エンタングル| B
 
-    A --> Identity[Identity Map<br>I]
-    B --> Channel[Channel<br>Phi]
+    A --> Identity[恒等写像<br>I]
+    B --> Channel[チャネル<br>Phi]
 
-    Identity --> OutA[System A]
-    Channel --> OutB[System Y]
+    Identity --> OutA[系 A]
+    Channel --> OutB[系 Y]
 
-    OutA ---|Choi State<br>J Phi| OutB
+    OutA ---|Choi状態<br>J Phi| OutB
 
     style A fill:#e1f5fe,stroke:#01579b
     style B fill:#e1f5fe,stroke:#01579b
@@ -265,19 +267,19 @@ graph LR
 %%| label: fig-stinespring
 %%| fig-cap: "Stinespring表現: 開いた系のダイナミクスは、「環境系 $Z$ との相互作用（ユニタリ発展）」と「環境系の破棄（部分トレース）」として理解できます。"
 graph LR
-    subgraph BeforeInteraction [Before Interaction]
-        X["System X"]
-        Z["Environment Z<br>|0>"]
+    subgraph BeforeInteraction [相互作用前]
+        X["系 X"]
+        Z["環境系 Z<br>|0>"]
     end
 
-    X --> U["Unitary Evolution<br>U or Isometric A"]
+    X --> U["ユニタリ発展<br>U or Isometric A"]
     Z --> U
 
-    U --> X_prime[System Y]
-    U --> Z_prime[Environment Z']
+    U --> X_prime[系 Y]
+    U --> Z_prime[環境系 Z']
 
-    Z_prime -.-> Trace[Trace Out]
-    X_prime --> Output[Output State]
+    Z_prime -.-> Trace[部分トレース]
+    X_prime --> Output[出力状態]
 
     style X fill:#e1f5fe,stroke:#01579b
     style Z fill:#f3e5f5,stroke:#7b1fa2
@@ -285,63 +287,6 @@ graph LR
     style Output fill:#fff3e0,stroke:#ef6c00
     style Trace stroke-dasharray: 5 5
 ```
-
-::: {.callout-note title="表記法についての補足 (Notation Clarification)"}
-この命題で使われる記号の定義を確認します。
-
-1.  **$\mathrm{T}(\mathcal{X}, \mathcal{Y})$**:
-    演算子空間から演算子空間への線形写像の集合です。
-    $$ \Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y}) $$
-    Chapter 1 で定義した $\mathrm{L}(\mathcal{X}, \mathcal{Y})$（ベクトル空間間の写像）とは異なり、$\Phi$ は行列（演算子）を入力として行列（演算子）を出力する「超演算子 (Superoperator)」です。
-
-2.  **$A_a, B_a$**:
-    これらは $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ に属する演算子の集まり（族）を表しています。$a$ はある有限集合 $\Sigma$ の元（インデックス）です。
-    例えば $\Sigma = \{0, 1\}$ なら、$\{A_0, A_1\}$ という2つの行列のセットを指します。
-
-:::
-
-::: {#prop-representations-relationship}
-## 表現間の関係 (Proposition 2.20) [📄 p.80](assets/Quantum_Information.pdf#page=88)
-線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ に対し、以下の4つの記述は同値です。
-
-1. **自然表現**: $K(\Phi) = \sum_{a \in \Sigma} A_a \otimes \overline{B}_a$
-2. **Choi 表現**: $J(\Phi) = \sum_{a \in \Sigma} \mathrm{vec}(A_a) \mathrm{vec}(B_a)^\dagger$
-3. **Kraus 表現**: $\Phi(X) = \sum_{a \in \Sigma} A_a X B_a^\dagger$
-4. **Stinespring 表現**: $A = \sum_a A_a \otimes e_a, B = \sum_a B_a \otimes e_a$ とした $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger)$
-
-:::
-
-::: {.proof}
-
-これら4つの表現が行ったり来たりできることを確認します。数式変形がメインになりますが、それぞれのステップには物理的・幾何学的な意味があります。
-
-1.  **Kraus $\iff$ Natural** (演算子積 $\leftrightarrow$ テンソル積):
-    線形代数の恒等式「$AXB^\dagger$ のベクトル化は $(A \otimes \overline{B})\mathrm{vec}(X)$ になる」を使います。
-    Kraus表現 $\Phi(X) = \sum A_a X B_a^\dagger$ をベクトル化してみましょう。
-    $$ \mathrm{vec}(\Phi(X)) = \sum_a \mathrm{vec}(A_a X B_a^\dagger) = \left( \sum_a A_a \otimes \overline{B}_a \right) \mathrm{vec}(X) $$
-    括弧の中身が、定義により自然表現 $K(\Phi)$ そのものです。つまり、Kraus演算子のテンソル積の和が表現行列になります。
-
-2.  **Kraus $\iff$ Choi** (作用素 $\leftrightarrow$ 状態):
-    こちらも恒等式 $\mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (A \otimes \mathbb{I}) \Omega (B^\dagger \otimes \mathbb{I})$ を使います（$\Omega$ は正規化されていない最大エンタングル状態）。
-    Choi演算子の定義式にKraus表現を代入して変形していくと...
-    $$ J(\Phi) = \sum_a \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger $$
-    というきれいな形になります。
-    これは、「Kraus演算子 $A_a, B_a$ をベクトル化して作ったランク1の演算子の和」になっています。
-
-3.  **Kraus $\iff$ Stinespring** (和 $\leftrightarrow$ 部分トレース):
-    物理的に一番面白いパートです。「補助系の情報を捨てる（部分トレース）」という操作が、「Kraus演算子の和」に対応することを見ます。
-
-    補助系 $\mathcal{Z}$ の基底を $|a\rangle$ とし、相互作用 $A = \sum A_a \otimes |a\rangle, B = \sum B_a \otimes |a\rangle$ を定義します。
-    これを Stinespring の式に入れて計算すると：
-    $$ \begin{aligned}
-    \Phi(X) &= \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger) \\
-    &= \sum_k (\mathbb{I} \otimes \langle k|) \left[ \left(\sum_a A_a \otimes |a\rangle\right) X \left(\sum_b B_b \otimes |b\rangle\right)^\dagger \right] (\mathbb{I} \otimes |k\rangle) \\
-    &= \sum_{a,b,k} (A_a X B_b^\dagger) \cdot \underbrace{\langle k|a\rangle}_{\delta_{k,a}} \underbrace{\langle b|k\rangle}_{\delta_{b,k}} \\
-    &= \sum_a A_a X B_a^\dagger
-    \end{aligned} $$
-    このように、環境系の基底 $k$ について和を取る操作（トレース）が、Kraus演算子の和の添字 $a$ にそのまま対応します。
-
-:::
 
 ::: {.callout-note title="視覚的ガイド: 2x2行列（1量子ビット）での表現の見た目" collapse="true"}
 単純な **ビット反転チャネル** $\Phi(X) = (1-p)X + p \sigma_x X \sigma_x$ を例に、各表現が具体的にどのような行列の形になるかを見てみましょう（$p$ は反転確率）。
@@ -413,6 +358,64 @@ $$
 
 
 :::
+
+::: {.callout-note title="表記法についての補足 (Notation Clarification)"}
+この命題で使われる記号の定義を確認します。
+
+1.  **$\mathrm{T}(\mathcal{X}, \mathcal{Y})$**:
+    演算子空間から演算子空間への線形写像の集合です。
+    $$ \Phi: \mathrm{L}(\mathcal{X}) \to \mathrm{L}(\mathcal{Y}) $$
+    Chapter 1 で定義した $\mathrm{L}(\mathcal{X}, \mathcal{Y})$（ベクトル空間間の写像）とは異なり、$\Phi$ は行列（演算子）を入力として行列（演算子）を出力する「超演算子 (Superoperator)」です。
+
+2.  **$A_a, B_a$**:
+    これらは $\mathrm{L}(\mathcal{X}, \mathcal{Y})$ に属する演算子の集まり（族）を表しています。$a$ はある有限集合 $\Sigma$ の元（インデックス）です。
+    例えば $\Sigma = \{0, 1\}$ なら、$\{A_0, A_1\}$ という2つの行列のセットを指します。
+
+:::
+
+::: {#prop-representations-relationship}
+## 表現間の関係 (Proposition 2.20) [📄 p.80](assets/Quantum_Information.pdf#page=88)
+線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ に対し、以下の4つの記述は同値です。
+
+1. **自然表現**: $K(\Phi) = \sum_{a \in \Sigma} A_a \otimes \overline{B}_a$
+2. **Choi 表現**: $J(\Phi) = \sum_{a \in \Sigma} \mathrm{vec}(A_a) \mathrm{vec}(B_a)^\dagger$
+3. **Kraus 表現**: $\Phi(X) = \sum_{a \in \Sigma} A_a X B_a^\dagger$
+4. **Stinespring 表現**: $A = \sum_a A_a \otimes e_a, B = \sum_a B_a \otimes e_a$ とした $\Phi(X) = \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger)$
+
+:::
+
+::: {.proof}
+
+これら4つの表現が行ったり来たりできることを確認します。数式変形がメインになりますが、それぞれのステップには物理的・幾何学的な意味があります。
+
+1.  **Kraus $\iff$ Natural** (演算子積 $\leftrightarrow$ テンソル積):
+    線形代数の恒等式「$AXB^\dagger$ のベクトル化は $(A \otimes \overline{B})\mathrm{vec}(X)$ になる」を使います。
+    Kraus表現 $\Phi(X) = \sum A_a X B_a^\dagger$ をベクトル化してみましょう。
+    $$ \mathrm{vec}(\Phi(X)) = \sum_a \mathrm{vec}(A_a X B_a^\dagger) = \left( \sum_a A_a \otimes \overline{B}_a \right) \mathrm{vec}(X) $$
+    括弧の中身が、定義により自然表現 $K(\Phi)$ そのものです。つまり、Kraus演算子のテンソル積の和が表現行列になります。
+
+2.  **Kraus $\iff$ Choi** (作用素 $\leftrightarrow$ 状態):
+    こちらも恒等式 $\mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (A \otimes \mathbb{I}) \Omega (B^\dagger \otimes \mathbb{I})$ を使います（$\Omega$ は正規化されていない最大エンタングル状態）。
+    Choi演算子の定義式にKraus表現を代入して変形していくと...
+    $$ J(\Phi) = \sum_a \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger $$
+    というきれいな形になります。
+    これは、「Kraus演算子 $A_a, B_a$ をベクトル化して作ったランク1の演算子の和」になっています。
+
+3.  **Kraus $\iff$ Stinespring** (和 $\leftrightarrow$ 部分トレース):
+    物理的に一番面白いパートです。「補助系の情報を捨てる（部分トレース）」という操作が、「Kraus演算子の和」に対応することを見ます。
+
+    補助系 $\mathcal{Z}$ の基底を $|a\rangle$ とし、相互作用 $A = \sum A_a \otimes |a\rangle, B = \sum B_a \otimes |a\rangle$ を定義します。
+    これを Stinespring の式に入れて計算すると：
+    $$ \begin{aligned}
+    \Phi(X) &= \mathrm{Tr}_{\mathcal{Z}}(A X B^\dagger) \\
+    &= \sum_k (\mathbb{I} \otimes \langle k|) \left[ \left(\sum_a A_a \otimes |a\rangle\right) X \left(\sum_b B_b \otimes |b\rangle\right)^\dagger \right] (\mathbb{I} \otimes |k\rangle) \\
+    &= \sum_{a,b,k} (A_a X B_b^\dagger) \cdot \underbrace{\langle k|a\rangle}_{\delta_{k,a}} \underbrace{\langle b|k\rangle}_{\delta_{b,k}} \\
+    &= \sum_a A_a X B_a^\dagger
+    \end{aligned} $$
+    このように、環境系の基底 $k$ について和を取る操作（トレース）が、Kraus演算子の和の添字 $a$ にそのまま対応します。
+
+:::
+
 
 ::: {.callout-tip title="物理学の視点"}
 Stinespring表現からKraus表現への変換は、「環境系を測定せずに捨てたとき、対象系はどう変化するか？」という問いへの答えです。
