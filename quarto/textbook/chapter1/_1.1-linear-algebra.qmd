@@ -344,7 +344,12 @@ $$ A^* = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
 2.  **直和空間上の一般の演算子** $A$:
     直和空間全体から直和空間全体への任意の線形写像
     $$ A : (\mathcal{X}_1 \oplus \dots \oplus \mathcal{X}_n) \to (\mathcal{Y}_1 \oplus \dots \oplus \mathcal{Y}_m) $$
-    です（一般には入力・出力の部分系の個数も異なってよい）。
+    です。このような演算子は、各成分 $\mathcal{X}_k$ から $\mathcal{Y}_j$ への線形写像の集まり $\{ A_{j,k} \in \mathrm{L}(\mathcal{X}_k, \mathcal{Y}_j) \}$ によって一意に定まります。
+
+    その作用は、任意のベクトル $u = u_1 \oplus \dots \oplus u_n$ に対して次のように定義されます（線形性により拡張）。
+    $$ A(u_1 \oplus \dots \oplus u_n) = \bigoplus_{j=1}^m \left( \sum_{k=1}^n A_{j,k} u_k \right) $$
+    つまり、出力の第 $j$ 成分には、すべての入力成分からの寄与 $A_{j,k} u_k$ が足し合わされます。
+
     行列で書くと、**非対角ブロック $A_{j,k}$ ($j \ne k$) も非ゼロになり得ます**。
 
     $$ A = \begin{pmatrix} A_{1,1} & \dots & A_{1,n} \\ \vdots & \ddots & \vdots \\ A_{m,1} & \dots & A_{m,n} \end{pmatrix} $$ {#eq-block-matrix}
