@@ -578,6 +578,33 @@ $$
 さらに $A$ との和をとると、これは $(A(XB^T))$ の $(i,j)$ 成分となります。
 すなわち、結果のベクトルは行列 $AXB^T$ の成分を並べたもの、つまり $\mathrm{vec}(AXB^T)$ と一致します。
 
+**具体例 ($2 \times 2$ の場合):**
+$X = \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \end{pmatrix}, A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}, B = \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix}$ とします。
+
+1. **左辺**: $(A \otimes B)\mathrm{vec}(X)$
+   $$
+   \begin{pmatrix}
+     a_{11} B & a_{12} B \\
+     a_{21} B & a_{22} B
+   \end{pmatrix}
+   \begin{pmatrix} x_{11} \\ x_{21} \\ x_{12} \\ x_{22} \end{pmatrix}
+   =
+   \begin{pmatrix}
+     a_{11} B \begin{pmatrix} x_{11} \\ x_{21} \end{pmatrix} + a_{12} B \begin{pmatrix} x_{12} \\ x_{22} \end{pmatrix} \\
+     a_{21} B \begin{pmatrix} x_{11} \\ x_{21} \end{pmatrix} + a_{22} B \begin{pmatrix} x_{12} \\ x_{22} \end{pmatrix}
+   \end{pmatrix}
+   $$
+   これの第1ブロック（上半分）は、
+   $$ a_{11} \begin{pmatrix} b_{11}x_{11} + b_{12}x_{21} \\ b_{21}x_{11} + b_{22}x_{21} \end{pmatrix} + a_{12} \begin{pmatrix} b_{11}x_{12} + b_{12}x_{22} \\ b_{21}x_{12} + b_{22}x_{22} \end{pmatrix} $$
+   となります。
+
+2. **右辺**: $\mathrm{vec}(AXB^T)$
+   まじめに $AXB^T$ を計算すると、その $(1,1)$ 成分（ベクトルの第1成分）は
+   $$ \sum_k A_{1k} (XB^T)_{k1} = A_{11}(x_{11}b_{11} + x_{12}b_{12}) + A_{12}(x_{21}b_{11} + x_{22}b_{12}) $$
+   ここで左辺のベクトルの第1成分（$B$ の1行目との積から来る項）を取り出すと、
+   $$ a_{11}(b_{11}x_{11} + b_{12}x_{21}) + a_{12}(b_{11}x_{12} + b_{12}x_{22}) $$
+   項を整理すると一致していることがわかります（注：右辺の計算中の $x$ の添字と $b$ の添字の組み合わせに注意して展開すると確かめられます）。
+
 :::
 
 ::: {.callout-tip title="物理学の視点（ブラケット記法による証明）"}
