@@ -198,9 +198,10 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
   $K(\Phi)$ は、線形代数における「表現行列」そのものです。基底を固定すれば、写像 $\Phi$ と行列 $K(\Phi)$ は1対1に対応します。
 - **物理的意味**:
   計算機シミュレーションや数値計算を行う際、最も直接的に実装できる形式です（ベクトルに対する行列積として計算できるため）。
-- **Kraus表現との関係**:
-  後述の [Proposition 2.20](#prop-representations-relationship) で見るように、Kraus表現 $\Phi(X) = \sum A_a X B_a^\dagger$ を持つとき、自然表現は **$K(\Phi) = \sum A_a \otimes \overline{B}_a$** という具体的な形になります。
-  これは、線形代数の恒等式 $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ から直ちに導かれます（$\overline{B}$ は複素共役）。
+- **Kraus表現との関係（先行して紹介）**:
+  もし、この写像が Kraus 表現 $\Phi(X) = \sum A_a X B_a^\dagger$ を持つならば、その自然表現は具体的な計算（Proposition 2.20）により以下の形になることが知られています。
+  $$ K(\Phi) = \sum_a A_a \otimes \overline{B}_a $$
+  （これは $\mathrm{vec}(AXB^\dagger) = (A \otimes \overline{B})\mathrm{vec}(X)$ という恒等式から導かれます）
 
 #### 2. Choi 表現 (Choi Representation) [📄 p.78](assets/Quantum_Information.pdf#page=86)
 
@@ -213,9 +214,10 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
   「チャネル $\Phi$ の片割れに、最大エンタングル状態を通したときの出力状態」と解釈できます。つまり、チャネルの性質は出力される量子状態の性質に完全に転写されます。
 - **重要性**:
   「写像が完全正 (CP) であること」と「Choi演算子が半正定値 ($J(\Phi) \ge 0$) であること」は同値です（Choiの定理）。
-- **Kraus表現との関係**:
-  Kraus表現を用いると **$J(\Phi) = \sum \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger$** と書けます。
-  これは、恒等式 $\mathrm{vec}(A) = (A \otimes I)\mathrm{vec}(I)$ を使うことで導かれます。つまり、Choi状態は「Kraus演算子をベクトル化したもの」の重ね合わせ（ランク1行列の和）として理解できます。
+- **Kraus表現との関係（先行して紹介）**:
+  もし、この写像が Kraus 表現を持つならば、Choi行列は以下の形になります。
+  $$ J(\Phi) = \sum_a \mathrm{vec}(A_a)\mathrm{vec}(B_a)^\dagger $$
+  （これは $\mathrm{vec}(A) = (A \otimes I)\mathrm{vec}(I)$ という恒等式から導かれます）
 
 
 ```{mermaid}
@@ -252,15 +254,15 @@ graph LR
 - **非一意性**:
   異なる Kraus 演算子の組が同じチャネルを表すことがあります（ユニタリ変換の自由度があります）。
 
-::: {.callout-note title="なぜ A_a, B_a で書けるのか？（存在の保証）" collapse="true"}
-「どんなチャネル（線形写像）でも、本当に $\sum A_a X B_a^\dagger$ の形に書けるの？」と疑問に思うかもしれません。**答えは Yes です。**
+::: {.callout-note title="Kraus 表現の存在保証 (Corollary 2.21 の先取り)" collapse="true"}
+「そもそも、どんなチャネルでも $A_a, B_a$ で書けるのか？」という疑問は、本来的には後述の **Corollary 2.21** で扱われるトピックですが、ここで直観を持っておくと理解がスムーズです。
 
-これは線形代数の基本的な性質から導かれます：
-1.  まず、任意の線形写像 $\Phi$ は、自然表現 $K(\Phi)$ という1つの巨大な行列で表せます。
-2.  この行列 $K(\Phi)$（空間 $\mathcal{Y} \otimes \mathcal{X}$ 上の演算子）は、特異値分解（SVD）などを用いることで、必ず「ランク1の行列の和」に分解できます。つまり、テンソル積の和 $K(\Phi) = \sum_a A_a \otimes \overline{B}_a$ の形に書き下せます。
-3.  この「テンソル積の和」を元の写像の形に戻すと（ベクトル化の逆操作）、自動的に Kraus 表現 $\Phi(X) = \sum_a A_a X B_a^\dagger$ が得られます。
+1.  任意の線形写像 $\Phi$ に対して、Natural表現 $K(\Phi)$（巨大な行列）は常に定義できます。
+2.  この行列 $K(\Phi)$ を **特異値分解 (SVD)** すれば、必ず「ランク1行列（テンソル積）の和」 $K(\Phi) = \sum_a A_a \otimes \overline{B}_a$ に分解できます。
+3.  この分解された成分である $A_a, B_a$ を用いて $\sum A_a X B_a^\dagger$ を構成すれば、元の $\Phi$ と一致します（Proposition 2.20 より）。
 
-つまり、$A_a, B_a$ は、**チャネルを表現する巨大な行列を成分分解したパーツ** だと言えます。Proposition 2.20 は、このパーツが他の表現（Choi, Natural）においてどのように配置されるかを示しているに過ぎません。
+つまり、$A_a, B_a$ は「天下り的に与えられたもの」ではなく、「写像の行列を自然に成分分解したパーツ」として必ず存在することが保証されています。
+（詳細は後の定理で厳密に示されますが、ここでは「分解できる」という事実だけ認めて進んでください。）
 
 :::
 
@@ -383,7 +385,8 @@ $$
 
 ::: {#prop-representations-relationship}
 ## 表現間の関係 (Proposition 2.20) [📄 p.80](assets/Quantum_Information.pdf#page=88)
-線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ に対し、以下の4つの記述は同値です。
+ある線形写像 $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ が、演算子の集合 $\{A_a\}, \{B_a\}$ によって表現されると仮定します。このとき、以下の4つの記述は同値です。
+（つまり、Kraus表現の形が決まれば、他の全ての表現の形も自動的に決まり、逆もまた然りです）
 
 1. **自然表現**: $K(\Phi) = \sum_{a \in \Sigma} A_a \otimes \overline{B}_a$
 2. **Choi 表現**: $J(\Phi) = \sum_{a \in \Sigma} \mathrm{vec}(A_a) \mathrm{vec}(B_a)^\dagger$
