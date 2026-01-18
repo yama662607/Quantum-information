@@ -343,6 +343,53 @@ graph LR
 
 :::
 
+::: {.callout-note title="視覚的ガイド: 2x2行列（1量子ビット）での表現の見た目" collapse="true"}
+単純な **ビット反転チャネル** $\Phi(X) = (1-p)X + p \sigma_x X \sigma_x$ を例に、各表現が具体的にどのような行列の形になるかを見てみましょう（$p$ は反転確率）。
+
+**1. Kraus 表現 (演算子のリスト)**
+$2 \times 2$ 行列のペアです。
+$$
+A_0 = \sqrt{1-p} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}, \quad
+A_1 = \sqrt{p} \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+$$
+これらが状態サンドイッチの具材になります：$\Phi(\rho) = A_0 \rho A_0^\dagger + A_1 \rho A_1^\dagger$
+
+**2. Natural 表現 (表現行列)**
+$4 \times 4$ のブロック行列です。対角成分に $I$ と $\sigma_x$ の成分が混合しています。
+$$
+K(\Phi) = \begin{pmatrix}
+1-p & 0 & 0 & p \\
+0 & 1-p & p & 0 \\
+0 & p & 1-p & 0 \\
+p & 0 & 0 & 1-p
+\end{pmatrix}
+$$
+ベクトル化した $\rho$ に左から掛けることで遷移を計算します。
+
+**3. Choi 表現 (双対状態)**
+$4 \times 4$ の密度演算子（ブロック行列）です。Natural表現の成分を並び替えた形をしています。
+$$
+J(\Phi) = \begin{pmatrix}
+1-p & 0 & 0 & 1-p \\
+0 & p & p & 0 \\
+0 & p & p & 0 \\
+1-p & 0 & 0 & 1-p
+\end{pmatrix}
+$$
+（注: $p=0$ の恒等写像なら正規化されていない最大エンタングル状態 $| \Gamma \rangle \langle \Gamma |$ になります）
+
+**4. Stinespring 表現 (等長写像)**
+$4 \times 2$ の縦長行列（Isometric）です。Kraus演算子を縦に積み上げた形になります。
+$$
+A = \begin{pmatrix} A_0 \\ A_1 \end{pmatrix} = \begin{pmatrix}
+\sqrt{1-p} & 0 \\ 0 & \sqrt{1-p} \\
+0 & \sqrt{p} \\ \sqrt{p} & 0
+\end{pmatrix}
+$$
+入力（2次元）を環境込みの系（4次元）へ埋め込みます。
+
+:::
+
 ::: {.callout-tip title="物理学の視点"}
 Stinespring表現からKraus表現への変換は、「環境系を測定せずに捨てたとき、対象系はどう変化するか？」という問いへの答えです。
 計算の途中で現れる $\langle k| \dots |k\rangle$ という部分トレースの操作によって、環境系の自由度が消去され、代わりに主系の演算子 $A_a, B_a$ の和（混合）が現れる様子が見て取れます。
