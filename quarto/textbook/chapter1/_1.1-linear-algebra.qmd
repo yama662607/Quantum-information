@@ -561,7 +561,11 @@ $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{v
 ::: {.callout-note title="別証明：行列成分による計算（具体例）" collapse="true"}
 抽象的な定義ではなく、具体的な $2 \times 2$ 行列で計算して確かめてみましょう。
 
-$X = \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \end{pmatrix}, A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}, B = \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix}$ とします。
+教科書の恒等式 $(A \otimes B)\mathrm{vec}(X) = \mathrm{vec}(AXB^T)$ と整合させるため、ここでは $\mathrm{vec}(X)$ を**行ごと**に並べたベクトル（Row-stacking）として扱います（列ごとの場合は $B \otimes A$ となります）。
+
+$X = \begin{pmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \end{pmatrix}, A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}, B = \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix}$ とし、
+$$ \mathrm{vec}(X) = \begin{pmatrix} x_{11} \\ x_{12} \\ x_{21} \\ x_{22} \end{pmatrix} $$
+とします。
 
 **1. 行列積 $(A \otimes B)\mathrm{vec}(X) = \mathrm{vec}(AXB^T)$ の確認**
 
@@ -570,22 +574,22 @@ $$
 \begin{aligned}
 (A \otimes B) \mathrm{vec}(X) &=
 \left( \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \otimes \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix} \right)
-\begin{pmatrix} x_{11} \\ x_{21} \\ x_{12} \\ x_{22} \end{pmatrix} \\
+\begin{pmatrix} x_{11} \\ x_{12} \\ x_{21} \\ x_{22} \end{pmatrix} \\
 &= \begin{pmatrix}
   a_{11} B & a_{12} B \\
   a_{21} B & a_{22} B
 \end{pmatrix}
-\begin{pmatrix} x_{11} \\ x_{21} \\ x_{12} \\ x_{22} \end{pmatrix} \\
+\begin{pmatrix} x_{11} \\ x_{12} \\ x_{21} \\ x_{22} \end{pmatrix} \\
 &= \begin{pmatrix}
   a_{11} \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix} & a_{12} \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix} \\
   a_{21} \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix} & a_{22} \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix}
 \end{pmatrix}
-\begin{pmatrix} x_{11} \\ x_{21} \\ x_{12} \\ x_{22} \end{pmatrix} \\
+\begin{pmatrix} x_{11} \\ x_{12} \\ x_{21} \\ x_{22} \end{pmatrix} \\
 &= \begin{pmatrix}
-  a_{11} (b_{11}x_{11} + b_{12}x_{21}) + a_{12} (b_{11}x_{12} + b_{12}x_{22}) \\
-  a_{11} (b_{21}x_{11} + b_{22}x_{21}) + a_{12} (b_{21}x_{12} + b_{22}x_{22}) \\
-  a_{21} (b_{11}x_{11} + b_{12}x_{21}) + a_{22} (b_{11}x_{12} + b_{12}x_{22}) \\
-  a_{21} (b_{21}x_{11} + b_{22}x_{21}) + a_{22} (b_{21}x_{12} + b_{22}x_{22})
+  a_{11} (b_{11}x_{11} + b_{12}x_{12}) + a_{12} (b_{11}x_{21} + b_{12}x_{22}) \\
+  a_{11} (b_{21}x_{11} + b_{22}x_{12}) + a_{12} (b_{21}x_{21} + b_{22}x_{22}) \\
+  a_{21} (b_{11}x_{11} + b_{12}x_{12}) + a_{22} (b_{11}x_{21} + b_{12}x_{22}) \\
+  a_{21} (b_{21}x_{11} + b_{22}x_{12}) + a_{22} (b_{21}x_{21} + b_{22}x_{22})
 \end{pmatrix}
 \end{aligned}
 $$
@@ -602,59 +606,67 @@ AXB^T &= (AX) \begin{pmatrix} b_{11} & b_{21} \\ b_{12} & b_{22} \end{pmatrix} \
 \end{pmatrix}
 \end{aligned}
 $$
-これの $\mathrm{vec}$（1列目を並べ、次に2列目を並べる）をとると、結果は以下の縦ベクトルになります。
-
+これの $\mathrm{vec}$（行ごとに並べる）をとると、
 $$
 \mathrm{vec}(AXB^T) =
 \begin{pmatrix}
 (AX)_{11}b_{11} + (AX)_{12}b_{12} \\
-(AX)_{21}b_{11} + (AX)_{22}b_{12} \\
 (AX)_{11}b_{21} + (AX)_{12}b_{22} \\
+(AX)_{21}b_{11} + (AX)_{22}b_{12} \\
 (AX)_{21}b_{21} + (AX)_{22}b_{22}
 \end{pmatrix}
 $$
 
-各成分を $A, B$ の成分で展開します。
+右辺の第1成分を展開すると：
+$(a_{11}x_{11} + a_{12}x_{21})b_{11} + (a_{11}x_{12} + a_{12}x_{22})b_{12} = a_{11}b_{11}x_{11} + a_{12}b_{11}x_{21} + a_{11}b_{12}x_{12} + a_{12}b_{12}x_{22}$
+これは左辺の第1成分 $a_{11}b_{11}x_{11} + a_{11}b_{12}x_{12} + a_{12}b_{11}x_{21} + a_{12}b_{12}x_{22}$ と完全に一致します。
+（注: 項の順序を入れ替えると一致します）
 
-1. **第1成分 ($i=1, j=1$)**:
-   $(a_{11}x_{11} + a_{12}x_{21})b_{11} + (a_{11}x_{12} + a_{12}x_{22})b_{12}$
-   $= a_{11}(b_{11}x_{11} + b_{12}x_{21}) + a_{12}(b_{11}x_{12} + b_{12}x_{22})$
-   (左辺の第1成分と一致)
+**2. 部分トレース $\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger) = AB^\dagger$ の確認**
 
-2. **第2成分 ($i=2, j=1$)**:
-   $(a_{21}x_{11} + a_{22}x_{21})b_{11} + (a_{21}x_{12} + a_{22}x_{22})b_{12}$
-   $= a_{21}(b_{11}x_{11} + b_{12}x_{21}) + a_{22}(b_{11}x_{12} + b_{12}x_{22})$
-   (左辺の第2成分と一致)
+$\mathrm{vec}(A) = (a_{11}, a_{12}, a_{21}, a_{22})^T$, $\mathrm{vec}(B)^\dagger = (\overline{b_{11}}, \overline{b_{12}}, \overline{b_{21}}, \overline{b_{22}})$ とします。
+外積行列 $M = \mathrm{vec}(A)\mathrm{vec}(B)^\dagger$ は以下のようになります（$4 \times 4$ 行列）。
 
-3. **第3成分 ($i=1, j=2$)**:
-   $(a_{11}x_{11} + a_{12}x_{21})b_{21} + (a_{11}x_{12} + a_{12}x_{22})b_{22}$
-   $= a_{11}(b_{21}x_{11} + b_{22}x_{21}) + a_{12}(b_{21}x_{12} + b_{22}x_{22})$
-   (左辺の第3成分と一致)
-
-4. **第4成分 ($i=2, j=2$)**:
-   $(a_{21}x_{11} + a_{22}x_{21})b_{21} + (a_{21}x_{12} + a_{22}x_{22})b_{22}$
-   $= a_{21}(b_{21}x_{11} + b_{22}x_{21}) + a_{22}(b_{21}x_{12} + b_{22}x_{22})$
-   (左辺の第4成分と一致)
-
-**2. 内積 $\langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \mathrm{Tr}(X^\dagger Y)$ の確認**
-
-**左辺**: ベクトルの内積（成分ごとの積の和）
 $$
-\begin{pmatrix} \overline{x_{11}} & \overline{x_{21}} & \overline{x_{12}} & \overline{x_{22}} \end{pmatrix}
-\begin{pmatrix} y_{11} \\ y_{21} \\ y_{12} \\ y_{22} \end{pmatrix}
-= \overline{x_{11}}y_{11} + \overline{x_{21}}y_{21} + \overline{x_{12}}y_{12} + \overline{x_{22}}y_{22}
+M = \begin{pmatrix}
+  a_{11}\overline{b_{11}} & a_{11}\overline{b_{12}} & a_{11}\overline{b_{21}} & a_{11}\overline{b_{22}} \\
+  a_{12}\overline{b_{11}} & a_{12}\overline{b_{12}} & a_{12}\overline{b_{21}} & a_{12}\overline{b_{22}} \\
+  a_{21}\overline{b_{11}} & a_{21}\overline{b_{12}} & a_{21}\overline{b_{21}} & a_{21}\overline{b_{22}} \\
+  a_{22}\overline{b_{11}} & a_{22}\overline{b_{12}} & a_{22}\overline{b_{21}} & a_{22}\overline{b_{22}}
+\end{pmatrix}
 $$
 
-**右辺**: トレース
+この行列を $2 \times 2$ のブロック行列とみなし、各ブロックのトレース（対角成分の和）をとる操作が $\mathrm{Tr}_{\mathcal{Y}}$ です。
+インデックス対応は $1 \leftrightarrow (1,1), 2 \leftrightarrow (1,2), 3 \leftrightarrow (2,1), 4 \leftrightarrow (2,2)$ です（行スタック順）。
+第2成分（$\mathcal{Y}$）についてのトレースは、「第2インデックスが等しい項の和」をとります。
+
+行列の $(i,k)$ ブロック（$i,k \in \{1,2\}$）における対角成分の和を計算します。
+
+- **$(1,1)$ 成分**:
+  $M_{11}$ (index $11-11$) + $M_{22}$ (index $12-12$)
+  $= a_{11}\overline{b_{11}} + a_{12}\overline{b_{12}}$
+
+- **$(1,2)$ 成分**:
+  $M_{13}$ (index $11-21$) + $M_{24}$ (index $12-22$)
+  $= a_{11}\overline{b_{21}} + a_{12}\overline{b_{22}}$
+
+- **$(2,1)$ 成分**:
+  $M_{31}$ (index $21-11$) + $M_{42}$ (index $22-12$)
+  $= a_{21}\overline{b_{11}} + a_{22}\overline{b_{12}}$
+
+- **$(2,2)$ 成分**:
+  $M_{33}$ (index $21-21$) + $M_{44}$ (index $22-22$)
+  $= a_{21}\overline{b_{21}} + a_{22}\overline{b_{22}}$
+
+一方、右辺 $AB^\dagger$ を計算すると：
 $$
-\begin{aligned}
-X^\dagger Y &= \begin{pmatrix} \overline{x_{11}} & \overline{x_{21}} \\ \overline{x_{12}} & \overline{x_{22}} \end{pmatrix} \begin{pmatrix} y_{11} & y_{12} \\ y_{21} & y_{22} \end{pmatrix} \\
-&= \begin{pmatrix} \overline{x_{11}}y_{11} + \overline{x_{21}}y_{21} & \dots \\ \dots & \overline{x_{12}}y_{12} + \overline{x_{22}}y_{22} \end{pmatrix}
-\end{aligned}
+AB^\dagger = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \begin{pmatrix} \overline{b_{11}} & \overline{b_{21}} \\ \overline{b_{12}} & \overline{b_{22}} \end{pmatrix}
+= \begin{pmatrix}
+  a_{11}\overline{b_{11}} + a_{12}\overline{b_{12}} & a_{11}\overline{b_{21}} + a_{12}\overline{b_{22}} \\
+  a_{21}\overline{b_{11}} + a_{22}\overline{b_{12}} & a_{21}\overline{b_{21}} + a_{22}\overline{b_{22}}
+\end{pmatrix}
 $$
-トレース（対角成分の和）をとると、
-$$ \mathrm{Tr}(X^\dagger Y) = (\overline{x_{11}}y_{11} + \overline{x_{21}}y_{21}) + (\overline{x_{12}}y_{12} + \overline{x_{22}}y_{22}) $$
-となり、左辺と完全に一致します。
+となり、すべての成分が完全に一致します。
 
 :::
 
