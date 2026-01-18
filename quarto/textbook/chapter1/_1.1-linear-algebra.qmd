@@ -92,8 +92,35 @@ $$ \langle u, v \rangle = \sum_{a \in \Sigma} \overline{u(a)} v(a) $$
 **ユークリッドノルム** (Euclidean Norm) は内積を用いて $\|u\| = \sqrt{\langle u, u \rangle}$ と定義されます。
 これは物理的には状態ベクトルの「大きさ」に対応し、量子状態を表すベクトルは通常 $\|u\|=1$ の正規化条件を満たします。
 
-**ノルムの性質**（正定値性・斉次性・三角不等式）は $\|u\|$ に対して成立します。特に**コーシー・シュワルツ不等式**が成り立ちます。
+**ノルムの性質**（正定値性・斉次性・三角不等式）は $\|u\|$ に対して成立します。特に、以下の重要な不等式が成り立ちます。
+
+::: {#thm-cauchy-schwarz}
+## コーシー・シュワルツの不等式 (Theorem 1.2 / Cauchy-Schwarz Inequality)
+任意のベクトル $u, v \in \mathcal{X}$ に対して、以下が成立します。
 $$ |\langle u, v \rangle| \le \|u\| \, \|v\| $$
+等号成立条件は、線形従属性 $u = \alpha v$ または $v = 0$ の場合（つまり2つのベクトルが平行である場合）に限られます。
+
+:::
+
+::: {.proof}
+$v=0$ のときは自明 ($0 \le 0$) なので、$v \ne 0$ とします。
+$u$ を「$v$ に平行な成分」と「$v$ に直交する成分」に分解します（グラム・シュミット化）。
+$$ z = u - \frac{\langle v, u \rangle}{\|v\|^2} v $$
+この $z$ と $v$ は直交します（$\langle v, z \rangle = \langle v, u \rangle - \frac{\langle v, u \rangle}{\|v\|^2} \langle v, v \rangle = 0$）。
+ピタゴラスの定理（ノルムの加法性）より、
+$$ \|u\|^2 = \left\| z + \frac{\langle v, u \rangle}{\|v\|^2} v \right\|^2 = \|z\|^2 + \left| \frac{\langle v, u \rangle}{\|v\|^2} \right|^2 \|v\|^2 = \|z\|^2 + \frac{|\langle u, v \rangle|^2}{\|v\|^2} $$
+$\|z\|^2 \ge 0$ なので、
+$$ \|u\|^2 \ge \frac{|\langle u, v \rangle|^2}{\|v\|^2} $$
+これを整理して平方根をとると $|\langle u, v \rangle| \le \|u\| \|v\|$ が得られます。
+等号成立は $\|z\| = 0$、すなわち $u$ が $v$ のスカラー倍であるときに限られます。
+
+:::
+
+::: {.callout-tip title="物理学の視点（波動関数の重なり）"}
+量子力学では、内積 $\langle u|v\rangle$ は**確率振幅の重なり (Overlap)** を表します。
+不等式 $|\langle u|v\rangle|^2 \le \langle u|u\rangle \langle v|v\rangle$ は、「重なり積分（遷移確率）は決して1（正規化された状態同士の場合）を超えない」という、確率の保存則に関連する直感的な事実を保証しています。
+
+:::
 
 単位ベクトル全体は**単位球** $S(\mathcal{X})$ と書きます。
 $$ S(\mathcal{X}) = \{ u \in \mathcal{X} : \|u\| = 1 \} $$
@@ -439,21 +466,81 @@ $$
 エルミート演算子では $\lambda_k \in \mathbb{R}$ となり、物理量の実固有値性に対応します。
 
 #### 特異値分解 (Singular Value Decomposition, SVD)
+線形代数において最も強力なツールの一つが特異値分解です。
 
-任意の $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、正規直交系 $\{x_k\} \subset \mathcal{X}$、$\{y_k\} \subset \mathcal{Y}$ と特異値 $s_k \ge 0$ が存在し、
-$$
-A = \sum_{k=1}^r s_k\, y_k x_k^\dagger
-$$
-と表されます。$r$ はランクです。
+::: {#thm-svd}
+## 特異値分解 (Theorem 1.3 / Sigular Value Decomposition)
+任意の非ゼロ演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、正の実数 $s_1, \dots, s_r$（特異値）と、正規直交系 $\{x_1, \dots, x_r\} \subset \mathcal{X}$ および $\{y_1, \dots, y_r\} \subset \mathcal{Y}$ が存在して、
+$$ A = \sum_{k=1}^r s_k y_k x_k^\dagger $$
+と書くことができます。ここで $r = \mathrm{rank}(A)$ です。
 
-#### その他の重要な分解
+:::
 
-* **極分解 (Polar Decomposition)**: $X = W P$（$W$ ユニタリ、$P$ 半正定値）。
-* **シュミット分解 (Schmidt Decomposition)**: $u \in \mathcal{X}\otimes\mathcal{Y}$ に対して
-  $$
-  u = \sum_{k=1}^r s_k\, x_k \otimes z_k
-  $$
-  と表せ、エンタングルメントの解析に直接使われます。
+::: {.proof}
+$A^\dagger A$ は半正定値演算子なので、スペクトル分解により正の固有値 $s_k^2$ と正規直交固有ベクトル $x_k$ を持ちます。
+$$ A^\dagger A x_k = s_k^2 x_k $$
+ここで $y_k = \frac{1}{s_k} A x_k$ と定義します。これらが正規直交系をなすことは、内積を計算することで確認できます。
+$$ \langle y_j, y_k \rangle = \frac{1}{s_j s_k} \langle A x_j, A x_k \rangle = \frac{1}{s_j s_k} \langle x_j, A^\dagger A x_k \rangle = \frac{s_k^2}{s_j s_k} \delta_{jk} = \delta_{jk} $$
+任意のベクトル $u$ を基底 $\{x_k\}$ とその補空間で展開して $A$ を作用させると、$\sum s_k y_k x_k^\dagger$ と一致することが示せます。
+
+:::
+
+::: {.callout-tip title="物理学の視点"}
+SVDは、任意の演算子を「入力基底の回転 ($V^\dagger$)」→「軸に沿った伸縮 ($\Sigma$)」→「出力基底の回転 ($U$)」という3つのステップ $A = U \Sigma V^\dagger$ に分解することを意味します。
+物理的には、不可逆な変化も含めた一般的な遷移振幅を対角化して単純化する操作として現れます。
+
+:::
+
+#### 極分解 (Polar Decomposition)
+
+::: {#thm-polar-decomposition}
+## 極分解 (Theorem 1.4 / Polar Decomposition)
+任意の正方演算子 $A \in \mathrm{L}(\mathcal{X})$ に対して、ユニタリ演算子 $W \in \mathrm{U}(\mathcal{X})$ と 半正定値演算子 $P \in \mathrm{Pos}(\mathcal{X})$ が存在して、
+$$ A = W P $$
+と分解できます。ここで $P = \sqrt{A^\dagger A}$ は一意に定まります。
+
+:::
+
+::: {.proof}
+SVD $A = \sum s_k y_k x_k^\dagger$ を用います。$P = \sum s_k x_k x_k^\dagger$（正定値部分）と定義します。
+ユニタリ $W$ は、$x_k$ を $y_k$ に移すような作用を持つものとして構成できます（ランク落ちしている部分は適当な基底で補完します）。
+すると $WP = (\sum |y_j\rangle\langle x_j|) (\sum s_k |x_k\rangle\langle x_k|) = \sum s_k |y_k\rangle\langle x_k| = A$ となります。
+
+:::
+
+::: {.callout-tip title="物理学の視点（複素数の極形式の拡張）"}
+これは複素数の極形式 $z = e^{i\theta} r$ （$r \ge 0$）の行列版です。
+$P$（エルミート・正定値）が絶対値 $r$ に、$W$（ユニタリ）が位相 $e^{i\theta}$ に対応します。
+物理的には「変形（ひずみ） $P$」と「回転 $W$」に分解する操作といえます。
+
+:::
+
+#### シュミット分解 (Schmidt Decomposition)
+
+複合系の純粋状態の構造を決定づける最重要定理です。
+
+::: {#thm-schmidt-decomposition}
+## シュミット分解 (Theorem 1.5 / Schmidt Decomposition)
+任意のベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ に対して、正の実数 $s_1, \dots, s_r$（シュミット係数）と、正規直交系 $\{x_1, \dots, x_r\} \subset \mathcal{X}$ および $\{y_1, \dots, y_r\} \subset \mathcal{Y}$ が存在して、
+$$ u = \sum_{k=1}^r s_k x_k \otimes y_k $$
+と分解できます。
+
+:::
+
+::: {.proof}
+ベクトル化の逆操作（テンソル空間と演算子空間の同型）を用います。
+$u = \mathrm{vec}(A)$ となる演算子 $A \in \mathrm{L}(\mathcal{Y}, \mathcal{X})$ を考えます。
+$A$ に特異値分解を適用すると $A = \sum s_k x_k y_k^\dagger$ （通常のSVDでは共役転置がつきますが、ここでの $y_k$ は共役の関係に注意して再定義します）。
+これをベクトル化すると、線形性と $\mathrm{vec}(x y^\dagger) = x \otimes \bar{y}$ （物理記法では $x \otimes y$ の形式に対応）を用いることで、目的の分離形式が得られます。
+
+:::
+
+::: {.callout-tip title="物理学の視点（エンタングルメントの基準）"}
+ブラケット記法ではおなじみの形式です：
+$$ |\psi\rangle_{AB} = \sum_k \sqrt{p_k} |k\rangle_A |k\rangle_B $$
+シュミットランク（項の数 $r$）が1なら積状態（セパラブル）、$r > 1$ ならエンタングル状態です。この分解は、両方の系で基底をうまく選べば、状態を「対角化」できることを示しており、密度演算子の対角化と密接に関係しています。
+
+:::
 
 #### シャッテン $p$-ノルム (Schatten $p$-norms) [📄 p.32](assets/Quantum_Information.pdf#page=40)
 
