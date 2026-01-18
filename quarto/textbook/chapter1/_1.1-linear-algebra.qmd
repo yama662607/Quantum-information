@@ -407,12 +407,15 @@ $$ A^* = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
 2.  **テンソル積空間上の一般の演算子** $C$:
     空間全体 $\mathcal{X} \otimes \mathcal{W}$ から $\mathcal{Y} \otimes \mathcal{Z}$ への任意の線形写像
     $$ C : (\mathcal{X} \otimes \mathcal{W}) \to (\mathcal{Y} \otimes \mathcal{Z}) $$
-    です。
+    です。重要な事実として、テンソル積空間上の**任意の**線形演算子 $C$ は、有限個の演算子 $A_k, B_k$ を用いて次のように表現できます。
+    $$ C = \sum_{k=1}^r A_k \otimes B_k $$
+
+    その作用は、線形性により各項の作用の和として定義されます。
+    $$ C(u \otimes v) = \sum_{k=1}^r (A_k u) \otimes (B_k v) $$
 
     ::: {.callout-important title="テンソル積演算子との決定的違い"}
     一般の演算子は、必ずしも $A \otimes B$ の形（局所操作の積）には分解できません。
     一般の演算子は、**「演算子のテンソル積の線形結合」** として表されます。
-    $$ C = \sum_k A_k \otimes B_k $$
     物理的には、**CNOTゲート**のように、2つの系をまたいで相互作用し、**エンタングルメントを生成できる**のが一般の演算子の特徴です。
 
     :::
