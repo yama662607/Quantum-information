@@ -100,6 +100,35 @@ graph TD
 - **平坦状態 (Flat States)**: ある部分空間への射影演算子 $\Pi$ を用いて $\rho = \frac{\Pi}{\mathrm{Tr}(\Pi)}$ と書ける状態。
 - **最大混合状態 (Completely Mixed State)**: $\omega = \frac{\mathbb{I}_{\mathcal{X}}}{\dim(\mathcal{X})}$。完全な無知の状態に対応します。
 
+::: {.callout-note title="Visual Guide: 密度演算子の見方（2x2行列）" collapse="true"}
+1量子ビット系において、密度演算子の各成分が何を意味するのかを具体的な $2 \times 2$ 行列で見てみましょう。
+$\rho = \begin{pmatrix} \rho_{00} & \rho_{01} \\ \rho_{10} & \rho_{11} \end{pmatrix}$ とします。
+
+1.  **対角成分 ($\rho_{00}, \rho_{11}$)**:
+    古典的な確率分布に対応します。$\rho_{00}$ は「$0$ が観測される確率」、$\rho_{11}$ は「$1$ が観測される確率」です（和は必ず1）。
+
+2.  **非対角成分 ($\rho_{01}, \rho_{10}$)**:
+    **量子コヒーレンス（干渉性）** を表します。ここは古典確率論には存在しない、量子特有の項です。純粋状態（重ね合わせ状態）では大きく、混合が進むにつれて小さくなります。
+
+**具体例の比較**:
+
+*   **純粋状態（重ね合わせ）**: $|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}$
+    $$
+    \rho_+ = |+\rangle\langle+| = \frac{1}{2} \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}
+    $$
+    対角成分は $0.5, 0.5$（確率は半々）。非対角成分も $0.5$ あり、**強い干渉性**を持っています。
+
+*   **混合状態（古典的な混ぜ合わせ）**: 「確率 $1/2$ で $|0\rangle$、確率 $1/2$ で $|1\rangle$」
+    $$
+    \rho_{\text{mix}} = \frac{1}{2}|0\rangle\langle 0| + \frac{1}{2}|1\rangle\langle 1| = \begin{pmatrix} 0.5 & 0 \\ 0 & 0.5 \end{pmatrix}
+    $$
+    対角成分は純粋状態と同じ $0.5, 0.5$ ですが、**非対角成分は完全に 0** です。干渉性は失われています。
+
+*   **その中間**: $p |+\rangle\langle+| + (1-p) |-\rangle\langle-|$ など
+    非対角成分の大きさ $|\rho_{01}|$ によって、その状態がどれくらい「純粋」に近いか（あるいは混合しているか）を直感的に判断できます。
+
+:::
+
 #### 凸結合とアンサンブル
 
 量子状態の集合 $\mathrm{D}(\mathcal{X})$ は、確率的状態の集合と同様に凸集合を形成します。
@@ -125,6 +154,7 @@ $\mathcal{X}$ を複素ユークリッド空間とします。
 :::
 
 複数の状態の確率的な混合もまた量子状態となります。
+
 $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
 関数 $\eta: \Gamma \to \mathrm{Pos}(\mathcal{X})$ で $\mathrm{Tr}(\sum \eta(a)) = 1$ を満たすものを**アンサンブル (Ensemble)** と呼びます。アンサンブルにおいて、$\eta(a)$ は「確率 $p(a) = \mathrm{Tr}(\eta(a))$」と「その時に選ばれる量子状態 $\rho_a = \eta(a)/\mathrm{Tr}(\eta(a))$」を同時に表現しています。
 
@@ -336,6 +366,29 @@ $\mathcal{X}, \mathcal{Y}$ を複素ユークリッド空間、 $P \in \mathrm{P
 $$
 \mathrm{Tr}_{\mathcal{Y}}(u u^*) = P
 $$
+
+:::
+
+::: {.callout-note title="具体例：混合状態の純粋化" collapse="true"}
+最もシンプルな例として、1量子ビットの混合状態 $\rho$ を考えます。
+$$ \rho = \begin{pmatrix} p & 0 \\ 0 & 1-p \end{pmatrix} = p |0\rangle\langle 0| + (1-p) |1\rangle\langle 1| $$
+これは「確率 $p$ で $|0\rangle$、確率 $1-p$ で $|1\rangle$」という状態です。
+
+これの純粋化を作るには、補助系（環境）$\mathcal{Y}$ を追加します。定理の証明（シュミット分解）に従って、$\sqrt{\text{固有値}}$ を係数に持つエンタングル状態を作ります。
+$$ |u\rangle = \sqrt{p} |0\rangle_{\mathcal{X}} \otimes |0\rangle_{\mathcal{Y}} + \sqrt{1-p} |1\rangle_{\mathcal{X}} \otimes |1\rangle_{\mathcal{Y}} $$
+（物理ではしばしば $|00\rangle, |11\rangle$ と略記されます）
+
+**確認（部分トレース）**:
+この純粋状態 $|u\rangle\langle u|$ の環境系 $\mathcal{Y}$ をトレースアウトしてみましょう。
+$$
+\begin{aligned}
+|u\rangle\langle u| &= \left(\sqrt{p}|00\rangle + \sqrt{1-p}|11\rangle\right)\left(\sqrt{p}\langle 00| + \sqrt{1-p}\langle 11|\right) \\
+&= p|00\rangle\langle 00| + \sqrt{p(1-p)}|00\rangle\langle 11| + \sqrt{p(1-p)}|11\rangle\langle 00| + (1-p)|11\rangle\langle 11|
+\end{aligned}
+$$
+ここで $\mathcal{Y}$ 側の基底 $|0\rangle\langle 0|, |1\rangle\langle 1|$ だけが残り、交差項 $|0\rangle\langle 1|$ などはトレースで消えます。
+$$ \mathrm{Tr}_{\mathcal{Y}}(|u\rangle\langle u|) = p |0\rangle\langle 0| + (1-p) |1\rangle\langle 1| = \rho $$
+確かに元の混合状態 $\rho$ が復元されました。つまり、**「手元の混合状態」は「どこかにある環境系とのエンタングル状態」の一部として解釈できる**わけです。
 
 :::
 
