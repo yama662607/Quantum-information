@@ -22,7 +22,7 @@ $$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 :::
 
 
-::: {.physics-notes title="Born 則との対応"}
+::: {.callout-tip title="物理学の視点（ボルン則との対応）"}
 効果演算子 $\mu(a)$ は、物理で使うブラケット記法なら $\Pr[a] = \langle \psi | \mu(a) | \psi \rangle$ に対応します。$|\psi\rangle$ の代わりに密度演算子 $\rho$ を使うと $\Pr[a] = \operatorname{Tr}(\mu(a)\rho)$ が得られ、どちらの表記でも同じボルン則を表現しています。
 
 :::
@@ -44,7 +44,7 @@ $$ \Phi(X) = \sum_{a \in \Sigma} \langle \mu(a), X \rangle E_{a,a} $$
 と書けます（Theorem 2.37）。測定は「確率付け」、チャネル表現は「回路実装」の観点を与え、二つの定義が同じ物理操作を記述していることがわかります。
 
 
-::: {.physics-notes title="物理的イメージ"}
+::: {.callout-tip title="物理学の視点（測定とチャネルの対応）"}
 POVM は「効果演算子」で確率を与える道具、チャネル表現は「計算手順」としての実装。どちらも同じ物理操作を別視点で記述しています。
 
 :::
@@ -54,7 +54,7 @@ POVM は「効果演算子」で確率を与える道具、チャネル表現は
 測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。互いに直交するため $a \neq b$ で $\mu(a)\mu(b)=0$ となり、可観測量 $H = \sum_a \lambda_a \mu(a)$ のスペクトル分解に一致します。ブラケット表記では基底ベクトル $|a\rangle$ への射影 $|a\rangle\langle a|$ が各アウトカムに対応します。
 
 
-::: {.physics-notes title="射影測定の物理像"}
+::: {.callout-tip title="物理学の視点（射影測定の物理像）"}
 固有状態 $|a\rangle$ を測れば結果は必ず $a$ で、測定後の状態も $|a\rangle$ に「射影」されます。数学では $\mu(a)$ が射影であることと、物理の「状態が崩壊して固有状態になる」描像が1対1で対応します。
 
 :::
@@ -94,7 +94,7 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 次元 $d = \dim \mathcal{X}$ の場合、少なくとも $d^2$ 個のアウトカムが必要で、等間隔なフレーム（例: SIC-POVM や Pauli 行列に基づく 4 点 POVM）が典型例です。測定結果から線形再構成を行うことで、状態トモグラフィーが可能になります。
 
 
-::: {.physics-notes title="物理記法での例"}
+::: {.callout-tip title="物理学の視点（物理記法での例）"}
 1量子ビットなら $\{I, X, Y, Z\}$ の射影を平均0.25で測る POVM が情報完全です。得られた確率 $p_i = \operatorname{Tr}(\rho M_i)$ から Bloch ベクトル $(\langle X \rangle, \langle Y \rangle, \langle Z \rangle)$ を再構成できます。
 
 :::

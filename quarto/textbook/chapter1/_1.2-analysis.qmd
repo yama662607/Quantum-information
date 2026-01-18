@@ -51,7 +51,7 @@
 
 * **円錐 (Cone)**: $K \subseteq \mathcal{V}$ が $u\in K,\,\lambda\ge 0$ なら $\lambda u\in K$ を満たすとき、$K$ は円錐。
 * **凸錐 (Convex cone)**: 円錐かつ凸集合。
-* **凸関数** $f:\mathcal{C}\to\mathbb{R}$:  
+* **凸関数** $f:\mathcal{C}\to\mathbb{R}$:
   $$ f(\lambda u + (1-\lambda)v) \le \lambda f(u) + (1-\lambda) f(v). $$
   連続な中点凸関数は凸関数と一致します。
 
@@ -107,8 +107,9 @@ $$ {#eq-separating-hyperplane}
 ## シオンのミニマックス定理 (Sion's Min-Max Theorem)
 
 $\mathcal{A}$ をコンパクト凸集合、$\mathcal{B}$ を凸集合とし、$f:\mathcal{A}\times\mathcal{B}\to\mathbb{R}$ が
-1. $u\mapsto f(u,v)$ は凸（各 $v$ 固定）、  
-2. $v\mapsto f(u,v)$ は凹（各 $u$ 固定）、  
+
+1. $u\mapsto f(u,v)$ は凸（各 $v$ 固定）、
+2. $v\mapsto f(u,v)$ は凹（各 $u$ 固定）、
 かつ適当な連続性条件を満たすとき、
 $$
 \inf_{u\in\mathcal{A}} \max_{v\in\mathcal{B}} f(u,v)
@@ -174,9 +175,9 @@ $$
 \gamma^n(UA) = \gamma^n(A)
 $$ {#eq-gaussian-invariance}
 
-::: {.physics-notes title="量子情報との接続"}
-確率ベクトル $p$ は古典状態の集合 $P(\Sigma)$ を与え、  
-密度演算子の集合と同様に凸集合を成します。  
+::: {.callout-tip title="物理学の視点（量子情報との接続）"}
+確率ベクトル $p$ は古典状態の集合 $P(\Sigma)$ を与え、
+密度演算子の集合と同様に凸集合を成します。
 この凸構造が「混合状態」や「アンサンブル」の解析で重要になります。
 
 :::
@@ -189,11 +190,13 @@ $$ {#eq-gaussian-invariance}
 ## 半正定値計画問題 (Semidefinite Program)
 
 SDPは、以下の3つ組 $(\Phi, A, B)$ によって定義されます。
+
 1.  **保存写像**: $\Phi \in \mathrm{T}(\mathcal{X}, \mathcal{Y})$ （エルミート保存写像）
 2.  **制約演算子**: $A \in \mathrm{Herm}(\mathcal{X})$
 3.  **定数演算子**: $B \in \mathrm{Herm}(\mathcal{Y})$
 
 これに対し、以下の**実行可能集合 (Feasible Sets)** を定義します。
+
 - **主実行可能集合**:
   $$ \mathcal{A} = \{ X \in \mathrm{Pos}(\mathcal{X}) : \Phi(X) = B \} $$ {#eq-sdp-primal-feasible}
 - **双対実行可能集合**:
@@ -248,6 +251,7 @@ $$
 ## スレーターの定理 (Slater's Theorem for SDP)
 
 以下のいずれかの条件が満たされるとき、強双対性 ($\alpha = \beta$) が成立し、かつ最適解が存在します。
+
 1.  **主問題の正則性**: 主問題実行可能領域に正定値演算子 $X > 0$ が存在する（かつ双対問題が有界）。
 2.  **双対問題の正則性**: 双対問題実行可能領域に狭義不等式 $\Phi^*(Y) > A$ を満たす $Y$ が存在する（かつ主問題が有界）。
 

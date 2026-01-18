@@ -12,7 +12,7 @@
 量子情報の理論において、**複素ユークリッド空間** (Complex Euclidean Space) は最も基本的な数学的構造です。
 本書では、複素ユークリッド空間を、ある有限のアルファベット（シンボル集合）$\Sigma$ から複素数体 $\mathbb{C}$ への関数全体の集合（$\mathbb{C}^\Sigma$）として定義します。
 
-::: {.physics-notes title="Physics Perspective: Hilbert space との関係"}
+::: {.callout-tip title="物理学の視点（ヒルベルト空間との関係）"}
 物理の量子力学では **Hilbert space（ヒルベルト空間）** という呼び方が一般的ですが、本書は**有限次元**に限定しているため「complex Euclidean space」を用います。有限次元では両者はほぼ同じ対象として扱えます。
 
 :::
@@ -134,7 +134,7 @@ $$
 \|u\|_\infty = \max\{ |u(a)| : a \in \Sigma \}.
 $$ {#eq-p-norm-inf}
 
-::: {.physics-notes title="ブラケット記法での読み替え"}
+::: {.callout-tip title="物理学の視点（ブラケット記法での読み替え）"}
 $\langle u, v \rangle$ は物理では $\langle u|v\rangle$ と書きます。
 また、$\|u\|=1$ は「状態が正規化されている」ことを意味します。
 
@@ -222,6 +222,7 @@ $$ \phi(u_1, \dots, u_n) = A(u_1 \otimes \dots \otimes u_n) $$
 
 ::: {.proof}
 簡単のため $n=2$ の場合（双線形写像）について示します。一般の場合も同様です。
+
 **存在性**:
 標準基底 $e_{a} \otimes e_{b}$ に対して、線形写像 $A$ の作用を以下のように定義します。
 $$ A(e_{a} \otimes e_{b}) = \phi(e_{a}, e_{b}) $$
@@ -296,10 +297,10 @@ $$ A(a, b) = \langle e_a, A e_b \rangle $$
 :::
 
 #### 随伴演算子 (Adjoint Operator)
-任意の $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、以下の内積の等式を満たす一意の演算子 $A^\dagger \in \mathrm{L}(\mathcal{Y}, \mathcal{X})$ が存在します。
-$$ \langle u, A v \rangle = \langle A^\dagger u, v \rangle \quad (\forall u \in \mathcal{Y}, v \in \mathcal{X}) $$ {#eq-adjoint-def}
+任意の $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、以下の内積の等式を満たす一意の演算子 $A^* \in \mathrm{L}(\mathcal{Y}, \mathcal{X})$ が存在します。
+$$ \langle u, A v \rangle = \langle A^* u, v \rangle \quad (\forall u \in \mathcal{Y}, v \in \mathcal{X}) $$ {#eq-adjoint-def}
 これらを $A$ の**随伴演算子** (Adjoint Operator)、またはエルミート共役と呼びます。行列表示では、転置行列の複素共役に相当します。すなわち、
-$$ A^\dagger = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
+$$ A^* = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
 となります。ここで $\overline{A}$ は成分ごとの複素共役、$A^T$ は転置を表します。
 
 成分表示での定義は次の通りです。
@@ -309,9 +310,9 @@ $$ A^\dagger = \overline{A}^T $$ {#eq-adjoint-conj-transpose}
 2. **転置**:
    $$ A^T(b,a) = A(a,b) $$ {#eq-adjoint-transpose}
 3. **随伴**:
-   $$ A^\dagger = \overline{A}^T $$ {#eq-adjoint-adjoint}
+   $$ A^* = \overline{A}^T $$ {#eq-adjoint-adjoint}
 
-::: {.physics-notes title="記法の注意"}
+::: {.callout-tip title="物理学の視点（記法の注意）"}
 本書では随伴を $A^*$ と書く流儀ですが、物理では $A^\dagger$ が標準です。
 内容は同一で、$A^* = \overline{A}^T$ です。
 
@@ -409,7 +410,7 @@ $$ \mathrm{vec}(|a\rangle\langle b|) = |a\rangle \otimes |b\rangle $$
 :::
 
 
-::: {.physics-notes title="直感的イメージ：Row Stacking (行優先)"}
+::: {.callout-tip title="物理学の視点（直感的イメージ：行の積み重ね）"}
 行列 $X$ をベクトル $\mathrm{vec}(X)$ に変換する操作は、行列の各**行**を上から順番に並べて、1本の長い縦ベクトルにする操作（Flatten）として視覚化できます。
 
 $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{vec}} \quad \mathrm{vec}(X) = \begin{pmatrix} A \\ B \\ C \\ D \end{pmatrix} $$

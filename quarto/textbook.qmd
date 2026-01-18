@@ -23,4 +23,3 @@ toc-depth: 3
 # Chapter 3: Similarity and distance among states and channels {#chapter-3}
 
 {{< include textbook/chapter3/_3.1-quantum-state-discrimination.qmd >}}
-
