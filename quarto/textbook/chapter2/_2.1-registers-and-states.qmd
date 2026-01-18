@@ -101,12 +101,45 @@ graph TD
 - **最大混合状態 (Completely Mixed State)**: $\omega = \frac{\mathbb{I}_{\mathcal{X}}}{\dim(\mathcal{X})}$。完全な無知の状態に対応します。
 
 #### 凸結合とアンサンブル
-量子状態の集合 $\mathrm{D}(\mathcal{X})$ は凸集合であり、複数の状態の確率的な混合もまた量子状態となります。
+
+量子状態の集合 $\mathrm{D}(\mathcal{X})$ は、確率的状態の集合と同様に凸集合を形成します。
+
+::: {#prop-convexity}
+## 量子状態集合の凸性 (Proposition 2.6)
+$\mathcal{X}$ を複素ユークリッド空間とします。
+
+1.  密度演算子の集合 $\mathrm{D}(\mathcal{X})$ はコンパクト凸集合です。
+
+2.  $\mathrm{D}(\mathcal{X})$ の極点の集合は、ランク1の射影演算子（純粋状態）の集合 $\{ x x^* : x \in \mathcal{X}, \|x\| = 1 \}$ に等しい。
+
+:::
+
+::: {.proof}
+1.  **凸性**: $\rho_0, \rho_1 \in \mathrm{D}(\mathcal{X})$ とし、$\lambda \in [0, 1]$ とします。$\rho = \lambda \rho_0 + (1-\lambda) \rho_1$ とおくと、正定値性の和は正定値なので $\rho \ge 0$ です。また、トレースは線形なので
+    $$ \mathrm{Tr}(\rho) = \lambda \mathrm{Tr}(\rho_0) + (1-\lambda) \mathrm{Tr}(\rho_1) = \lambda(1) + (1-\lambda)(1) = 1 $$
+    よって $\rho \in \mathrm{D}(\mathcal{X})$ です。
+    **コンパクト性**: $\mathrm{D}(\mathcal{X})$ は有限次元ベクトル空間 $\mathrm{Herm}(\mathcal{X})$ の有界閉集合（単位球面の交差部分など）なのでコンパクトです。
+
+2.  **極点**: 一般に正定値演算子の集合の極点がランク1であること（スペクトル分解の一意性に関連）から従います。$\rho$ が純粋状態（ランク1）なら、非自明な凸結合で書くことはできません。逆にランクが2以上なら、自身の固有ベクトルを用いて非自明な凸結合に分解できます。
+
+:::
+
+複数の状態の確率的な混合もまた量子状態となります。
 $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
 関数 $\eta: \Gamma \to \mathrm{Pos}(\mathcal{X})$ で $\mathrm{Tr}(\sum \eta(a)) = 1$ を満たすものを**アンサンブル (Ensemble)** と呼びます。アンサンブルにおいて、$\eta(a)$ は「確率 $p(a) = \mathrm{Tr}(\eta(a))$」と「その時に選ばれる量子状態 $\rho_a = \eta(a)/\mathrm{Tr}(\eta(a))$」を同時に表現しています。
 
 #### 独立性と相関
-複合レジスタの状態 $\rho \in \mathrm{D}(\mathcal{Y} \otimes \mathcal{Z})$ が $\rho = \sigma \otimes \tau$ と書けるとき、レジスタ $\mathrm{Y}$ と $\mathrm{Z}$ は**独立 (Independent)** であると言います。そうでない場合は**相関 (Correlated)** しており、特に量子特有の強い相関を**エンタングルメント (Entanglement)** と呼びます。
+
+複合レジスタの状態が、それぞれの部分系の状態の「積」で書けるかどうかは、相関の有無を定義します。
+
+::: {#def-independence}
+## 独立性 (Definition 2.7)
+レジスタ $Y, Z$ の複合系の状態 $\rho \in \mathrm{D}(\mathcal{Y} \otimes \mathcal{Z})$ に対し、$\rho = \sigma \otimes \tau$ （ここで $\sigma \in \mathrm{D}(\mathcal{Y}), \tau \in \mathrm{D}(\mathcal{Z})$）と書けるとき、レジスタ $Y$ と $Z$ は **独立 (Independent)** であると言います（積状態とも呼びます）。
+
+そうでない場合、レジスタ $Y$ と $Z$ は **相関 (Correlated)** していると言います。
+特に、量子的特有の強い相関（セパラブルでない状態）を **エンタングルメント (Entanglement)** と呼びます。
+
+:::
 
 ### Reductions and purifications of quantum states (量子状態の縮約と純粋化) [📄 p.67](assets/Quantum_Information.pdf#page=75) {#reductions-and-purifications-of-quantum-states}
 
@@ -367,4 +400,52 @@ $$ |\psi\rangle = \sum_{k=1}^r \sqrt{\lambda_k} |x_k\rangle_{\mathcal{A}} \otime
 
 :::
 
-また、2つの純粋化 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ は、補助系 $\mathcal{Y}$ 上のあるユニタリ $U$ によって $v = (\mathbb{I}_{\mathcal{X}} \otimes U)u$ と結ばれます（**純粋化のユニタリ同値性**、Theorem 2.12）。
+また、2つの純粋化の間の関係（等価性）については、以下の重要な定理があります。
+
+::: {#thm-unitary-equivalence}
+## 純粋化のユニタリ同値性 (Theorem 2.11)
+$u, v \in \mathcal{X} \otimes \mathcal{Y}$ を、ある状態 $\rho \in \mathrm{D}(\mathcal{X})$ の2つの純粋化とします。
+このとき、補助系 $\mathcal{Y}$ 上のユニタリ演算子 $U \in \mathrm{U}(\mathcal{Y})$ が存在して、以下が成り立ちます。
+$$ v = (\mathbb{I}_{\mathcal{X}} \otimes U) u $$
+
+:::
+
+::: {.proof}
+シュミット分解（特異値分解）を用います。$u$ と $v$ が共に $\rho$ の純粋化であるということは、部分トレースが一致する、すなわちシュミット係数が（非ゼロの部分で）一致することを意味します。
+$$ u = \sum_k \sqrt{\lambda_k} x_k \otimes y_k, \quad v = \sum_k \sqrt{\lambda_k} x_k \otimes z_k $$
+ここで $\{y_k\}$ と $\{z_k\}$ は共に $\mathcal{Y}$ の正規直交系です。
+正規直交系同士を移すユニタリ $U$（$U y_k = z_k$）を構成すれば、
+$$ (\mathbb{I} \otimes U) u = \sum \sqrt{\lambda_k} x_k \otimes (U y_k) = \sum \sqrt{\lambda_k} x_k \otimes z_k = v $$
+となり、定理が示されます。
+
+:::
+
+::: {.callout-tip title="物理学の視点（環境の自由度）"}
+これは「対象系 $\mathcal{X}$ の状態 $\rho$ さえ同じなら、環境系 $\mathcal{Y}$ の詳細がどうあろうと、**環境側の基底変換（ユニタリ$U$）だけで互いに移り合える**」ことを保証します。
+つまり、純粋化の違いは本質的な違いではなく、単なる座標（基底）の選び方の違いに過ぎません。
+
+:::
+
+さらに、この概念をアンサンブルへと拡張したのが以下の定理です（しばしば **GHJWの定理** と呼ばれます）。
+
+::: {#thm-ghjw}
+## アンサンブルの等価性 (Theorem 2.12 / GHJW Theorem)
+$\mathcal{X}$ 上の2つのアンサンブル $\eta = \{ (p_a, u_a) \}_{a \in \Sigma}$ と $\nu = \{ (q_b, v_b) \}_{b \in \Gamma}$ が同じ密度演算子 $\rho$ を生成するとします。
+$$ \rho = \sum_a p_a u_a u_a^* = \sum_b q_b v_b v_b^* $$
+このとき、ある等長写像（またはユニタリ） $U$ が存在して、アンサンブルの要素間を線形変換で結びつけます。特に、両者が純粋状態のアンサンブルであれば、係数行列はユニタリ行列になります。
+
+:::
+
+::: {.proof}
+それぞれのアンサンブルに対応する純粋化を考えます。
+$$ \psi_\eta = \sum_a \sqrt{p_a} u_a \otimes e_a, \quad \psi_\nu = \sum_b \sqrt{q_b} v_b \otimes e_b $$
+これらは共に部分トレースをとると $\rho$ になるため、Theorem 2.11 より、あるユニタリ $U$ で $\psi_\nu = (\mathbb{I} \otimes U) \psi_\eta$ と書けます。
+この関係式を成分で書き下すことで、アンサンブル間の線形関係が導かれます。
+
+:::
+
+::: {.callout-tip title="物理学の視点（測定によるアンサンブル生成）"}
+この定理は、「ある量子状態 $\rho$ を記述するアンサンブル表現は無数にあるが、それらはすべて **純粋化状態 $|\Psi\rangle$ に対する環境側での異なる測定** に対応する」という物理的意味を持ちます。
+環境系をある基底で測ればアンサンブル $\eta$ が得られ、別の基底で測れば $\nu$ が得られる、というわけです。
+
+:::
