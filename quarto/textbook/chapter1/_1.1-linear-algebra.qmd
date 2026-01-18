@@ -209,12 +209,47 @@ $$ {#eq-tensor-inner}
 
 #### テンソル積の普遍性 (Universal Property)
 
-多重線形写像 $\Phi:\mathcal{X}_1 \times \cdots \times \mathcal{X}_n \to \mathcal{Y}$ に対し、
-一意な線形写像 $A:\mathcal{X}_1 \otimes \cdots \otimes \mathcal{X}_n \to \mathcal{Y}$ が存在して
-$$
-\Phi(u_1,\dots,u_n) = A(u_1 \otimes \cdots \otimes u_n)
-$$
-が成立します（命題1.1）。これがテンソル積の抽象的な定義の核心です。
+テンソル積は、「多重線形写像」を「線形写像」に変換する普遍的な役割を持ちます。
+
+::: {#prop-tensor-universality}
+## テンソル積の普遍性 (Proposition 1.1)
+$\mathcal{X}_1, \dots, \mathcal{X}_n$ および $\mathcal{Y}$ を複素ユークリッド空間とします。
+任意の多重線形写像 $\phi: \mathcal{X}_1 \times \dots \times \mathcal{X}_n \to \mathcal{Y}$ に対して、以下の条件を満たす一意の線形写像 $A: \mathcal{X}_1 \otimes \dots \otimes \mathcal{X}_n \to \mathcal{Y}$ が存在します。
+$$ \phi(u_1, \dots, u_n) = A(u_1 \otimes \dots \otimes u_n) $$
+すべての $u_1 \in \mathcal{X}_1, \dots, u_n \in \mathcal{X}_n$ に対して成立します。
+
+:::
+
+::: {.proof}
+簡単のため $n=2$ の場合（双線形写像）について示します。一般の場合も同様です。
+**存在性**:
+標準基底 $e_{a} \otimes e_{b}$ に対して、線形写像 $A$ の作用を以下のように定義します。
+$$ A(e_{a} \otimes e_{b}) = \phi(e_{a}, e_{b}) $$
+任意のベクトル $u \otimes v = (\sum u(a)e_a) \otimes (\sum v(b)e_b) = \sum_{a,b} u(a)v(b) (e_a \otimes e_b)$ に対して、線形性より
+$$ A(u \otimes v) = \sum_{a,b} u(a)v(b) A(e_a \otimes e_b) = \sum_{a,b} u(a)v(b) \phi(e_a, e_b) $$
+一方、$\phi$ の双線形性より
+$$ \phi(u, v) = \phi(\sum_a u(a)e_a, \sum_b v(b)e_b) = \sum_{a,b} u(a)v(b) \phi(e_a, e_b) $$
+よって $A(u \otimes v) = \phi(u, v)$ が成り立ちます。
+
+**一意性**:
+テンソル積空間 $\mathcal{X} \otimes \mathcal{Y}$ は基底 $\{e_a \otimes e_b\}$ によって張られます。
+線形写像 $A$ は基底上の値によって一意に決定されるため、条件を満たす $A$ は一つしか存在しません。
+
+:::
+
+::: {.callout-note title="数学的な重要性（基底に依存しない定義）"}
+この命題は、テンソル積空間 $\mathcal{X} \otimes \mathcal{Y}$ を**具体的にどのように構成したか（基底の選び方など）によらず**、その性質だけで一意に特定できることを保証します。
+数学（圏論など）では、この「普遍性」こそがテンソル積の定義そのものとして扱われます。
+
+:::
+
+::: {.callout-tip title="物理学の視点（局所的な定義から大域的な演算へ）"}
+量子力学において、これは非常に強力な事実を示唆しています。
+「複合系全体に対する線形演算子」を定義したいとき、わざわざ全空間の複雑な基底すべてに対する作用を考える必要はありません。
+**「個々の部分系に対する作用（局所的な積状態への作用）」さえ決まれば、全体の演算子が一意に決まる**ということを意味しています。
+例えば、2量子ビット系への作用を考える際、各ビットへの作用（$H \otimes H$ など）を指定するだけで、エンタングル状態を含むあらゆる状態への作用が自動的に（線形性によって）定まるのは、この普遍性のおかげです。
+
+:::
 
 #### 実ユークリッド空間 (Real Euclidean Spaces)
 
