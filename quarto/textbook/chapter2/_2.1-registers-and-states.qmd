@@ -1,4 +1,4 @@
-## Registers and states [📄 p.58](assets/Quantum_Information.pdf#page=66) {#registers-and-states}
+## Registers and states [📄 p.58](/assets/Quantum_Information.pdf#page=66) {#registers-and-states}
 
 この節では、量子情報の基本的な器である「レジスタ」と、その中に保存される「状態」について定義します。
 
@@ -9,7 +9,7 @@
 
 :::
 
-### Registers and classical state sets (レジスタと古典状態集合) [📄 p.58](assets/Quantum_Information.pdf#page=66) {#registers-and-classical-state-sets}
+### Registers and classical state sets (レジスタと古典状態集合) [📄 p.58](/assets/Quantum_Information.pdf#page=66) {#registers-and-classical-state-sets}
 
 **レジスタ (Register)** は、物理的なデバイス（コンピュータのメモリ、量子ビット、あるいは通信媒体など）の抽象化です。
 
@@ -56,7 +56,7 @@ graph TD
 
 :::
 
-### Quantum states of registers (レジスタの量子状態) [📄 p.61](assets/Quantum_Information.pdf#page=69) {#quantum-states-of-registers}
+### Quantum states of registers (レジスタの量子状態) [📄 p.61](/assets/Quantum_Information.pdf#page=69) {#quantum-states-of-registers}
 
 ::: {#def-probabilistic-state}
 ## 確率的状態 (Definition 2.4)
@@ -211,7 +211,7 @@ $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
 
 :::
 
-### Reductions and purifications of quantum states (量子状態の縮約と純粋化) [📄 p.67](assets/Quantum_Information.pdf#page=75) {#reductions-and-purifications-of-quantum-states}
+### Reductions and purifications of quantum states (量子状態の縮約と純粋化) [📄 p.67](/assets/Quantum_Information.pdf#page=75) {#reductions-and-purifications-of-quantum-states}
 
 #### 縮約 (Reductions)
 複合系 $(X, Y)$ の状態 $\rho$ から、部分系 $X$ の状態を得る操作を **縮約 (Reduction)** と呼び、数理的には **部分トレース (Partial Trace)** で記述されます。

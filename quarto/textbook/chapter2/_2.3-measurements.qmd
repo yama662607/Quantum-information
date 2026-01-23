@@ -1,4 +1,4 @@
-## Measurements [📄 p.100](assets/Quantum_Information.pdf#page=108) {#measurements}
+## Measurements [📄 p.100](/assets/Quantum_Information.pdf#page=108) {#measurements}
 
 測定（Measurement）は、量子状態から古典情報を抽出するための数学的メカニズムを提供します。
 
@@ -9,7 +9,7 @@
 
 :::
 
-### Two equivalent definitions (2つの等価な定義) [📄 p.100](assets/Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
+### Two equivalent definitions (2つの等価な定義) [📄 p.100](/assets/Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
 
 量子情報の文脈では、測定は通常、以下の POVM (Positive Operator-Valued Measure) として定義されます。
 
@@ -28,7 +28,7 @@ $$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 :::
 
 
-### Measurements as channels (チャネルとしての測定) [📄 p.102](assets/Quantum_Information.pdf#page=110) {#measurements-as-channels}
+### Measurements as channels (チャネルとしての測定) [📄 p.102](/assets/Quantum_Information.pdf#page=110) {#measurements-as-channels}
 
 測定は、量子情報を古典情報に変換する**量子から古典へのチャネル** (Quantum-to-classical channel) としても定義できます。
 
@@ -49,7 +49,7 @@ POVM は「効果演算子」で確率を与える道具、チャネル表現は
 
 :::
 
-### Projective measurements (射影測定) [📄 p.105](assets/Quantum_Information.pdf#page=113) {#projective-measurements}
+### Projective measurements (射影測定) [📄 p.105](/assets/Quantum_Information.pdf#page=113) {#projective-measurements}
 
 測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。互いに直交するため $a \neq b$ で $\mu(a)\mu(b)=0$ となり、可観測量 $H = \sum_a \lambda_a \mu(a)$ のスペクトル分解に一致します。ブラケット表記では基底ベクトル $|a\rangle$ への射影 $|a\rangle\langle a|$ が各アウトカムに対応します。
 
@@ -59,7 +59,7 @@ POVM は「効果演算子」で確率を与える道具、チャネル表現は
 
 :::
 
-### Naimark の定理 [📄 p.109](assets/Quantum_Information.pdf#page=117) {#naimarks-theorem}
+### Naimark の定理 [📄 p.109](/assets/Quantum_Information.pdf#page=117) {#naimarks-theorem}
 
 任意の測定は、補助系を含む拡大された系における射影測定の一部とみなすことができます。
 
@@ -79,7 +79,7 @@ Naimark の構成は「測定をユニタリ＋射影＋部分トレース」の
 
 :::
 
-### Information-complete measurements (情報完全測定) [📄 p.110](assets/Quantum_Information.pdf#page=118) {#information-complete-measurements}
+### Information-complete measurements (情報完全測定) [📄 p.110](/assets/Quantum_Information.pdf#page=118) {#information-complete-measurements}
 
 測定統計から元の量子状態を一意に特定できる測定を**情報完全測定**と呼びます。
 
@@ -99,7 +99,7 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 
 :::
 
-### Quantum instruments (量子インストルメント) [📄 p.112](assets/Quantum_Information.pdf#page=120) {#quantum-instruments}
+### Quantum instruments (量子インストルメント) [📄 p.112](/assets/Quantum_Information.pdf#page=120) {#quantum-instruments}
 
 測定によってレジスタが破壊されず、結果 $a$ に応じて状態が変化するプロセスを**量子インストルメント**（あるいは単にインストルメント）と呼びます。
 
@@ -116,7 +116,7 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 $$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^\dagger, \qquad M_a = \sum_j A_{a,j}^\dagger A_{a,j} $$
 と書け、$\{M_a\}$ が対応する POVM です。測定と同時に「その後の量子状態」を記述できるため、フィードバックを伴う量子回路のモデル化に不可欠です。
 
-### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](assets/Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
+### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](/assets/Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
 
 測定全体の集合もまた凸集合を形成します。
 
