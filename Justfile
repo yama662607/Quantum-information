@@ -5,8 +5,12 @@
 set dotenv-load := true
 
 # Package manager and runtime
+# Package manager and runtime
 pm := "uv"
 python := "uv run python"
+
+# Windows-specific configuration (PowerShell)
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
 # =============================================================================
 # 🤖 Standard Interface (AI Agent Protocol)

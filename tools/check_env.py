@@ -43,6 +43,11 @@ def main():
         print(
             "\n❗ Some dependencies are missing. Please refer to README.md for installation instructions."
         )
+        if sys.platform == "win32":
+            print("\n💡 WINDOWS TIP:")
+            print("   If you just installed these tools, your terminal might not see them yet.")
+            print("   Try restarting your terminal (PowerShell/Command Prompt).")
+            print("   (Winget and installs often require a fresh session to update PATH)")
         sys.exit(1)
 
 
