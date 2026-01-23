@@ -24,7 +24,7 @@ book:
     collapse-level: 4
   chapters:
     - index.qmd
-    - part: "教科書解説 (Textbook)"
+    - part: "Quarto Notebook"
       chapters:
         - textbook/chapter1.qmd
         - textbook/chapter2.qmd
