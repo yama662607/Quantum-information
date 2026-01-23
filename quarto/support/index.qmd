@@ -1,6 +1,9 @@
 ---
-title: "サポート & ガイド"
+unnumbered: true
+number-sections: false
 ---
+
+# サポート & ガイド {.unnumbered}
 
 プロジェクトの運用や環境構築に関するドキュメントと、学習用テンプレートをまとめています。
 

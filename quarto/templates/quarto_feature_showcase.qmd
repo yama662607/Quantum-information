@@ -1,5 +1,4 @@
 ---
-title: "Quarto Extended Features Showcase"
 subtitle: "A Massive Template Demonstrating Every Researched Capability"
 author: "Quantum Info Study Team"
 date: last-modified
@@ -7,7 +6,8 @@ format:
   html:
     toc: true
     toc-depth: 4
-    number-sections: true
+    number-sections: false
+    unnumbered: true
     code-fold: show
     code-tools: true
     theme:
@@ -22,6 +22,8 @@ execute:
   warning: false
 bibliography: references.bib
 ---
+
+# Quarto Extended Features Showcase {.unnumbered}
 
 # Introduction
 

@@ -1,10 +1,11 @@
 ---
-title: "The Theory of Quantum Information"
 subtitle: "John Watrous『The Theory of Quantum Information』学習ロードマップ"
 page-layout: full
 toc: true
-unnumbered: true
+number-sections: false
 ---
+
+# 目次 {.unnumbered}
 
 ::: {.callout-note appearance="simple"}
 John Watrous『The Theory of Quantum Information』の内容を数学的に厳密、かつ視覚的に理解するための学習・解説リサーチ環境です。

@@ -1,5 +1,4 @@
 ---
-title: "Chapter X: [Chapter Title]"
 subtitle: "Section Y: [Section Title]"
 author: "Quantum Info Study Team"
 date: last-modified
@@ -7,7 +6,8 @@ format:
   html:
     toc: true
     toc-depth: 3
-    number-sections: true
+    number-sections: false
+    unnumbered: true
     code-fold: show
     code-summary: "View Code"
     theme: cosmo
@@ -15,6 +15,8 @@ format:
     html-math-method: katex
 bibliography: references.bib
 ---
+
+# Chapter X: [Chapter Title] {.unnumbered}
 
 # Overview & Objectives [📄 p.XX](Quantum_Information.pdf#page=YY) {#overview}
 
