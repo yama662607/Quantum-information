@@ -26,15 +26,12 @@ book:
     - index.qmd
     - part: "教科書解説 (Textbook)"
       chapters:
-        - textbook/index.qmd
         - textbook/chapter1.qmd
         - textbook/chapter2.qmd
         - textbook/chapter3.qmd
-    - part: "サポート (Support)"
-      chapters:
-        - support/index.qmd
-        - templates/quarto_feature_showcase.qmd
-        - templates/quantum_textbook_template.qmd
+    - support/index.qmd
+    - templates/quarto_feature_showcase.qmd
+    - templates/quantum_textbook_template.qmd
 
   page-navigation: true
 
@@ -43,6 +40,11 @@ book:
     right:
       - text: "ホーム"
         href: index.qmd
+
+number-sections: true
+number-depth: 3
+crossref:
+  chapters: true
 
 lang: ja
 
@@ -66,6 +68,10 @@ format:
       margin-width: 250px
       sidebar-width: 300px
       gutter-width: 1.5rem
+    html-math-method: katex
+  pdf:
+    include-in-header: preamble.tex
+    pdf-engine: xelatex
 
 execute:
   freeze: auto
