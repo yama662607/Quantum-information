@@ -1,0 +1,5 @@
+# Mathematical Preliminaries {#chapter-1}
+
+{{< include chapter1/_1.1-linear-algebra.qmd >}}
+
+{{< include chapter1/_1.2-analysis.qmd >}}

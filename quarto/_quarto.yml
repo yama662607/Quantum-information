@@ -1,5 +1,5 @@
 project:
-  type: website
+  type: book
   output-dir: _output
   resources:
     - "assets/*.pdf"
@@ -7,8 +7,10 @@ project:
   preview:
     watch-inputs: true
 
-website:
+book:
   title: "Quantum Information"
+  author: "Daisuke Yamashiki"
+  date: "2025-01-23"
   navbar:
     left:
       - text: "ホーム"
@@ -16,26 +18,23 @@ website:
     right:
       - text: "サポート"
         href: support/index.qmd
+  sidebar:
+    style: "docked"
     search: true
-    sidebar:
-      style: "docked"
-      search: true
-      collapse-level: 4
-      contents:
-        - section: "量子情報"
-          contents:
-            - index.qmd
-            - section: "教科書解説 (Textbook)"
-              contents:
-                - text: "Textbook Theory (All Chapters)"
-                  href: textbook.qmd
-        - section: "サポート (Support)"
-          contents:
-            - support/index.qmd
-            - text: "Quarto機能ショーケース"
-              href: templates/quarto_feature_showcase.qmd
-            - text: "教科書テンプレート"
-              href: templates/quantum_textbook_template.qmd
+    collapse-level: 4
+  chapters:
+    - index.qmd
+    - part: "教科書解説 (Textbook)"
+      chapters:
+        - textbook/index.qmd
+        - textbook/chapter1.qmd
+        - textbook/chapter2.qmd
+        - textbook/chapter3.qmd
+    - part: "サポート (Support)"
+      chapters:
+        - support/index.qmd
+        - templates/quarto_feature_showcase.qmd
+        - templates/quantum_textbook_template.qmd
 
   page-navigation: true
 
@@ -53,7 +52,7 @@ format:
     css: templates/styles.css
     toc: true
     toc-depth: 3
-    toc-location: left
+    toc-location: right
     code-fold: true
     code-tools: true
     code-copy: true
