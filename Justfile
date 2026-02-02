@@ -91,7 +91,14 @@ clean:
 
 # Quarto文書のリアルタイム・プレビュー起動 (自動更新機能付き)
 docs:
-    {{python}} tools/dev_server.py
+    @{{python}} tools/dev_server.py || (echo "\n❌ Preview failed. If the port is already in use, try running: \033[1mjust fix-docs\033[0m" && exit 1)
+
+# docs が失敗した（ポート使用中など）場合の復旧コマンド
+fix-docs:
+    @echo "🧹 Cleaning up lingering Quarto processes and freeing port 4312..."
+    -lsof -ti:4312 | xargs kill -9 2>/dev/null
+    -pkill -f "quarto preview" 2>/dev/null
+    @echo "✅ Cleanup complete. You can now try 'just docs' again."
 
 # Streamlitアプリの起動
 app path:
