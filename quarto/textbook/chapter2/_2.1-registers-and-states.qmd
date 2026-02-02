@@ -106,7 +106,7 @@ graph TD
 :::
 
 #### 純粋状態、平坦状態、および混合状態
-- **純粋状態 (Pure States)**: ランク1の密度演算子。ある単位ベクトル $u$ を用いて $\rho = u u^\dagger$ と書けます。
+- **純粋状態 (Pure States)**: ランク1の密度演算子。ある単位ベクトル $u$ を用いて $\rho = u u^*$ と書けます。
 - **平坦状態 (Flat States)**: ある部分空間への射影演算子 $\Pi$ を用いて $\rho = \frac{\Pi}{\mathrm{Tr}(\Pi)}$ と書ける状態。
 - **最大混合状態 (Completely Mixed State)**: $\omega = \frac{\mathbb{I}_{\mathcal{X}}}{\dim(\mathcal{X})}$。完全な無知の状態に対応します。
 
@@ -444,29 +444,29 @@ $$ \dim(\mathcal{Y}) \geq \mathrm{rank}(P) $$
 
 1.  **スペクトル分解**:
     $P$ は半正定値演算子なので、スペクトル分解可能です。ランクを $r = \mathrm{rank}(P)$ とすると、正の固有値 $\lambda_1, \dots, \lambda_r$ と対応する正規直交固有ベクトル $x_1, \dots, x_r \in \mathcal{X}$ を用いて次のように書けます。
-    $$ P = \sum_{k=1}^r \lambda_k x_k x_k^\dagger $$
+    $$ P = \sum_{k=1}^r \lambda_k x_k x_k^* $$
 
 2.  **補助系の準備と純粋化の構成**:
     条件 $\dim(\mathcal{Y}) \ge \mathrm{rank}(P) = r$ より、補助系 $\mathcal{Y}$ の中に $r$ 個の正規直交系 $\{y_1, \dots, y_r\}$ を取ることができます。これを用いて、複合系 $\mathcal{X} \otimes \mathcal{Y}$ のベクトル $u$ を次のように定義します。
     $$ u = \sum_{k=1}^r \sqrt{\lambda_k} x_k \otimes y_k $$
 
 3.  **部分トレースによる検証**:
-    この $u$ が $P$ の純粋化になっていることを確認します。まず、全体系の密度演算子 $uu^\dagger$ を計算します。
+    この $u$ が $P$ の純粋化になっていることを確認します。まず、全体系の密度演算子 $uu^*$ を計算します。
     $$
     \begin{aligned}
-    uu^\dagger &= \left( \sum_{j=1}^r \sqrt{\lambda_j} x_j \otimes y_j \right) \left( \sum_{k=1}^r \sqrt{\lambda_k} x_k \otimes y_k \right)^\dagger \\
-    &= \sum_{j,k=1}^r \sqrt{\lambda_j \lambda_k} (x_j x_k^\dagger) \otimes (y_j y_k^\dagger)
+    uu^* &= \left( \sum_{j=1}^r \sqrt{\lambda_j} x_j \otimes y_j \right) \left( \sum_{k=1}^r \sqrt{\lambda_k} x_k \otimes y_k \right)^* \\
+    &= \sum_{j,k=1}^r \sqrt{\lambda_j \lambda_k} (x_j x_k^*) \otimes (y_j y_k^*)
     \end{aligned}
     $$
     ここで、補助系 $\mathcal{Y}$ について部分トレースを取ります。
     $$
     \begin{aligned}
-    \mathrm{Tr}_{\mathcal{Y}}(uu^\dagger) &= \sum_{j,k=1}^r \sqrt{\lambda_j \lambda_k} (x_j x_k^\dagger) \underbrace{\mathrm{Tr}(y_j y_k^\dagger)}_{\delta_{jk}} \\
-    &= \sum_{k=1}^r \lambda_k x_k x_k^\dagger \\
+    \mathrm{Tr}_{\mathcal{Y}}(uu^*) &= \sum_{j,k=1}^r \sqrt{\lambda_j \lambda_k} (x_j x_k^*) \underbrace{\mathrm{Tr}(y_j y_k^*)}_{\delta_{jk}} \\
+    &= \sum_{k=1}^r \lambda_k x_k x_k^* \\
     &= P
     \end{aligned}
     $$
-    $\{y_k\}$ が正規直交系であることを利用しました（$\mathrm{Tr}(y_j y_k^\dagger) = \langle y_k, y_j \rangle = \delta_{jk}$）。これにより、$\mathrm{Tr}_{\mathcal{Y}}(uu^\dagger) = P$ が満たされることが示されました。
+    $\{y_k\}$ が正規直交系であることを利用しました（$\mathrm{Tr}(y_j y_k^*) = \langle y_k, y_j \rangle = \delta_{jk}$）。これにより、$\mathrm{Tr}_{\mathcal{Y}}(uu^*) = P$ が満たされることが示されました。
 
 逆に、$\dim(\mathcal{Y}) < \mathrm{rank}(P)$ の場合、シュミット分解の性質よりランク $r$ のベクトルを作ることができないため、純粋化は存在しません。
 

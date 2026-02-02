@@ -64,7 +64,7 @@ POVM は「効果演算子」で確率を与える道具、チャネル表現は
 
 ::: {#thm-naimark name="Naimark の定理 (Theorem 2.42)"}
 測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ に対し、等長写像 $A: \mathcal{X} \to \mathcal{X} \otimes \mathcal{Y}$（ただし $\mathcal{Y} = \mathbb{C}^\Sigma$）が存在して、次が成り立ちます。
-$$ \mu(a) = A^\dagger (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
+$$ \mu(a) = A^* (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
 
 :::
 
@@ -108,7 +108,7 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 状態 $\rho$ にインストルメントを適用すると、確率 $p(a) = \mathrm{Tr}(\mathcal{A}_a(\rho))$ でアウトカム $a$ が得られ、その後の系は状態 $\mathcal{A}_a(\rho) / p(a)$ に変化します。
 
 インストルメントは Kraus 演算子族 $\{A_{a,j}\}$ を用いて
-$$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^\dagger, \qquad M_a = \sum_j A_{a,j}^\dagger A_{a,j} $$
+$$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^*, \qquad M_a = \sum_j A_{a,j}^* A_{a,j} $$
 と書け、$\{M_a\}$ が対応する POVM です。測定と同時に「その後の量子状態」を記述できるため、フィードバックを伴う量子回路のモデル化に不可欠です。
 
 ### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](/assets/Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
