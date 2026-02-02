@@ -208,7 +208,7 @@ $$ {#eq-tensor-inner}
 
 テンソル積は、「多重線形写像」を「線形写像」に変換する普遍的な役割を持ちます。
 
-::: {#prop-tensor-universality name="テンソル積の普遍性 (Proposition 1.1)"}
+::: {#prp-tensor-universality name="テンソル積の普遍性 (Proposition 1.1)"}
 $\mathcal{X}_1, \dots, \mathcal{X}_n$ および $\mathcal{Y}$ を複素ユークリッド空間とします。
 任意の多重線形写像 $\phi: \mathcal{X}_1 \times \dots \times \mathcal{X}_n \to \mathcal{Y}$ に対して、以下の条件を満たす一意の線形写像 $A: \mathcal{X}_1 \otimes \dots \otimes \mathcal{X}_n \to \mathcal{Y}$ が存在します。
 $$ \phi(u_1, \dots, u_n) = A(u_1 \otimes \dots \otimes u_n) $$

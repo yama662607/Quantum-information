@@ -143,7 +143,7 @@ $\rho = \begin{pmatrix} \rho_{00} & \rho_{01} \\ \rho_{10} & \rho_{11} \end{pmat
 
 量子状態の集合 $\mathrm{D}(\mathcal{X})$ は、確率的状態の集合と同様に凸集合を形成します。
 
-::: {#prop-convexity name="量子状態集合の凸性 (Proposition 2.6)"}
+::: {#prp-convexity name="量子状態集合の凸性 (Proposition 2.6)"}
 $\mathcal{X}$ を複素ユークリッド空間とします。
 
 1.  密度演算子の集合 $\mathrm{D}(\mathcal{X})$ はコンパクト凸集合です。

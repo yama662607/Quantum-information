@@ -13,7 +13,7 @@ $$ D(A, B) = \frac{1}{2} \| A - B \|_1 $$ {#eq-trace-distance-def}
 
 トレース距離は、数学的な意味での「距離（メトリック）」の条件を満たします。
 
-::: {#prop-trace-distance-properties name="トレース距離の性質"}
+::: {#prp-trace-distance-properties name="トレース距離の性質"}
 密度演算子 $\rho, \sigma, \tau \in \mathrm{D}(\mathcal{X})$ に対し、以下が成立します。
 
 1.  **非負性**: $D(\rho, \sigma) \ge 0$ であり、$D(\rho, \sigma) = 0 \iff \rho = \sigma$。
