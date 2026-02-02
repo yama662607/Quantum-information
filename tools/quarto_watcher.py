@@ -1,5 +1,4 @@
 import time
-import sys
 from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -39,10 +38,14 @@ class QuartoWatcherHandler(FileSystemEventHandler):
         current_time = time.time()
         if current_time - self.last_triggered > self.debounce_seconds:
             if target_file:
-                print(f"Detected change in {src_path.name}. Touching {target_file.name}...")
+                print(
+                    f"Detected change in {src_path.name}. Touching {target_file.name}..."
+                )
                 self.touch_target(target_file)
             else:
-                print(f"Detected change in {src_path.name}, but no specific target found.")
+                print(
+                    f"Detected change in {src_path.name}, but no specific target found."
+                )
 
             self.last_triggered = current_time
 

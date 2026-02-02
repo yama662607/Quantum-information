@@ -45,9 +45,13 @@ def main():
         )
         if sys.platform == "win32":
             print("\n💡 WINDOWS TIP:")
-            print("   If you just installed these tools, your terminal might not see them yet.")
+            print(
+                "   If you just installed these tools, your terminal might not see them yet."
+            )
             print("   Try restarting your terminal (PowerShell/Command Prompt).")
-            print("   (Winget and installs often require a fresh session to update PATH)")
+            print(
+                "   (Winget and installs often require a fresh session to update PATH)"
+            )
         sys.exit(1)
 
 
