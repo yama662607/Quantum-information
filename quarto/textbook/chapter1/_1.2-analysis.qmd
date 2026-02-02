@@ -40,8 +40,7 @@
 
 #### 凸集合と分離定理
 
-::: {#def-convex-set}
-## 凸集合 (Convex Set)
+::: {#def-convex-set name="凸集合 (Convex Set)"}
 
 集合 $\mathcal{C} \subseteq \mathcal{V}$ が**凸 (Convex)** であるとは、任意の $u, v \in \mathcal{C}$ と $\lambda \in [0, 1]$ に対して、$\lambda u + (1-\lambda)v \in \mathcal{C}$ が成り立つことです。
 
@@ -71,14 +70,12 @@ $$ {#eq-convex-combination}
 
 #### カラテオドリとミンコフスキー
 
-::: {#thm-caratheodory}
-## Carathéodory の定理
+::: {#thm-caratheodory name="Carathéodory の定理"}
 次元 $n$ のアフィン部分空間に含まれる集合 $A$ に対して、任意の $v\in \mathrm{conv}(A)$ は高々 $n+1$ 個の点の凸結合で表せる。
 
 :::
 
-::: {#thm-minkowski}
-## Minkowski の定理
+::: {#thm-minkowski name="Minkowski の定理"}
 有限次元のコンパクト凸集合 $C$ は、その極点集合 $A$ の凸包で表される：$C=\mathrm{conv}(A)$。
 
 :::
@@ -92,8 +89,7 @@ $$ {#eq-convex-combination}
 
 凸集合に関する重要な定理として、以下があります。
 
-::: {#thm-separating-hyperplane}
-## 分離超平面定理 (Separating Hyperplane Theorem)
+::: {#thm-separating-hyperplane name="分離超平面定理 (Separating Hyperplane Theorem)"}
 
 実ベクトル空間 $V$ の閉凸集合 $\mathcal{C}$ と点 $u\notin \mathcal{C}$ に対し、ある $v\in V$ と $\alpha\in\mathbb{R}$ が存在して
 $$
@@ -103,8 +99,7 @@ $$ {#eq-separating-hyperplane}
 
 :::
 
-::: {#thm-sion-minimax}
-## シオンのミニマックス定理 (Sion's Min-Max Theorem)
+::: {#thm-sion-minimax name="シオンのミニマックス定理 (Sion's Min-Max Theorem)"}
 
 $\mathcal{A}$ をコンパクト凸集合、$\mathcal{B}$ を凸集合とし、$f:\mathcal{A}\times\mathcal{B}\to\mathbb{R}$ が
 
@@ -186,8 +181,7 @@ $$ {#eq-gaussian-invariance}
 
 半正定値計画法 (SDP) は、線形計画法 (LP) を半正定値行列の空間へと拡張した最適化問題であり、量子情報の多くの問題（状態識別、通信路容量など）において中心的な役割を果たします。
 
-::: {#def-sdp}
-## 半正定値計画問題 (Semidefinite Program)
+::: {#def-sdp name="半正定値計画問題 (Semidefinite Program)"}
 
 SDPは、以下の3つ組 $(\Phi, A, B)$ によって定義されます。
 
@@ -211,8 +205,7 @@ SDPは、以下の3つ組 $(\Phi, A, B)$ によって定義されます。
 #### 弱双対性と強双対性
 任意の SDP において、常に **$\alpha \leq \beta$ (弱双対性)** が成り立ちます。これは、任意の双対実行可能解が主最適値の上界を与えることを意味します。$\alpha = \beta$ が成り立つ状況を **強双対性 (Strong Duality)** と呼びます。
 
-::: {#exm-trace-norm-sdp}
-## トレースノルムのSDP表示 (Example 1.20)
+::: {#exm-trace-norm-sdp name="トレースノルムのSDP表示 (Example 1.20)"}
 演算子 $K \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ のトレースノルム $\|K\|_1$ は、以下の SDP の最適値として表せます。
 
 **主問題**:
@@ -223,8 +216,7 @@ $$ \text{minimize} \quad \frac{1}{2}\mathrm{Tr}(X) + \frac{1}{2}\mathrm{Tr}(Y) \
 
 :::
 
-::: {#exm-inequality-sdp}
-## 不等式制約付きSDP (Example 1.21)
+::: {#exm-inequality-sdp name="不等式制約付きSDP (Example 1.21)"}
 
 線形写像 $\Phi:\mathrm{L}(\mathcal{X})\to \mathrm{L}(\mathcal{Y})$ と $\Psi:\mathrm{L}(\mathcal{X})\to \mathrm{L}(\mathcal{Z})$ に対し、次の形式の SDP を考えます。
 
@@ -247,8 +239,7 @@ $$
 主問題の最適値を $\alpha$、双対問題の最適値を $\beta$ とすると、常に **$\alpha \leq \beta$ (弱双対性)** が成り立ちます。
 さらに、以下の条件（スレーター条件）が満たされるとき、**$\alpha = \beta$ (強双対性)** が保証されます。
 
-::: {#thm-slater}
-## スレーターの定理 (Slater's Theorem for SDP)
+::: {#thm-slater name="スレーターの定理 (Slater's Theorem for SDP)"}
 
 以下のいずれかの条件が満たされるとき、強双対性 ($\alpha = \beta$) が成立し、かつ最適解が存在します。
 

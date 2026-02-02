@@ -24,8 +24,7 @@ Alice は確率変数 $Y \in \{0, 1\}$ を用意し、確率 $\pi$ で $Y=0$、$
 Bob の最適な戦略は、ベイズの定理に基づき、各シンボル $b$ に対して $\pi p_0(b)$ と $(1-\pi) p_1(b)$ を比較し、大きい方を選ぶことです。
 $$ P_{\text{correct}} = \frac{1}{2} + \frac{1}{2} \| \pi p_0 - (1-\pi) p_1 \|_1 $$
 
-::: {#lem-3.3}
-## 補助定理 (Lemma 3.3)
+::: {#lem-3.3 name="補助定理 (Lemma 3.3)"}
 半正定値演算子 $P_a \succeq 0$ の族と任意のベクトル $u$ に対し、
 $$
 \sum_{a \in \Sigma} \langle P_a u, u \rangle \le \big\| \sum_{a \in \Sigma} P_a \big\| \cdot \|u\|^2
@@ -64,8 +63,7 @@ $$ P_{\text{correct}} = p_0 \langle M_0, \rho_0 \rangle + p_1 \langle M_1, \rho_
 
 この最大識別確率は、2つの状態間の「距離」と深く関係しています。
 
-::: {#thm-holevo-helstrom}
-## ホレボ・ヘルストローム定理 (Holevo-Helstrom Theorem)
+::: {#thm-holevo-helstrom name="ホレボ・ヘルストローム定理 (Holevo-Helstrom Theorem)"}
 
 2つの量子状態 $\rho_0, \rho_1$ を事前確率 $p_0, p_1$ で識別する際の最適な成功確率は以下で与えられます。
 
@@ -89,8 +87,7 @@ $$ P_{\text{success}} = \sum_{a \in \Sigma} p_a \langle M_a, \rho_a \rangle $$
 
 この最適化問題は、**半正定値計画法 (SDP)** として定式化できます。
 
-::: {#def-state-discrimination-sdp}
-## 最適状態識別のSDP
+::: {#def-state-discrimination-sdp name="最適状態識別のSDP"}
 
 最適な識別確率は、以下のSDPの解として与えられます。
 
@@ -117,8 +114,7 @@ $$
 
 主問題と双対問題の最適値は一致し（強双対性）、最適解 $( \{M_a\}, Y )$ は以下の条件を満たします。
 
-::: {#thm-optimality-criterion}
-## 測定の最適性条件 (Holevo-Yuen-Kennedy-Lax Theorem)
+::: {#thm-optimality-criterion name="測定の最適性条件 (Holevo-Yuen-Kennedy-Lax Theorem)"}
 測定 $\mu = \{M_a : a \in \Sigma\}$ がアンサンブル $\{ (p_a, \rho_a) \}$ に対して最適であるための必要十分条件は、演算子
 $$ Y = \sum_{a \in \Sigma} p_a \rho_a M_a $$
 が双対実行可能解になり、以下の「補完スラックネス」を満たすことです。
@@ -134,8 +130,7 @@ $$
 
 最適解を解析的に求めるのが難しい場合でも、アンサンブルの情報ののみから構成できる「十分良い」測定として **Pretty Good Measurement (PGM)**（または正則測定）が知られています。
 
-::: {#def-pgm}
-## Pretty Good Measurement
+::: {#def-pgm name="Pretty Good Measurement"}
 アンサンブル $\{ (p_a, \rho_a) \}$ に対して、平均状態を $\rho = \sum_a p_a \rho_a$ とします。$\rho$ が正定値であるとき、PGM は以下の測定演算子で定義されます。
 $$ M_a = \rho^{-1/2} (p_a \rho_a) \rho^{-1/2} $$
 

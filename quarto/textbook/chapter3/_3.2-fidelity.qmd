@@ -2,8 +2,7 @@
 
 **フィデリティ**（忠実度）は、2つの量子状態（あるいはより一般に半正定値演算子）の間の「重なり」の度合いを測る尺度です。
 
-::: {#def-fidelity}
-## フィデリティ (Fidelity)
+::: {#def-fidelity name="フィデリティ (Fidelity)"}
 2つの半正定値演算子 $P, Q \in \mathrm{Pos}(\mathcal{X})$ に対し、フィデリティ $F(P, Q)$ は次のように定義されます（式3.64）。
 $$ F(P, Q) = \| \sqrt{P} \sqrt{Q} \|_1 $$ {#eq-fidelity-def}
 あるいは、以下のような等価な表現も用いられます（式3.65）。
@@ -13,8 +12,7 @@ $$ F(P, Q) = \mathrm{Tr}\left(\sqrt{\sqrt{Q} P \sqrt{Q}}\right) $$ {#eq-fidelity
 
 ### Elementary properties of the fidelity function [📄 p.140](/assets/Quantum_Information.pdf#page=148) {#elementary-properties-fidelity}
 
-::: {#prop-fidelity-properties}
-## フィデリティの基本的性質 (Proposition 3.12)
+::: {#prop-fidelity-properties name="フィデリティの基本的性質 (Proposition 3.12)"}
 
 1.  **連続性**: $(P, Q)$ に関して連続。
 
@@ -38,8 +36,7 @@ $$ F(|u\rangle\langle u|, |v\rangle\langle v|) = |\langle u | v \rangle| $$ {#eq
 
 フィデリティに関する最も重要な定理の一つが、純粋化（Purification）との関係を示す**Uhlmannの定理**です。
 
-::: {#thm-uhlmann}
-## Uhlmannの定理 (Theorem 3.22 / Uhlmann's Theorem)
+::: {#thm-uhlmann name="Uhlmannの定理 (Theorem 3.22 / Uhlmann's Theorem)"}
 状態 $\rho, \sigma \in \mathrm{D}(\mathcal{X})$ とし、空間 $\mathcal{Y}$ を $\dim(\mathcal{Y}) \ge \dim(\mathcal{X})$ となるように選びます。
 このとき、
 $$ F(\rho, \sigma) = \max \left\{ |\langle u, v \rangle| : u, v \in \mathcal{X} \otimes \mathcal{Y}, \mathrm{Tr}_{\mathcal{Y}}(u u^*) = \rho, \mathrm{Tr}_{\mathcal{Y}}(v v^*) = \sigma \right\} $$
@@ -57,8 +54,7 @@ $$ F(\rho, \sigma) = \max \left\{ |\langle u, v \rangle| : u, v \in \mathcal{X} 
 
 測定によって状態がほとんど変化しないことを保証する補題です。
 
-::: {#lem-gentle-measurement}
-## 穏やかな測定の補題 (Winter's Gentle Measurement Lemma)
+::: {#lem-gentle-measurement name="穏やかな測定の補題 (Winter's Gentle Measurement Lemma)"}
 密度演算子 $\rho$ と、$0 \leq P \leq \mathbb{I}$ を満たす演算子 $P$ に対し、$\langle P, \rho \rangle > 0$ であれば
 $$ F\left(\rho, \frac{\sqrt{P} \rho \sqrt{P}}{\langle P, \rho \rangle}\right) \geq \sqrt{\langle P, \rho \rangle} $$
 が成立します。

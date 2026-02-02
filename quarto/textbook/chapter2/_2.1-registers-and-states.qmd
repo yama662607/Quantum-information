@@ -13,8 +13,7 @@
 
 **レジスタ (Register)** は、物理的なデバイス（コンピュータのメモリ、量子ビット、あるいは通信媒体など）の抽象化です。
 
-::: {#def-register}
-## レジスタ (Definition 2.1)
+::: {#def-register name="レジスタ (Definition 2.1)"}
 
 レジスタ $X$ は、以下のいずれかのオブジェクトとして帰納的に定義されます：
 
@@ -47,8 +46,7 @@ graph TD
     Y1 --> Z3
 ```
 
-::: {#def-classical-state-set}
-## 古典状態集合 (Definition 2.3)
+::: {#def-classical-state-set name="古典状態集合 (Definition 2.3)"}
 レジスタ $X$ の **古典状態集合 (Classical State Set)** は以下のように決定されます：
 
 1.  $X = \Sigma$ が単純レジスタの場合、その古典状態集合は $\Sigma$ である。
@@ -58,8 +56,7 @@ graph TD
 
 ### Quantum states of registers (レジスタの量子状態) [📄 p.61](/assets/Quantum_Information.pdf#page=69) {#quantum-states-of-registers}
 
-::: {#def-probabilistic-state}
-## 確率的状態 (Definition 2.4)
+::: {#def-probabilistic-state name="確率的状態 (Definition 2.4)"}
 レジスタ $X$ の **確率的状態 (Probabilistic State)** とは、その古典状態集合 $\Sigma$ 上の確率ベクトル $p \in \mathrm{P}(\Sigma)$ のことです。
 すなわち、すべての $a \in \Sigma$ について $p(a) \ge 0$ であり、$\sum_{a \in \Sigma} p(a) = 1$ を満たすベクトルです。
 
@@ -67,8 +64,7 @@ graph TD
 
 量子状態は、複素ユークリッド空間上の演算子（密度演算子）として記述されます。ここで、本教科書（Watrous）の重要な数学的抽象化として、古典状態集合 $\Sigma$ に対応する複素ユークリッド空間 $\mathcal{X} = \mathbb{C}^\Sigma$ が導入されます。
 
-::: {#def-quantum-state}
-## 量子状態 (Definition 2.5)
+::: {#def-quantum-state name="量子状態 (Definition 2.5)"}
 レジスタ $X$ の **量子状態 (Quantum State)** とは、対応する複素ユークリッド空間 $\mathcal{X}$ 上の密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ のことです。
 
 :::
@@ -147,8 +143,7 @@ $\rho = \begin{pmatrix} \rho_{00} & \rho_{01} \\ \rho_{10} & \rho_{11} \end{pmat
 
 量子状態の集合 $\mathrm{D}(\mathcal{X})$ は、確率的状態の集合と同様に凸集合を形成します。
 
-::: {#prop-convexity}
-## 量子状態集合の凸性 (Proposition 2.6)
+::: {#prop-convexity name="量子状態集合の凸性 (Proposition 2.6)"}
 $\mathcal{X}$ を複素ユークリッド空間とします。
 
 1.  密度演算子の集合 $\mathrm{D}(\mathcal{X})$ はコンパクト凸集合です。
@@ -187,8 +182,7 @@ $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
 
 複合レジスタの状態が、それぞれの部分系の状態の「積」で書けるかどうかは、相関の有無を定義します。
 
-::: {#def-independence}
-## 独立性 (Definition 2.7)
+::: {#def-independence name="独立性 (Definition 2.7)"}
 レジスタ $Y, Z$ の複合系の状態 $\rho \in \mathrm{D}(\mathcal{Y} \otimes \mathcal{Z})$ に対し、$\rho = \sigma \otimes \tau$ （ここで $\sigma \in \mathrm{D}(\mathcal{Y}), \tau \in \mathrm{D}(\mathcal{Z})$）と書けるとき、レジスタ $Y$ と $Z$ は **独立 (Independent)** であると言います（積状態とも呼びます）。
 
 そうでない場合、レジスタ $Y$ と $Z$ は **相関 (Correlated)** していると言います。
@@ -216,8 +210,7 @@ $$ \rho = \sum_{a \in \Gamma} p(a) \rho_a $$
 #### 縮約 (Reductions)
 複合系 $(X, Y)$ の状態 $\rho$ から、部分系 $X$ の状態を得る操作を **縮約 (Reduction)** と呼び、数理的には **部分トレース (Partial Trace)** で記述されます。
 
-::: {#def-partial-trace}
-## 部分トレース (Partial Trace)
+::: {#def-partial-trace name="部分トレース (Partial Trace)"}
 
 写像 $\mathrm{Tr}_{\mathcal{Y}}: \mathrm{L}(\mathcal{X} \otimes \mathcal{Y}) \to \mathrm{L}(\mathcal{X})$ は、以下の関係式をすべての $X, Y$ に対して満たす唯一の線形写像です。
 $$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
@@ -227,8 +220,7 @@ $$ \mathrm{Tr}_{\mathcal{Y}}(X \otimes Y) = \mathrm{Tr}(Y) X $$
 複合系 $(X, Y)$ の状態 $\rho$ から $X$ だけを取り出した状態は $\rho^X = \mathrm{Tr}_{\mathcal{Y}}(\rho)$ と書かれます。
 
 
-::: {#exm-maximally-entangled}
-## 最大絡み合い状態 (Maximally Entangled State)
+::: {#exm-maximally-entangled name="最大絡み合い状態 (Maximally Entangled State)"}
 空間 $\mathcal{X} \otimes \mathcal{Y}$（$\mathcal{X}, \mathcal{Y} \cong \mathbb{C}^\Sigma$）上の状態
 $$ u = \frac{1}{\sqrt{|\Sigma|}} \sum_{a \in \Sigma} e_a \otimes e_a $$ {#eq-maximally-entangled}
 は、どちらかの系をトレースアウトすると完全に混合した状態 $1/|\Sigma| \mathbb{I}$ になる、最大絡み合い状態の典型的な例です（@eq-maximally-entangled）。
@@ -388,8 +380,7 @@ $$
     ランクが 1 から 2 へと増加したことは、縮約操作によって「純粋性が失われた（混合状態になった）」ことを数学的に示しています。これはエンタングルメントによって情報が全体系の相関の中に分散してしまい、部分系だけを見ても完全な情報が得られないことを意味します。
 
 :::
-::: {.callout-note}
-## 直感的な理解：情報の破棄
+::: {.callout-note title="直感的な理解：情報の破棄"}
 
 縮約（部分トレース）は、**関心のない部分系（この場合は $Y$）に関する情報を完全に捨て去る（無視する）** 操作です。これは古典的な確率論において、結合確率分布から周辺確率分布を求める操作（$p(x) = \sum_y p(x,y)$）の量子版と考えることができます。
 
@@ -400,8 +391,7 @@ $$
 
 #### 純粋化 (Purifications)
 
-::: {#def-purification}
-## 純粋化 (Definition 2.9)
+::: {#def-purification name="純粋化 (Definition 2.9)"}
 $\mathcal{X}, \mathcal{Y}$ を複素ユークリッド空間、 $P \in \mathrm{Pos}(\mathcal{X})$ を半正定値演算子とします。ベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ が $P$ の **純粋化 (Purification)** であるとは、以下を満たすことです：
 $$
 \mathrm{Tr}_{\mathcal{Y}}(u u^*) = P
@@ -434,8 +424,7 @@ $$ \mathrm{Tr}_{\mathcal{Y}}(|u\rangle\langle u|) = p |0\rangle\langle 0| + (1-p
 
 物理学的には、これは「混合状態 $P$ を、より大きな系（環境系 $\mathcal{Y}$ を含む）の純粋状態 $u$ の一部として解釈する」ことに相当します。
 
-::: {.callout-tip}
-## Church of the Larger Hilbert Space (大きなヒルベルト空間の教会)
+::: {.callout-tip title="Church of the Larger Hilbert Space (大きなヒルベルト空間の教会)"}
 
 純粋化は、**「すべての混合状態（ノイズのある状態）は、実はより大きな系の純粋状態（完璧な状態）の一部である」** という視点を提供します。この考え方はしばしば "Church of the Larger Hilbert Space" と呼ばれ、量子情報の理論的解析における強力なツールです。
 
@@ -444,8 +433,7 @@ $$ \mathrm{Tr}_{\mathcal{Y}}(|u\rangle\langle u|) = p |0\rangle\langle 0| + (1-p
 :::
 
 
-::: {#thm-purification-existence}
-## 純粋化の存在 (Theorem 2.10)
+::: {#thm-purification-existence name="純粋化の存在 (Theorem 2.10)"}
 $P \in \mathrm{Pos}(\mathcal{X})$ に対して、純粋化 $u \in \mathcal{X} \otimes \mathcal{Y}$ が存在するための必要十分条件は、
 $$ \dim(\mathcal{Y}) \geq \mathrm{rank}(P) $$
 です。
@@ -495,8 +483,7 @@ $$ |\psi\rangle = \sum_{k=1}^r \sqrt{\lambda_k} |x_k\rangle_{\mathcal{A}} \otime
 
 また、2つの純粋化の間の関係（等価性）については、以下の重要な定理があります。
 
-::: {#thm-unitary-equivalence}
-## 純粋化のユニタリ同値性 (Theorem 2.11)
+::: {#thm-unitary-equivalence name="純粋化のユニタリ同値性 (Theorem 2.11)"}
 $u, v \in \mathcal{X} \otimes \mathcal{Y}$ を、ある状態 $\rho \in \mathrm{D}(\mathcal{X})$ の2つの純粋化とします。
 このとき、補助系 $\mathcal{Y}$ 上のユニタリ演算子 $U \in \mathrm{U}(\mathcal{Y})$ が存在して、以下が成り立ちます。
 $$ v = (\mathbb{I}_{\mathcal{X}} \otimes U) u $$
@@ -535,8 +522,7 @@ $$
 
 さらに、この概念をアンサンブルへと拡張したのが以下の定理です（しばしば **GHJWの定理** と呼ばれます）。
 
-::: {#thm-ghjw}
-## アンサンブルの等価性 (Theorem 2.12 / GHJW Theorem)
+::: {#thm-ghjw name="アンサンブルの等価性 (Theorem 2.12 / GHJW Theorem)"}
 $\mathcal{X}$ 上の2つのアンサンブル $\eta = \{ (p_a, u_a) \}_{a \in \Sigma}$ と $\nu = \{ (q_b, v_b) \}_{b \in \Gamma}$ が同じ密度演算子 $\rho$ を生成するとします。
 $$ \rho = \sum_a p_a u_a u_a^* = \sum_b q_b v_b v_b^* $$
 このとき、ある等長写像（またはユニタリ） $U$ が存在して、アンサンブルの要素間を線形変換で結びつけます。特に、両者が純粋状態のアンサンブルであれば、係数行列はユニタリ行列になります。

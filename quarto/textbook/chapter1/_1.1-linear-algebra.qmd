@@ -17,8 +17,7 @@
 
 :::
 
-::: {#def-complex-euclidean-space}
-## 複素ユークリッド空間
+::: {#def-complex-euclidean-space name="複素ユークリッド空間"}
 
 有限集合（アルファベット）$\Sigma$ に対し、$\Sigma$ 上の複素ユークリッド空間 $\mathbb{C}^\Sigma$ は以下のように定義されます。
 $$ \mathbb{C}^\Sigma = \{ u : \Sigma \to \mathbb{C} \} $$
@@ -69,8 +68,7 @@ $$ u = \sum_{a \in \Sigma} u(a) e_a $$
 
 #### 内積とノルム (Inner Products and Norms)
 
-::: {#def-inner-product}
-## 内積 (Inner Product)
+::: {#def-inner-product name="内積 (Inner Product)"}
 
 2つのベクトル $u, v \in \mathbb{C}^\Sigma$ の内積 $\langle u, v \rangle$ は以下で定義されます。
 $$ \langle u, v \rangle = \sum_{a \in \Sigma} \overline{u(a)} v(a) $$
@@ -94,8 +92,7 @@ $$ \langle u, v \rangle = \sum_{a \in \Sigma} \overline{u(a)} v(a) $$
 
 **ノルムの性質**（正定値性・斉次性・三角不等式）は $\|u\|$ に対して成立します。特に、以下の重要な不等式が成り立ちます。
 
-::: {#thm-cauchy-schwarz}
-## コーシー・シュワルツの不等式 (Theorem 1.2 / Cauchy-Schwarz Inequality)
+::: {#thm-cauchy-schwarz name="コーシー・シュワルツの不等式 (Theorem 1.2 / Cauchy-Schwarz Inequality)"}
 任意のベクトル $u, v \in \mathcal{X}$ に対して、以下が成立します。
 $$ |\langle u, v \rangle| \le \|u\| \, \|v\| $$
 等号成立条件は、線形従属性 $u = \alpha v$ または $v = 0$ の場合（つまり2つのベクトルが平行である場合）に限られます。
@@ -211,8 +208,7 @@ $$ {#eq-tensor-inner}
 
 テンソル積は、「多重線形写像」を「線形写像」に変換する普遍的な役割を持ちます。
 
-::: {#prop-tensor-universality}
-## テンソル積の普遍性 (Proposition 1.1)
+::: {#prop-tensor-universality name="テンソル積の普遍性 (Proposition 1.1)"}
 $\mathcal{X}_1, \dots, \mathcal{X}_n$ および $\mathcal{Y}$ を複素ユークリッド空間とします。
 任意の多重線形写像 $\phi: \mathcal{X}_1 \times \dots \times \mathcal{X}_n \to \mathcal{Y}$ に対して、以下の条件を満たす一意の線形写像 $A: \mathcal{X}_1 \otimes \dots \otimes \mathcal{X}_n \to \mathcal{Y}$ が存在します。
 $$ \phi(u_1, \dots, u_n) = A(u_1 \otimes \dots \otimes u_n) $$
@@ -260,8 +256,7 @@ $$ \phi(u, v) = \phi(\sum_a u(a)e_a, \sum_b v(b)e_b) = \sum_{a,b} u(a)v(b) \phi(
 
 ### Linear operators (線形演算子) [📄 p.8](/assets/Quantum_Information.pdf#page=16) {#linear-operators}
 
-::: {#def-linear-operator}
-## 線形演算子 (Linear Operator)
+::: {#def-linear-operator name="線形演算子 (Linear Operator)"}
 
 2つの複素ユークリッド空間 $\mathcal{X}, \mathcal{Y}$ に対し、写像 $A: \mathcal{X} \to \mathcal{Y}$ が線形性を満たすとき、これを**線形演算子**と呼びます。
 $$ A(\alpha u + \beta v) = \alpha A(u) + \beta A(v) $$
@@ -441,8 +436,7 @@ $$ (|a\rangle\langle b|) |u\rangle = |a\rangle (\langle b|u\rangle) = \langle b|
 
 #### カーネル、像、およびランク (Kernel, Image, and Rank)
 
-::: {#def-kernel-image-rank}
-## カーネル、像、ランク
+::: {#def-kernel-image-rank name="カーネル、像、ランク"}
 線形演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、以下を定義します。
 
 - **カーネル (Kernel)**: $\mathrm{ker}(A) = \{ u \in \mathcal{X} : Au = 0 \}$
@@ -531,8 +525,7 @@ $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{v
 
 この写像について、以下の重要な恒等式が成り立ちます。
 
-::: {#thm-vec-identities}
-## ベクトル化に関する恒等式 (Identities 1.88, 1.91)
+::: {#thm-vec-identities name="ベクトル化に関する恒等式 (Identities 1.88, 1.91)"}
 
 演算子 $A, B, X, Y$ に対し、以下が成立する。
 
@@ -732,8 +725,7 @@ $$ A B^\dagger = |i\rangle\langle j| (|k\rangle\langle l|)^\dagger = |i\rangle\l
 
 #### スペクトル定理 (Spectral Theorem) [📄 p.25](/assets/Quantum_Information.pdf#page=33)
 
-::: {#thm-spectral-theorem}
-## スペクトル定理 (Spectral Theorem)
+::: {#thm-spectral-theorem name="スペクトル定理 (Spectral Theorem)"}
 正規演算子 $X \in \mathrm{L}(\mathcal{X})$（$XX^\dagger = X^\dagger X$）に対し、正規直交基底 $\{x_k\}$ と固有値 $\{\lambda_k\}$ が存在して
 $$
 X = \sum_{k} \lambda_k x_k x_k^\dagger
@@ -747,8 +739,7 @@ $$
 #### 特異値分解 (Singular Value Decomposition, SVD)
 線形代数において最も強力なツールの一つが特異値分解です。
 
-::: {#thm-svd}
-## 特異値分解 (Theorem 1.3 / Sigular Value Decomposition)
+::: {#thm-svd name="特異値分解 (Theorem 1.3 / Sigular Value Decomposition)"}
 任意の非ゼロ演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、正の実数 $s_1, \dots, s_r$（特異値）と、正規直交系 $\{x_1, \dots, x_r\} \subset \mathcal{X}$ および $\{y_1, \dots, y_r\} \subset \mathcal{Y}$ が存在して、
 $$ A = \sum_{k=1}^r s_k y_k x_k^\dagger $$
 と書くことができます。ここで $r = \mathrm{rank}(A)$ です。
@@ -772,8 +763,7 @@ SVDは、任意の演算子を「入力基底の回転 ($V^\dagger$)」→「軸
 
 #### 極分解 (Polar Decomposition)
 
-::: {#thm-polar-decomposition}
-## 極分解 (Theorem 1.4 / Polar Decomposition)
+::: {#thm-polar-decomposition name="極分解 (Theorem 1.4 / Polar Decomposition)"}
 任意の正方演算子 $A \in \mathrm{L}(\mathcal{X})$ に対して、ユニタリ演算子 $W \in \mathrm{U}(\mathcal{X})$ と 半正定値演算子 $P \in \mathrm{Pos}(\mathcal{X})$ が存在して、
 $$ A = W P $$
 と分解できます。ここで $P = \sqrt{A^\dagger A}$ は一意に定まります。
@@ -798,8 +788,7 @@ $P$（エルミート・正定値）が絶対値 $r$ に、$W$（ユニタリ）
 
 複合系の純粋状態の構造を決定づける最重要定理です。
 
-::: {#thm-schmidt-decomposition}
-## シュミット分解 (Theorem 1.5 / Schmidt Decomposition)
+::: {#thm-schmidt-decomposition name="シュミット分解 (Theorem 1.5 / Schmidt Decomposition)"}
 任意のベクトル $u \in \mathcal{X} \otimes \mathcal{Y}$ に対して、正の実数 $s_1, \dots, s_r$（シュミット係数）と、正規直交系 $\{x_1, \dots, x_r\} \subset \mathcal{X}$ および $\{y_1, \dots, y_r\} \subset \mathcal{Y}$ が存在して、
 $$ u = \sum_{k=1}^r s_k x_k \otimes y_k $$
 と分解できます。
