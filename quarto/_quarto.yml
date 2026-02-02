@@ -30,8 +30,8 @@ book:
         - textbook/chapter2.qmd
         - textbook/chapter3.qmd
     - support/index.qmd
-    - templates/quarto_feature_showcase.qmd
-    - templates/quantum_textbook_template.qmd
+    # Note: Template files (templates/*.qmd) are excluded from build
+    # They are reference documents for creating new content
 
   page-navigation: true
 

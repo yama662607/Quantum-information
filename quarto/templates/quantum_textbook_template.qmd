@@ -18,7 +18,7 @@ bibliography: references.bib
 
 # Chapter X: [Chapter Title] {.unnumbered}
 
-# Overview & Objectives [📄 p.XX](Quantum_Information.pdf#page=YY) {#overview}
+# Overview & Objectives [[PDF] p.XX](Quantum_Information.pdf#page=YY) {#overview}
 
 ::: {.callout-note}
 ## このセクションの学習目標
