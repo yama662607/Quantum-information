@@ -57,7 +57,7 @@ $$ u = \sum_{a \in \Sigma} u(a) e_a $$
 | $u(a)$ | $\langle a|u\rangle$ | 成分（振幅） |
 | $e_a$ | $|a\rangle$ | 標準基底 |
 | $\langle u, v \rangle$ | $\langle u|v\rangle$ | 内積 |
-| $u v^\dagger$ | $|u\rangle\langle v|$ | ランク1演算子 |
+| $u v^*$ | $|u\rangle\langle v|$ | ランク1演算子 |
 | $E_{a,b}$ | $|a\rangle\langle b|$ | 行列単位 |
 
 : 記法対応表 {#tbl-notation-mapping-1-1-1}
@@ -445,13 +445,13 @@ $$ (|a\rangle\langle b|) |u\rangle = |a\rangle (\langle b|u\rangle) = \langle b|
 
 :::
 
-特に、任意のベクトル $u \in \mathcal{X}$ と $v \in \mathcal{Y}$ に対して定義される演算子 $v u^\dagger$ は、ランクが1（$u, v \neq 0$ の場合）であり、次のように作用します。
-$$ (v u^\dagger) w = \langle u, w \rangle v $$ {#eq-rank-one}
+特に、任意のベクトル $u \in \mathcal{X}$ と $v \in \mathcal{Y}$ に対して定義される演算子 $v u^*$ は、ランクが1（$u, v \neq 0$ の場合）であり、次のように作用します。
+$$ (v u^*) w = \langle u, w \rangle v $$ {#eq-rank-one}
 すべてのランク1演算子はこの形式で記述できます。
 
 さらに、任意の演算子 $A$ に対して
 $$
-\ker(A) = \ker(A^\dagger A), \qquad \mathrm{im}(A) = \mathrm{im}(A A^\dagger),
+\ker(A) = \ker(A^* A), \qquad \mathrm{im}(A) = \mathrm{im}(A A^*),
 $$ {#eq-kernel-image}
 $$
 \dim(\ker(A)) + \dim(\mathrm{im}(A)) = \dim(\mathcal{X}),
@@ -462,8 +462,8 @@ $$ {#eq-rank-dim}
 
 #### トレース (Trace)
 正方演算子 $X \in \mathrm{L}(\mathcal{X})$ の**トレース** $\mathrm{Tr}(X)$ は、対角成分の和 $\sum_a X(a, a)$ です。また、以下を満たす唯一の線形関数としても定義されます。
-$$ \mathrm{Tr}(u v^\dagger) = \langle v, u \rangle $$ {#eq-trace-uv}
-トレースは**サイクリック性** ($\mathrm{Tr}(AB) = \mathrm{Tr}(BA)$) を持ち、これを用いて演算子空間の内積を $\langle A, B \rangle = \mathrm{Tr}(A^\dagger B)$ と定義できます。
+$$ \mathrm{Tr}(u v^*) = \langle v, u \rangle $$ {#eq-trace-uv}
+トレースは**サイクリック性** ($\mathrm{Tr}(AB) = \mathrm{Tr}(BA)$) を持ち、これを用いて演算子空間の内積を $\langle A, B \rangle = \mathrm{Tr}(A^* B)$ と定義できます。
 
 #### 行列式 (Determinant)
 正方演算子 $X \in \mathrm{L}(\mathcal{X})$ の**行列式** $\mathrm{Det}(X)$ は、以下のように定義されます。
@@ -495,7 +495,7 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 
 線形演算子の空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と、テンソル積空間 $\mathcal{X} \otimes \mathcal{Y}$ の間には、非常に重要な同型対応が存在します。
 
-空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、標準基底行列単位 $E_{a,b} = e_a e_b^\dagger$ に対して次のように定義されます。
+空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と $\mathcal{X} \otimes \mathcal{Y}$ の間の同型写像 **$\mathrm{vec}$** は、標準基底行列単位 $E_{a,b} = e_a e_b^*$ に対して次のように定義されます。
 $$ \mathrm{vec}(E_{a,b}) = e_a \otimes e_b $$
 
 ::: {.callout-note title="定義式の意味"}
@@ -533,11 +533,11 @@ $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{v
    $$ (A \otimes B)\,\mathrm{vec}(X) = \mathrm{vec}(A X B^T) $$ {#eq-vec-axb}
 
 2. **内積の保存**:
-   $$ \langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \mathrm{Tr}(X^\dagger Y) = \langle X, Y \rangle $$ {#eq-vec-inner}
+   $$ \langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \mathrm{Tr}(X^* Y) = \langle X, Y \rangle $$ {#eq-vec-inner}
 
 3. **部分トレースとの関係 (Choi表現の基礎)**:
-   $$ \mathrm{Tr}_{\mathcal{Y}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A B^\dagger $$ {#eq-vec-try}
-   $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger\right) = A^T \overline{B} $$ {#eq-vec-trx}
+   $$ \mathrm{Tr}_{\mathcal{Y}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^*\right) = A B^* $$ {#eq-vec-try}
+   $$ \mathrm{Tr}_{\mathcal{X}}\!\left(\mathrm{vec}(A)\mathrm{vec}(B)^*\right) = A^T \overline{B} $$ {#eq-vec-trx}
 
 :::
 
@@ -547,7 +547,7 @@ $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{v
     線形性より $X = E_{a,b}$ の場合に示せば十分である。
     まず左辺を計算する：
     $$ (A \otimes B)\mathrm{vec}(E_{a,b}) = (A \otimes B)(e_a \otimes e_b) = (Ae_a) \otimes (Be_b) $$
-    一方、右辺の中身は $A E_{a,b} B^T = A e_a e_b^\dagger B^T = (A e_a) (B e_b)^T$ である。
+    一方、右辺の中身は $A E_{a,b} B^T = A e_a e_b^* B^T = (A e_a) (B e_b)^T$ である。
     ここでランク1演算子のベクトル化 $\mathrm{vec}(u v^T) = u \otimes v$ を用いると：
     $$ \mathrm{vec}((A e_a) (B e_b)^T) = (Ae_a) \otimes (Be_b) $$
     よって一致する。
@@ -556,16 +556,16 @@ $$ X = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \quad \xrightarrow{\mathrm{v
     $X = E_{a,b}, Y = E_{c,d}$ とすると、
     $$ \langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \langle e_a \otimes e_b, e_c \otimes e_d \rangle = \langle e_a, e_c \rangle \langle e_b, e_d \rangle = \delta_{a,c} \delta_{b,d} $$
     一方で、
-    $$ \mathrm{Tr}(X^\dagger Y) = \mathrm{Tr}(E_{b,a} E_{c,d}) = \delta_{a,c} \mathrm{Tr}(E_{b,d}) = \delta_{a,c} \delta_{b,d} $$
+    $$ \mathrm{Tr}(X^* Y) = \mathrm{Tr}(E_{b,a} E_{c,d}) = \delta_{a,c} \mathrm{Tr}(E_{b,d}) = \delta_{a,c} \delta_{b,d} $$
     よって一致する。
 
 3.  **Identity 1.91 (部分トレース)**:
     $A = E_{a,b}, B = E_{c,d}$ とする。
-    $$ \mathrm{vec}(A)\mathrm{vec}(B)^\dagger = (e_a \otimes e_b) (e_c \otimes e_d)^\dagger = (e_a e_c^\dagger) \otimes (e_b e_d^\dagger) = E_{a,c} \otimes E_{b,d} $$
+    $$ \mathrm{vec}(A)\mathrm{vec}(B)^* = (e_a \otimes e_b) (e_c \otimes e_d)^* = (e_a e_c^*) \otimes (e_b e_d^*) = E_{a,c} \otimes E_{b,d} $$
     $\mathcal{Y}$ 系についてトレースをとると：
     $$ \mathrm{Tr}_{\mathcal{Y}}(E_{a,c} \otimes E_{b,d}) = E_{a,c} \mathrm{Tr}(E_{b,d}) = E_{a,c} \delta_{b,d} $$
     右辺は：
-    $$ AB^\dagger = E_{a,b} E_{c,d}^\dagger = E_{a,b} E_{d,c} = E_{a,c} \delta_{b,d} $$
+    $$ AB^* = E_{a,b} E_{c,d}^* = E_{a,b} E_{d,c} = E_{a,c} \delta_{b,d} $$
     よって一致する。
 
 :::
@@ -634,7 +634,7 @@ $(a_{11}x_{11} + a_{12}x_{21})b_{11} + (a_{11}x_{12} + a_{12}x_{22})b_{12} = a_{
 これは左辺の第1成分 $a_{11}b_{11}x_{11} + a_{11}b_{12}x_{12} + a_{12}b_{11}x_{21} + a_{12}b_{12}x_{22}$ と完全に一致します。
 （注: 項の順序を入れ替えると一致します）
 
-**2. 内積 $\langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \mathrm{Tr}(X^\dagger Y)$ の確認**
+**2. 内積 $\langle \mathrm{vec}(X), \mathrm{vec}(Y) \rangle = \mathrm{Tr}(X^* Y)$ の確認**
 
 **左辺**: ベクトルの内積（成分ごとの積の和）
 $$
@@ -647,18 +647,18 @@ $$
 **右辺**: トレース
 $$
 \begin{aligned}
-X^\dagger Y &= \begin{pmatrix} \overline{x_{11}} & \overline{x_{21}} \\ \overline{x_{12}} & \overline{x_{22}} \end{pmatrix} \begin{pmatrix} y_{11} & y_{12} \\ y_{21} & y_{22} \end{pmatrix} \\
+X^* Y &= \begin{pmatrix} \overline{x_{11}} & \overline{x_{21}} \\ \overline{x_{12}} & \overline{x_{22}} \end{pmatrix} \begin{pmatrix} y_{11} & y_{12} \\ y_{21} & y_{22} \end{pmatrix} \\
 &= \begin{pmatrix} \overline{x_{11}}y_{11} + \overline{x_{21}}y_{21} & \dots \\ \dots & \overline{x_{12}}y_{12} + \overline{x_{22}}y_{22} \end{pmatrix}
 \end{aligned}
 $$
 トレース（対角成分の和）をとると、
-$$ \mathrm{Tr}(X^\dagger Y) = (\overline{x_{11}}y_{11} + \overline{x_{21}}y_{21}) + (\overline{x_{12}}y_{12} + \overline{x_{22}}y_{22}) $$
+$$ \mathrm{Tr}(X^* Y) = (\overline{x_{11}}y_{11} + \overline{x_{21}}y_{21}) + (\overline{x_{12}}y_{12} + \overline{x_{22}}y_{22}) $$
 項を整理すると左辺と完全に一致します。
 
-**3. 部分トレース $\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(B)^\dagger) = AB^\dagger$ の確認**
+**3. 部分トレース $\mathrm{Tr}_{\mathcal{Y}}(\mathrm{vec}(A)\mathrm{vec}(B)^*) = AB^*$ の確認**
 
-$\mathrm{vec}(A) = (a_{11}, a_{12}, a_{21}, a_{22})^T$, $\mathrm{vec}(B)^\dagger = (\overline{b_{11}}, \overline{b_{12}}, \overline{b_{21}}, \overline{b_{22}})$ とします。
-外積行列 $M = \mathrm{vec}(A)\mathrm{vec}(B)^\dagger$ は以下のようになります（$4 \times 4$ 行列）。
+$\mathrm{vec}(A) = (a_{11}, a_{12}, a_{21}, a_{22})^T$, $\mathrm{vec}(B)^* = (\overline{b_{11}}, \overline{b_{12}}, \overline{b_{21}}, \overline{b_{22}})$ とします。
+外積行列 $M = \mathrm{vec}(A)\mathrm{vec}(B)^*$ は以下のようになります（$4 \times 4$ 行列）。
 
 $$
 M = \begin{pmatrix}
@@ -691,9 +691,9 @@ $$
   $M_{33}$ (index $21-21$) + $M_{44}$ (index $22-22$)
   $= a_{21}\overline{b_{21}} + a_{22}\overline{b_{22}}$
 
-一方、右辺 $AB^\dagger$ を計算すると：
+一方、右辺 $AB^*$ を計算すると：
 $$
-AB^\dagger = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \begin{pmatrix} \overline{b_{11}} & \overline{b_{21}} \\ \overline{b_{12}} & \overline{b_{22}} \end{pmatrix}
+AB^* = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \begin{pmatrix} \overline{b_{11}} & \overline{b_{21}} \\ \overline{b_{12}} & \overline{b_{22}} \end{pmatrix}
 = \begin{pmatrix}
   a_{11}\overline{b_{11}} + a_{12}\overline{b_{12}} & a_{11}\overline{b_{21}} + a_{12}\overline{b_{22}} \\
   a_{21}\overline{b_{11}} + a_{22}\overline{b_{12}} & a_{21}\overline{b_{21}} + a_{22}\overline{b_{22}}
@@ -726,9 +726,9 @@ $$ A B^\dagger = |i\rangle\langle j| (|k\rangle\langle l|)^\dagger = |i\rangle\l
 #### スペクトル定理 (Spectral Theorem) [📄 p.25](/assets/Quantum_Information.pdf#page=33)
 
 ::: {#thm-spectral-theorem name="スペクトル定理 (Spectral Theorem)"}
-正規演算子 $X \in \mathrm{L}(\mathcal{X})$（$XX^\dagger = X^\dagger X$）に対し、正規直交基底 $\{x_k\}$ と固有値 $\{\lambda_k\}$ が存在して
+正規演算子 $X \in \mathrm{L}(\mathcal{X})$（$XX^* = X^* X$）に対し、正規直交基底 $\{x_k\}$ と固有値 $\{\lambda_k\}$ が存在して
 $$
-X = \sum_{k} \lambda_k x_k x_k^\dagger
+X = \sum_{k} \lambda_k x_k x_k^*
 $$
 と分解できる。
 
@@ -741,22 +741,22 @@ $$
 
 ::: {#thm-svd name="特異値分解 (Theorem 1.3 / Sigular Value Decomposition)"}
 任意の非ゼロ演算子 $A \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ に対して、正の実数 $s_1, \dots, s_r$（特異値）と、正規直交系 $\{x_1, \dots, x_r\} \subset \mathcal{X}$ および $\{y_1, \dots, y_r\} \subset \mathcal{Y}$ が存在して、
-$$ A = \sum_{k=1}^r s_k y_k x_k^\dagger $$
+$$ A = \sum_{k=1}^r s_k y_k x_k^* $$
 と書くことができます。ここで $r = \mathrm{rank}(A)$ です。
 
 :::
 
 ::: {.proof}
-$A^\dagger A$ は半正定値演算子なので、スペクトル分解により正の固有値 $s_k^2$ と正規直交固有ベクトル $x_k$ を持ちます。
-$$ A^\dagger A x_k = s_k^2 x_k $$
+$A^* A$ は半正定値演算子なので、スペクトル分解により正の固有値 $s_k^2$ と正規直交固有ベクトル $x_k$ を持ちます。
+$$ A^* A x_k = s_k^2 x_k $$
 ここで $y_k = \frac{1}{s_k} A x_k$ と定義します。これらが正規直交系をなすことは、内積を計算することで確認できます。
-$$ \langle y_j, y_k \rangle = \frac{1}{s_j s_k} \langle A x_j, A x_k \rangle = \frac{1}{s_j s_k} \langle x_j, A^\dagger A x_k \rangle = \frac{s_k^2}{s_j s_k} \delta_{jk} = \delta_{jk} $$
-任意のベクトル $u$ を基底 $\{x_k\}$ とその補空間で展開して $A$ を作用させると、$\sum s_k y_k x_k^\dagger$ と一致することが示せます。
+$$ \langle y_j, y_k \rangle = \frac{1}{s_j s_k} \langle A x_j, A x_k \rangle = \frac{1}{s_j s_k} \langle x_j, A^* A x_k \rangle = \frac{s_k^2}{s_j s_k} \delta_{jk} = \delta_{jk} $$
+任意のベクトル $u$ を基底 $\{x_k\}$ とその補空間で展開して $A$ を作用させると、$\sum s_k y_k x_k^*$ と一致することが示せます。
 
 :::
 
 ::: {.callout-tip title="物理学の視点"}
-SVDは、任意の演算子を「入力基底の回転 ($V^\dagger$)」→「軸に沿った伸縮 ($\Sigma$)」→「出力基底の回転 ($U$)」という3つのステップ $A = U \Sigma V^\dagger$ に分解することを意味します。
+SVDは、任意の演算子を「入力基底の回転 ($V^*$)」→「軸に沿った伸縮 ($\Sigma$)」→「出力基底の回転 ($U$)」という3つのステップ $A = U \Sigma V^*$ に分解することを意味します。
 物理的には、不可逆な変化も含めた一般的な遷移振幅を対角化して単純化する操作として現れます。
 
 :::
@@ -766,12 +766,12 @@ SVDは、任意の演算子を「入力基底の回転 ($V^\dagger$)」→「軸
 ::: {#thm-polar-decomposition name="極分解 (Theorem 1.4 / Polar Decomposition)"}
 任意の正方演算子 $A \in \mathrm{L}(\mathcal{X})$ に対して、ユニタリ演算子 $W \in \mathrm{U}(\mathcal{X})$ と 半正定値演算子 $P \in \mathrm{Pos}(\mathcal{X})$ が存在して、
 $$ A = W P $$
-と分解できます。ここで $P = \sqrt{A^\dagger A}$ は一意に定まります。
+と分解できます。ここで $P = \sqrt{A^* A}$ は一意に定まります。
 
 :::
 
 ::: {.proof}
-SVD $A = \sum s_k y_k x_k^\dagger$ を用います。$P = \sum s_k x_k x_k^\dagger$（正定値部分）と定義します。
+SVD $A = \sum s_k y_k x_k^*$ を用います。$P = \sum s_k x_k x_k^*$（正定値部分）と定義します。
 ユニタリ $W$ は、$x_k$ を $y_k$ に移すような作用を持つものとして構成できます（ランク落ちしている部分は適当な基底で補完します）。
 すると $WP = (\sum |y_j\rangle\langle x_j|) (\sum s_k |x_k\rangle\langle x_k|) = \sum s_k |y_k\rangle\langle x_k| = A$ となります。
 
@@ -798,8 +798,8 @@ $$ u = \sum_{k=1}^r s_k x_k \otimes y_k $$
 ::: {.proof}
 ベクトル化の逆操作（テンソル空間と演算子空間の同型）を用います。
 $u = \mathrm{vec}(A)$ となる演算子 $A \in \mathrm{L}(\mathcal{Y}, \mathcal{X})$ を考えます。
-$A$ に特異値分解を適用すると $A = \sum s_k x_k y_k^\dagger$ （通常のSVDでは共役転置がつきますが、ここでの $y_k$ は共役の関係に注意して再定義します）。
-これをベクトル化すると、線形性と $\mathrm{vec}(x y^\dagger) = x \otimes \bar{y}$ （物理記法では $x \otimes y$ の形式に対応）を用いることで、目的の分離形式が得られます。
+$A$ に特異値分解を適用すると $A = \sum s_k x_k y_k^*$ （通常のSVDでは共役転置がつきますが、ここでの $y_k$ は共役の関係に注意して再定義します）。
+これをベクトル化すると、線形性と $\mathrm{vec}(x y^*) = x \otimes \bar{y}$ （物理記法では $x \otimes y$ の形式に対応）を用いることで、目的の分離形式が得られます。
 
 :::
 
@@ -815,7 +815,7 @@ $$ |\psi\rangle_{AB} = \sum_k \sqrt{p_k} |k\rangle_A |k\rangle_B $$
 特異値列 $s(A)$ の $p$-ノルムとして
 $$
 \|A\|_p = \left( \sum_k s_k(A)^p \right)^{1/p}
-= \left[\mathrm{Tr}\!\left((A^\dagger A)^{p/2}\right)\right]^{1/p}
+= \left[\mathrm{Tr}\!\left((A^* A)^{p/2}\right)\right]^{1/p}
 $$
 で定義されます。
 

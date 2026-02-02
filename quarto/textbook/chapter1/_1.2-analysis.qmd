@@ -83,7 +83,7 @@ $$ {#eq-convex-combination}
 #### 代表例（極点の例）
 
 1. **スペクトルノルム単位球**: $\{X : \|X\|\le 1\}$ の極点はユニタリ演算子。
-2. **トレースノルム単位球**: 極点はランク1演算子 $u v^\dagger$。
+2. **トレースノルム単位球**: 極点はランク1演算子 $u v^*$。
 3. **密度演算子の集合** $\mathrm{D}(\mathcal{X})$: 極点は純粋状態 $|u\rangle\langle u|$。
 4. **確率単体** $P(\Sigma)$: 極点は標準基底 $e_a$。
 
@@ -209,10 +209,10 @@ SDPは、以下の3つ組 $(\Phi, A, B)$ によって定義されます。
 演算子 $K \in \mathrm{L}(\mathcal{X}, \mathcal{Y})$ のトレースノルム $\|K\|_1$ は、以下の SDP の最適値として表せます。
 
 **主問題**:
-$$ \text{maximize} \quad \frac{1}{2}\langle K, Z \rangle + \frac{1}{2}\langle K^\dagger, Z^\dagger \rangle \quad \text{subject to} \quad \begin{pmatrix} \mathbb{I}_{\mathcal{X}} & Z^\dagger \\ Z & \mathbb{I}_{\mathcal{Y}} \end{pmatrix} \geq 0 $$
+$$ \text{maximize} \quad \frac{1}{2}\langle K, Z \rangle + \frac{1}{2}\langle K^*, Z^* \rangle \quad \text{subject to} \quad \begin{pmatrix} \mathbb{I}_{\mathcal{X}} & Z^* \\ Z & \mathbb{I}_{\mathcal{Y}} \end{pmatrix} \geq 0 $$
 
 **双対問題**:
-$$ \text{minimize} \quad \frac{1}{2}\mathrm{Tr}(X) + \frac{1}{2}\mathrm{Tr}(Y) \quad \text{subject to} \quad \begin{pmatrix} X & -K^\dagger \\ -K & Y \end{pmatrix} \geq 0, \ X \geq 0, Y \geq 0 $$
+$$ \text{minimize} \quad \frac{1}{2}\mathrm{Tr}(X) + \frac{1}{2}\mathrm{Tr}(Y) \quad \text{subject to} \quad \begin{pmatrix} X & -K^* \\ -K & Y \end{pmatrix} \geq 0, \ X \geq 0, Y \geq 0 $$
 
 :::
 
