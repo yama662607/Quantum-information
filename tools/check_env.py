@@ -2,6 +2,8 @@ import subprocess
 import shutil
 import sys
 
+from find_quarto import find_quarto
+
 
 def check_command(cmd, name):
     path = shutil.which(cmd)
@@ -23,13 +25,34 @@ def check_command(cmd, name):
         return False
 
 
+def check_quarto():
+    """Check for Quarto using the enhanced finder (supports fallback paths)."""
+    path = find_quarto()
+    if path:
+        try:
+            version = (
+                subprocess.check_output([path, "--version"], stderr=subprocess.STDOUT)
+                .decode()
+                .strip()
+            )
+            print(f"✅ {'Quarto':10} Found: {path}")
+            print(f"   Version: {version.splitlines()[0]}")
+            return True
+        except Exception:
+            print(f"⚠️ {'Quarto':10} Found at {path}, but failed to get version.")
+            return True
+    else:
+        print(f"❌ {'Quarto':10} NOT FOUND. Please install it.")
+        return False
+
+
 def main():
     print("🔍 Checking development environment...\n")
 
     results = [
         check_command("uv", "uv"),
         check_command("just", "just"),
-        check_command("quarto", "Quarto"),
+        check_quarto(),
         check_command("npm", "Node/npm"),
     ]
 

@@ -3,13 +3,21 @@ import sys
 import time
 from pathlib import Path
 
+from find_quarto import find_quarto
+
 
 def run_dev_server():
     project_root = Path(__file__).parent.parent.resolve()
 
+    # Quarto バイナリの検出
+    quarto_bin = find_quarto()
+    if quarto_bin is None:
+        print("❌ Quarto が見つかりません。インストールしてください: https://quarto.org/docs/get-started/")
+        sys.exit(1)
+
     # コマンドの定義
     watcher_cmd = [sys.executable, str(project_root / "tools" / "quarto_watcher.py")]
-    quarto_cmd = ["quarto", "preview", "quarto", "--port", "4312", "--render", "html"]
+    quarto_cmd = [quarto_bin, "preview", "quarto", "--port", "4312", "--render", "html"]
 
     print("🚀 Starting dev server (Watcher + Quarto Preview)...")
 

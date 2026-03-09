@@ -10,6 +10,8 @@ import hashlib
 from concurrent.futures import ThreadPoolExecutor
 from typing import List, Dict, Any
 
+from find_quarto import find_quarto
+
 # --- Configuration ---
 NODE_SCRIPT_PATH = os.path.join(os.path.dirname(__file__), "mermaid_parser.js")
 CACHE_FILE = os.path.join(os.path.dirname(__file__), ".validation_cache.json")
@@ -64,8 +66,12 @@ def save_cache(cache: Dict[str, Any]):
 def check_quarto_structure(filepath: str) -> List[str]:
     """Checks general Quarto structure using Pandoc AST dry-run."""
     errors = []
+    quarto_bin = find_quarto()
+    if quarto_bin is None:
+        errors.append("[Structure] Quarto binary not found. Skipping structure check.")
+        return errors
     try:
-        cmd = ["quarto", "pandoc", filepath, "-t", "json"]
+        cmd = [quarto_bin, "pandoc", filepath, "-t", "json"]
         subprocess.run(
             cmd,
             stdout=subprocess.DEVNULL,
