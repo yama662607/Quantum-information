@@ -20,17 +20,22 @@ $$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 
 :::
 
+この定義には、物理的な直感と異なる重要な前提があります。
+
+::: {.important-point}
+**レジスタの消失 (Cease to exist)**:
+測定が行われると、もとの量子レジスタ $X$ は「もはや定義された状態を持たず、以降の計算の対象にならない」という意味で**存在しなくなります**（PDF p.101）。これは、測定を「量子状態から古典情報への一方通行の変換」と捉えるこの教科書特有の数理的アプローチです。
+
+:::
 
 ::: {.callout-tip title="物理学の視点（ボルン則との対応）"}
 効果演算子 $\mu(a)$ は、物理で使うブラケット記法なら $\Pr[a] = \langle \psi | \mu(a) | \psi \rangle$ に対応します。$|\psi\rangle$ の代わりに密度演算子 $\rho$ を使うと $\Pr[a] = \operatorname{Tr}(\mu(a)\rho)$ が得られ、どちらの表記でも同じボルン則を表現しています。
 
 :::
 
-
 ### Measurements as channels (チャネルとしての測定) [📄 p.102](/assets/Quantum_Information.pdf#page=110) {#measurements-as-channels}
 
 測定は、量子情報を古典情報に変換する**量子から古典へのチャネル** (Quantum-to-classical channel) としても定義できます。
-
 
 ::: {#def-qc-channel name="量子から古典へのチャネル (Definition 2.35)"}
 チャネル $\Phi \in \mathrm{C}(\mathcal{X}, \mathcal{Y})$ が量子から古典へのチャネルであるとは、$\Phi = \Delta \Phi$ を満たすことを言います。ここで $\Delta$ は完全に脱位相させるチャネル（すべてを対角化する写像）です。
@@ -38,12 +43,17 @@ $$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 :::
 
 基底 $\{\lvert a \rangle : a \in \Sigma\}$ に沿った完全脱位相チャネルを $\Delta(Z) = \sum_{a} E_{a,a} Z E_{a,a}$ とすると、任意の量子→古典チャネルは一意な測定 $\mu$ を用いて
-$$ \Phi(X) = \sum_{a \in \Sigma} \langle \mu(a), X \rangle E_{a,a} $$
-と書けます（Theorem 2.37）。測定は「確率付け」、チャネル表現は「回路実装」の観点を与え、二つの定義が同じ物理操作を記述していることがわかります。
+$$ \Phi(X) = \sum_{a \in \Sigma} \operatorname{Tr}(\mu(a)X) E_{a,a} $$
+と書けます（Theorem 2.37）。測定は「確率の集合」、チャネル表現は「情報の流れ」としての側面を強調します。
 
+::: {.callout-note collapse="true" title="定理 2.37 の証明（共役チャネルによるアプローチ）"}
+量子→古典チャネル $\Phi$ と POVM $\mu$ の 1対1 対応は、共役写像 $\Phi^*$ を通じて理解できます。
 
-::: {.callout-tip title="物理学の視点（測定とチャネルの対応）"}
-POVM は「効果演算子」で確率を与える道具、チャネル表現は「計算手順」としての実装。どちらも同じ物理操作を別視点で記述しています。
+1.  **情報の取り出し**: 出力の各成分（確率）は、$\langle E_{a,a}, \Phi(X) \rangle$ として抽出できる。
+2.  **共役の利用**: 内積の性質 $\langle E_{a,a}, \Phi(X) \rangle = \langle \Phi^*(E_{a,a}), X \rangle$ を用いる。
+3.  **POVM の定義**: $\mu(a) \equiv \Phi^*(E_{a,a})$ と置く。$\Phi$ が CPTP ならば、$\Phi^*$ は CP Unital であり、$\mu(a) \ge 0$ かつ $\sum \mu(a) = \Phi^*(\sum E_{a,a}) = \mathbb{I}$ を満たす（PDF p.111）。
+
+この証明は、**「出力側の古典情報を、チャネルを逆向きに辿って入力側の効果演算子に翻訳した」**ものと言えます。
 
 :::
 
@@ -81,7 +91,6 @@ $$ \eta(a) = \operatorname{Tr}_{Y_k} \Big( (\mathbb{I}_{Y_1 \otimes \dots} \otim
 
 測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。互いに直交するため $a \neq b$ で $\mu(a)\mu(b)=0$ となり、可観測量 $H = \sum_a \lambda_a \mu(a)$ のスペクトル分解に一致します。ブラケット表記では基底ベクトル $|a\rangle$ への射影 $|a\rangle\langle a|$ が各アウトカムに対応します。
 
-
 ::: {.callout-tip title="物理学の視点（射影測定の物理像）"}
 固有状態 $|a\rangle$ を測れば結果は必ず $a$ で、測定後の状態も $|a\rangle$ に「射影」されます。数学では $\mu(a)$ が射影であることと、物理の「状態が崩壊して固有状態になる」描像が1対1で対応します。
 
@@ -91,7 +100,6 @@ $$ \eta(a) = \operatorname{Tr}_{Y_k} \Big( (\mathbb{I}_{Y_1 \otimes \dots} \otim
 
 任意の測定は、補助系を含む拡大された系における射影測定の一部とみなすことができます。
 
-
 ::: {#thm-naimark name="Naimark の定理 (Theorem 2.42)"}
 測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ に対し、等長写像 $A: \mathcal{X} \to \mathcal{X} \otimes \mathcal{Y}$（ただし $\mathcal{Y} = \mathbb{C}^\Sigma$）が存在して、次が成り立ちます。
 $$ \mu(a) = A^* (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
@@ -99,7 +107,6 @@ $$ \mu(a) = A^* (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
 :::
 
 等長写像 $A$ は $\mu(a)$ の平方根を並べた「測定行列」$A = \sum_a \sqrt{\mu(a)} \otimes |a\rangle$ と書けます。$\mathcal{Y}$ の次元はアウトカム数 $|\Sigma|$ で十分であり、最小の補助次元を与える「最小拡大」によって、任意の POVM を物理的に射影測定として実装できることを示します。
-
 
 ::: {.important-point}
 Naimark の構成は「測定をユニタリ＋射影＋部分トレース」の形で実装できることを保証します。回路設計では、POVM を補助キュービットと制御ユニタリに分解する際の理論的裏付けになります。
@@ -110,7 +117,6 @@ Naimark の構成は「測定をユニタリ＋射影＋部分トレース」の
 
 測定統計から元の量子状態を一意に特定できる測定を**情報完全測定**と呼びます。
 
-
 ::: {#def-information-complete name="情報完全測定"}
 測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ が情報完全であるとは、その測定演算子の集合 $\{\mu(a) : a \in \Sigma\}$ が演算子空間 $\mathrm{L}(\mathcal{X})$ 全体を張ることを言います。
 $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
@@ -119,7 +125,6 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 
 次元 $d = \dim \mathcal{X}$ の場合、少なくとも $d^2$ 個のアウトカムが必要で、等間隔なフレーム（例: SIC-POVM や Pauli 行列に基づく 4 点 POVM）が典型例です。測定結果から線形再構成を行うことで、状態トモグラフィーが可能になります。
 
-
 ::: {.callout-tip title="物理学の視点（物理記法での例）"}
 1量子ビットなら $\{I, X, Y, Z\}$ の射影を平均0.25で測る POVM が情報完全です。得られた確率 $p_i = \operatorname{Tr}(\rho M_i)$ から Bloch ベクトル $(\langle X \rangle, \langle Y \rangle, \langle Z \rangle)$ を再構成できます。
 
@@ -127,19 +132,24 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 
 ### Quantum instruments (量子インストルメント) [📄 p.112](/assets/Quantum_Information.pdf#page=120) {#quantum-instruments}
 
-測定によってレジスタが破壊されず、結果 $a$ に応じて状態が変化するプロセスを**量子インストルメント**（あるいは単にインストルメント）と呼びます。
-
+「レジスタの消失」というドライな定義を超えて、測定後の系の変化を完全に記述する枠組みが**量子インストルメント**です。学部レベルで学ぶ「射影による波束の収縮」は、これの特殊なケースとして一般化されます。
 
 ::: {#def-instrument name="インストルメント"}
 アルファベット $\Sigma$ へのインストルメントは、完全正値写像の集合 $\{\mathcal{A}_a \in \mathrm{CP}(\mathcal{X}, \mathcal{Y}) : a \in \Sigma\}$ であり、それらの和 $\sum_{a \in \Sigma} \mathcal{A}_a$ がチャネル（トレース保存）となるものです。
 
 :::
 
-状態 $\rho$ にインストルメントを適用すると、確率 $p(a) = \mathrm{Tr}(\mathcal{A}_a(\rho))$ でアウトカム $a$ が得られ、その後の系は状態 $\mathcal{A}_a(\rho) / p(a)$ に変化します。
+状態 $\rho$ にインストルメントを適用すると、確率 $p(a) = \operatorname{Tr}(\mathcal{A}_a(\rho))$ でアウトカム $a$ が得られ、その後の系は状態 $\mathcal{A}_a(\rho) / p(a)$ に変化します。
 
 インストルメントは Kraus 演算子族 $\{A_{a,j}\}$ を用いて
-$$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^*, \qquad M_a = \sum_j A_{a,j}^* A_{a,j} $$
-と書け、$\{M_a\}$ が対応する POVM です。測定と同時に「その後の量子状態」を記述できるため、フィードバックを伴う量子回路のモデル化に不可欠です。
+$$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^* $$
+と書け、対応する POVM は $\mu(a) = \sum_j A_{a,j}^* A_{a,j}$ です。
+
+::: {.callout-tip title="物理学の視点（「波束の収縮」の一般化）"}
+*   **射影測定 (PVM)**: $\mathcal{A}_a(\rho) = P_a \rho P_a$ という、もっとも情報の劣化が少ないケース（固有状態への収縮）。
+*   **一般のインストルメント**: 測定による不可避なノイズや、系の一部破壊、あるいは特定の状態への強制的な遷移など、あらゆる「事後状態の変化」を許容します。
+
+:::
 
 ### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](/assets/Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
 
