@@ -101,12 +101,31 @@ $$ \eta(a) = \operatorname{Tr}_{Y_k} \Big( (\mathbb{I}_{Y_1 \otimes \dots} \otim
 任意の測定は、補助系を含む拡大された系における射影測定の一部とみなすことができます。
 
 ::: {#thm-naimark name="Naimark の定理 (Theorem 2.42)"}
-測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ に対し、等長写像 $A: \mathcal{X} \to \mathcal{X} \otimes \mathcal{Y}$（ただし $\mathcal{Y} = \mathbb{C}^\Sigma$）が存在して、次が成り立ちます。
+測定 $\mu: \Sigma \to \mathrmmathrm{Pos}(\mathcal{X})$ に対し、等長写像 $A: \mathcal{X} \to \mathcal{X} \otimes \mathcal{Y}$（ただし $\mathcal{Y} = \mathbb{C}^\Sigma$）が存在して、次が成り立ちます。
 $$ \mu(a) = A^* (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
 
 :::
 
 等長写像 $A$ は $\mu(a)$ の平方根を並べた「測定行列」$A = \sum_a \sqrt{\mu(a)} \otimes |a\rangle$ と書けます。$\mathcal{Y}$ の次元はアウトカム数 $|\Sigma|$ で十分であり、最小の補助次元を与える「最小拡大」によって、任意の POVM を物理的に射影測定として実装できることを示します。
+
+この定理の重要な帰結として、任意の POVM は「適切な初期状態に準備された補助系」と「全体系へのユニタリ操作」、そして「補助系への射影測定」の組み合わせでシミュレートできることが導かれます。
+
+::: {#cor-naimark-simulation name="系 2.43 (射影測定による POVM のシミュレーション)"}
+測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$、および補助系 $\mathcal{Y} = \mathbb{C}^\Sigma$ 上の単位ベクトル $u \in \mathcal{Y}$ に対し、全体系 $\mathcal{X} \otimes \mathcal{Y}$ 上の射影測定 $\xi: \Sigma \to \mathrm{Proj}(\mathcal{X} \otimes \mathcal{Y})$ が存在して、任意の $X \in \mathrm{L}(\mathcal{X})$ について次が成り立ちます。
+$$ \langle \xi(a), X \otimes uu^* \rangle = \langle \mu(a), X \rangle $$
+
+:::
+
+::: {.callout-note collapse="true" title="系 2.43 の物理的解釈と導出"}
+この系は、実験室で POVM を実現する具体的な手順を記述しています。
+
+1.  **補助系の準備**: 補助レジスタ $Y$ をあらかじめ状態 $u$（例：$\lvert 0 \rangle$）に初期化する。
+2.  **ユニタリ相互作用**: 定理 2.42 の等長写像 $A$ を、$A(1_{\mathcal{X}} \otimes u) = U$ を満たすような全体系のユニタリ演算子 $U$ へと拡張する。
+3.  **射影測定**: 補助系 $Y$ に対して基底 $\{E_{a,a}\}$ で射影測定を行う（全体系では $\xi(a) = U^* (\mathbb{I} \otimes E_{a,a}) U$）。
+
+このプロセスにより、直接的には測りにくい POVM $\mu$ を、標準的な「ユニタリ＋射影測定」の組み合わせとして実装できることが数学的に保証されます。
+
+:::
 
 ::: {.important-point}
 Naimark の構成は「測定をユニタリ＋射影＋部分トレース」の形で実装できることを保証します。回路設計では、POVM を補助キュービットと制御ユニタリに分解する際の理論的裏付けになります。
