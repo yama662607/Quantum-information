@@ -12,7 +12,9 @@ def run_dev_server():
     # Quarto バイナリの検出
     quarto_bin = find_quarto()
     if quarto_bin is None:
-        print("❌ Quarto が見つかりません。インストールしてください: https://quarto.org/docs/get-started/")
+        print(
+            "❌ Quarto が見つかりません。インストールしてください: https://quarto.org/docs/get-started/"
+        )
         sys.exit(1)
 
     # コマンドの定義

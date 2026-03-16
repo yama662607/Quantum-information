@@ -47,6 +47,36 @@ POVM は「効果演算子」で確率を与える道具、チャネル表現は
 
 :::
 
+### Basic notions concerning measurements (基本的な測定概念) [📄 p.104](/assets/Quantum_Information.pdf#page=112) {#basic-notions-cerning-measurements}
+
+ここでは、複数の系に対する独立した測定や、系の一部のみを測定する場合の定式化について述べます。
+
+#### Product measurements (積測定) {#product-measurements}
+
+複合系 $X = (Y_1, \dots, Y_n)$ に対して、各レジスタ $Y_k$ 上で独立に測定 $\mu_k: \Sigma_k \to \mathrm{Pos}(Y_k)$ を行う場合を考えます。このプロセス全体は、全体系 $X$ 上の単一の測定 $\mu: \Sigma_1 \times \dots \times \Sigma_n \to \mathrm{Pos}(X)$ とみなすことができ、次のように定義されます。
+
+$$ \mu(a_1, \dots, a_n) = \mu_1(a_1) \otimes \dots \otimes \mu_n(a_n) $$
+
+積状態 $\rho_1 \otimes \dots \otimes \rho_n$ に対して積測定を行うと、各測定結果の分布は数学的に独立な確率分布となります。
+
+#### Partial measurements (部分測定) {#partial-measurements}
+
+複合系 $X = (Y_1, \dots, Y_n)$ のうち、特定のレジスタ $Y_k$ のみを測定し、他の系には何もしない場合を**部分測定**と呼びます。このとき、測定結果 $a$ が得られる確率だけでなく、「測定後に残された他の系（$Y_1, \dots, Y_{k-1}, Y_{k+1}, \dots, Y_n$）がどのような状態にあるか」を記述する必要があります。
+
+全体系の状態を $\rho \in \mathrm{D}(X)$ とし、系 $Y_k$ に対して測定 $\mu: \Sigma \to \mathrm{Pos}(Y_k)$ を行うとします。このとき、結果 $a \in \Sigma$ とそれに対応する残りの系の状態は、以下の**アンサンブル** $\eta: \Sigma \to \mathrm{Pos}(Y \setminus Y_k)$ によって完全に記述されます（PDF p.106）。
+
+$$ \eta(a) = \operatorname{Tr}_{Y_k} \Big( (\mathbb{I}_{Y_1 \otimes \dots} \otimes \mu(a) \otimes \mathbb{I}_{\dots \otimes Y_n}) \rho \Big) $$
+
+この $\eta(a)$ は、以下の物理的意味を持ちます。
+
+1.  **出現確率**: 結果 $a$ が得られる確率は $\Pr(a) = \operatorname{Tr}(\eta(a))$ です。
+2.  **事後状態**: 結果 $a$ が得られたという条件の下で、残りの系がとる正規化された状態は $\frac{\eta(a)}{\operatorname{Tr}(\eta(a))}$ です。
+
+::: {.important-point}
+部分測定の定式化は、量子通信プロトコル（量子テレポーテーションなど）において、測定結果に応じた条件付きの状態変化を記述するための基礎となります。
+
+:::
+
 ### Projective measurements (射影測定) [📄 p.105](/assets/Quantum_Information.pdf#page=113) {#projective-measurements}
 
 測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。互いに直交するため $a \neq b$ で $\mu(a)\mu(b)=0$ となり、可観測量 $H = \sum_a \lambda_a \mu(a)$ のスペクトル分解に一致します。ブラケット表記では基底ベクトル $|a\rangle$ への射影 $|a\rangle\langle a|$ が各アウトカムに対応します。
