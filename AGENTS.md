@@ -20,7 +20,7 @@
   - **計算式**: `物理ページ` = `本の表記ページ` + `8`。
 - **Preskill版**: `quarto/assets/pdf/preskill/` 配下の各チャプター PDF を使用。
   - **計算式**: ページ番号のズレについては、各チャプターの PDF 構造を観測して決定してください。
-  - **形式**: `[📄 chap1.pdf](assets/pdf/preskill/chap1.pdf#page=Y)`
+  - 形式: `[📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=Y)`
 ### 4. テンプレート・システム (Templates)
 執筆の効率と品質を維持するために、2種類の標準テンプレートを用意しています。
 - **場所**: `quarto/templates/`
@@ -44,37 +44,43 @@
 
 4.  **PDFリンクの配置**:
     - すべてのセクション（`##`）およびサブセクション（`###`）の見出しには、必ず対応するPDFページへのリンクを付与してください。
-    - 形式 (Watrous版): `## 見出し [📄 p.XX](assets/pdf/watrous/Quantum_Information.pdf#page=YY) {#anchor}`
-    - 形式 (Preskill版): `## 見出し [📄 chap1.pdf](assets/pdf/preskill/chap1.pdf#page=YY) {#anchor}`
+    - 形式 (Watrous版): `## 見出し [📄 p.XX](/assets/pdf/watrous/Quantum_Information.pdf#page=YY) {#anchor}`
+    - 形式 (Preskill版): `## 見出し [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=YY) {#anchor}`
     - ページ番号 `XX` と `YY` の対応は `index.qmd` を確認してください。
 
 5.  **Fenced Div の書式 (Style)**:
     - `:::` による囲み（Definition, Theorem 等）を使用する場合、**閉じ括弧の直前には必ず空行を挿入**してください。
     - これを怠ると Quarto/Pandoc のパースに失敗する場合があります。`just fix` で自動修正可能です。
 
-
 ## コンテンツ作成ワークフロー (Content Creation Workflow)
+
+> [!CAUTION]
+> **🚨 ゴールデンルール（省略禁止）**: Phase 1（忠実翻訳）では、原文の定義・定理・補題・証明・式番号・Remark・Footnote を**一つも省いてはならない**。要約・言い換えは Phase 2 以降で行う。詳細は `research/guidelines/writing_policy.md` を参照。
 
 **重要: ノートを作成する前に、必ず元のPDFを読み込んでください。**
 
-AIエージェントとして新しいノートを作成または編集する場合は、以下の手順を厳守してください。
+### Phase 1: 忠実翻訳
 
-1.  **原文の読解（テキスト抽出と画像スキャンの併用）**:
-    テキストの抽出には `tools/extract_pdf.py` を使用します。
+1.  **原文の一括解析**: `just process-pdf` を使って対象ページのテキスト・数式・画像を取得します。
     ```bash
-    # ページ範囲を指定してテキストを抽出（例：Watrous版）
-    uv run python tools/extract_pdf.py quarto/assets/pdf/watrous/Quantum_Information.pdf --start 5 --end 10
-    ```
-    複雑な数式や可換図式など、テキスト抽出で記号が欠落・崩壊しやすい部分を読み取る場合は、`tools/extract_pdf_image.py` を使用してページを画像として出力し、AIエージェントが持つ **`view_file` ツールを用いて直接視覚情報として読み込んで**ください。
-    ```bash
-    # 特定の物理ページ（例: 114）を高解像度画像として抽出
-    uv run --with pymupdf python tools/extract_pdf_image.py quarto/assets/pdf/watrous/Quantum_Information.pdf 114 /tmp/page_114.png
-    ```
-    （※画像抽出後、エージェントは `/tmp/page_114.png` に対し `view_file` ツールを実行し、マルチモーダル入力としてスキャンします。抽出した画像は不要になれば破棄して構いません）
+    # Preskill版 (例: chap2 の物理ページ 30-32)
+    just process-pdf quarto/assets/pdf/preskill/chap2_15.pdf 30 32
 
-2.  **断片ファイル (Partial QMD) の作成**: `quarto/textbook/chapter[N]/` 直下に部分ファイル (`_*.qmd`) を作成・更新します。
-3.  **リンク付け (Cross-linking)**: 元のPDFへの絶対リンクと、教科書内の相対リンクを維持します。
-4.  **形式と数式の検証 (Verification)**: 変更後は必ず `just check` を実行し、フォーマット、数式環境、Mermaidの構文エラーがないか確認してください。
+    # Watrous版 (例: 物理ページ 114)
+    just process-pdf quarto/assets/pdf/watrous/Quantum_Information.pdf 114 114
+    ```
+    出力: テキスト・数式（LaTeX）・画像パスの3種が整理されて表示されます。
+
+2.  **視覚的な精査**: 数式など記号が欠落しやすい部分は、出力された画像パス（例: `/tmp/page_30.png`）に対して `view_file` ツールでスキャンして正確に読み取ります。
+
+3.  **断片ファイルの作成**: `quarto/textbook-[preskill|watrous]/chapterX/_X.Y-title.qmd` を作成し、**省略なく**翻訳します。
+
+4.  **形式と数式の検証**: 変更後は必ず `just check` を実行します。
+
+### Phase 2: 解説と拡充
+
+5.  Phase 1 完了後、同じファイルの末尾に `callout-note`（直感的解説）、Mermaid 図式、Qiskit 実装例などを追記します。
+
 
 ## 教科書解説の追加 (Adding New Content)
 1. **テンプレートの準備**: `quarto/templates/quantum_textbook_template.qmd` をコピーし、断片ファイル `quarto/textbook-[preskill|watrous]/chapterX/_name.qmd` を作成します。

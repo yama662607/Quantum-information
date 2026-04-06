@@ -124,3 +124,9 @@ clear-validation-cache:
 extract-pdf pdf_path *args="":
     @echo "📄 Extracting text from: {{pdf_path}}"
     {{python}} tools/extract_pdf.py {{pdf_path}} {{args}}
+
+# PDFページの詳細解析 (Text, Image, LaTeX)
+# 使い方: just process-pdf <pdf_path> <start_page> <end_page>
+process-pdf pdf_path start end *args="":
+    @echo "🔍 Processing PDF pages {{start}}-{{end}}..."
+    @export PYTHONPATH=$PYTHONPATH:. && {{python}} tools/process_pdf_page.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}

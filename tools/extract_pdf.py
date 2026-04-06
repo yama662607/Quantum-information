@@ -3,21 +3,17 @@ import PyPDF2
 import sys
 
 
-def extract_pdf_text(pdf_path, start_page=None, end_page=None):
+def extract_pdf_text(pdf_path, start_page=None, end_page=None, quiet=False):
     """
     Extracts text from a PDF file within a specified page range.
-
-    Args:
-        pdf_path (str): Path to the PDF file.
-        start_page (int, optional): Starting page number (1-based).
-        end_page (int, optional): Ending page number (1-based).
+    Returns a list of strings, where each string is the text of one page.
     """
+    results = []
     try:
         with open(pdf_path, "rb") as f:
             reader = PyPDF2.PdfReader(f)
             total_pages = len(reader.pages)
 
-            # Adjust 1-based indexing to 0-based
             start_idx = 0
             if start_page:
                 start_idx = max(0, start_page - 1)
@@ -27,25 +23,26 @@ def extract_pdf_text(pdf_path, start_page=None, end_page=None):
                 end_idx = min(total_pages, end_page)
 
             if start_idx >= total_pages:
-                print(
-                    f"Error: Start page {start_page} is out of range (Total pages: {total_pages})",
-                    file=sys.stderr,
-                )
-                return
-
-            print(
-                f"--- Extracting from {pdf_path} (Pages {start_idx + 1}-{end_idx}) ---\n"
-            )
+                if not quiet:
+                    print(
+                        f"Error: Start page {start_page} is out of range",
+                        file=sys.stderr,
+                    )
+                return []
 
             for i in range(start_idx, end_idx):
-                print(f"--- Page {i + 1} ---")
-                print(reader.pages[i].extract_text())
-                print("\n")
+                text = reader.pages[i].extract_text()
+                results.append(text)
+                if not quiet:
+                    print(f"--- Page {i + 1} ---")
+                    print(text)
+                    print("\n")
+        return results
 
-    except FileNotFoundError:
-        print(f"Error: File not found at {pdf_path}", file=sys.stderr)
     except Exception as e:
-        print(f"An error occurred: {e}", file=sys.stderr)
+        if not quiet:
+            print(f"An error occurred: {e}", file=sys.stderr)
+        return []
 
 
 if __name__ == "__main__":

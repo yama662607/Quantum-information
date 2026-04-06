@@ -12,9 +12,9 @@ class QuartoWatcherHandler(FileSystemEventHandler):
 
         # マッピング定義: 変更検知ディレクトリ -> タッチすべきファイル
         self.chapter_map = {
-            "chapter1": self.project_root / "quarto" / "textbook" / "chapter1.qmd",
-            "chapter2": self.project_root / "quarto" / "textbook" / "chapter2.qmd",
-            "chapter3": self.project_root / "quarto" / "textbook" / "chapter3.qmd",
+            "chapter1": self.project_root / "quarto" / "textbook-preskill" / "textbook.qmd",
+            "chapter2": self.project_root / "quarto" / "textbook-preskill" / "textbook.qmd",
+            "chapter3": self.project_root / "quarto" / "textbook-preskill" / "textbook.qmd",
         }
         self.default_target = self.project_root / "quarto" / "index.qmd"
 
@@ -98,7 +98,7 @@ class QuartoWatcherHandler(FileSystemEventHandler):
 def main():
     # プロジェクトのルートディレクトリを基準にする
     project_root = Path(__file__).parent.parent.resolve()
-    watch_path = project_root / "quarto" / "textbook"
+    watch_path = project_root / "quarto"
 
     print("Starting Quarto Watcher...")
     print(f"Monitoring: {watch_path}")

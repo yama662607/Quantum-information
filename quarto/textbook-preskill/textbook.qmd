@@ -1,7 +1,7 @@
 ---
 title: "John Preskill『Quantum Computation』学習ノート"
-number-sections: true
-number-depth: 3
+number-sections: false
+page-layout: full
 toc: true
 toc-depth: 3
 ---
@@ -13,31 +13,13 @@ Watrous 教授の教科書に比べ、より物理学的な直感と量子情報
 
 # Chapter 1: Introduction {#chapter-1-preskill}
 
-::: {.callout-note}
-## この章の資料
-[📄 chap1.pdf](assets/pdf/preskill/chap1.pdf)
-
-:::
-
-[ここに概要を記述]
+{{< include chapter1/_1.1-introduction.qmd >}}
 
 # Chapter 2: Foundations I: States and Ensembles {#chapter-2-preskill}
-
-::: {.callout-note}
-## この章の資料
-[📄 chap2.pdf](assets/pdf/preskill/chap2_15.pdf)
-
-:::
 
 [ここに概要を記述]
 
 # Chapter 3: Foundations II: Measurement and Evolution {#chapter-3-preskill}
-
-::: {.callout-note}
-## この章の資料
-[📄 chap3.pdf](assets/pdf/preskill/chap3_15.pdf)
-
-:::
 
 [ここに概要を記述]
 
@@ -51,7 +33,7 @@ Watrous 教授の教科書に比べ、より物理学的な直感と量子情報
 
 ---
 
-# Theoretical Background (理論的背景) {#theory}
+# Theoretical Background (理論的背景) {#theory .unlisted}
 
 数学的な記述に入る前に、概念の直感的なイメージを整理します。
 
@@ -61,7 +43,7 @@ Watrous 教授の教科書に比べ、より物理学的な直感と量子情報
 
 :::
 
-## Key Intuitions (直感的な理解)
+## Key Intuitions (直感的な理解) {.unlisted}
 
 [ここに図解や比喩を記述]
 
@@ -75,7 +57,7 @@ graph LR
 
 ---
 
-# Rigorous Definitions (厳密な定義) {#definitions}
+# Rigorous Definitions (厳密な定義) {#definitions .unlisted}
 
 ::: {#def-main}
 ## [概念名] (Definition X.Y)
@@ -94,7 +76,7 @@ $$
 
 ---
 
-# Theorems & Proofs (定理と証明) {#theorems}
+# Theorems & Proofs (定理と証明) {#theorems .unlisted}
 
 ::: {#thm-core}
 ## [定理名] (Theorem X.Z)
@@ -122,7 +104,7 @@ $$
 
 ---
 
-# Notation Mapping (記法の対応) {#mapping}
+# Notation Mapping (記法の対応) {#mapping .unlisted}
 
 本プロジェクト独自の「マッピング表」を用いて、Watrousの数学的記法と標準的な物理学の記法を整理します。
 
@@ -138,11 +120,11 @@ $$
 
 ---
 
-# Quantum Algorithm & Implementation (アルゴリズムと実装) {#implementation}
+# Quantum Algorithm & Implementation (アルゴリズムと実装) {#implementation .unlisted}
 
 理論を量子回路やアルゴリズムの観点から解釈・実装します。
 
-## Quantum Circuit (量子回路)
+## Quantum Circuit (量子回路) {.unlisted}
 
 ```{mermaid}
 %%| label: fig-quantum-circuit
@@ -155,7 +137,7 @@ graph LR
     CNOT --> M2[Measure]
 ```
 
-## Implementation & Simulation (Qiskit)
+## Implementation & Simulation (Qiskit) {.unlisted}
 
 理論を実際の量子回路として実装し、シミュレーション結果を確認します。
 
@@ -200,7 +182,7 @@ plot_histogram(counts)
 
 ---
 
-# Exercises & Review (復習) {#review}
+# Exercises & Review (復習) {#review .unlisted}
 
 ::: {.callout-warning collapse="true"}
 ## Check Quiz: [質問内容]
@@ -210,6 +192,6 @@ plot_histogram(counts)
 
 ---
 
-## 参考文献
+## 参考文献 {.unlisted}
 - Watrous, TQI, pp. XX-YY [@watrous2018]
 - [その他参考文献]

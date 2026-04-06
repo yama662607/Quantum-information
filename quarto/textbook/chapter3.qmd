@@ -1,7 +1,0 @@
-# Similarity and distance among states and channels {#chapter-3}
-
-{{< include chapter3/_3.1-quantum-state-discrimination.qmd >}}
-
-{{< include chapter3/_3.2-fidelity.qmd >}}
-
-{{< include chapter3/_3.3-trace-distance.qmd >}}

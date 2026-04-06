@@ -26,3 +26,14 @@ tools/.validation_cache.json
 node_modules/
 .DS_Store
 .data/
+
+# AI agent config (machine-local)
+.codex/
+.gemini/
+
+# LaTeX build artifacts
+quarto/*.aux
+quarto/*.log
+quarto/*.tex
+quarto/*.toc
+quarto/*.pdf
