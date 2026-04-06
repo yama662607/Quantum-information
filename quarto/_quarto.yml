@@ -26,7 +26,7 @@ book:
     - index.qmd
     - part: "Preskill 教授 講義ノート"
       chapters:
-        - textbook.qmd
+        - textbook-preskill/textbook.qmd
     - part: "Watrous 教授 (アーカイブ)"
       chapters:
         - textbook-watrous/textbook.qmd
@@ -42,10 +42,13 @@ book:
       - text: "ホーム"
         href: index.qmd
 
-number-sections: true
-number-depth: 3
+number-sections: false
 crossref:
   chapters: true
+  sec-prefix: "節"
+  fig-prefix: "図"
+  tbl-prefix: "表"
+  eq-prefix: "式"
 
 lang: ja
 
@@ -53,6 +56,7 @@ format:
   html:
     theme: cosmo
     css: templates/styles.css
+    include-after-body: templates/sidebar-toggle.html
     toc: true
     toc-depth: 3
     toc-location: right
@@ -65,14 +69,17 @@ format:
     fig-cap-location: bottom
     tbl-cap-location: top
     grid:
-      body-width: 1000px
+      body-width: 1100px
       margin-width: 250px
-      sidebar-width: 300px
+      sidebar-width: 200px
       gutter-width: 1.5rem
     html-math-method: katex
   pdf:
     include-in-header: preamble.tex
     pdf-engine: xelatex
+    top-level-division: chapter
+    number-sections: true
+    number-depth: 2
 
 execute:
   freeze: auto
