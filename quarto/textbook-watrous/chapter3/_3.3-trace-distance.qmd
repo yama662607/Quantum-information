@@ -1,0 +1,63 @@
+## トレース距離 (Trace distance) [📄 p.150](/assets/Quantum_Information.pdf#page=158) {#trace-distance}
+
+**トレース距離**は、2つの量子状態（密度演算子）の間の「近さ」あるいは「区別しやすさ」を測る最も代表的な距離尺度です。
+
+::: {#def-trace-distance name="トレース距離 (Trace Distance)"}
+2つの演算子 $A, B \in \mathrm{L}(\mathcal{X})$ に対し、トレース距離 $D(A, B)$ は次のように定義されます。
+$$ D(A, B) = \frac{1}{2} \| A - B \|_1 $$ {#eq-trace-distance-def}
+ここで $\| \cdot \|_1$ はトレースノルム（特異値の和）です。
+
+:::
+
+### 基本的性質 (Elementary properties) [📄 p.151](/assets/Quantum_Information.pdf#page=159) {#properties-trace-distance}
+
+トレース距離は、数学的な意味での「距離（メトリック）」の条件を満たします。
+
+::: {#prp-trace-distance-properties name="トレース距離の性質"}
+密度演算子 $\rho, \sigma, \tau \in \mathrm{D}(\mathcal{X})$ に対し、以下が成立します。
+
+1.  **非負性**: $D(\rho, \sigma) \ge 0$ であり、$D(\rho, \sigma) = 0 \iff \rho = \sigma$。
+2.  **対称性**: $D(\rho, \sigma) = D(\sigma, \rho)$。
+3.  **三角不等式**: $D(\rho, \tau) \le D(\rho, \sigma) + D(\sigma, \tau)$。
+4.  **有界性**: $0 \le D(\rho, \sigma) \le 1$。
+
+    - $D(\rho, \sigma) = 1 \iff \rho$ と $\sigma$ のサポートが直交する。
+
+:::
+
+### 確率的な解釈 (Probabilistic interpretation) {#trace-distance-probabilistic}
+
+トレース距離は、2つの状態を識別する際の「最適成功確率との差」として物理的に解釈できます。
+
+::: {#thm-trace-distance-success-prob name="トレース距離と識別確率 (Theorem 3.4)"}
+2つの状態 $\rho, \sigma$ を等確率 ($1/2$) で識別する際の最大成功確率 $P_{\text{opt}}$ は、トレース距離を用いて次のように書けます。
+$$ P_{\text{opt}} = \frac{1}{2} + \frac{1}{2} D(\rho, \sigma) $$ {#eq-trace-distance-opt-prob}
+
+:::
+
+この関係式（@eq-trace-distance-opt-prob）は、トレース距離が「2つの状態がどれだけ統計的に区別可能か」を直接的に表していることを示しています。
+
+### チャネルによる単調性 (Monotonicity under channels) [📄 p.153](/assets/Quantum_Information.pdf#page=161) {#trace-distance-monotonicity}
+
+量子チャネル（操作）を施しても、2つの状態はより区別しやすくなることはありません。
+
+::: {#thm-trace-distance-contractivity name="トレース距離の単調性 (Contractivity of Trace Distance)"}
+任意の量子チャネル $\Phi \in \mathrm{C}(\mathcal{X}, \mathcal{Y})$ に対し、
+$$ D(\Phi(\rho), \Phi(\sigma)) \le D(\rho, \sigma) $$ {#eq-trace-distance-contractivity}
+が成立します。
+
+:::
+
+これは物理的に非常に重要です。システムに操作（ノイズなど）を加えることは、情報の損失を招くことはあっても、魔法のように「より区別しやすく」することはないという熱力学的な直感と一致します。
+
+### フィデリティとの関係 (Relationship with Fidelity) [📄 p.154](/assets/Quantum_Information.pdf#page=162) {#trace-distance-vs-fidelity}
+
+トレース距離とフィデリティ（@def-fidelity）の間には、以下の強力な不等式が成り立ちます。
+
+::: {#thm-fuchs-van-de-graaf name="Fuchs–van de Graaf 不等式 (Theorem 3.33)"}
+任意の状態 $\rho, \sigma$ に対し、以下が成立します。
+$$ 1 - F(\rho, \sigma) \le D(\rho, \sigma) \le \sqrt{1 - F(\rho, \sigma)^2} $$ {#eq-fuchs-van-de-graaf}
+
+:::
+
+特に純粋状態に対しては、上界が等号で成立し $D(|u\rangle, |v\rangle) = \sqrt{1 - |\langle u, v \rangle|^2}$ となります。

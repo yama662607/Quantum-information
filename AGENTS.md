@@ -4,22 +4,23 @@
 
 ## 🏗️ アーキテクチャと規約
 
-### 1. 信頼できる唯一の情報源 (`textbook.qmd`)
-- **ルール**: すべての教科書解説は、単一のファイル `quarto/textbook.qmd` に統合されています。
-- **制約**: 新しい親ファイル（例: `chapterX.qmd`）を作成**しないでください**。すべての章は `textbook.qmd` 内のレベル1見出し（`#`）として定義されます。
-- **インクルード**: コンテンツを取り込む際は、Quartoの `{{< include textbook/path/to/_file.qmd >}}` を使用してください。
+### 1. 信頼できる唯一の情報源
+- **メイン教科書 (Preskill版)**: `quarto/textbook-preskill/textbook.qmd`
+- **アーカイブ (Watrous版)**: `quarto/textbook-watrous/textbook.qmd`
+- **ルール**: すべての解説は、各教科書の `textbook.qmd` に `include` 形式で統合されます。
+- **制約**: 新しいメイン qmd ファイルを直下に作成せず、セクションごとの断片ファイル（`_*.qmd`）を `chapterX/` フォルダ内に作成してください。
 
 ### 2. パーシャル（断片）ファイル (`_*.qmd`)
-- **場所**: `quarto/textbook/chapterX/`
-- **命名**: 必ずアンダースコアで始めてください（例: `_1.1-linear-algebra.qmd`）。
-- **内容**: 純粋な Markdown/Quarto コンテンツのみ。**YAMLヘッダーを含めてはいけません**（親ドキュメントのビルドが壊れるため）。
-- **見出しレベル**: 節（Section）はレベル2（`##`）、項（Sub-section）はレベル3（`###`）から始めてください。
+- **場所**: `quarto/textbook-[preskill|watrous]/chapterX/`
+- **命名**: 必ずアンダースコアで始めてください（例: `_1-introduction.qmd`）。
+- **内容**: 純粋な Markdown/Quarto コンテンツのみ。**YAMLヘッダーを含めてはいけません**。
 
 ### 3. PDFリンク戦略
-- **ファイル**: `quarto/assets/Quantum_Information.pdf`。
-- **ロジック**: PDFへのリンクは「物理ページ番号」を使用します。
-- **計算式**: `物理ページ` = `本の表記ページ` + `8`。
-- **リンク形式**: `[📄 p.9](assets/Quantum_Information.pdf#page=17)` （例: 本のページが9の場合、物理ページ17へリンク）。
+- **Watrous版**: `quarto/assets/pdf/watrous/Quantum_Information.pdf` を使用。
+  - **計算式**: `物理ページ` = `本の表記ページ` + `8`。
+- **Preskill版**: `quarto/assets/pdf/preskill/` 配下の各チャプター PDF を使用。
+  - **計算式**: ページ番号のズレについては、各チャプターの PDF 構造を観測して決定してください。
+  - **形式**: `[📄 chap1.pdf](assets/pdf/preskill/chap1.pdf#page=Y)`
 ### 4. テンプレート・システム (Templates)
 執筆の効率と品質を維持するために、2種類の標準テンプレートを用意しています。
 - **場所**: `quarto/templates/`
@@ -43,7 +44,8 @@
 
 4.  **PDFリンクの配置**:
     - すべてのセクション（`##`）およびサブセクション（`###`）の見出しには、必ず対応するPDFページへのリンクを付与してください。
-    - 形式: `## 見出し [📄 p.XX](Quantum_Information.pdf#page=YY) {#anchor}`
+    - 形式 (Watrous版): `## 見出し [📄 p.XX](assets/pdf/watrous/Quantum_Information.pdf#page=YY) {#anchor}`
+    - 形式 (Preskill版): `## 見出し [📄 chap1.pdf](assets/pdf/preskill/chap1.pdf#page=YY) {#anchor}`
     - ページ番号 `XX` と `YY` の対応は `index.qmd` を確認してください。
 
 5.  **Fenced Div の書式 (Style)**:
@@ -57,27 +59,28 @@
 
 AIエージェントとして新しいノートを作成または編集する場合は、以下の手順を厳守してください。
 
-1.  **原文の読解 (Read the Source)**:
-    `extract_pdf.py` ツールを使用して、対応するPDFのテキストを抽出・読解します。
-    推測で書くのではなく、必ず教科書の記述に基づいてください。
-
+1.  **原文の読解（テキスト抽出と画像スキャンの併用）**:
+    テキストの抽出には `tools/extract_pdf.py` を使用します。
     ```bash
-    # ページ範囲を指定して抽出 (例: 5ページから10ページ)
-    uv run python extract_pdf.py docs/divided/Chapter3_Distance.pdf --start 5 --end 10
-## Content Creation Workflow
+    # ページ範囲を指定してテキストを抽出（例：Watrous版）
+    uv run python tools/extract_pdf.py quarto/assets/pdf/watrous/Quantum_Information.pdf --start 5 --end 10
+    ```
+    複雑な数式や可換図式など、テキスト抽出で記号が欠落・崩壊しやすい部分を読み取る場合は、`tools/extract_pdf_image.py` を使用してページを画像として出力し、AIエージェントが持つ **`view_file` ツールを用いて直接視覚情報として読み込んで**ください。
+    ```bash
+    # 特定の物理ページ（例: 114）を高解像度画像として抽出
+    uv run --with pymupdf python tools/extract_pdf_image.py quarto/assets/pdf/watrous/Quantum_Information.pdf 114 /tmp/page_114.png
+    ```
+    （※画像抽出後、エージェントは `/tmp/page_114.png` に対し `view_file` ツールを実行し、マルチモーダル入力としてスキャンします。抽出した画像は不要になれば破棄して構いません）
 
-1.  **PDF Extraction**:
-    - Use both `tools/extract_pdf.py` (for searchable text) and the `view_file` tool (for high-fidelity visual check of formulas, diagrams, and layout).
-    - Meticulously cross-reference both outputs to ensure technical terms and mathematical symbols are transcribed exactly.
-2.  **Modular QMD Creation**: Create or update partial files (`_*.qmd`) in `quarto/textbook/chapter[N]/`.
-3.  **Cross-linking**: Maintain absolute links to the source PDF and relative links between textbook/notes.
-4.  **Verification**: Always run `just check` to ensure formatting, math, and Mermaid validity.
+2.  **断片ファイル (Partial QMD) の作成**: `quarto/textbook/chapter[N]/` 直下に部分ファイル (`_*.qmd`) を作成・更新します。
+3.  **リンク付け (Cross-linking)**: 元のPDFへの絶対リンクと、教科書内の相対リンクを維持します。
+4.  **形式と数式の検証 (Verification)**: 変更後は必ず `just check` を実行し、フォーマット、数式環境、Mermaidの構文エラーがないか確認してください。
 
-## 教科書解説の追加 (Adding New Textbook Content)
-1.  **テンプレートの準備**: `quarto/templates/quantum_textbook_template.qmd` の内容をコピーし、新しい断片ファイル `quarto/textbook/chapterX/_new-section.qmd` を作成します。
-2.  **YAMLの削除**: **重要: 断片ファイルからは必ず YAML ヘッダーを削除してください。**
-3.  **インクルード**: `quarto/textbook.qmd` の適切な場所に `{{< include textbook/chapterX/_new-section.qmd >}}` を追加します。
-3.  **ロードマップの更新**: `quarto/index.qmd` の表に行を追加します。
+## 教科書解説の追加 (Adding New Content)
+1. **テンプレートの準備**: `quarto/templates/quantum_textbook_template.qmd` をコピーし、断片ファイル `quarto/textbook-[preskill|watrous]/chapterX/_name.qmd` を作成します。
+2. **YAMLの削除**: 断片ファイルからは必ず YAML ヘッダーを削除してください。
+3. **インクルード**: 該当する `textbook.qmd` に `{{< include chapterX/_name.qmd >}}` を追加します。
+4. **ロードマップの更新**: `quarto/index.qmd` の対応する表に行を追加します。
     - カラム構成: `| 項目名 | 原文 PDF | 教科書解説 |`
     - 教科書解説へのリンクは `[📖 Textbook](textbook.qmd#new-anchor)` とします。
 

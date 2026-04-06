@@ -2,7 +2,7 @@ project:
   type: book
   output-dir: _output
   resources:
-    - "assets/*.pdf"
+    - "assets/pdf/**/*.pdf"
     - "assets/*.png"
   preview:
     watch-inputs: true
@@ -24,11 +24,12 @@ book:
     collapse-level: 4
   chapters:
     - index.qmd
-    - part: "Quarto Notebook"
+    - part: "Preskill 教授 講義ノート"
       chapters:
-        - textbook/chapter1.qmd
-        - textbook/chapter2.qmd
-        - textbook/chapter3.qmd
+        - textbook.qmd
+    - part: "Watrous 教授 (アーカイブ)"
+      chapters:
+        - textbook-watrous/textbook.qmd
     - support/index.qmd
     # Note: Template files (templates/*.qmd) are excluded from build
     # They are reference documents for creating new content

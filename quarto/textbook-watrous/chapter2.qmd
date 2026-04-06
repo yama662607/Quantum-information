@@ -1,0 +1,7 @@
+# Basic Notions {#chapter-2}
+
+{{< include chapter2/_2.1-registers-and-states.qmd >}}
+
+{{< include chapter2/_2.2-quantum-channels.qmd >}}
+
+{{< include chapter2/_2.3-measurements.qmd >}}

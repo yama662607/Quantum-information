@@ -1,0 +1,215 @@
+---
+title: "John Preskill『Quantum Computation』学習ノート"
+number-sections: true
+number-depth: 3
+toc: true
+toc-depth: 3
+---
+
+# はじめに {.unnumbered}
+
+このノートは、John Preskill 教授の講義ノート『Quantum Computation』に基づいた学習記録です。
+Watrous 教授の教科書に比べ、より物理学的な直感と量子情報理論の結びつきに重点を置いて解説します。
+
+# Chapter 1: Introduction {#chapter-1-preskill}
+
+::: {.callout-note}
+## この章の資料
+[📄 chap1.pdf](assets/pdf/preskill/chap1.pdf)
+
+:::
+
+[ここに概要を記述]
+
+# Chapter 2: Foundations I: States and Ensembles {#chapter-2-preskill}
+
+::: {.callout-note}
+## この章の資料
+[📄 chap2.pdf](assets/pdf/preskill/chap2_15.pdf)
+
+:::
+
+[ここに概要を記述]
+
+# Chapter 3: Foundations II: Measurement and Evolution {#chapter-3-preskill}
+
+::: {.callout-note}
+## この章の資料
+[📄 chap3.pdf](assets/pdf/preskill/chap3_15.pdf)
+
+:::
+
+[ここに概要を記述]
+
+::: {.callout-note}
+## このセクションの学習目標
+1. **[目標1]**: ...の定義とその物理的背景を理解する。
+2. **[目標2]**: ...の定理を証明し、行間の計算を埋める。
+3. **[重要]**: 標準的な物理学（ブラケット記法）との対応を確認する。
+
+:::
+
+---
+
+# Theoretical Background (理論的背景) {#theory}
+
+数学的な記述に入る前に、概念の直感的なイメージを整理します。
+
+::: {.physics-notes title="物理学の視点 (Physics Perspective)"}
+量子力学の標準的な教科書（例：サクライ等）では、この概念は**[用語]**として知られています。
+記法としては、状態 $| \psi \rangle$ に対して...のように記述されることが多いですが、本書（Watrous）では線形代数的側面を強調するため、演算子 $\rho$ を中心に議論を進めます。
+
+:::
+
+## Key Intuitions (直感的な理解)
+
+[ここに図解や比喩を記述]
+
+```{mermaid}
+%%| label: fig-concept-map
+%%| fig-cap: "概念の依存関係"
+graph LR
+    A[前提概念] --> B[現在の概念]
+    B --> C[応用]
+```
+
+---
+
+# Rigorous Definitions (厳密な定義) {#definitions}
+
+::: {#def-main}
+## [概念名] (Definition X.Y)
+[ここに厳密な数理定義を記述]
+$$
+\dots
+$$
+
+:::
+
+::: {.important-point}
+## Point: 定義の核心
+この定義において最も重要なのは、[XX] という条件が [YY] という物理的要請（例：確率の保存）に対応している点です。
+
+:::
+
+---
+
+# Theorems & Proofs (定理と証明) {#theorems}
+
+::: {#thm-core}
+## [定理名] (Theorem X.Z)
+任意の [XX] に対して、次が成り立つ：
+$$
+\text{Tr}(\dots) = \dots
+$$
+
+:::
+
+::: {.proof}
+**証明の概要**:
+[証明の戦略：背理法、構成的証明など]
+
+**詳細なステップ**:
+1. まず、...を定義する。
+2. 次に、以下の関係式を利用する：
+   $$
+   \langle u, v \rangle \leq \|u\| \|v\|
+   $$ {#eq-calc-step}
+[マージンノートで補足：ここでの不等式はコーシー・シュワルツの不等式である]{.aside}
+3. したがって、...となる。
+
+:::
+
+---
+
+# Notation Mapping (記法の対応) {#mapping}
+
+本プロジェクト独自の「マッピング表」を用いて、Watrousの数学的記法と標準的な物理学の記法を整理します。
+
+| Watrous (数学的記法) | 標準的な物理学 (ブラケット記法) | 補足説明 |
+| :--- | :--- | :--- |
+| $\rho \in \mathrm{D}(\mathcal{X})$ | 密度演算子 $\hat{\rho}$ | 量子状態 |
+| $\langle \phi, \psi \rangle$ | 内積 $\langle \phi | \psi \rangle$ | ヒルベルト空間の内積 |
+| $u v^*$ | 外積 $| u \rangle \langle v |$ | ランク1演算子 |
+| $\mathrm{Tr}(A)$ | トレース $\mathrm{Tr}(\hat{A})$ | 演算子の対角和 |
+| $\langle A, B \rangle = \mathrm{Tr}(A^* B)$ | ヒルベルト・シュミット内積 | 演算子空間の内積 |
+
+: 記法対応表 {#tbl-physics-mapping}
+
+---
+
+# Quantum Algorithm & Implementation (アルゴリズムと実装) {#implementation}
+
+理論を量子回路やアルゴリズムの観点から解釈・実装します。
+
+## Quantum Circuit (量子回路)
+
+```{mermaid}
+%%| label: fig-quantum-circuit
+%%| fig-cap: "実装する量子回路のイメージ"
+graph LR
+    Q0["|0⟩"] --> H[H]
+    H --> CNOT(( ))
+    Q1["|0⟩"] --> CNOT
+    CNOT --> M1[Measure]
+    CNOT --> M2[Measure]
+```
+
+## Implementation & Simulation (Qiskit)
+
+理論を実際の量子回路として実装し、シミュレーション結果を確認します。
+
+```{python}
+#| label: fig-qiskit-circuit
+#| fig-cap: "Qiskitによる量子回路の描画とシミュレーション"
+from qiskit import QuantumCircuit, transpile
+from qiskit.visualization import plot_histogram
+from qiskit_aer import AerSimulator
+import matplotlib.pyplot as plt
+
+# 1. 量子回路の初期化
+qc = QuantumCircuit(2, 2)
+qc.h(0)
+qc.cx(0, 1)
+qc.measure([0, 1], [0, 1])
+
+# A. 回路図の描画 (mplスタイル)
+# Quarto環境では display() を使わなくても最後の行に置けば表示されます
+qc.draw('mpl')
+```
+
+```{python}
+#| label: fig-qiskit-results
+#| fig-cap: "シミュレーション実行結果のヒストグラム"
+# B. シミュレーション実行
+simulator = AerSimulator()
+compiled_circuit = transpile(qc, simulator)
+result = simulator.run(compiled_circuit, shots=1024).result()
+counts = result.get_counts()
+
+# ヒストグラムの描画
+plot_histogram(counts)
+```
+
+::: {.callout-tip}
+### Quartoでの描画のコツ
+*   **スタイル**: `qc.draw('mpl')` を使用すると、論文クオリティの綺麗な回路図が出力されます。
+*   **依存関係**: 回路図の描画には `pylatexenc` が必要になる場合があります。
+
+:::
+
+---
+
+# Exercises & Review (復習) {#review}
+
+::: {.callout-warning collapse="true"}
+## Check Quiz: [質問内容]
+[回答と解説をここに記述]
+
+:::
+
+---
+
+## 参考文献
+- Watrous, TQI, pp. XX-YY [@watrous2018]
+- [その他参考文献]

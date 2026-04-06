@@ -1,5 +1,5 @@
 ---
-subtitle: "John Watrous『The Theory of Quantum Information』学習ロードマップ"
+subtitle: "John Preskill 教授『Quantum Computation』学習ロードマップ"
 page-layout: full
 toc: true
 number-sections: false
@@ -8,41 +8,40 @@ number-sections: false
 # 目次 {.unnumbered}
 
 ::: {.callout-note appearance="simple"}
-John Watrous『The Theory of Quantum Information』の内容を数学的に厳密、かつ視覚的に理解するための学習・解説リサーチ環境です。
+John Preskill 教授の講義ノート『Quantum Computation』の内容を数学的に厳密、かつ視覚的に理解するための学習・解説リサーチ環境です。
+旧版（John Watrous 教授『The Theory of Quantum Information』）のノートは [こちら](textbook-watrous/textbook.qmd) から参照できます。
 
 :::
 
-## 🗺️ ロードマップ (Textbook Roadmap)
+## 🗺️ ロードマップ (Preskill Edition)
 
 | 項目名 | 原文 PDF | 教科書解説 |
 | :--- | :--: | :--: |
-| **Chapter 1: Mathematical Preliminaries** | [📄 p.1](assets/Quantum_Information.pdf#page=9) | [📖 Textbook](textbook/chapter1.qmd) |
-| 　**1.1** Linear algebra | [📄 p.1](assets/Quantum_Information.pdf#page=9) | [📖 Textbook](textbook/chapter1.qmd#linear-algebra) |
-| 　　**1.1.1** Complex Euclidean spaces | [📄 p.1](assets/Quantum_Information.pdf#page=9) | [📖 Textbook](textbook/chapter1.qmd#complex-euclidean-spaces) |
-| 　　**1.1.2** Linear operators | [📄 p.8](assets/Quantum_Information.pdf#page=16) | [📖 Textbook](textbook/chapter1.qmd#linear-operators) |
-| 　　**1.1.3** Operator decompositions and norms | [📄 p.24](assets/Quantum_Information.pdf#page=32) | [📖 Textbook](textbook/chapter1.qmd#operator-decompositions-and-norms) |
-| 　**1.2** Analysis, convexity, and probability theory | [📄 p.35](assets/Quantum_Information.pdf#page=43) | [📖 Textbook](textbook/chapter1.qmd#analysis-convexity-probability) |
-| 　　**1.2.1** Analysis and convexity | [📄 p.35](assets/Quantum_Information.pdf#page=43) | [📖 Textbook](textbook/chapter1.qmd#analysis-and-convexity) |
-| 　　**1.2.2** Probability theory | [📄 p.47](assets/Quantum_Information.pdf#page=55) | [📖 Textbook](textbook/chapter1.qmd#probability-theory) |
-| 　　**1.2.3** Semidefinite programming | [📄 p.53](assets/Quantum_Information.pdf#page=61) | [📖 Textbook](textbook/chapter1.qmd#semidefinite-programming) |
-| | | |
-| **Chapter 2: Basic notions of quantum information** | [📄 p.58](assets/Quantum_Information.pdf#page=66) | [📖 Textbook](textbook/chapter2.qmd) |
-| 　**2.1** Registers and states | [📄 p.58](assets/Quantum_Information.pdf#page=66) | [📖 Textbook](textbook/chapter2.qmd#registers-and-states) |
-| 　　**2.1.1** Registers and classical state sets | [📄 p.58](assets/Quantum_Information.pdf#page=66) | [📖 Textbook](textbook/chapter2.qmd#registers-and-classical-state-sets) |
-| 　　**2.1.2** Quantum states of registers | [📄 p.61](assets/Quantum_Information.pdf#page=69) | [📖 Textbook](textbook/chapter2.qmd#quantum-states-of-registers) |
-| 　　**2.1.3** Reductions and purifications of quantum states | [📄 p.67](assets/Quantum_Information.pdf#page=75) | [📖 Textbook](textbook/chapter2.qmd#reductions-and-purifications-of-quantum-states) |
-| 　**2.2** Quantum channels | [📄 p.72](assets/Quantum_Information.pdf#page=80) | [📖 Textbook](textbook/chapter2.qmd#quantum-channels) |
-| 　　**2.2.1** Definitions and basic notions | [📄 p.72](assets/Quantum_Information.pdf#page=80) | [📖 Textbook](textbook/chapter2.qmd#definitions-and-basic-notions) |
-| 　　**2.2.2** Representations and characterizations | [📄 p.77](assets/Quantum_Information.pdf#page=85) | [📖 Textbook](textbook/chapter2.qmd#representations-and-characterizations) |
-| 　　**2.2.3** Examples of channels | [📄 p.91](assets/Quantum_Information.pdf#page=99) | [📖 Textbook](textbook/chapter2.qmd#examples-of-channels) |
-| 　　**2.2.4** Extremal channels | [📄 p.96](assets/Quantum_Information.pdf#page=104) | [📖 Textbook](textbook/chapter2.qmd#extremal-channels) |
-| 　**2.3** Measurements | [📄 p.100](assets/Quantum_Information.pdf#page=108) | [📖 Textbook](textbook/chapter2.qmd#measurements) |
-| 　　**2.3.1** Two equivalent definitions | [📄 p.100](assets/Quantum_Information.pdf#page=108) | [📖 Textbook](textbook/chapter2.qmd#two-equivalent-definitions) |
-| 　　**2.3.2** Basic notions concerning measurements | [📄 p.105](assets/Quantum_Information.pdf#page=113) | [📖 Textbook](textbook/chapter2.qmd#basic-notions-concerning-measurements) |
-| 　　**2.3.3** Extremal measurements and ensembles | [📄 p.113](assets/Quantum_Information.pdf#page=121) | [📖 Textbook](textbook/chapter2.qmd#extremal-measurements-and-ensembles) |
-| | | |
-| **Chapter 3: Similarity and distance among states and channels** | [📄 p.124](assets/Quantum_Information.pdf#page=132) | [📖 Textbook](textbook/chapter3.qmd) |
-| 　**3.1** Quantum state discrimination | [📄 p.124](assets/Quantum_Information.pdf#page=132) | [📖 Textbook](textbook/chapter3.qmd#quantum-state-discrimination) |
+| **Chapter 1: Introduction** | [📄 chap1.pdf](assets/pdf/preskill/chap1.pdf) | [📖 Textbook](textbook.qmd#chapter-1-preskill) |
+| **Chapter 2: Foundations I: States and Ensembles** | [📄 chap2.pdf](assets/pdf/preskill/chap2_15.pdf) | [📖 Textbook](textbook.qmd#chapter-2-preskill) |
+| **Chapter 3: Foundations II: Measurement and Evolution** | [📄 chap3.pdf](assets/pdf/preskill/chap3_15.pdf) | [📖 Textbook](textbook.qmd#chapter-3-preskill) |
+
+---
+
+## 🏛️ アーカイブ (Watrous Edition)
+
+John Watrous 教授の教科書に基づいた旧ノートです。
+
+- [📖 Watrous版 学習ノート一覧](textbook-watrous/textbook.qmd)
+
+---
+
+## 🛠️ 執筆・学習ツール (Tools)
+
+- [**サポート & ガイド**](support/index.qmd): 執筆用テンプレートや環境構築ガイド。
+- [**Quarto 機能ショーケース**](templates/quarto_feature_showcase.qmd): Quarto の全機能の見本市。
+
+---
+
+::: {.text-center}
+*© 2025 Quantum Information Study Project*
+
+:::
 
 ---
 

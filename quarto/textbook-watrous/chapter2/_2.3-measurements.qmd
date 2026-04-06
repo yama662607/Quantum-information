@@ -1,0 +1,768 @@
+## Measurements [📄 p.100](/assets/Quantum_Information.pdf#page=108) {#measurements}
+
+測定（Measurement）は、量子状態から古典情報を抽出するための数学的メカニズムを提供します。
+
+::: {.callout-note appearance="simple" title="この節の学習目標"}
+1. POVM と量子→古典チャネルの2つの定義を往復できる
+2. 射影測定・情報完全測定・Naimark の定理の要点を説明できる
+3. 測定とアンサンブルの凸構造、極値性の条件を理解する
+
+:::
+
+### Two equivalent definitions (2つの等価な定義) [📄 p.100](/assets/Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
+
+量子情報の文脈では、測定は通常、以下の POVM (Positive Operator-Valued Measure) として定義されます。
+
+
+::: {#def-measurement name="測定 (Measurement)"}
+レジスタ $X$（空間 $\mathcal{X}$）上の**測定** $\mu$ は、有限集合 $\Sigma$ 上の関数 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ であり、以下の条件を満たします。
+$$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
+
+:::
+
+この定義には、物理的な直感と異なる重要な前提があります。
+
+::: {.important-point}
+**レジスタの消失 (Cease to exist)**:
+測定が行われると、もとの量子レジスタ $X$ は「もはや定義された状態を持たず、以降の計算の対象にならない」という意味で**存在しなくなります**（PDF p.101）。これは、測定を「量子状態から古典情報への一方通行の変換」と捉えるこの教科書特有の数理的アプローチです。
+
+:::
+
+::: {.callout-tip title="物理学の視点（ボルン則との対応）"}
+効果演算子 $\mu(a)$ は、物理で使うブラケット記法なら $\Pr[a] = \langle \psi | \mu(a) | \psi \rangle$ に対応します。$|\psi\rangle$ の代わりに密度演算子 $\rho$ を使うと $\Pr[a] = \operatorname{Tr}(\mu(a)\rho)$ が得られ、どちらの表記でも同じボルン則を表現しています。
+
+:::
+
+### Measurements as channels (チャネルとしての測定) [📄 p.102](/assets/Quantum_Information.pdf#page=110) {#measurements-as-channels}
+
+測定は、量子情報を古典情報に変換する**量子から古典へのチャネル** (Quantum-to-classical channel) としても定義できます。
+
+::: {#def-qc-channel name="量子から古典へのチャネル (Definition 2.35)"}
+チャネル $\Phi \in \mathrm{C}(\mathcal{X}, \mathcal{Y})$ が量子から古典へのチャネルであるとは、$\Phi = \Delta \Phi$ を満たすことを言います。ここで $\Delta$ は完全に脱位相させるチャネル（すべてを対角化する写像）です。
+
+:::
+
+基底 $\{\lvert a \rangle : a \in \Sigma\}$ に沿った完全脱位相チャネルを $\Delta(Z) = \sum_{a} E_{a,a} Z E_{a,a}$ とすると、任意の量子→古典チャネルは一意な測定 $\mu$ を用いて
+$$ \Phi(X) = \sum_{a \in \Sigma} \operatorname{Tr}(\mu(a)X) E_{a,a} $$
+と書けます（Theorem 2.37）。測定は「確率の集合」、チャネル表現は「情報の流れ」としての側面を強調します。
+
+::: {.callout-note collapse="true" title="定理 2.37 の証明（共役チャネルによるアプローチ）"}
+量子→古典チャネル $\Phi$ と POVM $\mu$ の 1対1 対応は、共役写像 $\Phi^*$ を通じて理解できます。
+
+1.  **情報の取り出し**: 出力の各成分（確率）は、$\langle E_{a,a}, \Phi(X) \rangle$ として抽出できる。
+2.  **共役の利用**: 内積の性質 $\langle E_{a,a}, \Phi(X) \rangle = \langle \Phi^*(E_{a,a}), X \rangle$ を用いる。
+3.  **POVM の定義**: $\mu(a) \equiv \Phi^*(E_{a,a})$ と置く。$\Phi$ が CPTP ならば、$\Phi^*$ は CP Unital であり、$\mu(a) \ge 0$ かつ $\sum \mu(a) = \Phi^*(\sum E_{a,a}) = \mathbb{I}$ を満たす（PDF p.111）。
+
+この証明は、**「出力側の古典情報を、チャネルを逆向きに辿って入力側の効果演算子に翻訳した」**ものと言えます。
+
+:::
+
+### Basic notions concerning measurements (基本的な測定概念) [📄 p.104](/assets/Quantum_Information.pdf#page=112) {#basic-notions-cerning-measurements}
+
+ここでは、複数の系に対する独立した測定や、系の一部のみを測定する場合の定式化について述べます。
+
+#### Product measurements (積測定) {#product-measurements}
+
+複合系 $X = (Y_1, \dots, Y_n)$ に対して、各レジスタ $Y_k$ 上で独立に測定 $\mu_k: \Sigma_k \to \mathrm{Pos}(Y_k)$ を行う場合を考えます。このプロセス全体は、全体系 $X$ 上の単一の測定 $\mu: \Sigma_1 \times \dots \times \Sigma_n \to \mathrm{Pos}(X)$ とみなすことができ、次のように定義されます。
+
+$$ \mu(a_1, \dots, a_n) = \mu_1(a_1) \otimes \dots \otimes \mu_n(a_n) $$
+
+積状態 $\rho_1 \otimes \dots \otimes \rho_n$ に対して積測定を行うと、各測定結果の分布は数学的に独立な確率分布となります。
+
+#### Partial measurements (部分測定) {#partial-measurements}
+
+複合系 $X = (Y_1, \dots, Y_n)$ のうち、特定のレジスタ $Y_k$ のみを測定し、他の系には何もしない場合を**部分測定**と呼びます。このとき、測定結果 $a$ が得られる確率だけでなく、「測定後に残された他の系（$Y_1, \dots, Y_{k-1}, Y_{k+1}, \dots, Y_n$）がどのような状態にあるか」を記述する必要があります。
+
+全体系の状態を $\rho \in \mathrm{D}(X)$ とし、系 $Y_k$ に対して測定 $\mu: \Sigma \to \mathrm{Pos}(Y_k)$ を行うとします。このとき、結果 $a \in \Sigma$ とそれに対応する残りの系の状態は、以下の**アンサンブル** $\eta: \Sigma \to \mathrm{Pos}(Y \setminus Y_k)$ によって完全に記述されます（PDF p.106）。
+
+$$ \eta(a) = \operatorname{Tr}_{Y_k} \Big( (\mathbb{I}_{Y_1 \otimes \dots} \otimes \mu(a) \otimes \mathbb{I}_{\dots \otimes Y_n}) \rho \Big) $$
+
+この $\eta(a)$ は、以下の物理的意味を持ちます。
+
+1.  **出現確率**: 結果 $a$ が得られる確率は $\Pr(a) = \operatorname{Tr}(\eta(a))$ です。
+2.  **事後状態**: 結果 $a$ が得られたという条件の下で、残りの系がとる正規化された状態は $\frac{\eta(a)}{\operatorname{Tr}(\eta(a))}$ です。
+
+::: {.important-point}
+部分測定の定式化は、量子通信プロトコル（量子テレポーテーションなど）において、測定結果に応じた条件付きの状態変化を記述するための基礎となります。
+
+:::
+
+### Projective measurements (射影測定) [📄 p.105](/assets/Quantum_Information.pdf#page=113) {#projective-measurements}
+
+測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。互いに直交するため $a \neq b$ で $\mu(a)\mu(b)=0$ となり、可観測量 $H = \sum_a \lambda_a \mu(a)$ のスペクトル分解に一致します。ブラケット表記では基底ベクトル $|a\rangle$ への射影 $|a\rangle\langle a|$ が各アウトカムに対応します。
+
+::: {.callout-tip title="物理学の視点（射影測定の物理像）"}
+固有状態 $|a\rangle$ を測れば結果は必ず $a$ で、測定後の状態も $|a\rangle$ に「射影」されます。数学では $\mu(a)$ が射影であることと、物理の「状態が崩壊して固有状態になる」描像が1対1で対応します。
+
+:::
+
+### Naimark の定理 [📄 p.109](/assets/Quantum_Information.pdf#page=117) {#naimarks-theorem}
+
+任意の測定は、補助系を含む拡大された系における射影測定の一部とみなすことができます。
+
+::: {#thm-naimark name="Naimark の定理 (Theorem 2.42)"}
+測定 $\mu: \Sigma \to \mathrmmathrm{Pos}(\mathcal{X})$ に対し、等長写像 $A: \mathcal{X} \to \mathcal{X} \otimes \mathcal{Y}$（ただし $\mathcal{Y} = \mathbb{C}^\Sigma$）が存在して、次が成り立ちます。
+$$ \mu(a) = A^* (\mathbb{I}_{\mathcal{X}} \otimes E_{a,a}) A $$
+
+:::
+
+等長写像 $A$ は $\mu(a)$ の平方根を並べた「測定行列」$A = \sum_a \sqrt{\mu(a)} \otimes |a\rangle$ と書けます。$\mathcal{Y}$ の次元はアウトカム数 $|\Sigma|$ で十分であり、最小の補助次元を与える「最小拡大」によって、任意の POVM を物理的に射影測定として実装できることを示します。
+
+この定理の重要な帰結として、任意の POVM は「適切な初期状態に準備された補助系」と「全体系へのユニタリ操作」、そして「補助系への射影測定」の組み合わせでシミュレートできることが導かれます。
+
+::: {#cor-naimark-simulation name="系 2.43 (射影測定による POVM のシミュレーション)"}
+測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$、および補助系 $\mathcal{Y} = \mathbb{C}^\Sigma$ 上の単位ベクトル $u \in \mathcal{Y}$ に対し、全体系 $\mathcal{X} \otimes \mathcal{Y}$ 上の射影測定 $\xi: \Sigma \to \mathrm{Proj}(\mathcal{X} \otimes \mathcal{Y})$ が存在して、任意の $X \in \mathrm{L}(\mathcal{X})$ について次が成り立ちます。
+$$ \langle \xi(a), X \otimes uu^* \rangle = \langle \mu(a), X \rangle $$
+
+:::
+
+::: {.callout-note collapse="true" title="系 2.43 の物理的解釈と導出"}
+この系は、実験室で POVM を実現する具体的な手順を記述しています。
+
+1.  **補助系の準備**: 補助レジスタ $Y$ をあらかじめ状態 $u$（例：$\lvert 0 \rangle$）に初期化する。
+2.  **ユニタリ相互作用**: 定理 2.42 の等長写像 $A$ を、$A(1_{\mathcal{X}} \otimes u) = U$ を満たすような全体系のユニタリ演算子 $U$ へと拡張する。
+3.  **射影測定**: 補助系 $Y$ に対して基底 $\{E_{a,a}\}$ で射影測定を行う（全体系では $\xi(a) = U^* (\mathbb{I} \otimes E_{a,a}) U$）。
+
+このプロセスにより、直接的には測りにくい POVM $\mu$ を、標準的な「ユニタリ＋射影測定」の組み合わせとして実装できることが数学的に保証されます。
+
+:::
+
+::: {.important-point}
+Naimark の構成は「測定をユニタリ＋射影＋部分トレース」の形で実装できることを保証します。回路設計では、POVM を補助キュービットと制御ユニタリに分解する際の理論的裏付けになります。
+
+:::
+
+### Information-complete measurements (情報完全測定) [📄 p.110](/assets/Quantum_Information.pdf#page=118) {#information-complete-measurements}
+
+測定統計から元の量子状態を一意に特定できる測定を**情報完全測定**と呼びます。
+
+::: {#def-information-complete name="情報完全測定"}
+測定 $\mu: \Sigma \to \mathrm{Pos}(\mathcal{X})$ が情報完全であるとは、その測定演算子の集合 $\{\mu(a) : a \in \Sigma\}$ が演算子空間 $\mathrm{L}(\mathcal{X})$ 全体を張ることを言います。
+$$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
+
+:::
+
+次元 $d = \dim \mathcal{X}$ の場合、少なくとも $d^2$ 個のアウトカムが必要で、等間隔なフレーム（例: SIC-POVM や Pauli 行列に基づく 4 点 POVM）が典型例です。測定結果から線形再構成を行うことで、状態トモグラフィーが可能になります。
+
+::: {.callout-tip title="物理学の視点（物理記法での例）"}
+1量子ビットなら $\{I, X, Y, Z\}$ の射影を平均0.25で測る POVM が情報完全です。得られた確率 $p_i = \operatorname{Tr}(\rho M_i)$ から Bloch ベクトル $(\langle X \rangle, \langle Y \rangle, \langle Z \rangle)$ を再構成できます。
+
+:::
+
+### Quantum instruments (量子インストルメント) [📄 p.112](/assets/Quantum_Information.pdf#page=120) {#quantum-instruments}
+
+「レジスタの消失」というドライな定義を超えて、測定後の系の変化を完全に記述する枠組みが**量子インストルメント**です。学部レベルで学ぶ「射影による波束の収縮」は、これの特殊なケースとして一般化されます。
+
+::: {#def-instrument name="インストルメント"}
+アルファベット $\Sigma$ へのインストルメントは、完全正値写像の集合 $\{\mathcal{A}_a \in \mathrm{CP}(\mathcal{X}, \mathcal{Y}) : a \in \Sigma\}$ であり、それらの和 $\sum_{a \in \Sigma} \mathcal{A}_a$ がチャネル（トレース保存）となるものです。
+
+:::
+
+状態 $\rho$ にインストルメントを適用すると、確率 $p(a) = \operatorname{Tr}(\mathcal{A}_a(\rho))$ でアウトカム $a$ が得られ、その後の系は状態 $\mathcal{A}_a(\rho) / p(a)$ に変化します。
+
+インストルメントは Kraus 演算子族 $\{A_{a,j}\}$ を用いて
+$$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^* $$
+と書け、対応する POVM は $\mu(a) = \sum_j A_{a,j}^* A_{a,j}$ です。
+
+::: {.callout-tip title="物理学の視点（「波束の収縮」の一般化）"}
+*   **射影測定 (PVM)**: $\mathcal{A}_a(\rho) = P_a \rho P_a$ という、もっとも情報の劣化が少ないケース（固有状態への収縮）。
+*   **一般のインストルメント**: 測定による不可避なノイズや、系の一部破壊、あるいは特定の状態への強制的な遷移など、あらゆる「事後状態の変化」を許容します。
+
+:::
+
+### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](/assets/Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
+
+測定やアンサンブルは、どちらも「正演算子を各アウトカムへ割り当てる写像」として見られるため、自然に凸集合をなします。ここでは、まず測定の凸構造を厳密に記述し、その後に同じ幾何学がアンサンブルへ移ることを見ます。
+
+#### From instruments to channels (インストルメントからチャネルへ) [📄 p.113](/assets/Quantum_Information.pdf#page=121) {#instruments-to-channels}
+
+113ページ冒頭は、直前のインストルメントの議論の締めくくりです。インストルメント
+$$
+\{\Phi_a : a \in \Sigma\}
+$$
+の和
+$$
+\Phi = \sum_{a \in \Sigma} \Phi_a
+$$
+は、各 $\Phi_a$ の完全正値性と、総和がトレース保存になるという条件から、正当な量子チャネルになります。
+
+さらに、このチャネル $\Phi$ をレジスタ $\mathsf{X}$ に適用した後で、補助レジスタ $\mathsf{Z}$ を標準基底で測定すると、得られるアウトカム分布と、各アウトカムに条件づけた $\mathsf{Y}$ の事後状態は、インストルメントそのものから定義される過程と一致します。つまり、
+
+> インストルメントは「結果付きの状態変化」を記述し、  
+> それをチャネルと古典測定に分解しても同じ物理を表す
+
+ということです。
+
+#### Convex combinations of measurements (測定の凸結合) [📄 p.113](/assets/Quantum_Information.pdf#page=121) {#convex-structure-of-measurements}
+
+複素ユークリッド空間 $\mathcal{X}$ とアルファベット $\Sigma$ を固定します。アルファベット $\Gamma$、確率ベクトル $p \in \mathcal{P}(\Gamma)$、および各 $b \in \Gamma$ に対して測定
+$$
+\mu_b : \Sigma \to \mathrm{Pos}(\mathcal{X})
+$$
+が与えられたとき、測定
+$$
+\mu = \sum_{b \in \Gamma} p(b)\mu_b \tag{2.263}
+$$
+を、各 $a \in \Sigma$ に対して
+$$
+\mu(a) = \sum_{b \in \Gamma} p(b)\mu_b(a) \tag{2.264}
+$$
+と定義します。
+
+この定義は、関数全体
+$$
+\theta : \Sigma \to \mathrm{Herm}(\mathcal{X})
+$$
+を実ベクトル空間と見たときの、要素ごとの加法と実数倍そのものです。
+
+同値な見方として、測定 $\mu$ を量子から古典へのチャネル
+$$
+\Phi_\mu(X) = \sum_{a \in \Sigma} \langle \mu(a), X \rangle E_{a,a} \tag{2.265}
+$$
+と同一視できます。すると測定の凸結合は、対応するチャネルの通常の凸結合に一致します。
+
+::: {.callout-note title="物理的な読み方: 「測定器をランダムに選んで、選択ラベルを捨てる」"}
+式 (2.263), (2.264) の物理的意味は単純です。
+
+1. 確率 $p(b)$ に従って、どの測定器 $\mu_b$ を使うか選ぶ
+2. 選ばれた測定器 $\mu_b$ を実行する
+3. どの測定器を選んだかというラベル $b$ は記録せず、最終アウトカム $a$ だけを残す
+
+この「ラベルを捨てる」操作があるので、全体としては一つの新しい測定 $\mu$ として見えます。
+
+:::
+
+::: {.callout-tip title="測定とチャネルの対応を一言で"}
+POVM は「各アウトカムの重み付け」、量子→古典チャネルは「その重み付けを古典レジスタへ書き出す操作」です。凸結合を考えるときは、後者で見ると線形性が最も明瞭になります。
+
+:::
+
+#### Extremal measurements (端点測定) [📄 p.114](/assets/Quantum_Information.pdf#page=122) {#extremal-measurements}
+
+命題 2.38 により、量子から古典へのチャネル全体はコンパクト凸集合です。したがって、その極値点に対応する測定を考えることができます。
+
+::: {#def-2-46 name="端点測定 (Definition 2.46)"}
+$\Sigma$ をアルファベット、$\mathcal{X}$ を複素ユークリッド空間とします。測定
+$$
+\mu : \Sigma \to \mathrm{Pos}(\mathcal{X})
+$$
+が**端点測定**であるとは、ある $\lambda \in (0,1)$ に対して
+$$
+\mu = \lambda \mu_0 + (1-\lambda)\mu_1
+$$
+を満たす任意の測定 $\mu_0,\mu_1 : \Sigma \to \mathrm{Pos}(\mathcal{X})$ について、必ず
+$$
+\mu_0 = \mu_1
+$$
+が成り立つことを言います。
+
+:::
+
+測定が端点でないなら、それは「複数の異なる測定器を古典確率で混ぜたもの」に過ぎません。端点測定は、そのような混合で代用できない「純粋な測定器」です。
+
+::: {#thm-extremal-measurement name="端点測定の判定条件 (Theorem 2.47)"}
+$\mathcal{X}$ を複素ユークリッド空間、$\Sigma$ をアルファベット、$\mu : \Sigma \to \mathrm{Pos}(\mathcal{X})$ を測定とします。$\mu$ が端点測定であるための必要十分条件は、
+$$
+\sum_{a \in \Sigma} \theta(a) = 0 \tag{2.266}
+$$
+および、すべての $a \in \Sigma$ に対して
+$$
+\mathrm{im}(\theta(a)) \subseteq \mathrm{im}(\mu(a))
+$$
+を満たすすべての関数
+$$
+\theta : \Sigma \to \mathrm{Herm}(\mathcal{X})
+$$
+に対して、必ず $\theta$ が恒等的にゼロ、すなわち
+$$
+\theta(a)=0 \qquad (\forall a \in \Sigma)
+$$
+となることです。
+
+:::
+
+この定理の心は、$\theta(a)$ を「POVM 条件を壊さずに各測定演算子を微小に動かす摂動」と読むことです。
+
+- $\sum_a \theta(a)=0$ は、総和条件 $\sum_a \mu(a)=\mathbb{1}$ を保つための条件
+- $\mathrm{im}(\theta(a)) \subseteq \mathrm{im}(\mu(a))$ は、正定値性を壊さずに $\mu(a)\pm \varepsilon \theta(a)$ を作るための条件
+
+したがって、これらを満たす非自明な $\theta$ が存在しないとは、「合法な微小変形の自由度がない」ということです。
+
+::: {.callout-note collapse="true" title="定理 2.47 の証明 [📄 pp.114-115](/assets/Quantum_Information.pdf#page=122)"}
+教科書の証明は対偶で進みます。
+
+**(A) まず、$\mu$ が端点でないと仮定する**
+
+このとき、異なる測定 $\mu_0,\mu_1 : \Sigma \to \mathrm{Pos}(\mathcal{X})$ と $\lambda \in (0,1)$ が存在して
+$$
+\mu = \lambda \mu_0 + (1-\lambda)\mu_1 \tag{2.267}
+$$
+となります。
+
+ここから、等重み平均の形
+$$
+\mu = \frac{\nu_0+\nu_1}{2} \tag{2.268}
+$$
+を満たす異なる測定 $\nu_0,\nu_1 : \Sigma \to \mathrm{Pos}(\mathcal{X})$ が作れます。具体的には、
+$$
+\begin{aligned}
+\nu_0 &= 2\lambda \mu_0 + (1-2\lambda)\mu_1,
+\qquad
+\nu_1 = \mu_1,
+\qquad &&\lambda \le \frac12 \text{ の場合}, \\
+\nu_0 &= \mu_0,
+\qquad
+\nu_1 = (2\lambda-1)\mu_0 + (2-2\lambda)\mu_1,
+\qquad &&\lambda \ge \frac12 \text{ の場合}
+\end{aligned} \tag{2.269}
+$$
+とすればよい。
+
+各 $a \in \Sigma$ に対して
+$$
+\theta(a)=\nu_0(a)-\nu_1(a)
+$$
+と定義します。すると
+$$
+\sum_{a \in \Sigma}\theta(a)
+=\sum_{a \in \Sigma}\nu_0(a)-\sum_{a \in \Sigma}\nu_1(a)
+=\mathbb{1}_{\mathcal{X}}-\mathbb{1}_{\mathcal{X}}
+=0 \tag{2.270}
+$$
+が成り立ちます。
+
+さらに各 $a \in \Sigma$ について
+$$
+\mathrm{im}(\theta(a))
+\subseteq
+\mathrm{im}(\nu_0(a))+\mathrm{im}(\nu_1(a))
+=
+\mathrm{im}(\mu(a)) \tag{2.271}
+$$
+が成り立ちます。最後の等号は、$\nu_0(a),\nu_1(a)$ が半正定値であり、
+$$
+\mu(a)=\frac{\nu_0(a)+\nu_1(a)}{2}
+$$
+であることから従います。しかも $\nu_0,\nu_1$ は異なるので、$\theta$ は恒等的にゼロではありません。
+
+**(B) 逆に、条件を満たす非自明な $\theta$ が存在すると仮定する**
+
+すなわち、恒等的にゼロでない関数 $\theta : \Sigma \to \mathrm{Herm}(\mathcal{X})$ で
+$$
+\sum_{a \in \Sigma}\theta(a)=0 \tag{2.272}
+$$
+を満たし、かつすべての $a \in \Sigma$ について
+$$
+\mathrm{im}(\theta(a))\subseteq \mathrm{im}(\mu(a))
+$$
+が成り立つと仮定します。
+
+各 $a \in \Sigma$ に対して、ある正数 $\varepsilon_a>0$ が存在して
+$$
+\mu(a)+\varepsilon_a\theta(a)\ge 0
+\qquad \text{および} \qquad
+\mu(a)-\varepsilon_a\theta(a)\ge 0 \tag{2.273}
+$$
+となります。ここで
+$$
+\varepsilon = \min\{\varepsilon_a : a \in \Sigma\} \tag{2.274}
+$$
+と置き、
+$$
+\mu_0=\mu-\varepsilon\theta,
+\qquad
+\mu_1=\mu+\varepsilon\theta \tag{2.275}
+$$
+と定義します。
+
+すると明らかに
+$$
+\mu = \frac{\mu_0+\mu_1}{2}
+$$
+です。$\theta$ が恒等的にゼロではなく、かつ $\varepsilon>0$ なので、$\mu_0$ と $\mu_1$ は異なります。
+
+最後に $\mu_0,\mu_1$ が測定であることを示します。仮定 (2.272) から
+$$
+\sum_{a \in \Sigma}\mu_0(a)
+=
+\sum_{a \in \Sigma}\mu_1(a)
+=
+\sum_{a \in \Sigma}\mu(a)
+=
+\mathbb{1}_{\mathcal{X}} \tag{2.276}
+$$
+が成り立ちます。また (2.273) により、各 $a$ について $\mu_0(a),\mu_1(a)$ は半正定値です。したがって $\mu_0,\mu_1$ は測定であり、しかも異なるので、$\mu$ は端点測定ではありません。
+
+以上で定理が示されます。
+
+:::
+
+#### Corollaries on extremal measurements (端点測定の系) [📄 p.116](/assets/Quantum_Information.pdf#page=124) {#corollaries-extremal-measurements}
+
+定理 2.47 から、測定の幾何学に関するいくつかの強い事実が直ちに導かれます。
+
+::: {#cor-2-48 name="系 2.48: 端点測定のアウトカム数の上限"}
+$\mathcal{X}$ を複素ユークリッド空間、$\Sigma$ をアルファベット、$\mu : \Sigma \to \mathrm{Pos}(\mathcal{X})$ を測定とします。もし $\mu$ が端点測定ならば、
+$$
+\left| \{ a \in \Sigma : \mu(a)\neq 0 \} \right| \le \dim(\mathcal{X})^2 \tag{2.277}
+$$
+が成り立ちます。
+
+:::
+
+この証明は対偶です。非零アウトカムの集合
+$$
+\Gamma = \{ a \in \Sigma : \mu(a)\neq 0 \} \tag{2.278}
+$$
+が $\dim(\mathcal{X})^2$ より多ければ、実ベクトル空間 $\mathrm{Herm}(\mathcal{X})$ の次元論から
+$$
+\sum_{a \in \Gamma} \alpha_a \mu(a) = 0 \tag{2.279}
+$$
+という、全てがゼロではない実数族 $\{\alpha_a : a \in \Gamma\}$ が存在します。そこで
+$$
+\theta(a)=
+\begin{cases}
+\alpha_a \mu(a) & a \in \Gamma \\
+0 & a \notin \Gamma
+\end{cases} \tag{2.280}
+$$
+と置きます。すると $\theta$ は恒等的にゼロではなく、さらに
+$$
+\sum_{a \in \Sigma}\theta(a)=0 \tag{2.281}
+$$
+が成り立ちます。また各 $a \in \Sigma$ について $\theta(a)$ は $\mu(a)$ の実数倍または $0$ なので、
+$$
+\mathrm{im}(\theta(a)) \subseteq \mathrm{im}(\mu(a))
+$$
+です。よって定理 2.47 により、$\mu$ は端点測定ではありません。
+
+::: {.callout-tip title="なぜ d^2 か"}
+$d=\dim(\mathcal{X})$ のとき、$\mathrm{Herm}(\mathcal{X})$ は実ベクトル空間として $d^2$ 次元です。つまり、POVM 要素を「実ベクトル」として見たとき、$d^2$ を超えると必ず線形従属が発生します。端点性は、その線形従属が許されないことの反映です。
+
+:::
+
+::: {#cor-2-49 name="系 2.49: 任意の測定の凸分解"}
+$\mathcal{X}$ を複素ユークリッド空間、$\Sigma$ をアルファベット、$\mu : \Sigma \to \mathrm{Pos}(\mathcal{X})$ を測定とします。このとき、あるアルファベット $\Gamma$、確率ベクトル $p \in \mathcal{P}(\Gamma)$、および各 $b \in \Gamma$ に対して
+$$
+\mu_b : \Sigma \to \mathrm{Pos}(\mathcal{X})
+$$
+なる測定の族が存在して、
+$$
+\left| \{ a \in \Sigma : \mu_b(a)\neq 0 \} \right| \le \dim(\mathcal{X})^2 \tag{2.282}
+$$
+かつ
+$$
+\mu = \sum_{b \in \Gamma} p(b)\mu_b \tag{2.283}
+$$
+と書けます。
+
+:::
+
+これは系 2.48 と、命題 2.38 によるコンパクト凸性、および定理 1.10 を組み合わせたものです。すなわち、任意の測定は端点測定の凸結合として書け、しかも各端点測定は系 2.48 により非零アウトカム数が高々 $d^2$ です。
+
+#### Rank-1 and projective cases (ランク1測定と射影測定) [📄 p.117](/assets/Quantum_Information.pdf#page=125) {#rank1-and-projective-extremality}
+
+ランク1測定と射影測定では、定理 2.47 の条件がさらに具体化されます。
+
+::: {#cor-2-50 name="系 2.50: ランク1測定の端点性"}
+$\mathcal{X}$ を複素ユークリッド空間、$\Sigma$ をアルファベット、
+$$
+\{x_a : a \in \Sigma\} \subset \mathcal{X}
+$$
+を
+$$
+\sum_{a \in \Sigma} x_a x_a^* = \mathbb{1}_{\mathcal{X}} \tag{2.284}
+$$
+を満たす非ゼロベクトルの族とします。各 $a \in \Sigma$ について
+$$
+\mu(a)=x_a x_a^*
+$$
+で定義される測定 $\mu$ が端点測定であるための必要十分条件は、
+$$
+\{x_a x_a^* : a \in \Sigma\} \subset \mathrm{Herm}(\mathcal{X})
+$$
+が線形独立であることです。
+
+:::
+
+証明は定理 2.47 と、エルミート演算子 $H \in \mathrm{Herm}(\mathcal{X})$ およびベクトル $u \in \mathcal{X}$ が
+$$
+\mathrm{im}(H)\subseteq \mathrm{im}(uu^*)
+$$
+を満たすことと、
+$$
+H=\alpha uu^*
+$$
+となるある $\alpha \in \mathbb{C}$ が存在することが同値である、という事実から従います。ランク1演算子 $\mu(a)=x_a x_a^*$ の場合、定理 2.47 に現れる摂動は必ず
+$$
+\theta(a)=\alpha_a x_a x_a^*
+$$
+という形に限られるので、条件
+$$
+\sum_{a \in \Sigma}\theta(a)=0
+$$
+はそのまま
+$$
+\sum_{a \in \Sigma}\alpha_a x_a x_a^* = 0
+$$
+となり、これは $\{x_a x_a^*\}$ の線形独立性と同値になります。
+
+::: {#cor-2-51 name="系 2.51: 射影測定は端点測定である"}
+$\mathcal{X}$ を複素ユークリッド空間、$\Sigma$ をアルファベット、$\mu : \Sigma \to \mathrm{Pos}(\mathcal{X})$ を射影測定とします。このとき、$\mu$ は端点測定です。
+
+:::
+
+証明では、まず関数 $\theta : \Sigma \to \mathrm{Herm}(\mathcal{X})$ が
+$$
+\sum_{a \in \Sigma}\theta(a)=0 \tag{2.285}
+$$
+および
+$$
+\mathrm{im}(\theta(a))\subseteq \mathrm{im}(\mu(a))
+$$
+を満たすと仮定します。各 $b \in \Sigma$ に対して両辺に $\mu(b)$ を左から掛けると、
+$$
+\sum_{a \in \Sigma} \mu(b)\theta(a)=0 \tag{2.286}
+$$
+となります。射影測定の直交性により
+$$
+\mu(b)\theta(a)=
+\begin{cases}
+\theta(a) & a=b \\
+0 & a\neq b
+\end{cases} \tag{2.287}
+$$
+が成り立つので、(2.286) の和で生き残るのは $a=b$ の項だけです。したがって
+$$
+\theta(b)=0
+$$
+がすべての $b \in \Sigma$ について従い、ゆえに $\theta$ は恒等的にゼロです。定理 2.47 より、$\mu$ は端点測定です。
+
+::: {.callout-note appearance="simple" title="ここまでの測定側のまとめ"}
+1. 測定の凸結合は「測定器をランダムに選んで、その選択ラベルを捨てる」操作
+2. 端点測定は、そのような混合で実現できない測定
+3. 端点測定の非零アウトカム数は高々 $d^2$
+4. ランク1 POVM では線形独立性が端点性と一致し、射影測定は常に端点
+
+この構造が、そのままアンサンブル側へ移ります。
+
+:::
+
+#### Convex combinations of ensembles of states (状態アンサンブルの凸結合) [📄 p.118](/assets/Quantum_Information.pdf#page=126) {#convex-structure-of-ensembles}
+
+状態のアンサンブルに対しても、測定と本質的に同じ方法で凸結合を定義できます。$\mathcal{X}$ を複素ユークリッド空間、$\Sigma,\Gamma$ をアルファベット、$p \in \mathcal{P}(\Gamma)$ を確率ベクトルとし、各 $b \in \Gamma$ に対して
+$$
+\eta_b : \Sigma \to \mathrm{Pos}(\mathcal{X}) \tag{2.288}
+$$
+をアンサンブルとするとき、
+$$
+\eta(a)=\sum_{b \in \Gamma} p(b)\eta_b(a) \tag{2.289}
+$$
+で定まる関数 $\eta : \Sigma \to \mathrm{Pos}(\mathcal{X})$ もアンサンブルです。このとき
+$$
+\eta = \sum_{b \in \Gamma} p(b)\eta_b \tag{2.290}
+$$
+と書きます。
+
+各 $\eta_b$ の平均状態を
+$$
+\rho_b = \sum_{a \in \Sigma} \eta_b(a) \tag{2.291}
+$$
+とすると、$\eta$ の平均状態は
+$$
+\sum_{a \in \Sigma}\eta(a)=\sum_{b \in \Gamma} p(b)\rho_b \tag{2.292}
+$$
+です。
+
+::: {.important-point}
+**アンサンブルは密度演算子そのものではない**:
+アンサンブル $\eta$ は、平均状態
+$$
+\rho = \sum_{a \in \Sigma}\eta(a)
+$$
+を、どの成分の混合として実現しているかという「分解データ」です。各成分は
+$$
+\eta(a)=p(a)\sigma_a
+$$
+と書け、$p(a)$ がそのラベルの出現確率、$\sigma_a$ が対応する状態です。
+
+:::
+
+全アンサンブルの集合の極値点は、スペクトル定理の直接の帰結として非常に単純です。
+
+::: {#def-extremal-ensemble name="極値アンサンブルの形"}
+全アンサンブル集合の極値点は、ある単位ベクトル $u \in \mathcal{X}$ とある記号 $b \in \Sigma$ に対して
+$$
+\eta(a)=
+\begin{cases}
+uu^* & a=b \\
+0 & a\neq b
+\end{cases} \tag{2.293}
+$$
+という形をしたアンサンブルです。
+
+:::
+
+これは「ただ一つのラベルだけを使い、しかもその状態が純粋状態である」という極端なケースです。平均状態を固定しない全アンサンブル集合では、これが最も分解不能な要素になります。
+
+::: {.callout-note title="測定とアンサンブルの対応をどう見るか"}
+測定では
+$$
+\sum_a \mu(a)=\mathbb{1},
+$$
+アンサンブルでは
+$$
+\sum_a \eta(a)=\rho
+$$
+です。違いは「全体の和」が単位演算子か、固定された平均状態か、という一点だけです。
+
+このため、平均状態 $\rho$ を固定したアンサンブルの集合は、測定の集合とほぼ同じ凸構造を持ちます。119〜120ページは、この対応を厳密に実行しています。
+
+:::
+
+#### Ensembles with a fixed average state (平均状態を固定したアンサンブル) [📄 p.119](/assets/Quantum_Information.pdf#page=127) {#decomposition-ensembles}
+
+ここからは平均状態 $\rho$ を固定します。すると話は急に豊かになります。同じ $\rho$ を与えるアンサンブルは一般に無数に存在し、それらの凸構造が問題になります。
+
+::: {#prop-2.52 name="命題 2.52: 平均状態を固定したアンサンブルの分解"}
+$\mathcal{X}$ を複素ユークリッド空間、$\Sigma$ をアルファベット、$\eta : \Sigma \to \mathrm{Pos}(\mathcal{X})$ を平均状態 $\rho \in \mathrm{D}(\mathcal{X})$ を持つアンサンブルとします。このとき、アルファベット $\Gamma$、確率ベクトル $p \in \mathcal{P}(\Gamma)$、および各 $b \in \Gamma$ に対して平均状態 $\rho$ を持つアンサンブル $\eta_b : \Sigma \to \mathrm{Pos}(\mathcal{X})$ の族が存在し、
+$$
+\eta = \sum_{b \in \Gamma} p(b)\eta_b \tag{2.294}
+$$
+かつ各 $b \in \Gamma$ に対して、$\eta_b$ が非零となるアウトカムの数は高々
+$$
+\mathrm{rank}(\rho)^2
+$$
+です。
+
+:::
+
+この命題の本質は、「平均状態を固定したアンサンブルの問題は、$\mathrm{rank}(\rho)$ 次元空間上の測定の問題へ変換できる」という点です。証明を数式通りに書くと次のようになります。
+
+まず $\dim(\mathcal{Y})=\mathrm{rank}(\rho)$ を満たす複素ユークリッド空間 $\mathcal{Y}$ を取り、
+$$
+AA^*=\rho \tag{2.295}
+$$
+を満たす演算子 $A \in \mathrm{L}(\mathcal{Y},\mathcal{X})$ を選びます。
+
+命題 2.5 により、各 $a \in \Sigma$ について
+$$
+\mathrm{im}(\eta(a)) \subseteq \mathrm{im}(\rho)
+$$
+が成り立つので、各 $a \in \Sigma$ に対して
+$$
+\eta(a)=AQ_aA^* \tag{2.296}
+$$
+を満たす $Q_a \in \mathrm{Pos}(\mathcal{Y})$ が一意に存在します。
+
+さらに、
+$$
+A\left(\sum_{a \in \Sigma}Q_a\right)A^*
+=
+\sum_{a \in \Sigma}\eta(a)
+=
+\rho
+=
+AA^* \tag{2.297}
+$$
+であり、$A$ は単射なので
+$$
+\sum_{a \in \Sigma}Q_a=\mathbb{1}_{\mathcal{Y}} \tag{2.298}
+$$
+が従います。したがって
+$$
+\mu(a)=Q_a \qquad (\forall a \in \Sigma)
+$$
+で定義される関数 $\mu : \Sigma \to \mathrm{Pos}(\mathcal{Y})$ は $\mathcal{Y}$ 上の測定です。
+
+#### Conclusion of the proof (証明の完了) [📄 p.120](/assets/Quantum_Information.pdf#page=128) {#conclusion-prop-2-52}
+
+測定の分解定理（系 2.49）を $\mu$ に適用すると、あるアルファベット $\Gamma$、確率ベクトル $p \in \mathcal{P}(\Gamma)$、および $\mathcal{Y}$ 上の端点測定の族 $\{\mu_b : b \in \Gamma\}$ が存在して
+$$
+\mu = \sum_{b \in \Gamma} p(b)\mu_b \tag{2.299}
+$$
+と書けます。各 $\mu_b$ は高々
+$$
+(\dim \mathcal{Y})^2 = \mathrm{rank}(\rho)^2
+$$
+個の非零アウトカムしか持ちません。
+
+そこで各 $b \in \Gamma$ に対して
+$$
+\eta_b(a)=A\mu_b(a)A^* \tag{2.300}
+$$
+と定義すると、
+$$
+\sum_{a \in \Sigma}\eta_b(a)
+=A\left(\sum_{a \in \Sigma}\mu_b(a)\right)A^*
+=A\mathbb{1}_{\mathcal{Y}}A^*
+=\rho \tag{2.301}
+$$
+なので、各 $\eta_b$ は平均状態 $\rho$ を持つアンサンブルです。さらに
+$$
+\sum_{b \in \Gamma} p(b)\eta_b(a)
+=A\left(\sum_{b \in \Gamma} p(b)\mu_b(a)\right)A^*
+=A\mu(a)A^*
+=\eta(a) \tag{2.302}
+$$
+がすべての $a \in \Sigma$ について成り立つので、$\eta$ は所望の凸分解を持ちます。
+
+::: {.callout-note title="命題 2.52 の読み方"}
+この命題は、複雑なアンサンブルを「単純なアンサンブルの古典混合」として整理できると言っています。ここでの単純さは、各アンサンブルが持つ非零アウトカム数が高々 $\mathrm{rank}(\rho)^2$ であることです。
+
+測定側で「端点測定は高々 $d^2$ 個の非零アウトカムしか持てない」と言ったのと完全に同じ構造が、平均状態固定アンサンブル側では $d=\mathrm{rank}(\rho)$ として現れます。
+
+:::
+
+::: {.callout-tip title="発表での直感的な言い換え"}
+アンサンブルは「状態のレシピ」です。命題 2.52 は、
+
+> 複雑なレシピも、少数の材料しか使わない単純なレシピたちを、古典確率で選ぶことで実現できる
+
+と言っています。その単純さの尺度が $\mathrm{rank}(\rho)^2$ です。
+
+:::
+
+#### Exercises (演習問題) [📄 p.120](/assets/Quantum_Information.pdf#page=128) {#measurement-exercises}
+
+この節の終わりには、測定とアンサンブルの対応をさらに抽象的・物理的に理解するための演習が置かれています。
+
+::: {#ex-2-1 name="Exercise 2.1"}
+$\Sigma$ をアルファベット、$\mathcal{X}$ を複素ユークリッド空間、
+$$
+\phi : \mathrm{Herm}(\mathcal{X}) \to \mathbb{R}^{\Sigma}
+$$
+を線形写像とします。任意の密度演算子 $\rho \in \mathrm{D}(\mathcal{X})$ に対して $\phi(\rho)$ が確率ベクトルになるための必要十分条件は、ある測定 $\mu$ が存在して、すべての $H \in \mathrm{Herm}(\mathcal{X})$ と $a \in \Sigma$ に対して
+$$
+(\phi(H))(a)=\langle \mu(a), H \rangle \tag{2.303}
+$$
+が成り立つことであることを示せ。
+
+:::
+
+::: {#ex-2-2 name="Exercise 2.2"}
+$\mathcal{X}$ を複素ユークリッド空間、$\Sigma$ をアルファベット、$\eta : \Sigma \to \mathrm{Pos}(\mathcal{X})$ を平均状態 $\rho \in \mathrm{D}(\mathcal{X})$ を持つアンサンブルとする。さらに、$\mathcal{Y}$ を複素ユークリッド空間、$u \in \mathcal{X}\otimes\mathcal{Y}$ を
+$$
+\mathrm{Tr}_{\mathcal{Y}}(uu^*)=\rho
+$$
+を満たす $\rho$ の浄化とする。このとき、ある測定
+$$
+\mu : \Sigma \to \mathrm{Pos}(\mathcal{Y})
+$$
+が存在して、すべての $a \in \Sigma$ に対して
+$$
+\eta(a)=\mathrm{Tr}_{\mathcal{Y}}\left((\mathbb{1}_{\mathcal{X}}\otimes \mu(a))uu^*\right) \tag{2.304}
+$$
+が成り立つことを示せ。
+
+:::
+
+::: {.callout-note title="Exercise 2.2 の物理的意味"}
+演習 2.2 は、アンサンブルが「浄化された純粋状態の片側に対する測定」の結果として実現できることを述べています。つまり、
+
+- アンサンブルの分解自由度
+- 補助系への局所測定の自由度
+
+は本質的に同じものです。これにより、なぜ測定とアンサンブルがここまで密接に対応しているのかが、物理的にも説明されます。
+
+:::
