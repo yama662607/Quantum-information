@@ -1,3 +1,12 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
 # Python-generated files
 __pycache__/
 *.py[oc]
@@ -12,11 +21,13 @@ wheels/
 # Quarto-generated files
 _output/
 quarto/_freeze/
-docs/_freeze/
 .quarto/
-quarto/textbook/*/*.html
-quarto/textbook/*/*_files/
-docs/*.html
-docs/*_files/
+quarto/textbook-*/*/*.html
+quarto/textbook-*/*/*_files/
+research/*.html
+research/*_files/
 tools/.validation_cache.json
 node_modules/
+
+# Local data
+.data/
