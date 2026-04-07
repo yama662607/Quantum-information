@@ -14,7 +14,7 @@ def extract_latex_from_images(image_paths, quiet=False):
         # Initialize Pix2Text
         # MFD: Mathematical Formula Detection
         # MFR: Mathematical Formula Recognition
-        p2t = Pix2Text()
+        p2t = Pix2Text(device="cpu")
 
         for img_path in image_paths:
             if not os.path.exists(img_path):

@@ -1,0 +1,147 @@
+# 2.5 アンサンブル解釈の曖昧さ (Ambiguity of the ensemble interpretation) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=26) {#sec-2.5-ambiguity}
+
+## 2.5.1 凸性 (Convexity) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=26) {#sec-2.5.1-convexity}
+
+ヒルベルト空間 $\mathcal{H}$ に作用する演算子 $\boldsymbol{\rho}$ が密度演算子として解釈できるのは、以下の3つの性質を持つ場合であることを思い出してください：
+
+(1) $\boldsymbol{\rho}$ は自己共役である。
+(2) $\boldsymbol{\rho}$ は非負（正値）である。
+(3) $\text{tr}(\boldsymbol{\rho}) = 1$。
+
+これらの性質を満たす演算子の集合は**凸集合（convex set）**を形成します。つまり、$\boldsymbol{\rho}_1$ と $\boldsymbol{\rho}_2$ が密度演算子である場合、任意の $0 \le \lambda \le 1$ に対して線形結合
+$$
+\boldsymbol{\rho}(\lambda) = \lambda \boldsymbol{\rho}_1 + (1-\lambda) \boldsymbol{\rho}_2
+$$
+もまた密度演算子となります（自己共役で非負であり、トレースが1であるため）。この凸集合を表現する自然な物理的解釈があります：$\boldsymbol{\rho}(\lambda)$ は、確率 $\lambda$ で状態 $\boldsymbol{\rho}_1$ が準備され、確率 $1-\lambda$ で状態 $\boldsymbol{\rho}_2$ が準備された場合の系の状態を表します。
+
+凸集合において、集合内の他の元の凸結合（和）として表現できない元を**極値点（extremal point）**と呼びます。密度演算子の凸集合における極値点は**純粋状態（pure states）**です。純粋状態は、他のいかなる状態のアンサンブルのようにも振る舞うことができません。逆に、すべての混合状態（mixed state）は、極値点である純粋状態の凸結合として表現できます。
+
+数学的には、これは「$\boldsymbol{\rho}$ を極値状態の和として何通りに表現できるか？」という問いになります。
+単一のクビットについて考えてみましょう。ブロッホ球の球面上にある状態が純粋状態であり、内部の点が混合状態です。ブロッホ球の中心点
+$$
+\boldsymbol{\rho} = \frac{1}{2} \boldsymbol{I}
+$$
+を考えてみます。これは、純粋状態のアンサンブルとして無限のバリエーションで準備することができます。例えば、
+$$
+\boldsymbol{\rho} = \frac{1}{2} |\uparrow_z\rangle\langle\uparrow_z| + \frac{1}{2} |\downarrow_z\rangle\langle\downarrow_z|,
+$$ {#eq-2.102}
+とすれば、確率 $1/2$ ずつで $|\uparrow_z\rangle$ または $|\downarrow_z\rangle$ を準備することで $\boldsymbol{\rho}$ を得ることができます。しかし同時に、
+$$
+\boldsymbol{\rho} = \frac{1}{2} |\uparrow_x\rangle\langle\uparrow_x| + \frac{1}{2} |\downarrow_x\rangle\langle\downarrow_x|,
+$$ {#eq-2.103}
+とすれば、確率 $1/2$ ずつで $|\uparrow_x\rangle$ または $|\downarrow_x\rangle$ を準備することでも $\boldsymbol{\rho}$ を得ることができます。これら2つの準備手順は明らかに異なります。しかし、スピンのいかなる観測を行っても、その違いを見分けることは不可能です。
+
+より一般的に、ブロッホ球の中心点は、球面上の任意の2つの対蹠点（互いに反対側にある点）の和となります。すなわち、確率 $1/2$ で $|\uparrow_{\hat{n}}\rangle$ と $|\downarrow_{\hat{n}}\rangle$ のいずれかを準備すれば、$\boldsymbol{\rho} = \frac{1}{2}\boldsymbol{I}$ が生成されます。
+
+$\boldsymbol{\rho}$ が2つ（以上）の縮退した固有値を持つ場合にのみ、互いに直交する純粋状態のアンサンブルから $\boldsymbol{\rho}$ を生成する異なる方法が存在します。しかし、互いに直交する純粋状態のアンサンブルだけに注目を限定する正当な理由はありません。ブロッホ球の内部の点
+$$
+\boldsymbol{\rho}(\vec{P}) = \frac{1}{2} (\boldsymbol{I} + \vec{P} \cdot \vec{\boldsymbol{\sigma}}),
+$$ {#eq-2.104}
+を考えてみましょう。ここで $0 < |\vec{P}| < 1$ です。これもまた
+$$
+\boldsymbol{\rho}(\vec{P}) = \lambda \boldsymbol{\rho}(\hat{n}_1) + (1-\lambda) \boldsymbol{\rho}(\hat{n}_2),
+$$ {#eq-2.105}
+として表現できます。ただし、$\vec{P} = \lambda \hat{n}_1 + (1-\lambda) \hat{n}_2$ を満たすものとします（言い換えれば、$\vec{P}$ が球面上の点 $\hat{n}_1$ と $\hat{n}_2$ を結ぶ線分上のどこかにある場合）。明らかに、任意の $\vec{P}$ に対して、点 $\vec{P}$ を通るブロッホ球の任意の弦（chord）に関連付けられた純粋状態の凸結合として $\boldsymbol{\rho}(\vec{P})$ を表現することができます。そのようなすべての弦は2パラメータのファミリーを構成します。
+
+このように、混合量子状態の準備に関する高度に曖昧な性質は、古典的な確率分布とは対照的な、量子情報の特徴的な性質の一つです。
+
+## 2.5.2 アンサンブルの準備 (Ensemble preparation) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=28) {#sec-2.5.2-ensemble-preparation}
+（この部分は、上記の凸性の議論と連続しています。古典的なビットの確率分布は単体（simplex）を構成し、その分解が一意に定まるのに対し、量子系の混合状態は極値状態の分解が一意に定まらないという特徴を説明しています。）
+
+## 2.5.3 光速より速い？ (Faster than light?) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=30) {#sec-2.5.3-faster-than-light}
+
+系 $A$ の混合状態は、$A$ が系 $B$ とエンタングルしているから生じるという、以前の視点に戻りましょう。これを用いて、混合状態の準備が曖昧であることの含意をさらに検討します。もしクビット $A$ が密度行列
+$$
+\boldsymbol{\rho}_A = \frac{1}{2} |\uparrow_z\rangle\langle\uparrow_z| + \frac{1}{2} |\downarrow_z\rangle\langle\downarrow_z|
+$$ {#eq-2.106}
+を持つ場合、この密度行列は以下のシュミット分解を持つエンタングルした二部系の純粋状態 $|\psi\rangle_{AB}$ から生じた可能性があります：
+$$
+|\psi\rangle_{AB} = \frac{1}{\sqrt{2}} (|\uparrow_z\rangle_A |\uparrow_z\rangle_B + |\downarrow_z\rangle_A |\downarrow_z\rangle_B).
+$$ {#eq-2.107}
+したがって、$|\uparrow_z\rangle_A$ または $|\downarrow_z\rangle_A$ が準備される（各確率 $p = 1/2$）という $\boldsymbol{\rho}_A$ のアンサンブル解釈は、クビット $B$ の測定を行うことによって実現できます。クビット $B$ を $\{|\uparrow_z\rangle_B, |\downarrow_z\rangle_B\}$ 基底で測定します。もし結果 $|\uparrow_z\rangle_B$ が得られれば $|\uparrow_z\rangle_A$ を準備したことになり、結果 $|\downarrow_z\rangle_B$ が得られれば $|\downarrow_z\rangle_A$ を準備したことになります。
+
+しかし、すでに述べたように、この場合 $\boldsymbol{\rho}_A$ は縮退した固有値を持つため、シュミット基底は一意ではありません。二部純粋状態 $|\psi\rangle_{AB}$ を変更することなく、クビット $A$ と $B$ に同時ユニタリ変換を適用できます。したがって、任意の単位3次元ベクトル $\hat{n}$ に対して、$|\psi\rangle_{AB}$ は以下の形式のシュミット分解を持ちます：
+$$
+|\psi\rangle_{AB} = \frac{1}{\sqrt{2}} (|\uparrow_{\hat{n}}\rangle_A |\uparrow_{\hat{n}'}\rangle_B + |\downarrow_{\hat{n}}\rangle_A |\downarrow_{\hat{n}'}\rangle_B).
+$$ {#eq-2.108}
+クビット $B$ を適切な基底で測定することにより、2つの純粋状態のアンサンブルとしての $\boldsymbol{\rho}_A$ のいかなる解釈も実現できることがわかります。
+
+この性質は、光速より速い通信（faster-than-light communication）のメカニズムを示唆しているように見えます。$|\psi\rangle_{AB}$ の多くのコピーが準備されます。アリス（Alice）はすべての $A$ クビットをアンドロメダ銀河に持っていき、ボブ（Bob）は地球上のすべての $B$ クビットを保持します。
+ボブがアリスに1ビットのメッセージを送りたいとき、彼はすべてのスピンに対して $\boldsymbol{\sigma}_1$ または $\boldsymbol{\sigma}_3$ のどちらかを測定することを選択し、それによってアリスのスピンを $\{|\uparrow_z\rangle_A, |\downarrow_z\rangle_A\}$ または $\{|\uparrow_x\rangle_A, |\downarrow_x\rangle_A\}$ のいずれかのアンサンブルで準備します。アリスはメッセージを読むために、即座に自分のスピンを測定し、どのアンサンブルが準備されたかを確認します。
+
+この仕組みには欠陥があります。2つの準備方法は確かに異なりますが、どちらのアンサンブルも全く同じ密度行列 $\boldsymbol{\rho}_A$ によって記述されるためです。したがって、アリスが行える測定の中で、これら2つのアンサンブルを区別できるものは存在せず、アリスがボブの行った操作を知る方法はありません。「メッセージ」は解読不可能なのです。
+
+## 2.5.4 量子消去 (Quantum erasure) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=31) {#sec-2.5.4-quantum-erasure}
+
+密度行列 $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$ は、純粋状態 $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ の非コヒーレントな混合状態にあるスピンを記述すると述べました。これは、これら状態のコヒーレントな重ね合わせとは区別されるべきです。例えば
+$$
+|\uparrow_x, \downarrow_x\rangle = \frac{1}{\sqrt{2}} (|\uparrow_z\rangle \pm |\downarrow_z\rangle);
+$$ {#eq-2.109}
+コヒーレントな重ね合わせの場合、2つの状態の相対位相は観測可能な結果をもたらします（$|\uparrow_x\rangle$ と $|\downarrow_x\rangle$ を区別します）。非コヒーレントな混合状態の場合、相対位相は完全に観測不可能です。スピン $A$ が別のスピン $B$ とエンタングルし、スピン $B$ がアクセス不能になると、重ね合わせは非コヒーレントになります。
+
+発見的に言えば、状態 $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ が干渉できる（これらの状態の相対位相が観測できる）のは、スピン状態が $|\uparrow_z\rangle_A$ なのか $|\downarrow_z\rangle_A$ なのかについて、私たちが全く情報を持っていない場合のみです。スピン $A$ をスピン $B$ とエンタングルさせることは、スピン $B$ の適切な測定によってスピン $A$ が z軸に沿ってアップかダウンかを決定することが原理的に可能になるため、干渉を破壊します（スピン $A$ をデコヒーレンスさせます）。
+
+しかし、「エンタングルメントがデコヒーレンスを引き起こす」という主張には条件が必要であることがわかりました。ボブがスピン $B$ を x軸に沿って測定し、結果 $|\uparrow_x\rangle_B$ または $|\downarrow_x\rangle_B$ のいずれかを得て、その測定結果をアリスに送信したとしましょう。すると、アリスのスピンは純粋状態（$|\uparrow_x\rangle_A$ または $|\downarrow_x\rangle_A$）になり、実際には $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ のコヒーレントな重ね合わせになります。デコヒーレンスの顎が閉じる前に、私たちはアリスのスピンの純粋性を回復することに成功したのです！
+
+この状況は**量子消去（quantum eraser）**と呼ばれています。2つのスピンをエンタングルさせることは、スピン $B$ を観測することでスピン $A$ のアップダウンを知ることができるため、コヒーレンスが失われる「測定状況」を作り出します。しかし、スピン $B$ を x軸に沿って測定すると、この情報は「消去」されます。ボブの測定がアリスのスピンに関する「どの道（which way）」の情報を保持しないため、スピン $A$ は再びコヒーレントな重ね合わせとして振る舞うことが可能になります（そしてボブの結果をアリスが聞いた後、実際にそう振る舞います）。
+
+## 2.5.5 HJW 定理 (The HJW theorem) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=34) {#sec-2.5.5-hjw-theorem}
+
+これまでは、等確率の互いに直交する状態のアンサンブル（すなわち $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$）によって記述される単一のクビットの文脈でのみ、量子消去を考えてきました。この議論は大幅に一般化できます。
+
+密度行列 $\boldsymbol{\rho}_A$ に対して、純粋状態のアンサンブルとしての実現の1つを考えます：
+$$
+\boldsymbol{\rho}_A = \sum_i p_i |\varphi_i\rangle\langle\varphi_i|, \quad \sum_i p_i = 1.
+$$ {#eq-2.111}
+ここで状態 $\{|\varphi_i\rangle_A\}$ はすべて規格化されたベクトルですが、互いに直交しているとは仮定しません。これに対して、部分トレースを取ると $\boldsymbol{\rho}_A$ を与える二部系の純粋状態 $|\Phi_1\rangle_{AB}$（$\boldsymbol{\rho}_A$ の**純粋化（purification）**）を構成できます：
+$$
+|\Phi_1\rangle_{AB} = \sum_i \sqrt{p_i} |\varphi_i\rangle_A \otimes |\alpha_i\rangle_B;
+$$ {#eq-2.112}
+ここでベクトル $|\alpha_i\rangle_B \in \mathcal{H}_B$ は互いに直交して規格化されています：
+$$
+\langle\alpha_i|\alpha_j\rangle = \delta_{ij}.
+$$ {#eq-2.113}
+すると明らかに、
+$$
+\text{tr}_B(|\Phi_1\rangle\langle\Phi_1|) = \boldsymbol{\rho}_A
+$$ {#eq-2.114}
+となります。系 $B$ において $\{|\alpha_i\rangle_B\}$ 基底へ射影する直交測定を行うと、結果 $|\alpha_i\rangle_B$ が確率 $p_i$ で発生し、系 $A$ の純粋状態 $|\varphi_i\rangle\langle\varphi_i|$ を準備します。
+
+ここで、同じ密度行列 $\boldsymbol{\rho}_A$ の別の実現として：
+$$
+\boldsymbol{\rho}_A = \sum_\mu q_\mu |\psi_\mu\rangle\langle\psi_\mu|,
+$$ {#eq-2.115}
+を考えます。このアンサンブルに対しても、対応する純粋化が存在します：
+$$
+|\Phi_2\rangle_{AB} = \sum_\mu \sqrt{q_\mu} |\psi_\mu\rangle_A \otimes |\beta_\mu\rangle_B.
+$$ {#eq-2.116}
+ここで $\{|\beta_\mu\rangle_B\}$ は $\mathcal{H}_B$ の正規直交ベクトルです。
+
+$|\Phi_1\rangle_{AB}$ と $|\Phi_2\rangle_{AB}$ はどのように関連しているでしょうか？ 容易に示せるように、以下の関係が成り立ちます：
+$$
+|\Phi_1\rangle_{AB} = (\boldsymbol{I}_A \otimes \boldsymbol{U}_B)|\Phi_2\rangle_{AB};
+$$ {#eq-2.117}
+すなわち、2つの状態は $\mathcal{H}_B$ 単独に作用するユニタリ基底変換によって結びついており、
+$$
+|\Phi_1\rangle_{AB} = \sum_\mu \sqrt{q_\mu} |\psi_\mu\rangle_A \otimes |\gamma_\mu\rangle_B,
+$$ {#eq-2.118}
+と書くことができます。ここで
+$$
+|\gamma_\mu\rangle_B = \boldsymbol{U}_B |\beta_\mu\rangle_B
+$$ {#eq-2.119}
+は $\mathcal{H}_B$ のもう一つの正規直交基底です。したがって、$\boldsymbol{\rho}_A$ の「単一の純粋化」$|\Phi_1\rangle_{AB}$ が存在し、系 $B$ において適切な観測量を測定することを選択するだけで、$\{|\varphi_i\rangle_A\}$ アンサンブルか $\{|\psi_\mu\rangle_A\}$ アンサンブルのいずれかを実現できることがわかります！
+
+これが Hughston, Jozsa, Wootters による **HJW 定理**です。これは、量子消去現象を最も一般的な形式で表現しています。
+
+実際、HJW 定理はシュミット分解の簡単な系（corollary）です。$|\Phi_1\rangle_{AB}$ と $|\Phi_2\rangle_{AB}$ はどちらもシュミット分解を持ち、部分トレースを取るとどちらも同じ $\boldsymbol{\rho}_A$ を与えるため、これらの分解は以下の形式を持たなければなりません：
+$$
+\begin{aligned}
+|\Phi_1\rangle_{AB} &= \sum_k \sqrt{\lambda_k} |k\rangle_A \otimes |k_1'\rangle_B, \\
+|\Phi_2\rangle_{AB} &= \sum_k \sqrt{\lambda_k} |k\rangle_A \otimes |k_2'\rangle_B,
+\end{aligned}
+$$ {#eq-2.120}
+ここで $\lambda_k$ は $\boldsymbol{\rho}_A$ の固有値であり、$|k\rangle_A$ は対応する固有ベクトルです。$\{|k_1'\rangle_B\}$ と $\{|k_2'\rangle_B\}$ はどちらも $\mathcal{H}_B$ の正規直交基底であるため、以下を満たすユニタリ演算子 $\boldsymbol{U}_B$ が存在します：
+$$
+|k_1'\rangle_B = \boldsymbol{U}_B |k_2'\rangle_B.
+$$ {#eq-2.121}
+これにより、定理が証明されます。

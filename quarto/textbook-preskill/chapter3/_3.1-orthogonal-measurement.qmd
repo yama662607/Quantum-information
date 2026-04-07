@@ -1,0 +1,186 @@
+## 3.1 直交測定とその先へ (Orthogonal measurement and beyond) {#sec-3.1-orthogonal-measurement-and-beyond}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=4)
+
+Chapter 2 では、より大きなシステムの一部である「開いた量子系（open quantum system）」の状態をどのように記述するかを議論しました。本章では、開いた量子系の理論をさらに拡張します。特に、補助系（auxiliary system）を利用して行われる**一般化測定（generalized measurements）**と、開いた系の発展を記述する**量子チャネル（quantum channels）**という2つの重要な概念を展開します。
+
+### 3.1.1 直交測定 (Orthogonal Measurements) {#sec-3.1.1-orthogonal-measurements}
+
+量子理論の一つの公理は、測定が直交射影演算子（orthogonal projection operator）として記述されることを主張しています。しかし、システム $S$ の測定が、$S$ を含むより大きなシステムに対して直交測定を行うことによって実現される場合、$S$ 単独に対して行われる結果としての操作は、必ずしも直交射影である必要はありません。私たちは、システム $S$ 上のそのような「一般化測定」の数学的記述を見つけたいと考えています。しかし、まずはフォン・ノイマンの古典的な扱いに従い、任意のエルミート演算子の測定が原理的にどのように達成されるかを振り返ってみましょう。
+
+観測量 $\boldsymbol{M}$ を測定するために、その観測量と、装置（apparatus）を表す別の変数との間の結合をオンにすることで、世界のハミルトニアンを修正します。文脈に応じて、測定に使用される補助系のことを「指針（pointer）」、「メーター（meter）」、あるいは「**アンシラ（ancilla）**」と呼びます。（「アンシラ」という言葉は、所望の目的を達成するために使用される「余分なもの」を意味します。） 結合は、観測量の固有状態と指針の区別可能な状態との間に相関を確立し、それによって指針を「観察」することで観測量の固有状態を準備できるようにします。
+
+これは、指針をどのように測定するかを説明していないため、測定の完全に満足のいくモデルのようには見えないかもしれません。フォン・ノイマンの態度は、ミクロな量子系の状態をマクロな古典変数の値と相関させることは原理的に可能であり、私たちが古典変数の値を認識できることは当然のこととして受け入れてよいというものでした。したがって、量子測定とは、ミクロな世界の性質を増幅し、マクロな世界でそれを明白にするための手順です。
+
+指針を、測定対象の量子系との調整可能な結合を除けば自由に伝搬する、質量 $m$ の粒子として考えることができます。指針の位置を測定しようとしているため、指針は最初は位置空間において狭い波束状態に準備されるべきです。ただし、あまりに狭すぎてはいけません。なぜなら、非常に狭い波束は急速に広がってしまうからです。もし波束の初期幅が $\Delta x$ であれば、速度の不確定性は $\Delta v = \Delta p / m \sim \hbar / m \Delta x$ のオーダーとなり、時間 $t$ の後、波束は次の幅まで広がります： [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=5)
+$$
+\Delta x(t) \sim \Delta x + \frac{\hbar t}{m \Delta x};
+$$ {#eq-3.1}
+これは $(\Delta x(t))^2 \sim (\Delta x)^2 \sim \hbar t / m$ のとき最小化されます。したがって、実験に時間 $t$ がかかる場合、指針の最終位置に対して達成できる分解能は
+$$
+\Delta x \gtrsim (\Delta x)_{SQL} \sim \sqrt{\frac{\hbar t}{m}}
+$$ {#eq-3.2}
+によって制限されます。これが「標準量子限界（standard quantum limit）」です。私たちは、この制限が深刻にならないほど十分に重い指針を選択することにします。
+
+量子系と指針の結合を記述するハミルトニアンは、次の形式を持ちます：
+$$
+\boldsymbol{H} = \boldsymbol{H}_0 + \frac{1}{2m} \boldsymbol{P}^2 + \lambda(t) \boldsymbol{M} \otimes \boldsymbol{P};
+$$ {#eq-3.3}
+ここで $\boldsymbol{P}^2 / 2m$ は自由な指針粒子のハミルトニアンであり（指針が非常に重く、波束の広がりが無視できるという理由で、今後は無視します）、$\boldsymbol{H}_0$ は測定対象のシステムの非摂動ハミルトニアン、$\lambda$ は必要に応じてオン・オフできる結合定数です。測定される観測量 $\boldsymbol{M}$ は、指針の運動量 $\boldsymbol{P}$ と結合しています。
+
+もし $\boldsymbol{M}$ が $\boldsymbol{H}_0$ と可換でない場合、測定の過程で観測量 $\boldsymbol{M}$ がどのように発展するかを心配する必要があります。分析を単純化するために、$[\boldsymbol{M}, \boldsymbol{H}_0] = 0$ であるか、あるいは測定が十分に迅速に行われ、測定手順中にシステムの自由な発展が無視できると仮定しましょう。測定手順全体のユニタリ変換は
+$$
+\boldsymbol{U} = \exp\left( -i \left( \int \lambda(t) dt \right) \boldsymbol{M} \otimes \boldsymbol{P} \right)
+$$ {#eq-3.4}
+となります。ここで $\bar{\lambda} = \int \lambda(t) dt$ を測定の強度（strength）と呼びます。$\boldsymbol{P}$ は指針の位置 $\boldsymbol{x}$ の共役運動量であるため、演算子 $\exp(-i \bar{\lambda} \boldsymbol{M} \otimes \boldsymbol{P})$ は、システムの固有状態に応じた指針の位置の空間移動（translation）を引き起こします。もしシステムの初期状態が $\boldsymbol{M}$ の固有状態 $|a\rangle$ であり、
+$$
+\boldsymbol{M}|a\rangle = a|a\rangle
+$$ {#eq-3.5}
+であれば、指針の位置は $x = \bar{\lambda} a$ だけシフトします。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=6)
+
+もし指針の初期状態が、原点付近に中心を持つ位置空間の波関数 $E(x)$ を持っていれば、最終的な波関数は $E(x - \bar{\lambda} a)$ となります。もし指針の初期状態 $E(x)$ が十分に狭く、異なる固有値 $a$ に対応するシフトした波関数 $E(x - \bar{\lambda} a)$ 同士の重ね合わせが無視できるほどであれば、指針の位置を測定することで $\boldsymbol{M}$ の固有値を確実に特定できます。
+
+システム $S$ の初期状態が固有状態の重ね合わせ
+$$
+|\psi\rangle_S = \sum_a \alpha_a |a\rangle_S
+$$ {#eq-3.6}
+である場合、結合後のシステムと指針の全状態は
+$$
+\boldsymbol{U}(|\psi\rangle_S \otimes |E\rangle_P) = \sum_a \alpha_a |a\rangle_S \otimes |E_a\rangle_P
+$$ {#eq-3.7}
+となります。ここで $|E_a\rangle_P$ は $x = \bar{\lambda} a$ だけシフトした波関数を持つ指針の状態です。指針の位置を測定して $x = \bar{\lambda} a_0$ という結果を得た場合、全状態は $|a_0\rangle_S \otimes |E_{a_0}\rangle_P$ へと射影されます。したがって、システム $S$ は $\boldsymbol{M}$ の固有状態 $|a_0\rangle_S$ に準備されたことになります。
+
+これは、標準的なフォン・ノイマンの測定モデルです。このモデルでは、測定とはシステムと装置の間の「エンタングルメントの確立」と、その後の装置の「古典的な観察」という2つのステップから構成されます。
+
+しかし、現実の測定は必ずしもこのように理想的ではありません。例えば：
+
+1. **不完全な分解能**：指針の初期状態 $|E\rangle_P$ が十分に狭くない場合、異なる固有値に対応する $|E_a\rangle_P$ が重なり合い、固有値を完全には区別できなくなります。
+2. **非選択的測定**：指針を測定した結果を知ることができない（あるいはあえて無視する）場合、システム $S$ は混合状態になります。
+3. **補助系の自由度**：指針が単一の自由度ではなく、多くの自由度を持つ複雑なシステムである場合、その発展はより複雑になります。
+
+物体の磁気モーメントは $\mu \vec{\sigma}$ であり、磁場によって誘発される結合は次のようになります：
+$$
+\boldsymbol{H} = -\lambda \mu z \boldsymbol{\sigma}_3.
+$$ {#eq-3.10}
+この場合、測定される観測量は $\boldsymbol{\sigma}_3$ であり、これは指針の運動量ではなく位置 $z$ と結合しています。したがって、$z$ が $P_z$ の並進（translation）を生成するため、結合はスピンと相関したインパルスを指針に与えます。私たちは物体が上または下のどちらに押し出されたかを認識することができ、それによってスピン状態 $|\uparrow_z\rangle$ または $|\downarrow_z\rangle$ を射影できます。磁石を回転させることで、代わりに観測量 $\hat{n} \cdot \vec{\boldsymbol{\sigma}}$ を測定することも可能です。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=7)
+
+より抽象的に考えると、$\{\boldsymbol{E}_a, a = 0, 1, 2, \dots, N-1\}$ が次の条件を満たす直交射影演算子の完全集合であるとしましょう：
+$$
+\boldsymbol{E}_a \boldsymbol{E}_b = \delta_{ab} \boldsymbol{E}_a, \quad \boldsymbol{E}_a = \boldsymbol{E}_a^\dagger, \quad \sum_a \boldsymbol{E}_a = \boldsymbol{I}.
+$$ {#eq-3.11}
+これらの結果を持つ直交測定を実行するために、標準（fiducial）正規直交基底状態 $\{|a\rangle, a = 0, 1, 2, \dots, N-1\}$ を持つ $N$ 次元の指針システムを導入し、システムを指針に結合させることで、次のユニタリ変換を実行します：
+$$
+\boldsymbol{U} = \sum_{a,b} \boldsymbol{E}_a \otimes |b+a\rangle\langle b|.
+$$ {#eq-3.12}
+したがって、システムの計算状態が射影演算子 $\boldsymbol{E}_a$ の台（support）内にある場合、指針は $a$ だけ進みます。（$|b+a\rangle$ における加算は法 $N$ で理解されます。指針を $N$ 個の等間隔の目盛りが付いた円形のダイヤルとして想像することができます。） $\boldsymbol{U}$ のユニタリ性は簡単に検証できます：
+$$
+\begin{aligned}
+\boldsymbol{U} \boldsymbol{U}^\dagger &= \left( \sum_{a,b} \boldsymbol{E}_a \otimes |b+a\rangle\langle b| \right) \left( \sum_{c,d} \boldsymbol{E}_c \otimes |d\rangle\langle d+c| \right) \\
+&= \sum_{a,b,c,d} \delta_{ac} \boldsymbol{E}_a \otimes \delta_{bd} |b+a\rangle\langle d+c| \\
+&= \sum_a \boldsymbol{E}_a \otimes \sum_b |b+a\rangle\langle b+a| = \boldsymbol{I} \otimes \boldsymbol{I}.
+\end{aligned}
+$$ {#eq-3.13}
+このユニタリ変換は、システムと指針の初期積状態に対して次のように作用します：
+$$
+\boldsymbol{U} : |\Psi\rangle = |\psi\rangle \otimes |0\rangle \mapsto |\Psi'\rangle = \sum_a \boldsymbol{E}_a |\psi\rangle \otimes |a\rangle;
+$$ {#eq-3.14}
+指針が標準基底で測定されると、測定の公理により、結果 $a$ は次の確率で発生します：
+$$
+\text{Prob}(a) = \langle\Psi'| (\boldsymbol{I} \otimes |a\rangle\langle a|) |\Psi'\rangle = \langle\psi| \boldsymbol{E}_a |\psi\rangle,
+$$ {#eq-3.15}
+そして、この結果が発生したとき、規格化された測定後の状態は次のようになります：
+$$
+\frac{\boldsymbol{E}_a |\psi\rangle}{\|\boldsymbol{E}_a |\psi\rangle\|}.
+$$ {#eq-3.16}
+測定が実行され、その結果がわからない場合、システムの初期純粋状態はこれらの測定後状態の混合状態となります： [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=8)
+$$
+\sum_a \text{Prob}(a) \frac{\boldsymbol{E}_a |\psi\rangle\langle\psi| \boldsymbol{E}_a}{\langle\psi| \boldsymbol{E}_a |\psi\rangle} = \sum_a \boldsymbol{E}_a |\psi\rangle\langle\psi| \boldsymbol{E}_a.
+$$ {#eq-3.17}
+実際、システムが指針とエンタングルした時点で、私たちが指針を観察するかどうかにかかわらず、システムはこの密度演算子によって記述されます。もし測定前のシステムの初期状態が密度行列 $\boldsymbol{\rho}$ を持つ混合状態であれば、$\boldsymbol{\rho}$ を純粋状態のアンサンブルとして表現することにより、測定が状態を次のように修正すると結論づけられます：
+$$
+\boldsymbol{\rho} \mapsto \sum_a \boldsymbol{E}_a \boldsymbol{\rho} \boldsymbol{E}_a.
+$$ {#eq-3.18}
+私たちの指針をシステムに結合させることで、システムと指針を相関させる適切なユニタリ変換を実行でき、かつ指針をその標準基底で観察できるのであれば、システムに対していかなる考え得る直交測定も実行する能力があることがわかります。
+
+### 3.1.2 一般化測定 (Generalized measurements) {#sec-3.1.2-generalized-measurements}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=8)
+
+直交測定に関するこの議論において、指針の標準基底には2つの異なる役割がありました。すなわち、標準的な指針状態がシステムの射影演算子 $\{\boldsymbol{E}_a\}$ と相関するようになること、そして指針の測定が標準基底へと射影することです。原理的には、これら2つの役割を分離することができます。おそらく、システムと指針に適用されるユニタリ変換は、指針が容易に測定される基底とは異なる優先基底を選び出すかもしれません。あるいは、システムとエンタングルする指針自体がミクロなものであり、私たちが好む任意の基底でそのミクロな指針を測定するために、それを二番目のマクロな指針とエンタングルさせるかもしれません。
+
+具体的に、システム $A$ が単一のqubitであり、指針 $B$ も同様であるとしましょう。それらが相互作用し、結果として次のユニタリ写像が得られます：
+$$
+\boldsymbol{U} : (\alpha|0\rangle + \beta|1\rangle)_A \otimes |0\rangle_B \mapsto \alpha|0\rangle_A \otimes |0\rangle_B + \beta|1\rangle_A \otimes |1\rangle_B.
+$$ {#eq-3.19}
+$\{|0\rangle, |1\rangle\}$ 基底に射影することで指針を測定すれば、システムの直交測定（同じく $\{|0\rangle, |1\rangle\}$ 基底）が誘発されます。しかし、代わりに指針を異なる基底、例えば
+$$
+|\pm\rangle_B = \frac{1}{\sqrt{2}} (|0\rangle \pm |1\rangle)_B
+$$ {#eq-3.20}
+で測定するとしましょう。この測定結果 $|\pm\rangle_B$ は、システムの直交測定を誘発しません。代わりに、何が起きるか見てみましょう。
+
+システムと指針の全状態は式 (@eq-3.19) の右辺です。指針を $\{|+\rangle, |-\rangle\}$ 基底で測定した後のシステムの状態（規格化前）は、 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=9)
+$$
+\begin{aligned}
+|+\rangle_B \text{の結果}: {}_B\langle+| (\alpha|0\rangle_A |0\rangle_B + \beta|1\rangle_A |1\rangle_B) &= \frac{1}{\sqrt{2}} (\alpha|0\rangle_A + \beta|1\rangle_A) \\
+|-\rangle_B \text{の結果}: {}_B\langle-| (\alpha|0\rangle_A |0\rangle_B + \beta|1\rangle_A |1\rangle_B) &= \frac{1}{\sqrt{2}} (\alpha|0\rangle_A - \beta|1\rangle_A)
+\end{aligned}
+$$ {#eq-3.21}
+となります。これらの状態は、初期状態 $|\psi\rangle_A = \alpha|0\rangle + \beta|1\rangle$ にユニタリ演算子（この場合は $\boldsymbol{I}$ または $\boldsymbol{\sigma}_3$）を適用したものです。
+
+より一般的には、システム $S$ と補助系 $A$ が相互作用し、その後 $A$ に対して直交測定を行うとします。補助系の初期状態を $|0\rangle_A$、システムと補助系の間のユニタリ変換を $\boldsymbol{U}$ とすると、補助系で結果 $a$ を得る確率は、
+$$
+\text{Prob}(a) = {}_S\langle\psi| \boldsymbol{M}_a^\dagger \boldsymbol{M}_a |\psi\rangle_S
+$$ {#eq-3.22}
+となります。ここで $\boldsymbol{M}_a$ はシステム $S$ 上の演算子で、
+$$
+\boldsymbol{M}_a = {}_A\langle a| \boldsymbol{U} |0\rangle_A
+$$ {#eq-3.23}
+と定義されます。測定後のシステムの状態は、
+$$
+|\psi_a\rangle_S = \frac{\boldsymbol{M}_a |\psi\rangle_S}{\sqrt{\text{Prob}(a)}}
+$$ {#eq-3.24}
+となります。演算子 $\boldsymbol{M}_a$ は必ずしもエルミートでも射影演算子でもありません。しかし、確率の和が1であるという条件から、
+$$
+\sum_a \text{Prob}(a) = \sum_a \langle\psi| \boldsymbol{M}_a^\dagger \boldsymbol{M}_a |\psi\rangle = \langle\psi| \left( \sum_a \boldsymbol{M}_a^\dagger \boldsymbol{M}_a \right) |\psi\rangle = 1
+$$ {#eq-3.25}
+となり、任意の $|\psi\rangle$ に対してこれが成り立つことから、
+$$
+\sum_a \boldsymbol{M}_a^\dagger \boldsymbol{M}_a = \boldsymbol{I}
+$$ {#eq-3.26}
+という「完全性関係（completeness relation）」が導かれます。
+
+このような測定の手順は、**一般化測定（generalized measurement）**、または**POVM（Positive Operator-Valued Measure）**に関連付けられます。演算子 $\boldsymbol{F}_a = \boldsymbol{M}_a^\dagger \boldsymbol{M}_a$ は、エルミートであり、非負（$\langle\psi|\boldsymbol{F}_a|\psi\rangle \ge 0$）であり、かつそれらの和が恒等演算子になるものです。POVM の集合 $\{\boldsymbol{F}_a\}$ は、結果 $a$ が得られる確率 $\text{Prob}(a) = \text{Tr}(\boldsymbol{F}_a \boldsymbol{\rho})$ を決定しますが、測定後の状態を完全には決定しません。測定後の状態を知るには、具体的な「測定演算子（measurement operators）」 $\boldsymbol{M}_a$ を知る必要があります。
+
+指針基底 $\{|a\rangle_B\}$ への射影を行う完全な直交測定は、$AB$ 上の射影演算子 $\{\boldsymbol{I} \otimes |a\rangle\langle a|\}$ による不完全な直交測定と等価です。測定の公理は、結果 $a$ が次の確率で発生することを主張します：
+$$
+\text{Prob}(a) = \|\boldsymbol{M}_a |\psi\rangle\|^2;
+$$ {#eq-3.26}
+そして、結果 $a$ が発生したとき、システムの状態は次のように更新されます：
+$$
+\frac{\boldsymbol{M}_a |\psi\rangle}{\|\boldsymbol{M}_a |\psi\rangle\|}.
+$$ {#eq-3.27}
+完全性関係 $\sum_a \boldsymbol{M}_a^\dagger \boldsymbol{M}_a = \boldsymbol{I}$ は、確率の和が1になることを保証しますが、可能な測定後の状態が互いに直交している必要はなく、また測定が必ずしも反復可能（repeatable）である必要もありません。もし測定を2回連続して行い、1回目に結果 $a$ を得た場合、2回目に結果 $b$ を得る条件付き確率は、
+$$
+\text{Prob}(b|a) = \frac{\|\boldsymbol{M}_b \boldsymbol{M}_a |\psi\rangle\|^2}{\|\boldsymbol{M}_a |\psi\rangle\|^2}
+$$ {#eq-3.28}
+となります。2つの測定結果が一致（$\text{Prob}(b|a) = \delta_{ba}$）するのは、任意の初期状態に対して $\boldsymbol{M}_b \boldsymbol{M}_a = \delta_{ba} \boldsymbol{M}_a$ （位相因子を除いて）が成り立つ場合、すなわち測定が直交射影である場合に限られます。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=10)
+
+システムの初期状態が（純粋状態のアンサンブルとして実現された）密度演算子 $\boldsymbol{\rho}$ である場合、各可能な測定結果 $a$ に対して演算子 $\boldsymbol{F}_a = \boldsymbol{M}_a^\dagger \boldsymbol{M}_a$ が対応し、結果 $a$ の確率は
+$$
+\text{Prob}(a) = \text{Tr}(\boldsymbol{\rho} \boldsymbol{F}_a)
+$$ {#eq-3.29}
+となります。測定演算子 $\{\boldsymbol{F}_a\}$ は、以下の性質を満たすエルミート非負演算子の完全集合を構成します：
+
+1. **エルミート性**：$\boldsymbol{F}_a = \boldsymbol{F}_a^\dagger$。
+2. **非負性**：任意のベクトル $|\psi\rangle$ に対して $\langle\psi|\boldsymbol{F}_a|\psi\rangle \ge 0$。これを単に $\boldsymbol{F}_a \ge 0$ と略記します。
+3. **完全性**：$\sum_a \boldsymbol{F}_a = \boldsymbol{I}$。
+
+このような非負演算子による単位の分割は、**正演算子値測度（Positive Operator-Valued Measure）**、または **POVM** と呼ばれます。（「測度（measure）」という用語はこの有限次元の文脈では少し大げさかもしれませんが、インデックス $a$ が連続的に変化する場合にはより適切になります。）
+
+私たちは、メーターがシステムと相互作用した後にメーターに対して直交測定を行うことで、どのように POVM が生じるかを見てきました。実際、いかなる POVM もこのように実現可能です。非負のエルミート演算子 $\boldsymbol{F}_a$ は非負の平方根 $\sqrt{\boldsymbol{F}_a}$ を持つことに注目すれば十分です。より一般的には、演算子
+$$
+\boldsymbol{M}_a = \boldsymbol{U}_a \sqrt{\boldsymbol{F}_a}
+$$ {#eq-3.30}
+は $\boldsymbol{M}_a^\dagger \boldsymbol{M}_a = \boldsymbol{F}_a$ を満たします。ここで $\boldsymbol{U}_a$ は任意のユニタリ演算子であり、式 (@eq-3.30) は演算子 $\boldsymbol{M}_a$ の極分解です。これを式 (@eq-3.23) に代入すれば、POVM $\{\boldsymbol{F}_a\}$ を実現するユニタリ相互作用が得られます。この定式化において、結果 $a$ に対応する測定後の状態
+$$
+\boldsymbol{U}_a \left( \frac{\sqrt{\boldsymbol{F}_a} |\psi\rangle}{\|\sqrt{\boldsymbol{F}_a} |\psi\rangle\|} \right)
+$$ {#eq-3.31}
+は任意です。なぜなら、各可能な結果に対してユニタリ $\boldsymbol{U}_a$ を自由に選ぶことができるからです。POVM は各測定結果に確率を割り当てますが、測定後の状態については何の指針も提供しません。実際、測定の後に状態を捨てて、私たちが望む任意の新たに準備された状態に置き換える自由があるのです。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=11)

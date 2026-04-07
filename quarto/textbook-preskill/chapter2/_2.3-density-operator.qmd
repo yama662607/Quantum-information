@@ -1,0 +1,178 @@
+# 2.3 密度演算子 (The density operator) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=16) {#sec-2.3-density-operator}
+
+## 2.3.1 二部量子系 (The bipartite quantum system) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=16) {#sec-2.3-1-bipartite}
+
+単一のクビットについてすべてを理解したところで、2つのクビットを持つ系を扱う準備が整いました。1つのクビットから2つへとステップアップすることは、予想以上に大きな飛躍です。量子力学の奇妙で素晴らしいことの多くは、2つのクビットの量子状態の性質を考慮することで理解できます。
+
+@sec-2.1-axioms の公理は、量子理論の完全に受け入れられる一般的な定式化を提供します。しかし、多くの状況において、これらの公理が破られているように見えることがあります。問題は、私たちの公理が、周囲と相互作用しない閉じた系の量子挙動を特徴づけることを意図している点にあります。実際には、閉じた量子系は存在しません。私たちが行う観測は、常に、より大きな量子系のごく一部に限定されています。
+
+**開いた系（open systems）**を研究するとき、すなわち、より大きな系の一部だけに注目するとき、（公理に反して）以下のことが起こります：
+
+1. 状態は射（ray）ではない。
+2. 測定は直交射影ではない。
+3. 発展はユニタリではない。
+
+開いた量子系が従う法則に到達するために、複合量子系の記述とその構成要素の記述を結びつける第5の公理を思い出す必要があります。開いた系の量子記述を理解するための第一歩として、1つのクビットだけを観察する2クビットの世界を考えてみましょう。クビット $A$ は私たちと同じ部屋にあり、私たちはそれを自由に観察したり操作したりできます。しかし、クビット $B$ は金庫に閉じ込められており、アクセスできません。全体系 $AB$ は @sec-2.1-axioms の公理に従います。しかし、クビット $A$ のみに対して行われ得る観測を特徴づける簡潔な方法を見つけたいと考えています。
+
+クビット $A$ と $B$ の正規直交基底をそれぞれ $\{|0\rangle_A, |1\rangle_A\}$ と $\{|0\rangle_B, |1\rangle_B\}$ とします。2クビット世界の量子状態が以下の形式であるとします：
+$$
+|\psi\rangle_{AB} = a|0\rangle_A \otimes |0\rangle_B + b|1\rangle_A \otimes |1\rangle_B.
+$$ {#eq-2.51}
+この状態では、クビット $A$ と $B$ は相関しています。基底 $\{|0\rangle_A, |1\rangle_A\}$ への射影によってクビット $A$ を測定するとしましょう。すると、確率 $|a|^2$ で結果 $|0\rangle_A$ を得て、測定によって状態
+$$
+|0\rangle_A \otimes |0\rangle_B
+$$ {#eq-2.52}
+が準備されます。確率 $|b|^2$ で結果 $|1\rangle_A$ を得て、状態
+$$
+|1\rangle_A \otimes |1\rangle_B
+$$ {#eq-2.53}
+を準備します。いずれの場合も、測定によってクビット $B$ の確定した状態が選ばれます。その後クビット $B$ を測定すると、もし $A$ で $|0\rangle_A$ を得ていたなら確実に（確率1で）$|0\rangle_B$ が見つかり、$A$ で $|1\rangle_A$ を得ていたなら確実に $|1\rangle_B$ が見つかります。この意味で、基底 $\{|0\rangle_A, |1\rangle_A\}$ と $\{|0\rangle_B, |1\rangle_B\}$ による測定の結果は、状態 $|\psi\rangle_{AB}$ において完全に相関しています。
+
+しかしここで、クビット $A$ に作用するより一般的な観測量を考え、（アクセス不能なクビット $B$ のいかなる測定結果とも無関係に）$A$ 単独の測定結果を特徴づけたいと思います。クビット $A$ のみに作用する観測量は、以下のように表せます：
+$$
+\boldsymbol{M}_A \otimes \boldsymbol{I}_B;
+$$ {#eq-2.54}
+ここで $\boldsymbol{M}_A$ は $A$ に作用する自己共役演算子であり、$\boldsymbol{I}_B$ は $B$ に作用する恒等演算子です。状態 $|\psi\rangle$ におけるこの観測量の期待値は以下の通りです：
+$$
+\begin{aligned}
+\langle \boldsymbol{M}_A \rangle &= \langle\psi| \boldsymbol{M}_A \otimes \boldsymbol{I}_B |\psi\rangle_{AB} \\
+&= (a^* \langle 00 | + b^* \langle 11 |) (\boldsymbol{M}_A \otimes \boldsymbol{I}_B) (a|00\rangle + b|11\rangle) \\
+&= |a|^2 \langle 0 | \boldsymbol{M}_A | 0 \rangle + |b|^2 \langle 1 | \boldsymbol{M}_A | 1 \rangle
+\end{aligned}
+$$ {#eq-2.55}
+（ここで $|0\rangle_B$ と $|1\rangle_B$ の直交性を用いました）。この式は以下の形式に書き換えることができます：
+$$
+\langle \boldsymbol{M}_A \rangle = \text{tr}(\boldsymbol{M}_A \boldsymbol{\rho}_A); \quad \boldsymbol{\rho}_A = |a|^2 |0\rangle\langle 0| + |b|^2 |1\rangle\langle 1|
+$$ {#eq-2.56}
+ここで $\text{tr}(\cdot)$ はトレースを表します。演算子 $\rho_A$ は、クビット $A$ の**密度演算子（density operator）**（または**密度行列（density matrix）**）と呼ばれます。これは自己共役かつ正（固有値が非負）であり、トレースが 1 です（$|\psi\rangle$ が規格化された状態であるため）。
+
+任意の観測量 $\boldsymbol{M}_A$ に対して $\langle \boldsymbol{M}_A \rangle$ が式(@eq-2.56)の形式を持つため、$\rho_A$ を、それぞれが指定された確率で発生する可能性のある量子状態のアンサンブルを表していると解釈することは一貫しています。すなわち、クビット $A$ が2つの量子状態のいずれかにあると規定した場合でも、$\langle \boldsymbol{M}_A \rangle$ について全く同じ結果が得られます。確率 $p_0 = |a|^2$ で量子状態 $|0\rangle$ にあり、確率 $p_1 = |b|^2$ で状態 $|1\rangle$ にある、という場合です。クビット $A$ に作用する観測量の測定を記述するために、$\boldsymbol{M}_A$ をその観測量の対応する固有状態への射影 $\boldsymbol{E}_A(a_n)$ と考えることができます。すると
+$$
+\text{Prob}(a_n) = p_0 \langle 0 | \boldsymbol{E}_A(a_n) | 0 \rangle + p_1 \langle 1 | \boldsymbol{E}_A(a_n) | 1 \rangle
+$$ {#eq-2.57}
+となります。これは、アンサンブル全体で和をとった、アンサンブル内の各状態の確率で重み付けされた結果 $a_n$ の確率です。
+
+私たちは以前、状態 $|0\rangle$ と $|1\rangle$ のコヒーレントな重ね合わせと、$|0\rangle$ と $|1\rangle$ がそれぞれ指定された確率で発生し得る確率的なアンサンブルとの間には本質的な違いがあることを強調しました。例えば、スピン 1/2 の物体について、状態 $\frac{1}{\sqrt{2}}(|\uparrow_z\rangle + |\downarrow_z\rangle)$ で測定すると、確率1で結果 $|\uparrow_x\rangle$ を得ることを確認しました。しかし、$|\uparrow_z\rangle$ と $|\downarrow_z\rangle$ がそれぞれ確率 $1/2$ で発生するアンサンブルは、以下の密度演算子によって表されます：
+$$
+\boldsymbol{\rho} = \frac{1}{2}(|\uparrow_z\rangle\langle\uparrow_z| + |\downarrow_z\rangle\langle\downarrow_z|) = \frac{1}{2}\boldsymbol{I};
+$$ {#eq-2.58}
+このとき $|\uparrow_x\rangle$ への射影は以下の期待値を持ちます：
+$$
+\text{tr}(|\uparrow_x\rangle\langle\uparrow_x| \boldsymbol{\rho}) = \langle\uparrow_x| \boldsymbol{\rho} |\uparrow_x\rangle = \frac{1}{2}.
+$$ {#eq-2.59}
+同様に、極角 $\theta, \varphi$ でラベル付けされた任意の軸に沿ってスピンを測定すると、「スピンアップ」の結果が得られる確率は
+$$
+\langle \psi(\theta, \varphi) | \boldsymbol{\rho} | \psi(\theta, \varphi) \rangle = \text{tr}(|\psi(\theta, \varphi)\rangle\langle\psi(\theta, \varphi)| \boldsymbol{\rho}) = \langle \psi(\theta, \varphi) | \frac{1}{2}\boldsymbol{I} | \psi(\theta, \varphi) \rangle = \frac{1}{2}
+$$ {#eq-2.60}
+となります。したがって、2クビットの世界で $|00\rangle$ と $|11\rangle$ の等しく重み付けされたコヒーレントな重ね合わせが準備されている場合、クビット $A$ の状態は非コヒーレント（incoherent）に振る舞います。すなわち、どの軸に沿っても、スピンアップとスピンダウンの等確率な混合状態となります。
+
+相関した2クビット状態 $|\psi\rangle_{AB}$ に関するこの議論は、任意の二部量子系（2つの部分に分割された系）の任意の状態へと容易に一般化できます。二部系のヒルベルト空間は $\mathcal{H}_A \otimes \mathcal{H}_B$ です。ここで $\mathcal{H}_A, \mathcal{H}_B$ は2つの部分のヒルベルト空間です。これは、$\{|i\rangle_A\}$ が $\mathcal{H}_A$ の正規直交基底であり、$\{|j\rangle_B\}$ が $\mathcal{H}_B$ の正規直交基底であれば、$\{|i\rangle_A \otimes |j\rangle_B\}$ が $\mathcal{H}_A \otimes \mathcal{H}_B$ の正規直交基底であることを意味します。したがって、$\mathcal{H}_A \otimes \mathcal{H}_B$ の任意の純粋状態は以下のように展開できます：
+$$
+|\psi\rangle_{AB} = \sum_{i, j} a_{ij} |i\rangle_A |j\rangle_B;
+$$ {#eq-2.61}
+ここで $\sum_{i, j} |a_{ij}|^2 = 1$ です。サブシステム $A$ のみに作用する観測量 $\boldsymbol{M}_A \otimes \boldsymbol{I}_B$ の期待値は
+$$
+\begin{aligned}
+\langle \boldsymbol{M}_A \rangle &= \langle\psi| \boldsymbol{M}_A \otimes \boldsymbol{I}_B |\psi\rangle_{AB} \\
+&= \sum_{j, \nu} a_{j\nu}^* ({}_A\langle j| \otimes {}_B\langle \nu|) (\boldsymbol{M}_A \otimes \boldsymbol{I}_B) \sum_{i, \mu} a_{i\mu} (|i\rangle_A \otimes |\mu\rangle_B) \\
+&= \sum_{i, j, \mu} a_{j\mu}^* a_{i\mu} \langle j | \boldsymbol{M}_A | i \rangle = \text{tr}(\boldsymbol{M}_A \boldsymbol{\rho}_A);
+\end{aligned}
+$$ {#eq-2.62}
+ここで
+$$
+\boldsymbol{\rho}_A = \text{tr}_B(|\psi\rangle\langle\psi|) \equiv \sum_{i, j, \mu} a_{i\mu} a_{j\mu}^* |i\rangle\langle j|
+$$ {#eq-2.63}
+はサブシステム $A$ の密度演算子です。
+
+サブシステム $A$ の密度演算子 $\rho_A$ は、複合系 $AB$ の密度演算子（この場合は純粋状態）に対してサブシステム $B$ に関する**部分トレース（partial trace）**を行うことで得られる、と言うことができます。ブラ ${}_B\langle j|$ を、 $\mathcal{H}_A \otimes \mathcal{H}_B$ のベクトルを $\mathcal{H}_A$ のベクトルへと写像する線形写像と見なすことができます。基底に対する作用によって定義されます：
+$$
+{}_B\langle \mu | i, \nu \rangle_{AB} = \delta_{\mu\nu} |i\rangle_A;
+$$ {#eq-2.64}
+同様に、ケット $|j\rangle_B$ は、 $\mathcal{H}_A \otimes \mathcal{H}_B$ の双対基底から $\mathcal{H}_A$ の双対基底への写像を定義します：
+$$
+({}_A\langle i| \otimes {}_B\langle k|) |j\rangle_B = \delta_{kj} {}_A\langle i|.
+$$ {#eq-2.65}
+部分トレース操作は、 $\mathcal{H}_A \otimes \mathcal{H}_B$ 上の演算子 $\mathbf{M}_{AB}$ を、以下のように定義される $\mathcal{H}_A$ 上の演算子へと導く線形写像です：
+$$
+\text{tr}_B \mathbf{M}_{AB} = \sum_\mu {}_B\langle \mu | \mathbf{M}_{AB} | \mu \rangle_B.
+$$ {#eq-2.66}
+$A$ に作用する密度演算子が、部分トレース
+$$
+\boldsymbol{\rho}_A = \text{tr}_B(|\psi\rangle\langle\psi|)
+$$ {#eq-2.67}
+であることを確認しました。式(@eq-2.63)の定義から、$\rho_A$ が以下の性質を持つことが直ちに推論できます：
+
+1. $\rho_A$ は自己共役である： $\rho_A = \rho_A^\dagger$。
+2. $\rho_A$ は正である： 任意の $|\varphi\rangle$ に対して、$\langle \varphi | \rho_A | \varphi \rangle = \sum_k |\sum_i a_{ik} \langle \varphi | i \rangle|^2 \ge 0$。
+3. $\text{tr}(\rho_A) = 1$: $|\psi\rangle_{AB}$ が規格化されているため、$\text{tr}(\rho_A) = \sum_{i, k} |a_{ik}|^2 = 1$。
+
+したがって、$\rho_A$ は正規直交基底において対角化可能であり、固有値はすべて実数で非負であり、固有値の和は 1 になります。
+
+より大きな量子系のサブシステムを見ている場合、たとえ大きな系の状態が射であっても、サブシステムの状態が射である必要はありません。一般に、状態は密度演算子によって表されます。サブシステムの状態が射である場合、その状態は**純粋（pure）**であると言います。そうでない場合、状態は**混合（mixed）**しています。状態が純粋状態 $|\psi\rangle_A$ である場合、密度行列 $\boldsymbol{\rho}_A = |\psi\rangle\langle\psi|$ は $|\psi\rangle_A$ によって張られる1次元空間への射影となります。したがって、純粋な密度行列は $\boldsymbol{\rho}^2 = \boldsymbol{\rho}$ という性質を持ちます。それが対角となる基底 $\{|a\rangle\}$ で表された一般的な密度行列は、以下の形式を持ちます：
+$$
+\boldsymbol{\rho}_A = \sum_a p_a |a\rangle\langle a|;
+$$ {#eq-2.68}
+ここで $0 < p_a \le 1$ かつ $\sum p_a = 1$ です。状態が純粋でない場合、この和には2つ以上の項があり、$\boldsymbol{\rho}^2 \neq \boldsymbol{\rho}$ となります。実際、$\text{tr}(\boldsymbol{\rho}^2) = \sum p_a^2 < \sum p_a = 1$ です。
+
+私たちは、$\rho$ が状態 $\{|a\rangle\}$ の非コヒーレントな混合状態であると言います。「非コヒーレント」とは、$|a\rangle$ たちの相対位相が実験的にアクセス不能であることを意味します。サブシステムに作用する任意の観測量 $\mathbf{M}$ の期待値は
+$$
+\langle \mathbf{M} \rangle = \text{tr}(\mathbf{M} \rho) = \sum_a p_a \langle a | \mathbf{M} | a \rangle
+$$ {#eq-2.69}
+と表せるため、以前と同様に、$\rho$ を、状態 $|a\rangle$ が確率 $p_a$ で発生する純粋量子状態のアンサンブルを記述していると解釈できることがわかります。したがって、量子系 $A$ が別の系 $B$ と相互作用するときに量子力学においてどのように確率が生じるのかを理解する上で、私たちは長い道のりを歩んできました。$A$ と $B$ は**エンタングル（entangle）**、すなわち相関します。エンタングルメントは $A$ の状態の重ね合わせのコヒーレンスを破壊し、その結果、$A$ 単独を見る場合には重ね合わせの一部の位相にアクセスできなくなります。この状況を、系 $A$ の状態が**収縮（collapse）**した、すなわち、それぞれに確率を割り当てることができる一連の代替状態のいずれかにある、と言うことで表現できます。
+
+## 2.3.2 ブロッホ球 (Bloch sphere) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=21) {#sec-2.3-2-bloch-sphere}
+
+系 $A$ が単一のクビットである場合に戻り、一般的な密度行列の形式を考えてみましょう。最も一般的な自己共役 $2 \times 2$ 行列は4つの実パラメータを持ち、基底 $\{I, \sigma_1, \sigma_2, \sigma_3\}$ で展開できます。各 $\sigma_i$ はトレースレスであるため、密度行列の展開における $I$ の係数は $1/2$（$\text{tr}(\boldsymbol{\rho}) = 1$ となるため）でなければならず、次のように表せます：
+$$
+\begin{aligned}
+\boldsymbol{\rho}(\vec{P}) &= \frac{1}{2}(\boldsymbol{I} + \vec{P} \cdot \vec{\boldsymbol{\sigma}}) \\
+&= \frac{1}{2}(\boldsymbol{I} + P_1 \boldsymbol{\sigma}_1 + P_2 \boldsymbol{\sigma}_2 + P_3 \boldsymbol{\sigma}_3) \\
+&= \frac{1}{2} \begin{pmatrix} 1 + P_3 & P_1 - iP_2 \\ P_1 + iP_2 & 1 - P_3 \end{pmatrix};
+\end{aligned}
+$$ {#eq-2.70}
+ここで $P_1, P_2, P_3$ は実数です。$\det \boldsymbol{\rho} = \frac{1}{4}(1 - \vec{P}^2)$ を計算できます。したがって、$\rho$ が非負の固有値を持つための必要条件は $\det \boldsymbol{\rho} \ge 0$、すなわち $|\vec{P}|^2 \le 1$ です。この条件は十分条件でもあります。なぜなら $\text{tr}(\boldsymbol{\rho}) = 1$ であるため、$\rho$ が2つの負の固有値を持つことは不可能だからです。このように、単一クビットの可能な密度行列と、単位3次元球（3-ball） $0 \le |\vec{P}| \le 1$ 上の点との間には、1対1の対応があります。この球体は通常**ブロッホ球（Bloch sphere）**と呼ばれます（実際には球ではなく球体ですが）。
+
+球体の境界
+$$
+|\vec{P}| = 1
+$$
+（これは実際に球（sphere）です）は、行列式が消える密度行列を含んでいます。$\text{tr}(\boldsymbol{\rho}) = 1$ であるため、これらの密度行列は固有値 0 と 1 を持たなければなりません。すなわち、それらは1次元射影演算子であり、したがって純粋状態です。単一クビットの任意の純粋状態が $|\psi(\theta, \varphi)\rangle$ の形式であり、$(\theta, \varphi)$ 方向を向いたスピンとして視覚化できることをすでに確認しました。実際、単位ベクトル $\hat{n}$ に対して
+$$
+(\hat{n} \cdot \vec{\sigma})^2 = I
+$$ {#eq-2.71}
+という性質を用いると、純粋状態の密度行列
+$$
+\boldsymbol{\rho}(\hat{n}) = \frac{1}{2}(\boldsymbol{I} + \hat{n} \cdot \vec{\boldsymbol{\sigma}})
+$$ {#eq-2.72}
+が
+$$
+\boldsymbol{\rho}(\hat{n})^2 = \boldsymbol{\rho}(\hat{n})
+$$ {#eq-2.73}
+という性質を満たし、したがって射影演算子
+$$
+\boldsymbol{\rho}(\hat{n}) = |\psi(\hat{n})\rangle\langle\psi(\hat{n})|
+$$ {#eq-2.74}
+であることを容易に確認できます。すなわち、$\hat{n}$ はスピンがアップを向いている方向です。あるいは、表現
+$$
+|\psi(\theta, \varphi)\rangle = \begin{pmatrix} \cos(\theta/2) \\ e^{i\varphi} \sin(\theta/2) \end{pmatrix}
+$$ {#eq-2.75}
+から、直接以下を計算できます：
+$$
+\begin{aligned}
+\boldsymbol{\rho}(\theta, \varphi) &= |\psi(\theta, \varphi)\rangle\langle\psi(\theta, \varphi)| \\
+&= \begin{pmatrix} \cos^2(\theta/2) & \cos(\theta/2)\sin(\theta/2)e^{-i\varphi} \\ \cos(\theta/2)\sin(\theta/2)e^{i\varphi} & \sin^2(\theta/2) \end{pmatrix} \\
+&= \frac{1}{2} \boldsymbol{I} + \frac{1}{2} \begin{pmatrix} \cos\theta & \sin\theta e^{-i\varphi} \\ \sin\theta e^{i\varphi} & -\cos\theta \end{pmatrix} \\
+&= \frac{1}{2} (\boldsymbol{I} + \hat{n} \cdot \vec{\boldsymbol{\sigma}});
+\end{aligned}
+$$ {#eq-2.76}
+ここで $\hat{n} = (\sin\theta \cos\varphi, \sin\theta \sin\varphi, \cos\theta)$ です。純粋状態のブロッホパラメータ化の素晴らしい特性の一つは、 $|\psi(\theta, \varphi)\rangle$ は物理的に無関係な任意の全体位相を持ちますが、密度行列 $\boldsymbol{\rho}(\theta, \varphi) = |\psi(\theta, \varphi)\rangle\langle\psi(\theta, \varphi)| には位相の曖昧さがないことです。$\rho$ に含まれるすべてのパラメータは物理的な意味を持っています。
+
+性質
+$$
+\frac{1}{2} \text{tr}(\boldsymbol{\sigma}_i \boldsymbol{\sigma}_j) = \delta_{ij}
+$$ {#eq-2.77}
+から、以下がわかります：
+$$
+\langle \hat{n} \cdot \vec{\boldsymbol{\sigma}} \rangle = \text{tr}((\hat{n} \cdot \vec{\boldsymbol{\sigma}}) \boldsymbol{\rho}(\vec{P})) = \hat{n} \cdot \vec{P}.
+$$ {#eq-2.78}
+私たちは、式(@eq-2.70)のベクトル $\vec{P}$ がスピンの分極（polarization）をパラメータ化していると言います。もし自由に使える同一に準備された系が多数あれば、3つの線形独立な軸の各々に沿って $\langle \hat{n} \cdot \vec{\sigma} \rangle$ を測定することによって、$\vec{P}$（したがって完全な密度行列 $\rho(\vec{P})$）を決定することができます。

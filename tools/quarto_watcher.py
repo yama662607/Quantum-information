@@ -12,9 +12,18 @@ class QuartoWatcherHandler(FileSystemEventHandler):
 
         # マッピング定義: 変更検知ディレクトリ -> タッチすべきファイル
         self.chapter_map = {
-            "chapter1": self.project_root / "quarto" / "textbook-preskill" / "textbook.qmd",
-            "chapter2": self.project_root / "quarto" / "textbook-preskill" / "textbook.qmd",
-            "chapter3": self.project_root / "quarto" / "textbook-preskill" / "textbook.qmd",
+            "chapter1": self.project_root
+            / "quarto"
+            / "textbook-preskill"
+            / "textbook.qmd",
+            "chapter2": self.project_root
+            / "quarto"
+            / "textbook-preskill"
+            / "textbook.qmd",
+            "chapter3": self.project_root
+            / "quarto"
+            / "textbook-preskill"
+            / "textbook.qmd",
         }
         self.default_target = self.project_root / "quarto" / "index.qmd"
 

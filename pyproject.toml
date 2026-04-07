@@ -1,7 +1,10 @@
 [project]
 name = "quantum-information"
 version = "0.1.0"
-description = "Add your description here"
+description = "Study notes and research environment for Quantum Information based on Preskill and Watrous textbooks."
+authors = [
+    { name = "Daisuke Yamashiki" }
+]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

@@ -61,15 +61,15 @@
 
 ### Phase 1: 忠実翻訳
 
-1.  **原文の一括解析**: `just process-pdf` を使って対象ページのテキスト・数式・画像を取得します。
+1.  **原文の一括解析**: `just process-pdf` を使って対象ページのテキスト・数式・画像を取得します。すべてのページについて、text, latex, imageの全ての情報を抽出してから、できる限り正しく翻訳を開始してください。
     ```bash
     # Preskill版 (例: chap2 の物理ページ 30-32)
-    just process-pdf quarto/assets/pdf/preskill/chap2_15.pdf 30 32
+    just process-pdf quarto/assets/pdf/preskill/chap2.pdf 30 32
 
     # Watrous版 (例: 物理ページ 114)
     just process-pdf quarto/assets/pdf/watrous/Quantum_Information.pdf 114 114
     ```
-    出力: テキスト・数式（LaTeX）・画像パスの3種が整理されて表示されます。
+    出力: テキスト・数式（LaTeX）・画像パスの3種が整理されて表示されます。数式の正確な翻訳のため、LaTeXの抽出結果を必ず確認してください。
 
 2.  **視覚的な精査**: 数式など記号が欠落しやすい部分は、出力された画像パス（例: `/tmp/page_30.png`）に対して `view_file` ツールでスキャンして正確に読み取ります。
 

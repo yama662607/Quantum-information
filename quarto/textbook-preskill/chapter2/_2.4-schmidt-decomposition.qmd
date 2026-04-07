@@ -1,0 +1,90 @@
+# 2.4 シュミット分解 (Schmidt decomposition) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=23) {#sec-2.4-schmidt-decomposition}
+
+二部系の純粋状態は、しばしば非常に有用な標準形式（**シュミット分解**）で表すことができます。
+
+この形式を導くために、$\mathcal{H}_A \otimes \mathcal{H}_B$ における任意のベクトルが以下のように展開できることに注目してください：
+$$
+|\psi\rangle_{AB} = \sum_{i, \mu} \psi_{i\mu} |i\rangle_A \otimes |\mu\rangle_B \equiv \sum_i |i\rangle_A \otimes |\tilde{i}\rangle_B.
+$$ {#eq-2.79}
+ここで $\{|i\rangle_A\}$ と $\{|\mu\rangle_B\}$ はそれぞれ $\mathcal{H}_A$ と $\mathcal{H}_B$ の正規直交基底ですが、式(@eq-2.79)の2つ目の等号を得るために、次のように定義しました：
+$$
+|\tilde{i}\rangle_B \equiv \sum_\mu \psi_{i\mu} |\mu\rangle_B.
+$$ {#eq-2.80}
+$|\tilde{i}\rangle_B$ たちは互いに直交している必要も、規格化されている必要もないことに注意してください。
+
+ここで、$\{|i\rangle_A\}$ 基底として、$\boldsymbol{\rho}_A$ が対角となる基底を選んだと仮定しましょう：
+$$
+\boldsymbol{\rho}_A = \sum_i p_i |i\rangle\langle i|.
+$$ {#eq-2.81}
+また、部分トレースを実行することによっても $\boldsymbol{\rho}_A$ を計算できます：
+$$
+\begin{aligned}
+\boldsymbol{\rho}_A &= \text{tr}_B(|\psi\rangle\langle\psi|) \\
+&= \text{tr}_B\left( \sum_{i, j} |i\rangle\langle j| \otimes |\tilde{i}\rangle\langle\tilde{j}| \right) = \sum_{i, j} \langle\tilde{j}|\tilde{i}\rangle(|i\rangle\langle j|).
+\end{aligned}
+$$ {#eq-2.82}
+式(@eq-2.82)の最後の等号は、以下に注目することで得られます：
+$$
+\text{tr}_B\left(|\tilde{i}\rangle\langle\tilde{j}|\right) = \sum_k \langle k|\tilde{i}\rangle\langle\tilde{j}|k\rangle = \sum_k \langle\tilde{j}|k\rangle\langle k|\tilde{i}\rangle = \langle\tilde{j}|\tilde{i}\rangle;
+$$ {#eq-2.83}
+ここで $\{|k\rangle\}$ は $\mathcal{H}_B$ の完全正規直交基底です。式(@eq-2.81)と式(@eq-2.82)を比較すると、以下がわかります：
+$$
+{}_B\langle\tilde{j}|\tilde{i}\rangle_B = p_i \delta_{ij}.
+$$ {#eq-2.84}
+したがって、結局のところ $\{|\tilde{i}\rangle_B\}$ は互いに直交していることがわかります。再規格化することによって、正規直交ベクトルが得られます：
+$$
+|i'\rangle_B = p_i^{-1/2} |\tilde{i}\rangle_B
+$$ {#eq-2.85}
+（$p_i \neq 0$ と仮定できます。なぜなら、式(@eq-2.81)の和に現れる $i$ に対してのみ式(@eq-2.85)が必要だからです）。したがって、以下の展開が得られます：
+$$
+|\psi\rangle_{AB} = \sum_i \sqrt{p_i} |i\rangle_A \otimes |i'\rangle_B;
+$$ {#eq-2.86}
+これは $\mathcal{H}_A$ と $\mathcal{H}_B$ の特定の正規直交基底を用いた表現です。
+
+式(@eq-2.86)は、二部系の純粋状態 $|\psi\rangle_{AB}$ の**シュミット分解**です。任意の二部系の純粋状態はこの形式で表すことができますが、使用される基底は展開される純粋状態に依存します。一般に、$\mathcal{H}_A \otimes \mathcal{H}_B$ 内の2つの状態 $|\psi\rangle_{AB}$ と $|\varphi\rangle_{AB}$ を、$\mathcal{H}_A$ と $\mathcal{H}_B$ の同じ正規直交基底を用いて同時に式(@eq-2.86)の形式に展開することはできません。
+
+二部系の純粋状態 $|\psi\rangle_{AB}$ のシュミット分解を、一般的な正規直交基底における展開
+$$
+|\psi\rangle_{AB} = \sum_{a, \mu} \psi_{a\mu} |a\rangle_A \otimes |\mu\rangle_B
+$$ {#eq-2.87}
+と比較することは有益です。正規直交基底 $\{|a\rangle_A\}$ および $\{|\mu\rangle_B\}$ は、シュミット基底 $\{|i\rangle_A\}$ および $\{|i'\rangle_B\}$ とユニタリ変換 $\boldsymbol{U}_A$ および $\boldsymbol{U}_B$ によって結びついています。したがって
+$$
+|i\rangle_A = \sum_a |a\rangle_A (U_A)_{ai}, \quad |i'\rangle_B = \sum_\mu |\mu\rangle_B (U_B)_{\mu i'}
+$$ {#eq-2.88}
+となります。式(@eq-2.86)と式(@eq-2.87)における $|\psi\rangle_{AB}$ の表現を等置すると
+$$
+\psi_{a\mu} = \sum_i (U_A)_{ai} \sqrt{p_i} (U_B^T)_{i\mu}
+$$ {#eq-2.89}
+が見出されます。左右からユニタリ変換を施すことで、任意の行列 $\psi$ を対角かつ非負の行列に変換できることがわかります。（ヒルベルト空間 $\mathcal{H}_A$ と $\mathcal{H}_B$ の次元が異なる場合、「対角」行列は正方形ではなく長方形になります。）式(@eq-2.89)は $\psi$ の**特異値分解（singular value decomposition）**であると言われ、シュミット分解における重み $\{\sqrt{p_i}\}$ は $\psi$ の特異値です。
+
+式(@eq-2.86)を用いると、$\mathcal{H}_A$ に関する部分トレースを評価して $\boldsymbol{\rho}_B$ を得ることもできます：
+$$
+\boldsymbol{\rho}_B = \text{tr}_A(|\psi\rangle\langle\psi|) = \sum_i p_i |i'\rangle\langle i'|.
+$$ {#eq-2.90}
+$\boldsymbol{\rho}_A$ と $\boldsymbol{\rho}_B$ が**同じ非ゼロの固有値**を持つことがわかります。$\mathcal{H}_A$ と $\mathcal{H}_B$ の次元が等しくない場合、$\boldsymbol{\rho}_A$ と $\boldsymbol{\rho}_B$ のゼロ固有値の数は異なります。
+
+もし $\boldsymbol{\rho}_A$（したがって $\boldsymbol{\rho}_B$）がゼロ以外の縮退した固有値を持たない場合、$|\psi\rangle_{AB}$ のシュミット分解は $\boldsymbol{\rho}_A$ と $\boldsymbol{\rho}_B$ によって本質的に一意に決定されます。$\boldsymbol{\rho}_A$ と $\boldsymbol{\rho}_B$ を対角化して $|i\rangle_A$ と $|i'\rangle_B$ を見つけ、同じ固有値を持つ $\boldsymbol{\rho}_A$ と $\boldsymbol{\rho}_B$ の固有状態をペアにして式(@eq-2.86)を得ることができます。基底状態の位相は、和の係数に位相が現れないように選択しました。残されている唯一の自由度は、$|i\rangle_A$ と $|i'\rangle_B$ に逆の位相を掛けて再定義することです（これは式(@eq-2.86)の表現を不変に保ちます）。
+
+しかし、もし $\boldsymbol{\rho}_A$ がゼロでない縮退した固有値を持つ場合、シュミット分解を決定するために $\boldsymbol{\rho}_A$ と $\boldsymbol{\rho}_B$ によって提供される情報以上の情報が必要になります。どの $|i'\rangle_B$ が各 $|i\rangle_A$ とペアになるかを知る必要があります。例えば、$\mathcal{H}_A$ と $\mathcal{H}_B$ の両方が $d$ 次元であり、$U_{ij}$ が任意の $d \times d$ ユニタリ行列である場合、
+$$
+|\psi\rangle_{AB} = \frac{1}{\sqrt{d}} \sum_{i,j=1}^d |i\rangle_A U_{ij} \otimes |j'\rangle_B
+$$ {#eq-2.91}
+は、部分トレースをとると $\boldsymbol{\rho}_A = \boldsymbol{\rho}_B = \frac{1}{d}\boldsymbol{I}$ を与えます。さらに、$\mathcal{H}_A$ と $\mathcal{H}_B$ において同時にユニタリ変換を適用する自由度があります。
+$$
+|i\rangle_A = \sum_a |a\rangle_A V_{ai}, \quad |i'\rangle_B = \sum_b |b'\rangle_B V^*_{bi}
+$$ {#eq-2.92}
+と書くと（ここで $V$ はユニタリ行列）、
+$$
+\begin{aligned}
+|\psi\rangle_{AB} = \frac{1}{\sqrt{d}} \sum_i |i\rangle_A \otimes |i'\rangle_B &= \frac{1}{\sqrt{d}} \sum_{i,a,b} |a\rangle_A V_{ai} \otimes |b'\rangle_B V^\dagger_{ib} \\
+&= \frac{1}{\sqrt{d}} \sum_a |a\rangle_A \otimes |a'\rangle_B
+\end{aligned}
+$$ {#eq-2.93}
+となります。この同時回転は状態 $|\psi\rangle_{AB}$ を不変に保ち、シュミット形式で $|\psi\rangle_{AB}$ を表す際に使用される基底に曖昧さがあることを示しています。
+
+## 2.4.1 エンタングルメント (Entanglement) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=25) {#sec-2.4.1-entanglement}
+
+任意の二部系の純粋状態 $|\psi\rangle_{AB}$ に対して、正の整数である**シュミット数（Schmidt number）**を関連付けることができます。これは $\boldsymbol{\rho}_A$（または $\boldsymbol{\rho}_B$）の非ゼロ固有値の数であり、したがって $|\psi\rangle_{AB}$ のシュミット分解における項の数です。この量を用いて、二部系の純粋状態が**エンタングル（entangled）**しているとはどういう意味かを定義できます。すなわち、$|\psi\rangle_{AB}$ のシュミット数が1より大きい場合、その状態はエンタングル（または非可分：nonseparable）であり、そうでなければセパラブル（separable：可分またはエンタングルしていない）です。したがって、セパラブルな二部系の純粋状態は、$\mathcal{H}_A$ と $\mathcal{H}_B$ における純粋状態の直積となります：
+$$
+|\psi\rangle_{AB} = |\varphi\rangle_A \otimes |\chi\rangle_B;
+$$ {#eq-2.94}

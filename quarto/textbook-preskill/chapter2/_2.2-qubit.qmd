@@ -1,0 +1,236 @@
+# 2.2 クビット (The Qubit) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=7) {#sec-2.2-qubit}
+
+古典情報の最小単位は**ビット（bit）**であり、$\{0, 1\}$ の2つの値のいずれかをとります。これに対応する量子情報の単位は**「量子ビット（quantum bit）」**または**クビット（qubit）**と呼ばれます。これは、可能な限り最も単純な量子系における状態を記述します。
+
+最小の非自明なヒルベルト空間は2次元です。2次元ベクトル空間の正規直交基底を $\{|0\rangle, |1\rangle\}$ と表記することにします。すると、最も一般的な規格化された状態は以下のように表せます：
+$$
+a|0\rangle + b|1\rangle;
+$$ {#eq-2.15}
+ここで $a, b$ は $|a|^2 + |b|^2 = 1$ を満たす複素数であり、全体の位相は物理的に無関係です。クビットとは、2次元ヒルベルト空間によって記述される量子系であり、その状態は式(@eq-2.15)の形式の任意の値をとり得ます。
+
+クビットを基底 $\{|0\rangle, |1\rangle\}$ に射影する測定を行うことができます。このとき、結果 $|0\rangle$ が確率 $|a|^2$ で得られ、結果 $|1\rangle$ が確率 $|b|^2$ で得られます。さらに、$a=0$ または $b=0$ の場合を除き、測定は状態を不可逆的に乱します。クビットの値が初期状態で未知である場合、その一度の測定（あるいは他に考えられるいかなる測定）によって $a$ と $b$ を特定する方法はありません。しかし、測定後、クビットは既知の状態（$|0\rangle$ または $|1\rangle$ のいずれか）として準備され、それは（一般に）以前の状態とは異なります。
+
+この点において、クビットは古典ビットとは異なります。古典ビットは乱すことなく測定でき、エンコードされたすべての情報を解読できます。しかし、古典ビットが実際に確定した値（0または1）を持っているものの、その値が初期状態で私たちにとって未知である場合を考えてみましょう。私たちが利用可能な情報に基づけば、ビットが値 0 を持つ確率 $p_0$ と、値 1 を持つ確率 $p_1$（ここで $p_0 + p_1 = 1$）がある、としか言えません。ビットを測定すると、追加の情報が得られ、その後は100%の確信を持って値を知ることができます。
+
+重要な問いは「クビットと確率的な古典ビットの本質的な違いは何か？」ということです。実際、それらはいくつかの理由から同じではありません。その違いを端的に言えば、**「ビットを見る方法は一つしかないが、クビットを見る方法は複数ある」**ということです。
+
+## 2.2.1 スピン 1/2 [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=8) {#sec-2.2.1-spin-half}
+
+まず第一に、式(@eq-2.15)の係数 $a$ と $b$ は、単に基底 $\{|0\rangle, |1\rangle\}$ における測定結果の確率以上のものをエンコードしています。特に、$a$ と $b$ の相対位相も物理的に重要です。
+
+クビットの性質は、その状態の幾何学的な解釈を援用すると把握しやすくなります。物理学者にとって、式(@eq-2.15)をスピン 1/2 の物体（電子など）のスピン状態として解釈するのは自然なことです。その場合、$|0\rangle$ と $|1\rangle$ は、z軸などの特定の軸に沿ったスピンアップ（$|\uparrow\rangle$）とスピンダウン（$|\downarrow\rangle$）の状態になります。クビットを特徴づける2つの実数（規格化と全体位相を除いた複素数 $a, b$）は、3次元空間におけるスピンの向き（極角 $\theta$ と方位角 $\varphi$）を記述します。
+
+ここでは量子力学における対称性の理論には深く立ち入りませんが、有用ないくつかの要素を思い出しておきましょう。**対称性（symmetry）**とは、系の状態に作用しながらも、系のすべての観測可能な性質を変化させない変換のことです。量子力学において、観測とは自己共役演算子の測定です。状態 $|\psi\rangle$ において $\boldsymbol{A}$ が測定される場合、結果 $|a\rangle$（$\boldsymbol{A}$ の固有ベクトル）は確率 $|\langle a | \psi \rangle|^2$ で発生します。対称性は、系と装置の両方を「回転」させたときに、これらの確率を不変に保つべきです。
+
+したがって、対称性とはヒルベルト空間におけるベクトルの写像
+$$
+|\psi\rangle \mapsto |\psi'\rangle;
+$$ {#eq-2.16}
+であり、すべての $|\varphi\rangle$ と $|\psi\rangle$ に対して内積の絶対値を保存します：
+$$
+|\langle \varphi | \psi \rangle| = |\langle \varphi' | \psi' \rangle|.
+$$ {#eq-2.17}
+ウィグナー（Wigner）による有名な定理によれば、この性質を持つ写像は（適切な位相の慣習を採用することで）、常に**ユニタリ（unitary）**または**反ユニタリ（antiunitary）**のいずれかになるように選ぶことができます。反ユニタリの選択肢は、離散対称性にとっては重要ですが、連続対称性については除外できます。その場合、対称性は
+$$
+|\psi\rangle \mapsto |\psi'\rangle = \boldsymbol{U}|\psi\rangle;
+$$ {#eq-2.18}
+として作用します。ここで $\boldsymbol{U}$ はユニタリ（特に線形）です。
+
+対称性は**群（group）**を形成します。対称変換は反転可能であり、2つの対称性の積も対称性です。物理系に作用する各対称操作 $R$ に対して、対応するユニタリ変換 $\boldsymbol{U}(R)$ が存在します。これらのユニタリ演算子の積は、対称性の群の乗法規則を尊重しなければなりません。つまり、$R_1 \circ R_2$ を適用することは、まず $R_2$ を適用し、次に $R_1$ を適用することと等価であるべきです。したがって、以下を要求します：
+$$
+\boldsymbol{U}(R_1)\boldsymbol{U}(R_2) = \text{Phase}(R_1, R_2) \cdot \boldsymbol{U}(R_1 \circ R_2)
+$$ {#eq-2.19}
+式(@eq-2.19)において $R_1$ と $R_2$ に依存する位相が許容されるのは、量子状態が射だからです。$\boldsymbol{U}(R_1 \circ R_2)$ がベクトルではなく射に対して $\boldsymbol{U}(R_1)\boldsymbol{U}(R_2)$ と同じように作用することだけを要求すればよいのです。私たちは、$\boldsymbol{U}(R)$ が対称群の（位相を除いた）ユニタリ表現を与えると言います。
+
+これまでのところ、私たちの対称性の概念はダイナミクスとは無関係でした。通常、私たちは対称性が系の動力学的進化を尊重することを要求します。これは、系を最初に変換してから進化させても、最初に進化させてから変換しても、違いがないことを意味します。言い換えれば、以下の図式は可換です：
+$$
+\begin{CD}
+\text{初期状態} @>>> \text{最終状態} \\
+@VV\text{変換}V @VV\text{変換}V \\
+\text{新しい初期状態} @>>> \text{新しい最終状態}
+\end{CD}
+$$
+したがって、時間発展演算子 $e^{-it\boldsymbol{H}}$ は対称変換 $\boldsymbol{U}(R)$ と可換です：
+$$
+\boldsymbol{U}(R)e^{-it\boldsymbol{H}} = e^{-it\boldsymbol{H}}\boldsymbol{U}(R);
+$$ {#eq-2.20}
+$t$ の1次まで展開すると次を得ます：
+$$
+\boldsymbol{U}(R)\boldsymbol{H} = \boldsymbol{H}\boldsymbol{U}(R).
+$$ {#eq-2.21}
+連続対称性の場合、$R$ を恒等操作に無限に近く選ぶことができ（$R = I + \varepsilon T$）、そのとき $\boldsymbol{U}$ は $\boldsymbol{I}$ に近くなります：
+$$
+\boldsymbol{U} = \boldsymbol{I} - i\varepsilon \boldsymbol{Q} + O(\varepsilon^2);
+$$ {#eq-2.22}
+ここで $\boldsymbol{Q}$ は $T$ によって決定される演算子です。$\boldsymbol{U}$ の（$\varepsilon$ のオーダーでの）ユニタリ性から、$\boldsymbol{Q}$ が観測量であること（$\boldsymbol{Q} = \boldsymbol{Q}^\dagger$）が導かれます。式(@eq-2.21)を $\varepsilon$ の線形オーダーで展開すると、以下が見出されます：
+$$
+[\boldsymbol{Q}, \boldsymbol{H}] = 0;
+$$ {#eq-2.23}
+観測量 $\boldsymbol{Q}$ はハミルトニアンと可換です。
+
+式(@eq-2.23)は**保存則（conservation law）**です。例えば、これは $\boldsymbol{Q}$ の固有状態を準備した場合、シュレディンガー方程式によって支配される時間発展はその固有状態を保持することを述べています。このように、対称性は保存則を意味します。逆に、式(@eq-2.23)を満たす保存量 $\boldsymbol{Q}$ が与えられれば、対応する対称変換を構築できます。有限の変換は、多くの微小な変換の積として構築できます：
+$$
+R = \left( 1 + \frac{\theta}{N} T \right)^N \Rightarrow \boldsymbol{U}(R) = \left( \boldsymbol{I} + i \frac{\theta}{N} \boldsymbol{Q} \right)^N \to e^{i \theta \boldsymbol{Q}};
+$$ {#eq-2.24}
+$N \to \infty$ の極限をとります。微小な対称変換がどのようにユニタリ演算子によって表現されるかが決定されると、有限の変換がどのように表現されるかも決定されます。これらは微小変換の積として構築できるからです。私たちは $\boldsymbol{Q}$ を対称性の**生成子（generator）**と呼びます。
+
+この一般的な理論が空間回転と角運動量にどのように適用されるかを思い出しましょう。単位ベクトル $\hat{n} = (n_1, n_2, n_3)$ で指定される軸の周りの、反時計回りの微小回転 $d\theta$ は以下のように表せます：
+$$
+R(\hat{n}, d\theta) = I - i d\theta \hat{n} \cdot \vec{J};
+$$ {#eq-2.25}
+ここで $(J_1, J_2, J_3)$ は角運動量の成分です。有限の回転は以下のように表されます：
+$$
+R(\hat{n}, \theta) = \exp(-i \theta \hat{n} \cdot \vec{J}).
+$$ {#eq-2.26}
+異なる軸の周りの回転は可換ではありません。回転の初等的性質から、以下の交換関係が見出されます：
+$$
+[J_k, J_\ell] = i \varepsilon_{k\ell m} J_m;
+$$ {#eq-2.27}
+ここで $\varepsilon_{k\ell m}$ は $\varepsilon_{123}=1$ の完全反対称テンソルであり、繰り返される添字については和をとります。量子系において回転を実装するために、ヒルベルト空間においてこれらの関係を満たす自己共役演算子 $\boldsymbol{J}_1, \boldsymbol{J}_2, \boldsymbol{J}_3$ を見つけます。
+
+回転群の「定義」表現は3次元ですが、最小の非自明な既約表現は2次元であり、以下で与えられます：
+$$
+\boldsymbol{J}_k = \frac{1}{2} \boldsymbol{\sigma}_k;
+$$ {#eq-2.28}
+ここで
+$$
+\boldsymbol{\sigma}_1 = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad \boldsymbol{\sigma}_2 = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad \boldsymbol{\sigma}_3 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
+$$ {#eq-2.29}
+は**パウリ行列（Pauli matrices）**です。これは、ユニタリな基底変換を除いて唯一の2次元既約表現です。$\boldsymbol{J}_k$ の固有値が $\pm 1/2$ であるため、これを**スピン 1/2 表現**と呼びます。（$\boldsymbol{J}$ を角運動量と同一視することで、暗黙のうちに $\hbar = 1$ の単位系を選択しています。）
+
+パウリ行列は、互いに反可換であり、2乗すると恒等演算子になるという性質も持っています：
+$$
+\{\boldsymbol{\sigma}_k, \boldsymbol{\sigma}_\ell\} = 2 \delta_{k\ell} \boldsymbol{I};
+$$ {#eq-2.30}
+したがって $(\hat{n} \cdot \vec{\boldsymbol{\sigma}})^2 = n_k n_\ell \boldsymbol{\sigma}_k \boldsymbol{\sigma}_\ell = n_k n_k \boldsymbol{I} = \boldsymbol{I}$ です（繰り返される添字は和をとります）。指数関数シリーズを展開することで、有限の回転が以下のように表現されることがわかります：
+$$
+\boldsymbol{U}(\hat{n}, \theta) = e^{-i \frac{\theta}{2} \hat{n} \cdot \vec{\boldsymbol{\sigma}}} = \boldsymbol{I} \cos\frac{\theta}{2} - i \hat{n} \cdot \vec{\boldsymbol{\sigma}} \sin\frac{\theta}{2}.
+$$ {#eq-2.31}
+
+行列式が1である最も一般的な $2 \times 2$ ユニタリ行列はこの形式で表せます。したがって、私たちはクビットをスピン 1/2 の物体と考えることができ、クビットの状態に作用する任意のユニタリ変換（全体位相の物理的に無関係な回転は除く）は、スピンの回転となります。
+
+表現 $\boldsymbol{U}(\hat{n}, \theta)$ の奇妙な性質は、それが**2価（double-valued）**であることです。特に、任意の軸の周りの $2\pi$ 回転は非自明に表現されます：
+$$
+\boldsymbol{U}(\hat{n}, \theta=2\pi) = -\boldsymbol{I}.
+$$ {#eq-2.32}
+私たちの回転群の表現は、実際には「符号を除いた」表現です：
+$$
+\boldsymbol{U}(R_1)\boldsymbol{U}(R_2) = \pm \boldsymbol{U}(R_1 \circ R_2).
+$$ {#eq-2.33}
+しかし、既に述べたように、これは許容されます。なぜなら、ベクトルではなく射において群の乗法が尊重されるからです。これらの回転群の2価表現は**スピノル表現（spinor representations）**と呼ばれます。（スピノルの存在は、群のトポロジカルな性質、すなわち単連結でないことから導かれます。）
+
+$2\pi$ 回転がスピン 1/2 の物体に検出可能な影響を与えないのは事実ですが、スピノルの性質に観測可能な結果がないと結論づけるのは誤りです。一対のスピンに作用する機械があるとしましょう。第1スピンがアップなら何もしませんが、第1スピンがダウンなら第2スピンを $2\pi$ 回転させます。ここで、第1スピンがアップとダウンの重ね合わせ状態にあるときに、この機械を動作させてみます。すると：
+$$
+\frac{1}{\sqrt{2}} (|\uparrow\rangle_1 + |\downarrow\rangle_1)|\uparrow\rangle_2 \mapsto \frac{1}{\sqrt{2}} (|\uparrow\rangle_1 - |\downarrow\rangle_1)|\uparrow\rangle_2.
+$$ {#eq-2.34}
+第2スピンには検出可能な影響はありませんが、第1スピンの状態は直交する状態へと反転しており、これは非常に観測可能です。
+
+回転した参照系において、回転 $R(\hat{n}, \theta)$ は同じ角度の回転ですが、回転した軸の周りの回転になります。角運動量の3つの成分が回転の下でベクトルとして変換されることが導かれます：
+$$
+\boldsymbol{U}(R) \boldsymbol{J}_k \boldsymbol{U}(R)^\dagger = R_{k\ell} \boldsymbol{J}_\ell.
+$$ {#eq-2.35}
+したがって、状態 $|m\rangle$ が $\boldsymbol{J}_3$ の固有状態であるなら、
+$$
+\boldsymbol{J}_3 |m\rangle = m|m\rangle;
+$$ {#eq-2.36}
+$\boldsymbol{U}(R)|m\rangle$ は、同じ固有値を持つ $R \boldsymbol{J}_3$ の固有状態となります：
+$$
+(R \boldsymbol{J}_3) (\boldsymbol{U}(R)|m\rangle) = \boldsymbol{U}(R) \boldsymbol{J}_3 \boldsymbol{U}(R)^\dagger \boldsymbol{U}(R) |m\rangle = \boldsymbol{U}(R) \boldsymbol{J}_3 |m\rangle = m(\boldsymbol{U}(R)|m\rangle).
+$$ {#eq-2.37}
+
+したがって、$\hat{n} = (\sin\theta \cos\varphi, \sin\theta \sin\varphi, \cos\theta)$ 方向に沿った角運動量の固有状態を、軸 $\hat{n}' = (-\sin\varphi, \cos\varphi, 0)$ の周りの反時計回りの $\theta$ 回転を $\boldsymbol{J}_3$ 固有状態に適用することで構築できます。スピン 1/2 表現の場合、この回転は以下の通りです：
+$$
+\exp\left(-i \frac{\theta}{2} \hat{n}' \cdot \vec{\boldsymbol{\sigma}}\right) = \exp\left[ \frac{\theta}{2} \begin{pmatrix} 0 & -e^{-i\varphi} \\ e^{i\varphi} & 0 \end{pmatrix} \right] = \begin{pmatrix} \cos\frac{\theta}{2} & -e^{-i\varphi}\sin\frac{\theta}{2} \\ e^{i\varphi}\sin\frac{\theta}{2} & \cos\frac{\theta}{2} \end{pmatrix};
+$$ {#eq-2.38}
+これを固有値 1 を持つ $\boldsymbol{J}_3$ 固有状態 $\begin{pmatrix} 1 \\ 0 \end{pmatrix}$ に適用すると、次を得ます：
+$$
+|\psi(\theta, \varphi)\rangle = \begin{pmatrix} e^{-i\varphi/2} \cos\frac{\theta}{2} \\ e^{i\varphi/2} \sin\frac{\theta}{2} \end{pmatrix};
+$$ {#eq-2.39}
+（全体位相を除いて）。これが
+$$
+\hat{n} \cdot \vec{\boldsymbol{\sigma}} = \begin{pmatrix} \cos\theta & e^{-i\varphi}\sin\theta \\ e^{i\varphi}\sin\theta & -\cos\theta \end{pmatrix}
+$$ {#eq-2.40}
+の固有値 1 の固有状態であることを直接確認できます。これで、式(@eq-2.15)において $a = e^{-i\varphi/2}\cos(\theta/2)$, $b = e^{i\varphi/2}\sin(\theta/2)$ としたものは、$(\theta, \varphi)$ 方向を向いたスピンと解釈できることがわかります。
+
+私たちは一度の測定では $a$ と $b$ を決定できないと述べました。さらに、状態の多くの同一コピーがあっても、各コピーをz軸に沿ってのみ測定するのでは、状態を完全に決定することはできません。これによって $|a|$ と $|b|$ を推定することはできますが、$a$ と $b$ の相対位相については何も知ることができません。等価なことですが、z軸に沿ったスピンの成分
+$$
+\langle\psi(\theta, \varphi)| \sigma_3 |\psi(\theta, \varphi)\rangle = \cos^2\frac{\theta}{2} - \sin^2\frac{\theta}{2} = \cos\theta
+$$ {#eq-2.41}
+を見つけることはできますが、x-y平面内の成分については知ることができません。スピンを測定することによって $|\psi\rangle$ を決定する問題は、さまざまな軸に沿った成分を測定することによって単位ベクトル $\hat{n}$ を決定することと等価です。合計で、3つの異なる軸に沿った測定が必要です。例えば、$\langle\sigma_3\rangle$ と $\langle\sigma_1\rangle$ から $n_3$ と $n_1$ を決定できますが、$n_2$ の符号は未決定のままです。$\langle\sigma_2\rangle$ を測定すれば、この残された曖昧さを取り除くことができます。
+
+スピンを回転させることが許されるなら、z軸に沿った測定だけで十分です。すなわち、$\hat{n}$ 軸に沿ってスピンを測定することは、まず $\hat{n}$ 軸を $\hat{z}$ 軸に回転させる回転を適用し、その後にz軸に沿って測定することと等価です。
+
+$\theta = \pi/2$ かつ $\varphi = 0$（$\hat{x}$ 軸）の特別な場合、私たちのスピン状態は
+$$
+|\uparrow_x\rangle = \frac{1}{\sqrt{2}} (|\uparrow_z\rangle + |\downarrow_z\rangle)
+$$ {#eq-2.42}
+（「x軸に沿ったスピンアップ」）となります。直交する状態（「x軸に沿ったスピンダウン」）は
+$$
+|\downarrow_x\rangle = \frac{1}{\sqrt{2}} (|\uparrow_z\rangle - |\downarrow_z\rangle)
+$$ {#eq-2.43}
+です。これらの状態のいずれについても、z軸に沿ってスピンを測定すると、確率 $1/2$ で $|\uparrow_z\rangle$ を、確率 $1/2$ で $|\downarrow_z\rangle$ を得ます。
+
+ここで以下の組み合わせを考えてみましょう：
+$$
+\frac{1}{\sqrt{2}} (|\uparrow_x\rangle + |\downarrow_x\rangle).
+$$ {#eq-2.44}
+この状態は、x軸に沿ってスピンを測定すると、確率 $1/2$ ずつで $|\uparrow_x\rangle$ または $|\downarrow_x\rangle$ を得るという性質を持っています。では、式(@eq-2.44)の状態をz軸に沿って測定するとどうなるでしょうか？
+
+もしこれらが確率的な古典ビットであれば、答えは明白でしょう。式(@eq-2.44)の状態は2つの状態のいずれかであり、その各々についてz軸に沿ってアップまたはダウンを向く確率は $1/2$ です。したがって、当然、状態 $\frac{1}{\sqrt{2}}(|\uparrow_x\rangle + |\downarrow_x\rangle)$ をz軸に沿って測定すると、確率 $1/2$ でアップが見つかるはずです。
+
+しかし、クビットについてはそうではありません！ 式(@eq-2.42)と式(@eq-2.43)を加算することで、式(@eq-2.44)の状態は実際には $|\uparrow_z\rangle$ の変装であることがわかります。z軸に沿って測定すると、常に $|\uparrow_z\rangle$ が見つかり、$|\downarrow_z\rangle$ が見つかることは決してありません。
+
+クビットについては、確率的な古典ビットとは対照的に、確率が予想外の方法で加算されることがわかります。これは、最も単純な形での**「量子干渉（quantum interference）」**と呼ばれる現象であり、量子情報の重要な特徴です。
+
+クビットの幾何学的解釈を要約すると：クビットをスピン 1/2 の物体と考えることができ、その量子状態は3次元の単位ベクトル $\hat{n}$（スピンの方向）によって特徴づけられます。ユニタリ変換はスピンを回転させ、観測量の測定には2つの可能な結果があります：スピンは指定された軸に沿ってアップまたはダウンのいずれかになります。
+
+スピン 1/2 の物体とのこの形式的な等価性は、あらゆる2準位量子系に適用されますが、すべての2準位系が空間回転の下でスピノルとして変換されるわけではないことを強調しておく必要があります。
+
+## 2.2.2 光子の偏光 [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=14) {#sec-2.2.2-photon-polarization}
+
+もう一つの重要な2状態系は**光子（photon）**によって提供されます。光子は2つの独立した偏光を持つことができます。これらの光子偏光状態も回転の下で変換されますが、光子はスピン 1/2 の物体とは2つの重要な点で異なります：(1) 光子は質量がありません。(2) 光子はスピン 1 です（スピノルではありません）。
+
+ここではポアンカレ群のユニタリ表現についての詳細な議論は行いません。粒子のスピンは、それが**リトル群（little group）**（粒子の運動量を保存するローレンツ群の部分群）の下でどのように変換されるかを分類するものである、と言えば十分でしょう。有質量粒子の場合、常に粒子の静止系にブーストすることができ、そのときリトル群は回転群になります。
+
+無質量粒子の場合、静止系は存在しません。リトル群の有限次元ユニタリ表現は、2次元の回転群（運動量によって決定される軸の周りの回転）の表現であることがわかります。光子の場合、これは古典的な光の馴染みのある性質に対応しています。すなわち、波は伝搬方向に対して横方向に偏光しています。
+
+伝搬軸の周りの回転の下で、2つの線形偏光状態（水平偏光 $|x\rangle$ と垂直偏光 $|y\rangle$）は以下のように変換されます：
+$$
+\begin{aligned}
+|x\rangle &\to \cos\theta|x\rangle + \sin\theta|y\rangle \\
+|y\rangle &\to -\sin\theta|x\rangle + \cos\theta|y\rangle.
+\end{aligned}
+$$ {#eq-2.45}
+この2次元表現は実際には可約です。行列
+$$
+\begin{pmatrix} \cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{pmatrix}
+$$ {#eq-2.46}
+は以下の固有状態を持ちます：
+$$
+|R\rangle = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ i \end{pmatrix} \qquad |L\rangle = \frac{1}{\sqrt{2}} \begin{pmatrix} i \\ 1 \end{pmatrix},
+$$ {#eq-2.47}
+これらは固有値 $e^{i\theta}$ と $e^{-i\theta}$ を持つ、右円偏光と左円偏光の状態です。つまり、これらは回転の生成子
+$$
+\boldsymbol{J} = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix} = \boldsymbol{\sigma}_2,
+$$ {#eq-2.48}
+の固有値 $\pm 1$ を持つ固有状態です。固有値が $\pm 1$（$\pm 1/2$ ではなく）であるため、光子はスピン 1 であると言います。
+
+この文脈において、量子干渉現象は以下のように記述できます。偏光状態
+$$
+\begin{aligned}
+|+\rangle &= \frac{1}{\sqrt{2}} (|x\rangle + |y\rangle), \\
+|-\rangle &= \frac{1}{\sqrt{2}} (-|x\rangle + |y\rangle),
+\end{aligned}
+$$ {#eq-2.49}
+は互いに直交しており、$|x\rangle$ と $|y\rangle$ の状態を $45^\circ$ 回転させることで得られます。2つの直交する線形光子偏光のうち一方のみを通過させ、他方を吸収する偏光解析器（polarization analyzer）を想定します。すると、x偏光またはy偏光した光子は、$45^\circ$ 回転した偏光子を $1/2$ の確率で通過し、$45^\circ$ 偏光した光子は、xまたはy解析器を $1/2$ の確率で通過します。しかし、x光子がy解析器を通過することは決してありません。
+
+光子ビームがx解析器に向けられ、さらに下流にy解析器が置かれている場合を考えます。すると、約半数の光子が最初の解析器を通過しますが、そのすべてが2番目の解析器によって止められます。しかしここで、x解析器とy解析器の間に $45^\circ$ 回転した解析器を置くとどうなるでしょうか？ すると、約半数の光子が各解析器を通過し、約8個に1個が吸収されることなく3つすべてを通過することになります。この干渉効果のため、各光子が1つの古典的な偏光情報ビットを運んでいるという一貫した解釈は不可能です。クビットは確率的な古典ビットとは異なります。
+
+光子の線形偏光を回転させ、それによって式(@eq-2.45)の変換を私たちのクビットに適用する装置を構築できます。これは、円偏光状態 $|L\rangle$ と $|R\rangle$ が非縮退なエネルギー固有状態であるようなハミルトニアンを「オンにする」ことによって機能します。これは最も一般的なユニタリ変換ではありません。しかし、2つの直交する線形偏光状態の相対位相を変化させる装置：
+$$
+\begin{aligned}
+|x\rangle &\to e^{-i\varphi/2} |x\rangle, \\
+|y\rangle &\to e^{i\varphi/2} |y\rangle
+\end{aligned}
+$$ {#eq-2.50}
+（線形偏光状態が非縮退なエネルギー固有状態であるハミルトニアンをオンにすることによる）があれば、これら2つの装置を組み合わせて、光子の偏光状態に任意の $2 \times 2$ ユニタリ変換（行列式1のもの）を適用するために使用できます。

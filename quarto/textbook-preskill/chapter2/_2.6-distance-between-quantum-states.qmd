@@ -1,0 +1,170 @@
+## 2.6 2つの量子状態はどの程度離れているか？ (How far apart are two quantum states?) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=36) {#sec-2.6-how-far-apart}
+[📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=36)
+
+### 2.6.1 忠実度とウールマンの定理 (Fidelity and Uhlmann's theorem) {#sec-2.6.1-fidelity-uhlmann}
+
+2つの純粋状態 $|\psi\rangle$ と $|\varphi\rangle$ の区別可能性（distinguishability）は、それらの重ね合わせ（overlap） $|\langle\varphi|\psi\rangle|^2$ が1からどの程度乖離しているかによって定量化されます。これは**忠実度（fidelity）**とも呼ばれます。2つの密度演算子 $\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ に対して、忠実度は次のように定義されます：
+$$
+F(\boldsymbol{\rho}, \boldsymbol{\sigma}) \equiv \left( \text{Tr} \sqrt{\boldsymbol{\rho}^{1/2} \boldsymbol{\sigma} \boldsymbol{\rho}^{1/2}} \right)^2.
+$$ {#eq-2.122}
+（著者によっては、この量の平方根を「忠実度」と呼ぶ場合もあります。）
+忠実度は非負であり、$\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ が互いに直交する部分空間に台（support）を持つ場合に0となり、2つの状態が同一である場合に限り最大値1をとります。もし $\boldsymbol{\rho} = |\psi\rangle\langle\psi|$ が純粋状態であれば、忠実度は
+$$
+F(\boldsymbol{\rho}, \boldsymbol{\sigma}) = \langle\psi| \boldsymbol{\sigma} | \psi\rangle
+$$ {#eq-2.123}
+となります。$\boldsymbol{\sigma}$ に対して、「もし状態が $|\psi\rangle$ であれば『はい』、もし状態が $|\psi\rangle$ に直交していれば『いいえ』」という2つの結果を持つ直交測定を行うとしましょう。このとき、忠実度は結果が「はい」となる確率です。
+
+忠実度は $L^1$ ノルムを用いて表すこともできます：
+$$
+F(\boldsymbol{\rho}, \boldsymbol{\sigma}) = \|\boldsymbol{\sigma}^{1/2} \boldsymbol{\rho}^{1/2}\|_1^2,
+$$ {#eq-2.124}
+ここで
+$$
+\|\boldsymbol{A}\|_1 = \text{Tr} \sqrt{\boldsymbol{A}^\dagger \boldsymbol{A}}
+$$ {#eq-2.125}
+です。
+
+$L^1$ ノルムは**トレースノルム（trace norm）**とも呼ばれます。（エルミート演算子 $\boldsymbol{A}$ に対して、$\|\boldsymbol{A}\|_1$ は単にその固有値の絶対値の和です。） 忠実度 $F(\boldsymbol{\rho}, \boldsymbol{\sigma})$ は実際には2つの引数に関して対称ですが、その対称性は式 (@eq-2.122) では一見して明らかではありません。対称性を確認するには、任意のエルミート演算子 $\boldsymbol{A}$ と $\boldsymbol{B}$ に対して $L^1$ ノルムが次を満たすことに注意してください：
+$$
+\|\boldsymbol{A}\boldsymbol{B}\|_1 = \|\boldsymbol{B}\boldsymbol{A}\|_1.
+$$ {#eq-2.126}
+これが成り立つのは、$\boldsymbol{B}\boldsymbol{A}\boldsymbol{A}\boldsymbol{B}$ と $\boldsymbol{A}\boldsymbol{B}\boldsymbol{B}\boldsymbol{A}$ が同じ固有値を持つためです。もし $|\psi\rangle$ が $\boldsymbol{A}\boldsymbol{B}\boldsymbol{B}\boldsymbol{A}$ の固有値 $\lambda$ に属する固有ベクトルであれば、$\boldsymbol{B}\boldsymbol{A}|\psi\rangle$ は $\boldsymbol{B}\boldsymbol{A}\boldsymbol{A}\boldsymbol{B}$ の固有値 $\lambda$ に属する固有ベクトルとなります。 [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=37)
+
+2つの密度演算子の忠実度が、それらの**純粋化（purification）**の重ね合わせとどのように関係しているかを知ることは有用です。もし
+$$
+\boldsymbol{\rho}_A = \text{Tr}_B (|\Phi\rangle\langle\Phi|)
+$$ {#eq-2.127}
+であれば、$|\Phi\rangle_{AB}$ は密度演算子 $\boldsymbol{\rho}_A$ の純粋化であると言います。もし
+$$
+\boldsymbol{\rho} = \sum_i p_i |i\rangle\langle i|
+$$ {#eq-2.128}
+であり、$\{|i\rangle_A\}$ がシステム $A$ の正規直交基底であるなら、$\boldsymbol{\rho}$ の特定の純粋化は次の形式を持ちます：
+$$
+|\Phi_{\boldsymbol{\rho}}\rangle = \sum_i \sqrt{p_i} |i\rangle_A \otimes |i\rangle_B,
+$$ {#eq-2.129}
+ここで $\{|i\rangle_B\}$ はシステム $B$ の正規直交基底です。HJW 定理によれば、一般的な純粋化は次の形式を持ちます：
+$$
+|\Phi_{\boldsymbol{\rho}}(\boldsymbol{V})\rangle = \boldsymbol{I} \otimes \boldsymbol{V} |\Phi_{\boldsymbol{\rho}}\rangle,
+$$ {#eq-2.130}
+ここで $\boldsymbol{V}$ はユニタリ演算子です。これはまた、次のように書くこともできます：
+$$
+|\Phi_{\boldsymbol{\rho}}(\boldsymbol{V})\rangle = (\boldsymbol{\rho}^{1/2} \otimes \boldsymbol{V}) |\tilde{\Phi}\rangle,
+$$ {#eq-2.131}
+ここで $|\tilde{\Phi}\rangle$ は次のように（非標準的に規格化された）最大エンタングル状態です：
+$$
+|\tilde{\Phi}\rangle_{AB} = \sum_i |i\rangle_A \otimes |i\rangle_B.
+$$ {#eq-2.132}
+もし $\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ が $A$ 上の2つの密度演算子であれば、$AB$ 上のそれらの純粋化の内積は次のように表せます：
+$$
+\langle\Phi_{\boldsymbol{\sigma}}(\boldsymbol{W}) | \Phi_{\boldsymbol{\rho}}(\boldsymbol{V})\rangle = \langle\tilde{\Phi}| \boldsymbol{\sigma}^{1/2} \boldsymbol{\rho}^{1/2} \otimes \boldsymbol{W}^\dagger \boldsymbol{V} |\tilde{\Phi}\rangle.
+$$ {#eq-2.133}
+
+次の関係
+$$
+\boldsymbol{U} \otimes \boldsymbol{I} |\tilde{\Phi}\rangle = \sum_{i,j} |j\rangle \otimes |i\rangle U_{ji} = \sum_{i,j} |j\rangle \otimes |i\rangle U^T_{ij} = \boldsymbol{I} \otimes \boldsymbol{U}^T |\tilde{\Phi}\rangle
+$$ {#eq-2.134}
+に注目すると、
+$$
+\langle\Phi_{\boldsymbol{\sigma}}(\boldsymbol{W}) | \Phi_{\boldsymbol{\rho}}(\boldsymbol{V})\rangle = \langle\tilde{\Phi}| \boldsymbol{\sigma}^{1/2} \boldsymbol{\rho}^{1/2} \boldsymbol{U} \otimes \boldsymbol{I} |\tilde{\Phi}\rangle = \text{Tr}(\boldsymbol{\sigma}^{1/2} \boldsymbol{\rho}^{1/2} \boldsymbol{U})
+$$ {#eq-2.135}
+が得られます。ここで $\boldsymbol{U} = (\boldsymbol{W}^\dagger \boldsymbol{V})^T$ です。 [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=38)
+
+さて、極分解（polar decomposition）
+$$
+\boldsymbol{A} = \boldsymbol{U}' \sqrt{\boldsymbol{A}^\dagger \boldsymbol{A}}
+$$ {#eq-2.136}
+（ここで $\boldsymbol{U}'$ はユニタリ）を用いると、内積を次のように書き直すことができます：
+$$
+\langle\Phi_{\boldsymbol{\sigma}}(\boldsymbol{W}) | \Phi_{\boldsymbol{\rho}}(\boldsymbol{V})\rangle = \text{Tr} \left( \boldsymbol{U} \boldsymbol{U}' \sqrt{\boldsymbol{\rho}^{1/2} \boldsymbol{\sigma} \boldsymbol{\rho}^{1/2}} \right) = \sum_a \lambda_a \langle a | \boldsymbol{U} \boldsymbol{U}' | a \rangle
+$$ {#eq-2.137}
+ここで $\{\lambda_a\}$ は $\sqrt{\boldsymbol{\rho}^{1/2} \boldsymbol{\sigma} \boldsymbol{\rho}^{1/2}}$ の非負の固有値であり、$\{|a\rangle\}$ は対応する固有ベクトルです。内積が最大となる絶対値を持つのは、$\boldsymbol{U} = \boldsymbol{U}'^{-1}$ と選んだときであることは明らかであり、したがって次のように結論づけられます：
+$$
+F(\boldsymbol{\rho}, \boldsymbol{\sigma}) = \left( \text{Tr} \sqrt{\boldsymbol{\rho}^{1/2} \boldsymbol{\sigma} \boldsymbol{\rho}^{1/2}} \right)^2 = \max_{\boldsymbol{V}, \boldsymbol{W}} | \langle\Phi_{\boldsymbol{\sigma}}(\boldsymbol{W}) | \Phi_{\boldsymbol{\rho}}(\boldsymbol{V})\rangle |^2.
+$$ {#eq-2.138}
+
+2つの密度演算子の忠実度は、それらの純粋化の可能な最大の重ね合わせです。この結果は**ウールマンの定理（Uhlmann's theorem）**と呼ばれます。
+
+ウールマンの定理の一つの系は、忠実度の**単調性（monotonicity）**です：
+$$
+F(\boldsymbol{\rho}_{AB}, \boldsymbol{\sigma}_{AB}) \le F(\boldsymbol{\rho}_A, \boldsymbol{\sigma}_A);
+$$ {#eq-2.139}
+これは、サブシステムのトレースアウトが2つの密度演算子の忠実度を減少させ得ないことを述べています。単調性は、驚くことではありませんが、サブシステムを捨てることによって2つの量子状態がより区別しやすくなることはない、ということを意味します。これはウールマンの定理から直ちに導かれます。なぜなら、$\boldsymbol{\rho}_{AB}$ を純粋化するいかなる状態も、$\boldsymbol{\rho}_A$ の純粋化を提供し、したがって $\boldsymbol{\rho}_{AB}$ と $\boldsymbol{\sigma}_{AB}$ の純粋化の最適な重ね合わせは、必ず $\boldsymbol{\rho}_A$ と $\boldsymbol{\sigma}_A$ の純粋化によって達成可能だからです。
+
+### 2.6.2 距離尺度間の関係 (Relations among distance measures) {#sec-2.6.2-distance-relations}
+
+量子状態 $\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ の違いを定量化する方法は、忠実度以外にもあります。例えば、$L^1$ ノルムや $L^2$ ノルムを用いた状態間の距離：
+$$
+\|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1 \quad \text{または} \quad \|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_2
+$$ {#eq-2.140}
+ここで、演算子の $L^2$ ノルムは次のように定義されます： [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=39)
+$$
+\|\boldsymbol{A}\|_2 = \sqrt{\text{Tr} \boldsymbol{A}^\dagger \boldsymbol{A}}.
+$$ {#eq-2.141}
+（エルミート演算子 $\boldsymbol{A}$ に対し、$\|\boldsymbol{A}\|_2$ はその固有値の二乗和の平方根です。） $L^1$ 距離は、状態の区別可能性の尺度として特に自然です。なぜなら（演習 2.5 で示されるように）、それは状態を区別するための最適な測定によって達成される、対応する確率分布間の距離として解釈できるからです。忠実度、$L^1$ 距離、および $L^2$ 距離は、一般に互いに単純な関係にはありませんが、これらの異なる尺度を関連付ける有用な不等式が存在します。
+
+もし $\{|\lambda_i|, i = 0, 1, 2, \dots d-1\}$ が $\sqrt{\boldsymbol{A}^\dagger \boldsymbol{A}}$ の固有値を表すなら、
+$$
+\|\boldsymbol{A}\|_1 = \sum_{i=0}^{d-1} |\lambda_i|; \quad \|\boldsymbol{A}\|_2 = \sqrt{\sum_{i=0}^{d-1} |\lambda_i|^2}.
+$$ {#eq-2.142}
+もし $\|\boldsymbol{A}\|_1$ を2つのベクトル $(1, 1, 1, \dots, 1)$ と $(|\lambda_0|, |\lambda_1|, \dots, |\lambda_{d-1}|)$ の内積と見なせば、コーシー・シュワルツの不等式から
+$$
+\|\boldsymbol{A}\|_1 \le \sqrt{d} \|\boldsymbol{A}\|_2
+$$ {#eq-2.143}
+が得られます。右辺に $\sqrt{d}$ という因子があるため、高次元の系では $L^2$ ノルムで近い密度演算子が $L^1$ ノルムでも近いとは限りません。
+
+しかし、$\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ の間の $L^1$ 距離と、それらの平方根の間の $L^2$ 距離を関連付ける、次元に依存しない不等式が存在します：
+$$
+\|\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}\|_2^2 \le \|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1.
+$$ {#eq-2.144}
+この不等式を導くために、まず平方根の差をその固有基底で展開します：
+$$
+\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}} = \sum_i \lambda_i |i\rangle\langle i|,
+$$ {#eq-2.145}
+そして、この差の絶対値が次のように書けることに注意してください：
+$$
+|\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}| = \sum_i |\lambda_i| |i\rangle\langle i| = (\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}) \boldsymbol{U} = \boldsymbol{U} (\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}),
+$$ {#eq-2.146}
+ここで
+$$
+\boldsymbol{U} = \sum_i \text{sign}(\lambda_i) |i\rangle\langle i|
+$$ {#eq-2.147}
+です。
+
+$$
+\boldsymbol{\rho} - \boldsymbol{\sigma} = \frac{1}{2} (\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}) (\sqrt{\boldsymbol{\rho}} + \sqrt{\boldsymbol{\sigma}}) + \frac{1}{2} (\sqrt{\boldsymbol{\rho}} + \sqrt{\boldsymbol{\sigma}}) (\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}})
+$$ {#eq-2.148}
+を用い、トレースの巡回性（cyclicity）を利用すると、次のようにわかります： [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=40)
+$$
+\begin{aligned}
+\text{Tr}(\boldsymbol{\rho} - \boldsymbol{\sigma})\boldsymbol{U} &= \text{Tr} |\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}| (\sqrt{\boldsymbol{\rho}} + \sqrt{\boldsymbol{\sigma}}) = \sum_i |\lambda_i| \langle i | \sqrt{\boldsymbol{\rho}} + \sqrt{\boldsymbol{\sigma}} | i \rangle \\
+&\ge \sum_i |\lambda_i| |\langle i | \sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}} | i \rangle| = \sum_i |\lambda_i|^2 = \|\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}\|_2^2.
+\end{aligned}
+$$ {#eq-2.149}
+最後に、
+$$
+\|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1 = \text{Tr} |\boldsymbol{\rho} - \boldsymbol{\sigma}| \ge \text{Tr} (\boldsymbol{\rho} - \boldsymbol{\sigma})\boldsymbol{U}
+$$ {#eq-2.150}
+（これは任意のユニタリ $\boldsymbol{U}$ に対して真です）を用いることで、式 (@eq-2.144) を得ます。
+
+平方根の間のこの $L^2$ 距離は忠実度に関連付けることができます。まず、
+$$
+\|\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}\|_2^2 = \text{Tr}(\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}})^2 = 2 - 2 \text{Tr}(\sqrt{\boldsymbol{\rho}}\sqrt{\boldsymbol{\sigma}})
+$$ {#eq-2.151}
+であることに注意してください（$\text{Tr}\boldsymbol{\rho} = \text{Tr}\boldsymbol{\sigma} = 1$ のため）。極分解 $\boldsymbol{A} = \boldsymbol{U} \sqrt{\boldsymbol{A}^\dagger \boldsymbol{A}}$ （$\boldsymbol{U}$ はユニタリ）から、$\text{Tr}\sqrt{\boldsymbol{A}^\dagger \boldsymbol{A}} \ge |\text{Tr}\boldsymbol{A}|$ であることがわかるため、
+$$
+\sqrt{F(\boldsymbol{\rho}, \boldsymbol{\sigma})} = \text{Tr} \sqrt{\boldsymbol{\rho}^{1/2} \boldsymbol{\sigma} \boldsymbol{\rho}^{1/2}} \ge |\text{Tr}(\sqrt{\boldsymbol{\rho}}\sqrt{\boldsymbol{\sigma}})|
+$$ {#eq-2.152}
+となります。したがって、式 (@eq-2.144) と式 (@eq-2.151) から
+$$
+\sqrt{F(\boldsymbol{\rho}, \boldsymbol{\sigma})} \ge 1 - \frac{1}{2} \|\sqrt{\boldsymbol{\rho}} - \sqrt{\boldsymbol{\sigma}}\|_2^2 \ge 1 - \frac{1}{2} \|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1
+$$ {#eq-2.153}
+となります。式 (@eq-2.153) は、もし $\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ が $L^1$ ノルムで互いに近いならば、それらの忠実度は1に近いことを示しています。
+
+$L^1$ 距離は忠実度の上界も提供します：
+$$
+F(\boldsymbol{\rho}, \boldsymbol{\sigma}) \le 1 - \frac{1}{4} \|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1^2.
+$$ {#eq-2.154}
+式 (@eq-2.154) を導くために、まず純粋状態に対して等号が成り立つことを示します。任意の2つのベクトル $|\psi\rangle$ と $|\varphi\rangle$ はある2次元部分空間にあり、基底と位相の規約を適切に選ぶことで、次のように書くことができます：
+$$
+|\psi\rangle = \begin{pmatrix} \cos \theta/2 \\ \sin \theta/2 \end{pmatrix}, \quad |\varphi\rangle = \begin{pmatrix} \sin \theta/2 \\ \cos \theta/2 \end{pmatrix}.
+$$ {#eq-2.155}

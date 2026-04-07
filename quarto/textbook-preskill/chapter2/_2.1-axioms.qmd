@@ -1,0 +1,119 @@
+# 2.1 量子力学の公理 [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=3) {#sec-2.1-axioms}
+
+この章と次の章では、開いた量子系（open quantum systems）の理論を展開します。系が不完全に隔離されており、そのため観測されていない環境とエネルギーや情報を交換する場合、その系は「開いている」と言います。開いた系を研究する動機は、現実のすべての系が開いているからです。物理学者やエンジニアは量子系を隔離しようと懸命に努力しますが、完全に成功することはありません。
+
+私たちの主な関心は開いた系にありますが、まずは完全に隔離された「閉じている」量子系の理論を思い出すことから始めましょう。開いた系 $S$ の挙動を理解するために、私たちは $S$ とその環境 $E$ を組み合わせたものを閉じた系（全「宇宙」）と見なし、私たちが $S$ を観察できても $E$ は観察できないときに $S$ がどのように振る舞うかを問うことになります。
+
+量子理論は物理世界の数学的モデルです。閉じた系の場合、5つの公理（five axioms）を述べることでそのモデルを特徴づけることができます。これらの公理は、状態、観測量、測定、ダイナミクスをどのように表現するか、また2つの系を組み合わせて複合系を得る方法を規定しています。
+
+**公理1. 状態（States）**。状態とは、物理系の完全な記述です。量子力学において、状態はヒルベルト空間 $\mathcal{H}$ 内の**射（ray）**です。
+
+ヒルベルト空間とは何でしょうか？
+
+a) それは複素数体 $\mathbb{C}$ 上のベクトル空間です。ベクトルは $|\psi\rangle$（ディラックのケット記法）で表されます。
+
+b) それは、ベクトルの順序対を $\mathbb{C}$ に写像する内積 $\langle\psi|\varphi\rangle$ を持ち、以下の性質を有します：
+   i) 正値性：$|\psi\rangle \neq 0$ に対して $\langle\psi|\psi\rangle > 0$。
+   ii) 線形性：$\langle\varphi|(a|\psi_1\rangle + b|\psi_2\rangle) = a\langle\varphi|\psi_1\rangle + b\langle\varphi|\psi_2\rangle$。
+   iii) 歪対称性（共役対称性）：$\langle\varphi|\psi\rangle = \langle\psi|\varphi\rangle^*$。
+   （$^*$ は複素共役を表します。）
+
+c) それは、ノルム $\|\psi\| = \langle\psi|\psi\rangle^{1/2}$ に関して完備（complete）です。
+   （完備性は、無限次元の関数空間においては重要な条件であり、特定の固有関数展開の収束を保証します。しかし、私たちは主に有限次元の内積空間を扱うことで満足することにします。）
+
+射とは何でしょうか？ それは、0でない複素スカラーの乗算によってのみ異なるベクトルの同値類です。任意の0でない射に対して、慣習として、単位ノルムを持つ類の代表元 $|\psi\rangle$ を選ぶことができます：
+$$
+\langle\psi|\psi\rangle = 1.
+$$ {#eq-2.1}
+したがって、状態は規格化されたベクトルに対応し、ベクトルの全位相には物理的な意味がありません：$|\psi\rangle$ と $e^{i\alpha}|\psi\rangle$ は同じ状態を表します（ここで $|e^{i\alpha}| = 1$）。
+
+すべての射が可能な状態に対応するため、2つの状態 $|\varphi\rangle, |\psi\rangle$ が与えられたとき、それらの線形重ね合わせ $a|\varphi\rangle + b|\psi\rangle$ として別の状態を構築できます。この重ね合わせにおける**相対位相**は物理的に重要です。私たちは $a|\varphi\rangle + b|\psi\rangle$ を $e^{i\alpha}(a|\varphi\rangle + b|\psi\rangle)$ とは同一視しますが、$a|\varphi\rangle + e^{i\alpha}b|\psi\rangle$ とは同一視しません。
+
+ベクトルを複素数に写像する線形関数（双対ベクトル）に対して $\langle\psi|$（ディラックのブラ記法）という表記を用い、$|\varphi\rangle \mapsto \langle\psi|\varphi\rangle$ と定義します。
+
+**公理2. 観測量（Observables）**。観測量とは、原理的に測定可能な物理系の性質です。量子力学において、観測量は**自己共役演算子（self-adjoint operator）**です。
+
+演算子とは、ベクトルをベクトルに写像する線形写像です：
+$$
+\boldsymbol{A}: |\psi\rangle \mapsto \boldsymbol{A}|\psi\rangle, \quad \boldsymbol{A}(a|\psi\rangle + b|\varphi\rangle) = a\boldsymbol{A}|\psi\rangle + b\boldsymbol{A}|\varphi\rangle.
+$$ {#eq-2.2}
+（演算子を太字で表すことがよくあります。）演算子 $\boldsymbol{A}$ の随伴（adjoint）$\boldsymbol{A}^\dagger$ は、すべてのベクトル $|\varphi\rangle, |\psi\rangle$ に対して
+$$
+\langle\varphi|\boldsymbol{A}\psi\rangle = \langle\boldsymbol{A}^\dagger\varphi|\psi\rangle
+$$ {#eq-2.3}
+によって定義されます（ここで $\boldsymbol{A}|\psi\rangle$ は $|\boldsymbol{A}\psi\rangle$ と表記されています）。$\boldsymbol{A} = \boldsymbol{A}^\dagger$ である場合、あるいは言い換えれば、すべてのベクトル $|\varphi\rangle$ と $|\psi\rangle$ に対して $\langle\varphi|\boldsymbol{A}|\psi\rangle = \langle\psi|\boldsymbol{A}|\varphi\rangle^*$ である場合、$\boldsymbol{A}$ は自己共役です。$\boldsymbol{A}$ と $\boldsymbol{B}$ が自己共役であれば、$\boldsymbol{A}+\boldsymbol{B}$ も自己共役です（$(\boldsymbol{A}+\boldsymbol{B})^\dagger = \boldsymbol{A}^\dagger + \boldsymbol{B}^\dagger$ であるため）。しかし、$(\boldsymbol{A}\boldsymbol{B})^\dagger = \boldsymbol{B}^\dagger \boldsymbol{A}^\dagger$ なので、$\boldsymbol{A}\boldsymbol{B}$ が自己共役になるのは $\boldsymbol{A}$ と $\boldsymbol{B}$ が可換である場合に限られます。$\boldsymbol{A}$ と $\boldsymbol{B}$ が自己共役であれば、$\boldsymbol{A}\boldsymbol{B}+\boldsymbol{B}\boldsymbol{A}$ と $i(\boldsymbol{A}\boldsymbol{B}-\boldsymbol{B}\boldsymbol{A})$ は常に自己共役であることに注意してください。
+
+ヒルベルト空間 $\mathcal{H}$ における自己共役演算子はスペクトル表現を持ちます。つまり、その固有状態は $\mathcal{H}$ において完全正規直交基底を形成します。自己共役演算子 $\boldsymbol{A}$ を以下のように表すことができます：
+$$
+\boldsymbol{A} = \sum_n a_n \boldsymbol{E}_n.
+$$ {#eq-2.4}
+ここで、各 $a_n$ は $\boldsymbol{A}$ の固有値であり、$\boldsymbol{E}_n$ は固有値 $a_n$ を持つ固有ベクトルの空間への直交射影です。$\boldsymbol{E}_n$ は以下を満たします：
+$$
+\begin{aligned}
+\boldsymbol{E}_n \boldsymbol{E}_m &= \delta_{n,m} \boldsymbol{E}_n, \\
+\boldsymbol{E}_n^\dagger &= \boldsymbol{E}_n.
+\end{aligned}
+$$ {#eq-2.5}
+ベクトル $|\psi\rangle$ によって張られる1次元空間への直交射影は $|\psi\rangle\langle\psi|$ と表すことができます（ここで $\langle\psi|$ は $|\psi\rangle$ に直交するベクトルを消滅させるブラです）。したがって、$\boldsymbol{A}$ のスペクトル表現の別の表記は
+$$
+\boldsymbol{A} = \sum_n |n\rangle a_n \langle n|
+$$ {#eq-2.6}
+となります。ここで $\{|n\rangle\}$ は $\boldsymbol{A}$ の固有状態の正規直交基底であり、$\boldsymbol{A}|n\rangle = a_n|n\rangle$ を満たします。
+
+（無限次元空間における非有界演算子の場合、自己共役の定義とスペクトル定理の記述はより微妙になりますが、ここでは気にする必要はありません。）
+
+**公理3. 測定（Measurement）**。測定とは、観測者が物理系の状態に関する情報を取得するプロセスです。量子力学において、観測量 $\boldsymbol{A}$ の測定は $\boldsymbol{A}$ の固有状態を準備し、観測者は対応する固有値を知ることになります。測定直前の量子状態が $|\psi\rangle$ である場合、結果 $a_n$ は以下の事前確率で得られます：
+$$
+\text{Prob}(a_n) = \|\boldsymbol{E}_n|\psi\rangle\|^2 = \langle\psi|\boldsymbol{E}_n|\psi\rangle;
+$$ {#eq-2.7}
+結果 $a_n$ が得られた場合、測定直後の（規格化された）量子状態は
+$$
+\frac{\boldsymbol{E}_n|\psi\rangle}{\|\boldsymbol{E}_n|\psi\rangle\|}
+$$ {#eq-2.8}
+となります。
+
+測定が直ちに繰り返される場合、この規則によれば、同じ結果が再び確率1で得られます。状態 $|\psi\rangle$ で記述される、同一に準備された多くの系が測定される場合、結果の期待値は
+$$
+\langle a \rangle \equiv \sum_n a_n \text{Prob}(a_n) = \sum_n a_n \langle\psi|\boldsymbol{E}_n|\psi\rangle = \langle\psi|\boldsymbol{A}|\psi\rangle
+$$ {#eq-2.9}
+となります。
+
+**公理4. ダイナミクス（Dynamics）**。ダイナミクスとは、状態が時間の経過とともにどのように進化するかを記述するものです。量子力学において、閉じた系の時間発展は**ユニタリ演算子（unitary operator）**によって記述されます。
+
+ダイナミクスのシュレディンガー描像において、時刻 $t$ における初期状態が $|\psi(t)\rangle$ である場合、時刻 $t'$ における最終状態 $|\psi(t')\rangle$ は
+$$
+|\psi(t')\rangle = \boldsymbol{U}(t', t)|\psi(t)\rangle
+$$ {#eq-2.10}
+と表されます。ここで $\boldsymbol{U}(t', t)$ はユニタリ時間発展演算子です。微小時間発展はシュレディンガー方程式によって支配されます：
+$$
+\frac{d}{dt}|\psi(t)\rangle = -i\boldsymbol{H}(t)|\psi(t)\rangle,
+$$ {#eq-2.11}
+ここで $\boldsymbol{H}(t)$ は自己共役演算子であり、系のハミルトニアンと呼ばれます。（ハミルトニアンはエネルギーの次元を持ちます。プランク定数 $\hbar = h/2\pi = 1$ となる単位系を選択したため、エネルギーは時間の逆数の次元を持ちます。）微小量 $dt$ の1次までで、シュレディンガー方程式は
+$$
+|\psi(t+dt)\rangle = (\boldsymbol{I} - i\boldsymbol{H}(t)dt)|\psi(t)\rangle
+$$ {#eq-2.12}
+と表せます。したがって、演算子 $\boldsymbol{U}(t+dt, t) \equiv \boldsymbol{I} - i\boldsymbol{H}(t)dt$ はユニタリです。$\boldsymbol{H}$ が自己共役であるため、$dt$ の線形オーダーで $\boldsymbol{U}^\dagger \boldsymbol{U} = \boldsymbol{I}$ を満たします。ユニタリ演算子の積はユニタリであるため、シュレディンガー方程式によって支配される有限区間の時間発展もユニタリとなります。$\boldsymbol{H}$ が時間に依存しない場合、$\boldsymbol{U}(t', t) = e^{-i(t'-t)\boldsymbol{H}}$ と書くことができます。
+
+最後の公理は、複合量子系 $AB$ の記述と、その構成要素である $A$ および $B$ の記述を結びつけるものです。
+
+**公理5. 複合系（Composite Systems）**。系 $A$ のヒルベルト空間が $\mathcal{H}_A$ であり、系 $B$ のヒルベルト空間が $\mathcal{H}_B$ である場合、複合系 $AB$ のヒルベルト空間はテンソル積 $\mathcal{H}_A \otimes \mathcal{H}_B$ です。
+
+系 $A$ が状態 $|\psi\rangle_A$ で準備され、系 $B$ が状態 $|\varphi\rangle_B$ で準備された場合、複合系の状態は積状態 $|\psi\rangle_A \otimes |\varphi\rangle_B$ です。
+
+ヒルベルト空間のテンソル積とは何でしょうか？ $\{|i\rangle_A\}$ が $\mathcal{H}_A$ の正規直交基底であり、$\{|\mu\rangle_B\}$ が $\mathcal{H}_B$ の基底である場合、状態
+$$
+|i, \mu\rangle_{AB} \equiv |i\rangle_A \otimes |\mu\rangle_B
+$$
+は $\mathcal{H}_A \otimes \mathcal{H}_B$ の基底となります。ここで $\mathcal{H}_A \otimes \mathcal{H}_B$ 上の内積は以下のように定義されます：
+$$
+{}_{AB}\langle i, \mu | j, \nu \rangle_{AB} = \delta_{ij} \delta_{\mu\nu}.
+$$ {#eq-2.13}
+テンソル積演算子 $\boldsymbol{M}_A \otimes \boldsymbol{N}_B$ は、系 $A$ に $\boldsymbol{M}_A$ を、系 $B$ に $\boldsymbol{N}_B$ を適用する演算子です。正規直交基底 $|i, \mu\rangle_{AB}$ に対するその作用は以下の通りです：
+$$
+(\boldsymbol{M}_A \otimes \boldsymbol{N}_B)|i, \mu\rangle_{AB} = \boldsymbol{M}_A|i\rangle_A \otimes \boldsymbol{N}_B|\mu\rangle_B = \sum_{j, \nu} |j, \nu\rangle_{AB} (\boldsymbol{M}_A)_{ji} (\boldsymbol{N}_B)_{\nu\mu}.
+$$ {#eq-2.14}
+系 $B$ に対して自明に作用する演算子は $\boldsymbol{M}_A \otimes \boldsymbol{I}_B$ と表記でき（ここで $\boldsymbol{I}_B$ は $\mathcal{H}_B$ 上の恒等演算子）、系 $A$ に対して自明に作用する演算子は $\boldsymbol{I}_A \otimes \boldsymbol{N}_B$ と表記できます。
+
+これら5つの公理は、量子力学の完全な数学的定式化を与えます。すぐにいくつかの奇妙な特徴に気づくでしょう。一つの奇妙な点は、古典物理学では非線形な力学方程式に慣れているのに対し、シュレディンガー方程式が線形であることです。この性質は説明を求めているように思えます。しかし、それ以上に奇妙なのは謎めいた二元論です。量子状態が変化する方法には、全く異なる2つの方法があります。一方には、決定論的なユニタリ発展があります。初期状態 $|\psi(0)\rangle$ を指定すれば、理論は後の時刻の状態 $|\psi(t)\rangle$ を予測します。しかし、他方には確率的な測定があります。理論は測定結果について確定的な予測を行わず、さまざまな選択肢に確率を割り当てるだけです。これは困ったことです。なぜなら、測定プロセスが他のプロセスとは異なる物理法則によって支配されるべき理由が不明確だからです。
+
+発展と測定の根本的な区別、特に測定プロセスの本質的なランダム性は、量子理論の**測定問題（measurement problem）**と呼ばれることがあります。量子理論のより満足のいく公理的定式化を求めることは、いつか成功するかもしれない価値ある課題です。しかし、これら5つの公理は、現在私たちが量子物理学について知っているすべてを正しく説明しており、この本で続くすべての基礎となります。

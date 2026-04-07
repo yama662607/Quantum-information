@@ -1,0 +1,241 @@
+## 3.2 量子チャネル (Quantum channels) {#sec-3.2-quantum-channels}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=11)
+
+### 3.2.1 オペレーター和表現 (The operator-sum representation) {#sec-3.2.1-operator-sum}
+
+私たちは、二部量子システムの一方の振る舞いを理解するというプログラムの次のステップへと進みます。二部系 $AB$ の純粋状態は、サブシステム $A$ のみを観察する場合には混合状態のように振る舞うこと、そして二部系の直交測定は $A$ 単独に対して（非直交な）POVM を実現できることを見てきました。次に、二部システムの状態がユニタリ発展する場合、$A$ 単独の発展をどのように記述すればよいかを問います。
+
+実のところ、私たちは一般化測定の議論において、すでにこの問いに答えています。もしシステム $A$ が（$B$ とエンタングルしていない）純粋状態 $|\psi\rangle$ で始まり、その後 $B$ と相互作用するなら、$AB$ の全状態は式 (@eq-3.23) の形式を持ちます。結果として得られる $A$ の密度演算子は、$B$ をトレースアウトすることで求められます。同等な考え方として、システム $B$ を基底 $\{|a\rangle\}$ で測定したが、その測定結果を記録し損ねたと想像することもできます。その場合、私たちはすべての可能な測定後の状態を、それらの確率で重み付けして平均化せざるを得ません。その結果、初期密度演算子 $\boldsymbol{\rho} = |\psi\rangle\langle\psi|$ は線形写像 $\mathcal{E}$ を受け、次のように作用します：
+$$
+\mathcal{E}(\boldsymbol{\rho}) = \sum_a \boldsymbol{M}_a \boldsymbol{\rho} \boldsymbol{M}_a^\dagger,
+$$ {#eq-3.32}
+ここで演算子 $\{\boldsymbol{M}_a\}$ は完全性関係式 (@eq-3.26) に従います。線形であるため、$\mathcal{E}$ は式 (@eq-3.32) のように純粋状態だけでなく、任意の密度演算子に対して作用します。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=12)
+
+式 (@eq-3.32) の形式の線形写像（ここで $\{\boldsymbol{M}_a\}$ は式 (@eq-3.26) を満たす）は、**量子チャネル（quantum channel）**と呼ばれます。「チャネル」という言葉は通信理論から取られたものです。私たちは、状態 $\boldsymbol{\rho}$ を通信リンクを通じて別の当事者に送信し、その当事者が修正された状態 $\mathcal{E}(\boldsymbol{\rho})$ を受け取る状況を想像します。量子チャネルの類義語として**スーパーオペレーター（superoperator）**という言葉が使われることもあります。ここで「スーパー」は、その写像がベクトルからベクトルではなく、演算子から演算子への写像であることを伝えています。同じオブジェクトに対するもう一つの名称は、**トレース保存完全正値写像（trace-preserving completely positive map）**、略して **TPCP 写像**です。この名称の正当性はすぐに明らかになります。式 (@eq-3.32) は量子チャネルの**オペレーター和表現（operator-sum representation）**と言われ、演算子 $\{\boldsymbol{M}_a\}$ はチャネルの**クラウス演算子（Kraus operators）**または**演算要素（operation elements）**と呼ばれます。
+
+量子チャネルは密度演算子を密度演算子へと写像します。すなわち、以下の簡単に検証可能な性質を持っています：
+
+1. **線形性（Linearity）**：$\mathcal{E}(\alpha\boldsymbol{\rho}_1 + \beta\boldsymbol{\rho}_2) = \alpha\mathcal{E}(\boldsymbol{\rho}_1) + \beta\mathcal{E}(\boldsymbol{\rho}_2)$。
+2. **エルミート性保存（Preserves Hermiticity）**：$\boldsymbol{\rho} = \boldsymbol{\rho}^\dagger$ ならば $\mathcal{E}(\boldsymbol{\rho}) = \mathcal{E}(\boldsymbol{\rho})^\dagger$。
+3. **正値性保存（Preserves positivity）**：$\boldsymbol{\rho} \ge 0$ ならば $\mathcal{E}(\boldsymbol{\rho}) \ge 0$。
+4. **トレース保存（Preserves trace）**：$\text{Tr}(\mathcal{E}(\boldsymbol{\rho})) = \text{Tr}(\boldsymbol{\rho})$。
+
+これらの性質は「トレース保存完全正値写像」という言い回しを部分的に説明していますが、「完全（completely）」という修飾語の理由はまだ欠けています。それはすぐに出てきます。
+
+システム $A$ に作用する量子チャネルが、$A$ と $B$ に作用するユニタリ変換とその後の $B$ の部分トレースからどのように生じるかを見てきました。一般化測定の議論と同様に、この議論を逆向きに辿ることで、いかなる量子チャネルもこの方法で実現可能であることを確認できます。クラウス演算子 $\{\boldsymbol{M}_a\}$ を持つ $A$ 上の量子チャネル $\mathcal{E}$ が与えられたとき、クラウス演算子の数に一致するヒルベルト空間次元を持つ補助系 $B$ を導入できます。すると、式 (@eq-3.23) のように $|\psi\rangle_A \otimes |0\rangle_B$ に作用するユニタリ変換を構成でき、そこから $B$ をトレースアウトすることで量子チャネル $\mathcal{E}$ が得られます。
+
+与えられた量子チャネル $\mathcal{E}$ のオペレーター和表現は一意ではありません。なぜなら、私たちは $B$ の部分トレースを好きな基底で行うことができるからです。ユニタリ行列 $V$ によって回転された基底状態 $\{|\mu\rangle\}$：
+$$
+|a\rangle = \sum_\mu |\mu\rangle V_{\mu a}
+$$ {#eq-3.33}
+を用いて表現すると、 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=13) $AB$ の全状態は
+$$
+\sum_{a, \mu} \boldsymbol{M}_a |\psi\rangle_A \otimes |\mu\rangle_B V_{\mu a} = \sum_\mu \boldsymbol{N}_\mu |\psi\rangle_A \otimes |\mu\rangle_B
+$$ {#eq-3.34}
+となります。ここで新しいクラウス演算子は
+$$
+\boldsymbol{N}_\mu = \sum_a V_{\mu a} \boldsymbol{M}_a
+$$ {#eq-3.35}
+です。同じ量子チャネルの任意の2つのオペレーター和表現は、常にこのようなクラウス演算子のユニタリな基底変換によって関連付けられていることを、すぐ後に確認します。
+
+量子チャネルが重要である理由は、それらが純粋状態から混合状態への発展である**デコヒーレンス（decoherence）**を議論するための形式論を提供してくれるからです。$A$ のユニタリ発展は、オペレーター和の中に項が1つしかない特別なケースです。2つ以上の項がある場合、共同のユニタリ変換 $U_{AB}$ による発展の下で $B$ とエンタングルする $A$ の初期純粋状態が存在し、したがって $B$ をトレースアウトしたときに $A$ の状態は混合状態になります。
+
+2つのチャネル $\mathcal{E}_1$ と $\mathcal{E}_2$ を合成して、別のチャネル $\mathcal{E}_2 \circ \mathcal{E}_1$ を得ることができます。もし $\mathcal{E}_1$ が昨日から今日への発展を記述し、$\mathcal{E}_2$ が今日から明日への発展を記述するなら、$\mathcal{E}_2 \circ \mathcal{E}_1$ は昨日から明日への発展を記述します。具体的に、もし $\mathcal{E}_1$ が $N$ 個のクラウス演算子 $\{\boldsymbol{M}_a\}$ を持つオペレーター和表現を持ち、$\mathcal{E}_2$ が $M$ 個のクラウス演算子 $\{\boldsymbol{N}_\mu\}$ を持つオペレーター和表現を持つなら、$\mathcal{E}_2 \circ \mathcal{E}_1$ は $NM$ 個のクラウス演算子 $\{\boldsymbol{N}_\mu \boldsymbol{M}_a\}$ を持つオペレーター和表現を持ちます。このようにチャネルを合成できるため、量子チャネルは**力学的半群（dynamical semigroup）**を形成すると言います。
+
+### 3.2.2 可逆性 (Reversibility) {#sec-3.2.2-reversibility}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=13)
+
+ユニタリ変換 $\boldsymbol{U}$ はユニタリな逆演算子 $\boldsymbol{U}^\dagger$ を持ちます。したがって、もし今日の量子状態が昨日の状態に $\boldsymbol{U}$ を適用することで得られたのであれば、原理的には今日の状態に $\boldsymbol{U}^\dagger$ を適用することで昨日の状態を復元できます。ユニタリな時間発展は可逆的です。
+
+一般的な量子チャネルについても同じことが言えるでしょうか？ もしクラウス演算子 $\{\boldsymbol{M}_a\}$ を持つチャネル $\mathcal{E}_1$ が、クラウス演算子 $\{\boldsymbol{N}_\mu\}$ を持つチャネル $\mathcal{E}_2$ によって反転される（逆転される）なら、任意の純粋状態 $|\psi\rangle$ に対して以下が成り立たなければなりません：
+$$
+\mathcal{E}_2 \circ \mathcal{E}_1 (|\psi\rangle\langle\psi|) = \sum_{\mu, a} \boldsymbol{N}_\mu \boldsymbol{M}_a |\psi\rangle\langle\psi| \boldsymbol{M}_a^\dagger \boldsymbol{N}_\mu^\dagger = |\psi\rangle\langle\psi|.
+$$ {#eq-3.36}
+左辺は正の項の和であるため、式 (@eq-3.36) が成り立つためには、各項が $|\psi\rangle\langle\psi|$ に比例していなければならず、したがって
+$$
+\boldsymbol{N}_\mu \boldsymbol{M}_a = \lambda_{\mu a} \boldsymbol{I}
+$$ {#eq-3.37}
+となります。すべての $\mu$ と $a$ について完全性関係を用いると、
+$$
+\boldsymbol{M}_b^\dagger \boldsymbol{M}_a = \boldsymbol{M}_b^\dagger \left( \sum_\mu \boldsymbol{N}_\mu^\dagger \boldsymbol{N}_\mu \right) \boldsymbol{M}_a = \sum_\mu \lambda_{\mu b}^* \lambda_{\mu a} \boldsymbol{I} \equiv \beta_{ba} \boldsymbol{I}
+$$ {#eq-3.38}
+が得られます。ここで $\boldsymbol{M}_a = 0$ でない限り、各 $\beta_{aa}$ は実数かつ正です。
+
+チャネル $\mathcal{E}_1$ はシステム $A$ をそれ自身に写像するため、各クラウス演算子 $\boldsymbol{M}_a$ は $d \times d$ の正方行列です（$d$ は $A$ の次元）。したがって $\boldsymbol{M}_a$ は極分解（polar decomposition）を持ち、
+$$
+\boldsymbol{M}_a = \boldsymbol{U}_a \sqrt{\boldsymbol{M}_a^\dagger \boldsymbol{M}_a} = \sqrt{\beta_{aa}} \boldsymbol{U}_a
+$$ {#eq-3.39}
+となります（あるユニタリ $\boldsymbol{U}_a$ に対して）。すると、
+$$
+\boldsymbol{M}_b^\dagger \boldsymbol{M}_a = \sqrt{\beta_{aa} \beta_{bb}} \boldsymbol{U}_b^\dagger \boldsymbol{U}_a = \beta_{ba} \boldsymbol{I}
+$$ {#eq-3.40}
+となり、したがって
+$$
+\boldsymbol{U}_a = \frac{\beta_{ba}}{\sqrt{\beta_{aa} \beta_{bb}}} \boldsymbol{U}_b
+$$ {#eq-3.41}
+が各 $a, b$ に対して成り立ちます。私たちは、各クラウス演算子 $\boldsymbol{M}_a$ が単一のユニタリ行列に比例していること、したがって $\mathcal{E}_1$ がユニタリな写像であると結論付けます。量子チャネルが別の量子チャネルによって反転され得るのは、それがユニタリである場合に限られます。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=14)
+
+デコヒーレンスは不可逆（irreversible）であることがわかりました。システム $A$ がシステム $B$ とエンタングルしてしまうと、$B$ にアクセスできない限り $A$ への損傷を元に戻すことはできません。デコヒーレンスは量子情報をシステムの環境へと漏出させ、私たちが環境を制御できないため、その情報は回復することができないのです。
+
+この議論は、$A$ と $A'$ が同じ次元である限り、$A$ から $A'$ へのチャネルにも適用されます。しかし、$A'$ が $A$ よりも大きな次元を持つ場合、クラウス演算子が長方形になり極分解が適用されないため、この結論を回避できる可能性があります。第7章で量子誤り訂正の理論を展開する際、この例外を利用することになります。
+
+### 3.2.3 ハイゼンベルク描像における量子チャネル (Quantum channels in the Heisenberg picture) {#sec-3.2.3-heisenberg}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=14)
+
+これまで量子チャネルを、量子状態が時間とともに進化するシュレディンガー描像を用いて記述してきました。時として、状態は固定され、代わりに演算子が進化する**ハイゼンベルク描像（Heisenberg picture）**を使用するのが便利なことがあります。
+
+時間発展がユニタリである場合、シュレディンガー描像では時刻 $t$ における状態ベクトルは、時刻 0 における状態ベクトルから
+$$
+|\psi(t)\rangle = \boldsymbol{U}(t) |\psi(0)\rangle
+$$ {#eq-3.42}
+によって得られ（$\boldsymbol{U}(t)$ はユニタリ）、それに対応して密度演算子は
+$$
+\boldsymbol{\rho}(t) = \boldsymbol{U}(t) \boldsymbol{\rho}(0) \boldsymbol{U}(t)^\dagger
+$$ {#eq-3.43}
+に従って進化します。ハイゼンベルク描像では密度演算子は固定され、演算子 $\boldsymbol{A}$ は
+$$
+\boldsymbol{A}(t) = \boldsymbol{U}(t)^\dagger \boldsymbol{A}(0) \boldsymbol{U}(t)
+$$ {#eq-3.44}
+に従って進化します。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=15) この進化則は、2つの描像が任意の時刻における観測量の期待値について一致するように選ばれています：
+$$
+\langle\boldsymbol{A}\rangle_{t, \text{Schr}} = \text{tr}(\boldsymbol{A}(0)\boldsymbol{\rho}(t)) = \text{tr}(\boldsymbol{A}(t)\boldsymbol{\rho}(0)) = \langle\boldsymbol{A}\rangle_{t, \text{Heis}},
+$$ {#eq-3.45}
+ここでトレースの巡回性を用いました。
+
+同様に、密度演算子に対して
+$$
+\boldsymbol{\rho}' = \mathcal{E}(\boldsymbol{\rho}) = \sum_a \boldsymbol{M}_a \boldsymbol{\rho} \boldsymbol{M}_a^\dagger
+$$ {#eq-3.46}
+として作用する量子チャネル $\mathcal{E}$ がある場合、状態は固定されているが演算子が次のように進化する代替的な記述を使用できます：
+$$
+\boldsymbol{A}' = \mathcal{E}^*(\boldsymbol{A}) = \sum_a \boldsymbol{M}_a^\dagger \boldsymbol{A} \boldsymbol{M}_a,
+$$ {#eq-3.47}
+これによって
+$$
+\text{tr}(\boldsymbol{A} \mathcal{E}(\boldsymbol{\rho})) = \text{tr}(\mathcal{E}^*(\boldsymbol{A}) \boldsymbol{\rho})
+$$ {#eq-3.48}
+が成り立ちます。私たちは $\mathcal{E}^*$ を $\mathcal{E}$ の**双対（dual）**または**随伴（adjoint）**と呼びます。
+
+チャネルの双対は必ずしもチャネルである（すなわちトレース保存である）必要はないことに注意してください。代わりに、クラウス演算子の完全性関係式 $\{\boldsymbol{M}_a\}$ は、$\mathcal{E}$ がチャネルである場合に
+$$
+\mathcal{E}^*(\boldsymbol{I}) = \boldsymbol{I}
+$$ {#eq-3.49}
+であることを意味します。私たちは、恒等演算子を保存する写像を**ユニタル（unital）**であると言い、チャネルの双対はユニタルな写像であると結論付けます。
+
+すべての量子チャネルがユニタルであるわけではありませんが、中にはユニタルなものもあります。もし $\mathcal{E}$ のクラウス演算子が
+$$
+\sum_a \boldsymbol{M}_a^\dagger \boldsymbol{M}_a = \boldsymbol{I} = \sum_a \boldsymbol{M}_a \boldsymbol{M}_a^\dagger
+$$ {#eq-3.50}
+を満たすなら、$\mathcal{E}$ はユニタルであり、その双対 $\mathcal{E}^*$ もユニタルなチャネルとなります。ユニタルな量子チャネルは、最大混合状態の密度演算子をそれ自身に写像します。これは、確率分布を確率分布へと写像し一様分布を保存する、古典的な二重確率写像（doubly stochastic classical map）の量子版です。
+
+### 3.2.4 量子操作 (Quantum operations) {#sec-3.2.4-quantum-operations}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=16)
+
+一般化測定と量子チャネルは、実際には**量子操作（quantum operation）**と呼ばれるより一般的な概念の特殊なケースです。すでに述べたように、一般化測定は、システムを測定器とエンタングルさせ、測定器に対して直交測定を行うことで実現できます。一方、量子チャネルは、測定器を測定するものの、その結果を完全に忘れてしまう場合に生じます。量子操作では、測定器を測定し、その結果に関する情報の一部を保持し、残りを捨てることを想像します。
+
+2つのラベル $a$ と $\mu$ を持つクラウス演算子 $\{\boldsymbol{M}_{a\mu}\}$ によって記述される一般化測定を考えます。これらは通常の完全性関係式に従います：
+$$
+\sum_{a, \mu} \boldsymbol{M}_{a\mu}^\dagger \boldsymbol{M}_{a\mu} = \boldsymbol{I}.
+$$ {#eq-3.51}
+$a$ と $\mu$ の両方について確定した値へと射影する測定の後、私たちは $a$ は覚えているが $\mu$ は忘れてしまうとします。すると、測定前の量子状態が $\boldsymbol{\rho}$ であれば、測定後の状態は（規格化因子を除いて）
+$$
+\mathcal{E}_a(\boldsymbol{\rho}) \equiv \sum_\mu \boldsymbol{M}_{a\mu} \boldsymbol{\rho} \boldsymbol{M}_{a\mu}^\dagger
+$$ {#eq-3.52}
+となります。ここで結果 $a$ は以下の確率で発生します：
+$$
+\text{Prob}(a) = \text{tr } \mathcal{E}_a(\boldsymbol{\rho}).
+$$ {#eq-3.53}
+式 (@eq-3.52) は量子チャネルのオペレーター和表現に似ていますが、完全性関係式の代わりに、クラウス演算子は以下の不等式制約に従います：
+$$
+\sum_\mu \boldsymbol{M}_{a\mu}^\dagger \boldsymbol{M}_{a\mu} \le \boldsymbol{I}.
+$$ {#eq-3.54}
+（私たちは、$\boldsymbol{I} - \boldsymbol{A}$ が非負演算子であること、すなわちエルミート演算子 $\boldsymbol{A}$ の固有値が1以下であることを表す簡略記法として $\boldsymbol{A} \le \boldsymbol{I}$ と書きます。） $\mu$ がただ一つの値をとる場合（結果に関するすべての情報が保持される場合）に以前の一般化測定の概念が回復され、$a$ がただ一つの値をとる場合（結果に関するすべての情報が捨てられる場合）に操作はチャネルとなります。
+
+トレースが1である条件を回復するために状態を再規格化する必要があります。したがって、操作の下で状態は実際には次のように非線形に進化します：
+$$
+\boldsymbol{\rho} \mapsto \frac{\mathcal{E}_a(\boldsymbol{\rho})}{\text{tr } \mathcal{E}_a(\boldsymbol{\rho})}.
+$$ {#eq-3.55}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=17) しかし、操作を $\boldsymbol{\rho}$ を「サブ規格化された（subnormalized）」状態へと移す線形写像と見なす方が便利なことが多いです。例えば、結果 $\{a_1, a_2, \dots, a_n\}$ を伴う $n$ 回の連続した測定のシーケンスを考えたい場合があります。ここで $i$ 番目の測定は操作 $\mathcal{E}_{a_i}$ に従って状態を変換します。各測定の後に状態を再規格化する代わりに、シーケンスの最後の測定が終わるまで待ってから再規格化することができます。最終的な状態は次のように書けます：
+$$
+\boldsymbol{\rho} \mapsto \frac{\mathcal{E}_{a_n} \circ \mathcal{E}_{a_{n-1}} \circ \dots \circ \mathcal{E}_{a_2} \circ \mathcal{E}_{a_1}(\boldsymbol{\rho})}{\text{tr } \mathcal{E}_{a_n} \circ \mathcal{E}_{a_{n-1}} \circ \dots \circ \mathcal{E}_{a_2} \circ \mathcal{E}_{a_1}(\boldsymbol{\rho})},
+$$ {#eq-3.56}
+ここで分母の規格化因子は、観測された測定結果のシーケンスの確率に他なりません。
+
+### 3.2.5 線形性 (Linearity) {#sec-3.2.5-linearity}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=17)
+
+量子チャネルは、初期密度演算子が最終密度演算子へとどのように進化するかを指定します。なぜ一般的な根拠から、量子状態の進化が線形写像によって記述されることを期待すべきなのでしょうか？ 一つの可能な答えは、非線形な進化は密度演算子を「可能な状態のアンサンブル」として解釈することと矛盾する、というものです。
+
+$\mathcal{E}$ が時刻 $t=0$ の初期状態を時刻 $t=T$ の最終状態へと写像するとしましょう。そして、時刻 $t=0$ において初期状態 $\boldsymbol{\rho}_i$ が確率 $p_i$ で準備されると仮定します。すると、$t=T$ における時間発展した状態は、確率 $p_i$ で $\mathcal{E}(\boldsymbol{\rho}_i)$ となるはずです。
+
+一方で、第2章で議論したように、$\boldsymbol{\sigma}_i$ が確率 $q_i$ で準備されるアンサンブルは、密度演算子の凸結合
+$$
+\boldsymbol{\sigma} = \sum_i q_i \boldsymbol{\sigma}_i
+$$ {#eq-3.57}
+によって記述できます。したがって、初期状態は $\sum_i p_i \boldsymbol{\rho}_i$ によって記述され、それは
+$$
+\boldsymbol{\rho}' = \mathcal{E}\left( \sum_i p_i \boldsymbol{\rho}_i \right)
+$$ {#eq-3.58}
+へと進化します。しかし、式 (@eq-3.57) を最終状態のアンサンブルに適用することもでき、最終状態は代替的に
+$$
+\boldsymbol{\rho}' = \sum_i p_i \mathcal{E}(\boldsymbol{\rho}_i)
+$$ {#eq-3.59}
+と記述されるべきであると結論付けられます。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=18) $\boldsymbol{\rho}'$ に対する2つの表現を等置すると、$\mathcal{E}$ は、少なくとも状態の凸結合に対しては線形に作用しなければならないことがわかります。
+
+操作 $\mathcal{E}_a$ の規格化が対応する測定結果の確率を表していると考えれば、同様の推論が量子操作にも当てはまります。再び、初期状態 $\boldsymbol{\rho}_i$ が事前の確率 $p_i$ で準備され、その後に測定されると仮定します。もし状態が $\boldsymbol{\rho}_i$ であれば、測定結果 $a$ は条件付き確率 $p(a|i)$ で発生し、測定後の状態は $\mathcal{E}_a(\boldsymbol{\rho}_i) / p(a|i)$ となります。したがって、測定後の状態アンサンブルは以下の密度演算子によって記述されます：
+$$
+\boldsymbol{\rho}' = \sum_i p(i|a) \frac{\mathcal{E}_a(\boldsymbol{\rho}_i)}{p(a|i)},
+$$ {#eq-3.60}
+ここで $p(i|a)$ は、測定を行ったことによって得られた情報を考慮した、状態 $\boldsymbol{\rho}_i$ が準備されていたという事後確率です。一方で、初期状態の混合状態 $\{\boldsymbol{\rho}_i\}$ に対して操作 $\mathcal{E}_a$ を適用すると、以下が得られます：
+$$
+\boldsymbol{\rho}' = \frac{\mathcal{E}_a\left( \sum_i p_i \boldsymbol{\rho}_i \right)}{p_a}.
+$$ {#eq-3.61}
+ベイズの法則
+$$
+p_i p(a|i) = p_a p(i|a)
+$$ {#eq-3.62}
+を援用すると、操作 $\mathcal{E}_a$ が線形写像であることが要求されることがわかります：
+$$
+\mathcal{E}_a\left( \sum_i p_i \boldsymbol{\rho}_i \right) = \sum_i p_i \mathcal{E}_a(\boldsymbol{\rho}_i).
+$$ {#eq-3.63}
+
+### 3.2.6 完全正値性 (Complete positivity) {#sec-3.2.6-complete-positivity}
+[📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=18)
+
+量子チャネルは、密度演算子を密度演算子へと移す線形写像です。特に、入力が非負演算子であれば、出力も非負演算子となります。したがって、私たちはチャネルを**正値写像（positive map）**であると言います。
+
+しかし、チャネルは単なる正値性よりも強い性質、すなわち**完全正値性（completely positive）**を持っています。これは、チャネルをより大きなシステムの一部にのみ作用していると考えた場合でも、写像が正値性を保つことを意味します。
+
+もしチャネル $\mathcal{E}$ がヒルベルト空間 $\mathcal{H}_A$ 上の線形演算子をヒルベルト空間 $\mathcal{H}_{A'}$ 上の線形演算子へと写像するなら、通常はこれを「$\mathcal{E}$ が $A$ を $A'$ へと写像する」と簡潔に表現します。入力ヒルベルト空間を $\mathcal{H}_A \otimes \mathcal{H}_B$ へと拡張し、拡張されたチャネル $\mathcal{E} \otimes I$ が $AB$ を $A'B$ へと写像する状況を考えます。いかなるそのような拡張に対しても $\mathcal{E} \otimes I$ が正値であるとき、$\mathcal{E}$ は完全正値であると言います。
+
+明らかに、量子チャネルは完全正値です。なぜなら、もし $\mathcal{E}$ がクラウス演算子 $\{\boldsymbol{M}_a\}$ を持つオペレーター和表現を持つなら、$\mathcal{E} \otimes I$ はクラウス演算子 $\{\boldsymbol{M}_a \otimes \boldsymbol{I}\}$ を持つオペレーター和表現を持つからです。 [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=19) 同様に、量子操作も（必ずしもトレース保存ではありませんが）完全正値です。
+
+チャネルが量子系の時間発展を記述するものであるなら、それが完全正値であることを要求するのは極めて合理的です。たとえチャネルが世界の一部にしか作用していなくても、世界全体の初期状態を世界全体の最終状態へと写像するはずだからです。したがって、すべての正値写像が完全正値であるわけではない、という点に注意することが重要です。完全正値性はより強い条件なのです。
+
+単純な例は、 $d$ 次元システム $A$ をそれ自身に写像する**転置写像（transpose map）** $T$ です。特定の基底 $\{|i\rangle\}$ において、$T$ は次のように作用します：
+$$
+T : |i\rangle\langle j| \mapsto |j\rangle\langle i|
+$$ {#eq-3.64}
+したがって、
+$$
+T : \boldsymbol{\rho} \mapsto \boldsymbol{\rho}^T
+$$ {#eq-3.65}
+となります。写像 $T$ は明らかに正値です。なぜなら、任意のベクトル $|\psi\rangle$ に対して、
+$$
+\langle\psi| \boldsymbol{\rho}^T |\psi\rangle = \sum_{i,j} \psi_j^* (\boldsymbol{\rho}^T)_{ji} \psi_i = \sum_{i,j} \psi_i (\boldsymbol{\rho})_{ij} \psi_j^* = \langle\psi^*| \boldsymbol{\rho} |\psi^*\rangle
+$$ {#eq-3.66}
+となるため、$\boldsymbol{\rho}$ が非負であれば $\boldsymbol{\rho}^T$ も非負だからです。
+
+しかし $T$ は完全正値ではありません。$AB$ 上の（非標準的に規格化された）最大エンタングル状態を考えます（ここで $B$ も $d$ 次元です）：
+$$
+|\tilde{\Phi}\rangle_{AB} = \sum_{i=0}^{d-1} |i\rangle_A \otimes |i\rangle_B \equiv \sum_i |i, i\rangle.
+$$ {#eq-3.67}
+$T$ の拡張はこの状態に対して次のように作用します：
+$$
+T \otimes I : |\tilde{\Phi}\rangle\langle\tilde{\Phi}| = \sum_{i,j} |i\rangle\langle j| \otimes |i\rangle\langle j| \mapsto \sum_{i,j} |j\rangle\langle i| \otimes |i\rangle\langle j| \equiv \sum_{i,j} |j, i\rangle\langle i, j|;
+$$ {#eq-3.68}
+つまり、それは $|\tilde{\Phi}\rangle\langle\tilde{\Phi}|$ を、システム $A$ と $B$ を入れ替える **SWAP 演算子**へと写像します：
+$$
+\text{SWAP} : |\psi\rangle_A \otimes |\varphi\rangle_B = \sum_{i,j} \psi_i \varphi_j |i, j\rangle \mapsto \sum_{i,j} \varphi_j \psi_i |j, i\rangle = |\varphi\rangle_A \otimes |\psi\rangle_B.
+$$ {#eq-3.69}
+SWAP の2乗は恒等写像であるため、その固有値は $\pm 1$ です。 $A$ と $B$ の入れ替えに対して対称な状態は固有値 1 を持ち、反対称な状態は固有値 -1 を持ちます。したがって SWAP は負の固有値を持ち、これは $T \otimes I$ が正値ではないこと、したがって $T$ が完全正値ではないことを意味します。

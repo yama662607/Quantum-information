@@ -129,4 +129,4 @@ extract-pdf pdf_path *args="":
 # 使い方: just process-pdf <pdf_path> <start_page> <end_page>
 process-pdf pdf_path start end *args="":
     @echo "🔍 Processing PDF pages {{start}}-{{end}}..."
-    @export PYTHONPATH=$PYTHONPATH:. && {{python}} tools/process_pdf_page.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}
+    @export PYTHONPATH=${PYTHONPATH:-}:. && {{python}} tools/process_pdf_page.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}

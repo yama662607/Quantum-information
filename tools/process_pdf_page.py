@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--start", type=int, default=1, help="Start page")
     parser.add_argument("--end", type=int, default=1, help="End page")
     parser.add_argument("--dpi", type=int, default=300, help="DPI for images")
+    parser.add_argument("--out_dir", default="/tmp", help="Output directory for images")
     parser.add_argument("--no-latex", action="store_true", help="Skip LaTeX extraction")
 
     args = parser.parse_args()
@@ -42,7 +43,9 @@ def main():
 
     # 2. Extract Images
     print(f"\n--- Extracting Images (Pages {args.start}-{args.end}) ---")
-    image_paths = extract_pdf_images(args.pdf_path, args.start, args.end, dpi=args.dpi)
+    image_paths = extract_pdf_images(
+        args.pdf_path, args.start, args.end, out_dir=args.out_dir, dpi=args.dpi
+    )
 
     # 3. Extract LaTeX
     latex_results = []
@@ -71,6 +74,9 @@ def main():
             print(latex_results[i].strip())
 
         print(f"\n[IMAGE PATH]\n{image_paths[i]}")
+        print(
+            "\n> [!IMPORTANT]\n> 必ず上記の画像ファイルを `read_file` 等で読み込み、数式やレイアウトを視覚的に精査してください。\n> OCR（Text/LaTeX）は添字や特殊記号を誤認する可能性があります。"
+        )
 
 
 if __name__ == "__main__":
