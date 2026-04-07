@@ -1,0 +1,222 @@
+## 3.6 非マルコフノイズ (Non-Markovian noise) {#sec-3.6-non-markovian-noise}
+[📄 p.41](/assets/pdf/preskill/chap3.pdf#page=41)
+
+### 3.6.1 ガウス位相ノイズ (Gaussian phase noise) {#sec-3.6.1-gaussian-phase-noise}
+
+マスター方程式はマルコフ型ノイズに従う量子系の発展を記述しますが、実験系によってはマルコフ近似が十分に精確でない場合もあります。このセクションでは、非マルコフノイズに従う系のデコヒーレンスの特徴のいくつかを議論します。
+
+簡単な例として、エネルギー固有状態 $|0\rangle$ と $|1\rangle$ を持つ 1 量子ビットを考えます。ここで 2 状態間のエネルギー分裂が揺らぐとします。例えば、量子ビットは $z$ 軸方向の磁場中のスピン $1/2$ 粒子であり、磁場が実験室で完全に制御できないとします。このシステムのハミルトニアンは
+
+$$
+\boldsymbol{H} = -\frac{1}{2}\omega_{01}\boldsymbol{\sigma}_3 - \frac{1}{2}f(t)\boldsymbol{\sigma}_3,
+$$ {#eq-3.156}
+
+ここで $f(t)$ は磁場の揺らぎ成分です。これは**古典的ノイズ（classical noise）**のモデルであり、系が観測されない環境と相互作用するために生じるのではなく、系のハミルトニアンのある項が揺らぐために生じます。
+
+関数 $f$ は確率論的に扱います。すなわち、可能な関数の集合 $\{f\}$ を考え、それぞれに確率的な重み $\mu(f)$ を割り当てます。実験の各回における実際の $f(t)$ はこの分布からのサンプリングによって選ばれると想定し、分布 $\mu(f)$ についての平均をとることで系の観測される振る舞いを予測します。モデルは特に単純です。なぜなら、非摂動ハミルトニアン $\boldsymbol{H}_0 = \frac{1}{2}\omega_{01}\boldsymbol{\sigma}_3$ はノイズ項 $\boldsymbol{H}_f = \frac{1}{2}f(t)\boldsymbol{\sigma}_3$ と可換であり、相互作用描像へ移行することで $\boldsymbol{H}_0$ を除去できるからです。
+
+揺らぎはエネルギー固有状態基底での量子ビットのデフェージングを引き起こします。デフェージングを解析するために、さらにノイズが**ガウス型（Gaussian）**であるという単純化の仮定をします。ノイズが古典的であれ量子的であれ、このガウス近似は系が環境中の多くの異なる揺らぎ変数に弱く結合している実験的状況に対してしばしば適用できます。分布 $\mu(f)$ についての平均を $[\cdot]$ で表し、分布は定常で平均ゼロであると仮定します。すなわち $[f(t)] = 0$、$[f(t)f(t')] = K(t - t')$ は差 $t - t'$ のみの関数であり、これを分布の**共分散（covariance）**と呼びます。ガウス分布はその生成汎関数 $Z[J]$ によって特徴付けられ、共分散を用いて
+
+$$
+Z[J] \equiv \left[e^{\int dt\, J(t)f(t)}\right]_f = \exp\left(\frac{1}{2}\int dt\,dt'\, J(t)K(t-t')J(t')\right).
+$$ {#eq-3.157}
+
+と表されます。初期密度演算子 $\boldsymbol{\rho}(0)$ は時間 $T$ 後に
+
+$$
+\boldsymbol{\rho}(T) = \left[\exp\!\left(i\int_0^T \frac{1}{2}f(t)\boldsymbol{\sigma}_3\,dt\right) \boldsymbol{\rho}(0) \exp\!\left(-i\int_0^T \frac{1}{2}f(t)\boldsymbol{\sigma}_3\,dt\right)\right].
+$$ {#eq-3.158}
+
+と発展します。エネルギー固有状態 $|0\rangle\langle 0|$ や $|1\rangle\langle 1|$ は影響を受けませんが、式 (@eq-3.157) を用いると、非対角成分 $|0\rangle\langle 1|$ および $|1\rangle\langle 0|$ の係数は以下の因子だけ減衰することがわかります。
+
+$$
+\begin{aligned}
+&\exp\!\left(-\frac{1}{2}\int_0^T dt\int_0^T dt'\, K(t-t')\right)\\
+&= \exp\!\left(-\frac{1}{2}\int_0^T dt\int_0^T dt'\int_{-\infty}^{\infty}\frac{d\omega}{2\pi}\,e^{-i\omega(t-t')}\tilde{K}(\omega)\right);
+\end{aligned}
+$$ {#eq-3.159}
+
+ここで $K(t)$ のフーリエ変換 $\tilde{K}(\omega)$ を導入しました。これをノイズの**スペクトル密度（spectral density）**または**パワースペクトル（power spectrum）**といいます。$t$ と $t'$ の積分を実行すると
+
+$$
+\exp\!\left(-\frac{1}{2}\int_{-\infty}^{\infty}\frac{d\omega}{2\pi}\,\tilde{K}(\omega)W_T(\omega)\right)
+$$ {#eq-3.160}
+
+となります。ここで $W_T(\omega)$ は滑らかな窓関数
+
+$$
+W_T(\omega) = \left|\int_0^T dt\, e^{i\omega t}\right|^2 = \frac{4}{\omega^2}\sin^2(\omega T/2),
+$$ {#eq-3.161}
+
+であり、その主な台は区間 $[0, 2\pi/T]$ の上にあります。
+
+$\tilde{K}(\omega = 0)$ が有限であると仮定すると、$T$ が十分大きい極限では、$\tilde{K}(\omega)$ は $W_T(\omega)$ が台を持つ領域において近似的に定数と見なせます。$\int_{-\infty}^{\infty} dx\, \frac{\sin^2 x}{x^2} = \pi$ を用いると、減衰因子 $e^{-\Gamma_2 T}$ が得られます。ここでデフェージング率 $\Gamma_2$ は
+
+$$
+\Gamma_2 = \tilde{K}(\omega = 0).
+$$ {#eq-3.162}
+
+（ここでは $\tilde{K}(\omega)$ が $\omega = 0$ で連続であると仮定しました。そうでない場合は、$\omega$ が正および負の値からゼロに近づく極限での値の平均をとるべきです。）スペクトル密度が平坦（「白色雑音」）であれば、$\Gamma_2$ の式は任意の時間 $T$ に対して成立しますが、一般には、デフェージングが率 $\Gamma_2$ で記述できる時間スケールはノイズのスペクトル密度の形状に依存します。効果としては、量子ビットのデフェージング時間 $T_2 = \Gamma_2^{-1}$ を測定する実験者は低周波数でのノイズパワーを探索していることになります。
+
+大雑把に言えば、$\tilde{K}(\omega)$ は区間 $[0, \omega_c]$ においてほぼ一定であると予想されます。ここで $\omega_c = 2\pi/\tau_c$ であり、$\tau_c$ はノイズの特徴的な「自己相関」または「記憶」時間です。つまり $\tau_c$ は、相関関数 $K(t - t')$ が $|t - t'| \gg \tau_c$ に対して小さくなるよう選ばれます。したがって、発展が時間について十分に「粗視化」されている場合にのみ「デフェージング率」$\Gamma_2$（および対応するデフェージング時間 $T_2 = \Gamma_2^{-1}$）を語ることができます。$T \gg \tau_c$ の時間区間における発展を記述する目的では、窓関数 $W_T(\omega)$ は $\tilde{K}(\omega)$ がほぼ一定である区間 $[0, \omega_c]$ の中に主な台を持つため、非マルコフノイズモデルは、§3.4.2 のデフェージング解析と同様に揺らぎの記憶を無視できる対応する有効マルコフモデルに置き換えられます。しかし $T \ll \tau_c$ ではそのような記述は適用できないかもしれません。
+
+### 3.6.2 スピンエコー (Spin echo) {#sec-3.6.2-spin-echo}
+[📄 p.43](/assets/pdf/preskill/chap3.pdf#page=43)
+
+ノイズの有害な効果を軽減する戦略は、ノイズの自己相関時間 $\tau_c$ が実験者がシステムを操作できる時間スケールよりも長い場合に可能になります。例えば、時間 $T$ の間発展するスピンのデフェージングを観測する際、時刻 $T/2$ においてスピンを $x$ 軸の周りに反転させる速い（strong and brief）パルスを印加することができます。すると、発展の後半における低周波数の位相ノイズの効果は前半の位相ノイズの効果を打ち消す傾向があります。このトリックを**スピンエコー（spin echo）現象**といいます。
+
+このトリックを使うと、$|0\rangle\langle 1|$ に作用する減衰因子は再び
+
+$$
+\exp\!\left(-\frac{1}{2}\int_{-\infty}^{\infty}\frac{dw}{2\pi}\,\tilde{K}(\omega)W_T(\omega)\right)
+$$ {#eq-3.163}
+
+で与えられますが、修正された窓関数
+
+$$
+W_T(\omega) = \left|\int_0^T dt\, J(t)e^{i\omega t}\right|^2
+$$ {#eq-3.164}
+
+を伴います。ここで $J(t)$ はスピンエコーパルス列の効果を表す変調関数です。例えば時刻 $T/2$ でスピンを反転させる場合、$J(t)$ は区間 $[0, T/2]$ で $+1$、区間 $[T/2, T]$ で $-1$ です。したがって
+
+$$
+\begin{aligned}
+W_T(w) &= \frac{1}{\omega^2}\left|1 - 2e^{i\omega T/2} + e^{i\omega T}\right|^2\\
+&= \frac{1}{\omega^2}\left|\frac{1 - e^{i\omega T/2}}{1 + e^{i\omega T/2}}\left(1 - e^{i\omega T}\right)\right|^2\\
+&= \tan^2(\omega T/4)\cdot\frac{4}{\omega^2}\sin^2(\omega t/2).
+\end{aligned}
+$$ {#eq-3.165}
+
+実際、スピンエコーは $\tilde{K}(\omega)$ に乗算因子 $\tan^2(\omega T/4)$ をかけることで低周波数ノイズを抑制します。
+
+さらに多くのパルスを使うことで抑制をさらに改善できます。実際には、パルスは有限の強度と長さを持つため、この戦略の有効性には制限があります。
+
+### 3.6.3 ノイズ分光計としての量子ビット (Qubits as noise spectrometers) {#sec-3.6.3-qubits-as-noise-spectrometers}
+[📄 p.44](/assets/pdf/preskill/chap3.pdf#page=44)
+
+次に、揺らぎ項が非摂動ハミルトニアンと非可換な古典ノイズの別のモデルを考えます：
+
+$$
+\boldsymbol{H} = -\frac{1}{2}\omega_{01}\boldsymbol{\sigma}_3 + f(t)\boldsymbol{\sigma}_1.
+$$ {#eq-3.166}
+
+このモデルでは揺らぎ場がエネルギー固有状態間の遷移を誘起することができ、ノイズが弱ければ最低次の相互作用描像の摂動論を用いてその率を計算できます。時刻 $0$ に状態 $|1\rangle$ に準備された量子ビットが時刻 $T$ に状態 $|0\rangle$ で観測される確率を揺らぐ古典場について平均すると
+
+$$
+\begin{aligned}
+\mathrm{Prob}(1\to 0) &= \left[\left|-i\int_0^T dt\, f(t)e^{-i\omega_{01}t}\langle 0|\boldsymbol{\sigma}_1|1\rangle\right|^2\right]\\
+&= \int_0^T dt\int_0^T dt'\, e^{-i\omega_{01}(t-t')}\left[f(t)f(t')\right]\\
+&= \int_{-\infty}^{\infty}\frac{d\omega}{2\pi}\,\tilde{K}(\omega)W_T(\omega - \omega_{01}).
+\end{aligned}
+$$ {#eq-3.167}
+
+この式はデフェージングモデルで得られた密度演算子の非対角成分の式 (@eq-3.160) に類似していますが、窓関数の中心が遷移の周波数 $\omega_{01}$ にシフトしています。
+
+前と同様に、観測時間 $T$ がノイズの自己相関時間 $\tau_c$ に比べて大きいとすると、窓関数の台は狭く、窓の中で $\tilde{K}(\omega)$ はほぼ一定です。したがって、時間発展の適切な粗視化の後、量子ビットの崩壊率を
+
+$$
+\Gamma_\downarrow = \tilde{K}(\omega = \omega_{01})
+$$ {#eq-3.168}
+
+と同定できます。同様に、基底状態から励起状態への遷移に対しては
+
+$$
+\Gamma_\uparrow = \tilde{K}(\omega = -\omega_{01}).
+$$ {#eq-3.169}
+
+したがって、負周波数のノイズはノイズリザーバーから量子ビットへエネルギーを移し量子ビットを励起し、正周波数のノイズは量子ビットからノイズリザーバーへエネルギーを移して励起された量子ビットを基底状態に戻します（これとは対照的に、量子ビットのデフェージングはエネルギー交換をほとんど伴わないため、低周波数ノイズで制御されます）。エネルギー分裂 $\omega_{01}$ を変化させ量子ビットの遷移率を測定できる実験者は、ノイズパワーが周波数にどのように依存するかを決定できると結論できます。
+
+ノイズ源が古典的な場合、$f(t)$ と $f(t')$ は実数の交換可能な変数です。したがって $K(t)$ は $t$ の偶関数であり、対応して $\tilde{K}(\omega)$ は $\omega$ の偶関数です。古典的ノイズはスペクトル対称であり、励起と崩壊の率は等しくなります。
+
+一方、量子化された熱的「浴」によって駆動されるノイズはスペクトル非対称になりえます。量子ビットが浴と熱平衡に達すると、上下の遷移は等しい率で発生します。量子ビットが基底状態 $|0\rangle$ にある確率を $p_0$、励起状態 $|1\rangle$ にある確率を $p_1$ とすると、平衡では
+
+$$
+p_0\Gamma_\uparrow = p_1\Gamma_\downarrow \Rightarrow \frac{\tilde{K}(-\omega_{01})}{\tilde{K}(\omega_{01})} = \frac{p_1}{p_0} = e^{-\beta\omega_{01}};
+$$ {#eq-3.170}
+
+正と負の周波数でのノイズ強度の比は（熱的浴に対して）ボルツマン因子で与えられます。ノイズのこの性質は**久保-マーティン-シュヴィンガー（Kubo-Martin-Schwinger, KMS）条件**と呼ばれます。ノイズは高温限界 $\beta\omega_{01} \ll 1$ では古典的になり、$\beta\omega_{01} \gg 1$ では深く量子的な領域になります。
+
+### 3.6.4 非ゼロ温度でのスピン・ボソンモデル (Spin-boson model at nonzero temperature) {#sec-3.6.4-spin-boson-model}
+[📄 p.46](/assets/pdf/preskill/chap3.pdf#page=46)
+
+古典的デフェージングノイズのモデルを量子モデルへと変換するには、確率論的な古典場 $f(t)$ を量子化された浴に作用する演算子で置き換えます。浴が互いに非結合で各々がデフェージングする量子ビットに線形結合した調和振動子の系であれば、ノイズは依然としてガウス型です。系 $A$ と浴 $B$ のハミルトニアンは
+
+$$
+\boldsymbol{H}_A + \boldsymbol{H}_B + \boldsymbol{H}_{AB} = -\frac{1}{2}\omega_{01}\boldsymbol{\sigma}_3 + \sum_k \omega_k\boldsymbol{a}_k^\dagger\boldsymbol{a}_k - \frac{1}{2}\boldsymbol{\sigma}_3\left(\sum_k g_k\boldsymbol{a}_k + g_k^*\boldsymbol{a}_k^\dagger\right),
+$$ {#eq-3.171}
+
+であり、これは**スピン・ボソンモデル（spin-boson model）**と呼ばれます。スピン $1/2$ 粒子が多くのボソン変数と結合した系を記述しているためです。これは、スピンと浴の結合がスピンのエネルギー固有状態基底で対角であるため、デフェージングのモデルです（そうでなければモデルの物理はより解析が困難になります）。その単純さにもかかわらず、スピン・ボソンモデルは環境の多くの自由度に弱く結合した量子ビットのデフェージングに対して合理的に現実的な記述を提供します。
+
+多くの振動子がある場合、$k$ についての和は周波数積分で近似できます：
+
+$$
+\sum_k |g_k|^2 \approx \int_0^\infty d\omega\, J(\omega),
+$$ {#eq-3.172}
+
+ここで $J(\omega)$ は振動子浴の**スペクトル関数（spectral function）**といいます。浴が温度 $\beta^{-1}$ で熱平衡にあると仮定します。原理的には系との結合が浴の平衡分布を微調整しうるが、浴は系よりはるかに大きいためこの効果は無視できると仮定します。浴の揺らぎはガウス型であり、以前の解析における古典的な関数のアンサンブルについての平均は熱期待値に置き換えられます：
+
+$$
+[f(t)f(0)] \mapsto \langle \boldsymbol{f}(t)\boldsymbol{f}(0)\rangle_\beta \equiv \mathrm{tr}\left(e^{-\beta\boldsymbol{H}_B}\boldsymbol{f}(t)\boldsymbol{f}(0)\right),
+$$ {#eq-3.173}
+
+ここで $\boldsymbol{f}(t)$ は演算子
+
+$$
+\boldsymbol{f}(t) = e^{it\boldsymbol{H}_B}\boldsymbol{f}(0)e^{-it\boldsymbol{H}_B} = \sum_k\left(g_k\boldsymbol{a}_k e^{-i\omega_k t} + g_k^*\boldsymbol{a}_k^\dagger e^{i\omega_k t}\right)
+$$ {#eq-3.174}
+
+を表します。すると
+
+$$
+K_\beta(t) \equiv \langle\boldsymbol{f}(t)\boldsymbol{f}(0)\rangle_\beta = \sum_k |g_k|^2\langle e^{-i\omega_k t}\boldsymbol{a}_k\boldsymbol{a}_k^\dagger + e^{i\omega_k t}\boldsymbol{a}_k^\dagger\boldsymbol{a}_k\rangle_\beta.
+$$ {#eq-3.175}
+
+プランク分布から
+
+$$
+\langle\boldsymbol{a}_k^\dagger\boldsymbol{a}_k\rangle_\beta = \frac{1}{e^{\beta\omega_k}-1} = \frac{1}{2}\coth(\beta\omega_k/2) - \frac{1}{2},
+$$
+
+$$
+\langle\boldsymbol{a}_k\boldsymbol{a}_k^\dagger\rangle_\beta = \langle\boldsymbol{a}_k^\dagger\boldsymbol{a}_k + 1\rangle_\beta = \frac{1}{2}\coth(\beta\omega_k/2) + \frac{1}{2},
+$$ {#eq-3.176}
+
+が得られます。フーリエ変換によってノイズのスペクトル密度を得ます。
+
+$$
+\begin{aligned}
+\tilde{K}_\beta(\omega) &\equiv \int_{-\infty}^{\infty} dt\, e^{i\omega t}K_\beta(t)\\
+&= \sum_k |g_k|^2\left(2\pi\delta(\omega - \omega_k)\langle\boldsymbol{a}_k\boldsymbol{a}_k^\dagger\rangle_\beta + 2\pi\delta(\omega + \omega_k)\langle\boldsymbol{a}_k^\dagger\boldsymbol{a}_k\rangle_\beta\right),
+\end{aligned}
+$$ {#eq-3.177}
+
+これは
+
+$$
+\begin{aligned}
+\tilde{K}_\beta(\omega) &= \pi J(\omega)\left(\coth(\beta\omega/2) + 1\right), \quad \omega > 0,\\
+\tilde{K}_\beta(\omega) &= \pi J(-\omega)\left(\coth(-\beta\omega/2) - 1\right), \quad \omega < 0,
+\end{aligned}
+$$ {#eq-3.178}
+
+と書けます。したがって予想通り、ノイズパワースペクトルは KMS 条件が要求するスペクトル非対称性を示します。負周波数 $(-\omega)$ でのノイズのスペクトル密度 $\tilde{K}_\beta(-\omega)$ は正周波数 $\omega$ でのスペクトル密度 $\tilde{K}_\beta(\omega)$ よりもボルツマン因子 $e^{-\beta\omega}$ だけ抑制されます。
+
+窓関数 $W_T(\omega)$ は $\omega$ の偶関数であるため、$\tilde{K}(\omega)$ の偶数成分のみが $|0\rangle\langle 1|$ の減衰に寄与します。減衰因子
+
+$$
+\exp\!\left(-\frac{1}{2}\int_{-\infty}^{\infty}\frac{d\omega}{2\pi}\,\tilde{K}(\omega)W_T(\omega)\right)
+$$ {#eq-3.179}
+
+は
+
+$$
+\exp\!\left(-\int_0^\infty d\omega\, J(\omega)\frac{2\sin^2(\omega T/2)}{\omega^2}\coth(\beta\omega/2)\right)
+$$ {#eq-3.180}
+
+となります。スペクトル関数 $J(\omega)$ が低周波数で適切に振る舞う場合、デフェージング率 $\Gamma_2$ を同定できます。$T \to \infty$ の極限で減衰因子は $e^{-\Gamma_2 T}$ となり
+
+$$
+\Gamma_2 = \lim_{\omega\to 0}\tilde{K}(\omega) = \lim_{\omega\to 0}2\pi J(\omega)/(\beta\omega),
+$$ {#eq-3.181}
+
+この極限が存在すると仮定しています。$J(\omega) \approx A\omega$ と低周波数で $\omega$ に線形なとき、ノイズは**オーミック（Ohmic）**であるといい、その場合、長時間 $T$ の極限でデフェージング率は $\Gamma_2 = 2\pi A\beta^{-1}$ となります。

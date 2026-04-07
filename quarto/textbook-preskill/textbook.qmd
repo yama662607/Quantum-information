@@ -56,6 +56,16 @@ Watrous 教授の教科書に比べ、より物理学的な直感と量子情報
 
 {{< include chapter3/_3.2-quantum-channels.qmd >}}
 
+{{< include chapter3/_3.3-channel-state-duality.qmd >}}
+
+{{< include chapter3/_3.4-three-quantum-channels.qmd >}}
+
+{{< include chapter3/_3.5-master-equations.qmd >}}
+
+{{< include chapter3/_3.6-non-markovian-noise.qmd >}}
+
+{{< include chapter3/_3.7-summary.qmd >}}
+
 ---
 
 ## 参考文献 {.unlisted}

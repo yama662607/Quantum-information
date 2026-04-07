@@ -1,0 +1,44 @@
+## 3.7 まとめ (Summary) {#sec-3.7-summary}
+[📄 p.47](/assets/pdf/preskill/chap3.pdf#page=47)
+
+**POVM。** より大きなヒルベルト空間の部分空間に注目すると、より大きな空間に対して行われた直交（フォン・ノイマン）測定は一般に部分空間上の直交測定として記述できません。むしろそれは**一般化測定（generalized measurement）**または **POVM** であり、結果 $a$ は確率
+
+$$
+\mathrm{Prob}(a) = \mathrm{tr}(\boldsymbol{E}_a\boldsymbol{\rho})
+$$ {#eq-3.182}
+
+で生じます。ここで $\boldsymbol{\rho}$ は部分系の密度行列であり、各 $\boldsymbol{E}_a$ は正のエルミート演算子で、$\boldsymbol{E}_a$ たちは
+
+$$
+\sum_a \boldsymbol{E}_a = \boldsymbol{I}
+$$ {#eq-3.183}
+
+を満たします。$\mathcal{H}_A$ における POVM はテンソル積 $\mathcal{H}_A \otimes \mathcal{H}_B$ 上のユニタリ変換に続いて $\mathcal{H}_B$ における直交測定を行うことで実現できます。
+
+**量子チャネル。** $\mathcal{H}_A \otimes \mathcal{H}_B$ 上のユニタリ発展は、$\mathcal{H}_A$ だけに注目するとユニタリには見えません。むしろ $\mathcal{H}_A$ における発展は**量子チャネル（quantum channel）**によって記述されます（チャネルは別のチャネルによって逆変換できるのはユニタリの場合に限ります）。一般のチャネル $\mathcal{E}$ はオペレーター和表現
+
+$$
+\mathcal{E}: \boldsymbol{\rho} \to \mathcal{E}(\boldsymbol{\rho}) = \sum_a \boldsymbol{M}_a\boldsymbol{\rho}\boldsymbol{M}_a^\dagger,
+$$ {#eq-3.184}
+
+を持ちます。ここで
+
+$$
+\sum_a \boldsymbol{M}_a^\dagger\boldsymbol{M}_a = \boldsymbol{I}.
+$$ {#eq-3.185}
+
+実際、密度演算子から密度演算子への合理的な（線形、トレース保存、完全正値の）写像はいずれもそのようなオペレーター和表現を持ちます。
+
+**デコヒーレンス。** デコヒーレンス — 系と環境との相互作用による量子情報の崩壊 — は量子チャネルで記述できます。環境が系に頻繁に「散乱」し、環境の状態が監視されていない場合、系の密度演算子の非対角成分は優先的な基底（通常、系と環境の結合の性質によって選択された空間的に局在した基底）において急速に崩壊します。デコヒーレンスの時間スケールは散乱率によって決まりますが、それは系の減衰率よりもはるかに大きい可能性があります。
+
+**マスター方程式。** 開いた量子系の関連する力学的時間スケールが環境が量子情報を「忘れる」時間よりも長い場合、系の発展は有効的に時間について局所的です（マルコフ近似）。一般のユニタリ発展がハミルトニアンによって生成されるのと同様に、一般のマルコフ超演算子はリウビリアン $\mathcal{L}$ によって生成され、**マスター方程式（master equation）**
+
+$$
+\dot{\boldsymbol{\rho}} \equiv \mathcal{L}(\boldsymbol{\rho}) = -i[\boldsymbol{H}, \boldsymbol{\rho}] + \sum_a\left(\boldsymbol{L}_a\boldsymbol{\rho}\boldsymbol{L}_a^\dagger - \frac{1}{2}\boldsymbol{L}_a^\dagger\boldsymbol{L}_a\boldsymbol{\rho} - \frac{1}{2}\boldsymbol{\rho}\boldsymbol{L}_a^\dagger\boldsymbol{L}_a\right)
+$$ {#eq-3.186}
+
+によって記述されます。各リンドブラッド演算子（または**量子ジャンプ演算子（quantum jump operator）**）$\boldsymbol{L}_a$ は、環境を忠実に監視すれば原理的に検出できる「量子ジャンプ」を記述します。マスター方程式を解くことで、開いた系のデコヒーレンス率を計算できます。
+
+**非マルコフノイズ。** 非マルコフノイズはそのパワースペクトルで特徴付けられ、長時間にわたるデフェージングへのノイズの効果は低周波数でのパワースペクトルの振る舞いによって決まります。温度 $\beta^{-1}$ の熱平衡にある量子ノイズはスペクトル非対称性を持ちます — 負周波数 $(-\omega)$ でのノイズは正周波数 $\omega$ でのノイズよりもボルツマン因子 $e^{-\beta\omega}$ だけ抑制されます（KMS 条件）。
+
+さらに重要な考え方が演習問題で展開されます。
