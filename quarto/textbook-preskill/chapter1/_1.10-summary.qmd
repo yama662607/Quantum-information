@@ -21,38 +21,6 @@
 
 ### Phase 2: 解説と拡充
 
-::: {.important-point}
-## 量子情報科学の3本柱
-本章で学んだ内容は、大きく 3 つの領域が相互に支え合う構造になっています。
-
-```{mermaid}
-%%| label: fig-chapter1-summary-map
-%%| fig-cap: "第1章：量子情報科学の概念マップ"
-graph TD
-    A[量子情報科学] --> B(計算量/アルゴリズム)
-    A --> C(誤り訂正/デコヒーレンス)
-    A --> D(物理実装/ハードウェア)
-    
-    B --- |効率性の跳躍| C
-    C --- |信頼性の確保| D
-    D --- |計算の実現| B
-    
-    subgraph B_Detail ["主要概念"]
-        B1[Shorのアルゴリズム]
-        B2[量子並列性/干渉]
-    end
-    subgraph C_Detail ["主要概念"]
-        C1[デコヒーレンス]
-        C2[エラーのデジタル化]
-    end
-    subgraph D_Detail ["主要概念"]
-        D1[イオントラップ/NMR]
-        D2[DiVincenzoのクライテリア]
-    end
-```
-
-:::
-
 ::: {.callout-tip collapse="true"}
 ## 第1章 修了チェックリスト
 - [ ] 「情報は物理的である」というランダウアーの主張の核心を理解した。

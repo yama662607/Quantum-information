@@ -19,20 +19,6 @@
 
 :::
 
-```{mermaid}
-%%| label: fig-quantum-channel
-%%| fig-cap: "量子チャネルの概念図: 入力状態 $\\rho$ はチャネル $\\Phi$ によって変換され、出力 $\\Phi(\\rho)$ となります。物理的には、確率の保存（TP）とエンタングルメントの整合性（CP）が要請されます。"
-graph LR
-    Input(Input State<br>X) --> Channel[Quantum Channel<br>Phi]
-    Channel --> Output(Output State<br>Phi X)
-
-    style Input fill:#e1f5fe,stroke:#01579b
-    style Channel fill:#e8f5e9,stroke:#2e7d32
-    style Output fill:#fff3e0,stroke:#ef6c00
-```
-
-
-
 ### Theoretical Background (理論的背景) {#theory .unnumbered}
 
 数学的な記述に入る前に、概念の直感的なイメージを整理します。
@@ -213,27 +199,6 @@ $$ \Phi(X) = (1-p)X + p \mathrm{Tr}(X) \frac{\mathbb{I}}{d} $$
   （これは $\mathrm{vec}(A) = (A \otimes I)\mathrm{vec}(I)$ という恒等式から導かれます）
 
 
-```{mermaid}
-%%| label: fig-choi-isomorphism
-%%| fig-cap: "Choi同型 (Channel-State Duality): 最大エンタングル状態 $|\\Gamma\\rangle$ の片割れにチャネル $\\Phi$ を適用することで、チャネルの情報をすべて含んだ量子状態 $J(\\Phi)$ （Choi状態）が得られます。"
-graph LR
-    subgraph BellPair [Bell Pair]
-        A[系 A]
-        B[系 B]
-    end
-
-    A ---|エンタングル| B
-
-    A --> Identity[恒等写像<br>I]
-    B --> Channel[チャネル<br>Phi]
-
-    Identity --> OutA[系 A]
-    Channel --> OutB[系 Y]
-
-    OutA ---|Choi状態<br>J Phi| OutB
-
-```
-
 #### 3. Kraus 表現 (Kraus Representation) [📄 p.79](../assets/pdf/watrous/Quantum_Information.pdf#page=87)
 
 物理的な操作、特に「測定とその結果に応じた状態変化」を記述するのに適した表現です。
@@ -270,26 +235,6 @@ graph LR
 - **物理的意味**:
   「系 $\mathcal{X}$ をより大きな閉じた系（環境 $\mathcal{Z}$ を含む）に埋め込み、そこでユニタリ発展させ、最後に環境を無視（トレースアウト）する」という物理過程を数学的に定式化したものです。全ての物理的なノイズは、この形式で理解できます。
 
-
-```{mermaid}
-%%| label: fig-stinespring
-%%| fig-cap: "Stinespring表現: 開いた系のダイナミクスは、「環境系 $Z$ との相互作用（ユニタリ発展）」と「環境系の破棄（部分トレース）」として理解できます。"
-graph LR
-    subgraph BeforeInteraction [相互作用前]
-        X["系 X"]
-        Z["環境系 Z<br>|0>"]
-    end
-
-    X --> U["ユニタリ発展<br>U or Isometric A"]
-    Z --> U
-
-    U --> X_prime[系 Y]
-    U --> Z_prime[環境系 Z']
-
-    Z_prime -.-> Trace[部分トレース]
-    X_prime --> Output[出力状態]
-
-```
 
 ::: {.callout-note title="視覚的ガイド: 2x2行列（1量子ビット）での表現の見た目" collapse="true"}
 単純な **ビット反転チャネル** $\Phi(X) = (1-p)X + p \sigma_x X \sigma_x$ を例に、各表現が具体的にどのような行列の形になるかを見てみましょう（$p$ は反転確率）。

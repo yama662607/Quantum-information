@@ -26,25 +26,7 @@
 単純レジスタは木構造の「葉」に対応し、複合レジスタはサブレジスタを子に持つ親ノードに対応します。
 
 #### Example 2.2: Register Tree
-式 (2.1) で定義されるレジスタの構造を @fig-register-tree に図示します。
-
-```{mermaid}
-%%| label: fig-register-tree
-%%| fig-cap: "The tree associated with the registers described in Example 2.2"
-graph TD
-    X["X = (Y0, Y1)"]
-    Y0["Y0 = {1, 2, 3, 4}"]
-    Y1["Y1 = (Z1, Z2, Z3)"]
-    Z1["Z1 = {0, 1}"]
-    Z2["Z2 = {0, 1}"]
-    Z3["Z3 = {0, 1}"]
-
-    X -- Y0 is a subregister of X --> Y0
-    X -- Y1 is a subregister of X --> Y1
-    Y1 -- Z1 is a subregister of Y1 --> Z1
-    Y1 --> Z2
-    Y1 --> Z3
-```
+式 (2.1) で定義されるレジスタの構造は、$X$ をルートとし、$Y_0$（単純レジスタ）と $Y_1$（さらに $Z_1, Z_2, Z_3$ を子に持つ複合レジスタ）を子に持つ木構造として表せます。
 
 ::: {#def-classical-state-set name="古典状態集合 (Definition 2.3)"}
 レジスタ $X$ の **古典状態集合 (Classical State Set)** は以下のように決定されます：

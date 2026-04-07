@@ -42,25 +42,6 @@ $$ {#eq-1.2}
 
 :::
 
-::: {.callout-note}
-## 💡 マクスウェルの悪魔のサイクル
-悪魔が第二法則を破っているように見えるのは、情報を「消去」するコストを無視しているためです。
-
-```{mermaid}
-%%| label: fig-maxwells-demon
-%%| fig-cap: "マクスウェルの悪魔と情報消去のサイクル"
-graph TD
-    A["悪魔が分子の速度を測定"] --> B["情報をメモリに記録"]
-    B --> C["測定結果に基づき<br>シャッターを操作"]
-    C --> D["温度勾配が発生<br>(エントロピー減少?)"]
-    D --> E{"メモリがいっぱい?"}
-    E -->|Yes| F["情報を消去<br>(ランダウアーの原理)"]
-    F -->|"周囲に熱を放出<br>(トータルでSは増大)"| A
-    E -->|No| A
-```
-
-:::
-
 ::: {.callout-tip collapse="true"}
 ## Toffoli ゲートによる可逆 NAND の実装 (Qiskit)
 
@@ -80,9 +61,9 @@ qc.x(2) # 第3ビットを |1> に初期化
 # c=1 のとき, 1 ⊕ 1∧1 = 0 となり、NAND に一致
 qc.ccx(0, 1, 2)
 
-# 結果の表示
+# 結果の表示（Quarto/Jupyterが Latex を MathJax でレンダリング）
 state = qi.Statevector.from_instruction(qc)
-print(f"Final state: {state.draw('latex')}")
+state.draw('latex')
 ```
 
 :::
