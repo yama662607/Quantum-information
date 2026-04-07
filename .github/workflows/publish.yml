@@ -35,9 +35,9 @@ jobs:
           uv sync --all-extras
 
       - name: Render Quarto Project
-        uses: quarto-dev/quarto-actions/render@v2
-        with:
-          path: quarto
+        run: uv run quarto render quarto
+        env:
+          QUARTO_PRINT_STACK: "true"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
