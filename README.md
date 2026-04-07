@@ -128,3 +128,10 @@ Quantum-information/
 
 GitHub Pages への自動デプロイが設定されています。`master` ブランチへのプッシュにより、以下の URL が更新されます：
 `https://yama662607.github.io/Quantum-information/`
+
+---
+
+## 📄 ライセンス (License)
+
+このプロジェクトは [MIT License](./LICENSE) のもとで公開されています。
+© 2026 Daisuke Yamashiki

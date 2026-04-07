@@ -3163,11 +3163,9 @@ dependencies = [
     { name = "plotly" },
     { name = "pymupdf" },
     { name = "pypdf2" },
-    { name = "pytest" },
     { name = "pyvis" },
     { name = "qiskit" },
     { name = "qiskit-aer" },
-    { name = "ruff" },
     { name = "scipy" },
     { name = "watchdog" },
 ]
@@ -3175,6 +3173,8 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "pylatexenc" },
+    { name = "pytest" },
+    { name = "ruff" },
 ]
 
 [package.metadata]
@@ -3189,17 +3189,19 @@ requires-dist = [
     { name = "plotly", specifier = ">=6.5.0" },
     { name = "pymupdf", specifier = ">=1.27.2.2" },
     { name = "pypdf2", specifier = ">=3.0.1" },
-    { name = "pytest", specifier = ">=9.0.2" },
     { name = "pyvis", specifier = ">=0.3.2" },
     { name = "qiskit", specifier = ">=2.2.3" },
     { name = "qiskit-aer", specifier = ">=0.17.2" },
-    { name = "ruff", specifier = ">=0.14.10" },
     { name = "scipy", specifier = ">=1.16.3" },
     { name = "watchdog", specifier = ">=6.0.0" },
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pylatexenc", specifier = ">=2.10" }]
+dev = [
+    { name = "pylatexenc", specifier = ">=2.10" },
+    { name = "pytest", specifier = ">=9.0.2" },
+    { name = "ruff", specifier = ">=0.14.10" },
+]
 
 [[package]]
 name = "rapidocr"
