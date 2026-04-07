@@ -1,4 +1,4 @@
-## 1.10 まとめ (Summary) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#p=30) {#sec-1.10-summary}
+## 1.10 まとめ (Summary) [📄 p.30](/assets/pdf/preskill/chap1.pdf#p=30) {#sec-1.10-summary}
 
 ::: {.callout-note appearance="simple" title="第1章の総括"}
 本章では、量子情報科学という「物理学と情報理論の交差点」の全体像を俯瞰しました。

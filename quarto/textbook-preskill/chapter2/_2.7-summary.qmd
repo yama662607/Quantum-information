@@ -1,11 +1,11 @@
-## 2.7 まとめ (Summary) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=41) {#sec-2.7-summary}
-[📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=41)
+## 2.7 まとめ (Summary) [📄 p.41](/assets/pdf/preskill/chap2.pdf#p=41) {#sec-2.7-summary}
+[📄 p.41](/assets/pdf/preskill/chap2.pdf#p=41)
 
 **公理 (Axioms)**。量子力学の舞台はヒルベルト空間 $\mathcal{H}$ です。基本的な仮定は以下の通りです：
 (1) 状態は $\mathcal{H}$ 内の**射線（ray）**です。
 (2) 観測量は $\mathcal{H}$ 上の**自己共役演算子（self-adjoint operator）**です。
 (3) 測定は**直交射影（orthogonal projection）**です。
-(4) 時間発展は**ユニタリ（unitary）**です。 [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=42)
+(4) 時間発展は**ユニタリ（unitary）**です。 [📄 p.42](/assets/pdf/preskill/chap2.pdf#p=42)
 (5) 複合系 $AB$ はテンソル積 $\mathcal{H}_A \otimes \mathcal{H}_B$ によって記述されます。
 
 **密度演算子 (Density operator)**。しかし、より大きな量子系の一部にのみ注目を限定する場合、仮定 (1)-(4) は必ずしも満たされません。特に、量子状態は射線ではなく、**密度演算子（density operator）**、すなわちトレースが1の非負演算子によって記述されます。密度演算子が $\boldsymbol{\rho}^2 = \boldsymbol{\rho}$ を満たすとき、それは**純粋（pure）**であり（その状態は射線で記述可能）、そうでなければその状態は**混合（mixed）**しています。観測量 $\boldsymbol{M}$ は、この状態において期待値 $\text{Tr}(\boldsymbol{M}\boldsymbol{\rho})$ を持ちます。
@@ -24,6 +24,6 @@ $$ {#eq-2.163}
 
 **アンサンブル (Ensembles)**。ヒルベルト空間上の密度演算子は凸集合を形成し、純粋状態はその集合の端点（extremal points）となります。システム $A$ の混合状態は、多くの異なる方法で純粋状態のアンサンブルとして準備でき、システム $A$ のみを観察する限り、それらはすべて実験的に区別不可能です。システム $A$ の任意の混合状態 $\boldsymbol{\rho}_A$ が与えられたとき、$\boldsymbol{\rho}_A$ を純粋状態のアンサンブルとして準備するいかなる方法も、原理的には $A$ とエンタングルした別のシステム $B$ において測定を行うことによって実現できます。実際、$\boldsymbol{\rho}_A$ の多くのそのような準備に対して、$A$ と $B$ の単一のエンタングル状態が存在し、それらの準備のいずれもが $B$ における適切な観測量を測定することによって実現可能です（**HJW 定理**）。システム $B$ で測定を行い、その結果をシステム $A$ に報告することで、混合状態からアンサンブルの一つから選ばれた純粋状態を抽出できます。
 
-**忠実度 (Fidelity)**。忠実度 $F(\boldsymbol{\rho}, \boldsymbol{\sigma}) = \|\boldsymbol{\sigma}^{1/2} \boldsymbol{\rho}^{1/2}\|_1^2$ は、2つの密度演算子の区別可能性を定量化します。これは、それらの純粋化によって達成される最大の重ね合わせです（**ウールマンの定理**）。忠実度 $F(\boldsymbol{\rho}, \boldsymbol{\sigma})$ が1に近いことは、$L^1$ 距離 $\|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1$ が小さいことと同値です。 [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=43)
+**忠実度 (Fidelity)**。忠実度 $F(\boldsymbol{\rho}, \boldsymbol{\sigma}) = \|\boldsymbol{\sigma}^{1/2} \boldsymbol{\rho}^{1/2}\|_1^2$ は、2つの密度演算子の区別可能性を定量化します。これは、それらの純粋化によって達成される最大の重ね合わせです（**ウールマンの定理**）。忠実度 $F(\boldsymbol{\rho}, \boldsymbol{\sigma})$ が1に近いことは、$L^1$ 距離 $\|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1$ が小さいことと同値です。 [📄 p.43](/assets/pdf/preskill/chap2.pdf#p=43)
 
 さらなる重要なアイデアは、演習問題で展開されます。

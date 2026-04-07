@@ -1,6 +1,6 @@
-# 2.5 アンサンブル解釈の曖昧さ (Ambiguity of the ensemble interpretation) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=26) {#sec-2.5-ambiguity}
+# 2.5 アンサンブル解釈の曖昧さ (Ambiguity of the ensemble interpretation) [📄 p.26](/assets/pdf/preskill/chap2.pdf#p=26) {#sec-2.5-ambiguity}
 
-## 2.5.1 凸性 (Convexity) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=26) {#sec-2.5.1-convexity}
+## 2.5.1 凸性 (Convexity) [📄 p.26](/assets/pdf/preskill/chap2.pdf#p=26) {#sec-2.5.1-convexity}
 
 ヒルベルト空間 $\mathcal{H}$ に作用する演算子 $\boldsymbol{\rho}$ が密度演算子として解釈できるのは、以下の3つの性質を持つ場合であることを思い出してください：
 
@@ -45,10 +45,10 @@ $$ {#eq-2.105}
 
 このように、混合量子状態の準備に関する高度に曖昧な性質は、古典的な確率分布とは対照的な、量子情報の特徴的な性質の一つです。
 
-## 2.5.2 アンサンブルの準備 (Ensemble preparation) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=28) {#sec-2.5.2-ensemble-preparation}
+## 2.5.2 アンサンブルの準備 (Ensemble preparation) [📄 p.28](/assets/pdf/preskill/chap2.pdf#p=28) {#sec-2.5.2-ensemble-preparation}
 （この部分は、上記の凸性の議論と連続しています。古典的なビットの確率分布は単体（simplex）を構成し、その分解が一意に定まるのに対し、量子系の混合状態は極値状態の分解が一意に定まらないという特徴を説明しています。）
 
-## 2.5.3 光速より速い？ (Faster than light?) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=30) {#sec-2.5.3-faster-than-light}
+## 2.5.3 光速より速い？ (Faster than light?) [📄 p.30](/assets/pdf/preskill/chap2.pdf#p=30) {#sec-2.5.3-faster-than-light}
 
 系 $A$ の混合状態は、$A$ が系 $B$ とエンタングルしているから生じるという、以前の視点に戻りましょう。これを用いて、混合状態の準備が曖昧であることの含意をさらに検討します。もしクビット $A$ が密度行列
 $$
@@ -71,7 +71,7 @@ $$ {#eq-2.108}
 
 この仕組みには欠陥があります。2つの準備方法は確かに異なりますが、どちらのアンサンブルも全く同じ密度行列 $\boldsymbol{\rho}_A$ によって記述されるためです。したがって、アリスが行える測定の中で、これら2つのアンサンブルを区別できるものは存在せず、アリスがボブの行った操作を知る方法はありません。「メッセージ」は解読不可能なのです。
 
-## 2.5.4 量子消去 (Quantum erasure) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=31) {#sec-2.5.4-quantum-erasure}
+## 2.5.4 量子消去 (Quantum erasure) [📄 p.31](/assets/pdf/preskill/chap2.pdf#p=31) {#sec-2.5.4-quantum-erasure}
 
 密度行列 $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$ は、純粋状態 $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ の非コヒーレントな混合状態にあるスピンを記述すると述べました。これは、これら状態のコヒーレントな重ね合わせとは区別されるべきです。例えば
 $$
@@ -85,7 +85,7 @@ $$ {#eq-2.109}
 
 この状況は**量子消去（quantum eraser）**と呼ばれています。2つのスピンをエンタングルさせることは、スピン $B$ を観測することでスピン $A$ のアップダウンを知ることができるため、コヒーレンスが失われる「測定状況」を作り出します。しかし、スピン $B$ を x軸に沿って測定すると、この情報は「消去」されます。ボブの測定がアリスのスピンに関する「どの道（which way）」の情報を保持しないため、スピン $A$ は再びコヒーレントな重ね合わせとして振る舞うことが可能になります（そしてボブの結果をアリスが聞いた後、実際にそう振る舞います）。
 
-## 2.5.5 HJW 定理 (The HJW theorem) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#p=34) {#sec-2.5.5-hjw-theorem}
+## 2.5.5 HJW 定理 (The HJW theorem) [📄 p.34](/assets/pdf/preskill/chap2.pdf#p=34) {#sec-2.5.5-hjw-theorem}
 
 これまでは、等確率の互いに直交する状態のアンサンブル（すなわち $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$）によって記述される単一のクビットの文脈でのみ、量子消去を考えてきました。この議論は大幅に一般化できます。
 
