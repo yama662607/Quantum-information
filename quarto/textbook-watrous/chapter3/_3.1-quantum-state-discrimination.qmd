@@ -1,4 +1,4 @@
-## 量子状態の識別 (Quantum state discrimination) [📄 p.124](../assets/pdf/watrous/Quantum_Information.pdf#p=132) {#quantum-state-discrimination}
+## 量子状態の識別 (Quantum state discrimination) [📄 p.124](../assets/pdf/watrous/Quantum_Information.pdf#page=132) {#quantum-state-discrimination}
 
 この節では、与えられた量子状態が、既知の複数の候補のうちのどれであるかを特定する問題、すなわち「量子状態の識別」について扱います。
 
@@ -9,7 +9,7 @@
 
 :::
 
-### 2つの量子状態の識別 (Discriminating between pairs of quantum states) [📄 p.127](../assets/pdf/watrous/Quantum_Information.pdf#p=135) {#discriminating-pairs}
+### 2つの量子状態の識別 (Discriminating between pairs of quantum states) [📄 p.127](../assets/pdf/watrous/Quantum_Information.pdf#page=135) {#discriminating-pairs}
 
 量子状態の識別問題は、以下の古典的シナリオ（Scenario 3.1）の自然な拡張として理解できます。
 
@@ -107,7 +107,7 @@ $$
 
 :::
 
-### Pretty Good Measurement (PGM) [📄 p.137](../assets/pdf/watrous/Quantum_Information.pdf#p=145) {#pretty-good-measurement}
+### Pretty Good Measurement (PGM) [📄 p.137](../assets/pdf/watrous/Quantum_Information.pdf#page=145) {#pretty-good-measurement}
 
 最適解を解析的に求めるのが難しい場合でも、アンサンブルの情報ののみから構成できる「十分良い」測定として **Pretty Good Measurement (PGM)**（または正則測定）が知られています。
 

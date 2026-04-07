@@ -1,6 +1,6 @@
-# 2.3 密度演算子 (The density operator) [📄 p.16](/assets/pdf/preskill/chap2.pdf#p=16) {#sec-2.3-density-operator}
+# 2.3 密度演算子 (The density operator) [📄 p.16](/assets/pdf/preskill/chap2.pdf#page=16) {#sec-2.3-density-operator}
 
-## 2.3.1 二部量子系 (The bipartite quantum system) [📄 p.16](/assets/pdf/preskill/chap2.pdf#p=16) {#sec-2.3-1-bipartite}
+## 2.3.1 二部量子系 (The bipartite quantum system) [📄 p.16](/assets/pdf/preskill/chap2.pdf#page=16) {#sec-2.3-1-bipartite}
 
 単一のクビットについてすべてを理解したところで、2つのクビットを持つ系を扱う準備が整いました。1つのクビットから2つへとステップアップすることは、予想以上に大きな飛躍です。量子力学の奇妙で素晴らしいことの多くは、2つのクビットの量子状態の性質を考慮することで理解できます。
 
@@ -120,7 +120,7 @@ $$
 $$ {#eq-2.69}
 と表せるため、以前と同様に、$\rho$ を、状態 $|a\rangle$ が確率 $p_a$ で発生する純粋量子状態のアンサンブルを記述していると解釈できることがわかります。したがって、量子系 $A$ が別の系 $B$ と相互作用するときに量子力学においてどのように確率が生じるのかを理解する上で、私たちは長い道のりを歩んできました。$A$ と $B$ は**エンタングル（entangle）**、すなわち相関します。エンタングルメントは $A$ の状態の重ね合わせのコヒーレンスを破壊し、その結果、$A$ 単独を見る場合には重ね合わせの一部の位相にアクセスできなくなります。この状況を、系 $A$ の状態が**収縮（collapse）**した、すなわち、それぞれに確率を割り当てることができる一連の代替状態のいずれかにある、と言うことで表現できます。
 
-## 2.3.2 ブロッホ球 (Bloch sphere) [📄 p.21](/assets/pdf/preskill/chap2.pdf#p=21) {#sec-2.3-2-bloch-sphere}
+## 2.3.2 ブロッホ球 (Bloch sphere) [📄 p.21](/assets/pdf/preskill/chap2.pdf#page=21) {#sec-2.3-2-bloch-sphere}
 
 系 $A$ が単一のクビットである場合に戻り、一般的な密度行列の形式を考えてみましょう。最も一般的な自己共役 $2 \times 2$ 行列は4つの実パラメータを持ち、基底 $\{I, \sigma_1, \sigma_2, \sigma_3\}$ で展開できます。各 $\sigma_i$ はトレースレスであるため、密度行列の展開における $I$ の係数は $1/2$（$\text{tr}(\boldsymbol{\rho}) = 1$ となるため）でなければならず、次のように表せます：
 $$
