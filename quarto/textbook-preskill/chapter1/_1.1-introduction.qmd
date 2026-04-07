@@ -1,4 +1,4 @@
-# 1.1 情報の物理学 (Physics of information) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=1) {#sec-1.1-physics-of-information}
+# 1.1 情報の物理学 (Physics of information) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#p=1) {#sec-1.1-physics-of-information}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **情報の物理性**: 情報は物理的な状態に依存していることを理解する。

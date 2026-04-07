@@ -1,4 +1,4 @@
-## Linear algebra [📄 p.1](../assets/pdf/watrous/Quantum_Information.pdf#page=9) {#linear-algebra}
+## Linear algebra [📄 p.1](../assets/pdf/watrous/Quantum_Information.pdf#p=9) {#linear-algebra}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **複素ユークリッド空間**の定義と、量子情報での役割を把握する。
@@ -7,7 +7,7 @@
 
 :::
 
-### Complex Euclidean spaces (複素ユークリッド空間) [📄 p.1](../assets/pdf/watrous/Quantum_Information.pdf#page=9) {#complex-euclidean-spaces}
+### Complex Euclidean spaces (複素ユークリッド空間) [📄 p.1](../assets/pdf/watrous/Quantum_Information.pdf#p=9) {#complex-euclidean-spaces}
 
 量子情報の理論において、**複素ユークリッド空間** (Complex Euclidean Space) は最も基本的な数学的構造です。
 本書では、複素ユークリッド空間を、ある有限のアルファベット（シンボル集合）$\Sigma$ から複素数体 $\mathbb{C}$ への関数全体の集合（$\mathbb{C}^\Sigma$）として定義します。
@@ -254,7 +254,7 @@ $$ \phi(u, v) = \phi(\sum_a u(a)e_a, \sum_b v(b)e_b) = \sum_{a,b} u(a)v(b) \phi(
 複素共役は自明になるため多くの式が簡略化されますが、本書の主対象は複素の場合です。
 
 
-### Linear operators (線形演算子) [📄 p.8](../assets/pdf/watrous/Quantum_Information.pdf#page=16) {#linear-operators}
+### Linear operators (線形演算子) [📄 p.8](../assets/pdf/watrous/Quantum_Information.pdf#p=16) {#linear-operators}
 
 ::: {#def-linear-operator name="線形演算子 (Linear Operator)"}
 
@@ -458,7 +458,7 @@ $$
 $$ {#eq-rank-dim}
 が成り立ちます。
 
-### Trace and Determinant (トレースと行列式) [📄 p.15](../assets/pdf/watrous/Quantum_Information.pdf#page=23) {#trace-and-determinant}
+### Trace and Determinant (トレースと行列式) [📄 p.15](../assets/pdf/watrous/Quantum_Information.pdf#p=23) {#trace-and-determinant}
 
 #### トレース (Trace)
 正方演算子 $X \in \mathrm{L}(\mathcal{X})$ の**トレース** $\mathrm{Tr}(X)$ は、対角成分の和 $\sum_a X(a, a)$ です。また、以下を満たす唯一の線形関数としても定義されます。
@@ -487,11 +487,11 @@ $$ \mathrm{Det}(X) = \sum_{\pi \in \mathrm{Sym}(\Sigma)} \mathrm{sign}(\pi) \pro
 
 :::
 
-### Operator decompositions and norms (演算子の分解とノルム) [📄 p.24](../assets/pdf/watrous/Quantum_Information.pdf#page=32) {#operator-decompositions-and-norms}
+### Operator decompositions and norms (演算子の分解とノルム) [📄 p.24](../assets/pdf/watrous/Quantum_Information.pdf#p=32) {#operator-decompositions-and-norms}
 
 量子情報で頻出の「分解」と「ノルム」をまとめます。
 
-#### 演算子とベクトルの対応 (Operator-Vector Correspondence) [📄 p.23](../assets/pdf/watrous/Quantum_Information.pdf#page=31) {#vectorization}
+#### 演算子とベクトルの対応 (Operator-Vector Correspondence) [📄 p.23](../assets/pdf/watrous/Quantum_Information.pdf#p=31) {#vectorization}
 
 線形演算子の空間 $\mathrm{L}(\mathcal{Y}, \mathcal{X})$ と、テンソル積空間 $\mathcal{X} \otimes \mathcal{Y}$ の間には、非常に重要な同型対応が存在します。
 
@@ -723,7 +723,7 @@ $$ A B^\dagger = |i\rangle\langle j| (|k\rangle\langle l|)^\dagger = |i\rangle\l
 
 :::
 
-#### スペクトル定理 (Spectral Theorem) [📄 p.25](../assets/pdf/watrous/Quantum_Information.pdf#page=33)
+#### スペクトル定理 (Spectral Theorem) [📄 p.25](../assets/pdf/watrous/Quantum_Information.pdf#p=33)
 
 ::: {#thm-spectral-theorem name="スペクトル定理 (Spectral Theorem)"}
 正規演算子 $X \in \mathrm{L}(\mathcal{X})$（$XX^* = X^* X$）に対し、正規直交基底 $\{x_k\}$ と固有値 $\{\lambda_k\}$ が存在して
@@ -810,7 +810,7 @@ $$ |\psi\rangle_{AB} = \sum_k \sqrt{p_k} |k\rangle_A |k\rangle_B $$
 
 :::
 
-#### シャッテン $p$-ノルム (Schatten $p$-norms) [📄 p.32](../assets/pdf/watrous/Quantum_Information.pdf#page=40)
+#### シャッテン $p$-ノルム (Schatten $p$-norms) [📄 p.32](../assets/pdf/watrous/Quantum_Information.pdf#p=40)
 
 特異値列 $s(A)$ の $p$-ノルムとして
 $$

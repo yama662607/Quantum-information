@@ -1,4 +1,4 @@
-## Measurements [📄 p.100](../assets/pdf/watrous/Quantum_Information.pdf#page=108) {#measurements}
+## Measurements [📄 p.100](../assets/pdf/watrous/Quantum_Information.pdf#p=108) {#measurements}
 
 測定（Measurement）は、量子状態から古典情報を抽出するための数学的メカニズムを提供します。
 
@@ -9,7 +9,7 @@
 
 :::
 
-### Two equivalent definitions (2つの等価な定義) [📄 p.100](../assets/pdf/watrous/Quantum_Information.pdf#page=108) {#two-equivalent-definitions}
+### Two equivalent definitions (2つの等価な定義) [📄 p.100](../assets/pdf/watrous/Quantum_Information.pdf#p=108) {#two-equivalent-definitions}
 
 量子情報の文脈では、測定は通常、以下の POVM (Positive Operator-Valued Measure) として定義されます。
 
@@ -33,7 +33,7 @@ $$ \sum_{a \in \Sigma} \mu(a) = \mathbb{I}_{\mathcal{X}} $$
 
 :::
 
-### Measurements as channels (チャネルとしての測定) [📄 p.102](../assets/pdf/watrous/Quantum_Information.pdf#page=110) {#measurements-as-channels}
+### Measurements as channels (チャネルとしての測定) [📄 p.102](../assets/pdf/watrous/Quantum_Information.pdf#p=110) {#measurements-as-channels}
 
 測定は、量子情報を古典情報に変換する**量子から古典へのチャネル** (Quantum-to-classical channel) としても定義できます。
 
@@ -57,7 +57,7 @@ $$ \Phi(X) = \sum_{a \in \Sigma} \operatorname{Tr}(\mu(a)X) E_{a,a} $$
 
 :::
 
-### Basic notions concerning measurements (基本的な測定概念) [📄 p.104](../assets/pdf/watrous/Quantum_Information.pdf#page=112) {#basic-notions-cerning-measurements}
+### Basic notions concerning measurements (基本的な測定概念) [📄 p.104](../assets/pdf/watrous/Quantum_Information.pdf#p=112) {#basic-notions-cerning-measurements}
 
 ここでは、複数の系に対する独立した測定や、系の一部のみを測定する場合の定式化について述べます。
 
@@ -87,7 +87,7 @@ $$ \eta(a) = \operatorname{Tr}_{Y_k} \Big( (\mathbb{I}_{Y_1 \otimes \dots} \otim
 
 :::
 
-### Projective measurements (射影測定) [📄 p.105](../assets/pdf/watrous/Quantum_Information.pdf#page=113) {#projective-measurements}
+### Projective measurements (射影測定) [📄 p.105](../assets/pdf/watrous/Quantum_Information.pdf#p=113) {#projective-measurements}
 
 測定演算子がすべて射影演算子（$\mu(a)^2 = \mu(a)$）である場合、その測定を**射影測定**と呼びます。互いに直交するため $a \neq b$ で $\mu(a)\mu(b)=0$ となり、可観測量 $H = \sum_a \lambda_a \mu(a)$ のスペクトル分解に一致します。ブラケット表記では基底ベクトル $|a\rangle$ への射影 $|a\rangle\langle a|$ が各アウトカムに対応します。
 
@@ -96,7 +96,7 @@ $$ \eta(a) = \operatorname{Tr}_{Y_k} \Big( (\mathbb{I}_{Y_1 \otimes \dots} \otim
 
 :::
 
-### Naimark の定理 [📄 p.109](../assets/pdf/watrous/Quantum_Information.pdf#page=117) {#naimarks-theorem}
+### Naimark の定理 [📄 p.109](../assets/pdf/watrous/Quantum_Information.pdf#p=117) {#naimarks-theorem}
 
 任意の測定は、補助系を含む拡大された系における射影測定の一部とみなすことができます。
 
@@ -132,7 +132,7 @@ Naimark の構成は「測定をユニタリ＋射影＋部分トレース」の
 
 :::
 
-### Information-complete measurements (情報完全測定) [📄 p.110](../assets/pdf/watrous/Quantum_Information.pdf#page=118) {#information-complete-measurements}
+### Information-complete measurements (情報完全測定) [📄 p.110](../assets/pdf/watrous/Quantum_Information.pdf#p=118) {#information-complete-measurements}
 
 測定統計から元の量子状態を一意に特定できる測定を**情報完全測定**と呼びます。
 
@@ -149,7 +149,7 @@ $$ \mathrm{span}\{\mu(a) : a \in \Sigma\} = \mathrm{L}(\mathcal{X}) $$
 
 :::
 
-### Quantum instruments (量子インストルメント) [📄 p.112](../assets/pdf/watrous/Quantum_Information.pdf#page=120) {#quantum-instruments}
+### Quantum instruments (量子インストルメント) [📄 p.112](../assets/pdf/watrous/Quantum_Information.pdf#p=120) {#quantum-instruments}
 
 「レジスタの消失」というドライな定義を超えて、測定後の系の変化を完全に記述する枠組みが**量子インストルメント**です。学部レベルで学ぶ「射影による波束の収縮」は、これの特殊なケースとして一般化されます。
 
@@ -170,11 +170,11 @@ $$ \mathcal{A}_a(\rho) = \sum_j A_{a,j} \rho\, A_{a,j}^* $$
 
 :::
 
-### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](../assets/pdf/watrous/Quantum_Information.pdf#page=121) {#extremal-measurements-and-ensembles}
+### Extremal measurements and ensembles (極値的な測定とアンサンブル) [📄 p.113](../assets/pdf/watrous/Quantum_Information.pdf#p=121) {#extremal-measurements-and-ensembles}
 
 測定やアンサンブルは、どちらも「正演算子を各アウトカムへ割り当てる写像」として見られるため、自然に凸集合をなします。ここでは、まず測定の凸構造を厳密に記述し、その後に同じ幾何学がアンサンブルへ移ることを見ます。
 
-#### From instruments to channels (インストルメントからチャネルへ) [📄 p.113](../assets/pdf/watrous/Quantum_Information.pdf#page=121) {#instruments-to-channels}
+#### From instruments to channels (インストルメントからチャネルへ) [📄 p.113](../assets/pdf/watrous/Quantum_Information.pdf#p=121) {#instruments-to-channels}
 
 113ページ冒頭は、直前のインストルメントの議論の締めくくりです。インストルメント
 $$
@@ -193,7 +193,7 @@ $$
 
 ということです。
 
-#### Convex combinations of measurements (測定の凸結合) [📄 p.113](../assets/pdf/watrous/Quantum_Information.pdf#page=121) {#convex-structure-of-measurements}
+#### Convex combinations of measurements (測定の凸結合) [📄 p.113](../assets/pdf/watrous/Quantum_Information.pdf#p=121) {#convex-structure-of-measurements}
 
 複素ユークリッド空間 $\mathcal{X}$ とアルファベット $\Sigma$ を固定します。アルファベット $\Gamma$、確率ベクトル $p \in \mathcal{P}(\Gamma)$、および各 $b \in \Gamma$ に対して測定
 $$
@@ -237,7 +237,7 @@ POVM は「各アウトカムの重み付け」、量子→古典チャネルは
 
 :::
 
-#### Extremal measurements (端点測定) [📄 p.114](../assets/pdf/watrous/Quantum_Information.pdf#page=122) {#extremal-measurements}
+#### Extremal measurements (端点測定) [📄 p.114](../assets/pdf/watrous/Quantum_Information.pdf#p=122) {#extremal-measurements}
 
 命題 2.38 により、量子から古典へのチャネル全体はコンパクト凸集合です。したがって、その極値点に対応する測定を考えることができます。
 
@@ -288,7 +288,7 @@ $$
 
 したがって、これらを満たす非自明な $\theta$ が存在しないとは、「合法な微小変形の自由度がない」ということです。
 
-::: {.callout-note collapse="true" title="定理 2.47 の証明 [📄 pp.114-115](../assets/pdf/watrous/Quantum_Information.pdf#page=122)"}
+::: {.callout-note collapse="true" title="定理 2.47 の証明 [📄 pp.114-115](../assets/pdf/watrous/Quantum_Information.pdf#p=122)"}
 教科書の証明は対偶で進みます。
 
 **(A) まず、$\mu$ が端点でないと仮定する**
@@ -397,7 +397,7 @@ $$
 
 :::
 
-#### Corollaries on extremal measurements (端点測定の系) [📄 p.116](../assets/pdf/watrous/Quantum_Information.pdf#page=124) {#corollaries-extremal-measurements}
+#### Corollaries on extremal measurements (端点測定の系) [📄 p.116](../assets/pdf/watrous/Quantum_Information.pdf#p=124) {#corollaries-extremal-measurements}
 
 定理 2.47 から、測定の幾何学に関するいくつかの強い事実が直ちに導かれます。
 
@@ -460,7 +460,7 @@ $$
 
 これは系 2.48 と、命題 2.38 によるコンパクト凸性、および定理 1.10 を組み合わせたものです。すなわち、任意の測定は端点測定の凸結合として書け、しかも各端点測定は系 2.48 により非零アウトカム数が高々 $d^2$ です。
 
-#### Rank-1 and projective cases (ランク1測定と射影測定) [📄 p.117](../assets/pdf/watrous/Quantum_Information.pdf#page=125) {#rank1-and-projective-extremality}
+#### Rank-1 and projective cases (ランク1測定と射影測定) [📄 p.117](../assets/pdf/watrous/Quantum_Information.pdf#p=125) {#rank1-and-projective-extremality}
 
 ランク1測定と射影測定では、定理 2.47 の条件がさらに具体化されます。
 
@@ -548,7 +548,7 @@ $$
 
 :::
 
-#### Convex combinations of ensembles of states (状態アンサンブルの凸結合) [📄 p.118](../assets/pdf/watrous/Quantum_Information.pdf#page=126) {#convex-structure-of-ensembles}
+#### Convex combinations of ensembles of states (状態アンサンブルの凸結合) [📄 p.118](../assets/pdf/watrous/Quantum_Information.pdf#p=126) {#convex-structure-of-ensembles}
 
 状態のアンサンブルに対しても、測定と本質的に同じ方法で凸結合を定義できます。$\mathcal{X}$ を複素ユークリッド空間、$\Sigma,\Gamma$ をアルファベット、$p \in \mathcal{P}(\Gamma)$ を確率ベクトルとし、各 $b \in \Gamma$ に対して
 $$
@@ -620,7 +620,7 @@ $$
 
 :::
 
-#### Ensembles with a fixed average state (平均状態を固定したアンサンブル) [📄 p.119](../assets/pdf/watrous/Quantum_Information.pdf#page=127) {#decomposition-ensembles}
+#### Ensembles with a fixed average state (平均状態を固定したアンサンブル) [📄 p.119](../assets/pdf/watrous/Quantum_Information.pdf#p=127) {#decomposition-ensembles}
 
 ここからは平均状態 $\rho$ を固定します。すると話は急に豊かになります。同じ $\rho$ を与えるアンサンブルは一般に無数に存在し、それらの凸構造が問題になります。
 
@@ -675,7 +675,7 @@ $$
 $$
 で定義される関数 $\mu : \Sigma \to \mathrm{Pos}(\mathcal{Y})$ は $\mathcal{Y}$ 上の測定です。
 
-#### Conclusion of the proof (証明の完了) [📄 p.120](../assets/pdf/watrous/Quantum_Information.pdf#page=128) {#conclusion-prop-2-52}
+#### Conclusion of the proof (証明の完了) [📄 p.120](../assets/pdf/watrous/Quantum_Information.pdf#p=128) {#conclusion-prop-2-52}
 
 測定の分解定理（系 2.49）を $\mu$ に適用すると、あるアルファベット $\Gamma$、確率ベクトル $p \in \mathcal{P}(\Gamma)$、および $\mathcal{Y}$ 上の端点測定の族 $\{\mu_b : b \in \Gamma\}$ が存在して
 $$
@@ -723,7 +723,7 @@ $$
 
 :::
 
-#### Exercises (演習問題) [📄 p.120](../assets/pdf/watrous/Quantum_Information.pdf#page=128) {#measurement-exercises}
+#### Exercises (演習問題) [📄 p.120](../assets/pdf/watrous/Quantum_Information.pdf#p=128) {#measurement-exercises}
 
 この節の終わりには、測定とアンサンブルの対応をさらに抽象的・物理的に理解するための演習が置かれています。
 

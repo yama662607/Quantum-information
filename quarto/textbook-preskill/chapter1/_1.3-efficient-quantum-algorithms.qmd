@@ -1,4 +1,4 @@
-## 1.3 効率的な量子アルゴリズム (Efficient quantum algorithms) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=5) {#sec-1.3-efficient-quantum-algorithms}
+## 1.3 効率的な量子アルゴリズム (Efficient quantum algorithms) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#p=5) {#sec-1.3-efficient-quantum-algorithms}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **Shorのアルゴリズムの衝撃**: 素因数分解という「難解な」問題が量子計算で「効率的」に解けることを知る。
