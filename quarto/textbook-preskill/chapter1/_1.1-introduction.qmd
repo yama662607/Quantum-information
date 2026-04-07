@@ -43,32 +43,6 @@ $$ {#eq-1.2}
 :::
 
 ::: {.callout-tip collapse="true"}
-## Toffoli ゲートによる可逆 NAND の実装 (Qiskit)
-
-Toffoli ゲートを用いると、情報を失わずに NAND 演算を埋め込むことができます。
-
-```{python}
-from qiskit import QuantumCircuit
-import qiskit.quantum_info as qi
-
-# a=1, b=1 の NAND を計算する例
-qc = QuantumCircuit(3)
-qc.x(0) # input a = 1
-qc.x(1) # input b = 1
-qc.x(2) # 第3ビットを |1> に初期化
-
-# Toffoli ゲート適用: (a, b, c) -> (a, b, c ⊕ a∧b)
-# c=1 のとき, 1 ⊕ 1∧1 = 0 となり、NAND に一致
-qc.ccx(0, 1, 2)
-
-# 結果の表示（Quarto/Jupyterが Latex を MathJax でレンダリング）
-state = qi.Statevector.from_instruction(qc)
-state.draw('latex')
-```
-
-:::
-
-::: {.callout-tip collapse="true"}
 ## ゼミ発表チェックリスト
 - [ ] 「情報は物理的である」という言葉の意味を説明できる。
 - [ ] 情報の「消去」がなぜ熱を発生させるのか、直感的に説明できる。
