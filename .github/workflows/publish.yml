@@ -34,8 +34,8 @@ jobs:
         run: |
           uv sync --all-extras
 
-      - name: Render Quarto Project
-        run: uv run quarto render quarto
+      - name: Render Quarto Project (HTML only)
+        run: uv run quarto render quarto --to html
         env:
           QUARTO_PRINT_STACK: "true"
 
