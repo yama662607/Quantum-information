@@ -38,21 +38,13 @@ John Watrous 教授の教科書に基づいた旧ノートです。
 
 ---
 
+## 実装ノート (Implementation)
+
+- [**量子コンピューティングをQiskitで実装**](qiskit/index.qmd): Qiskit を使って、最小回路、状態ベクトル、測定、Bell状態、量子チャネルまでを基礎から辿ります。
+
+---
+
 ::: {.text-center}
 *© 2025 Quantum Information Study Project*
-
-:::
-
----
-
-## 執筆・学習ツール (Tools)
-
-- [**サポート & ガイド**](support/index.qmd): 執筆用テンプレートや環境構築ガイド。
-- [**Quarto 機能ショーケース**](templates/quarto_feature_showcase.qmd): Quarto の全機能の見本市。
-
----
-
-::: {.text-center}
-*2025 Quantum Information Study Project*
 
 :::

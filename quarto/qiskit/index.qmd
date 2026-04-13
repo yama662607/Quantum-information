@@ -1,0 +1,240 @@
+---
+title: "量子コンピューティングをQiskitで実装"
+subtitle: "Qiskitで量子回路・状態・測定を基礎から触る"
+toc: true
+toc-depth: 3
+number-sections: false
+---
+
+# はじめに {.unnumbered}
+
+::: {.callout-note appearance="simple" title="このページで扱うこと"}
+このページは、量子情報の理論を読んだあとに「実際に手を動かす」ための入口です。
+
+1. Qiskit で最小の量子回路を書く
+2. `Statevector` と `DensityMatrix` で状態を追う
+3. 測定とショット統計をシミュレートする
+4. `qiskit.quantum_info` を使って量子チャネルを扱う
+
+:::
+
+このリポジトリでは、すでに `qiskit` と `qiskit-aer` が依存関係に含まれています。
+したがって、まずは環境を同期してから `uv run python` でコードを試すのが最短です。
+
+## 準備
+
+```bash
+just setup
+uv run python -c "import qiskit; import qiskit_aer; print(qiskit.__version__)"
+```
+
+もしノート本文と並行して検証したい場合は、コードを小さなスクリプトとして保存して `uv run python <file>.py` で実行してください。
+
+## 1. 最初の量子回路
+
+量子回路の最小単位は `QuantumCircuit` です。
+まずは 1 量子ビットに Hadamard ゲートを作用させ、測定する最小例から始めます。
+
+```python
+from qiskit import QuantumCircuit
+
+qc = QuantumCircuit(1, 1)
+qc.h(0)
+qc.measure(0, 0)
+
+print(qc.draw())
+```
+
+この回路は、計算基底状態 $\lvert 0 \rangle$ を
+$$
+\frac{\lvert 0 \rangle + \lvert 1 \rangle}{\sqrt{2}}
+$$
+へ写し、その後に測定します。
+理論上は `0` と `1` がそれぞれ確率 $1/2$ で出ます。
+
+::: {.callout-tip title="ポイント"}
+量子回路では、`measure` を入れた瞬間に「状態ベクトルとしての可逆発展」から「古典ビットへの読み出し」に移ります。
+状態の中身を見たいときは、いったん `measure` を入れずに `Statevector` を使う方が見通しが良いです。
+
+:::
+
+## 2. 状態ベクトルを確認する
+
+測定前の純粋状態を直接見るには `qiskit.quantum_info.Statevector` が便利です。
+
+```python
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import Statevector
+
+qc = QuantumCircuit(1)
+qc.h(0)
+
+psi = Statevector.from_instruction(qc)
+
+print(psi)
+print(psi.data)
+```
+
+`psi.data` は NumPy 配列として振幅を返します。
+上の例では、おおむね
+
+```text
+[0.70710678+0.j 0.70710678+0.j]
+```
+
+のような出力になり、$\lvert 0 \rangle$ と $\lvert 1 \rangle$ の振幅が等しいことが確認できます。
+
+## 3. ベル状態を作る
+
+1 量子ビットに慣れたら、次は 2 量子ビットのエンタングルメントです。
+もっとも基本的なのは Bell 状態
+$$
+\lvert \Phi^+ \rangle = \frac{\lvert 00 \rangle + \lvert 11 \rangle}{\sqrt{2}}
+$$
+です。
+
+```python
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import Statevector
+
+qc = QuantumCircuit(2)
+qc.h(0)
+qc.cx(0, 1)
+
+bell = Statevector.from_instruction(qc)
+
+print(qc.draw())
+print(bell)
+print(bell.data)
+```
+
+ここで重要なのは、最終状態が
+$$
+\frac{\lvert 00 \rangle + \lvert 11 \rangle}{\sqrt{2}}
+$$
+となり、各量子ビットを単独では純粋状態として記述できなくなることです。
+
+::: {.callout-note title="理論との接続"}
+この話は、[Watrous 版の registers and states](../textbook-watrous/textbook.qmd#chapter-2-watrous) や
+[Preskill 版の density operator](../textbook-preskill/textbook.qmd#chapter-2-preskill)
+で扱っている二部系・混合状態の話と直接つながります。
+
+:::
+
+## 4. 測定をショット統計で見る
+
+実験に近い見方をするなら、回路をシミュレータに投げてショット統計を見るのが自然です。
+
+```python
+from qiskit import QuantumCircuit, transpile
+from qiskit_aer import AerSimulator
+
+qc = QuantumCircuit(2, 2)
+qc.h(0)
+qc.cx(0, 1)
+qc.measure([0, 1], [0, 1])
+
+simulator = AerSimulator()
+compiled = transpile(qc, simulator)
+result = simulator.run(compiled, shots=1024).result()
+counts = result.get_counts()
+
+print(counts)
+```
+
+理想的な Bell 状態なら、出力は概ね
+
+```text
+{'00': 5xx, '11': 4xx}
+```
+
+のようになり、`01` や `10` はほとんど現れません。
+
+グラフで確認したい場合は `plot_histogram` を使えます。
+
+```python
+from qiskit.visualization import plot_histogram
+
+plot_histogram(counts)
+```
+
+## 5. 密度行列で混合状態を見る
+
+ノイズや部分系を考えると、状態ベクトルよりも密度行列が自然になります。
+
+```python
+import numpy as np
+from qiskit.quantum_info import DensityMatrix
+
+rho0 = DensityMatrix([[1, 0], [0, 0]])
+rho1 = DensityMatrix([[0, 0], [0, 1]])
+
+rho_mixed = 0.7 * rho0.data + 0.3 * rho1.data
+
+print(rho_mixed)
+```
+
+この行列は
+$$
+\rho = 0.7 \lvert 0 \rangle \langle 0 \rvert + 0.3 \lvert 1 \rangle \langle 1 \rvert
+$$
+を表しています。
+純粋状態ではなく、古典的確率混合になっています。
+
+## 6. Qiskit で量子チャネルを扱う
+
+このプロジェクトでは、量子チャネルの実装例をすでに
+[Watrous chapter 2 の量子チャネル節](../textbook-watrous/textbook.qmd#implementation)
+に置いています。
+ここではその最小版だけ抜き出します。
+
+```python
+import numpy as np
+from qiskit.quantum_info import Kraus, SuperOp, Choi, DensityMatrix
+
+p = 0.3
+I = np.eye(2)
+X = np.array([[0, 1], [1, 0]])
+
+K0 = np.sqrt(1 - p) * I
+K1 = np.sqrt(p) * X
+
+channel = Kraus([K0, K1])
+
+print("is_cp =", channel.is_cp())
+print("is_tp =", channel.is_tp())
+
+super_op = SuperOp(channel)
+choi_op = Choi(channel)
+
+print(super_op.data)
+print(choi_op.data)
+
+rho_in = DensityMatrix([[1, 0], [0, 0]])
+rho_out = rho_in.evolve(channel)
+
+print(rho_out.data)
+```
+
+この例では bit-flip channel を作っています。
+`Kraus` 表現、`SuperOp`、`Choi` 行列の間を往復できるので、理論と実装を対応付ける練習に向いています。
+
+## 次に足していく題材
+
+::: {.callout-important title="次の実装候補"}
+このページは、今後の Qiskit 実装ノートの入口として使えます。次に追加しやすい題材は次の通りです。
+
+- Bloch 球と 1 量子ビット回転
+- 量子テレポーテーション
+- Deutsch-Jozsa / Grover
+- POVM と一般化測定の実装
+- ノイズチャネルと master equation の数値実験
+
+:::
+
+## 関連リンク
+
+- [ホーム](../index.qmd)
+- [Preskill 教授 講義ノート](../textbook-preskill/textbook.qmd)
+- [Watrous 教授アーカイブ](../textbook-watrous/textbook.qmd)
+- [サポート & ガイド](../support/index.qmd)

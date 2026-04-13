@@ -16,6 +16,8 @@ book:
       - text: "ホーム"
         href: index.qmd
     right:
+      - text: "Qiskit 実装"
+        href: qiskit/index.qmd
       - text: "サポート"
         href: support/index.qmd
   sidebar:
@@ -30,6 +32,9 @@ book:
     - part: "Watrous 教授 (アーカイブ)"
       chapters:
         - textbook-watrous/textbook.qmd
+    - part: "Qiskit 実装ノート"
+      chapters:
+        - qiskit/index.qmd
     - support/index.qmd
     # Note: Template files (templates/*.qmd) are excluded from build
     # They are reference documents for creating new content
