@@ -1,7 +1,6 @@
 ## 2.6 2つの量子状態はどの程度離れているか？ (How far apart are two quantum states?) [📄 p.36](/assets/pdf/preskill/chap2.pdf#page=36) {#sec-2.6-how-far-apart}
-[📄 p.36](/assets/pdf/preskill/chap2.pdf#page=36)
 
-### 2.6.1 忠実度とウールマンの定理 (Fidelity and Uhlmann's theorem) {#sec-2.6.1-fidelity-uhlmann}
+### 2.6.1 忠実度とウールマンの定理 (Fidelity and Uhlmann's theorem) [📄 p.36](/assets/pdf/preskill/chap2.pdf#page=36) {#sec-2.6.1-fidelity-uhlmann}
 
 2つの純粋状態 $|\psi\rangle$ と $|\varphi\rangle$ の区別可能性（distinguishability）は、それらの重ね合わせ（overlap） $|\langle\varphi|\psi\rangle|^2$ が1からどの程度乖離しているかによって定量化されます。これは**忠実度（fidelity）**とも呼ばれます。2つの密度演算子 $\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ に対して、忠実度は次のように定義されます：
 $$
@@ -90,7 +89,7 @@ F(\boldsymbol{\rho}_{AB}, \boldsymbol{\sigma}_{AB}) \le F(\boldsymbol{\rho}_A, \
 $$ {#eq-2.139}
 これは、サブシステムのトレースアウトが2つの密度演算子の忠実度を減少させ得ないことを述べています。単調性は、驚くことではありませんが、サブシステムを捨てることによって2つの量子状態がより区別しやすくなることはない、ということを意味します。これはウールマンの定理から直ちに導かれます。なぜなら、$\boldsymbol{\rho}_{AB}$ を純粋化するいかなる状態も、$\boldsymbol{\rho}_A$ の純粋化を提供し、したがって $\boldsymbol{\rho}_{AB}$ と $\boldsymbol{\sigma}_{AB}$ の純粋化の最適な重ね合わせは、必ず $\boldsymbol{\rho}_A$ と $\boldsymbol{\sigma}_A$ の純粋化によって達成可能だからです。
 
-### 2.6.2 距離尺度間の関係 (Relations among distance measures) {#sec-2.6.2-distance-relations}
+### 2.6.2 距離尺度間の関係 (Relations among distance measures) [📄 p.39](/assets/pdf/preskill/chap2.pdf#page=39) {#sec-2.6.2-distance-relations}
 
 量子状態 $\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ の違いを定量化する方法は、忠実度以外にもあります。例えば、$L^1$ ノルムや $L^2$ ノルムを用いた状態間の距離：
 $$

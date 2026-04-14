@@ -1,5 +1,4 @@
-## 3.7 まとめ (Summary) {#sec-3.7-summary}
-[📄 p.47](/assets/pdf/preskill/chap3.pdf#page=47)
+## 3.7 まとめ (Summary) [📄 p.47](/assets/pdf/preskill/chap3.pdf#page=47) {#sec-3.7-summary}
 
 **POVM。** より大きなヒルベルト空間の部分空間に注目すると、より大きな空間に対して行われた直交（フォン・ノイマン）測定は一般に部分空間上の直交測定として記述できません。むしろそれは**一般化測定（generalized measurement）**または **POVM** であり、結果 $a$ は確率
 

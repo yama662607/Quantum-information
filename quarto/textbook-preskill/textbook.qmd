@@ -65,9 +65,3 @@ Watrous 教授の教科書に比べ、より物理学的な直感と量子情報
 {{< include chapter3/_3.6-non-markovian-noise.qmd >}}
 
 {{< include chapter3/_3.7-summary.qmd >}}
-
----
-
-## 参考文献 {.unlisted}
-- Watrous, TQI, pp. XX-YY [@watrous2018]
-- [その他参考文献]

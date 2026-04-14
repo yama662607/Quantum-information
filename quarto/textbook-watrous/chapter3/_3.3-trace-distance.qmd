@@ -25,7 +25,7 @@ $$ D(A, B) = \frac{1}{2} \| A - B \|_1 $$ {#eq-trace-distance-def}
 
 :::
 
-### 確率的な解釈 (Probabilistic interpretation) {#trace-distance-probabilistic}
+### 確率的な解釈 (Probabilistic interpretation) [📄 p.152](../assets/pdf/watrous/Quantum_Information.pdf#page=160) {#trace-distance-probabilistic}
 
 トレース距離は、2つの状態を識別する際の「最適成功確率との差」として物理的に解釈できます。
 

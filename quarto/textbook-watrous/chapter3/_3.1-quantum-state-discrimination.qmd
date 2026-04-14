@@ -54,7 +54,7 @@ $$ P_{\text{opt}} = \frac{1}{2} + \frac{1}{2} \| p_0 \rho_0 - p_1 \rho_1 \|_1 $$
 
 :::
 
-### アンサンブルの量子状態の識別 (Discriminating quantum states of an ensemble)
+### アンサンブルの量子状態の識別 (Discriminating quantum states of an ensemble) [📄 p.132](../assets/pdf/watrous/Quantum_Information.pdf#page=140) {#discriminating-ensemble}
 
 より一般的な設定として、複数の状態のアンサンブルからの識別問題を考えます。
 

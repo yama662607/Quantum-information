@@ -1,9 +1,8 @@
-## 3.1 直交測定とその先へ (Orthogonal measurement and beyond) {#sec-3.1-orthogonal-measurement-and-beyond}
-[📄 p.4](/assets/pdf/preskill/chap3.pdf#page=4)
+## 3.1 直交測定とその先へ (Orthogonal measurement and beyond) [📄 p.4](/assets/pdf/preskill/chap3.pdf#page=4) {#sec-3.1-orthogonal-measurement-and-beyond}
 
 Chapter 2 では、より大きなシステムの一部である「開いた量子系（open quantum system）」の状態をどのように記述するかを議論しました。本章では、開いた量子系の理論をさらに拡張します。特に、補助系（auxiliary system）を利用して行われる**一般化測定（generalized measurements）**と、開いた系の発展を記述する**量子チャネル（quantum channels）**という2つの重要な概念を展開します。
 
-### 3.1.1 直交測定 (Orthogonal Measurements) {#sec-3.1.1-orthogonal-measurements}
+### 3.1.1 直交測定 (Orthogonal Measurements) [📄 p.4](/assets/pdf/preskill/chap3.pdf#page=4) {#sec-3.1.1-orthogonal-measurements}
 
 量子理論の一つの公理は、測定が直交射影演算子（orthogonal projection operator）として記述されることを主張しています。しかし、システム $S$ の測定が、$S$ を含むより大きなシステムに対して直交測定を行うことによって実現される場合、$S$ 単独に対して行われる結果としての操作は、必ずしも直交射影である必要はありません。私たちは、システム $S$ 上のそのような「一般化測定」の数学的記述を見つけたいと考えています。しかし、まずはフォン・ノイマンの古典的な扱いに従い、任意のエルミート演算子の測定が原理的にどのように達成されるかを振り返ってみましょう。
 
@@ -101,8 +100,7 @@ $$
 $$ {#eq-3.18}
 私たちの指針をシステムに結合させることで、システムと指針を相関させる適切なユニタリ変換を実行でき、かつ指針をその標準基底で観察できるのであれば、システムに対していかなる考え得る直交測定も実行する能力があることがわかります。
 
-### 3.1.2 一般化測定 (Generalized measurements) {#sec-3.1.2-generalized-measurements}
-[📄 p.8](/assets/pdf/preskill/chap3.pdf#page=8)
+### 3.1.2 一般化測定 (Generalized measurements) [📄 p.8](/assets/pdf/preskill/chap3.pdf#page=8) {#sec-3.1.2-generalized-measurements}
 
 直交測定に関するこの議論において、指針の標準基底には2つの異なる役割がありました。すなわち、標準的な指針状態がシステムの射影演算子 $\{\boldsymbol{E}_a\}$ と相関するようになること、そして指針の測定が標準基底へと射影することです。原理的には、これら2つの役割を分離することができます。おそらく、システムと指針に適用されるユニタリ変換は、指針が容易に測定される基底とは異なる優先基底を選び出すかもしれません。あるいは、システムとエンタングルする指針自体がミクロなものであり、私たちが好む任意の基底でそのミクロな指針を測定するために、それを二番目のマクロな指針とエンタングルさせるかもしれません。
 

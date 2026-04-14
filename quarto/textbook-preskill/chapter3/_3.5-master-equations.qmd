@@ -1,0 +1,249 @@
+## 3.5 開いた量子系のマスター方程式 (Master equations for open quantum systems) [📄 p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5-master-equations}
+
+### 3.5.1 マルコフ発展 (Markovian evolution) [📄 p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5.1-markovian-evolution}
+
+量子チャネルは、純粋状態から混合状態への発展（デコヒーレンス）を含む、密度演算子の発展の一般的な記述を提供します。同じ意味で、ユニタリ変換はコヒーレントな量子発展の一般的な記述を提供します。しかし、コヒーレントな発展の場合には、量子系のダイナミクスを**ハミルトニアン（Hamiltonian）**によって特徴づけることが非常に便利なことが多く、これは無限小の時間間隔にわたる発展を記述します。ダイナミクスは次に微分方程式、すなわち**シュレーディンガー方程式（Schrödinger equation）**にエンコードされ、方程式を積分すること、すなわち多くの無限小時間間隔にわたる発展を組み合わせることで有限時間間隔にわたる発展を計算できます。同様に、少なくとも良い近似として、密度演算子の（必ずしもコヒーレントでない）発展を微分方程式によって記述することが可能であることが多く、その方程式は**マスター方程式（master equation）**と呼ばれます。
+
+開いたシステムのデコヒーレンスを記述する微分方程式が存在すべきであることは自明ではありません。そのような記述は、量子系の発展が**マルコフ（Markovian）**、すなわち時間について**局所的（local）**である場合にのみ可能です。密度演算子 $\boldsymbol{\rho}(t)$ の発展が $t$ についての（1階の）微分方程式によって支配されるためには、$\boldsymbol{\rho}(t + dt)$ が $\boldsymbol{\rho}(t)$ によって完全に決定されなければなりません。
+
+開いたシステム $A$ の場合、その発展は $E$ が環境であるとして拡張されたシステム $AE$ 上でユニタリであると想像します。しかし $AE$ の発展はシュレーディンガー方程式によって支配されるかもしれませんが、それだけでは $A$ 単独の時間発展がマルコフであることを保証するのに十分ではありません。問題は、情報が $A$ から $E$ へ流れ、後で戻ってくる可能性があることです。その場合、密度演算子 $\boldsymbol{\rho}_A(t + dt)$ は $\boldsymbol{\rho}_A(t)$ によって完全には決定されません。過去の時刻の $\boldsymbol{\rho}_A$ も知る必要があります。
+
+この問題が生じるのは、情報の流れが双方向であるためです。開いたシステム（古典的であれ量子的であれ）は**散逸的（dissipative）**です。なぜなら、情報とエネルギーがシステムから環境に流れる可能性があるからです。しかし、それは情報が環境からシステムへ逆流する可能性もあることを意味し、システムの非マルコフ的な**揺らぎ（fluctuations）**をもたらします。この避けられない接続は、統計物理学の広く適用可能なツールである**揺動散逸定理（fluctuation-dissipation theorem）**の根底にあります。
+
+開いたシステムに対してこれらの揺らぎは避けられず、量子ダイナミクスの正確なマルコフ記述は不可能です。しかし、揺らぎの典型的な相関時間とフォローしたい発展の時間スケールの間にきれいな分離がある場合、マルコフ記述は非常に良い近似になりえます。大雑把に言えば、環境がシステムから獲得した情報を「忘れる」のにかかる時間を $(\Delta t)_{\rm env}$ で表すと、時刻 $(\Delta t)_{\rm env}$ 以降は情報を永遠に失われたものと見なし、情報がシステムのその後の発展に影響を与える可能性を無視できます。
+
+発展を時間的に「粗視化」し、$\omega \gg (\Delta t_{\rm coarse})^{-1}$ の運動の高周波成分を除去するフィルターを通してダイナミクスを見ます。$(\Delta t)_{\rm env} \ll (\Delta t)_{\rm coarse}$ の場合には近似的にマルコフな記述が可能です。リザーバーの記憶をその効果を解析できないなら無視できます。このマルコフ近似は、観察したいダイナミクスの時間スケールが $(\Delta t)_{\rm coarse}$ に比べて長い場合に*有用*です。例えば**ダンピング**時間スケール $(\Delta t)_{\rm damp}$ が
+
+$$
+(\Delta t)_{\rm damp} \gg (\Delta t)_{\rm coarse} \gg (\Delta t)_{\rm env}
+$$ {#eq-3.122}
+
+を満たす場合です。これは放射場と相互作用する原子のような一部の物理的状況では良い近似ですが、半導体中の核スピンと相互作用する電子スピンのような他の状況では疑わしいです。
+
+マスター方程式を $AE$ のシュレーディンガー方程式から出発し、$A$ と $E$ の間の結合を時間依存摂動論で扱い、周波数カットオフを慎重に導入することで導出しようとすることもできますが、ここではそれを行いません。代わりに、ダイナミクスがマルコフであることを所与として、量子チャネルの理論を使ってマスター方程式の形を推論します。 [📄 p.35](/assets/pdf/preskill/chap3.pdf#page=35)
+
+### 3.5.2 リウヴィリアン (The Liouvillian) [📄 p.35](/assets/pdf/preskill/chap3.pdf#page=35) {#sec-3.5.2-liouvillian}
+
+閉じた量子系では、時間発展は自己随伴ハミルトニアン $\boldsymbol{H}$ によって
+
+$$
+|\psi(t + dt)\rangle = (\boldsymbol{I} - idt\boldsymbol{H})|\psi(t)\rangle,
+$$ {#eq-3.123}
+
+に従って支配され、対応して密度演算子は
+
+$$
+\boldsymbol{\rho}(t + dt) = \boldsymbol{\rho}(t) - idt[\boldsymbol{H}, \boldsymbol{\rho}(t)]
+$$ {#eq-3.124}
+
+に従って発展します。開いた量子系の場合、無限小時間間隔 $dt$ にわたるマルコフ発展は
+
+$$
+\boldsymbol{\rho}(t + dt) = \mathcal{E}_{dt}(\boldsymbol{\rho}(t)),
+$$ {#eq-3.125}
+
+と表現できます。ここで $\mathcal{E}_{dt}$ は量子チャネルです。このマルコフ形式を採用することで、各無限小時間増分の後、系と環境の合同発展の後に環境の状態が廃棄されて系との絡み合いを持たない新鮮な環境状態に置き換えられるという見解を取ります。§3.4 で連続的なデファジングと自発放出を議論した際に、この仮定を暗黙的にすでに行っていました。
+
+$\mathcal{E}_{dt}$ を $dt$ について線形のオーダーまで展開すると、
+
+$$
+\mathcal{E}_{dt} = \boldsymbol{I} + dt\mathcal{L}
+$$ {#eq-3.126}
+
+となり、
+
+$$
+\dot{\boldsymbol{\rho}} = \mathcal{L}(\boldsymbol{\rho}),
+$$ {#eq-3.127}
+
+が得られます。ここで時間発展を生成する線形写像 $\mathcal{L}$ は**リウヴィリアン（Liouvillian）**または**リンドブラディアン（Lindbladian）**と呼ばれます。この発展方程式の形式的解は、$\mathcal{L}$ が時間に依存しない場合、
+
+$$
+\boldsymbol{\rho}(t) = \lim_{n \to \infty} \left(1 + \frac{\mathcal{L}t}{n}\right)^n (\boldsymbol{\rho}(0)) = e^{\mathcal{L}t}(\boldsymbol{\rho}(0))
+$$ {#eq-3.128}
+
+となります。
+
+チャネルはオペレーター和表現を持ちます：
+
+$$
+\boldsymbol{\rho}(t + dt) = \mathcal{E}_{dt}(\boldsymbol{\rho}(t)) = \sum_a \boldsymbol{M}_a \boldsymbol{\rho}(t) \boldsymbol{M}_a^\dagger = \boldsymbol{\rho}(t) + O(dt),
+$$ {#eq-3.129}
+
+ここで $dt$ の線形のオーダーまでの項だけを保持すれば、一般性を失うことなく $\boldsymbol{M}_0 = \boldsymbol{I} + O(dt)$ であり、$\boldsymbol{M}_a$ は $a > 0$ に対して $\sqrt{dt}$ のオーダーであると仮定できます。クラウス演算子 $\boldsymbol{M}_{1,2,\dots}$ はそれぞれ、系が時間間隔 $dt$ の間に確率 $O(dt)$ で起こりうる「量子ジャンプ（quantum jump）」を記述し、$\boldsymbol{M}_0$ はジャンプが起きない場合に系がどのように発展するかを記述します。
+
+$$
+\boldsymbol{M}_0 = \boldsymbol{I} + (-i\boldsymbol{H} + \boldsymbol{K})dt, \quad \boldsymbol{M}_a = \sqrt{dt} \, \boldsymbol{L}_a,
+$$ {#eq-3.130}
+
+と書くことができます。ここで $\boldsymbol{H}$ と $\boldsymbol{K}$ はともにエルミートであり、$\boldsymbol{L}_a$、$\boldsymbol{H}$、$\boldsymbol{K}$ はすべて $dt$ について零次です。実際、クラウス演算子の完全性関係を援用することで $\boldsymbol{K}$ を決定できます。$O(dt)$ の線形のオーダーまでの項を保持すると、
+
+$$
+\boldsymbol{I} = \sum_a \boldsymbol{M}_a^\dagger \boldsymbol{M}_a = \boldsymbol{I} + dt\left(2\boldsymbol{K} + \sum_{a>0} \boldsymbol{L}_a^\dagger \boldsymbol{L}_a\right) + \cdots,
+$$ {#eq-3.131}
+
+または
+
+$$
+\boldsymbol{K} = -\frac{1}{2}\sum_{a>0} \boldsymbol{L}_a^\dagger \boldsymbol{L}_a.
+$$ {#eq-3.132}
+
+これを式 (@eq-3.129) に代入すると、**リンドブラッドのマスター方程式（Lindblad master equation）**が得られます：
+
+$$
+\dot{\boldsymbol{\rho}} = \mathcal{L}(\boldsymbol{\rho}) = -i[\boldsymbol{H}, \boldsymbol{\rho}] + \sum_{a>0}\left(\boldsymbol{L}_a \boldsymbol{\rho} \boldsymbol{L}_a^\dagger - \frac{1}{2}\boldsymbol{L}_a^\dagger \boldsymbol{L}_a \boldsymbol{\rho} - \frac{1}{2}\boldsymbol{\rho} \boldsymbol{L}_a^\dagger \boldsymbol{L}_a\right).
+$$ {#eq-3.133}
+
+これはシュレーディンガー描像において量子状態に対するマルコフ発展の一般則であり、時間発展がトレース保存完全正値線形写像であると仮定しています。$\mathcal{L}(\boldsymbol{\rho})$ の最初の項はユニタリ発展を生成する馴染み深いハミルトニアン項です。他の項は系が環境との相互作用により起こしうる可能な遷移を記述します。演算子 $\boldsymbol{L}_a$ は**リンドブラッド演算子（Lindblad operators）**または**量子ジャンプ演算子（quantum jump operators）**と呼ばれます。各 $\boldsymbol{L}_a \boldsymbol{\rho} \boldsymbol{L}_a^\dagger$ 項は可能な量子ジャンプの1つを引き起こします。一方、$-\frac{1}{2}\boldsymbol{L}_a^\dagger \boldsymbol{L}_a \boldsymbol{\rho} - \frac{1}{2}\boldsymbol{\rho} \boldsymbol{L}_a^\dagger \boldsymbol{L}_a$ の項は、ジャンプが起きない場合を適切に規格化するために必要です。
+
+あるいは、ハイゼンベルク描像を使って発展を記述することもできます。式 (@eq-3.129) の代わりに密度演算子は時間に依存せず、演算子 $\boldsymbol{A}$ は
+
+$$
+\boldsymbol{A}(t + dt) = \mathcal{E}^*_{dt}(\boldsymbol{A}(t)) = \sum_a \boldsymbol{M}_a^\dagger \boldsymbol{A}(t) \boldsymbol{M}_a,
+$$ {#eq-3.134}
+
+に従って発展します。したがって
+
+$$
+\dot{\boldsymbol{A}} = \mathcal{L}^*(\boldsymbol{A}) = i[\boldsymbol{H}, \boldsymbol{A}] + \sum_{a>0}\left(\boldsymbol{L}_a^\dagger \boldsymbol{A} \boldsymbol{L}_a - \frac{1}{2}\boldsymbol{L}_a^\dagger \boldsymbol{L}_a \boldsymbol{A} - \frac{1}{2}\boldsymbol{A} \boldsymbol{L}_a^\dagger \boldsymbol{L}_a\right).
+$$ {#eq-3.135}
+
+ハイゼンベルク描像の時間発展はトレース保存ではなくユニタル（unital）です。恒等演算子 $\boldsymbol{I}$ は発展しません。
+
+非ユニタリな量子チャネルに対してと同様に、$\mathcal{E}_{dt}$ のオペレーター和表現のクラウス演算子を再定義する自由があります。$\{M_a\}$ の代わりにユニタリな基底変換で異なる演算子 $\{N_\mu\}$ に置き換えることができます。特に、$\boldsymbol{M}_0$ をそのままにしてジャンプ演算子に対するこの自由を援用することで、$\{\boldsymbol{L}_a\}$ を
+
+$$
+\boldsymbol{L}'_\mu = \sum_a V_{\mu a} \boldsymbol{L}_a
+$$ {#eq-3.136}
+
+に置き換えることができます。ここで $V_{\mu a}$ はユニタリ行列です。これら2つのジャンプ演算子の選択は、同じマルコフダイナミクスの2つの異なる**アンラベリング（unraveling）**であると言います。
+
+マスター方程式は、環境が観測されない状態で系が環境と相互作用するときに何が起きるかを記述します。しかし、環境が継続的に監視される場合に何が起きるかも考えることができます。その場合、各量子ジャンプが検出されます。ジャンプが起きるたびに量子状態を更新し、初期純粋状態は全ての後の時刻でも純粋状態のままです。具体的に、タイプ $a$ のジャンプが時間間隔 $(t, t + dt)$ 内で起きる確率は
+
+$$
+{\rm Prob}(a) = dt \langle\psi(t)|\boldsymbol{L}_a^\dagger \boldsymbol{L}_a|\psi(t)\rangle,
+$$ {#eq-3.137}
+
+であり、タイプ $a$ のジャンプが検出されたとき、更新後の状態は
+
+$$
+|\psi(t + dt)\rangle = \frac{\boldsymbol{L}_a|\psi(t)\rangle}{\|\boldsymbol{L}_a|\psi(t)\rangle\|},
+$$ {#eq-3.138}
+
+となります。一方、ジャンプが起きない場合には状態は
+
+$$
+|\psi(t + dt)\rangle = \frac{\boldsymbol{M}_0|\psi(t)\rangle}{\|\boldsymbol{M}_0|\psi(t)\rangle\|}
+$$ {#eq-3.139}
+
+に従って発展します。この**確率的シュレーディンガー発展（stochastic Schrödinger evolution）**は数値的にシミュレートできます。シミュレートされた**量子トラジェクトリ（quantum trajectory）**はそれぞれ異なりますが、多くのそのようなトラジェクトリにわたって平均化すると、マスター方程式に記述された密度演算子の発展が再現されます。確率的シュレーディンガー方程式をシミュレートすることは、$d \times d$ の密度行列よりも $d$ 次元の状態ベクトルの発展を追跡する方がコストが低いため、マスター方程式をシミュレートするよりも有利なことがあります。
+
+### 3.5.3 減衰調和振動子 (Damped harmonic oscillator) [📄 p.38](/assets/pdf/preskill/chap3.pdf#page=38) {#sec-3.5.3-damped-harmonic-oscillator}
+
+マスター方程式を説明する例として、電磁場と相互作用する調和振動子の場合を考えます：
+
+$$
+\boldsymbol{H}' = \sum_k g_k(\boldsymbol{a}\boldsymbol{b}_k^\dagger + \boldsymbol{a}^\dagger \boldsymbol{b}_k),
+$$ {#eq-3.140}
+
+ここで $\boldsymbol{a}$ は振動子の消滅演算子、$\boldsymbol{b}_k^\dagger$ はモード $k$ の光子を生成し、$g_k$ は結合定数です。また、環境はゼロ温度にあるとします。その場合、振動子はフォトンを連続放出することで励起レベルを連続的に下がることができますが、光子の吸収は起きません。各光子は放出後に振動子と二度と相互作用しなければ、発展はマルコフ的であり、リンドブラッドのジャンプ演算子は1つだけです：
+
+$$
+\boldsymbol{L} = \sqrt{\Gamma} \, \boldsymbol{a}.
+$$ {#eq-3.141}
+
+ここで $\Gamma$ は振動子が第1励起状態（$n = 1$）から基底状態（$n = 0$）に崩壊する速度であり、$\Gamma = \sum_k \Gamma_k$ として計算できます。ここで $\Gamma_k$ はモード $k$ への放出速度です。$n$ 準位から $n-1$ 準位への崩壊速度は $n\Gamma$ です。（振動子の $n$ 番目の励起準位は $n$ 個の非相互作用粒子の状態と解釈できます。$n$ 個の粒子のどれかが崩壊できるため、速度は $n\Gamma$ です。）
+
+シュレーディンガー描像のマスター方程式はリンドブラッドの形になります：
+
+$$
+\dot{\boldsymbol{\rho}} = -i[\boldsymbol{H}_0, \boldsymbol{\rho}] + \Gamma\left(\boldsymbol{a}\boldsymbol{\rho}\boldsymbol{a}^\dagger - \frac{1}{2}\boldsymbol{a}^\dagger \boldsymbol{a}\boldsymbol{\rho} - \frac{1}{2}\boldsymbol{\rho}\boldsymbol{a}^\dagger \boldsymbol{a}\right),
+$$ {#eq-3.142}
+
+ここで $\boldsymbol{H}_0 = \omega \boldsymbol{a}^\dagger \boldsymbol{a}$ は振動子のハミルトニアンです。ハイゼンベルク描像では、演算子 $\boldsymbol{A}$ は
+
+$$
+\dot{\boldsymbol{A}} = i[\boldsymbol{H}_0, \boldsymbol{A}] + \Gamma\left(\boldsymbol{a}^\dagger \boldsymbol{A} \boldsymbol{a} - \frac{1}{2}\boldsymbol{a}^\dagger \boldsymbol{a}\boldsymbol{A} - \frac{1}{2}\boldsymbol{A}\boldsymbol{a}^\dagger \boldsymbol{a}\right)
+$$ {#eq-3.143}
+
+に従って発展します。ジャンプ項は光子放出による振動子の**減衰（damping）**を記述します。
+
+ジャンプの影響を調べるために、消滅演算子 $\boldsymbol{a}(t)$ のハイゼンベルク描像の発展を考えます。$\boldsymbol{a}(t) = f(t)\boldsymbol{a}$ というアンザッツを用いて、ここで $f(t)$ は時間の関数で、アンザッツの自己無撞着性を確認することでマスター方程式を解くことができます。式 (@eq-3.143) に代入すると
+
+$$
+\dot{f}(t)\boldsymbol{a} = i\omega f(t)[\boldsymbol{a}^\dagger \boldsymbol{a}, \boldsymbol{a}] + \Gamma f(t)\left(\boldsymbol{a}^\dagger \boldsymbol{a}\boldsymbol{a} - \frac{1}{2}\boldsymbol{a}^\dagger\boldsymbol{a}\boldsymbol{a} - \frac{1}{2}\boldsymbol{a}\boldsymbol{a}^\dagger\boldsymbol{a}\right) = \left(i\omega + \frac{\Gamma}{2}\right)f(t)[\boldsymbol{a}^\dagger, \boldsymbol{a}]\boldsymbol{a} \implies \dot{f}(t) = -\left(i\omega + \frac{\Gamma}{2}\right)f(t),
+$$ {#eq-3.144}
+
+が得られ、$f(t) = e^{-i\omega t - \Gamma t/2} f(0)$ と積分されます。したがって、
+
+$$
+\boldsymbol{a}(t) = e^{-i\omega t - \Gamma t/2}\boldsymbol{a}(0),
+$$ {#eq-3.145}
+
+そして振動子の占有数 $\boldsymbol{n} = \boldsymbol{a}^\dagger \boldsymbol{a}$ はハイゼンベルク描像で
+
+$$
+\boldsymbol{n}(t) = e^{-\Gamma t}\boldsymbol{n}(0)
+$$ {#eq-3.146}
+
+に従って減衰します。したがって、$\Gamma$ は確かに振動子の減衰速度です。振動子の $n$ 番目の励起状態を $n$ 個の非相互作用粒子の状態として解釈し、各粒子が単位時間当たり確率 $\Gamma$ で崩壊するならば、式 (@eq-3.146) は崩壊しつつある粒子の集団が満たす指数法則にほかなりません。
+
+より興味深いのは、マスター方程式がデコヒーレンスについて何を教えてくれるかです。振幅ダンピングモデルでは、振動子と環境の結合 $\boldsymbol{H}'$ に現れるのは消滅演算子 $\boldsymbol{a}$ とその随伴であるため、振動子の状態は $\boldsymbol{a}$ の固有状態の基底でデコヒーレンスすると予測できます。**コヒーレント状態（coherent state）**
+
+$$
+|\alpha\rangle = e^{-|\alpha|^2/2} e^{\alpha \boldsymbol{a}^\dagger} |0\rangle = e^{-|\alpha|^2/2} \sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}}|n\rangle,
+$$ {#eq-3.147}
+
+は複素固有値 $\alpha$ を持つ $\boldsymbol{a}$ の規格化された固有状態です。演算子 $\boldsymbol{a}$ はエルミートでなく、異なる固有値 $\alpha$ と $\beta$ を持つ2つのコヒーレント状態は直交しておらず、その代わりに [📄 p.40](/assets/pdf/preskill/chap3.pdf#page=40)
+
+$$
+|\langle\alpha|\beta\rangle|^2 = e^{-|\alpha|^2} e^{-|\beta|^2} e^{2{\rm Re}(\alpha^*\beta)} = \exp(-|\alpha - \beta|^2),
+$$ {#eq-3.148}
+
+となります。したがって $|\alpha - \beta|$ が大きい場合に重なりは非常に小さくなります。
+
+シュレーディンガー描像のマスター方程式の解は演習 3.9 で求められており、初期コヒーレント状態はコヒーレントなままですが振幅が減衰することがわかります。時刻 $t$ で状態 $|\alpha\rangle$ は（ハミルトニアン発展が変換されたいわゆる回転系において）
+
+$$
+|\alpha\rangle \mapsto |\alpha e^{-\Gamma t/2}\rangle
+$$ {#eq-3.149}
+
+へと発展します。コヒーレント状態の重ね合わせ（「猫状態（cat state）」）の場合も考えることができます：
+
+$$
+|\psi\rangle = N_{\alpha,\beta}(|\alpha\rangle + |\beta\rangle),
+$$ {#eq-3.150}
+
+（ここで $N_{\alpha,\beta}$ は規格化因子）または
+
+$$
+\boldsymbol{\rho} = N_{\alpha,\beta}^2\Big(|\alpha\rangle\langle\alpha| + |\alpha\rangle\langle\beta| + |\beta\rangle\langle\alpha| + |\beta\rangle\langle\beta|\Big).
+$$ {#eq-3.151}
+
+この密度演算子の非対角項は次のように発展します：
+
+$$
+|\alpha\rangle\langle\beta| \mapsto e^{i\phi(\alpha,\beta)} e^{-\Gamma t|\alpha - \beta|^2/2} |\alpha e^{-\Gamma t/2}\rangle\langle\beta e^{-\Gamma t/2}|,
+$$ {#eq-3.152}
+
+ここで $e^{i\phi(\alpha,\beta)}$ は位相因子です。したがって、非対角項は時間とともに指数的に減衰し、その速度は
+
+$$
+\Gamma_{\rm decohere} = \frac{1}{2}\Gamma|\alpha - \beta|^2
+$$ {#eq-3.153}
+
+であり、位相空間における2つのコヒーレント状態の分離の2乗 $|\alpha - \beta|^2$ に比例します。$|\alpha - \beta|^2 \gg 1$ の場合、デコヒーレンス速度はダンピング速度 $\Gamma$ よりもはるかに大きいです。この振る舞いは解釈が容易です。コヒーレント状態における占有数の期待値は $\langle \boldsymbol{n} \rangle = \langle\alpha|\boldsymbol{a}^\dagger \boldsymbol{a}|\alpha\rangle = |\alpha|^2$ です。したがって、$\alpha$、$\beta$ が比較可能な絶対値を持ちますが大きく異なる位相を持つ場合（例えば位置 $x$ と $-x$ を中心とする最小不確定波束の重ね合わせ）、デコヒーレンス速度は $\Gamma\langle\boldsymbol{n}\rangle$ のオーダーであり、これは*1つの*光子の放出速度です。$n$ が大きい場合、この速度はエネルギーのかなりの部分が散逸される速度と比べてはるかに大きいです。
+
+ゼロでない温度の環境に結合した振動子も考えることができます。再び、デコヒーレンス速度はおおよそ1つの光子が放出または吸収される速度ですが、ゼロ温度よりも速くなる可能性があります。振動子の周波数 $\omega$ と比較可能な周波数を持つ光子モードは熱的占有数
+
+$$
+n_\gamma \approx \frac{T}{\hbar\omega},
+$$ {#eq-3.154}
+
+を持ちます（$T \gg \hbar\omega$ に対して）。相互作用速度はさらに因子 $n_\gamma$ だけ増強されます。エネルギー $E = \hbar\omega n_{\rm osc}$ を持つ振動子に対して、 [📄 p.41](/assets/pdf/preskill/chap3.pdf#page=41)
+
+$$
+\frac{\Gamma_{\rm decohere}}{\Gamma_{\rm damp}} \sim n_{\rm osc} n_\gamma \sim \frac{E}{\hbar\omega}\frac{T}{\hbar\omega} \sim \frac{m\omega^2 x^2}{\hbar\omega}\frac{T}{\hbar\omega} \sim \frac{x^2 m T}{\hbar^2} \sim \frac{x^2}{\lambda_T^2},
+$$ {#eq-3.155}
+
+ここで $x$ は振動の振幅であり $\lambda_T$ は振動する物体の熱的ド・ブロイ波長です。マクロな物体に対して、デコヒーレンスは本当に*速い*です。

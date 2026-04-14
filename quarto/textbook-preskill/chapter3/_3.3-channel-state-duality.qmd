@@ -1,0 +1,112 @@
+## 3.3 チャネル-状態双対性とチャネルのダイレーション (Channel-state duality and the dilation of a channel) [📄 p.20](/assets/pdf/preskill/chap3.pdf#page=20) {#sec-3.3-channel-state-duality}
+
+$A$ 上に作用する量子チャネルは、$A$ の拡張系に対するユニタリ写像から生じるものであり、密度演算子から密度演算子への完全正値線形写像であることを見てきました。線形性と完全正値性は、量子状態に対するいかなる合理的な発展則に対しても成り立つべき性質であると主張してきました。したがって、トレース保存完全正値線形写像はいずれも量子チャネルであり、オペレーター和表現とユニタリな実現を持つことに注意しておくことは意義深いです。$A$ の（一般にユニタリではない）発展を考える際、私たちは $A$ がユニタリに発展する拡張されたシステムの一部であると想像する権利があります。
+
+### 3.3.1 チャネル-状態双対性 (Channel-state duality) [📄 p.20](/assets/pdf/preskill/chap3.pdf#page=20) {#sec-3.3.1-channel-state-duality}
+
+この命題を証明するために、それ自体として興味深く、かつ他の応用も持つトリックを使います。$A$ から $A'$ へと写像する $\mathcal{E}$ の性質を研究するために、$A$ と同じ次元を持つ補助系 $R$（**参照系（reference system）**と呼びます）を導入します。もし $\mathcal{E}$ が完全正値ならば、$A$ 上の最大エンタングル状態を $RA'$ 上の非負演算子に写像します。逆に、$RA'$ 上の任意の非負演算子に対して、$A$ から $A'$ へと写像する対応する CP 写像を関連付けることができます。写像と状態のこの対応は、**Choi-Jamiołkowski 同型（Choi-Jamiolkowski isomorphism）**または**チャネル-状態双対性（channel-state duality）**と呼ばれ、非常に有用なツールです。
+
+その仕組みを見るために、$I \otimes \mathcal{E}$ が最大エンタングル状態
+$$
+|\tilde{\Phi}\rangle_{RA} = \sum_{i=0}^{d-1} |i\rangle_R \otimes |i\rangle_A.
+$$ {#eq-3.70}
+にどのように作用するかを考えます。ここで $A$ と $R$ はともに次元 $d$ を持ちます。このベクトルは規格 1 ではなく $\sqrt{d}$ のノルムを持ちます。私たちはこの標準化されていない正規化を選択し、$\Phi$ の上にチルドを付けることでそれを強調します。これは後の式で $d$ の因子が邪魔にならないようにするためです。もし $\mathcal{E}_{A \to A'}$ が完全正値ならば、$I \otimes \mathcal{E}$ は $|\tilde{\Phi}\rangle\langle\tilde{\Phi}|$（規格化まで）を $RA'$ 上の密度演算子に写像します。これはどんな密度演算子も純粋状態のアンサンブルとして表現できますので、
+
+$$
+(I \otimes \mathcal{E}) \left( \Big(|\tilde{\Phi}\rangle\langle\tilde{\Phi}|\Big)_{RA} \right) = \sum_a \Big(|\tilde{\Psi}_a\rangle\langle\tilde{\Psi}_a|\Big)_{RA'}.
+$$ {#eq-3.71}
+
+ここで $|\tilde{\Psi}_a\rangle$ の規格化は $a$ に依存してもよいです。各純粋状態に対応する確率を各状態の規格化の中に吸収したことで、式の見かけをすっきりさせています。
+
+次に、
+$$
+|\varphi\rangle_A = \sum_i \varphi_i |i\rangle_A = \sum_i \varphi_i \Big( {}_R\langle i|\tilde{\Phi}\rangle \Big)_{RA} = {}_R\langle\varphi^*|\tilde{\Phi}\rangle_{RA};
+$$ {#eq-3.72}
+
+であることに注意します。$\mathcal{E}$ の線形性を用いると、式 (@eq-3.71) は
+
+$$
+\mathcal{E} \Big((|\varphi\rangle\langle\varphi|)_A\Big) = \sum_a \Big(\langle\varphi^*|\tilde{\Psi}_a\rangle\langle\tilde{\Psi}_a|\varphi^*\rangle\Big)_{A'}.
+$$ {#eq-3.73}
+
+（$|\varphi\rangle_A$ に対する作用を双対ベクトル ${}_R\langle\varphi^*|$ を用いて抽出するこの方法は**相対状態法（relative-state method）**と呼ばれます。）$|\tilde{\Phi}\rangle_{RA'}$ が与えられたとき（ここで $R$ は次元 $d$）、$\mathcal{H}_A$ から $\mathcal{H}_{A'}$ への（$A$ が $d$ 次元のとき）演算子 $\boldsymbol{M}_a$ を
+
+$$
+\boldsymbol{M}_a |\varphi\rangle_A = {}_R\langle\varphi^*|\tilde{\Psi}_a\rangle_{RA'};
+$$ {#eq-3.74}
+
+と定義すると、$\boldsymbol{M}_a$ が線形であることは容易に確認できます。したがって、式 (@eq-3.73) は $\mathcal{E}$ の純粋状態 $(|\varphi\rangle\langle\varphi|)_A$ に対する作用（したがって線形性により任意の密度演算子に対する作用）のオペレーター和表現を与えます：
+
+$$
+\mathcal{E}(\boldsymbol{\rho}) = \sum_a \boldsymbol{M}_a \boldsymbol{\rho} \boldsymbol{M}_a^\dagger.
+$$ {#eq-3.75}
+
+これで状態とCPマップの間の望ましい同型が確立されました。式 (@eq-3.71) はチャネル $\mathcal{E}_{A \to A'}$ から $RA'$ 上の状態を求める方法を教えてくれます。一方、式 (@eq-3.74) と式 (@eq-3.75) は状態から CP 写像を回復する方法を教えてくれます。さらに、$\{\boldsymbol{M}_a\}$ は $\mathcal{E}$ がトレース保存の場合に完全性関係 $\sum_a \boldsymbol{M}_a^\dagger \boldsymbol{M}_a = \boldsymbol{I}$ を満たさなければなりません。
+
+簡潔に言えば、議論は次のように進みました。$\mathcal{E}_{A \to A'}$ が完全正値であるため、$I \otimes \mathcal{E}$ は最大エンタングル状態 $RA$ を $RA'$ 上の密度演算子に（規格化まで）写像します。この密度演算子は純粋状態のアンサンブルとして表現でき、これらの純粋状態のそれぞれが $\mathcal{E}$ のオペレーター和表現のクラウス演算子と関連付けられます。
+
+この観点から、チャネルを多くの異なる方法で表現するクラウス演算子を選ぶ自由は、密度演算子を表現する多くの異なる方法の純粋状態のアンサンブルを選ぶ自由と実質的に同じであることがわかります。HJW 定理によると、同じ密度演算子の2つの異なるアンサンブル実現、
+
+$$
+(I \otimes \mathcal{E}) \left( \Big(|\tilde{\Phi}\rangle\langle\tilde{\Phi}|\Big)_{RA} \right) = \sum_a \Big(|\tilde{\Psi}_a\rangle\langle\tilde{\Psi}_a|\Big)_{RA'} = \sum_\mu (|\tilde{\gamma}_\mu\rangle\langle\tilde{\gamma}_\mu|)_{RA'},
+$$ {#eq-3.76}
+
+はユニタリな基底変換によって関連付けられます：
+
+$$
+|\tilde{\gamma}_\mu\rangle = \sum_a V_{\mu a} |\tilde{\Psi}_a\rangle.
+$$ {#eq-3.77}
+
+対応して、同じチャネルを表現する2つの異なるクラウス演算子の集合 $\{\boldsymbol{M}_a\}$ と $\{\boldsymbol{N}_\mu\}$ は
+
+$$
+\boldsymbol{N}_\mu = \sum_a V_{\mu a} \boldsymbol{M}_a
+$$ {#eq-3.78}
+
+によって関連付けられます。ここで $V_{\mu a}$ はユニタリ行列です。 [📄 p.22](/assets/pdf/preskill/chap3.pdf#page=22)
+
+チャネル-状態双対性はまた、チャネルを記述するのに必要なクラウス演算子の数を明らかにします。$A$ を $A'$ に写像するチャネル $\mathcal{E}$（$A$ の次元 $d$、$A'$ の次元 $d'$）は、$R$ の次元 $d$、$RA'$ 上の密度演算子と等価であり、クラウス演算子の最小数はこの密度演算子のランク（非ゼロ固有値の数）と同じです。これは $dd'$ 以下です。もちろん、この最小数よりも多くのクラウス演算子を使う $\mathcal{E}$ のオペレーター和表現が存在することもあります。
+
+$A$ から $A'$ へのチャネルを指定するために必要な自由パラメータの数は、$RA'$ 上の密度演算子を指定するために必要な $(dd')^2$ 個のパラメータから、写像がトレース保存であるという条件（$d^2$ 個の線形独立な入力それぞれに対して $d^2$ 個の制約）を引いたものです。したがって実数の自由パラメータの数は
+
+$$
+d^2 (d'^2 - 1).
+$$ {#eq-3.79}
+
+これは qubit から qubit へのチャネルでは 12 個のパラメータです。対照的に、qubit 上のユニタリ写像は、物理的に無関係な全体位相を除くと 3 個のパラメータしか持ちません。
+
+### 3.3.2 Stinespring ダイレーション (Stinespring dilation) [📄 p.22](/assets/pdf/preskill/chap3.pdf#page=22) {#sec-3.3.2-stinespring-dilation}
+
+チャネル $\mathcal{E}_{A \to A'}$ のオペレーター和表現が得られれば、$\mathcal{E}$ を拡張されたシステムに対するユニタリ写像によってどのように実現できるかが容易にわかります。クラウス演算子の数に等しいヒルベルト空間の次元を持ち、正規直交基底 $\{|a\rangle\}$ を持つ余分なシステム $E$（チャネルの**環境（environment）**）を導入します。すると、$|\psi\rangle \in A$ を $A'E$ に写像するアイソメトリー（内積保存写像）を
+
+$$
+\boldsymbol{U}_{A \to A'E} : |\psi\rangle \mapsto \sum_a \boldsymbol{M}_a |\psi\rangle \otimes |a\rangle
+$$ {#eq-3.80}
+
+と定義します。$\{\boldsymbol{M}_a\}$ が満たす完全性関係により $\boldsymbol{U}^\dagger \boldsymbol{U} = \boldsymbol{I}_A$ が成り立ちます。$\boldsymbol{U}$ は実際にはユニタリでないかもしれませんが、入力ヒルベルト空間を拡張することで、アイソメトリーを簡単にユニタリ変換に拡張できるため、そうである可能性があります。環境をトレースアウトすることで $\mathcal{E}_{A \to A'}$ を生成するこのアイソメトリーは、チャネルの**Stinespring ダイレーション（Stinespring dilation）**と呼ばれます。
+
+Stinespring ダイレーションの構成について別の考え方をすると、チャネル-状態双対性から生じる密度演算子の精製（purification）を $E$ を用いて構成しているということです：
+
+$$
+|\Psi\rangle_{RA'E} = \sum_a |\tilde{\Psi}_a\rangle_{RA'} \otimes |a\rangle_E.
+$$ {#eq-3.81}
+
+$\sqrt{d}$ の規格化因子を除いて、これはダイレーションが最大エンタングル状態 $|\tilde{\Phi}\rangle_{RA}$ に作用するときに生じる $RA'E$ の純粋状態です。$|\Psi\rangle$ を用いてダイレーションを回復するには、
+
+$$
+\boldsymbol{U}_{A \to A'E} |\psi\rangle_A = {}_R\langle\psi^*|\Psi\rangle_{RA'E}
+$$ {#eq-3.82}
+
+を使います。チャネルを純粋状態を用いてこのように簡潔に特徴付けることは時として非常に便利であり、第 10 章で量子チャネルを研究する際にこれを多用します。
+
+### 3.3.3 公理の再考 (Axioms revisited) [📄 p.23](/assets/pdf/preskill/chap3.pdf#page=23) {#sec-3.3.3-axioms-revisited}
+
+第 2 章では、閉じたシステムに適した形で量子力学の公理を述べました。開いたシステムの理論が手元にある今、状態・測定・発展の記述の改訂された概念を用いた代替的な定式化を与えることができます。
+
+**状態（States）**。状態とは**密度演算子（density operator）**、すなわちユニットトレースを持つヒルベルト空間上の非負エルミート演算子です。
+
+**測定（Measurement）**。測定とは**正演算子値測度（POVM）**、すなわち非負演算子による単位の分割です。測定 $\{\boldsymbol{E}_a\}$ が状態 $\boldsymbol{\rho}$ に対して行われるとき、結果 $a$ は確率 $\text{tr}(\boldsymbol{E}_a \boldsymbol{\rho})$ で発生します。
+
+**ダイナミクス（Dynamics）**。時間発展は**トレース保存完全正値写像（TPCP 写像）**によって記述されます。
+
+開いたシステムの定式化と閉じたシステムの定式化のどちらを基本的な理論の定式化として見なすかは、好みの問題です。閉じたシステムの公理から開いたシステムの公理がどのように得られるかはすでに見てきました。あるいは、開いたシステムの公理から出発すると、純粋状態は密度演算子の空間における端点として、あるいはすべての密度演算子が拡張されたシステムにおいて精製を持つという観察から自然に生じます。同様に、直交測定とユニタリ発展は自然に生じます。なぜなら、すべての POVM は拡張されたシステムにおける直交測定によって実現でき、すべてのトレース保存完全正値写像はアイソメトリックな Stinespring ダイレーションを持つからです。開いたシステムは常により大きな閉じたシステムの一部と見なせるというこの考えは、**「より大きなヒルベルト空間の教会（church of the larger Hilbert space）」**として親しみを込めて呼ばれています。
