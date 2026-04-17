@@ -10,10 +10,10 @@ import hashlib
 from concurrent.futures import ThreadPoolExecutor
 from typing import List, Dict, Any
 
-from find_quarto import find_quarto
+from utils.find_quarto import find_quarto
 
 # --- Configuration ---
-NODE_SCRIPT_PATH = os.path.join(os.path.dirname(__file__), "mermaid_parser.js")
+NODE_SCRIPT_PATH = os.path.join(os.path.dirname(__file__), "utils", "mermaid_parser.js")
 CACHE_FILE = os.path.join(os.path.dirname(__file__), ".validation_cache.json")
 DOCS_DIR = "quarto"
 MERMAID_PATTERN = re.compile(r"```\{mermaid\}(.*?)```", re.DOTALL | re.IGNORECASE)

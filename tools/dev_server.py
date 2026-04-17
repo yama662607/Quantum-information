@@ -3,7 +3,7 @@ import sys
 import time
 from pathlib import Path
 
-from find_quarto import find_quarto
+from utils.find_quarto import find_quarto
 
 
 def run_dev_server():
@@ -18,7 +18,10 @@ def run_dev_server():
         sys.exit(1)
 
     # コマンドの定義
-    watcher_cmd = [sys.executable, str(project_root / "tools" / "quarto_watcher.py")]
+    watcher_cmd = [
+        sys.executable,
+        str(project_root / "tools" / "utils" / "quarto_watcher.py"),
+    ]
     quarto_cmd = [quarto_bin, "preview", "quarto", "--port", "4312", "--render", "html"]
 
     print("🚀 Starting dev server (Watcher + Quarto Preview)...")

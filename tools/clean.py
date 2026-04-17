@@ -13,6 +13,8 @@ def clean():
         ".mypy_cache",
         "quarto/_freeze",
         "quarto/_output",
+        "quarto/textbook-preskill/textbook_files",
+        "quarto/textbook-watrous/textbook_files",
     ]
 
     print("🗑️ Cleaning artifacts...")
