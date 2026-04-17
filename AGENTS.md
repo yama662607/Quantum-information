@@ -61,17 +61,15 @@
 
 ### Phase 1: 忠実翻訳
 
-1.  **原文の一括解析**: `just process-pdf` を使って対象ページのテキスト・数式・画像を取得します。すべてのページについて、text, latex, imageの全ての情報を抽出してから、できる限り正しく翻訳を開始してください。
+1.  **原文の一括解析**: 解析は「画像化」と「データ抽出」の2ステップで行います。まず `just render-pdf` で視覚情報を確定させ、次に `just extract-content` でテキストおよび数式を抽出します。
     ```bash
-    # Preskill版 (例: chap2 の物理ページ 30-32)
-    just process-pdf quarto/assets/pdf/preskill/chap2.pdf 30 32
+    # Step 1: 画像化 (例: Preskill版 chap2 の物理ページ 30-32)
+    just render-pdf quarto/assets/pdf/preskill/chap2.pdf 30 32
 
-    # Watrous版 (例: 物理ページ 114)
-    just process-pdf quarto/assets/pdf/watrous/Quantum_Information.pdf 114 114
+    # Step 2: データ抽出 (Text & LaTeX OCR)
+    just extract-content quarto/assets/pdf/preskill/chap2.pdf 30 32
     ```
-    出力: テキスト・数式（LaTeX）・画像パスの3種が整理されて表示されます。数式の正確な翻訳のため、LaTeXの抽出結果を必ず確認してください。
-
-2.  **視覚的な精査**: 数式など記号が欠落しやすい部分は、出力された画像パス（例: `/tmp/page_30.png`）に対して `view_file` ツールでスキャンして正確に読み取ります。
+    出力: テキスト、数式（LaTeX）、および画像パスが表示されます。**必ず画像ファイル（例: `/tmp/page_30.png`）を `view_file` で開き、OCR結果と照らし合わせて記号の誤植がないか精査してください。**
 
 3.  **断片ファイルの作成**: `quarto/textbook-[preskill|watrous]/chapterX/_X.Y-title.qmd` を作成し、**省略なく**翻訳します。
 

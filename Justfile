@@ -120,13 +120,15 @@ clear-validation-cache:
     @echo "🧹 Clearing document validation cache..."
     {{python}} tools/validate_docs.py --clear-cache
 
-# 教科書PDFからのテキスト抽出
-extract-pdf pdf_path *args="":
-    @echo "📄 Extracting text from: {{pdf_path}}"
-    {{python}} tools/extract_pdf.py {{pdf_path}} {{args}}
+# 教科書PDFの画像化 (PNG出力)
+# 使い方: just render-pdf <pdf_path> <start_page> <end_page>
+render-pdf pdf_path start end *args="":
+    @echo "🎨 Rendering PDF pages {{start}}-{{end}}..."
+    {{python}} tools/render_pdf.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}
 
-# PDFページの詳細解析 (Text, Image, LaTeX)
-# 使い方: just process-pdf <pdf_path> <start_page> <end_page>
-process-pdf pdf_path start end *args="":
-    @echo "🔍 Processing PDF pages {{start}}-{{end}}..."
-    @export PYTHONPATH=${PYTHONPATH:-}:. && {{python}} tools/process_pdf_page.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}
+# PDFページからのテキスト・数式(LaTeX)抽出
+# 使い方: just extract-content <pdf_path> <start_page> <end_page>
+# ※事前に just render-pdf を実行しておく必要があります。
+extract-content pdf_path start end *args="":
+    @echo "🔍 Extracting content from PDF pages {{start}}-{{end}}..."
+    @export PYTHONPATH=${PYTHONPATH:-}:. && {{python}} tools/extract_pdf_content.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}
