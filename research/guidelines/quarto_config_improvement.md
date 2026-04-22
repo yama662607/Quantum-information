@@ -4,19 +4,19 @@
 
 ### 現在の設定（すでに優良）
 
-✅ **既に適切に設定済み**：
+ **既に適切に設定済み**：
 - `number-sections: true` — 見出し番号が有効
 - `crossref: chapters: true` — 図表が章ごとに番号付け（Figure 1.1, 1.2, など）
 - `lang: ja` — 日本語設定
 
-⚙️ **改善の余地あり**：
+ **改善の余地あり**：
 - `number-depth: 3` （現在）→ `number-depth: 2` （推奨）
 - `crossref` に日本語プレフィックスが未設定
 - PDF 出力で `top-level-division: chapter` が明示化されていない
 
 ---
 
-## 🎯 推奨改善案
+## 推奨改善案
 
 ### 改善1: number-depth を 3 → 2 に変更
 
@@ -96,16 +96,16 @@ format:
 
 ---
 
-## 📋 推奨修正案（_quarto.yml の該当部分）
+## 推奨修正案（_quarto.yml の該当部分）
 
 ```yaml
-# ✅ 既存（保持）
+# 既存（保持）
 number-sections: true
 
-# 🔧 改善（変更）
+# 改善（変更）
 number-depth: 2
 
-# ✅ 既存（拡張）
+# 既存（拡張）
 crossref:
   chapters: true
   sec-prefix: "節"
@@ -128,7 +128,7 @@ format:
 
 ---
 
-## ✅ 実施手順
+## 実施手順
 
 1. **テスト環境で確認**（推奨）
    ```bash
@@ -151,7 +151,7 @@ format:
 
 ---
 
-## ⚠️ リスク評価
+## リスク評価
 
 | 項目 | リスク | 対策 |
 |------|--------|------|

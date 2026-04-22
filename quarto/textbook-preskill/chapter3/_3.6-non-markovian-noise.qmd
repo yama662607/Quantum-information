@@ -1,6 +1,6 @@
-## 3.6 非マルコフノイズ (Non-Markovian noise) [📄 p.41](/assets/pdf/preskill/chap3.pdf#page=41) {#sec-3.6-non-markovian-noise}
+## 3.6 非マルコフノイズ (Non-Markovian noise) [p.41](/assets/pdf/preskill/chap3.pdf#page=41) {#sec-3.6-non-markovian-noise}
 
-### 3.6.1 ガウス位相ノイズ (Gaussian phase noise) [📄 p.41](/assets/pdf/preskill/chap3.pdf#page=41) {#sec-3.6.1-gaussian-phase-noise}
+### 3.6.1 ガウス位相ノイズ (Gaussian phase noise) [p.41](/assets/pdf/preskill/chap3.pdf#page=41) {#sec-3.6.1-gaussian-phase-noise}
 
 マスター方程式はマルコフ型ノイズに従う量子系の発展を記述しますが、実験系によってはマルコフ近似が十分に精確でない場合もあります。このセクションでは、非マルコフノイズに従う系のデコヒーレンスの特徴のいくつかを議論します。
 
@@ -59,7 +59,7 @@ $$ {#eq-3.162}
 
 大雑把に言えば、$\tilde{K}(\omega)$ は区間 $[0, \omega_c]$ においてほぼ一定であると予想されます。ここで $\omega_c = 2\pi/\tau_c$ であり、$\tau_c$ はノイズの特徴的な「自己相関」または「記憶」時間です。つまり $\tau_c$ は、相関関数 $K(t - t')$ が $|t - t'| \gg \tau_c$ に対して小さくなるよう選ばれます。したがって、発展が時間について十分に「粗視化」されている場合にのみ「デフェージング率」$\Gamma_2$（および対応するデフェージング時間 $T_2 = \Gamma_2^{-1}$）を語ることができます。$T \gg \tau_c$ の時間区間における発展を記述する目的では、窓関数 $W_T(\omega)$ は $\tilde{K}(\omega)$ がほぼ一定である区間 $[0, \omega_c]$ の中に主な台を持つため、非マルコフノイズモデルは、§3.4.2 のデフェージング解析と同様に揺らぎの記憶を無視できる対応する有効マルコフモデルに置き換えられます。しかし $T \ll \tau_c$ ではそのような記述は適用できないかもしれません。
 
-### 3.6.2 スピンエコー (Spin echo) [📄 p.43](/assets/pdf/preskill/chap3.pdf#page=43) {#sec-3.6.2-spin-echo}
+### 3.6.2 スピンエコー (Spin echo) [p.43](/assets/pdf/preskill/chap3.pdf#page=43) {#sec-3.6.2-spin-echo}
 
 ノイズの有害な効果を軽減する戦略は、ノイズの自己相関時間 $\tau_c$ が実験者がシステムを操作できる時間スケールよりも長い場合に可能になります。例えば、時間 $T$ の間発展するスピンのデフェージングを観測する際、時刻 $T/2$ においてスピンを $x$ 軸の周りに反転させる速い（strong and brief）パルスを印加することができます。すると、発展の後半における低周波数の位相ノイズの効果は前半の位相ノイズの効果を打ち消す傾向があります。このトリックを**スピンエコー（spin echo）現象**といいます。
 
@@ -89,7 +89,7 @@ $$ {#eq-3.165}
 
 さらに多くのパルスを使うことで抑制をさらに改善できます。実際には、パルスは有限の強度と長さを持つため、この戦略の有効性には制限があります。
 
-### 3.6.3 ノイズ分光計としての量子ビット (Qubits as noise spectrometers) [📄 p.44](/assets/pdf/preskill/chap3.pdf#page=44) {#sec-3.6.3-qubits-as-noise-spectrometers}
+### 3.6.3 ノイズ分光計としての量子ビット (Qubits as noise spectrometers) [p.44](/assets/pdf/preskill/chap3.pdf#page=44) {#sec-3.6.3-qubits-as-noise-spectrometers}
 
 次に、揺らぎ項が非摂動ハミルトニアンと非可換な古典ノイズの別のモデルを考えます：
 
@@ -133,7 +133,7 @@ $$ {#eq-3.170}
 
 正と負の周波数でのノイズ強度の比は（熱的浴に対して）ボルツマン因子で与えられます。ノイズのこの性質は**久保-マーティン-シュヴィンガー（Kubo-Martin-Schwinger, KMS）条件**と呼ばれます。ノイズは高温限界 $\beta\omega_{01} \ll 1$ では古典的になり、$\beta\omega_{01} \gg 1$ では深く量子的な領域になります。
 
-### 3.6.4 非ゼロ温度でのスピン・ボソンモデル (Spin-boson model at nonzero temperature) [📄 p.46](/assets/pdf/preskill/chap3.pdf#page=46) {#sec-3.6.4-spin-boson-model}
+### 3.6.4 非ゼロ温度でのスピン・ボソンモデル (Spin-boson model at nonzero temperature) [p.46](/assets/pdf/preskill/chap3.pdf#page=46) {#sec-3.6.4-spin-boson-model}
 
 古典的デフェージングノイズのモデルを量子モデルへと変換するには、確率論的な古典場 $f(t)$ を量子化された浴に作用する演算子で置き換えます。浴が互いに非結合で各々がデフェージングする量子ビットに線形結合した調和振動子の系であれば、ノイズは依然としてガウス型です。系 $A$ と浴 $B$ のハミルトニアンは
 

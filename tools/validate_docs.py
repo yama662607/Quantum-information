@@ -8,7 +8,7 @@ import subprocess
 import concurrent.futures
 import hashlib
 from concurrent.futures import ThreadPoolExecutor
-from typing import List, Dict, Any
+from typing import List, Dict, Any, TypedDict
 
 from utils.find_quarto import find_quarto
 
@@ -16,9 +16,12 @@ from utils.find_quarto import find_quarto
 NODE_SCRIPT_PATH = os.path.join(os.path.dirname(__file__), "utils", "mermaid_parser.js")
 CACHE_FILE = os.path.join(os.path.dirname(__file__), ".validation_cache.json")
 DOCS_DIR = "quarto"
+VALIDATOR_VERSION = "2"
 MERMAID_PATTERN = re.compile(r"```\{mermaid\}(.*?)```", re.DOTALL | re.IGNORECASE)
 LATEX_INLINE_PATTERN = re.compile(r"(?<!\\)\$(?!\$)(.*?)(?<!\\)\$", re.DOTALL)  # $...$
 LATEX_BLOCK_PATTERN = re.compile(r"\$\$(.*?)\$\$", re.DOTALL)  # $$...$$
+FENCED_CODE_PATTERN = re.compile(r"```.*?```", re.DOTALL)
+INLINE_CODE_PATTERN = re.compile(r"`[^`\n]+`")
 
 # Try importing pylatexenc
 try:
@@ -27,6 +30,15 @@ try:
     HAS_PYLATEXENC = True
 except ImportError:
     HAS_PYLATEXENC = False
+
+
+class ValidationResult(TypedDict):
+    file: str
+    errors: List[str]
+    mermaid_blocks: List[Dict[str, Any]]
+    hash: str | None
+    fixed: bool
+
 
 # --- Caching Logic ---
 
@@ -37,6 +49,21 @@ def get_file_hash(filepath: str) -> str:
     with open(filepath, "rb") as f:
         while chunk := f.read(8192):
             hasher.update(chunk)
+    return hasher.hexdigest()
+
+
+def get_validator_hash() -> str:
+    """Calculates a hash for the validator implementation itself."""
+    hasher = hashlib.sha256()
+    hasher.update(VALIDATOR_VERSION.encode())
+
+    for path in [__file__, NODE_SCRIPT_PATH]:
+        if not os.path.exists(path):
+            continue
+        with open(path, "rb") as f:
+            while chunk := f.read(8192):
+                hasher.update(chunk)
+
     return hasher.hexdigest()
 
 
@@ -51,13 +78,13 @@ def load_cache() -> Dict[str, Any]:
     return {}
 
 
-def save_cache(cache: Dict[str, Any]):
+def save_cache(cache: Dict[str, Any]) -> None:
     """Saves validation cache to JSON file."""
     try:
         with open(CACHE_FILE, "w", encoding="utf-8") as f:
             json.dump(cache, f, indent=2, ensure_ascii=False)
     except Exception as e:
-        print(f"⚠️  Could not save cache: {e}")
+        print(f"  Could not save cache: {e}")
 
 
 # --- Validation Logic ---
@@ -168,9 +195,18 @@ def check_fenced_divs(
     return {"errors": errors, "fixed_lines": fixed_lines if do_fix else None}
 
 
+def strip_markdown_code(content: str) -> str:
+    """Removes Markdown code spans/blocks before math regex validation."""
+    content = FENCED_CODE_PATTERN.sub(
+        lambda match: "\n" * match.group(0).count("\n"), content
+    )
+    return INLINE_CODE_PATTERN.sub("", content)
+
+
 def check_latex(filepath: str, content: str) -> List[str]:
     """Validates LaTeX math blocks."""
     errors = []
+    content = strip_markdown_code(content)
 
     def validate_math_block(math_code: str, line_no_estimate: int, block_type: str):
         if not math_code.strip():
@@ -217,9 +253,9 @@ def collect_mermaid_blocks(filepath: str, content: str) -> List[Dict[str, Any]]:
     return blocks
 
 
-def validate_file(filepath: str, do_fix: bool = False) -> Dict[str, Any]:
+def validate_file(filepath: str, do_fix: bool = False) -> ValidationResult:
     """Runs Python-side checks and returns mermaid blocks for batching."""
-    results = {
+    results: ValidationResult = {
         "file": filepath,
         "errors": [],
         "mermaid_blocks": [],
@@ -280,20 +316,20 @@ def run_mermaid_batch_validation(blocks: List[Dict[str, Any]]) -> List[Dict[str,
         stdout, stderr = process.communicate(input=payload)
 
         if process.returncode != 0:
-            print(f"❌ Node.js validator crashed: {stderr}")
+            print(f" Node.js validator crashed: {stderr}")
             return []
 
         response = json.loads(stdout)
         return response.get("results", [])
 
     except FileNotFoundError:
-        print("❌ 'node' command not found or script missing.")
+        print(" 'node' command not found or script missing.")
         return []
     except json.JSONDecodeError:
-        print(f"❌ Failed to parse Node.js output: {stdout}")
+        print(f" Failed to parse Node.js output: {stdout}")
         return []
     except Exception as e:
-        print(f"❌ Error running Mermaid validator: {e}")
+        print(f" Error running Mermaid validator: {e}")
         return []
 
 
@@ -308,15 +344,18 @@ def main():
     parser.add_argument(
         "--fix", action="store_true", help="Automatically fix style issues"
     )
+    parser.add_argument(
+        "--no-cache", action="store_true", help="Ignore validation cache for this run"
+    )
     args = parser.parse_args()
 
-    if args.clear_cache and os.path.exists(CACHE_FILE):
+    if (args.clear_cache or args.no_cache) and os.path.exists(CACHE_FILE):
         os.remove(CACHE_FILE)
-        print("🧹 Cache cleared.")
+        print(" Cache cleared.")
 
     if not HAS_PYLATEXENC:
         print(
-            "⚠️  'pylatexenc' not found. LaTeX syntax checking will be limited to regex."
+            "  'pylatexenc' not found. LaTeX syntax checking will be limited to regex."
         )
 
     # Collect files
@@ -331,7 +370,8 @@ def main():
         sys.exit(0)
 
     # Caching Phase
-    cache = load_cache()
+    validator_hash = get_validator_hash()
+    cache = {} if args.no_cache else load_cache()
     files_to_validate = []
     skipped_count = 0
 
@@ -343,6 +383,7 @@ def main():
         if (
             cached_info
             and cached_info.get("hash") == current_hash
+            and cached_info.get("validator_hash") == validator_hash
             and cached_info.get("passed")
         ):
             skipped_count += 1
@@ -350,13 +391,13 @@ def main():
             files_to_validate.append(f)
 
     if skipped_count > 0:
-        print(f"  ⏭️  {skipped_count} files skipped (unchanged)")
+        print(f"  ⏭  {skipped_count} files skipped (unchanged)")
 
     if not files_to_validate:
-        print("\n✨ All files passed cache check. No new validation needed.")
+        print("\n All files passed cache check. No new validation needed.")
         sys.exit(0)
 
-    print(f"  🔍 Validating {len(files_to_validate)} changed files...\n")
+    print(f"   Validating {len(files_to_validate)} changed files...\n")
 
     all_mermaid_blocks = []
     file_results = {}
@@ -373,48 +414,54 @@ def main():
                 res = future.result()
                 file_results[filename] = res
                 if res["fixed"]:
-                    print(f"  ✨ Fixed style issues in {filename}")
+                    print(f"   Fixed style issues in {filename}")
                 if res["errors"]:
                     file_errors[filename] = res["errors"]
                 if res["mermaid_blocks"]:
                     all_mermaid_blocks.extend(res["mermaid_blocks"])
             except Exception as e:
-                print(f"  ❌ Error processing {filename}: {e}")
+                print(f"   Error processing {filename}: {e}")
 
     # Phase 2: Batch Mermaid Validation
     if all_mermaid_blocks:
-        print(f"  🧜 Validating {len(all_mermaid_blocks)} Mermaid diagrams...")
+        print(f"   Validating {len(all_mermaid_blocks)} Mermaid diagrams...")
         mermaid_results = run_mermaid_batch_validation(all_mermaid_blocks)
 
-        for res in mermaid_results:
-            if not res["valid"]:
-                filepath = res["file"]
+        for mermaid_result in mermaid_results:
+            if not mermaid_result["valid"]:
+                filepath = mermaid_result["file"]
                 if filepath not in file_errors:
                     file_errors[filepath] = []
-                msg = res["message"].split("\n")[0]
-                file_errors[filepath].append(f"[Mermaid] Line {res['line']}: {msg}")
+                msg = mermaid_result["message"].split("\n")[0]
+                file_errors[filepath].append(
+                    f"[Mermaid] Line {mermaid_result['line']}: {msg}"
+                )
 
     # Finalize Cache and Reporting
     for f in files_to_validate:
         abs_path = os.path.abspath(f)
         is_valid = f not in file_errors
         # Calculate hash here or use stored one
-        cache[abs_path] = {"hash": file_results[f]["hash"], "passed": is_valid}
+        cache[abs_path] = {
+            "hash": file_results[f]["hash"],
+            "validator_hash": validator_hash,
+            "passed": is_valid,
+        }
 
     save_cache(cache)
 
     if file_errors:
         print("\n" + "!" * 50)
-        print("🚨 Validation Issues Found")
+        print(" Validation Issues Found")
         print("!" * 50)
         for f, errors in file_errors.items():
-            print(f"\n📄 {f}:")
+            print(f"\n {f}:")
             for err in errors:
                 print(f"    - {err}")
         print("\n" + "!" * 50)
         sys.exit(1)
     else:
-        print("\n✅ All checks passed! (Quarto Structure, Style, LaTeX, Mermaid)")
+        print("\n All checks passed! (Quarto Structure, Style, LaTeX, Mermaid)")
         sys.exit(0)
 
 

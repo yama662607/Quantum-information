@@ -2,7 +2,7 @@
 
 このドキュメントでは、本プロジェクトのアーキテクチャ上の決定事項、制約、およびワークフローを概説します。**すべてのAIエージェントは、ドキュメントの整合性を保つために以下のルールに従わなければなりません。**
 
-## 🏗️ アーキテクチャと規約
+## アーキテクチャと規約
 
 ### 1. 信頼できる唯一の情報源
 - **メイン教科書 (Preskill版)**: `quarto/textbook-preskill/textbook.qmd`
@@ -20,7 +20,7 @@
   - **計算式**: `物理ページ` = `本の表記ページ` + `8`。
 - **Preskill版**: `quarto/assets/pdf/preskill/` 配下の各チャプター PDF を使用。
   - **計算式**: ページ番号のズレについては、各チャプターの PDF 構造を観測して決定してください。
-  - 形式: `[📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=Y)`
+  - 形式: `[chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=Y)`
 ### 4. テンプレート・システム (Templates)
 執筆の効率と品質を維持するために、2種類の標準テンプレートを用意しています。
 - **場所**: `quarto/templates/`
@@ -28,7 +28,7 @@
 - **部品集**: `quarto_feature_showcase.qmd` (複雑なレイアウトやパーツの書き方を確認・コピーする際に使用)
 - **ルール**: 新しくノートを作成する際は、必ず `quantum_textbook_template.qmd` の構成（PDFリンク、対応表、ポイント等）をベースにしてください。
 
-## 💎 ノート品質ガイドライン (Quality Standards)
+## ノート品質ガイドライン (Quality Standards)
 
 重要な定義や定理に関しては、以下の基準を厳守してください。
 
@@ -44,8 +44,8 @@
 
 4.  **PDFリンクの配置**:
     - すべてのセクション（`##`）およびサブセクション（`###`）の見出しには、必ず対応するPDFページへのリンクを付与してください。
-    - 形式 (Watrous版): `## 見出し [📄 p.XX](/assets/pdf/watrous/Quantum_Information.pdf#page=YY) {#anchor}`
-    - 形式 (Preskill版): `## 見出し [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=YY) {#anchor}`
+    - 形式 (Watrous版): `## 見出し [p.XX](/assets/pdf/watrous/Quantum_Information.pdf#page=YY) {#anchor}`
+    - 形式 (Preskill版): `## 見出し [chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=YY) {#anchor}`
     - ページ番号 `XX` と `YY` の対応は `index.qmd` を確認してください。
 
 5.  **Fenced Div の書式 (Style)**:
@@ -55,7 +55,7 @@
 ## コンテンツ作成ワークフロー (Content Creation Workflow)
 
 > [!CAUTION]
-> **🚨 ゴールデンルール（省略禁止）**: Phase 1（忠実翻訳）では、原文の定義・定理・補題・証明・式番号・Remark・Footnote を**一つも省いてはならない**。要約・言い換えは Phase 2 以降で行う。詳細は `research/guidelines/writing_policy.md` を参照。
+> ** ゴールデンルール（省略禁止）**: Phase 1（忠実翻訳）では、原文の定義・定理・補題・証明・式番号・Remark・Footnote を**一つも省いてはならない**。要約・言い換えは Phase 2 以降で行う。詳細は `research/guidelines/writing_policy.md` を参照。
 
 **重要: ノートを作成する前に、必ず元のPDFを読み込んでください。**
 
@@ -86,20 +86,20 @@
 3. **インクルード**: 該当する `textbook.qmd` に `{{< include chapterX/_name.qmd >}}` を追加します。
 4. **ロードマップの更新**: `quarto/index.qmd` の対応する表に行を追加します。
     - カラム構成: `| 項目名 | 原文 PDF | 教科書解説 |`
-    - 教科書解説へのリンクは `[📖 Textbook](textbook.qmd#new-anchor)` とします。
+    - 教科書解説へのリンクは `[Textbook](textbook.qmd#new-anchor)` とします。
 
 ### トップページ (`index.qmd`) の修正
 - デザインはシンプルに保つ: カラムは3つだけです。
 - 明示的な指示がない限り、「ステータス」や「日付」カラムを追加しないでください。
 - 「項目名」カラムの階層インデントには、全角スペース（`　`）を使用してください（レンダリング安定のため）。
 
-## 🛑 よくある間違い（禁止事項）
-- ❌ `quarto/textbook/chapter1.qmd` を作成しないでください。
-- ❌ `_*.qmd` ファイルに `title: ...` 等の YAML を追加しないでください。
-- ❌ `pip install` を提案しないでください。`uv sync` または `uv add` を使用してください。
-- ❌ `:::` の閉じ括弧の前に空行を忘れないでください。
+## よくある間違い（禁止事項）
+- `quarto/textbook/chapter1.qmd` を作成しないでください。
+- `_*.qmd` ファイルに `title: ...` 等の YAML を追加しないでください。
+- `pip install` を提案しないでください。`uv sync` または `uv add` を使用してください。
+- `:::` の閉じ括弧の前に空行を忘れないでください。
 
-## 🤖 Justfile ガイド (AIエージェント用)
+## Justfile ガイド (AIエージェント用)
 
 本プロジェクトではタスクランナー `Just` を採用しています。AIエージェントは、シェルコマンドを直接実行するのではなく、可能な限り `just` コマンドを使用してください。
 
@@ -112,7 +112,7 @@
 | `just docs` | **プレビュー** | ドキュメントのレンダリングを確認する際に使用します（サーバーが起動します）。 |
 | `just validate-docs` | **ドキュメント検証** | Quarto/Mermaid/LaTeX の統合検証を手動で実行します。 |
 
-## 🚀 AIエージェント向け初期導入ガイド (Onboarding)
+## AIエージェント向け初期導入ガイド (Onboarding)
 
 新しいAIエージェントがこのプロジェクトに参加した際は、以下のステップで現状を把握してください。
 

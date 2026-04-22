@@ -11,17 +11,17 @@ number-sections: false
 
 新しい章の作成や機能の確認に使用できるテンプレートです。各ページ右上の **`</> Code`** ボタンからソースをコピーできます。
 
-### 📘 量子情報教科書テンプレート (Textbook Template)
+### 量子情報教科書テンプレート (Textbook Template)
 **本プロジェクトの執筆に特化**した実戦用テンプレートです。物理学との対応表、重要ポイント、PDFリンクの標準化などが含まれています。
 
-[👉 テンプレートを開く (Preview)](../templates/quantum_textbook_template.qmd){.btn .btn-primary}
+[ テンプレートを開く (Preview)](../templates/quantum_textbook_template.qmd){.btn .btn-primary}
 
-### 🎡 Quarto 機能ショーケース (Feature Showcase)
+### Quarto 機能ショーケース (Feature Showcase)
 Quarto の**全機能を網羅した部品集**です。マージンノート、複合図表、コード注釈などの書き方を確認・コピペする際に便利です。
 
-[👉 ショーケースを開く (Preview)](../templates/quarto_feature_showcase.qmd){.btn .btn-success}
+[ ショーケースを開く (Preview)](../templates/quarto_feature_showcase.qmd){.btn .btn-success}
 
-### 📐 数理・理論テンプレート (Legacy)
+### 数理・理論テンプレート (Legacy)
 過去に作成された数理・理論学習用のテンプレートです。
 
 *   [数理特化テンプレート](../templates/math_focused_template.qmd)

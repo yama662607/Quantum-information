@@ -14,14 +14,14 @@ def check_command(cmd, name):
                 .decode()
                 .strip()
             )
-            print(f"✅ {name:10} Found: {path}")
+            print(f" {name:10} Found: {path}")
             print(f"   Version: {version.splitlines()[0]}")
             return True
         except Exception:
-            print(f"⚠️ {name:10} Found at {path}, but failed to get version.")
+            print(f" {name:10} Found at {path}, but failed to get version.")
             return True
     else:
-        print(f"❌ {name:10} NOT FOUND. Please install it.")
+        print(f" {name:10} NOT FOUND. Please install it.")
         return False
 
 
@@ -35,19 +35,19 @@ def check_quarto():
                 .decode()
                 .strip()
             )
-            print(f"✅ {'Quarto':10} Found: {path}")
+            print(f" {'Quarto':10} Found: {path}")
             print(f"   Version: {version.splitlines()[0]}")
             return True
         except Exception:
-            print(f"⚠️ {'Quarto':10} Found at {path}, but failed to get version.")
+            print(f" {'Quarto':10} Found at {path}, but failed to get version.")
             return True
     else:
-        print(f"❌ {'Quarto':10} NOT FOUND. Please install it.")
+        print(f" {'Quarto':10} NOT FOUND. Please install it.")
         return False
 
 
 def main():
-    print("🔍 Checking development environment...\n")
+    print(" Checking development environment...\n")
 
     results = [
         check_command("uv", "uv"),
@@ -60,14 +60,14 @@ def main():
     print(f"Interpretor: {sys.executable}")
 
     if all(results):
-        print("\n✨ All systems go! You are ready to develop.")
+        print("\n All systems go! You are ready to develop.")
         sys.exit(0)
     else:
         print(
-            "\n❗ Some dependencies are missing. Please refer to README.md for installation instructions."
+            "\n Some dependencies are missing. Please refer to README.md for installation instructions."
         )
         if sys.platform == "win32":
-            print("\n💡 WINDOWS TIP:")
+            print("\n WINDOWS TIP:")
             print(
                 "   If you just installed these tools, your terminal might not see them yet."
             )

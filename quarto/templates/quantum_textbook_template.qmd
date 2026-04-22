@@ -1,4 +1,4 @@
-## X.Y セクションタイトル [📄 chap1.pdf p.XX](/assets/pdf/preskill/chap1.pdf#page=YY) {#sec-X-Y}
+## X.Y セクションタイトル [chap1.pdf p.XX](/assets/pdf/preskill/chap1.pdf#page=YY) {#sec-X-Y}
 
 <!--
   使い方:
@@ -72,7 +72,7 @@ $\square$
 <!-- ============================================================ -->
 
 ::: {.callout-note}
-## 💡 直感的な理解
+## 直感的な理解
 
 [この概念の物理的・直感的な意味を補足する。原文にない内容はここに書く。]
 

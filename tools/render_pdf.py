@@ -13,9 +13,7 @@ except ImportError:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Render PDF pages as images (PNG)."
-    )
+    parser = argparse.ArgumentParser(description="Render PDF pages as images (PNG).")
     parser.add_argument("pdf_path", help="Path to PDF file")
     parser.add_argument("--start", type=int, default=1, help="Start page (1-based)")
     parser.add_argument("--end", type=int, default=1, help="End page (1-based)")
@@ -28,16 +26,16 @@ def main():
         print(f"Error: File not found: {args.pdf_path}", file=sys.stderr)
         sys.exit(1)
 
-    print(f"🎨 Rendering PDF pages {args.start}-{args.end} to {args.out_dir}...")
+    print(f" Rendering PDF pages {args.start}-{args.end} to {args.out_dir}...")
     image_paths = extract_pdf_images(
         args.pdf_path, args.start, args.end, out_dir=args.out_dir, dpi=args.dpi
     )
 
     if not image_paths:
-        print("❌ Failed to render images.")
+        print(" Failed to render images.")
         sys.exit(1)
 
-    print("\n✅ Rendering complete. Saved images:")
+    print("\n Rendering complete. Saved images:")
     for path in image_paths:
         print(f" - {path}")
 

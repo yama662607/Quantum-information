@@ -12,6 +12,7 @@ wheels/
 # Quarto-generated files
 _output/
 quarto/_freeze/
+quarto/.quarto/
 .quarto/
 quarto/textbook-*/**/*.html
 quarto/textbook-*/**/*_files/
@@ -24,8 +25,17 @@ research/partial-trace_reduction_purification_files/
 # Tool & OS files
 tools/.validation_cache.json
 node_modules/
+.mypy_cache/
 .DS_Store
 .data/
+
+# Local/private source material
+quarto/assets/raw/
+quarto/assets/private/
+!quarto/assets/raw/
+!quarto/assets/raw/.gitkeep
+!quarto/assets/private/
+!quarto/assets/private/.gitkeep
 
 # AI agent config (machine-local)
 .codex/

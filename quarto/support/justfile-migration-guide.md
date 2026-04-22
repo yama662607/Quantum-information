@@ -18,18 +18,18 @@
 
 このプロジェクトで定義されている、流用価値の高いコマンド群です。
 
-### 🤖 標準インターフェース (エージェントプロトコル)
+### 標準インターフェース (エージェントプロトコル)
 これらは、プロジェクトの健全性を保つための「入り口」となるコマンドです。
 - `just setup`: 依存関係のインストールと環境構築 (`uv sync`)。
 - `just check`: コードを変更せずに品質を検証（フォーマット、Lint、テストを一括実行）。CIでも使用可能。
 - `just fix`: フォーマット修正、Lintの自動修正、およびドキュメントのスタイル修正を適用。開発の「最初の一手」として最適。
 
-### 🧪 テスト・品質管理
+### テスト・品質管理
 - `just test`: 全テストの実行。`just test tests/specific_test.py` のように引数パススルーも可能。
 - `just fmt`: `ruff` を使用したコード成形。
 - `just lint`: 静的解析。
 
-### 📚 プロジェクト固有タスク
+### プロジェクト固有タスク
 - `just docs`: Quarto ドキュメントのローカルプレビュー。
 - `just app [path]`: Streamlit アプリケーションの起動。
 - `just validate-docs`: ドキュメント（Quarto, Mermaid, LaTeX）の統合検証。
@@ -60,19 +60,19 @@ default: check
 
 # セットアップ
 setup:
-    @echo "📦 Setting up..."
+    @echo " Setting up..."
     {{pm}} sync
 
 # 品質チェック (CIでも使用)
 check:
-    @echo "🔍 Checking quality..."
+    @echo " Checking quality..."
     {{pm}} run ruff format --check
     {{pm}} run ruff check
     {{pm}} run pytest
 
 # 自動修正
 fix:
-    @echo "✨ Fixing..."
+    @echo " Fixing..."
     {{pm}} run ruff format
     {{pm}} run ruff check --fix
     {{python}} tools/validate_docs.py quarto/ --fix
@@ -85,13 +85,13 @@ fix:
 
 ## 4. このプロジェクト独自の工夫点
 
-### 🔧 引数パススルー (`*args`)
+### 引数パススルー (`*args`)
 `test *args=""` のように定義することで、`just test -v -k "my_function"` のような複雑な引数を内部の `pytest` にそのまま渡せるようになっています。
 
-### 🔍 ドキュメントバリデーターの統合
+### ドキュメントバリデーターの統合
 `validate-docs` コマンドのように、ドキュメントの品質（Quarto構造、Mermaid、LaTeXなど）までタスクランナーに組み込むことで、ドキュメントとコードの乖離を防ぎ、爆速な検証（ハッシュキャッシュ）を実現しています。また、`--fix` フラグによる自動修正機能を備えており、`just fix` から透過的に利用できます。
 
-### 🧹 クリーンアップ
+### クリーンアップ
 `just clean` によって、Python特有のキャッシュファイル（`__pycache__`, `.pytest_cache`）を一括削除できるため、環境が不安定になった際の復旧が容易です。
 
 ---

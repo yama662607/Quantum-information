@@ -16,7 +16,7 @@
 # Preskill Chapter 1 PDF Mapping
 **（このテンプレート行は実装時に修正してください）**
 
-## 📋 基本情報
+## 基本情報
 
 | 項目 | 値 |
 |------|-----|
@@ -28,7 +28,7 @@
 
 ---
 
-## 🗂️ セクション構成とページマッピング
+## セクション構成とページマッピング
 
 以下の表を **PDF を実際に開きながら** 埋めてください。
 
@@ -47,7 +47,7 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 20
 
 ---
 
-## 🎯 記入のコツ
+## 記入のコツ
 
 ### ページ開始位置の決定方法
 
@@ -78,7 +78,7 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 20
 
 ---
 
-## 📸 スクリーンショット例（非表示）
+## スクリーンショット例（非表示）
 
 実装時には、各セクション開始ページのスクリーンショットを添付することも有効です：
 
@@ -91,12 +91,12 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 20
 
 ---
 
-## 🔗 Quarto での使用方法
+## Quarto での使用方法
 
 このマッピング情報を基に、`quarto/textbook-preskill/chapter1/_*.qmd` ファイルに PDFリンクを記入：
 
 ```markdown
-## 1.1 量子状態とアンサンブル [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=5) {#sec-quantum-states}
+## 1.1 量子状態とアンサンブル [chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=5) {#sec-quantum-states}
 
 （本文内容）
 ```
@@ -107,7 +107,7 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 20
 
 ---
 
-## 📝 作業フロー
+## 作業フロー
 
 ### Day 1: PDF 構造の観測
 
@@ -130,7 +130,7 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 15
 
 ---
 
-## ✅ チェックリスト
+## チェックリスト
 
 このマッピングを使用開始する前に確認：
 
@@ -142,7 +142,7 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 15
 
 ---
 
-## 📌 よくある質問
+## よくある質問
 
 ### Q: ページ番号が PDF ビューアと異なる
 
@@ -165,13 +165,13 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 15
 
 ---
 
-## 🔄 更新時のルール
+## 更新時のルール
 
 このマッピング表は **追記のみ、修正は最小限**：
 
-- ❌ ページ番号を後から変更しない（PDFリンクが破壊される）
-- ✅ 新しい気づきは「備考」欄に追記
-- ✅ 誤りを発見した場合は、理由と共に修正
+- ページ番号を後から変更しない（PDFリンクが破壊される）
+- 新しい気づきは「備考」欄に追記
+- 誤りを発見した場合は、理由と共に修正
 
 例:
 ```
@@ -180,7 +180,7 @@ just process-pdf quarto/assets/pdf/preskill/chap1.pdf 1 15
 
 ---
 
-## 📚 関連ドキュメント
+## 関連ドキュメント
 
 - `preskill_pdf_mapping.md` → 方法論全体
 - `AGENTS.md` → PDFリンク戦略の大方針

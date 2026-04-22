@@ -1,6 +1,6 @@
-## 3.5 開いた量子系のマスター方程式 (Master equations for open quantum systems) [📄 p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5-master-equations}
+## 3.5 開いた量子系のマスター方程式 (Master equations for open quantum systems) [p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5-master-equations}
 
-### 3.5.1 マルコフ発展 (Markovian evolution) [📄 p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5.1-markovian-evolution}
+### 3.5.1 マルコフ発展 (Markovian evolution) [p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5.1-markovian-evolution}
 
 量子チャネルは、純粋状態から混合状態への発展（デコヒーレンス）を含む、密度演算子の発展の一般的な記述を提供します。同じ意味で、ユニタリ変換はコヒーレントな量子発展の一般的な記述を提供します。しかし、コヒーレントな発展の場合には、量子系のダイナミクスを**ハミルトニアン（Hamiltonian）**によって特徴づけることが非常に便利なことが多く、これは無限小の時間間隔にわたる発展を記述します。ダイナミクスは次に微分方程式、すなわち**シュレーディンガー方程式（Schrödinger equation）**にエンコードされ、方程式を積分すること、すなわち多くの無限小時間間隔にわたる発展を組み合わせることで有限時間間隔にわたる発展を計算できます。同様に、少なくとも良い近似として、密度演算子の（必ずしもコヒーレントでない）発展を微分方程式によって記述することが可能であることが多く、その方程式は**マスター方程式（master equation）**と呼ばれます。
 
@@ -10,19 +10,19 @@
 
 この問題が生じるのは、情報の流れが双方向であるためです。開いたシステム（古典的であれ量子的であれ）は**散逸的（dissipative）**です。なぜなら、情報とエネルギーがシステムから環境に流れる可能性があるからです。しかし、それは情報が環境からシステムへ逆流する可能性もあることを意味し、システムの非マルコフ的な**揺らぎ（fluctuations）**をもたらします。この避けられない接続は、統計物理学の広く適用可能なツールである**揺動散逸定理（fluctuation-dissipation theorem）**の根底にあります。
 
-開いたシステムに対してこれらの揺らぎは避けられず、量子ダイナミクスの正確なマルコフ記述は不可能です。しかし、揺らぎの典型的な相関時間とフォローしたい発展の時間スケールの間にきれいな分離がある場合、マルコフ記述は非常に良い近似になりえます。大雑把に言えば、環境がシステムから獲得した情報を「忘れる」のにかかる時間を $(\Delta t)_{\rm env}$ で表すと、時刻 $(\Delta t)_{\rm env}$ 以降は情報を永遠に失われたものと見なし、情報がシステムのその後の発展に影響を与える可能性を無視できます。
+開いたシステムに対してこれらの揺らぎは避けられず、量子ダイナミクスの正確なマルコフ記述は不可能です。しかし、揺らぎの典型的な相関時間とフォローしたい発展の時間スケールの間にきれいな分離がある場合、マルコフ記述は非常に良い近似になりえます。大雑把に言えば、環境がシステムから獲得した情報を「忘れる」のにかかる時間を $(\Delta t)_{\mathrm{env}}$ で表すと、時刻 $(\Delta t)_{\mathrm{env}}$ 以降は情報を永遠に失われたものと見なし、情報がシステムのその後の発展に影響を与える可能性を無視できます。
 
-発展を時間的に「粗視化」し、$\omega \gg (\Delta t_{\rm coarse})^{-1}$ の運動の高周波成分を除去するフィルターを通してダイナミクスを見ます。$(\Delta t)_{\rm env} \ll (\Delta t)_{\rm coarse}$ の場合には近似的にマルコフな記述が可能です。リザーバーの記憶をその効果を解析できないなら無視できます。このマルコフ近似は、観察したいダイナミクスの時間スケールが $(\Delta t)_{\rm coarse}$ に比べて長い場合に*有用*です。例えば**ダンピング**時間スケール $(\Delta t)_{\rm damp}$ が
+発展を時間的に「粗視化」し、$\omega \gg (\Delta t_{\mathrm{coarse}})^{-1}$ の運動の高周波成分を除去するフィルターを通してダイナミクスを見ます。$(\Delta t)_{\mathrm{env}} \ll (\Delta t)_{\mathrm{coarse}}$ の場合には近似的にマルコフな記述が可能です。リザーバーの記憶をその効果を解析できないなら無視できます。このマルコフ近似は、観察したいダイナミクスの時間スケールが $(\Delta t)_{\mathrm{coarse}}$ に比べて長い場合に*有用*です。例えば**ダンピング**時間スケール $(\Delta t)_{\mathrm{damp}}$ が
 
 $$
-(\Delta t)_{\rm damp} \gg (\Delta t)_{\rm coarse} \gg (\Delta t)_{\rm env}
+(\Delta t)_{\mathrm{damp}} \gg (\Delta t)_{\mathrm{coarse}} \gg (\Delta t)_{\mathrm{env}}
 $$ {#eq-3.122}
 
 を満たす場合です。これは放射場と相互作用する原子のような一部の物理的状況では良い近似ですが、半導体中の核スピンと相互作用する電子スピンのような他の状況では疑わしいです。
 
-マスター方程式を $AE$ のシュレーディンガー方程式から出発し、$A$ と $E$ の間の結合を時間依存摂動論で扱い、周波数カットオフを慎重に導入することで導出しようとすることもできますが、ここではそれを行いません。代わりに、ダイナミクスがマルコフであることを所与として、量子チャネルの理論を使ってマスター方程式の形を推論します。 [📄 p.35](/assets/pdf/preskill/chap3.pdf#page=35)
+マスター方程式を $AE$ のシュレーディンガー方程式から出発し、$A$ と $E$ の間の結合を時間依存摂動論で扱い、周波数カットオフを慎重に導入することで導出しようとすることもできますが、ここではそれを行いません。代わりに、ダイナミクスがマルコフであることを所与として、量子チャネルの理論を使ってマスター方程式の形を推論します。 [p.35](/assets/pdf/preskill/chap3.pdf#page=35)
 
-### 3.5.2 リウヴィリアン (The Liouvillian) [📄 p.35](/assets/pdf/preskill/chap3.pdf#page=35) {#sec-3.5.2-liouvillian}
+### 3.5.2 リウヴィリアン (The Liouvillian) [p.35](/assets/pdf/preskill/chap3.pdf#page=35) {#sec-3.5.2-liouvillian}
 
 閉じた量子系では、時間発展は自己随伴ハミルトニアン $\boldsymbol{H}$ によって
 
@@ -121,7 +121,7 @@ $$ {#eq-3.136}
 マスター方程式は、環境が観測されない状態で系が環境と相互作用するときに何が起きるかを記述します。しかし、環境が継続的に監視される場合に何が起きるかも考えることができます。その場合、各量子ジャンプが検出されます。ジャンプが起きるたびに量子状態を更新し、初期純粋状態は全ての後の時刻でも純粋状態のままです。具体的に、タイプ $a$ のジャンプが時間間隔 $(t, t + dt)$ 内で起きる確率は
 
 $$
-{\rm Prob}(a) = dt \langle\psi(t)|\boldsymbol{L}_a^\dagger \boldsymbol{L}_a|\psi(t)\rangle,
+\mathrm{Prob}(a) = dt \langle\psi(t)|\boldsymbol{L}_a^\dagger \boldsymbol{L}_a|\psi(t)\rangle,
 $$ {#eq-3.137}
 
 であり、タイプ $a$ のジャンプが検出されたとき、更新後の状態は
@@ -138,7 +138,7 @@ $$ {#eq-3.139}
 
 に従って発展します。この**確率的シュレーディンガー発展（stochastic Schrödinger evolution）**は数値的にシミュレートできます。シミュレートされた**量子トラジェクトリ（quantum trajectory）**はそれぞれ異なりますが、多くのそのようなトラジェクトリにわたって平均化すると、マスター方程式に記述された密度演算子の発展が再現されます。確率的シュレーディンガー方程式をシミュレートすることは、$d \times d$ の密度行列よりも $d$ 次元の状態ベクトルの発展を追跡する方がコストが低いため、マスター方程式をシミュレートするよりも有利なことがあります。
 
-### 3.5.3 減衰調和振動子 (Damped harmonic oscillator) [📄 p.38](/assets/pdf/preskill/chap3.pdf#page=38) {#sec-3.5.3-damped-harmonic-oscillator}
+### 3.5.3 減衰調和振動子 (Damped harmonic oscillator) [p.38](/assets/pdf/preskill/chap3.pdf#page=38) {#sec-3.5.3-damped-harmonic-oscillator}
 
 マスター方程式を説明する例として、電磁場と相互作用する調和振動子の場合を考えます：
 
@@ -194,10 +194,10 @@ $$
 |\alpha\rangle = e^{-|\alpha|^2/2} e^{\alpha \boldsymbol{a}^\dagger} |0\rangle = e^{-|\alpha|^2/2} \sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}}|n\rangle,
 $$ {#eq-3.147}
 
-は複素固有値 $\alpha$ を持つ $\boldsymbol{a}$ の規格化された固有状態です。演算子 $\boldsymbol{a}$ はエルミートでなく、異なる固有値 $\alpha$ と $\beta$ を持つ2つのコヒーレント状態は直交しておらず、その代わりに [📄 p.40](/assets/pdf/preskill/chap3.pdf#page=40)
+は複素固有値 $\alpha$ を持つ $\boldsymbol{a}$ の規格化された固有状態です。演算子 $\boldsymbol{a}$ はエルミートでなく、異なる固有値 $\alpha$ と $\beta$ を持つ2つのコヒーレント状態は直交しておらず、その代わりに [p.40](/assets/pdf/preskill/chap3.pdf#page=40)
 
 $$
-|\langle\alpha|\beta\rangle|^2 = e^{-|\alpha|^2} e^{-|\beta|^2} e^{2{\rm Re}(\alpha^*\beta)} = \exp(-|\alpha - \beta|^2),
+|\langle\alpha|\beta\rangle|^2 = e^{-|\alpha|^2} e^{-|\beta|^2} e^{2\mathrm{Re}(\alpha^*\beta)} = \exp(-|\alpha - \beta|^2),
 $$ {#eq-3.148}
 
 となります。したがって $|\alpha - \beta|$ が大きい場合に重なりは非常に小さくなります。
@@ -229,7 +229,7 @@ $$ {#eq-3.152}
 ここで $e^{i\phi(\alpha,\beta)}$ は位相因子です。したがって、非対角項は時間とともに指数的に減衰し、その速度は
 
 $$
-\Gamma_{\rm decohere} = \frac{1}{2}\Gamma|\alpha - \beta|^2
+\Gamma_{\mathrm{decohere}} = \frac{1}{2}\Gamma|\alpha - \beta|^2
 $$ {#eq-3.153}
 
 であり、位相空間における2つのコヒーレント状態の分離の2乗 $|\alpha - \beta|^2$ に比例します。$|\alpha - \beta|^2 \gg 1$ の場合、デコヒーレンス速度はダンピング速度 $\Gamma$ よりもはるかに大きいです。この振る舞いは解釈が容易です。コヒーレント状態における占有数の期待値は $\langle \boldsymbol{n} \rangle = \langle\alpha|\boldsymbol{a}^\dagger \boldsymbol{a}|\alpha\rangle = |\alpha|^2$ です。したがって、$\alpha$、$\beta$ が比較可能な絶対値を持ちますが大きく異なる位相を持つ場合（例えば位置 $x$ と $-x$ を中心とする最小不確定波束の重ね合わせ）、デコヒーレンス速度は $\Gamma\langle\boldsymbol{n}\rangle$ のオーダーであり、これは*1つの*光子の放出速度です。$n$ が大きい場合、この速度はエネルギーのかなりの部分が散逸される速度と比べてはるかに大きいです。
@@ -240,10 +240,10 @@ $$
 n_\gamma \approx \frac{T}{\hbar\omega},
 $$ {#eq-3.154}
 
-を持ちます（$T \gg \hbar\omega$ に対して）。相互作用速度はさらに因子 $n_\gamma$ だけ増強されます。エネルギー $E = \hbar\omega n_{\rm osc}$ を持つ振動子に対して、 [📄 p.41](/assets/pdf/preskill/chap3.pdf#page=41)
+を持ちます（$T \gg \hbar\omega$ に対して）。相互作用速度はさらに因子 $n_\gamma$ だけ増強されます。エネルギー $E = \hbar\omega n_{\mathrm{osc}}$ を持つ振動子に対して、 [p.41](/assets/pdf/preskill/chap3.pdf#page=41)
 
 $$
-\frac{\Gamma_{\rm decohere}}{\Gamma_{\rm damp}} \sim n_{\rm osc} n_\gamma \sim \frac{E}{\hbar\omega}\frac{T}{\hbar\omega} \sim \frac{m\omega^2 x^2}{\hbar\omega}\frac{T}{\hbar\omega} \sim \frac{x^2 m T}{\hbar^2} \sim \frac{x^2}{\lambda_T^2},
+\frac{\Gamma_{\mathrm{decohere}}}{\Gamma_{\mathrm{damp}}} \sim n_{\mathrm{osc}} n_\gamma \sim \frac{E}{\hbar\omega}\frac{T}{\hbar\omega} \sim \frac{m\omega^2 x^2}{\hbar\omega}\frac{T}{\hbar\omega} \sim \frac{x^2 m T}{\hbar^2} \sim \frac{x^2}{\lambda_T^2},
 $$ {#eq-3.155}
 
 ここで $x$ は振動の振幅であり $\lambda_T$ は振動する物体の熱的ド・ブロイ波長です。マクロな物体に対して、デコヒーレンスは本当に*速い*です。

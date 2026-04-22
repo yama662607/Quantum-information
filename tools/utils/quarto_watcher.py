@@ -7,8 +7,8 @@ from watchdog.events import FileSystemEventHandler
 class QuartoWatcherHandler(FileSystemEventHandler):
     def __init__(self, project_root):
         self.project_root = Path(project_root).resolve()
-        self.last_triggered = 0
-        self.debounce_seconds = 1
+        self.last_triggered = 0.0
+        self.debounce_seconds = 1.0
 
         # マッピング定義: 変更検知ディレクトリ -> タッチすべきファイル
         self.chapter_map = {

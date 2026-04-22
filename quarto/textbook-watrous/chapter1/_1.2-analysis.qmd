@@ -1,4 +1,4 @@
-## Analysis, convexity, and probability theory [📄 p.35](../assets/pdf/watrous/Quantum_Information.pdf#page=43) {#analysis-convexity-probability}
+## Analysis, convexity, and probability theory [p.35](../assets/pdf/watrous/Quantum_Information.pdf#page=43) {#analysis-convexity-probability}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **解析・測度**の基本語彙（ボレル集合、測度、積分）を整理する。
@@ -7,7 +7,7 @@
 
 :::
 
-### Analysis and convexity (解析学と凸性) [📄 p.35](../assets/pdf/watrous/Quantum_Information.pdf#page=43) {#analysis-and-convexity}
+### Analysis and convexity (解析学と凸性) [p.35](../assets/pdf/watrous/Quantum_Information.pdf#page=43) {#analysis-and-convexity}
 
 量子情報の解析に必要な、解析学と凸解析の基本的な概念をまとめます。
 
@@ -114,7 +114,7 @@ $$ {#eq-sion-minimax}
 
 :::
 
-### Probability theory (確率論) [📄 p.47](../assets/pdf/watrous/Quantum_Information.pdf#page=55) {#probability-theory}
+### Probability theory (確率論) [p.47](../assets/pdf/watrous/Quantum_Information.pdf#page=55) {#probability-theory}
 
 本書では、測度論に基づく確率論の定義を採用します。
 
@@ -177,7 +177,7 @@ $$ {#eq-gaussian-invariance}
 
 :::
 
-### Semidefinite programming (半正定値計画法) [📄 p.53](../assets/pdf/watrous/Quantum_Information.pdf#page=61) {#semidefinite-programming}
+### Semidefinite programming (半正定値計画法) [p.53](../assets/pdf/watrous/Quantum_Information.pdf#page=61) {#semidefinite-programming}
 
 半正定値計画法 (SDP) は、線形計画法 (LP) を半正定値行列の空間へと拡張した最適化問題であり、量子情報の多くの問題（状態識別、通信路容量など）において中心的な役割を果たします。
 

@@ -1,4 +1,4 @@
-## 量子状態の識別 (Quantum state discrimination) [📄 p.124](../assets/pdf/watrous/Quantum_Information.pdf#page=132) {#quantum-state-discrimination}
+## 量子状態の識別 (Quantum state discrimination) [p.124](../assets/pdf/watrous/Quantum_Information.pdf#page=132) {#quantum-state-discrimination}
 
 この節では、与えられた量子状態が、既知の複数の候補のうちのどれであるかを特定する問題、すなわち「量子状態の識別」について扱います。
 
@@ -9,7 +9,7 @@
 
 :::
 
-### 2つの量子状態の識別 (Discriminating between pairs of quantum states) [📄 p.127](../assets/pdf/watrous/Quantum_Information.pdf#page=135) {#discriminating-pairs}
+### 2つの量子状態の識別 (Discriminating between pairs of quantum states) [p.127](../assets/pdf/watrous/Quantum_Information.pdf#page=135) {#discriminating-pairs}
 
 量子状態の識別問題は、以下の古典的シナリオ（Scenario 3.1）の自然な拡張として理解できます。
 
@@ -54,7 +54,7 @@ $$ P_{\text{opt}} = \frac{1}{2} + \frac{1}{2} \| p_0 \rho_0 - p_1 \rho_1 \|_1 $$
 
 :::
 
-### アンサンブルの量子状態の識別 (Discriminating quantum states of an ensemble) [📄 p.132](../assets/pdf/watrous/Quantum_Information.pdf#page=140) {#discriminating-ensemble}
+### アンサンブルの量子状態の識別 (Discriminating quantum states of an ensemble) [p.132](../assets/pdf/watrous/Quantum_Information.pdf#page=140) {#discriminating-ensemble}
 
 より一般的な設定として、複数の状態のアンサンブルからの識別問題を考えます。
 
@@ -74,19 +74,19 @@ $$ P_{\text{success}} = \sum_{a \in \Sigma} p_a \langle M_a, \rho_a \rangle $$
 
 **主問題 (Primal):**
 $$
-\begin{align}
+\begin{aligned}
 \text{maximize} \quad & \sum_{a \in \Sigma} p_a \langle M_a, \rho_a \rangle \\
 \text{subject to} \quad & \sum_{a \in \Sigma} M_a = \mathbb{I}, \\
 & M_a \geq 0 \quad (\forall a \in \Sigma)
-\end{align}
+\end{aligned}
 $$
 
 **双対問題 (Dual):**
 $$
-\begin{align}
+\begin{aligned}
 \text{minimize} \quad & \text{Tr}(Y) \\
 \text{subject to} \quad & Y \geq p_a \rho_a \quad (\forall a \in \Sigma)
-\end{align}
+\end{aligned}
 $$
 
 :::
@@ -107,7 +107,7 @@ $$
 
 :::
 
-### Pretty Good Measurement (PGM) [📄 p.137](../assets/pdf/watrous/Quantum_Information.pdf#page=145) {#pretty-good-measurement}
+### Pretty Good Measurement (PGM) [p.137](../assets/pdf/watrous/Quantum_Information.pdf#page=145) {#pretty-good-measurement}
 
 最適解を解析的に求めるのが難しい場合でも、アンサンブルの情報ののみから構成できる「十分良い」測定として **Pretty Good Measurement (PGM)**（または正則測定）が知られています。
 

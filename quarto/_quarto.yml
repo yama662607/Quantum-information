@@ -10,7 +10,7 @@ project:
 book:
   title: "Quantum Information"
   author: "Daisuke Yamashiki"
-  date: "2025-01-23"
+  date: last-modified
   navbar:
     left:
       - text: "ホーム"

@@ -4,7 +4,7 @@
 
 ---
 
-## 📋 このプロジェクトでの推奨設定
+## このプロジェクトでの推奨設定
 
 ### 基本方針
 
@@ -24,7 +24,7 @@ number-depth: 2              # 2階層まで番号付け（章.節）
 
 ---
 
-## 🎯 実装パターン
+## 実装パターン
 
 ### パターン1: 標準的な教科書構成（推奨）
 
@@ -79,7 +79,7 @@ number-depth: 2
 
 ---
 
-## 🚫 特定見出しを番号なしにする
+## 特定見出しを番号なしにする
 
 ### 例：序文、参考文献、付録
 
@@ -105,7 +105,7 @@ number-depth: 2
 
 ---
 
-## 🔗 節参照の使用方法（重要）
+## 節参照の使用方法（重要）
 
 見出し番号と連動した参照を使うには、**必ず `{#sec-...}` ラベルを付けてください**。
 
@@ -128,7 +128,7 @@ number-depth: 2
 
 ---
 
-## 📊 図表の章ごと番号付け
+## 図表の章ごと番号付け
 
 教科書では「Figure 2.1, 2.2, 3.1」のように章ごとに番号を分けたいことが多いです。
 
@@ -152,7 +152,7 @@ crossref:
 
 ---
 
-## ⚙️ Preskill版とWatrous版の番号付けを分ける
+## Preskill版とWatrous版の番号付けを分ける
 
 （オプション）異なる章番号体系が必要な場合：
 
@@ -178,7 +178,7 @@ number-depth: 2
 
 ---
 
-## 🔧 テンプレート統合
+## テンプレート統合
 
 ### quantum_textbook_template.qmd での推奨記述
 
@@ -201,31 +201,31 @@ number-depth: 2
 
 ---
 
-## ⚠️ よくある落とし穴
+## よくある落とし穴
 
 ### 1. number-sections がない
 
 ```yaml
-# ❌ 番号が出ない
+# 番号が出ない
 title: "My Doc"
 ```
 
 ```yaml
-# ✅ これが必須
+# これが必須
 number-sections: true
 ```
 
 ### 2. ラベルが sec- で始まっていない
 
 ```markdown
-# ❌ 参照が成立しない
+# 参照が成立しない
 ## 背景 {#background}
 
 @background は機能しません。
 ```
 
 ```markdown
-# ✅ 正しい形式
+# 正しい形式
 ## 背景 {#sec-background}
 
 @sec-background は機能します。
@@ -234,12 +234,12 @@ number-sections: true
 ### 3. ラベルにアンダースコアを使う
 
 ```markdown
-# ⚠️ PDF/LaTeX で問題が起きる可能性
+# PDF/LaTeX で問題が起きる可能性
 ## データ処理 {#sec-data_processing}
 ```
 
 ```markdown
-# ✅ ハイフンを使う
+# ハイフンを使う
 ## データ処理 {#sec-data-processing}
 ```
 
@@ -256,7 +256,7 @@ number-sections: true
 ### 5. number-offset が PDF で効かない
 
 ```yaml
-# ⚠️ HTML/Docx では機能、PDF では期待通りにならない可能性
+# HTML/Docx では機能、PDF では期待通りにならない可能性
 number-offset: 5
 ```
 
@@ -264,7 +264,7 @@ number-offset: 5
 
 ---
 
-## 📋 実装チェックリスト
+## 実装チェックリスト
 
 新しい章を追加する際の確認項目：
 
@@ -277,7 +277,7 @@ number-offset: 5
 
 ---
 
-## 🎨 日本語化の参考設定
+## 日本語化の参考設定
 
 ```yaml
 # _quarto.yml で日本語向けカスタマイズ
@@ -292,7 +292,7 @@ crossref:
 
 ---
 
-## 📚 参考資料
+## 参考資料
 
 - **Quarto 公式**: https://quarto.org/docs/authoring/cross-references.html
 - **Quarto PDF ガイド**: https://quarto.org/docs/output-formats/pdf-basics.html

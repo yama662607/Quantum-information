@@ -4,7 +4,7 @@
 
 ---
 
-## 📋 概要
+## 概要
 
 | 項目 | 内容 |
 |:---|:---|
@@ -15,7 +15,7 @@
 
 ---
 
-## 🔧 インストールしたツール
+## インストールしたツール
 
 | ツール | バージョン | 用途 |
 |:---|:---|:---|
@@ -25,7 +25,7 @@
 
 ---
 
-## 📝 詳細手順
+## 詳細手順
 
 ### ステップ 1: uv のインストール
 
@@ -127,26 +127,26 @@ just setup
 #### 結果
 
 ```
-🔍 Checking development environment...
+ Checking development environment...
 
-✅ uv         Found: C:\Users\hiroto yamada\.local\bin\uv.EXE
+ uv         Found: C:\Users\hiroto yamada\.local\bin\uv.EXE
    Version: uv 0.9.26 (ee4f00362 2026-01-15)
-✅ just       Found: C:\Users\hiroto yamada\AppData\Local\Microsoft\WinGet\Packages\Casey.Just_Microsoft.Winget.Source_8wekyb3d8bbwe\just.EXE
+ just       Found: C:\Users\hiroto yamada\AppData\Local\Microsoft\WinGet\Packages\Casey.Just_Microsoft.Winget.Source_8wekyb3d8bbwe\just.EXE
    Version: just 1.46.0
-✅ Quarto     Found: C:\Program Files\Quarto\bin\quarto.EXE
-✨ All systems go! You are ready to develop.
+ Quarto     Found: C:\Program Files\Quarto\bin\quarto.EXE
+ All systems go! You are ready to develop.
 
-📦 Setting up environment...
+ Setting up environment...
 uv sync --all-extras
 Resolved 128 packages in 3ms
 Audited 124 packages in 19ms
 npm install
-✅ Environment setup complete!
+ Environment setup complete!
 ```
 
 ---
 
-## ⚠️ 重要な注意点
+## 重要な注意点
 
 ### 環境変数の更新について
 
@@ -168,7 +168,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 
 ---
 
-## 📂 インストール後のプロジェクト構造
+## インストール後のプロジェクト構造
 
 ```
 Quantum-information/
@@ -192,7 +192,7 @@ Quantum-information/
 
 ---
 
-## 🚀 利用可能なコマンド
+## 利用可能なコマンド
 
 セットアップ完了後、以下のコマンドが利用可能です：
 
@@ -207,7 +207,7 @@ Quantum-information/
 
 ---
 
-## 📚 参考リンク
+## 参考リンク
 
 - [uv 公式ドキュメント](https://github.com/astral-sh/uv)
 - [Just 公式ドキュメント](https://github.com/casey/just)

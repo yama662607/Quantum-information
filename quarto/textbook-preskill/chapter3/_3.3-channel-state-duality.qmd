@@ -1,8 +1,8 @@
-## 3.3 チャネル-状態双対性とチャネルのダイレーション (Channel-state duality and the dilation of a channel) [📄 p.20](/assets/pdf/preskill/chap3.pdf#page=20) {#sec-3.3-channel-state-duality}
+## 3.3 チャネル-状態双対性とチャネルのダイレーション (Channel-state duality and the dilation of a channel) [p.20](/assets/pdf/preskill/chap3.pdf#page=20) {#sec-3.3-channel-state-duality}
 
 $A$ 上に作用する量子チャネルは、$A$ の拡張系に対するユニタリ写像から生じるものであり、密度演算子から密度演算子への完全正値線形写像であることを見てきました。線形性と完全正値性は、量子状態に対するいかなる合理的な発展則に対しても成り立つべき性質であると主張してきました。したがって、トレース保存完全正値線形写像はいずれも量子チャネルであり、オペレーター和表現とユニタリな実現を持つことに注意しておくことは意義深いです。$A$ の（一般にユニタリではない）発展を考える際、私たちは $A$ がユニタリに発展する拡張されたシステムの一部であると想像する権利があります。
 
-### 3.3.1 チャネル-状態双対性 (Channel-state duality) [📄 p.20](/assets/pdf/preskill/chap3.pdf#page=20) {#sec-3.3.1-channel-state-duality}
+### 3.3.1 チャネル-状態双対性 (Channel-state duality) [p.20](/assets/pdf/preskill/chap3.pdf#page=20) {#sec-3.3.1-channel-state-duality}
 
 この命題を証明するために、それ自体として興味深く、かつ他の応用も持つトリックを使います。$A$ から $A'$ へと写像する $\mathcal{E}$ の性質を研究するために、$A$ と同じ次元を持つ補助系 $R$（**参照系（reference system）**と呼びます）を導入します。もし $\mathcal{E}$ が完全正値ならば、$A$ 上の最大エンタングル状態を $RA'$ 上の非負演算子に写像します。逆に、$RA'$ 上の任意の非負演算子に対して、$A$ から $A'$ へと写像する対応する CP 写像を関連付けることができます。写像と状態のこの対応は、**Choi-Jamiołkowski 同型（Choi-Jamiolkowski isomorphism）**または**チャネル-状態双対性（channel-state duality）**と呼ばれ、非常に有用なツールです。
 
@@ -63,7 +63,7 @@ $$
 \boldsymbol{N}_\mu = \sum_a V_{\mu a} \boldsymbol{M}_a
 $$ {#eq-3.78}
 
-によって関連付けられます。ここで $V_{\mu a}$ はユニタリ行列です。 [📄 p.22](/assets/pdf/preskill/chap3.pdf#page=22)
+によって関連付けられます。ここで $V_{\mu a}$ はユニタリ行列です。 [p.22](/assets/pdf/preskill/chap3.pdf#page=22)
 
 チャネル-状態双対性はまた、チャネルを記述するのに必要なクラウス演算子の数を明らかにします。$A$ を $A'$ に写像するチャネル $\mathcal{E}$（$A$ の次元 $d$、$A'$ の次元 $d'$）は、$R$ の次元 $d$、$RA'$ 上の密度演算子と等価であり、クラウス演算子の最小数はこの密度演算子のランク（非ゼロ固有値の数）と同じです。これは $dd'$ 以下です。もちろん、この最小数よりも多くのクラウス演算子を使う $\mathcal{E}$ のオペレーター和表現が存在することもあります。
 
@@ -75,7 +75,7 @@ $$ {#eq-3.79}
 
 これは qubit から qubit へのチャネルでは 12 個のパラメータです。対照的に、qubit 上のユニタリ写像は、物理的に無関係な全体位相を除くと 3 個のパラメータしか持ちません。
 
-### 3.3.2 Stinespring ダイレーション (Stinespring dilation) [📄 p.22](/assets/pdf/preskill/chap3.pdf#page=22) {#sec-3.3.2-stinespring-dilation}
+### 3.3.2 Stinespring ダイレーション (Stinespring dilation) [p.22](/assets/pdf/preskill/chap3.pdf#page=22) {#sec-3.3.2-stinespring-dilation}
 
 チャネル $\mathcal{E}_{A \to A'}$ のオペレーター和表現が得られれば、$\mathcal{E}$ を拡張されたシステムに対するユニタリ写像によってどのように実現できるかが容易にわかります。クラウス演算子の数に等しいヒルベルト空間の次元を持ち、正規直交基底 $\{|a\rangle\}$ を持つ余分なシステム $E$（チャネルの**環境（environment）**）を導入します。すると、$|\psi\rangle \in A$ を $A'E$ に写像するアイソメトリー（内積保存写像）を
 
@@ -99,7 +99,7 @@ $$ {#eq-3.82}
 
 を使います。チャネルを純粋状態を用いてこのように簡潔に特徴付けることは時として非常に便利であり、第 10 章で量子チャネルを研究する際にこれを多用します。
 
-### 3.3.3 公理の再考 (Axioms revisited) [📄 p.23](/assets/pdf/preskill/chap3.pdf#page=23) {#sec-3.3.3-axioms-revisited}
+### 3.3.3 公理の再考 (Axioms revisited) [p.23](/assets/pdf/preskill/chap3.pdf#page=23) {#sec-3.3.3-axioms-revisited}
 
 第 2 章では、閉じたシステムに適した形で量子力学の公理を述べました。開いたシステムの理論が手元にある今、状態・測定・発展の記述の改訂された概念を用いた代替的な定式化を与えることができます。
 

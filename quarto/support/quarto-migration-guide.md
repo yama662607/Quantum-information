@@ -63,16 +63,16 @@ Quarto の挙動を定義するプロジェクト全体の設計図です。
 
 このプロジェクトで実践されている独自の工夫を以下にまとめます。
 
-### 🐍 Python 連携 (Frozen Execution)
+### Python 連携 (Frozen Execution)
 `execute: freeze: auto` 設定により、ドキュメント内の Python コードは実行結果がキャッシュ（フリーズ）されます。
 これにより、環境が変わってもドキュメントの再レンダリングが高速化され、再現性が保たれます。
 
-### 🎨 カスタム CSS による装飾
+### カスタム CSS による装飾
 `quarto/templates/styles.css` を通じて、標準の Quarto には無いスタイルを適用しています。
 - **Callout ボックスの調整**: ヒントや警告の余白を最適化。
 - **コード強調**: フォントや背景色の微調整。
 
-### 🕵️ ドキュメント自動検証器 (`just validate-docs`)
+### ドキュメント自動検証器 (`just validate-docs`)
 大規模なドキュメントプロジェクトでは、Mermaid や LaTeX の構文エラーがビルドを止めがちです。
 このプロジェクトの `just validate-docs` コマンドを流用することで、Quarto の構造チェックに加え、Mermaid や数式の検証を爆速（キャッシュ機能付き）で行うことができます。
 

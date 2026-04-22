@@ -13,7 +13,7 @@ def run_dev_server():
     quarto_bin = find_quarto()
     if quarto_bin is None:
         print(
-            "❌ Quarto が見つかりません。インストールしてください: https://quarto.org/docs/get-started/"
+            " Quarto が見つかりません。インストールしてください: https://quarto.org/docs/get-started/"
         )
         sys.exit(1)
 
@@ -24,7 +24,7 @@ def run_dev_server():
     ]
     quarto_cmd = [quarto_bin, "preview", "quarto", "--port", "4312", "--render", "html"]
 
-    print("🚀 Starting dev server (Watcher + Quarto Preview)...")
+    print(" Starting dev server (Watcher + Quarto Preview)...")
 
     processes = []
     try:
@@ -51,7 +51,7 @@ def run_dev_server():
             time.sleep(1)
 
     except KeyboardInterrupt:
-        print("\n🛑 Shutting down...")
+        print("\n Shutting down...")
     finally:
         for proc in processes:
             if proc.poll() is None:
@@ -66,7 +66,7 @@ def run_dev_server():
             except subprocess.TimeoutExpired:
                 proc.kill()
 
-    print("👋 Dev server stopped.")
+    print(" Dev server stopped.")
 
 
 if __name__ == "__main__":

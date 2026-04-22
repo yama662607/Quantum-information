@@ -3,11 +3,11 @@
 John Preskill 教授の講義ノート **"Quantum Computation"** を、自主ゼミ形式で1年かけて丁寧に読み解き、日本語の解説ノートとして再現するプロジェクトです。
 
 > [!NOTE]
-> John Watrous 教授の "The Theory of Quantum Information" の学習ノートはアーカイブとして引き続き参照できます。[📚 Watrous版 アーカイブへ](./quarto/textbook-watrous/textbook.qmd)
+> John Watrous 教授の "The Theory of Quantum Information" の学習ノートはアーカイブとして引き続き参照できます。[ Watrous版 アーカイブへ](./quarto/textbook-watrous/textbook.qmd)
 
 ---
 
-## 🎯 プロジェクトの目的
+## プロジェクトの目的
 
 このプロジェクトでは、単なる要約や解説にとどまらず、**原文を一言一句日本語に翻訳したうえで、数学的直感や Qiskit を用いた実装例を追加した、究極の日本語版講義ノート**を作ることを目指しています。
 
@@ -24,7 +24,7 @@ Preskill 教授の講義ノートは、量子情報理論を**物理学的な直
 
 ---
 
-## 🗓️ ロードマップ（1年間の目安）
+## ロードマップ（1年間の目安）
 
 | 期間 | 章 | 内容 |
 | :--- | :--- | :--- |
@@ -40,7 +40,7 @@ Preskill 教授の講義ノートは、量子情報理論を**物理学的な直
 
 ---
 
-## 🚀 クイックスタート (Quick Start)
+## クイックスタート (Quick Start)
 
 このプロジェクトを動かすには **[uv](https://github.com/astral-sh/uv)** と **[Just](https://github.com/casey/just)** が必要です。
 
@@ -61,17 +61,17 @@ Preskill 教授の講義ノートは、量子情報理論を**物理学的な直
 
 ---
 
-## 🤝 共同開発ガイド (Collaboration)
+## 共同開発ガイド (Collaboration)
 
 このプロジェクトは、人間とAIエージェントが協力して執筆することを前提に設計されています。
 
--   **品質管理**: パッチをプッシュする前に `just check` を実行してください。
--   **PDF解析**: 新しいページを読むときは `just process-pdf <pdf> <start> <end>` を使ってテキスト・数式・画像を一括取得します。
--   **AIエージェントとの協調**: パートナーのAIエージェントにはまず [AGENTS.md](./AGENTS.md) を読むように指示してください。
+- **品質管理**: パッチをプッシュする前に `just check` を実行してください。
+- **PDF解析**: 新しいページを読むときは `just process-pdf <pdf> <start> <end>` を使ってテキスト・数式・画像を一括取得します。
+- **AIエージェントとの協調**: パートナーのAIエージェントにはまず [AGENTS.md](./AGENTS.md) を読むように指示してください。
 
 ---
 
-## 🛠️ 技術スタック (Tech Stack)
+## 技術スタック (Tech Stack)
 
 | ツール | 用途 |
 | :--- | :--- |
@@ -82,7 +82,7 @@ Preskill 教授の講義ノートは、量子情報理論を**物理学的な直
 
 ---
 
-## 📂 ディレクトリ構成
+## ディレクトリ構成
 
 ```text
 Quantum-information/
@@ -104,34 +104,34 @@ Quantum-information/
 
 ---
 
-## 🔧 セットアップガイド (Setup Guide)
+## セットアップガイド (Setup Guide)
 
 ### 1. uv のインストール
 
--   **macOS / Linux:**
+- **macOS / Linux:**
     ```bash
     curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
--   **macOS (Homebrew):** `brew install uv`
+- **macOS (Homebrew):** `brew install uv`
 
 ### 2. Just のインストール
 
--   **macOS (Homebrew):** `brew install just`
--   **Linux (Ubuntu/Debian):** `sudo apt install just`
+- **macOS (Homebrew):** `brew install just`
+- **Linux (Ubuntu/Debian):** `sudo apt install just`
 
 > [!TIP]
 > インストール後、ターミナルを再起動して `just --version` および `uv --version` が動作することを確認してください。
 
 ---
 
-## 📈 デプロイ状況
+## デプロイ状況
 
 GitHub Pages への自動デプロイが設定されています。`master` ブランチへのプッシュにより、以下の URL が更新されます：
 `https://yama662607.github.io/Quantum-information/`
 
 ---
 
-## 📄 ライセンス (License)
+## ライセンス (License)
 
 このプロジェクトは [MIT License](./LICENSE) のもとで公開されています。
 © 2026 Daisuke Yamashiki

@@ -1,0 +1,16 @@
+# Source material intake manifest.
+#
+# Use this file to record newly imported notes, screenshots, draft OCR output,
+# and private source material before promoting the content into Quarto chapters.
+
+materials:
+  - id: example-source
+    date: null
+    source_files:
+      raw: []
+      private: []
+      pdf: []
+      images: []
+    context: ""
+    extracted_sections: []
+    notes: "Replace this example entry when importing real source material."

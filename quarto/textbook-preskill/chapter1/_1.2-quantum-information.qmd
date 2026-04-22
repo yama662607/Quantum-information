@@ -1,4 +1,4 @@
-## 1.2 量子情報 (Quantum information) [📄 p.4](/assets/pdf/preskill/chap1.pdf#page=4) {#sec-1.2-quantum-information}
+## 1.2 量子情報 (Quantum information) [p.4](/assets/pdf/preskill/chap1.pdf#page=4) {#sec-1.2-quantum-information}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **量子的なランダム性**: 古典的な「疑似乱数」とは異なる、本質的なランダム性を理解する。

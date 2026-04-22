@@ -8,7 +8,7 @@
 
 ## 1. トレース保存 (TP) の証明における鍵：双対性
 
-### 🔑 随伴写像の定義と物理的意味
+### 随伴写像の定義と物理的意味
 
 数学的な定義は以下の内積保存です：
 $$ \langle Y, \Phi(X) \rangle = \langle \Phi^*(Y), X \rangle $$
@@ -45,7 +45,7 @@ $$ \langle Y, \Phi(X) \rangle = \langle \Phi^*(Y), X \rangle $$
 
 ## 2. 完全正値 (CP) の証明における鍵：Choi行列と分解
 
-### 🔑 Choi-Jamiolkowski 同型による「診断」
+### Choi-Jamiolkowski 同型による「診断」
 
 Choi行列 $J(\Phi)$ は、正規化されていない最大エンタングル状態 $|\Gamma\rangle = \sum_{i=1}^d |i\rangle|i\rangle$ を入力して得られます。
 
@@ -61,7 +61,7 @@ $$
     入力の基底 $|i\rangle\langle j|$ が、出力側の第2系（参照系）に $|i\rangle\langle j|$ として「コピー」されています。
     つまり、$J(\Phi)$ は「入力 $i, j$ に対する出力 $\Phi(|i\rangle\langle j|)$ のリスト」そのものです。
 
-### 🔑 Choi行列からKraus表現への変換（構成的証明）
+### Choi行列からKraus表現への変換（構成的証明）
 
 「Choi行列が半正定値 ($J(\Phi) \ge 0$) ならば、Kraus表現が存在する」という証明は、実際にKraus演算子を作る手順になっています。
 

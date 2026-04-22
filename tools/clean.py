@@ -17,7 +17,7 @@ def clean():
         "quarto/textbook-watrous/textbook_files",
     ]
 
-    print("🗑️ Cleaning artifacts...")
+    print(" Cleaning artifacts...")
 
     for target_rel in targets:
         target_path = project_root / target_rel
@@ -47,7 +47,7 @@ def clean():
         except Exception:
             pass
 
-    print("✅ Cleanup complete!")
+    print(" Cleanup complete!")
 
 
 if __name__ == "__main__":

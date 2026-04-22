@@ -1,6 +1,6 @@
 # Preskill版 PDFマッピングガイド
 
-## 🎯 問題設定
+## 問題設定
 
 Preskill版の講義ノートは **チャプター毎に独立したPDFファイル** となっており、各PDFのページナンバリングが独立しています。つまり：
 
@@ -12,7 +12,7 @@ Preskill版の講義ノートは **チャプター毎に独立したPDFファイ
 
 ---
 
-## 📋 実装戦略
+## 実装戦略
 
 ### ステップ1: 各チャプターPDFの構造を観測
 
@@ -57,7 +57,7 @@ just process-pdf quarto/assets/pdf/preskill/chap2_15.pdf 1 5
 マッピング表を基にして、各セクションに対応するPDFリンクを記述：
 
 ```markdown
-## 1.1 量子情報とは何か [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=1) {#sec-what-is-qi}
+## 1.1 量子情報とは何か [chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=1) {#sec-what-is-qi}
 
 （本文内容）
 ```
@@ -69,7 +69,7 @@ just process-pdf quarto/assets/pdf/preskill/chap2_15.pdf 1 5
 
 ---
 
-## 🔧 実装例
+## 実装例
 
 ### 例1: Preskill Chapter 1
 
@@ -91,18 +91,18 @@ title: "Chapter 1: Introduction"
 
 # Chapter 1: Introduction
 
-## 1.1 基礎概念 [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=3) {#sec-foundations}
+## 1.1 基礎概念 [chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=3) {#sec-foundations}
 
 ここでは量子情報の基礎を説明します。
 
-## 1.2 量子状態 [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=8) {#sec-quantum-states}
+## 1.2 量子状態 [chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=8) {#sec-quantum-states}
 
 量子状態の定義と性質について述べます。
 ```
 
 ---
 
-## 🛠️ ワークフロー実装手順
+## ワークフロー実装手順
 
 ### フェーズ1: PDF構造の観測（翻訳前）
 
@@ -130,7 +130,7 @@ just process-pdf quarto/assets/pdf/preskill/chap2_15.pdf 1 10
 ### フェーズ3: 翻訳と並行してリンク付け
 
 ```markdown
-## 2.1 量子状態とアンサンブル [📄 chap2.pdf](/assets/pdf/preskill/chap2_15.pdf#page=1) {#sec-states-ensembles}
+## 2.1 量子状態とアンサンブル [chap2.pdf](/assets/pdf/preskill/chap2_15.pdf#page=1) {#sec-states-ensembles}
 
 （翻訳内容）
 ```
@@ -139,13 +139,13 @@ just process-pdf quarto/assets/pdf/preskill/chap2_15.pdf 1 10
 
 ```bash
 just docs
-# ブラウザで [📄 chap2.pdf] をクリック
+# ブラウザで [chap2.pdf] をクリック
 # 正しいページが開くか確認（特にPDF#page番号が正確か）
 ```
 
 ---
 
-## 📊 管理ファイルの位置づけ
+## 管理ファイルの位置づけ
 
 ```
 research/
@@ -197,29 +197,29 @@ type: reference
 
 ---
 
-## ⚠️ よくある落とし穴
+## よくある落とし穴
 
 ### 1. ページ番号を統合PDFのものと混同
 
-❌ **NG**: Watrous版の「物理ページ = 表記ページ + 8」のような計算をそのまま適用
+ **NG**: Watrous版の「物理ページ = 表記ページ + 8」のような計算をそのまま適用
 
-✅ **OK**: 各チャプターのページナンバリングは独立。必ず対象PDFで確認
+ **OK**: 各チャプターのページナンバリングは独立。必ず対象PDFで確認
 
 ### 2. セクション番号とページ番号を対応付けないまま執筆
 
-❌ **NG**: 「ページ5」と言ってるが、実際には別チャプターの内容だった
+ **NG**: 「ページ5」と言ってるが、実際には別チャプターの内容だった
 
-✅ **OK**: 執筆前に マッピング表を完成させてから翻訳開始
+ **OK**: 執筆前に マッピング表を完成させてから翻訳開始
 
 ### 3. PDFリンクのページ番号が誤ったまま進行
 
-❌ **NG**: `#page=10` で指定したが、実は `#page=8` が正しい（後から修正しづらい）
+ **NG**: `#page=10` で指定したが、実は `#page=8` が正しい（後から修正しづらい）
 
-✅ **OK**: `just docs` で常に確認しながら作業
+ **OK**: `just docs` で常に確認しながら作業
 
 ---
 
-## 🔍 チェックリスト
+## チェックリスト
 
 新しいチャプターを開始する際：
 
@@ -232,7 +232,7 @@ type: reference
 
 ---
 
-## 📚 関連ドキュメント
+## 関連ドキュメント
 
 - `AGENTS.md` → PDFリンク戦略（大方針）
 - `quarto_heading_numbering.md` → 見出し番号と参照の実装
