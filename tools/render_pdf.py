@@ -13,9 +13,7 @@ except ImportError:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Render PDF pages as images (PNG)."
-    )
+    parser = argparse.ArgumentParser(description="Render PDF pages as images (PNG).")
     parser.add_argument("pdf_path", help="Path to PDF file")
     parser.add_argument("--start", type=int, default=1, help="Start page (1-based)")
     parser.add_argument("--end", type=int, default=1, help="End page (1-based)")
