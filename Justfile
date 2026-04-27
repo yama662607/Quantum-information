@@ -31,8 +31,17 @@ setup: check-env
     @echo "✅ Environment setup complete!"
 
 # 全体品質検証: コードを変更せずに品質を検証 (CIゲート)
-check: fmt-check lint typecheck validate-docs test
+check: fmt-check lint typecheck validate-docs render-check test
     @echo "✅ All quality checks passed!"
+
+# 構文チェックのみの軽量レンダリング (compute blocks は実行しない)
+render-check:
+    @echo "🧪 Quarto syntax check (no execute)..."
+    quarto render quarto --to html --execute-debug --no-execute
+
+# Quarto HTML 実レンダリング
+render-site:
+    quarto render quarto --to html
 
 # 自動修正: フォーマット、Lint、およびドキュメントの構造エラーを自動修正
 fix: fmt lint-fix validate-docs-fix
@@ -89,16 +98,16 @@ clean:
 # 📚 Project-Specific Tasks
 # =============================================================================
 
-# Quarto文書のリアルタイム・プレビュー起動 (自動更新機能付き)
-docs:
-    @{{python}} tools/dev_server.py || (echo "\n❌ Preview failed. If the port is already in use, try running: \033[1mjust fix-docs\033[0m" && exit 1)
+# Quarto プレビュー起動 (port 4312)。
+# 前回のプレビューを止め忘れて別ターミナルで再実行しても動くよう、
+# 起動前に必ず port 4312 に居座っているプロセスを掃除する。
+docs: fix-docs
+    @{{python}} tools/dev_server.py
 
-# docs が失敗した（ポート使用中など）場合の復旧コマンド
+# プレビューが落ちない / ポートが使用中の場合の復旧 (Win/Mac/Linux 対応)。
+# `docs` から自動で呼ばれる。手動での復旧用にも単独実行可。
 fix-docs:
-    @echo "🧹 Cleaning up lingering Quarto processes and freeing port 4312..."
-    -lsof -ti:4312 | xargs kill -9 2>/dev/null
-    -pkill -f "quarto preview" 2>/dev/null
-    @echo "✅ Cleanup complete. You can now try 'just docs' again."
+    @{{python}} tools/kill_quarto_process.py --port 4312
 
 # Streamlitアプリの起動
 app path:
