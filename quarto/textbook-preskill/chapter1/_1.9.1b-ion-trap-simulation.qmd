@@ -162,3 +162,124 @@ fig
 **観察ポイント**: 赤線 ($|e,0_{\rm ph}\rangle$) と青線 ($|g,1_{\rm ph}\rangle$) が完全に逆相のラビ振動を示す一方、ダーク状態 $|g,0_{\rm ph}\rangle$ は確率 1 のまま動かない。**この「ダーク状態の存在」こそが、フォノンバス CNOT の制御条件 (= 制御イオンが $|0\rangle$ なら何もしない)** を物理的に成立させています。
 
 :::
+
+##### Section 3: Step-by-step phonon-bus CNOT
+
+ここからは「制御イオン $c$ と標的イオン $t$ の間に **CNOT を実装する**」という Cirac–Zoller 提案のコアを、3 量子系 $|c, t, {\rm ph}\rangle$ で段階的に追います。基底は 8 次元:
+
+$$
+|c,t,{\rm ph}\rangle,\qquad c, t, {\rm ph} \in \{0, 1\}
+$$
+
+をインデックス順 $i = 4c + 2t + {\rm ph}$ で並べます。初期状態と各ステップの作用は以下の通り。
+
+- **Step 0**: $\frac{1}{\sqrt{2}}(|0\rangle_c + |1\rangle_c)\otimes |0\rangle_t \otimes |0\rangle_{\rm ph}$
+- **Step 1** (制御 $\to$ フォノン): $|0\rangle_c|\cdots\rangle|0\rangle_{\rm ph}\to$ そのまま、$|1\rangle_c|\cdots\rangle|0\rangle_{\rm ph}\to |1\rangle_c|\cdots\rangle|1\rangle_{\rm ph}$
+- **Step 2** (フォノン-標的 CNOT): $|y\rangle_t|0\rangle_{\rm ph}\to$ そのまま、$|y\rangle_t|1\rangle_{\rm ph}\to |y\oplus 1\rangle_t|1\rangle_{\rm ph}$
+- **Step 3** (フォノン消去 = Step 1 の逆): $|1\rangle_c|\cdots\rangle|1\rangle_{\rm ph}\to |1\rangle_c|\cdots\rangle|0\rangle_{\rm ph}$
+
+最終状態は Bell 状態 $\frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)\otimes|0\rangle_{\rm ph}$ になり、フォノンが綺麗に基底状態に戻っているため **2 量子部分系がそのまま純粋なエンタングル状態として残る**ことを次の Section 4 以降で検証します。
+
+```{pyodide}
+#| autorun: true
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 8 次元基底のラベルとインデックス変換
+LABELS = [f"|{c}{t}{p}>" for c in (0, 1) for t in (0, 1) for p in (0, 1)]
+
+def idx(c, t, p):
+    return 4 * c + 2 * t + p
+
+def state_table(psi, eps=1e-10):
+    amp = np.asarray(psi, dtype=complex)
+    prob = np.abs(amp) ** 2
+    phase = np.where(np.abs(amp) > eps, np.angle(amp), np.nan)
+    return pd.DataFrame({
+        "basis": LABELS,
+        "amplitude": [f"{a.real:+.3f} {a.imag:+.3f}i" for a in amp],
+        "probability": np.round(prob, 4),
+        "phase [rad]": np.round(phase, 4),
+    })
+
+def plot_probs(psi, title):
+    fig = plt.figure(figsize=(8, 2.8))
+    plt.bar(range(8), np.abs(psi) ** 2, color="#1e40af")
+    plt.xticks(range(8), LABELS, rotation=0)
+    plt.ylim(0.0, 1.05)
+    plt.ylabel("probability")
+    plt.title(title)
+    plt.tight_layout()
+    return fig
+
+# ---- Step 0: 初期状態 (|0>_c + |1>_c)/sqrt(2) ⊗ |0>_t ⊗ |0>_ph ----
+inv_sqrt2 = 1.0 / np.sqrt(2.0)
+psi0 = np.zeros(8, dtype=complex)
+psi0[idx(0, 0, 0)] = inv_sqrt2
+psi0[idx(1, 0, 0)] = inv_sqrt2
+```
+
+```{pyodide}
+#| autorun: true
+plot_probs(psi0, "Step 0: initial state (|0>_c + |1>_c)/sqrt(2) ⊗ |00>_{t,ph}")
+```
+
+```{pyodide}
+#| autorun: true
+state_table(psi0)
+```
+
+```{pyodide}
+#| autorun: true
+# ---- Step 1: 制御イオンが |1> なら フォノンを 0 -> 1 にする (SWAP on ph for c=1) ----
+psi1 = psi0.copy()
+for tval in (0, 1):
+    i0, i1 = idx(1, tval, 0), idx(1, tval, 1)
+    psi1[i0], psi1[i1] = psi0[i1], psi0[i0]
+
+plot_probs(psi1, "Step 1: control-conditioned phonon excitation")
+```
+
+```{pyodide}
+#| autorun: true
+state_table(psi1)
+```
+
+```{pyodide}
+#| autorun: true
+# ---- Step 2: フォノンが 1 のときだけ標的イオンを反転 (CNOT_{ph -> t}) ----
+psi2 = psi1.copy()
+for cval in (0, 1):
+    i_t0 = idx(cval, 0, 1)
+    i_t1 = idx(cval, 1, 1)
+    psi2[i_t0], psi2[i_t1] = psi1[i_t1], psi1[i_t0]
+
+plot_probs(psi2, "Step 2: phonon-controlled NOT on target")
+```
+
+```{pyodide}
+#| autorun: true
+state_table(psi2)
+```
+
+```{pyodide}
+#| autorun: true
+# ---- Step 3: Step 1 の逆 (フォノンを 0 に戻す) ----
+psi3 = psi2.copy()
+for tval in (0, 1):
+    i0, i1 = idx(1, tval, 0), idx(1, tval, 1)
+    psi3[i0], psi3[i1] = psi2[i1], psi2[i0]
+
+plot_probs(psi3, "Step 3: erase phonon — final = (|00> + |11>)/sqrt(2) ⊗ |0>_ph")
+```
+
+```{pyodide}
+#| autorun: true
+state_table(psi3)
+```
+
+::: {.field-notes}
+**観察ポイント**: 各ステップで確率分布が「2 本のピークだけが移動」していくことに注目。位相情報 (`phase [rad]`) は全ての非ゼロ成分で 0 のまま (実数係数) で、最終的な Bell 状態 $\frac{1}{\sqrt{2}}(|000\rangle + |110\rangle)$ も確率は $|000\rangle$ と $|110\rangle$ に半々です。**確率だけ見ると古典的な「コインで決まる 2 状態混合」と区別できない** — この区別は Section 4 で密度行列を使って初めて可視化されます。
+
+:::
