@@ -115,7 +115,9 @@ def _kill_by_cmdline(needle: str) -> int:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Kill lingering Quarto preview processes.")
+    parser = argparse.ArgumentParser(
+        description="Kill lingering Quarto preview processes."
+    )
     parser.add_argument(
         "--port", type=int, default=4312, help="Preview port to free (default: 4312)"
     )

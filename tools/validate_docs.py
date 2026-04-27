@@ -319,12 +319,18 @@ def main():
             "⚠️  'pylatexenc' not found. LaTeX syntax checking will be limited to regex."
         )
 
-    # Collect files
+    # Collect files. `_extensions/` 配下は Quarto extension が同梱する
+    # サンプル qmd (例: r-wasm/live/_knitr.qmd) を含み、本プロジェクトの
+    # コンテンツではないため検証対象から除外する。
     files = []
     if os.path.isfile(args.target):
         files.append(args.target)
     else:
-        files = glob.glob(os.path.join(args.target, "**/*.qmd"), recursive=True)
+        files = [
+            f
+            for f in glob.glob(os.path.join(args.target, "**/*.qmd"), recursive=True)
+            if "_extensions" not in os.path.normpath(f).split(os.sep)
+        ]
 
     if not files:
         print("No .qmd files found.")
