@@ -283,3 +283,83 @@ state_table(psi3)
 **観察ポイント**: 各ステップで確率分布が「2 本のピークだけが移動」していくことに注目。位相情報 (`phase [rad]`) は全ての非ゼロ成分で 0 のまま (実数係数) で、最終的な Bell 状態 $\frac{1}{\sqrt{2}}(|000\rangle + |110\rangle)$ も確率は $|000\rangle$ と $|110\rangle$ に半々です。**確率だけ見ると古典的な「コインで決まる 2 状態混合」と区別できない** — この区別は Section 4 で密度行列を使って初めて可視化されます。
 
 :::
+
+##### Section 4: 量子重ね合わせ vs 古典的確率混合
+
+Section 3 の終状態の 2 量子部分 ($c, t$) は次の純粋な量子重ね合わせです。
+
+$$
+|\psi\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)
+$$
+
+これと比べて、もし誰かが「コインを振って 50 % で $|00\rangle$、50 % で $|11\rangle$ を用意した」とすると、それは **古典的な確率混合** で、密度行列は
+
+$$
+\rho_{\rm mix} = \tfrac{1}{2}|00\rangle\langle 00| + \tfrac{1}{2}|11\rangle\langle 11|
+$$
+
+になります。両者は計算基底での測定確率 ($|00\rangle$ が 50 %, $|11\rangle$ が 50 %) が完全に一致するため、**どちらか片方の測定実験では区別できません**。違いは密度行列の **非対角成分 (コヒーレンス)** に現れます。
+
+```{pyodide}
+#| autorun: true
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 2 量子基底: |00>, |01>, |10>, |11>
+LABELS_2Q = ["|00>", "|01>", "|10>", "|11>"]
+
+ket_00 = np.array([1, 0, 0, 0], dtype=complex)
+ket_11 = np.array([0, 0, 0, 1], dtype=complex)
+
+# 純粋状態 (Bell 状態)
+psi = (ket_00 + ket_11) / np.sqrt(2.0)
+rho_pure = np.outer(psi, psi.conj())
+
+# 古典混合 (Bell 状態と同じ計算基底測定確率を持つが、コヒーレンスゼロ)
+rho_mixed = 0.5 * np.outer(ket_00, ket_00.conj()) + 0.5 * np.outer(ket_11, ket_11.conj())
+
+print("rho_pure (real part):")
+print(np.round(rho_pure.real, 3))
+print()
+print("rho_mixed:")
+print(np.round(rho_mixed.real, 3))
+```
+
+```{pyodide}
+#| autorun: true
+def plot_density_matrix(rho, title):
+    fig = plt.figure(figsize=(4.6, 4.6))
+    plt.imshow(np.abs(rho), cmap="viridis", vmin=0.0, vmax=0.5)
+    plt.colorbar(label="|rho_ij|")
+    plt.xticks(range(4), LABELS_2Q)
+    plt.yticks(range(4), LABELS_2Q)
+    plt.title(title)
+    # 数値を各セルに重ねて表示 (教育用)
+    for i in range(4):
+        for j in range(4):
+            plt.text(
+                j, i, f"{np.abs(rho[i, j]):.2f}",
+                ha="center", va="center",
+                color="white" if np.abs(rho[i, j]) < 0.25 else "black",
+                fontsize=9,
+            )
+    plt.tight_layout()
+    return fig
+
+plot_density_matrix(rho_pure, "Pure state |Bell><Bell|: |00><11| coherence is alive")
+```
+
+```{pyodide}
+#| autorun: true
+plot_density_matrix(rho_mixed, "Classical mixture 0.5|00><00| + 0.5|11><11|: no coherence")
+```
+
+::: {.field-notes}
+**観察ポイント**:
+
+- **対角成分** ($|00\rangle\langle 00|$ と $|11\rangle\langle 11|$) はどちらも $0.5$ で同一 — 計算基底での測定統計が一致することの数学的表現。
+- **非対角成分** $|00\rangle\langle 11|$ と $|11\rangle\langle 00|$ は純粋状態にだけ $0.5$ で現れ、古典混合では $0$。これが **量子コヒーレンス** であり、Bell 不等式の破れや量子テレポーテーションを成立させる本質。
+
+「フォノンを基底状態に戻し忘れて、フォノン自由度で外部環境と区別がつかなくなる」ことは、まさにこの非対角成分を消す = **デコヒーレンス** に他なりません。次の Section 5 で具体的に確認します。
+
+:::
