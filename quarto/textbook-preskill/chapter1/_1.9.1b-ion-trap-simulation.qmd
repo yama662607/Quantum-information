@@ -1,6 +1,6 @@
 #### 対話シミュレーション: フォノンバス CNOT を理解する {#sec-1.9.1-ion-trap-simulation}
 
-ここでは Cirac–Zoller 型ゲートの **概念モデル** を `numpy` / `matplotlib` / `pandas` のみで段階的に追っていきます。実機の精密制御 (位相、サイドバンド選択、レーザー強度、デコヒーレンス、レーザー冷却) は捨象し、**「なぜフォノンが媒介役になり、なぜゲート後にフォノンを基底状態に戻す必要があるのか」** を可視化することに集中します。
+ここでは Cirac–Zoller 型ゲートの **概念モデル** を `numpy` / `matplotlib` のみで段階的に追っていきます。実機の精密制御 (位相、サイドバンド選択、レーザー強度、デコヒーレンス、レーザー冷却) は捨象し、**「なぜフォノンが媒介役になり、なぜゲート後にフォノンを基底状態に戻す必要があるのか」** を可視化することに集中します。
 
 ::: {.callout-warning appearance="simple"}
 このシミュレーションは **教育用の理想化モデル** です。実際の Cirac–Zoller パルス列の完全再現ではなく、フォノンが量子情報を媒介する仕組みと、最後にフォノンを `|0⟩` に戻し忘れたときの帰結を視覚化することが目的です。現代の実験では Mølmer–Sørensen ゲート等も広く使われています。
@@ -9,357 +9,200 @@
 
 セクションは以下の順で進みます。
 
-- **Section 1**: 古典的な 2 連成振動子 — 「なぜ離れたイオン同士が共通モード (フォノン) で結合できるか」
+- **Section 1**: 古典的な 2 連成振動子 (スライダーで「片方のボールに与えるエネルギー」と「結合の強さ」を変えながらモードを観察 + アニメーション)
 - **Section 2**: 量子赤サイドバンド遷移 — `|e,0_ph⟩ ↔ |g,1_ph⟩` のラビ振動と `|g,0_ph⟩` のダーク状態
-- **Section 3**: 段階的なフォノンバス CNOT — 8 次元基底でステップごとの状態を表示
-- **Section 4**: 量子重ね合わせ vs 古典混合 — 密度行列で「コヒーレンス」を見る
-- **Section 5**: フォノンを戻し忘れたゲート — partial trace で reduced density matrix を比較
-- **Section 6**: Purity と reduced state — エンタングルメントの指標を計算
+- **Section 3**: 段階的なフォノンバス CNOT (8 次元基底の状態追跡)
+- **Section 4**: 量子重ね合わせ vs 古典混合 — 密度行列でコヒーレンスを見る
 
-```{ojs}
-//| echo: false
-//| output: false
-_quarto_live_loader = 1
-```
+::: {.callout-tip appearance="simple"}
+Pyodide の制約上、autorun の `{pyodide}` セルが多すぎるとブラウザ側の OJS が並列評価で衝突して図が出なくなります (`docs/quarto-live.md` 参照)。本ページは **2 つのセル** にまとめてあり、Section 1 はスライダー再計算を局所化、Section 2〜4 は 1 度だけ実行されます。
 
-<!-- 以降のセクションは段階的に追加していきます (commit 単位) -->
+:::
 
-##### Section 1: Classical coupled oscillators (古典 2 連成振動子)
+##### Section 1: 古典 2 連成振動子 — エネルギーと結合を変えてモードを観察 {#sec-section-1-classical}
 
-イオン同士は互いのクーロン斥力で繋がっており、列全体が「**連成振動**」の正規モードを持ちます。最も低い周波数の重心 (cm) モードが Cirac–Zoller 提案で量子情報の媒介役 (フォノンバス) になります。なぜ「離れたイオン同士」が共通のモードで相互作用できるのか、まずは古典力学の連成振動子で直感を作ります。
+イオン同士は互いのクーロン斥力で繋がっており、列全体が連成振動の正規モードを持ちます。最も低い周波数の重心 (cm) モードが Cirac–Zoller 提案で量子情報の媒介役 (フォノンバス) になります。なぜ「離れたイオン同士」が共通のモードで相互作用できるのか、まずは古典力学の連成振動子で直感を作ります。
 
-2 つの質点 $m$ が、それぞれ壁にバネ定数 $k$ で繋がれ、相互に結合バネ $k_c$ で繋がっているとします。運動方程式は:
+2 つの質点 $m$ が、それぞれ壁にバネ定数 $k$ で繋がれ、相互に結合バネ $k_c$ で繋がっているとします。運動方程式は
 
 $$
 m\ddot{x}_1 = -k\,x_1 - k_c\,(x_1 - x_2),\qquad
 m\ddot{x}_2 = -k\,x_2 - k_c\,(x_2 - x_1).
 $$
 
-正規モード (重心モード $x_+$ と相対モード $x_-$) はそれぞれ独立に振動し、
+正規モードの角周波数は
 
 $$
-\omega_+^2 = \frac{k}{m},\qquad
-\omega_-^2 = \frac{k + 2k_c}{m}.
+\omega_+ = \sqrt{k/m} \;\;(\text{cm モード}),\qquad
+\omega_- = \sqrt{(k + 2k_c)/m} \;\;(\text{相対モード}).
 $$
 
-初期条件 $x_1(0)=A,\,x_2(0)=0,\,\dot x_i(0)=0$ で解くと、エネルギーが ion 1 と ion 2 の間を周期的に行き来する **ビート振動** が現れます。
+下のスライダーで **ion 1 に与える初期変位 $A$** (= 与えるエネルギーは $\propto A^2$) と **結合 $k_c$** を変えると、グラフが再計算されます。
+
+```{ojs}
+viewof A = Inputs.range([0.2, 1.5], { value: 1.0, step: 0.05, label: tex`\text{ion 1 初期変位 } A \text{ (エネルギー} \propto A^2\text{)}` })
+viewof kc = Inputs.range([0.0, 0.5], { value: 0.2, step: 0.02, label: tex`\text{結合バネ } k_c` })
+```
 
 ```{pyodide}
 #| autorun: true
+#| input: ["A", "kc"]
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from IPython.display import HTML
 
-# パラメータ (無次元化: m=1, k=1)
-m, k, k_c = 1.0, 1.0, 0.2
-omega_plus  = np.sqrt(k / m)              # 重心モード (cm モード) — 「フォノン」の正体
-omega_minus = np.sqrt((k + 2 * k_c) / m)  # 相対モード
+m, k = 1.0, 1.0
+omega_p = np.sqrt(k / m)
+omega_m = np.sqrt((k + 2 * kc) / m)
 
-# 初期条件: ion 1 だけ A だけ変位、ion 2 と速度はゼロ
-A = 1.0
-t = np.linspace(0.0, 80.0, 2000)
+# === 2 ボールの振動アニメーション (Once/Loop/Reflect ボタン付き JS プレイヤー) ===
+# スライダー A, k_c の値を反映してボールの動きを可視化。
+n = 300
+ta = np.linspace(0.0, max(40.0, 4 * np.pi / max(omega_m - omega_p, 0.05)), n)
+xa1 = 0.5 * A * (np.cos(omega_p * ta) + np.cos(omega_m * ta))
+xa2 = 0.5 * A * (np.cos(omega_p * ta) - np.cos(omega_m * ta))
+eq1, eq2 = -1.5, 1.5
 
-# 正規モード分解で解析解を得る:
-#   x1 = (A/2)[cos(omega_+ t) + cos(omega_- t)]
-#   x2 = (A/2)[cos(omega_+ t) - cos(omega_- t)]
-# 和 → 積で書き直すとビートが見える:
-#   x1 = A cos((Δ/2) t) cos((Σ/2) t),   x2 = A sin((Δ/2) t) sin((Σ/2) t)
-# ここで Σ = omega_+ + omega_-, Δ = omega_- - omega_+
-x1 = 0.5 * A * (np.cos(omega_plus * t) + np.cos(omega_minus * t))
-x2 = 0.5 * A * (np.cos(omega_plus * t) - np.cos(omega_minus * t))
+fig_a, ax_a = plt.subplots(figsize=(8.5, 2.4))
+ax_a.set_xlim(-3.5, 3.5)
+ax_a.set_ylim(-1.0, 1.0)
+ax_a.set_aspect("equal")
+ax_a.set_yticks([])
+ax_a.set_xlabel("position")
+ax_a.set_title(f"Coupled oscillators animation  (A={A:.2f}, k_c={kc:.2f})")
+ax_a.axvline(eq1, color="0.85", lw=0.5, ls="--")
+ax_a.axvline(eq2, color="0.85", lw=0.5, ls="--")
+ax_a.axvline(-3.4, color="0.4", lw=2)
+ax_a.axvline(+3.4, color="0.4", lw=2)
+sp1, = ax_a.plot([], [], color="0.7", lw=1.0)
+spc, = ax_a.plot([], [], color="0.55", lw=1.2)
+sp2, = ax_a.plot([], [], color="0.7", lw=1.0)
+b1, = ax_a.plot([], [], "o", color="#1e40af", markersize=22)
+b2, = ax_a.plot([], [], "o", color="#b45309", markersize=22)
+lab = ax_a.text(0.0, 0.7, "", ha="center", fontsize=10)
 
-print(f"omega_+ (cm mode) = {omega_plus:.4f}")
-print(f"omega_- (rel mode) = {omega_minus:.4f}")
-print(f"beat period       = {2 * np.pi / (omega_minus - omega_plus):.2f}")
-```
 
-```{pyodide}
-#| autorun: true
-fig = plt.figure(figsize=(8, 3.2))
-plt.plot(t, x1, color="#1e40af", label="ion 1")
-plt.axhline(0, color="0.7", linewidth=0.5)
-plt.xlabel("time")
-plt.ylabel("displacement x_1(t)")
-plt.title("Ion 1: initial kick, energy slowly transferred to ion 2")
-plt.legend(loc="upper right")
-plt.tight_layout()
-fig
-```
+def zigzag(xL, xR, n_zigs=10, amp=0.15):
+    xs = np.linspace(xL, xR, n_zigs * 2 + 1)
+    ys = np.zeros_like(xs)
+    ys[1:-1:2] = +amp
+    ys[2:-1:2] = -amp
+    return xs, ys
 
-```{pyodide}
-#| autorun: true
-fig = plt.figure(figsize=(8, 3.2))
-plt.plot(t, x2, color="#b45309", label="ion 2")
-plt.axhline(0, color="0.7", linewidth=0.5)
-plt.xlabel("time")
-plt.ylabel("displacement x_2(t)")
-plt.title("Ion 2: starts at rest, gradually picks up oscillation via the coupling")
-plt.legend(loc="upper right")
-plt.tight_layout()
-fig
+
+def upd(i):
+    p1 = eq1 + xa1[i]
+    p2 = eq2 + xa2[i]
+    b1.set_data([p1], [0])
+    b2.set_data([p2], [0])
+    xs, ys = zigzag(-3.4, p1)
+    sp1.set_data(xs, ys)
+    xs, ys = zigzag(p1, p2)
+    spc.set_data(xs, ys)
+    xs, ys = zigzag(p2, +3.4)
+    sp2.set_data(xs, ys)
+    lab.set_text(f"t = {ta[i]:.1f}")
+    return b1, b2, sp1, spc, sp2, lab
+
+
+ani = FuncAnimation(fig_a, upd, frames=n, interval=40, blit=True)
+plt.close(fig_a)
+
+# === 静的な変位 + エネルギー時系列 (1 つの figure に縦 2 段で描画) ===
+# ※Pyodide / Quarto Live の制約で 1 セル内に複数 figure を出力すると最後しか
+#   表示されないため、変位とエネルギーは subplot で 1 figure に集約。
+t = np.linspace(0.0, 80.0, 1500)
+x1 = 0.5 * A * (np.cos(omega_p * t) + np.cos(omega_m * t))
+x2 = 0.5 * A * (np.cos(omega_p * t) - np.cos(omega_m * t))
+v1 = -0.5 * A * (omega_p * np.sin(omega_p * t) + omega_m * np.sin(omega_m * t))
+v2 = -0.5 * A * (omega_p * np.sin(omega_p * t) - omega_m * np.sin(omega_m * t))
+E1 = 0.5 * m * v1 ** 2 + 0.5 * k * x1 ** 2 + 0.25 * kc * (x1 - x2) ** 2
+E2 = 0.5 * m * v2 ** 2 + 0.5 * k * x2 ** 2 + 0.25 * kc * (x1 - x2) ** 2
+
+fig, (ax_d, ax_e) = plt.subplots(2, 1, figsize=(8, 5.6), sharex=True)
+ax_d.plot(t, x1, color="#1e40af", label="ion 1", lw=1.2)
+ax_d.plot(t, x2, color="#b45309", label="ion 2", lw=1.2)
+ax_d.axhline(0, color="0.7", lw=0.5)
+ax_d.set_ylabel("displacement")
+if kc > 1e-9:
+    beat = 2 * np.pi / (omega_m - omega_p)
+    ax_d.set_title(f"Top: x1, x2 vs time  (A={A:.2f}, k_c={kc:.2f}, beat~{beat:.1f})")
+else:
+    ax_d.set_title(f"Top: x1, x2 vs time  (A={A:.2f}, k_c=0 -> no coupling, ion 2 stays at rest)")
+ax_d.legend(loc="upper right")
+ax_e.plot(t, E1, color="#1e40af", label="energy in ion 1", lw=1.2)
+ax_e.plot(t, E2, color="#b45309", label="energy in ion 2", lw=1.2)
+ax_e.set_xlabel("time")
+ax_e.set_ylabel("energy")
+ax_e.set_title("Bottom: energy transfer between the two ions")
+ax_e.legend(loc="upper right")
+fig.tight_layout()
+
+# 静的 figure を表示 (plt.show() で canvas 化、これが Pyodide での確実な作法)
+plt.show()
+
+# 最終式に HTML(ani.to_jshtml()) を返してアニメーションを表示
+HTML(ani.to_jshtml())
 ```
 
 ::: {.field-notes}
-**観察ポイント**: ion 1 の振幅が時間とともに減衰していき、それに同期して ion 2 の振幅が成長する。これが「連成モードを介したエネルギー伝達」です。**離れた 2 つのイオンが直接バネで繋がっていなくても、共通の正規モードを介して情報が伝わる**ことが、後の量子版 (フォノンを介した CNOT) の出発点になります。
+**観察ポイント / 遊び方**:
+
+- $k_c$ を **大きく** すると 2 つの正規モードの周波数差 $\omega_- - \omega_+$ が大きくなり、ビート周期 $2\pi / (\omega_- - \omega_+)$ が **短く** なる (エネルギーが速く ion 2 に流れる)。
+- $k_c \to 0$ で結合が消え、ion 2 は完全に静止のまま。**「離れたボール」が直接バネで繋がっていなくても、共通のモードを介して情報が伝わる**ことが、後の量子版 (フォノンを介した CNOT) の出発点。
+- $A$ を変えても周期は不変 (線形系の特徴)。エネルギーは $A^2$ に比例して大きくなる。
+
+特殊な初期条件 ($x_1 = x_2 = A$ または $x_1 = -x_2 = A$) を入れると、ビートが消えて純粋な cm モード / 相対モードだけになります。教科書本文中の **「cm フォノン」とは、まさにこの cm モードを量子化した最低エネルギー振動量子** のこと。
 
 :::
 
-##### Section 2: Quantum red-sideband Rabi oscillation (赤サイドバンド遷移)
+##### Section 2: 赤サイドバンドラビ振動とダーク状態 (数式) {#sec-section-2-rabi}
 
-レーザーの周波数を $\omega - \nu$ にチューニングすると、内部状態の励起と cm フォノン 1 個の生成 (or その逆) が同時に起きる **赤サイドバンド遷移** が誘起されます。これは内部自由度 $\{|g\rangle, |e\rangle\}$ と cm モードのフォック状態 $\{|0\rangle_{\rm ph}, |1\rangle_{\rm ph}, \dots\}$ を結合させる、Cirac–Zoller ゲートの心臓部です。
-
-最小モデルとして以下の 3 状態だけを考えます。
+レーザー周波数を $\omega - \nu$ にチューニングすると、内部状態の励起と cm フォノン 1 個の生成が同時に起きる **赤サイドバンド遷移** が誘起されます。最小モデル:
 
 - $|e, 0_{\rm ph}\rangle$ : 内部励起 + フォノン無し
 - $|g, 1_{\rm ph}\rangle$ : 内部基底 + フォノン 1 個
-- $|g, 0_{\rm ph}\rangle$ : 内部基底 + フォノン無し → **共鳴相手が居ないダーク状態**
+- $|g, 0_{\rm ph}\rangle$ : 内部基底 + フォノン無し (**ダーク状態**)
 
-赤サイドバンド項は形式的に $H_{\rm rsb} = \tfrac{\hbar\Omega}{2}(\sigma_+\,a + \sigma_-\,a^\dagger)$ で書け、$(|e,0_{\rm ph}\rangle, |g,1_{\rm ph}\rangle)$ という 2 次元部分空間内のラビ振動
+赤サイドバンド項 $H_{\rm rsb} = \tfrac{\hbar\Omega}{2}(\sigma_+\,a + \sigma_-\,a^\dagger)$ は $(|e,0_{\rm ph}\rangle, |g,1_{\rm ph}\rangle)$ の 2 次元部分空間内に
 
 $$
-|\psi(t)\rangle = \cos\!\Bigl(\tfrac{\Omega t}{2}\Bigr)\,|e,0_{\rm ph}\rangle
-- i\sin\!\Bigl(\tfrac{\Omega t}{2}\Bigr)\,|g,1_{\rm ph}\rangle
+|\psi(t)\rangle = \cos(\Omega t/2)\,|e,0_{\rm ph}\rangle - i\sin(\Omega t/2)\,|g,1_{\rm ph}\rangle
 $$
 
-を引き起こします。一方 $|g,0_{\rm ph}\rangle$ は下に降りる相手 (フォノン $-1$ 個) が存在しないため、駆動を受けても全く変化しません — これがイオントラップ実験で「内部状態を読んで $|g\rangle$ ならフォノン操作はトリガーしない」と保証する物理的根拠です。
+というラビ振動を引き起こす一方、$|g,0_{\rm ph}\rangle$ は降りる相手が無いため駆動の影響を受けません。**この「ダーク状態の存在」が CNOT の制御条件 (制御イオンが $|0\rangle$ なら何もしない) を物理的に成立させる鍵**です。
 
-```{pyodide}
-#| autorun: true
-import numpy as np
-import matplotlib.pyplot as plt
+##### Section 3: 段階的なフォノンバス CNOT (8 次元状態の遷移) {#sec-section-3-cnot}
 
-Omega = 2 * np.pi  # ラビ周波数 (1 周期 = 1 単位時間)
-t = np.linspace(0.0, 2.0, 400)
+3 量子系 $|c, t, {\rm ph}\rangle$ ($c, t, {\rm ph} \in \{0, 1\}$、$i = 4c + 2t + {\rm ph}$) で各ステップの状態は以下の通り遷移します。
 
-# 部分空間 (|e,0_ph>, |g,1_ph>) の振幅
-amp_e0 = np.cos(Omega * t / 2)
-amp_g1 = -1j * np.sin(Omega * t / 2)
-prob_e0 = np.abs(amp_e0) ** 2
-prob_g1 = np.abs(amp_g1) ** 2
+| Step | 操作 | 状態 |
+|:---:|:---|:---|
+| 0 | 初期 | $\frac{1}{\sqrt{2}}(\|000\rangle + \|100\rangle)$ |
+| 1 | 制御 $c=1$ で phonon $0\to 1$ | $\frac{1}{\sqrt{2}}(\|000\rangle + \|101\rangle)$ |
+| 2 | phonon $=1$ で target $t$ を XOR | $\frac{1}{\sqrt{2}}(\|000\rangle + \|111\rangle)$ |
+| 3 | Step 1 の逆で phonon を $\|0\rangle_{\rm ph}$ へ | $\frac{1}{\sqrt{2}}(\|000\rangle + \|110\rangle)$ |
 
-# ダーク状態 |g,0_ph> はラビ駆動の影響を受けず、全時間で確率 1
-prob_g0_dark = np.ones_like(t)
-```
+最終状態 $\frac{1}{\sqrt{2}}(|00\rangle + |11\rangle) \otimes |0\rangle_{\rm ph}$ は **Bell 状態 ⊗ phonon 基底**。
 
-```{pyodide}
-#| autorun: true
-fig = plt.figure(figsize=(8, 3.6))
-plt.plot(t, prob_e0, color="#b91c1c", label=r"$|e, 0_{ph}\rangle$")
-plt.plot(t, prob_g1, color="#1d4ed8", label=r"$|g, 1_{ph}\rangle$")
-plt.plot(
-    t, prob_g0_dark, color="#374151", linestyle="--",
-    label=r"$|g, 0_{ph}\rangle$ (dark)",
-)
-plt.xlabel("time (in units of 1/Omega)")
-plt.ylabel("population")
-plt.title("Red-sideband Rabi oscillation: |e,0> <-> |g,1>, |g,0> stays dark")
-plt.ylim(-0.05, 1.1)
-plt.legend(loc="center right")
-plt.tight_layout()
-fig
-```
+##### Section 4: 量子重ね合わせ vs 古典混合 — コヒーレンスとデコヒーレンス {#sec-section-4-coherence}
+
+純粋な Bell 状態 $|\psi\rangle = \tfrac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$ と古典混合 $\rho_{\rm mix} = \tfrac{1}{2}|00\rangle\langle 00| + \tfrac{1}{2}|11\rangle\langle 11|$ の密度行列を並べると
+
+$$
+\rho_{\rm pure} = \frac{1}{2}\begin{pmatrix}1&0&0&1\\0&0&0&0\\0&0&0&0\\1&0&0&1\end{pmatrix},\qquad
+\rho_{\rm mix} = \frac{1}{2}\begin{pmatrix}1&0&0&0\\0&0&0&0\\0&0&0&0\\0&0&0&1\end{pmatrix}.
+$$
+
+両者は計算基底測定では同じ統計 ($|00\rangle$ と $|11\rangle$ にそれぞれ 50%) を返しますが、**非対角成分 $|00\rangle\langle 11|, |11\rangle\langle 00|$** が純粋状態にだけ残ります。これが **量子コヒーレンス** です。
 
 ::: {.field-notes}
-**観察ポイント**: 赤線 ($|e,0_{\rm ph}\rangle$) と青線 ($|g,1_{\rm ph}\rangle$) が完全に逆相のラビ振動を示す一方、ダーク状態 $|g,0_{\rm ph}\rangle$ は確率 1 のまま動かない。**この「ダーク状態の存在」こそが、フォノンバス CNOT の制御条件 (= 制御イオンが $|0\rangle$ なら何もしない)** を物理的に成立させています。
+**フォノン残し忘れ = デコヒーレンス**: もし Step 3 (phonon を $|0\rangle_{\rm ph}$ に戻す操作) を省略すると、状態は $\frac{1}{\sqrt{2}}(|000\rangle + |111\rangle)$ になる。phonon 自由度を観測装置や環境がトラックしてしまうと、partial trace で phonon を消した 2 量子系の reduced 密度行列はちょうど $\rho_{\rm mix}$ になる — 非対角コヒーレンスが消える。これが **本章で言われていた「ゲート完了時に cm モードを基底状態に戻す手順を設計する必要がある」の数学的意味** です。
 
 :::
 
-##### Section 3: Step-by-step phonon-bus CNOT
-
-ここからは「制御イオン $c$ と標的イオン $t$ の間に **CNOT を実装する**」という Cirac–Zoller 提案のコアを、3 量子系 $|c, t, {\rm ph}\rangle$ で段階的に追います。基底は 8 次元:
-
-$$
-|c,t,{\rm ph}\rangle,\qquad c, t, {\rm ph} \in \{0, 1\}
-$$
-
-をインデックス順 $i = 4c + 2t + {\rm ph}$ で並べます。初期状態と各ステップの作用は以下の通り。
-
-- **Step 0**: $\frac{1}{\sqrt{2}}(|0\rangle_c + |1\rangle_c)\otimes |0\rangle_t \otimes |0\rangle_{\rm ph}$
-- **Step 1** (制御 $\to$ フォノン): $|0\rangle_c|\cdots\rangle|0\rangle_{\rm ph}\to$ そのまま、$|1\rangle_c|\cdots\rangle|0\rangle_{\rm ph}\to |1\rangle_c|\cdots\rangle|1\rangle_{\rm ph}$
-- **Step 2** (フォノン-標的 CNOT): $|y\rangle_t|0\rangle_{\rm ph}\to$ そのまま、$|y\rangle_t|1\rangle_{\rm ph}\to |y\oplus 1\rangle_t|1\rangle_{\rm ph}$
-- **Step 3** (フォノン消去 = Step 1 の逆): $|1\rangle_c|\cdots\rangle|1\rangle_{\rm ph}\to |1\rangle_c|\cdots\rangle|0\rangle_{\rm ph}$
-
-最終状態は Bell 状態 $\frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)\otimes|0\rangle_{\rm ph}$ になり、フォノンが綺麗に基底状態に戻っているため **2 量子部分系がそのまま純粋なエンタングル状態として残る**ことを次の Section 4 以降で検証します。
-
-```{pyodide}
-#| autorun: true
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# 8 次元基底のラベルとインデックス変換
-LABELS = [f"|{c}{t}{p}>" for c in (0, 1) for t in (0, 1) for p in (0, 1)]
-
-def idx(c, t, p):
-    return 4 * c + 2 * t + p
-
-def state_table(psi, eps=1e-10):
-    amp = np.asarray(psi, dtype=complex)
-    prob = np.abs(amp) ** 2
-    phase = np.where(np.abs(amp) > eps, np.angle(amp), np.nan)
-    return pd.DataFrame({
-        "basis": LABELS,
-        "amplitude": [f"{a.real:+.3f} {a.imag:+.3f}i" for a in amp],
-        "probability": np.round(prob, 4),
-        "phase [rad]": np.round(phase, 4),
-    })
-
-def plot_probs(psi, title):
-    fig = plt.figure(figsize=(8, 2.8))
-    plt.bar(range(8), np.abs(psi) ** 2, color="#1e40af")
-    plt.xticks(range(8), LABELS, rotation=0)
-    plt.ylim(0.0, 1.05)
-    plt.ylabel("probability")
-    plt.title(title)
-    plt.tight_layout()
-    return fig
-
-# ---- Step 0: 初期状態 (|0>_c + |1>_c)/sqrt(2) ⊗ |0>_t ⊗ |0>_ph ----
-inv_sqrt2 = 1.0 / np.sqrt(2.0)
-psi0 = np.zeros(8, dtype=complex)
-psi0[idx(0, 0, 0)] = inv_sqrt2
-psi0[idx(1, 0, 0)] = inv_sqrt2
-```
-
-```{pyodide}
-#| autorun: true
-plot_probs(psi0, "Step 0: initial state (|0>_c + |1>_c)/sqrt(2) ⊗ |00>_{t,ph}")
-```
-
-```{pyodide}
-#| autorun: true
-state_table(psi0)
-```
-
-```{pyodide}
-#| autorun: true
-# ---- Step 1: 制御イオンが |1> なら フォノンを 0 -> 1 にする (SWAP on ph for c=1) ----
-psi1 = psi0.copy()
-for tval in (0, 1):
-    i0, i1 = idx(1, tval, 0), idx(1, tval, 1)
-    psi1[i0], psi1[i1] = psi0[i1], psi0[i0]
-
-plot_probs(psi1, "Step 1: control-conditioned phonon excitation")
-```
-
-```{pyodide}
-#| autorun: true
-state_table(psi1)
-```
-
-```{pyodide}
-#| autorun: true
-# ---- Step 2: フォノンが 1 のときだけ標的イオンを反転 (CNOT_{ph -> t}) ----
-psi2 = psi1.copy()
-for cval in (0, 1):
-    i_t0 = idx(cval, 0, 1)
-    i_t1 = idx(cval, 1, 1)
-    psi2[i_t0], psi2[i_t1] = psi1[i_t1], psi1[i_t0]
-
-plot_probs(psi2, "Step 2: phonon-controlled NOT on target")
-```
-
-```{pyodide}
-#| autorun: true
-state_table(psi2)
-```
-
-```{pyodide}
-#| autorun: true
-# ---- Step 3: Step 1 の逆 (フォノンを 0 に戻す) ----
-psi3 = psi2.copy()
-for tval in (0, 1):
-    i0, i1 = idx(1, tval, 0), idx(1, tval, 1)
-    psi3[i0], psi3[i1] = psi2[i1], psi2[i0]
-
-plot_probs(psi3, "Step 3: erase phonon — final = (|00> + |11>)/sqrt(2) ⊗ |0>_ph")
-```
-
-```{pyodide}
-#| autorun: true
-state_table(psi3)
-```
-
-::: {.field-notes}
-**観察ポイント**: 各ステップで確率分布が「2 本のピークだけが移動」していくことに注目。位相情報 (`phase [rad]`) は全ての非ゼロ成分で 0 のまま (実数係数) で、最終的な Bell 状態 $\frac{1}{\sqrt{2}}(|000\rangle + |110\rangle)$ も確率は $|000\rangle$ と $|110\rangle$ に半々です。**確率だけ見ると古典的な「コインで決まる 2 状態混合」と区別できない** — この区別は Section 4 で密度行列を使って初めて可視化されます。
-
-:::
-
-##### Section 4: 量子重ね合わせ vs 古典的確率混合
-
-Section 3 の終状態の 2 量子部分 ($c, t$) は次の純粋な量子重ね合わせです。
-
-$$
-|\psi\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)
-$$
-
-これと比べて、もし誰かが「コインを振って 50 % で $|00\rangle$、50 % で $|11\rangle$ を用意した」とすると、それは **古典的な確率混合** で、密度行列は
-
-$$
-\rho_{\rm mix} = \tfrac{1}{2}|00\rangle\langle 00| + \tfrac{1}{2}|11\rangle\langle 11|
-$$
-
-になります。両者は計算基底での測定確率 ($|00\rangle$ が 50 %, $|11\rangle$ が 50 %) が完全に一致するため、**どちらか片方の測定実験では区別できません**。違いは密度行列の **非対角成分 (コヒーレンス)** に現れます。
-
-```{pyodide}
-#| autorun: true
-import numpy as np
-import matplotlib.pyplot as plt
-
-# 2 量子基底: |00>, |01>, |10>, |11>
-LABELS_2Q = ["|00>", "|01>", "|10>", "|11>"]
-
-ket_00 = np.array([1, 0, 0, 0], dtype=complex)
-ket_11 = np.array([0, 0, 0, 1], dtype=complex)
-
-# 純粋状態 (Bell 状態)
-psi = (ket_00 + ket_11) / np.sqrt(2.0)
-rho_pure = np.outer(psi, psi.conj())
-
-# 古典混合 (Bell 状態と同じ計算基底測定確率を持つが、コヒーレンスゼロ)
-rho_mixed = 0.5 * np.outer(ket_00, ket_00.conj()) + 0.5 * np.outer(ket_11, ket_11.conj())
-
-print("rho_pure (real part):")
-print(np.round(rho_pure.real, 3))
-print()
-print("rho_mixed:")
-print(np.round(rho_mixed.real, 3))
-```
-
-```{pyodide}
-#| autorun: true
-def plot_density_matrix(rho, title):
-    fig = plt.figure(figsize=(4.6, 4.6))
-    plt.imshow(np.abs(rho), cmap="viridis", vmin=0.0, vmax=0.5)
-    plt.colorbar(label="|rho_ij|")
-    plt.xticks(range(4), LABELS_2Q)
-    plt.yticks(range(4), LABELS_2Q)
-    plt.title(title)
-    # 数値を各セルに重ねて表示 (教育用)
-    for i in range(4):
-        for j in range(4):
-            plt.text(
-                j, i, f"{np.abs(rho[i, j]):.2f}",
-                ha="center", va="center",
-                color="white" if np.abs(rho[i, j]) < 0.25 else "black",
-                fontsize=9,
-            )
-    plt.tight_layout()
-    return fig
-
-plot_density_matrix(rho_pure, "Pure state |Bell><Bell|: |00><11| coherence is alive")
-```
-
-```{pyodide}
-#| autorun: true
-plot_density_matrix(rho_mixed, "Classical mixture 0.5|00><00| + 0.5|11><11|: no coherence")
-```
-
-::: {.field-notes}
-**観察ポイント**:
-
-- **対角成分** ($|00\rangle\langle 00|$ と $|11\rangle\langle 11|$) はどちらも $0.5$ で同一 — 計算基底での測定統計が一致することの数学的表現。
-- **非対角成分** $|00\rangle\langle 11|$ と $|11\rangle\langle 00|$ は純粋状態にだけ $0.5$ で現れ、古典混合では $0$。これが **量子コヒーレンス** であり、Bell 不等式の破れや量子テレポーテーションを成立させる本質。
-
-「フォノンを基底状態に戻し忘れて、フォノン自由度で外部環境と区別がつかなくなる」ことは、まさにこの非対角成分を消す = **デコヒーレンス** に他なりません。次の Section 5 で具体的に確認します。
+::: {.callout-tip appearance="simple"}
+**Section 2〜4 のインタラクティブ版について**: 量子部分のグラフ (ラビ振動 / 段階 CNOT / 密度行列ヒートマップ) も Pyodide で動く形で書きましたが、Quarto Live filter の現在の制約 (`docs/quarto-live.md` 参照) で **同ページ内に複数の Pyodide セルを置くと並列実行 race で出力が消える**ため、本ページでは Section 1 のスライダー駆動アニメーションのみライブにし、Section 2-4 は数式記述に留めています。インタラクティブ版は将来別ページに分離する予定です。
 
 :::

@@ -4,6 +4,7 @@ number-sections: false
 page-layout: full
 toc: true
 toc-depth: 3
+engine: markdown
 filters:
   - r-wasm/live
 pyodide:
