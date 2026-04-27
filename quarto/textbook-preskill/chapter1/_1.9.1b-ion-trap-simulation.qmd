@@ -23,3 +23,82 @@ _quarto_live_loader = 1
 ```
 
 <!-- 以降のセクションは段階的に追加していきます (commit 単位) -->
+
+##### Section 1: Classical coupled oscillators (古典 2 連成振動子)
+
+イオン同士は互いのクーロン斥力で繋がっており、列全体が「**連成振動**」の正規モードを持ちます。最も低い周波数の重心 (cm) モードが Cirac–Zoller 提案で量子情報の媒介役 (フォノンバス) になります。なぜ「離れたイオン同士」が共通のモードで相互作用できるのか、まずは古典力学の連成振動子で直感を作ります。
+
+2 つの質点 $m$ が、それぞれ壁にバネ定数 $k$ で繋がれ、相互に結合バネ $k_c$ で繋がっているとします。運動方程式は:
+
+$$
+m\ddot{x}_1 = -k\,x_1 - k_c\,(x_1 - x_2),\qquad
+m\ddot{x}_2 = -k\,x_2 - k_c\,(x_2 - x_1).
+$$
+
+正規モード (重心モード $x_+$ と相対モード $x_-$) はそれぞれ独立に振動し、
+
+$$
+\omega_+^2 = \frac{k}{m},\qquad
+\omega_-^2 = \frac{k + 2k_c}{m}.
+$$
+
+初期条件 $x_1(0)=A,\,x_2(0)=0,\,\dot x_i(0)=0$ で解くと、エネルギーが ion 1 と ion 2 の間を周期的に行き来する **ビート振動** が現れます。
+
+```{pyodide}
+#| autorun: true
+import numpy as np
+import matplotlib.pyplot as plt
+
+# パラメータ (無次元化: m=1, k=1)
+m, k, k_c = 1.0, 1.0, 0.2
+omega_plus  = np.sqrt(k / m)              # 重心モード (cm モード) — 「フォノン」の正体
+omega_minus = np.sqrt((k + 2 * k_c) / m)  # 相対モード
+
+# 初期条件: ion 1 だけ A だけ変位、ion 2 と速度はゼロ
+A = 1.0
+t = np.linspace(0.0, 80.0, 2000)
+
+# 正規モード分解で解析解を得る:
+#   x1 = (A/2)[cos(omega_+ t) + cos(omega_- t)]
+#   x2 = (A/2)[cos(omega_+ t) - cos(omega_- t)]
+# 和 → 積で書き直すとビートが見える:
+#   x1 = A cos((Δ/2) t) cos((Σ/2) t),   x2 = A sin((Δ/2) t) sin((Σ/2) t)
+# ここで Σ = omega_+ + omega_-, Δ = omega_- - omega_+
+x1 = 0.5 * A * (np.cos(omega_plus * t) + np.cos(omega_minus * t))
+x2 = 0.5 * A * (np.cos(omega_plus * t) - np.cos(omega_minus * t))
+
+print(f"omega_+ (cm mode) = {omega_plus:.4f}")
+print(f"omega_- (rel mode) = {omega_minus:.4f}")
+print(f"beat period       = {2 * np.pi / (omega_minus - omega_plus):.2f}")
+```
+
+```{pyodide}
+#| autorun: true
+fig = plt.figure(figsize=(8, 3.2))
+plt.plot(t, x1, color="#1e40af", label="ion 1")
+plt.axhline(0, color="0.7", linewidth=0.5)
+plt.xlabel("time")
+plt.ylabel("displacement x_1(t)")
+plt.title("Ion 1: initial kick, energy slowly transferred to ion 2")
+plt.legend(loc="upper right")
+plt.tight_layout()
+fig
+```
+
+```{pyodide}
+#| autorun: true
+fig = plt.figure(figsize=(8, 3.2))
+plt.plot(t, x2, color="#b45309", label="ion 2")
+plt.axhline(0, color="0.7", linewidth=0.5)
+plt.xlabel("time")
+plt.ylabel("displacement x_2(t)")
+plt.title("Ion 2: starts at rest, gradually picks up oscillation via the coupling")
+plt.legend(loc="upper right")
+plt.tight_layout()
+fig
+```
+
+::: {.field-notes}
+**観察ポイント**: ion 1 の振幅が時間とともに減衰していき、それに同期して ion 2 の振幅が成長する。これが「連成モードを介したエネルギー伝達」です。**離れた 2 つのイオンが直接バネで繋がっていなくても、共通の正規モードを介して情報が伝わる**ことが、後の量子版 (フォノンを介した CNOT) の出発点になります。
+
+:::
