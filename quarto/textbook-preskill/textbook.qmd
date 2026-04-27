@@ -4,6 +4,13 @@ number-sections: false
 page-layout: full
 toc: true
 toc-depth: 3
+filters:
+  - r-wasm/live
+pyodide:
+  packages:
+    - numpy
+    - matplotlib
+    - pandas
 ---
 
 # はじめに {.unnumbered}
