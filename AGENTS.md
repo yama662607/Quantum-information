@@ -52,6 +52,34 @@
     - `:::` による囲み（Definition, Theorem 等）を使用する場合、**閉じ括弧の直前には必ず空行を挿入**してください。
     - これを怠ると Quarto/Pandoc のパースに失敗する場合があります。`just fix` で自動修正可能です。
 
+6.  **qmd の追記は小さく刻む**:
+    - 一度に大量の節 / 数式 / 図表を流し込まないでください。1 節ずつ (または 1 つの論理単位ずつ) 書いて `just check` または `just docs` のプレビューで確認 → 問題なければ次へ進みます。
+    - 理由: (1) OCR / 推論由来の誤りは少量ずつでないと見落とす、(2) Mermaid / LaTeX / fenced div の構文ミスは早期に発見すれば局所的に直せるが、巨大 diff の中では原因切り分けが困難、(3) `{{< include >}}` の追加 / 図表パス / 式番号は 1 つずつ視認確認するのが一番確実。
+    - **「ファイル全体を一気に書き起こす」モードは使わない。**
+
+## 対話シミュレーション (Quarto Live + Pyodide)
+
+ブラウザだけで動く Python シミュレーション (Qiskit 簡易例 / 数値計算可視化等) は [Quarto Live](https://r-wasm.github.io/quarto-live/) を使えます。サーバー Python は不要。詳しい手順・dead-end・トラブルシュートは [`docs/quarto-live.md`](docs/quarto-live.md) を参照してください。
+
+主要ポイント (詳細は docs/quarto-live.md):
+
+- 追加 Python パッケージは親 qmd の YAML `pyodide.packages` で宣言する (セル内 `await micropip.install` は autorun 並列実行で race するので **禁止**)
+- 日本語フォント (matplotlib) は `pyfetch` で `assets/fonts/NotoSansJP-Regular.ttf` をロードして `font_manager.fontManager.addfont`。font setup は描画セルに inline 必須
+- `{ojs}` セルが 1 個も無いページでは Quarto Live filter が OJS runtime を inject しないため、`{pyodide}` のみのページにはダミー `{ojs}` セル (`_quarto_live_loader = 1` + `output: false`) を置く
+
+なお Qiskit は Pyodide の標準環境では動きません (拡張ビルドが必要)。Qiskit を使った対話デモは現状 `qiskit/` 配下の Jupyter Notebook で扱い、Quarto Live は **Qiskit を使わない** Python 可視化に限定しています。
+
+## Quarto 機能の live demo
+
+各種 Quarto 機能 (Mermaid / Graphviz / theorem 環境 / panel-tabset / lightbox / 引用 / code annotation 等) の **動く例** は、兄弟プロジェクト [`quarto-textbook-template`](https://github.com/yama662607/quarto-textbook-template) に partial `_05`〜`_08` として収録されています (公開先: <https://yama662607.github.io/quarto-textbook-template/>)。
+
+**Quantum-information には機能ショーケース partial を当面統合していません** — Preskill / Watrous の翻訳本体に集中するためです。機能の使い方を確認したい場合は:
+
+- インデックス: [`docs/features.md`](docs/features.md) (partial → Quarto 機能対応表)
+- 公開デモサイト: <https://yama662607.github.io/quarto-textbook-template/>
+
+将来 QI でも機能を試したくなったら、テンプレ側の partial を `quarto/textbook-*/` 配下にコピーしてください。
+
 ## コンテンツ作成ワークフロー (Content Creation Workflow)
 
 > [!CAUTION]
@@ -98,6 +126,8 @@
 - ❌ `_*.qmd` ファイルに `title: ...` 等の YAML を追加しないでください。
 - ❌ `pip install` を提案しないでください。`uv sync` または `uv add` を使用してください。
 - ❌ `:::` の閉じ括弧の前に空行を忘れないでください。
+- ❌ Justfile に Unix 専用コマンド (`lsof`, `pkill`, `xargs`, `export PATH=`) を追加しないでください。必ず `tools/*.py` 経由で cross-platform 化してください (例: `tools/kill_quarto_process.py`)。
+- ❌ `{pyodide}` セル内で `await micropip.install(...)` を呼ばないでください (autorun 並列実行で race する)。追加パッケージは親 qmd の YAML `pyodide.packages` に宣言します。
 
 ## 🤖 Justfile ガイド (AIエージェント用)
 
