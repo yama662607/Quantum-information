@@ -47,15 +47,19 @@ $$
 \boldsymbol{x}(t) = \sum_{n=1}^{N} (\boldsymbol{A}\!\cdot\!\boldsymbol{\phi}_n)\,\boldsymbol{\phi}_n\,\cos(\omega_n t).
 $$
 
-下のスライダーで **質点数 $N$**、各 ion の **初期変位 $A_i$**、**結合 $k_c$** を変えると、グラフ・アニメーションが再計算されます。
+下のスライダーで以下を変えると、グラフ・アニメーションが再計算されます。
+
+- **`N`**: 質点数 (2〜4)。$N \geq 3$ で `A3`、$N = 4$ で `A4` が有効になり、それ未満では値は無視されます。
+- **`A1`〜`A4`**: 各 ion の初期変位 $A_i$ (符号で振動方向を指定)。エネルギーは $A_i^2$ に比例。
+- **`kc`**: 結合バネ強度 $k_c$。
 
 ```{ojs}
-viewof N = Inputs.range([2, 4], { value: 2, step: 1, label: tex`\text{質点数 } N` })
-viewof A1 = Inputs.range([-1.5, 1.5], { value: 1.0, step: 0.05, label: tex`\text{ion 1 初期変位 } A_1` })
-viewof A2 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: tex`\text{ion 2 初期変位 } A_2` })
-viewof A3 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: tex`\text{ion 3 初期変位 } A_3 \text{ (} N \geq 3 \text{ で有効)}` })
-viewof A4 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: tex`\text{ion 4 初期変位 } A_4 \text{ (} N = 4 \text{ で有効)}` })
-viewof kc = Inputs.range([0.0, 0.5], { value: 0.2, step: 0.02, label: tex`\text{結合バネ } k_c` })
+viewof N = Inputs.range([2, 4], { value: 2, step: 1, label: "N" })
+viewof A1 = Inputs.range([-1.5, 1.5], { value: 1.0, step: 0.05, label: "A1" })
+viewof A2 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: "A2" })
+viewof A3 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: "A3" })
+viewof A4 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: "A4" })
+viewof kc = Inputs.range([0.0, 0.5], { value: 0.2, step: 0.02, label: "kc" })
 ```
 
 ::: {.field-notes}
