@@ -57,6 +57,8 @@ crossref:
 
 lang: ja
 
+lightbox: auto
+
 format:
   html:
     theme: cosmo

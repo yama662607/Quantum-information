@@ -309,3 +309,24 @@ main a.btn,
 #quarto-margin-sidebar {
   transition: width 0.25s ease, min-width 0.25s ease, padding 0.25s ease;
 }
+/* 分野非依存の汎用 callout (テンプレ系列で共通利用)。
+   `.physics-notes` の汎用版で、量子情報以外の文脈にも使える。 */
+.field-notes {
+  background-color: rgba(30, 64, 175, 0.05);
+  border-left: 5px solid #1e40af;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.field-notes::before {
+  content: " Field Notes";
+  display: block;
+  font-weight: bold;
+  font-family: 'Outfit', sans-serif;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
