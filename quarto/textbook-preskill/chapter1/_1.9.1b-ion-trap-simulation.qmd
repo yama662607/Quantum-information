@@ -23,67 +23,166 @@ Pyodide の制約上、autorun の `{pyodide}` セルが多すぎるとブラウ
 
 イオン同士は互いのクーロン斥力で繋がっており、列全体が連成振動の正規モードを持ちます。最も低い周波数の重心 (cm) モードが Cirac–Zoller 提案で量子情報の媒介役 (フォノンバス) になります。なぜ「離れたイオン同士」が共通のモードで相互作用できるのか、まずは古典力学の連成振動子で直感を作ります。
 
-2 つの質点 $m$ が、それぞれ壁にバネ定数 $k$ で繋がれ、相互に結合バネ $k_c$ で繋がっているとします。運動方程式は
+$N$ 個 ($N = 2, 3, 4$) の質点 $m$ が、それぞれ壁にバネ定数 $k$ で繋がれ、隣接質点同士は結合バネ $k_c$ で繋がっているとします (両端は壁、内部は左右の隣接 ion と結合)。運動方程式は
 
 $$
-m\ddot{x}_1 = -k\,x_1 - k_c\,(x_1 - x_2),\qquad
-m\ddot{x}_2 = -k\,x_2 - k_c\,(x_2 - x_1).
+m\ddot{x}_i = -k\,x_i - k_c\,(x_i - x_{i-1}) - k_c\,(x_i - x_{i+1}),
+\qquad i = 1, \dots, N
 $$
 
-正規モードの角周波数は
+(端 ion では存在しない隣接項を 0 と読みます)。これは行列で $m\ddot{\boldsymbol{x}} = -K\boldsymbol{x}$ の形に書け、$K$ は対称三重対角:
 
 $$
-\omega_+ = \sqrt{k/m} \;\;(\text{cm モード}),\qquad
-\omega_- = \sqrt{(k + 2k_c)/m} \;\;(\text{相対モード}).
+K = \begin{pmatrix}
+k+k_c & -k_c &  &  \\
+-k_c & k+2k_c & -k_c &  \\
+& -k_c & \ddots & -k_c \\
+& & -k_c & k+k_c
+\end{pmatrix}.
 $$
 
-下のスライダーで **ion 1 に与える初期変位 $A$** (= 与えるエネルギーは $\propto A^2$) と **結合 $k_c$** を変えると、グラフが再計算されます。
+$K$ を対角化して固有値 $\omega_n^2 / m$ ($n = 1, \dots, N$) と固有ベクトル $\boldsymbol{\phi}_n$ を求めると、初期条件 $x_i(0) = A_i,\ \dot x_i(0) = 0$ に対する一般解は
+
+$$
+\boldsymbol{x}(t) = \sum_{n=1}^{N} (\boldsymbol{A}\!\cdot\!\boldsymbol{\phi}_n)\,\boldsymbol{\phi}_n\,\cos(\omega_n t).
+$$
+
+下のスライダーで **質点数 $N$**、各 ion の **初期変位 $A_i$**、**結合 $k_c$** を変えると、グラフ・アニメーションが再計算されます。
 
 ```{ojs}
-viewof A = Inputs.range([0.2, 1.5], { value: 1.0, step: 0.05, label: tex`\text{ion 1 初期変位 } A \text{ (エネルギー} \propto A^2\text{)}` })
+viewof N = Inputs.range([2, 4], { value: 2, step: 1, label: tex`\text{質点数 } N` })
+viewof A1 = Inputs.range([-1.5, 1.5], { value: 1.0, step: 0.05, label: tex`\text{ion 1 初期変位 } A_1` })
+viewof A2 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: tex`\text{ion 2 初期変位 } A_2` })
+viewof A3 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: tex`\text{ion 3 初期変位 } A_3 \text{ (} N \geq 3 \text{ で有効)}` })
+viewof A4 = Inputs.range([-1.5, 1.5], { value: 0.0, step: 0.05, label: tex`\text{ion 4 初期変位 } A_4 \text{ (} N = 4 \text{ で有効)}` })
 viewof kc = Inputs.range([0.0, 0.5], { value: 0.2, step: 0.02, label: tex`\text{結合バネ } k_c` })
 ```
 
+::: {.field-notes}
+**解析的に意味のある初期条件 (正規モード) の例** (すべて $k = 1$, $m = 1$, $k_c = 0.2$ 想定。`np.linalg.eigh` で計算した値):
+
+- $N = 2$ — モード周波数 $\omega_1 = 1.000$ (cm), $\omega_2 = 1.183$ (相対)
+  - $(A_1, A_2) = (1, 0)$: 片方だけキック → 2 モード重ね合わせの **ビート** (デフォルト)
+  - $(A_1, A_2) = (1, 1)$: **モード 1** $\boldsymbol{\phi}_1 \propto (1, 1)$ — 両 ion が同位相、$\omega_1 = 1.000$ で振動 (ビートなし)
+  - $(A_1, A_2) = (1, -1)$: **モード 2** $\boldsymbol{\phi}_2 \propto (1, -1)$ — 逆位相、$\omega_2 \approx 1.183$ (高い周波数)
+- $N = 3$ — モード周波数 $\omega_1 = 1.000$, $\omega_2 = 1.095$, $\omega_3 = 1.265$
+  - $(A_1, A_2, A_3) = (1, 1, 1)$: **モード 1** $\boldsymbol{\phi}_1 \propto (1, 1, 1)$ — 全 ion が同方向同振幅で振動
+  - $(A_1, A_2, A_3) = (1, 0, -1)$: **モード 2** $\boldsymbol{\phi}_2 \propto (1, 0, -1)$ — 中央静止、両端が逆位相
+  - $(A_1, A_2, A_3) = (1, -2, 1)$: **モード 3** $\boldsymbol{\phi}_3 \propto (1, -2, 1)$ — 中央が両端と逆方向で 2 倍の振幅 (規格化形 $\approx (0.408, -0.816, 0.408)$)
+- $N = 4$ — モード周波数 $\omega_1 = 1.000$, $\omega_2 = 1.057$, $\omega_3 = 1.183$, $\omega_4 = 1.297$
+  - $(A_1, A_2, A_3, A_4) = (1, 1, 1, 1)$: **モード 1** $\boldsymbol{\phi}_1 \propto (1, 1, 1, 1)$ — 全 ion 同方向 (cm モード)
+  - $(A_1, A_2, A_3, A_4) = (1.20, 0.50, -0.50, -1.20)$: **モード 2** $\boldsymbol{\phi}_2 \propto (0.653, 0.271, -0.271, -0.653)$ — 左右半分で逆位相
+  - $(A_1, A_2, A_3, A_4) = (1, -1, -1, 1)$: **モード 3** $\boldsymbol{\phi}_3 \propto (1, -1, -1, 1)$ — 中央 2 個と両端 2 個が逆位相
+  - $(A_1, A_2, A_3, A_4) = (-0.50, 1.20, -1.20, 0.50)$: **モード 4** $\boldsymbol{\phi}_4 \propto (-0.271, 0.653, -0.653, 0.271)$ — 隣接 ion 同士が必ず逆位相 (最高周波数 = ジグザグモード)
+
+これらの初期条件で **ビート (周期的なエネルギー再分配) が消え単一周波数の振動だけ**が残ります。これは正規モードが運動方程式の独立な固有モードだからで、教科書本文中の **「cm フォノン = 最低エネルギーの cm モードを量子化したもの」** が、まさに最低周波数モード ($\omega_1 = \sqrt{k/m}$、すべての $N$ で 1.000) に対応します。
+
+> **Tip**: 固有ベクトルの絶対値が同じでも、**符号** (向き) と相対比が重要です。スライダーの値が比だけ合っていれば全体スケールは自由 (例: モード 3 で $(0.5, -1, 0.5)$ も $(1, -2, 1)$ も同じモードを純粋に励起する)。Python セル内で `mode_amps = eigvecs.T @ A_vec` を `print` すれば現在の初期条件が各モードにどれだけ重なっているか確認できます。
+:::
+
 ```{pyodide}
 #| autorun: true
-#| input: ["A", "kc"]
+#| input: ["N", "A1", "A2", "A3", "A4", "kc"]
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from IPython.display import HTML
 
+# OJS スライダーで指定された質点数 N (2-4) と各初期変位 A_i, 結合 k_c を取得
+N_int = int(N)
 m, k = 1.0, 1.0
-omega_p = np.sqrt(k / m)
-omega_m = np.sqrt((k + 2 * kc) / m)
+A_full = np.array([A1, A2, A3, A4], dtype=float)
+A_vec = A_full[:N_int]  # N 個の初期変位だけ使用
 
-# === 2 ボールの振動アニメーション (Once/Loop/Reflect ボタン付き JS プレイヤー) ===
-# スライダー A, k_c の値を反映してボールの動きを可視化。
-n = 300
-ta = np.linspace(0.0, max(40.0, 4 * np.pi / max(omega_m - omega_p, 0.05)), n)
-xa1 = 0.5 * A * (np.cos(omega_p * ta) + np.cos(omega_m * ta))
-xa2 = 0.5 * A * (np.cos(omega_p * ta) - np.cos(omega_m * ta))
-eq1, eq2 = -1.5, 1.5
+# === 行列 K を構築 (対称三重対角) ===
+K_mat = np.zeros((N_int, N_int))
+for i in range(N_int):
+    n_neigh = (1 if i > 0 else 0) + (1 if i < N_int - 1 else 0)
+    K_mat[i, i] = k + n_neigh * kc
+    if i > 0:
+        K_mat[i, i - 1] = -kc
+        K_mat[i - 1, i] = -kc
 
+# === 正規モード (固有値 = ω_n^2, 固有ベクトル = φ_n) ===
+eigvals, eigvecs = np.linalg.eigh(K_mat / m)
+omegas = np.sqrt(np.maximum(eigvals, 0.0))
+mode_amps = eigvecs.T @ A_vec  # 各正規モードへの初期射影 c_n = A · φ_n
+
+# === 時間発展: x_i(t) = Σ_n c_n φ_n[i] cos(ω_n t) ===
+T_max = 80.0 if N_int == 2 else 60.0
+n_t = 1500
+t = np.linspace(0.0, T_max, n_t)
+# x[i, t_idx] = Σ_n c_n φ_n[i] cos(ω_n t)
+cos_t = np.cos(np.outer(omegas, t))           # shape (N, n_t)
+x_t = (eigvecs * mode_amps[None, :]) @ cos_t  # shape (N, n_t)
+v_t = -(eigvecs * mode_amps[None, :] * omegas[None, :]) @ np.sin(np.outer(omegas, t))
+
+# === 各 ion の瞬時エネルギー (運動 + 自身の壁バネ + 結合バネの半分) ===
+E_t = np.zeros_like(x_t)
+for i in range(N_int):
+    KE = 0.5 * m * v_t[i] ** 2
+    PE_wall = 0.5 * k * x_t[i] ** 2
+    PE_left = 0.25 * kc * (x_t[i] - x_t[i - 1]) ** 2 if i > 0 else 0.0
+    PE_right = 0.25 * kc * (x_t[i] - x_t[i + 1]) ** 2 if i < N_int - 1 else 0.0
+    E_t[i] = KE + PE_wall + PE_left + PE_right
+
+# === アニメーション用に短い時間レンジで再サンプル ===
+n_a = 300
+T_anim = max(40.0, 4 * np.pi / max(omegas[-1] - omegas[0], 0.05))
+ta = np.linspace(0.0, T_anim, n_a)
+cos_ta = np.cos(np.outer(omegas, ta))
+xa_t = (eigvecs * mode_amps[None, :]) @ cos_ta  # shape (N, n_a)
+
+# 平衡位置: 等間隔に配置
+spacing = 1.5
+eq_pos = (np.arange(N_int) - (N_int - 1) / 2) * spacing
+wall_left = eq_pos[0] - spacing
+wall_right = eq_pos[-1] + spacing
+
+colors = ["#1e40af", "#b45309", "#15803d", "#b91c1c"]  # blue, orange, green, red
+
+# === 静的な変位 + エネルギー時系列 ===
+fig, (ax_d, ax_e) = plt.subplots(2, 1, figsize=(8, 5.6), sharex=True)
+for i in range(N_int):
+    ax_d.plot(t, x_t[i], color=colors[i], label=f"ion {i + 1}", lw=1.2)
+    ax_e.plot(t, E_t[i], color=colors[i], label=f"E (ion {i + 1})", lw=1.2)
+ax_d.axhline(0, color="0.7", lw=0.5)
+ax_d.set_ylabel("displacement")
+freqs_str = ", ".join(f"ω{n + 1}={omegas[n]:.3f}" for n in range(N_int))
+ax_d.set_title(f"Top: displacements (N={N_int}, k_c={kc:.2f}; modes: {freqs_str})")
+ax_d.legend(loc="upper right", ncol=2 if N_int >= 3 else 1)
+ax_e.set_xlabel("time")
+ax_e.set_ylabel("energy")
+ax_e.set_title("Bottom: energy in each ion (sums to total system energy)")
+ax_e.legend(loc="upper right", ncol=2 if N_int >= 3 else 1)
+fig.tight_layout()
+plt.show()
+
+# === N 個のボールと N+1 本のバネのアニメーション ===
 fig_a, ax_a = plt.subplots(figsize=(8.5, 2.4))
-ax_a.set_xlim(-3.5, 3.5)
+ax_a.set_xlim(wall_left - 0.4, wall_right + 0.4)
 ax_a.set_ylim(-1.0, 1.0)
 ax_a.set_aspect("equal")
 ax_a.set_yticks([])
 ax_a.set_xlabel("position")
-ax_a.set_title(f"Coupled oscillators animation  (A={A:.2f}, k_c={kc:.2f})")
-ax_a.axvline(eq1, color="0.85", lw=0.5, ls="--")
-ax_a.axvline(eq2, color="0.85", lw=0.5, ls="--")
-ax_a.axvline(-3.4, color="0.4", lw=2)
-ax_a.axvline(+3.4, color="0.4", lw=2)
-sp1, = ax_a.plot([], [], color="0.7", lw=1.0)
-spc, = ax_a.plot([], [], color="0.55", lw=1.2)
-sp2, = ax_a.plot([], [], color="0.7", lw=1.0)
-b1, = ax_a.plot([], [], "o", color="#1e40af", markersize=22)
-b2, = ax_a.plot([], [], "o", color="#b45309", markersize=22)
-lab = ax_a.text(0.0, 0.7, "", ha="center", fontsize=10)
+ax_a.set_title(
+    f"Coupled oscillators animation  (N={N_int}, k_c={kc:.2f}, "
+    f"A=({', '.join(f'{a:.2f}' for a in A_vec)}))"
+)
+for ep in eq_pos:
+    ax_a.axvline(ep, color="0.85", lw=0.5, ls="--")
+ax_a.axvline(wall_left, color="0.4", lw=2)
+ax_a.axvline(wall_right, color="0.4", lw=2)
+
+springs = [ax_a.plot([], [], color="0.6", lw=1.0)[0] for _ in range(N_int + 1)]
+balls = [
+    ax_a.plot([], [], "o", color=colors[i], markersize=22)[0]
+    for i in range(N_int)
+]
+lab = ax_a.text(0.0, 0.78, "", ha="center", fontsize=10)
 
 
-def zigzag(xL, xR, n_zigs=10, amp=0.15):
+def zigzag(xL, xR, n_zigs=10, amp=0.13):
     xs = np.linspace(xL, xR, n_zigs * 2 + 1)
     ys = np.zeros_like(xs)
     ys[1:-1:2] = +amp
@@ -91,69 +190,32 @@ def zigzag(xL, xR, n_zigs=10, amp=0.15):
     return xs, ys
 
 
-def upd(i):
-    p1 = eq1 + xa1[i]
-    p2 = eq2 + xa2[i]
-    b1.set_data([p1], [0])
-    b2.set_data([p2], [0])
-    xs, ys = zigzag(-3.4, p1)
-    sp1.set_data(xs, ys)
-    xs, ys = zigzag(p1, p2)
-    spc.set_data(xs, ys)
-    xs, ys = zigzag(p2, +3.4)
-    sp2.set_data(xs, ys)
-    lab.set_text(f"t = {ta[i]:.1f}")
-    return b1, b2, sp1, spc, sp2, lab
+def upd(frame):
+    pos = eq_pos + xa_t[:, frame]
+    edges = np.concatenate(([wall_left], pos, [wall_right]))
+    for s, xL, xR in zip(springs, edges[:-1], edges[1:]):
+        xs, ys = zigzag(xL, xR)
+        s.set_data(xs, ys)
+    for i, b in enumerate(balls):
+        b.set_data([pos[i]], [0])
+    lab.set_text(f"t = {ta[frame]:.1f}")
+    return [*springs, *balls, lab]
 
 
-ani = FuncAnimation(fig_a, upd, frames=n, interval=40, blit=True)
+ani = FuncAnimation(fig_a, upd, frames=n_a, interval=40, blit=True)
 plt.close(fig_a)
-
-# === 静的な変位 + エネルギー時系列 (1 つの figure に縦 2 段で描画) ===
-# ※Pyodide / Quarto Live の制約で 1 セル内に複数 figure を出力すると最後しか
-#   表示されないため、変位とエネルギーは subplot で 1 figure に集約。
-t = np.linspace(0.0, 80.0, 1500)
-x1 = 0.5 * A * (np.cos(omega_p * t) + np.cos(omega_m * t))
-x2 = 0.5 * A * (np.cos(omega_p * t) - np.cos(omega_m * t))
-v1 = -0.5 * A * (omega_p * np.sin(omega_p * t) + omega_m * np.sin(omega_m * t))
-v2 = -0.5 * A * (omega_p * np.sin(omega_p * t) - omega_m * np.sin(omega_m * t))
-E1 = 0.5 * m * v1 ** 2 + 0.5 * k * x1 ** 2 + 0.25 * kc * (x1 - x2) ** 2
-E2 = 0.5 * m * v2 ** 2 + 0.5 * k * x2 ** 2 + 0.25 * kc * (x1 - x2) ** 2
-
-fig, (ax_d, ax_e) = plt.subplots(2, 1, figsize=(8, 5.6), sharex=True)
-ax_d.plot(t, x1, color="#1e40af", label="ion 1", lw=1.2)
-ax_d.plot(t, x2, color="#b45309", label="ion 2", lw=1.2)
-ax_d.axhline(0, color="0.7", lw=0.5)
-ax_d.set_ylabel("displacement")
-if kc > 1e-9:
-    beat = 2 * np.pi / (omega_m - omega_p)
-    ax_d.set_title(f"Top: x1, x2 vs time  (A={A:.2f}, k_c={kc:.2f}, beat~{beat:.1f})")
-else:
-    ax_d.set_title(f"Top: x1, x2 vs time  (A={A:.2f}, k_c=0 -> no coupling, ion 2 stays at rest)")
-ax_d.legend(loc="upper right")
-ax_e.plot(t, E1, color="#1e40af", label="energy in ion 1", lw=1.2)
-ax_e.plot(t, E2, color="#b45309", label="energy in ion 2", lw=1.2)
-ax_e.set_xlabel("time")
-ax_e.set_ylabel("energy")
-ax_e.set_title("Bottom: energy transfer between the two ions")
-ax_e.legend(loc="upper right")
-fig.tight_layout()
-
-# 静的 figure を表示 (plt.show() で canvas 化、これが Pyodide での確実な作法)
-plt.show()
-
-# 最終式に HTML(ani.to_jshtml()) を返してアニメーションを表示
 HTML(ani.to_jshtml())
 ```
 
 ::: {.field-notes}
 **観察ポイント / 遊び方**:
 
-- $k_c$ を **大きく** すると 2 つの正規モードの周波数差 $\omega_- - \omega_+$ が大きくなり、ビート周期 $2\pi / (\omega_- - \omega_+)$ が **短く** なる (エネルギーが速く ion 2 に流れる)。
-- $k_c \to 0$ で結合が消え、ion 2 は完全に静止のまま。**「離れたボール」が直接バネで繋がっていなくても、共通のモードを介して情報が伝わる**ことが、後の量子版 (フォノンを介した CNOT) の出発点。
-- $A$ を変えても周期は不変 (線形系の特徴)。エネルギーは $A^2$ に比例して大きくなる。
+- $k_c$ を **大きく** すると正規モードの周波数差が広がり、エネルギー再分配のリズム (ビート) が **速く** なる。$k_c \to 0$ で結合が切れ、各 ion は独立に単振動 (周期 $2\pi/\sqrt{k/m} = 2\pi$)。
+- 上の正規モード初期条件 ($N=2$ の $(1, 1)$ や $N=3$ の $(0.5, 0.71, 0.5)$ 等) を入れると **ビートが消えて単一周波数の振動だけ**残る。グラフタイトルに表示される $\omega_n$ と一致するか確認できる。
+- $N = 4$ の最高周波数モード (隣接 ion が必ず逆位相) は実機イオントラップで言う「ジグザグモード」に対応。
+- 任意の初期条件は **正規モードの線形重ね合わせ**。Python コード内の `mode_amps = eigvecs.T @ A_vec` の各成分が、その初期条件にどのモードがどれだけ含まれるかを表す。
 
-特殊な初期条件 ($x_1 = x_2 = A$ または $x_1 = -x_2 = A$) を入れると、ビートが消えて純粋な cm モード / 相対モードだけになります。教科書本文中の **「cm フォノン」とは、まさにこの cm モードを量子化した最低エネルギー振動量子** のこと。
+教科書本文中の **「cm フォノン」とは、最低周波数モード ($\omega_1$) の最低励起量子** のこと。$N$ ion の Cirac–Zoller ゲートでは、$N$ ion 全部が乗っている **cm モード一つだけ** を量子情報の媒介に使い、他の $N-1$ モードは励起しないように制御します。
 
 :::
 
