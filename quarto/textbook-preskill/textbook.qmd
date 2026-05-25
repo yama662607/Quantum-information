@@ -12,6 +12,9 @@ pyodide:
     - numpy
     - matplotlib
     - pandas
+    - plotly
+    - nbformat
+    - jsonschema
 ---
 
 # はじめに {.unnumbered}

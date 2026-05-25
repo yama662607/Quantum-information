@@ -129,6 +129,272 @@ $$ {#eq-2.34}
 $$
 \boldsymbol{U}(R) \boldsymbol{J}_k \boldsymbol{U}(R)^\dagger = R_{k\ell} \boldsymbol{J}_\ell.
 $$ {#eq-2.35}
+
+::: {.callout-note appearance="simple"}
+#### 【補足】ベクトル演算子の変換則と添え字の訂正
+
+式(@eq-2.35)の原文の記述（$\boldsymbol{U}(R) \boldsymbol{J}_k \boldsymbol{U}(R)^\dagger = R_{k\ell} \boldsymbol{J}_\ell$）は、厳密には添え字またはダガー（$\dagger$）の位置が逆になっています。正しくは、以下のいずれかの形式になります。
+
+**【正しい関係式】**
+$$
+\boldsymbol{U}(R)^\dagger \boldsymbol{J}_k \boldsymbol{U}(R) = R_{k\ell} \boldsymbol{J}_\ell \quad \text{または} \quad \boldsymbol{U}(R) \boldsymbol{J}_k \boldsymbol{U}(R)^\dagger = R_{\ell k} \boldsymbol{J}_\ell
+$$
+(※直交行列の逆行列は転置になるため、$(R^{-1})_{k\ell} = R_{\ell k}$ となります。)
+
+**【証明（微小回転による確認）】**
+$\boldsymbol{U}(R)^\dagger \boldsymbol{J}_k \boldsymbol{U}(R) = R_{k\ell} \boldsymbol{J}_\ell$ を微小回転 $R(\hat{n}, \theta)$ ($\theta \ll 1$) について証明します。
+微小回転のユニタリ演算子は $\boldsymbol{U} \approx \boldsymbol{I} - i\theta \hat{n} \cdot \vec{\boldsymbol{J}}$ です。これを左辺に代入すると、
+$$
+\begin{aligned}
+\boldsymbol{U}^\dagger \boldsymbol{J}_k \boldsymbol{U} &\approx (\boldsymbol{I} + i\theta n_m \boldsymbol{J}_m) \boldsymbol{J}_k (\boldsymbol{I} - i\theta n_p \boldsymbol{J}_p) \\
+&\approx \boldsymbol{J}_k + i\theta n_m [\boldsymbol{J}_m, \boldsymbol{J}_k] \\
+&= \boldsymbol{J}_k + i\theta n_m (i \varepsilon_{mk\ell} \boldsymbol{J}_\ell) \quad \text{（交換関係 } [\boldsymbol{J}_m, \boldsymbol{J}_k] = i \varepsilon_{mk\ell} \boldsymbol{J}_\ell \text{ より）} \\
+&= \boldsymbol{J}_k - \theta \varepsilon_{mk\ell} n_m \boldsymbol{J}_\ell \\
+&= \boldsymbol{J}_k + \theta \varepsilon_{km\ell} n_m \boldsymbol{J}_\ell.
+\end{aligned}
+$$
+一方で、古典的な3次元ベクトルの微小回転は $\vec{v}' = \vec{v} + \theta \hat{n} \times \vec{v}$ となり、成分で書くと $v'_k = v_k + \theta \varepsilon_{km\ell} n_m v_\ell = R_{k\ell} v_\ell$ となります。
+したがって、回転行列の成分は $R_{k\ell} = \delta_{k\ell} + \theta \varepsilon_{km\ell} n_m$ です。これを右辺に代入すると、
+$$
+R_{k\ell} \boldsymbol{J}_\ell = (\delta_{k\ell} + \theta \varepsilon_{km\ell} n_m) \boldsymbol{J}_\ell = \boldsymbol{J}_k + \theta \varepsilon_{km\ell} n_m \boldsymbol{J}_\ell
+$$
+となり、左辺と一致することがわかります。
+
+**【物理的意味（能動的変換と受動的変換）】**
+
+- $\boldsymbol{U}(R)^\dagger \boldsymbol{J}_k \boldsymbol{U}(R)$ は、状態を固定して**「観測装置（演算子）を逆に回転させること」**（ハイゼンベルク描像における受動的変換）に相当します。
+- $\langle \psi | \boldsymbol{U}(R)^\dagger \boldsymbol{J}_k \boldsymbol{U}(R) | \psi \rangle = \sum_\ell R_{k\ell} \langle \psi | \boldsymbol{J}_\ell | \psi \rangle$ は、**「状態を回転させると、角運動量の期待値ベクトルも3次元空間で同じように回転する」**という直感的な物理的事実を表しています。角運動量演算子が「ベクトル演算子」と呼ばれる所以です。
+
+:::
+
+#### 対話シミュレーション: スピン期待値のベクトル変換 {#sec-2.2-spin-rotation-simulation}
+
+ここでは、量子状態（クビット）に対するユニタリ回転 $\boldsymbol{U}(R)$（能動的変換）と、期待値ベクトルの空間的な回転 $R$（受動的変換）が完全に一致することをアニメーションで確認します。
+
+```{ojs}
+//| echo: false
+{
+  const container = html`<div style="width: 100%; min-height: 560px;"></div>`;
+  const Plotly = await require("plotly.js-dist-min@2.35.2");
+  const nFrames = 73;
+  const thetaValues = Array.from(
+    { length: nFrames },
+    (_, i) => (2 * Math.PI * i) / (nFrames - 1),
+  );
+  const v0 = [0, 0, 1];
+  const n = [0, 1, 0];
+
+  function activeBlochVector(theta) {
+    const a = Math.cos(theta / 2);
+    const b = Math.sin(theta / 2);
+    return [2 * a * b, 0, a * a - b * b];
+  }
+
+  function rotateVectorY(vector, theta) {
+    const [x, y, z] = vector;
+    const c = Math.cos(theta);
+    const s = Math.sin(theta);
+    return [c * x + s * z, y, -s * x + c * z];
+  }
+
+  function vectorTrace(vector, color, name, width, dash = "solid") {
+    return {
+      type: "scatter3d",
+      mode: "lines+markers",
+      x: [0, vector[0]],
+      y: [0, vector[1]],
+      z: [0, vector[2]],
+      line: { color, width, dash },
+      marker: { size: [2, 5], color },
+      name,
+      hovertemplate: name + "<br>x=%{x:.3f}<br>y=%{y:.3f}<br>z=%{z:.3f}<extra></extra>",
+    };
+  }
+
+  const sphereU = Array.from({ length: 32 }, (_, i) => (2 * Math.PI * i) / 31);
+  const sphereV = Array.from({ length: 17 }, (_, i) => (Math.PI * i) / 16);
+  const sphereX = sphereU.map((u) => sphereV.map((v) => Math.cos(u) * Math.sin(v)));
+  const sphereY = sphereU.map((u) => sphereV.map((v) => Math.sin(u) * Math.sin(v)));
+  const sphereZ = sphereU.map(() => sphereV.map((v) => Math.cos(v)));
+  const orbit = thetaValues.map((theta) => rotateVectorY(v0, theta));
+
+  const active0 = activeBlochVector(0);
+  const passive0 = rotateVectorY(v0, 0);
+  const data = [
+    {
+      type: "surface",
+      x: sphereX,
+      y: sphereY,
+      z: sphereZ,
+      opacity: 0.12,
+      colorscale: "Greys",
+      showscale: false,
+      hoverinfo: "skip",
+      name: "Bloch sphere",
+    },
+    {
+      type: "scatter3d",
+      mode: "lines",
+      x: [-1.25, 1.25],
+      y: [0, 0],
+      z: [0, 0],
+      line: { color: "#6b7280", width: 2 },
+      showlegend: false,
+      hoverinfo: "skip",
+    },
+    {
+      type: "scatter3d",
+      mode: "lines",
+      x: [0, 0],
+      y: [-1.25, 1.25],
+      z: [0, 0],
+      line: { color: "#6b7280", width: 2 },
+      showlegend: false,
+      hoverinfo: "skip",
+    },
+    {
+      type: "scatter3d",
+      mode: "lines",
+      x: [0, 0],
+      y: [0, 0],
+      z: [-1.25, 1.25],
+      line: { color: "#6b7280", width: 2 },
+      showlegend: false,
+      hoverinfo: "skip",
+    },
+    {
+      type: "scatter3d",
+      mode: "lines",
+      x: orbit.map((p) => p[0]),
+      y: orbit.map((p) => p[1]),
+      z: orbit.map((p) => p[2]),
+      line: { color: "rgba(37, 99, 235, 0.35)", width: 4 },
+      name: "回転軌道",
+      hoverinfo: "skip",
+    },
+    vectorTrace(v0, "#2563eb", "初期状態 v0", 5),
+    vectorTrace(n.map((value) => 1.18 * value), "#059669", "回転軸 y", 5, "dash"),
+    vectorTrace(active0, "rgba(220, 38, 38, 0.65)", "能動的: U_y(θ)|ψ0⟩", 13),
+    vectorTrace(passive0, "#111827", "空間回転: R_y(θ)v0", 4),
+  ];
+
+  const frames = thetaValues.map((theta, i) => {
+    const active = activeBlochVector(theta);
+    const passive = rotateVectorY(v0, theta);
+    const err = Math.hypot(
+      active[0] - passive[0],
+      active[1] - passive[1],
+      active[2] - passive[2],
+    );
+    return {
+      name: "frame-" + i,
+      data: [
+        {
+          x: [0, active[0]],
+          y: [0, active[1]],
+          z: [0, active[2]],
+          hovertemplate:
+            "能動的: U_y(θ)|ψ0⟩<br>θ=" +
+            (theta / Math.PI).toFixed(2) +
+            "π<br>x=" +
+            active[0].toFixed(3) +
+            "<br>y=" +
+            active[1].toFixed(3) +
+            "<br>z=" +
+            active[2].toFixed(3) +
+            "<extra></extra>",
+        },
+        {
+          x: [0, passive[0]],
+          y: [0, passive[1]],
+          z: [0, passive[2]],
+          hovertemplate:
+            "空間回転: R_y(θ)v0<br>差 |Δ|=" +
+            err.toExponential(1) +
+            "<br>x=" +
+            passive[0].toFixed(3) +
+            "<br>y=" +
+            passive[1].toFixed(3) +
+            "<br>z=" +
+            passive[2].toFixed(3) +
+            "<extra></extra>",
+        },
+      ],
+      traces: [7, 8],
+    };
+  });
+
+  const animationOptions = {
+    mode: "immediate",
+    frame: { duration: 45, redraw: true },
+    transition: { duration: 0 },
+  };
+  const sliderSteps = thetaValues.map((theta, i) => ({
+    method: "animate",
+    args: [["frame-" + i], { ...animationOptions, frame: { duration: 0, redraw: true } }],
+    label: Math.round((theta * 180) / Math.PI) + "°",
+  }));
+
+  const layout = {
+    title: "ブロッホベクトルの回転: U_y(θ)|ψ0⟩ と R_y(θ)v0",
+    height: 560,
+    margin: { l: 0, r: 0, t: 54, b: 0 },
+    legend: { orientation: "h", x: 0, y: 1.03 },
+    scene: {
+      aspectmode: "cube",
+      camera: { eye: { x: 1.45, y: 1.7, z: 1.25 } },
+      xaxis: { title: "X", range: [-1.25, 1.25], zeroline: false },
+      yaxis: { title: "Y", range: [-1.25, 1.25], zeroline: false },
+      zaxis: { title: "Z", range: [-1.25, 1.25], zeroline: false },
+    },
+    updatemenus: [
+      {
+        type: "buttons",
+        showactive: false,
+        x: 0,
+        y: -0.06,
+        xanchor: "left",
+        yanchor: "top",
+        buttons: [
+          {
+            label: "再生",
+            method: "animate",
+            args: [null, { ...animationOptions, fromcurrent: true }],
+          },
+          {
+            label: "停止",
+            method: "animate",
+            args: [[null], { mode: "immediate", frame: { duration: 0 }, transition: { duration: 0 } }],
+          },
+        ],
+      },
+    ],
+    sliders: [
+      {
+        active: 0,
+        x: 0.12,
+        y: -0.06,
+        len: 0.86,
+        currentvalue: { visible: false },
+        steps: sliderSteps,
+      },
+    ],
+  };
+
+  await Plotly.newPlot(container, data, layout, { responsive: true, displaylogo: false });
+  await Plotly.addFrames(container, frames);
+  invalidation.then(() => Plotly.purge(container));
+  return container;
+}
+```
+
+::: {.field-notes}
+**観察ポイント**:
+- **赤い太いベクトル**（状態 $|\psi\rangle$ を複素2次行列 $\boldsymbol{U}(R)$ で回転させた結果）と、**黒い細いベクトル**（古典的な3次元回転行列 $R$ を直接ベクトルに掛けた結果）を重ねて表示しています。
+- 「再生」ボタンを押すかスライダーを動かすと、この2つのベクトルが**完全に一致したまま回転する**様子が確認できます。これが $\langle \psi | \boldsymbol{U}^\dagger \boldsymbol{\sigma}_k \boldsymbol{U} | \psi \rangle = \sum_\ell R_{k\ell} \langle \psi | \boldsymbol{\sigma}_\ell | \psi \rangle$ の直感的な証明です。
+
+:::
+
 したがって、状態 $|m\rangle$ が $\boldsymbol{J}_3$ の固有状態であるなら、
 $$
 \boldsymbol{J}_3 |m\rangle = m|m\rangle;
