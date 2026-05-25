@@ -12,6 +12,54 @@
 2. 測定は直交射影ではない。
 3. 発展はユニタリではない。
 
+::: {.callout-note collapse="true" title="💡 開いた系における公理の破れと反例"}
+閉じた全体系（システム $A$ ＋ 環境 $B$）は量子力学の公理に従いますが、私たちがシステム $A$ だけに視野を限定した瞬間、環境 $B$ との「量子もつれ（エンタングルメント）」や相互作用によって、公理が破れているように見えます。
+
+#### 1. 状態は射（ray）ではない
+対象とするシステム $A$ が外部の環境 $B$ と量子もつれしている場合、システム $A$ の状態は単一のベクトル $|\psi\rangle_A$ だけでは書き表せなくなります（混合状態 $\boldsymbol{\rho}_A$ となるため）。
+
+**【反例】**
+システム $A$ と環境 $B$ が最大もつれ状態（ベル状態）にあるとします。
+$$
+|\psi\rangle_{AB} = \frac{1}{\sqrt{2}} (|0\rangle_A |0\rangle_B + |1\rangle_A |1\rangle_B)
+$$
+環境 $B$ をトレースアウトしてシステム $A$ の密度行列 $\boldsymbol{\rho}_A$ を求めると、完全に混合した状態（Maximal Mixed State）になります。
+$$
+\boldsymbol{\rho}_A = \text{tr}_B (|\psi\rangle\langle\psi|_{AB}) = \frac{1}{2} |0\rangle\langle 0|_A + \frac{1}{2} |1\rangle\langle 1|_A = \frac{1}{2} \boldsymbol{I}
+$$
+この $\boldsymbol{\rho}_A = \frac{1}{2} \boldsymbol{I}$ はいかなるベクトル $|\phi\rangle_A$ を用いても $\boldsymbol{\rho}_A = |\phi\rangle\langle\phi|_A$ （1次元の射）の形に書くことができません（行列のランクが $2$ であるため）。
+
+#### 2. 測定は直交射影ではない
+開いた系 $A$ においては、「補助的な系（アンシラ） $B$ を用意して $A$ と相互作用させ、そのあとに全体系 $AB$ で通常の直交射影測定を行う」という操作が可能です。これをシステム $A$ の視点だけで解釈すると、互いに直交しない演算子による測定（POVM: Positive Operator-Valued Measure）になります。
+
+**【反例】**
+1クビット（2次元空間）において、互いに直交しない以下の3つの正定値演算子 $\{ \boldsymbol{E}_1, \boldsymbol{E}_2, \boldsymbol{E}_3 \}$ を定義します（正三角形のように $120^\circ$ ずつ離れた3つの非直交状態の識別に対応します）。
+$$
+\begin{aligned}
+\boldsymbol{E}_1 &= \frac{2}{3} |0\rangle\langle 0| \\
+\boldsymbol{E}_2 &= \frac{2}{3} \left( -\frac{1}{2}|0\rangle + \frac{\sqrt{3}}{2}|1\rangle \right) \left( -\frac{1}{2}\langle 0| + \frac{\sqrt{3}}{2}\langle 1| \right) \\
+\boldsymbol{E}_3 &= \frac{2}{3} \left( -\frac{1}{2}|0\rangle - \frac{\sqrt{3}}{2}|1\rangle \right) \left( -\frac{1}{2}\langle 0| - \frac{\sqrt{3}}{2}\langle 1| \right)
+\end{aligned}
+$$
+これらは $\sum_{i=1}^3 \boldsymbol{E}_i = \boldsymbol{I}$ を満たし、各 $\boldsymbol{E}_i \ge 0$ ですが、射影演算子ではありません（例えば $\boldsymbol{E}_1^2 = \frac{2}{3}\boldsymbol{E}_1 \neq \boldsymbol{E}_1$ であり、$\boldsymbol{E}_1 \boldsymbol{E}_2 \neq 0$ となり互いに直交していません）。この測定は、背後のアンシラ $B$ を用いた全体系 $AB$ 上の通常の直交射影測定から誘導されます。
+
+#### 3. 発展はユニタリではない
+開いた系 $A$ では、システム内の量子コヒーレンスやエネルギーが相互作用を通じて外部の環境へと逃げていってしまいます（デコヒーレンスや散逸）。
+
+**【反例】**
+状態の非対角成分（量子的なコヒーレンス）だけが減衰する完全位相緩和（フェーズ・デコヒーレンス）を考えます。
+$$
+\boldsymbol{\rho}_A = \begin{pmatrix} \rho_{00} & \rho_{01} \\ \rho_{10} & \rho_{11} \end{pmatrix} \quad \longrightarrow \quad \boldsymbol{\rho}'_A = \begin{pmatrix} \rho_{00} & 0 \\ 0 & \rho_{11} \end{pmatrix}
+$$
+もしこの発展がユニタリ行列 $\boldsymbol{U}$ を用いたユニタリ変換 $\boldsymbol{\rho}'_A = \boldsymbol{U} \boldsymbol{\rho}_A \boldsymbol{U}^\dagger$ であれば、純粋状態は常に純粋状態に保たれるはずです。しかし、初期の純粋状態 $|\psi\rangle_A = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ から出発すると、
+$$
+\boldsymbol{\rho}_A = \frac{1}{2} \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix} \quad \longrightarrow \quad \boldsymbol{\rho}'_A = \frac{1}{2} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \frac{1}{2} \boldsymbol{I}
+$$
+のように混合状態へ変化します。ユニタリ変換によって純粋状態が混合状態に変わることはあり得ないため、この発展は非ユニタリです。
+
+:::
+
+
 開いた量子系が従う法則に到達するために、複合量子系の記述とその構成要素の記述を結びつける第5の公理を思い出す必要があります。開いた系の量子記述を理解するための第一歩として、1つのクビットだけを観察する2クビットの世界を考えてみましょう。クビット $A$ は私たちと同じ部屋にあり、私たちはそれを自由に観察したり操作したりできます。しかし、クビット $B$ は金庫に閉じ込められており、アクセスできません。全体系 $AB$ は @sec-2.1-axioms の公理に従います。しかし、クビット $A$ のみに対して行われ得る観測を特徴づける簡潔な方法を見つけたいと考えています。
 
 クビット $A$ と $B$ の正規直交基底をそれぞれ $\{|0\rangle_A, |1\rangle_A\}$ と $\{|0\rangle_B, |1\rangle_B\}$ とします。2クビット世界の量子状態が以下の形式であるとします：
