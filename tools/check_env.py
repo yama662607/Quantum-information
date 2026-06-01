@@ -2,7 +2,7 @@ import subprocess
 import shutil
 import sys
 
-from find_quarto import find_quarto
+from utils.find_quarto import find_quarto
 
 
 def check_command(cmd, name):
