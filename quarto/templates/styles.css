@@ -263,21 +263,63 @@ main a.btn,
   margin-right: auto !important;
 }
 
-/* 左サイドバーは空で残す（グリッドの幅を確保して本文を中央配置） */
+/* 左サイドバー（章ナビゲーション）のスタイル */
 #quarto-sidebar {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  overflow: hidden !important;
+  font-size: 0.9rem;
 }
 
-#quarto-sidebar>* {
-  display: none !important;
+#quarto-sidebar .sidebar-item-text {
+  font-size: 0.88rem;
+  line-height: 1.4;
 }
 
-#quarto-sidebar-glass {
-  display: none !important;
+/* ページ上部・下部の章ナビゲーションバー */
+.top-page-navigation,
+nav.page-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1rem;
+  margin: 0.5rem 0 1.5rem 0;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
+
+.top-page-navigation .pagination-link,
+nav.page-navigation .pagination-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #1e40af !important;
+  font-weight: 500;
+  font-size: 0.88rem;
+  text-decoration: none !important;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.375rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.15s ease;
+}
+
+.top-page-navigation .pagination-link:hover,
+nav.page-navigation .pagination-link:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8 !important;
+}
+
+.top-page-navigation .nav-page-index .pagination-link {
+  color: #4b5563 !important;
+}
+
+.top-page-navigation .nav-page-index .pagination-link:hover {
+  background: #f1f5f9;
+  color: #111827 !important;
+}
+
 
 /* サイドバー折りたたみボタン */
 #right-sidebar-toggle {

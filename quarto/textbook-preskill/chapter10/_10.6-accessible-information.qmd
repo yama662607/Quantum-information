@@ -18,7 +18,7 @@ $$ {#eq-10.205}
 
 もし状態群 $\{\boldsymbol{\rho}(x)\}$ が互いに直交しているならば、それらは完全に識別可能です。ボブは $\boldsymbol{E}(x)$ を $\boldsymbol{\rho}(x)$ の台（support）への射影作用素として選ぶことで、アリスの状態を確実に特定できます。このとき $p(y|x) = \delta_{x,y} = p(x|y)$ となり、したがって $H(X|Y) = \langle -\log p(x|y)\rangle = 0$ かつ $\mathrm{Acc}(\mathcal{E}) = H(X)$ となります。アリスの状態が直交していない場合、ボブの課題はずっと難しくなります。その場合、状態を完全に特定できる測定は存在しないため、$H(X|Y)$ は必ず正となり、$\mathrm{Acc}(\mathcal{E}) < H(X)$ となります。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=47) アンサンブルの達成可能情報に対する単純な一般公式は存在しませんが、**ホレボ限界（Holevo bound）**と呼ばれる有用な上限を導くことができます。純粋状態のアンサンブル $\mathcal{E} = \{|\varphi(x)\rangle, p(x)\}$ という特別な場合、ホレボ限界は次のように表されます：
+アンサンブルの達成可能情報に対する単純な一般公式は存在しませんが、**ホレボ限界（Holevo bound）**と呼ばれる有用な上限を導くことができます。純粋状態のアンサンブル $\mathcal{E} = \{|\varphi(x)\rangle, p(x)\}$ という特別な場合、ホレボ限界は次のように表されます：
 $$
 \mathrm{Acc}(\mathcal{E}) \le H(\boldsymbol{\rho}), \quad \text{ここで} \quad \boldsymbol{\rho} = \sum_x p(x) |\varphi(x)\rangle\langle\varphi(x)|.
 $$ {#eq-10.206}
@@ -38,7 +38,7 @@ $$
 $$ {#eq-10.207}
 となります。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=48) ボブの測定は、次のように $A$ を $AY$ に写像する量子通信路です：
+ボブの測定は、次のように $A$ を $AY$ に写像する量子通信路です：
 $$
 \boldsymbol{\rho}(x) \mapsto \sum_y \boldsymbol{M}(y)\boldsymbol{\rho}(x)\boldsymbol{M}(y)^\dagger \otimes |y\rangle\langle y|.
 $$ {#eq-10.208}
@@ -84,7 +84,7 @@ $$
 $$ {#eq-10.215}
 となります。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=49) ここで、
+ここで、
 $$
 \mathcal{E} = \{\boldsymbol{\rho}(x), p(x)\} \quad \text{および} \quad \mathcal{E}' = \{\boldsymbol{\rho}'(x) = \mathcal{N}(\boldsymbol{\rho}(x)), p(x)\}
 $$ {#eq-10.216}
@@ -117,7 +117,7 @@ $$
 \langle\varphi_1|\varphi_2\rangle = \langle\varphi_1|\varphi_3\rangle = \langle\varphi_2|\varphi_3\rangle = -\frac{1}{2}.
 $$ {#eq-10.220}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=50) ボブの課題は、適切な測定を行うことによって、アリスが準備したものについてできるだけ多くのことを知ることです。アリスのアンサンブルの密度行列は
+ボブの課題は、適切な測定を行うことによって、アリスが準備したものについてできるだけ多くのことを知ることです。アリスのアンサンブルの密度行列は
 $$
 \boldsymbol{\rho} = \frac{1}{3}\left(|\varphi_1\rangle\langle\varphi_1| + |\varphi_2\rangle\langle\varphi_2| + |\varphi_3\rangle\langle\varphi_3|\right) = \frac{1}{2}\boldsymbol{I}
 $$ {#eq-10.221}
@@ -158,7 +158,7 @@ $$ {#eq-10.227}
 
 3つの $|\Phi_a\rangle$ は線形独立であるため、4次元の2量子ビットヒルベルト空間の3次元部分空間を張ります。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=51) 演習10.9において、密度作用素
+演習10.9において、密度作用素
 $$
 \boldsymbol{\rho} = \frac{1}{3}\left(\sum_{a=1}^3 |\Phi_a\rangle\langle\Phi_a|\right)
 $$ {#eq-10.228}
@@ -195,7 +195,7 @@ $$
 |\tilde{\Phi}_a\rangle = \sqrt{\lambda_a}|\phi_a\rangle
 $$ {#eq-10.234}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=52) （ここで $|\phi_a\rangle$ は正規直交系）であり、
+（ここで $|\phi_a\rangle$ は正規直交系）であり、
 $$
 \begin{aligned}
 \boldsymbol{E}_a &= \sum_{b,c} (|\phi_b\rangle \lambda_b^{-1/2}\langle\phi_b|)(|\phi_a\rangle \lambda_a \langle\phi_a|)(|\phi_c\rangle \lambda_c^{-1/2}\langle\phi_c|) \\
@@ -231,7 +231,7 @@ $$ {#eq-10.238}
 
 アリスによって準備された入力信号状態のアンサンブル $\mathcal{E} = \{\boldsymbol{\rho}(x), p(x)\}$ は、通信路によって出力信号のアンサンブル $\mathcal{E}' = \{\mathcal{N}(\boldsymbol{\rho}(x)), p(x)\}$ に写像されます。ボブが
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=53) 出力を測定する場合、彼の最適情報利得
+出力を測定する場合、彼の最適情報利得
 $$
 \mathrm{Acc}(\mathcal{E}') \le I(X; B) = \chi(\mathcal{E}')
 $$ {#eq-10.239}
@@ -260,7 +260,7 @@ $$ {#eq-10.242}
 
 実際、この上限は実際に達成可能なレートであり、したがって古典容量 $C(\mathcal{N})$ に等しくなります。しかし、古典容量に対するこの公式は、任意の長さのメッセージアンサンブルにわたってホレボ $\chi$ を最適化する必要があるため、現状のままではあまり有用ではありません。通信路の使用回数が無限大に向かう極限を取ることを含む場合、容量の公式は**正則化されている（regularized）**と言います。$C(\mathcal{N})$ に対する表現を、通信路の1回の使用のみを含む**単一文字公式（single-letter formula）**に簡約できる方がはるかに望ましいです。古典通信路の場合、通信路の $n$ 回の使用に対する条件付きエントロピーが式 (10.49) のように加法的であったため、正則化された表現を単一文字公式に簡約することが可能でした。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=54) 量子通信路の場合、ホレボ $\chi$ が真に超加法的（strictly superadditive）である通信路が存在することが知られているため、状況はより複雑です：
+量子通信路の場合、ホレボ $\chi$ が真に超加法的（strictly superadditive）である通信路が存在することが知られているため、状況はより複雑です：
 $$
 \chi(\mathcal{N}_1 \otimes \mathcal{N}_2) > \chi(\mathcal{N}_1) + \chi(\mathcal{N}_2).
 $$ {#eq-10.243}
@@ -295,7 +295,7 @@ H(B^n|X^n) &= \sum_{x_1, x_2, \dots, x_n} p(x_1 x_2 \dots x_n)\left(\sum_{i=1}^n
 $$ {#eq-10.249}
 となります。ここで $X_i = \{x_i, p_i(x_i)\}$ は $i$ 番目の文字に対する周辺確率分布です。式 (@eq-10.249) は式 (10.49) の量子版であり、積状態アンサンブルに対しては成り立ちますが、
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=55) 一般のもつれたアンサンブルに対しては成り立ちません。式 (@eq-10.246), (@eq-10.247), (@eq-10.249) を組み合わせると、
+一般のもつれたアンサンブルに対しては成り立ちません。式 (@eq-10.246), (@eq-10.247), (@eq-10.249) を組み合わせると、
 $$
 I(X^n; B^n) \le \sum_{i=1}^n (H(B_i) - H(B_i|X_i)) = \sum_i I(X_i; B_i) \le n\chi(\mathcal{N})
 $$ {#eq-10.250}
@@ -325,7 +325,7 @@ $$ {#eq-10.254}
 
 これを厳密な論証にするためには、ボブの復号測定をより明示的に指定し、注意深い誤り解析を行う必要があります。これは少々技術的になるため、
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=56) ここでは詳細は省略します。しかし幾分驚くべきことに、古典情報を送信する以外の他のタスクに量子通信路が使用される場合、容量定理を証明する方が容易であることが判明します。私たちは §10.7 でその問題に移ります。
+ここでは詳細は省略します。しかし幾分驚くべきことに、古典情報を送信する以外の他のタスクに量子通信路が使用される場合、容量定理を証明する方が容易であることが判明します。私たちは §10.7 でその問題に移ります。
 
 ### 10.6.6 もつれ破壊通信路 (Entanglement-breaking channels) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=56) {#sec-10.6.6-entanglement-breaking-channels}
 
@@ -373,7 +373,7 @@ $$ {#eq-10.263}
 $$
 \boldsymbol{\rho}'_{X B_1 B_2} = \sum_{x,y} p(x) p(y|x) |x\rangle\langle x| \otimes \boldsymbol{\sigma}(x, y)_{B_1} \otimes [\mathcal{N}_2(\boldsymbol{\tau}(x, y))]_{B_2}
 $$ {#eq-10.264}
-は、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=57)
+は、
 $$
 \boldsymbol{\omega}'_{XY B_1 B_2} = \sum_{x,y} p(x, y) |x, y\rangle\langle x, y| \otimes \boldsymbol{\sigma}(x, y) \otimes \mathcal{N}_2(\boldsymbol{\tau}(x, y))
 $$ {#eq-10.265}

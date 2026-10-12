@@ -1,6 +1,30 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
+  // ── ページ上部への章ナビゲーション自動配置 ─────────────────
+  const bottomNav = document.querySelector('nav.page-navigation');
+  if (bottomNav) {
+    const topNav = bottomNav.cloneNode(true);
+    topNav.classList.add('top-page-navigation');
+    
+    // パンくずリストがある場合はその直後に配置、なければ main 先頭に配置
+    const breadcrumb = document.querySelector('nav.quarto-page-breadcrumbs');
+    const mainContent = document.querySelector('main.content');
+    
+    if (breadcrumb && breadcrumb.parentNode) {
+      breadcrumb.parentNode.insertBefore(topNav, breadcrumb.nextSibling);
+    } else if (mainContent) {
+      const titleBlock = mainContent.querySelector('.quarto-title-block') || mainContent.firstElementChild;
+      mainContent.insertBefore(topNav, titleBlock);
+    }
+  }
+
+  // ── 目次（TOC）から「📄 chapX.pdf」や「📄 p.X」を取り除く ───────
+  const tocLinks = document.querySelectorAll('#TOC a');
+  tocLinks.forEach(function (a) {
+    a.innerHTML = a.innerHTML.replace(/\s*📄[^\s<]*/g, '').trim();
+  });
+
   // ── 右サイドバー（目次）トグル ──────────────────────────
   const rightSidebar = document.getElementById('quarto-margin-sidebar');
   if (rightSidebar) {

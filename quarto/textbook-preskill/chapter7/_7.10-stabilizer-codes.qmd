@@ -30,7 +30,6 @@ $$ {#eq-7.118}
 
 パウリ群 $G_n$ の（$2^n$ 次元表現）は、明らかに次の性質を持っています：
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=34)
 
 (i) 各 $\boldsymbol{M} \in G_n$ はユニタリであり、$\boldsymbol{M}^{-1} = \boldsymbol{M}^\dagger$ である。  
 (ii) 各元 $\boldsymbol{M} \in G_n$ に対して、$\boldsymbol{M}^2 = \pm\boldsymbol{I} \equiv \pm\boldsymbol{I}^{\otimes n}$ である。さらに、テンソル積内の $\boldsymbol{Y}$ の個数が偶数であれば $\boldsymbol{M}^2 = \boldsymbol{I}$ であり、$\boldsymbol{Y}$ の個数が奇数であれば $\boldsymbol{M}^2 = -\boldsymbol{I}$ である。  
@@ -73,7 +72,6 @@ $$ {#eq-7.122}
 
 安定化群の言語が有用であるのは、符号が検出および訂正できる誤りを特徴付ける単純な方法を提供するためです。$n - k$ 個の安定化生成元 $\boldsymbol{M}_1, \dots, \boldsymbol{M}_{n-k}$ を、符号の**検査演算子（チェック演算子；check operators）**、すなわち誤りを診断するために測定する集団的観測可能量と考えることができます。もし符号化された情報が損傷を受けていなければ、
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=35)
 各生成元に対して $\boldsymbol{M}_i = 1$ であることが見出されます。しかし、ある $i$ に対して $\boldsymbol{M}_i = -1$ であれば、データは符号部分空間に直交しており、誤りが検出されたことになります。
 
 誤りスーパーオペレータはパウリ群の元 $\boldsymbol{E}_a$ で展開できることを思い出してください。特定の $\boldsymbol{E}_a$ は、特定の安定化生成元 $\boldsymbol{M}$ と可換であるか反可換であるかのいずれかです。もし $\boldsymbol{E}_a$ と $\boldsymbol{M}$ が可換であれば、$|\psi\rangle \in \mathcal{H}_S$ に対して
@@ -122,7 +120,6 @@ $$ {#eq-7.127}
 
 明らかに、符号部分空間として、$G_n$ の $n - k$ 個の独立な可換元の $2^{n-k}$ 個の同時固有空間のいずれか1つを同様に選ぶこともできます。しかし実際には、これらすべての符号は同値です。2つの安定化符号が、量子ビットのラベル付けの方法や各単一量子ビットヒルベルト空間の基底の選び方のみにおいて異なる場合――すなわち、一方の符号の安定化群が、量子ビットの置換と単一量子ビット変換のテンソル積によって他方の符号の安定化群へと変換される場合――それらは**同値（equivalent）**であるとみなすことができます。もし安定化生成元を2つの集合 $\{\boldsymbol{M}_1, \dots, \boldsymbol{M}_j\}$ と $\{\boldsymbol{M}_{j+1}, \dots, \boldsymbol{M}_{n-k}\}$ に分割するならば、第1の集合の各元と可換であり、かつ第2の集合の各元と反可換であるような $\boldsymbol{n} \in G_n$ が存在します。
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=36)
 $|\psi\rangle \in \mathcal{H}_S$ に $\boldsymbol{n}$ を適用すると、第1の集合の固有値は保存されたまま、第2の集合の固有値が反転します。$\boldsymbol{n}$ は単一量子ビットユニタリ変換の単なるテンソル積であるため、（同値性を除いて）すべての固有値を 1 と選択することに一般性を失うことはありません。さらに、安定化群を指定する際にはマイナス符号は実質的に重要ではないため、位相を除いて、安定化群が $n$ 個の量子ビットの置換と各量子ビット上での演算子 $\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}$ の置換によって異なっている場合にも、2つの符号は同値であると言うことができます。
 
 もし安定化群と**可換**でありながら安定化群内には存在しない $\boldsymbol{E}_a^\dagger\boldsymbol{E}_b$ が存在するならば、復元は失敗する可能性があります。これは符号部分空間 $\mathcal{H}_S$ を保存するものの、その空間内で非自明に作用し得る演算子です。したがって、符号化された情報を改変してしまう可能性があります。$\boldsymbol{E}_a|\psi\rangle$ と $\boldsymbol{E}_b|\psi\rangle$ は同一のシンドロームを持つため、$\boldsymbol{E}_a$ 誤りを誤って $\boldsymbol{E}_b$ 誤りと解釈してしまう可能性があり、その場合、誤りの効果と復元の試みの全体としての効果はデータに $\boldsymbol{E}_b^\dagger\boldsymbol{E}_a$ が適用されることになり、損傷を引き起こす可能性があります。
@@ -159,7 +156,6 @@ $$
 (\alpha|\beta)(\alpha'|\beta') = (-1)^{\alpha \cdot \beta' + \alpha' \cdot \beta} (\alpha'|\beta')(\alpha|\beta).
 $$ {#eq-7.131}
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=37)
 したがって、2つのパウリ演算子が可換であることと、対応するベクトルが「シンプレクティック」内積
 
 $$
@@ -208,7 +204,6 @@ $$ {#eq-7.137}
 
 **(a) 9量子ビット符号 (The nine-qubit code):** この $[[9, 1, 3]]$ 符号は、次のように表現できる8個の安定化生成元を持ちます：
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=38)
 
 $$
 \begin{aligned}
@@ -271,7 +266,6 @@ $$ {#eq-7.142}
 
 ここで $H$ は $C$ の $(n - k) \times n$ パリティ検査行列です。7量子ビット符号と同様に、$C$ が $C^\perp$ を含むために安定化生成元は互いに可換であり、符号部分空間は
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=39)
 $F$ 基底と $P$ 基底の双方において $H$ パリティ検査を満たす状態によって張られます。同値として、符号語は $H$ パリティ検査を満たし、かつ次のもとで不変です：
 
 $$
@@ -310,7 +304,6 @@ $$ {#eq-7.146}
 
 実際、これら $2k$ 個の演算は、単一量子ビット演算子 $\bar{\boldsymbol{Z}}_i, \bar{\boldsymbol{X}}_i$（$i = 1, 2, \dots, k$）として選ぶことができます。ここで $\bar{\boldsymbol{Z}}_i, \bar{\boldsymbol{X}}_i$ は、$i$ でラベル付けされた符号化された量子ビットに作用するパウリ演算子 $\boldsymbol{Z}$ および $\boldsymbol{X}$ です。まず、$n - k$ 個の安定化生成元を $n$ 個の可換演算子の極大集合へと拡張できることに注意します。
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=40)
 この集合に追加する $k$ 個の演算子を $\bar{\boldsymbol{Z}}_1, \dots, \bar{\boldsymbol{Z}}_k$ と表すことができます。このとき、（符号部分空間 $\mathcal{H}_S$ 内における）$\bar{\boldsymbol{Z}}_1, \dots, \bar{\boldsymbol{Z}}_k$ の同時固有状態を論理基底状態 $|\bar{z}_1, \dots, \bar{z}_k\rangle$ とみなすことができます。ここで $\bar{z}_j = 0$ は $\bar{\boldsymbol{Z}}_j = 1$ に対応し、$\bar{z}_j = 1$ は $\bar{\boldsymbol{Z}}_j = -1$ に対応します。
 
 正規化群の残りの $k$ 個の生成元は、互いに可換であり、かつ安定化群とも可換であるように選ぶことができますが、その場合、どの $\bar{\boldsymbol{Z}}_i$ とも可換にはなりません。グラム・シュミットの正規直交化法を適用することにより、シンプレクティック形式を対角化するように、これらの生成元（$\bar{\boldsymbol{X}}_i$ と表記）を選択できます：

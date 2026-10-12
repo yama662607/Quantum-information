@@ -10,7 +10,6 @@
 **相互情報量（mutual information）** $I(X;Y) = H(X) + H(Y) - H(XY)$ は、情報源 $X$ と $Y$ がどのように相関しているかを定量化します。$y$ の値を知ると、私たちは（平均して）$x$ に関する情報を $I(X;Y)$ ビット獲得し、逆もまた同様です。記憶のない（memoryless）ノイズのある古典通信チャネルの通信路容量は $C = \max_X I(X;Y)$ です。これは、最良の符号を用いた場合に、$n \to \infty$ で誤り確率を無視できる程度に抑えつつチャネルの $n$ 回の使用によって伝送できる、文字あたりの古典ビット数の最大値です。
 
 **フォン・ノイマン・エントロピーと量子データ圧縮 (Von Neumann entropy and quantum data compression)**:  
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=85)  
 密度演算子 $\rho$ の**フォン・ノイマン・エントロピー（von Neumann entropy）**は
 
 $$
@@ -53,7 +52,6 @@ He rocks.
 I remember  
 When  
 He showed me how to fit  
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=86)  
 A qubit  
 In a small box.  
 
@@ -138,7 +136,7 @@ Nielsen と Chuang [4] は量子シャノン理論のいくつかの側面への
 
 ベッケンシュタイン（Bekenstein）のエントロピー限界は [9] で定式化され、Casini [10] によって導出されました。エントロピー的不確定性関係は [11] で概説されており、本章の議論はその導出に従っています。Maassen と Uffink [12] による最初の導出は異なる手法を用いています。
 
-シューマッハー圧縮は [13, 14] で初めて議論され、Bennett ら [15] はエンタングルメントの濃縮と希釈のためのプロトコルを考案しました。混合状態のエンタングルメント尺度は [16] で概説されています。混合状態エンタングルメントの可逆理論は Brandão と Plenio [17] によって定式化されました（彼らの解析の欠陥は [18, 19] で対処されました）。スカッシュド・エンタングルメント（Squashed entanglement）は Christandl と Winter [20] によって導入され、そのモノガミー性は Koashi と Winter [21] によって議論されました。Brandão, Christandl, Yard [22] は、任意の非可分（エンタングルした）2部状態に対してスカッシュド・エンタングルメントが正であることを示しました。[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=87) Doherty, Parrilo, Spedalieri [23] は、すべての非可分な2部状態はある有限な $k$ に対して $k$-拡張可能（$k$-extendable）ではないことを示しました。
+シューマッハー圧縮は [13, 14] で初めて議論され、Bennett ら [15] はエンタングルメントの濃縮と希釈のためのプロトコルを考案しました。混合状態のエンタングルメント尺度は [16] で概説されています。混合状態エンタングルメントの可逆理論は Brandão と Plenio [17] によって定式化されました（彼らの解析の欠陥は [18, 19] で対処されました）。スカッシュド・エンタングルメント（Squashed entanglement）は Christandl と Winter [20] によって導入され、そのモノガミー性は Koashi と Winter [21] によって議論されました。Brandão, Christandl, Yard [22] は、任意の非可分（エンタングルした）2部状態に対してスカッシュド・エンタングルメントが正であることを示しました。Doherty, Parrilo, Spedalieri [23] は、すべての非可分な2部状態はある有限な $k$ に対して $k$-拡張可能（$k$-extendable）ではないことを示しました。
 
 ホレボ限界（Holevo bound）は [24] で導出されました。Peres–Wootters 符号化は [25] で議論されました。積状態容量の公式は Holevo [26] および Schumacher と Westmoreland [27] によって導出されました。Hastings [28] は、ホレボ・カイが超加法的（superadditive）になり得ることを示しました。Horodecki, Shor, Ruskai [29] はエンタングルメント破壊チャネル（entanglement-breaking channels）を導入し、これらのチャネルに対するホレボ・カイの加法性が Shor [30] によって示されました。
 

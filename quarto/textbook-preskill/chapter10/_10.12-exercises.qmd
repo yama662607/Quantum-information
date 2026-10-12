@@ -16,7 +16,6 @@ $$ {#eq-10.378}
 
 であり、等号成立は確率分布が同一（$p(x) = q(x)$）であるときに限ることを示せ。**ヒント:** (a) の不等式を $\ln(q(x)/p(x))$ に適用せよ。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=88)  
 c) 密度演算子 $\boldsymbol{\sigma}$ に対する密度演算子 $\boldsymbol{\rho}$ の量子相対エントロピーは以下のように定義される：
 $$
 D(\boldsymbol{\rho}\|\boldsymbol{\sigma}) = \mathrm{tr}\,\boldsymbol{\rho}(\log \boldsymbol{\rho} - \log \boldsymbol{\sigma}) .
@@ -78,7 +77,6 @@ $$ {#eq-10.387}
 
 が成り立つのはすべての $\boldsymbol{\rho}_x$ が同一であるときに限ることを示せ。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89)  
 ### 演習 10.3 量子相対エントロピーの単調性 (Monotonicity of quantum relative entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.3}
 
 量子相対エントロピーは**単調性（monotonicity）**と呼ばれる性質を持ちます：
@@ -124,7 +122,7 @@ d) コインが 100 万回トスされます。(c) の結果を用いて、コ�
 
 ### 演習 10.5 可分性と優劣関係 (Separability and majorization) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.5}
 
-エンタングルメントの顕著な特徴は、エンタングルした状態では全体がその各部分よりもランダムではない（無秩序度が低い）という点にあります。しかし可分な状態では、相関は本質的に [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=90) 古典的であり、したがって「部分は全体よりも無秩序ではない」という古典的な原理に従うことが期待されます。この問題の目的は、2部（混合）状態 $\boldsymbol{\rho}_{AB}$ が可分であるならば
+エンタングルメントの顕著な特徴は、エンタングルした状態では全体がその各部分よりもランダムではない（無秩序度が低い）という点にあります。しかし可分な状態では、相関は本質的に古典的であり、したがって「部分は全体よりも無秩序ではない」という古典的な原理に従うことが期待されます。この問題の目的は、2部（混合）状態 $\boldsymbol{\rho}_{AB}$ が可分であるならば
 $$
 \lambda(\boldsymbol{\rho}_{AB}) \prec \lambda(\boldsymbol{\rho}_A) , \quad \lambda(\boldsymbol{\rho}_{AB}) \prec \lambda(\boldsymbol{\rho}_B) .
 $$ {#eq-10.393}
@@ -175,7 +173,6 @@ $$
 E_{\text{sq}}(\boldsymbol{\rho}_{ABA'B'}) \ge E_{\text{sq}}(\boldsymbol{\rho}_{AB}) + E_{\text{sq}}(\boldsymbol{\rho}_{A'B'})
 $$ {#eq-10.400}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=91)  
 そしてテンソル積に対して厳密に加法的（strictly additive）であること、
 $$
 E_{\text{sq}}(\boldsymbol{\rho}_{AB} \otimes \boldsymbol{\rho}_{A'B'}) = E_{\text{sq}}(\boldsymbol{\rho}_{AB}) + E_{\text{sq}}(\boldsymbol{\rho}_{A'B'}) .
@@ -241,7 +238,6 @@ $$
 \boldsymbol{Z} = |0\rangle\langle 0| - |1\rangle\langle 1|
 $$ {#eq-10.411}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=92)  
 が測定されるとします。この測定によって達成される情報利得（information gain）を計算せよ。
 
 b) 次に、$\boldsymbol{Z}$ の代わりに、回転された観測量
@@ -290,7 +286,7 @@ $$
 \boldsymbol{E}_a = \frac{2}{3} (\boldsymbol{I} - |\varphi_a\rangle\langle\varphi_a|) , \quad a = 1, 2, 3 ;
 $$ {#eq-10.417}
 
-を実行します。この測定は3つの状態のうち1つを除外しますが、残りの2つの状態を区別するための情報は提供しません。次に、第1の測定結果を条件として、第2の qubit に対する測定を行います。演習 10.8 の結果を参考にして、第2の qubit に行う [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) 最も情報量の多い測定を選択し、この適応手順によって達成される情報利得を計算せよ。§10.6.4 で説明された集団測定によって達成される情報利得と比較せよ。
+を実行します。この測定は3つの状態のうち1つを除外しますが、残りの2つの状態を区別するための情報は提供しません。次に、第1の測定結果を条件として、第2の qubit に対する測定を行います。演習 10.8 の結果を参考にして、第2の qubit に行う最も情報量の多い測定を選択し、この適応手順によって達成される情報利得を計算せよ。§10.6.4 で説明された集団測定によって達成される情報利得と比較せよ。
 
 ### 演習 10.11 4つの純粋状態のアンサンブル (An ensemble of four pure states) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) {#ex-10.11}
 
@@ -344,7 +340,6 @@ $$
 |1\rangle_A \mapsto |\phi_1\rangle_{BEF} = \cos\theta |11\rangle_{BE}|1\rangle_F + \sin\theta |\psi^+\rangle_{BE}|0\rangle_F ,
 $$ {#eq-10.425}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=94)  
 ここで
 $$
 |\psi^+\rangle = \frac{1}{\sqrt{2}} (|01\rangle + |10\rangle) ,
@@ -377,7 +372,7 @@ d) $\theta \neq \theta_0$ の場合、$g(\theta) \neq 0$ であり、したが�
 
 ### 演習 10.14 一様アンサンブルから選ばれた量子状態の情報利得 (Information gain for a quantum state drawn from the uniform ensemble) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=94) {#ex-10.14}
 
-Alice がアンサンブル $\{\boldsymbol{\rho}(x), p(x)\}$ から選ばれた量子状態を準備し、Bob が確率 $p(y|x) = \mathrm{tr}\,(\boldsymbol{E}(y)\boldsymbol{\rho}(x))$ で結果 $y$ を与える測定 $\{\boldsymbol{E}(y)\}$ を行うとします。§10.6.1 で述べたように、Alice の準備に関する [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=95) Bob の情報利得は相互情報量 $I(X; Y) = H(X) - H(X|Y)$ です。$x$ が連続変数で $y$ が離散変数である場合、相互情報量の対称性を用いて $I(X; Y) = H(Y) - H(Y|X)$ と書く方が便利です。ここで
+Alice がアンサンブル $\{\boldsymbol{\rho}(x), p(x)\}$ から選ばれた量子状態を準備し、Bob が確率 $p(y|x) = \mathrm{tr}\,(\boldsymbol{E}(y)\boldsymbol{\rho}(x))$ で結果 $y$ を与える測定 $\{\boldsymbol{E}(y)\}$ を行うとします。§10.6.1 で述べたように、Alice の準備に関するBob の情報利得は相互情報量 $I(X; Y) = H(X) - H(X|Y)$ です。$x$ が連続変数で $y$ が離散変数である場合、相互情報量の対称性を用いて $I(X; Y) = H(Y) - H(Y|X)$ と書く方が便利です。ここで
 $$
 H(Y|X) = \sum_y \int dx \cdot p(x) \cdot p(y|x) \cdot \log p(y|x) ;
 $$ {#eq-10.430}
@@ -423,7 +418,6 @@ $$
 \int_0^1 dx\,(1 - x)^p x \ln x ,
 $$ {#eq-10.437}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=96)  
 を評価するために、
 $$
 x \ln x = \left. \frac{d}{ds} x^s \right|_{s=1} ,
@@ -478,7 +472,6 @@ $$ {#eq-10.444}
 
 d) ファノの不等式を用いて eq.(10.55) を導出し、古典通信路容量 $C$ が、無視できる誤り確率を持つノイズのあるチャネルを介した通信の達成可能レートの上界であることを証明せよ。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=97)  
 ### 演習 10.16 量子版ファノの不等式 (A quantum version of Fano’s inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=97) {#ex-10.16}
 
 a) $d$ 次元システムにおいて、密度演算子 $\boldsymbol{\rho}$ が純粋状態 $|\psi\rangle$ を忠実度
@@ -526,7 +519,6 @@ $$
 |\phi\rangle_{ABE} = \frac{1}{\sqrt{2}} (|000\rangle + |111\rangle) .
 $$ {#eq-10.451}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=98)  
 のわずか $n = 2$ 個のコピーを共有しているだけで、完全な変換が可能であることを確認します。この完全変換を達成するプロトコルは、第4章で定義された**コヒーレント古典通信（coherent classical communication）**の概念を用います。
 
 a) GHZ 状態 $|\phi\rangle_{ABE}$ において、$I(A; E) = I(A; B) = 1$ であることを示せ。したがって、この状態に対してマザー不等式は以下のようになります：
@@ -565,7 +557,7 @@ $$ {#eq-10.454}
 
 Alice のシステムは確率 $1 - p$ で Bob に、確率 $p$ で Eve に渡り、他方の当事者は Alice のヒルベルト空間に直交する「消失シンボル」$|e\rangle$ を受け取ります。$\boldsymbol{U}$ は変換 $p \leftrightarrow (1 - p)$ を伴うシステム $B$ と $E$ の入れ替えに対して不変であるため、$\mathcal{N}_{\text{erase}}^{A \to B}(p)$ の相補チャネルは $\mathcal{N}_{\text{erase}}^{A \to E}(1 - p)$ です。
 
-b) $\mathcal{N}_{\text{erase}}^{A \to B}(p)$ は $p \le 1/2$ に対して劣化可能であることを示せ。したがって、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) 消失チャネルの量子容量はその最適化された 1-shot コヒーレント情報に一致します。**ヒント:** 以下を示すことで十分です：
+b) $\mathcal{N}_{\text{erase}}^{A \to B}(p)$ は $p \le 1/2$ に対して劣化可能であることを示せ。したがって、消失チャネルの量子容量はその最適化された 1-shot コヒーレント情報に一致します。**ヒント:** 以下を示すことで十分です：
 $$
 \mathcal{N}_{\text{erase}}^{A \to E}(1 - p) = \mathcal{N}_{\text{erase}}^{B \to E}(q) \circ \mathcal{N}_{\text{erase}}^{A \to B}(p) ,
 $$ {#eq-10.455}
@@ -620,7 +612,7 @@ $\phi$ が $AB$ の最大エンタングル状態であるとき、これが通�
 
 ### 演習 10.21 消失の熱力学的コスト (The cost of erasure) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) {#ex-10.21}
 
-ビットの**消失（erasure）**とは、ビットの状態が 0 にリセットされるプロセスです。消失は**不可逆（irreversible）**です――消失後の最終状態 0 のみを知っていても、消失前の初期状態が 0 であったか 1 であったかを判断することはできません。この不可逆性は、消失が不可避の熱力学的コストを招くことを意味します。**ランダウアーの原理（Landauer's Principle）**によれば、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=100) 温度 $T$ で 1 ビットを消去するには仕事 $W \ge kT \ln 2$ が必要です。この問題では、消失を達成する特定の手順がランダウアーの原理に従うことを検証します。
+ビットの**消失（erasure）**とは、ビットの状態が 0 にリセットされるプロセスです。消失は**不可逆（irreversible）**です――消失後の最終状態 0 のみを知っていても、消失前の初期状態が 0 であったか 1 であったかを判断することはできません。この不可逆性は、消失が不可避の熱力学的コストを招くことを意味します。**ランダウアーの原理（Landauer's Principle）**によれば、温度 $T$ で 1 ビットを消去するには仕事 $W \ge kT \ln 2$ が必要です。この問題では、消失を達成する特定の手順がランダウアーの原理に従うことを検証します。
 
 ビットの2つの状態がともにエネルギーゼロを持つと仮定します。私たちはビットを2つのステップで消去します。第1ステップでは、温度 $T > 0$ の熱浴（reservoir）にビットを接触させ、ビットが熱浴と熱平衡に達するのを待ちます。このステップでビットはその初期値を「忘れ」ますが、まだリセットされていないため消去は完了していません。
 
@@ -653,7 +645,7 @@ $$ {#eq-10.463}
 
 ここで $\boldsymbol{S}_{AA'}$ はスワップ演算子であり、対称部分空間と反対称部分空間の次元はそれぞれ $\frac{1}{2}|A|(|A| + 1)$ および $\frac{1}{2}|A|(|A| - 1)$ です。
 
-群の表現論に詳しくなくても、eq.(10.462) は明白であると見なせるかもしれません。$\boldsymbol{M}_{AA'}(\boldsymbol{U})$ を、$A$ と $A'$ の入れ替えに対して対称な項と反対称な項の2つの和として書くことができます。[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=101) 対称部分の期待値は対称でなければならず、反対称部分の期待値は反対称でなければなりません。さらに、ユニタリ群全体で平均することにより、特定の対称状態が他の対称状態より優先されないことが保証されます。
+群の表現論に詳しくなくても、eq.(10.462) は明白であると見なせるかもしれません。$\boldsymbol{M}_{AA'}(\boldsymbol{U})$ を、$A$ と $A'$ の入れ替えに対して対称な項と反対称な項の2つの和として書くことができます。対称部分の期待値は対称でなければならず、反対称部分の期待値は反対称でなければなりません。さらに、ユニタリ群全体で平均することにより、特定の対称状態が他の対称状態より優先されないことが保証されます。
 
 b) 定数 $c_{\text{sym}}$ を評価するために、eq.(10.462) の両辺に $\boldsymbol{\Pi}_{AA'}^{(\text{sym})}$ を掛けて両辺のトレースを取ることで、以下を見出せ：
 $$
