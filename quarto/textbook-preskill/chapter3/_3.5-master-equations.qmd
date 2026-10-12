@@ -1,6 +1,6 @@
-## 3.5 開いた量子系のマスター方程式 (Master equations for open quantum systems) {#sec-3.5-master-equations}
+## 3.5 開いた量子系のマスター方程式 (Master equations for open quantum systems) [📄 p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5-master-equations}
 
-### 3.5.1 マルコフ発展 (Markovian evolution) {#sec-3.5.1-markovian-evolution}
+### 3.5.1 マルコフ発展 (Markovian evolution) [📄 p.34](/assets/pdf/preskill/chap3.pdf#page=34) {#sec-3.5.1-markovian-evolution}
 
 量子チャネルは、純粋状態から混合状態への発展（デコヒーレンス）を含む、密度演算子の発展の一般的な記述を提供します。同様の意味で、ユニタリ変換はコヒーレントな量子発展の一般的な記述を提供します。しかし、コヒーレントな発展の場合、無限小の時間間隔にわたる発展を記述する**ハミルトニアン（Hamiltonian）**を用いて量子系のダイナミクスを特徴づけることが非常に便利なことがよくあります。ダイナミクスは微分方程式である**シュレーディンガー方程式（Schrödinger equation）**にエンコードされ、その方程式を積分することによって、すなわち多数の無限小間隔にわたる発展を継ぎ合わせることによって、有限の時間間隔にわたる発展を計算できます。同様に、少なくとも良い近似として、密度演算子の（必ずしもコヒーレントではない）発展を、**マスター方程式（master equation）**と呼ばれる微分方程式によって記述できることが多くあります。
 
@@ -22,7 +22,7 @@ $$ {#eq-3.122}
 
 $AE$ に対するシュレーディンガー方程式から出発し、$A$ と $E$ の間の結合を時間依存の摂動論で扱い、周波数カットオフを慎重に導入することによってマスター方程式を導出することを試みることもできますが、ここではそれは行いません。代わりに、ダイナミクスがマルコフ的であることを所与として受け入れ、量子チャネルの理論を用いてマスター方程式の形を推論することにしましょう。
 
-### 3.5.2 リウヴィリアン (The Liouvillian) {#sec-3.5.2-liouvillian}
+### 3.5.2 リウヴィリアン (The Liouvillian) [📄 p.35](/assets/pdf/preskill/chap3.pdf#page=35) {#sec-3.5.2-liouvillian}
 
 閉じた量子系では、時間発展は自己随伴ハミルトニアン $\boldsymbol{H}$ に従って支配されます：
 
@@ -139,7 +139,7 @@ $$ {#eq-3.139}
 
 この**確率的シュレーディンガー発展（stochastic Schrödinger evolution）**は数値的にシミュレートすることができます。シミュレートされた各**量子トラジェクトリ（quantum trajectory）**は異なりますが、そのような多数のトラジェクトリのサンプルにわたって平均をとることで、マスター方程式によって記述される密度演算子の発展が再現されます。確率的シュレーディンガー方程式をシミュレートすることは、$d \times d$ の密度行列よりも $d$ 次元の状態ベクトルの発展を追跡する方が計算コストが低いため、マスター方程式をシミュレートするよりも有利な場合があります。
 
-### 3.5.3 減衰調和振動子 (Damped harmonic oscillator) {#sec-3.5.3-damped-harmonic-oscillator}
+### 3.5.3 減衰調和振動子 (Damped harmonic oscillator) [📄 p.38](/assets/pdf/preskill/chap3.pdf#page=38) {#sec-3.5.3-damped-harmonic-oscillator}
 
 マスター方程式を例証するための具体例として、次のような相互作用を介して電磁場に結合した調和振動子の場合を考えましょう：
 

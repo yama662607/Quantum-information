@@ -1,4 +1,4 @@
-## 4.9 エンタングルメントの操作 (Manipulating entanglement) {#sec-4.9-manipulating-entanglement}
+## 4.9 エンタングルメントの操作 (Manipulating entanglement) [📄 chap4.pdf](/assets/pdf/preskill/chap4.pdf#page=59) {#sec-4.9-manipulating-entanglement}
 
 ::: {.callout-note}
 ### 原著草稿における本節の注記

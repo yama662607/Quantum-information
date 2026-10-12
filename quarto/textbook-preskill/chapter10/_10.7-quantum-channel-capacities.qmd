@@ -1,6 +1,6 @@
-## 10.7 量子通信路容量とデカップリング (Quantum Channel Capacities and Decoupling) {#sec-10.7-quantum-channel-capacities}
+## 10.7 量子通信路容量とデカップリング (Quantum Channel Capacities and Decoupling) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=57) {#sec-10.7-quantum-channel-capacities}
 
-### 10.7.1 コヒーレント情報量と量子通信路容量 (Coherent information and the quantum channel capacity) {#sec-10.7.1-coherent-information}
+### 10.7.1 コヒーレント情報量と量子通信路容量 (Coherent information and the quantum channel capacity) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=57) {#sec-10.7.1-coherent-information}
 
 これまで強調してきたように、古典通信路の容量が、通信路の1回の使用に対する入力と出力の間の最適相関によって表されることは驚くべきことです：
 $$
@@ -73,7 +73,7 @@ Q(\mathcal{N}^{A \to B}) = \lim_{n \to \infty} \max_{A^n} \frac{1}{n} I_c(R^n \r
 $$ {#eq-10.278}
 ここで、入力密度作用素 $\boldsymbol{\rho}_{A^n}$ は $n$ 回の通信路使用にわたってもつれていることが許容されます。もしコヒーレント情報量が劣加法的であったならば、この表現を単一文字の量、すなわち単発容量 $Q_1(\mathcal{N})$ に簡約することができたでしょう。しかし不運なことに、一部の通信路に対してはコヒーレント情報量は超加法的（superadditive）になる可能性があり、その場合、正則化公式はあまり有用な情報を与えてくれません。少なくとも、$Q_1(\mathcal{N})$ は達成可能レートであり、したがって容量の下限であると言うことはできます。
 
-### 10.7.2 デカップリング原理 (The decoupling principle) {#sec-10.7.2-decoupling-principle}
+### 10.7.2 デカップリング原理 (The decoupling principle) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=59) {#sec-10.7.2-decoupling-principle}
 
 達成可能性に取り組む前に、なぜ式 (@eq-10.278) が容量の上限であるかを理解しましょう。まず、相互情報量の単調性がコヒーレント情報量に対する対応する単調性を意味することに注目します。通信路 $\mathcal{N}_1^{A \to B}$ の後に通信路 $\mathcal{N}_2^{B \to C}$ が続くと仮定します。相互情報量は単調であるため、
 $$
@@ -175,7 +175,7 @@ $$ {#eq-10.297}
 
 単なる上限ではなく、$Q(\mathcal{N})$ が達成可能なレートであることを示すためには、シャノンのランダム符号化の議論の量子版を定式化する必要があります。私たちの戦略（§10.9.3 を参照）は、$R^n$ から $E^n$ の近似的デカップリングを達成する符号の存在を実証することになります。
 
-### 10.7.3 分解可能通信路 (Degradable channels) {#sec-10.7.3-degradable-channels}
+### 10.7.3 分解可能通信路 (Degradable channels) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=62) {#sec-10.7.3-degradable-channels}
 
 一部のケースではコヒーレント情報量は超加法的になり得ますが、コヒーレント情報量が加法的であり、したがって量子通信路容量が単発容量（単一文字公式が存在する）と一致する通信路のクラスが存在します。そのようなクラスの1つが**分解可能通信路（degradable channels）**のクラスです。
 
@@ -250,7 +250,7 @@ $$
 $$ {#eq-10.309}
 この意味で、ボブはエバよりもノイズの多い出力を受け取ります。反分解可能通信路の量子容量がゼロにならなければならないことは容易に理解できます。エバは自身の出力に $\mathcal{T}^{E \to B}$ を適用することでボブの出力をシミュレートできます。したがって、もしアリスからボブへ通信路 $\mathcal{N}^{A \to B}$ を何回も使用して量子状態が送信され、ボブが高い忠実度でその状態を復号できるならば、エバも同様にそれを復号できることになります。ゆえに、反分解可能通信路に対する非ゼロの容量は、量子複製不可能定理（no-cloning theorem）によって禁止されます。
 
-### 10.7.4 脱分極通信路の容量 (Capacity of the depolarizing channel) {#sec-10.7.4-depolarizing-capacity}
+### 10.7.4 脱分極通信路の容量 (Capacity of the depolarizing channel) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=64) {#sec-10.7.4-depolarizing-capacity}
 
 第3章で議論したように、誤り確率 $p$ を持つ脱分極通信路は、単一量子ビットの入力密度作用素 $\boldsymbol{\rho}$ に対して次のように作用します：
 $$

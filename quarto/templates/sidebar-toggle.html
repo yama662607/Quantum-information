@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── 目次（TOC）から「📄 chapX.pdf」や「📄 p.X」を取り除く ───────
   const tocLinks = document.querySelectorAll('#TOC a');
   tocLinks.forEach(function (a) {
-    a.innerHTML = a.innerHTML.replace(/\s*📄[^\s<]*/g, '').trim();
+    a.innerHTML = a.innerHTML.replace(/\s*📄[\s\S]*$/i, '').trim();
   });
 
   // ── 右サイドバー（目次）トグル ──────────────────────────

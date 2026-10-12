@@ -1,4 +1,4 @@
-## 7.1 量子誤り訂正符号 (A Quantum error-correcting code) {#sec-7.1-code}
+## 7.1 量子誤り訂正符号 (A Quantum error-correcting code) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=7) {#sec-7.1-code}
 
 量子アルゴリズムの研究において、私たちは量子コンピュータが並外れた能力を持つという説得力のある証拠を見出してきました。しかし、量子コンピュータは本当に動作するのでしょうか？ 私たちはそれを実際に構築し、運用することができるのでしょうか？
 

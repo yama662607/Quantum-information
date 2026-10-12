@@ -1,4 +1,4 @@
-## 6.6 量子探索 (Quantum Searching) {#sec-6.6-quantum-searching}
+## 6.6 量子探索 (Quantum Searching) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=34) {#sec-6.6-quantum-searching}
 
 NP困難問題の最も困難なインスタンスに対しては、解のしらみつぶし探索（全探索、exhaustive search）よりも優れた方法は知られていません。例えば、ある効率的に計算可能なブール関数
 
@@ -118,7 +118,7 @@ $$ {#eq-6.162}
 
 で解くことができます。なぜなら、$f(x)$ を評価する回路は（古典または量子的な）時間 $O(\text{polylog} N)$ で計算できるからです。
 
-### 6.6.1 一般化された探索 (Generalized Search) {#sec-6.6.1-generalized-search}
+### 6.6.1 一般化された探索 (Generalized Search) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=37) {#sec-6.6.1-generalized-search}
 
 場合によっては、解をより高速に探索するために利用できる構造が問題に備わっていることがあります。その場合、一部の文字列は他の文字列よりも解である可能性が高い候補となり、したがって可能性の低い解ではなく可能性の高い解のテストにより多くの時間を費やすことで、より効率的に探索できるはずです。
 

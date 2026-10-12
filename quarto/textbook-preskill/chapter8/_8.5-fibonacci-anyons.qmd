@@ -1,8 +1,8 @@
-## 8.5 フィボナッチ・エニオン、量子次元、五角形・六角形方程式、および普遍的量子計算 {#sec-8-5-fibonacci-anyons}
+## 8.5 フィボナッチ・エニオン、量子次元、五角形・六角形方程式、および普遍的量子計算 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=51) {#sec-8-5-fibonacci-anyons}
 
 前節で示したように、$n$ 個のエニオンの状態は、定数次元 $d = \sum_{a,b,c} N_{abc}^1$ を持つ $n - 2$ 個の量子系（qudit）のヒルベルト空間 $(\mathcal{H}_d)^{\otimes (n-2)}$ に符号化できます。この qudit の基底状態は $\{|a, b, c; \mu\rangle\}$ として選ぶことができます。ここで $\mu$ は融合空間 $V_{abc}^1$ の基底のラベルです。
 
-### トポロジカル量子計算の量子回路シミュレーション（続）：組み紐と融合 {#sec-8-5-circuit-simulation-braiding-fusion}
+### トポロジカル量子計算の量子回路シミュレーション（続）：組み紐と融合 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=51) {#sec-8-5-circuit-simulation-braiding-fusion}
 
 **組み紐（Braiding）**  
 トポロジカル量子コンピュータにおいて、組み紐は隣接する粒子の対にそれぞれ作用する一連の交換操作を実行することによって実現されます。標準基底における各交換の効果は $B$ 行列によって記述されます。では、（qudit を用いた）トポロジカル・ベクトル空間の符号化において、$B$ 行列はどのように表現されるでしょうか。
@@ -153,7 +153,7 @@ $$ {#eq-8.95}
 
 ---
 
-### 8.5.1 フィボナッチ・エニオン（Yang-Lee モデル） {#sec-8-5-fibonacci-anyons-intro}
+### 8.5.1 フィボナッチ・エニオン（Yang-Lee モデル） [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=52) {#sec-8-5-fibonacci-anyons-intro}
 
 ここまでで、トポロジカル量子計算が量子回路モデルよりも強力ではないこと、すなわち非アーベル・エニオンの組み紐によって効率的に解ける任意の計算問題は量子回路によっても効率的に解けることが確立されました。
 
@@ -202,7 +202,7 @@ $$
 
 ---
 
-### 8.5.2 量子次元の幾何学的・代数的性質 {#sec-8-5-quantum-dimension}
+### 8.5.2 量子次元の幾何学的・代数的性質 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=53) {#sec-8-5-quantum-dimension}
 
 フィボナッチ・モデルの性質に戻る前に、まず量子次元の概念をより深く探求します。一般的なエニオンモデルにおいて、ラベル $a$ の次元 $d_a$ はどのように定義されるべきでしょうか？
 
@@ -472,7 +472,7 @@ $$ {#eq-8.112}
 
 ---
 
-### 8.5.3 五角形方程式と六角形方程式（Moore-Seiberg 多項式方程式） {#sec-8-5-pentagon-hexagon-equations}
+### 8.5.3 五角形方程式と六角形方程式（Moore-Seiberg 多項式方程式） [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=58) {#sec-8-5-pentagon-hexagon-equations}
 
 フィボナッチ・モデルのようなエニオンモデルの計算能力を評価するためには、$R$ 行列と $F$ 行列によって定まるエニオンの組み紐の性質を知る必要があります。組み紐の規則は、代数学的整合性条件（consistency conditions）によって極めて強く制約されます。フィボナッチ・モデルに対しては、これらの整合性条件によって融合規則と両立する組み紐の規則が一意に決定されます。
 
@@ -721,7 +721,7 @@ $$ {#eq-8.125}
 
 ---
 
-### 8.5.4 フィボナッチ・エニオンによる量子回路のシミュレーションと普遍性 {#sec-8-5-fibonacci-quantum-computation}
+### 8.5.4 フィボナッチ・エニオンによる量子回路のシミュレーションと普遍性 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=61) {#sec-8-5-fibonacci-quantum-computation}
 
 ここまでの知見により、フィボナッチ・エニオンを用いて普遍的量子コンピュータをシミュレートできるかどうかを論じる準備が整いました。エニオンを用いて量子ビット（qubit）をどのように符号化するか、そして普遍的な量子ゲート集合をどのように実現できるかを説明する必要があります。
 

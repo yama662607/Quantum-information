@@ -1,6 +1,6 @@
-## 8.3 融合規則と非アーベル・エニオン量子計算 (Fusion rules and nonabelian anyon quantum computing) {#sec-8.3-fusion-rules}
+## 8.3 融合規則と非アーベル・エニオン量子計算 (Fusion rules and nonabelian anyon quantum computing) [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=32) {#sec-8.3-fusion-rules}
 
-### 8.3.1 非アーベル磁束子による量子計算 (Quantum computing with nonabelian fluxons) {#sec-8.3.1-qc-nonabelian-fluxons}
+### 8.3.1 非アーベル磁束子による量子計算 (Quantum computing with nonabelian fluxons) [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=32) {#sec-8.3.1-qc-nonabelian-fluxons}
 
 エニオンのモデルは、2つの基本的な問いに対する答えによって特徴づけられます：
 
@@ -165,7 +165,7 @@ $$ {#eq-8.63}
 
 ---
 
-### 8.3.2 一般化されたエニオン模型 (Anyon models generalized) {#sec-8.3.2-anyon-models-generalized}
+### 8.3.2 一般化されたエニオン模型 (Anyon models generalized) [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=40) {#sec-8.3.2-anyon-models-generalized}
 
 非アーベル超伝導体モデルに関する私たちの議論は、エニオンを用いたフォールトトレラント量子計算の存在証明を与えてくれます。しかし、このモデルには確かに欠点があります。私たちが説明した体系には美しさ、エレガンス、あるいは単純さが欠けています。
 
@@ -179,7 +179,7 @@ $$ {#eq-8.63}
 
 それでは、これらの性質のそれぞれについて、より詳細に議論していきましょう。
 
-#### 8.3.2.1 ラベルと超選択セクター (Labels and superselection sectors) {#sec-8.3.2.1-labels}
+#### 8.3.2.1 ラベルと超選択セクター (Labels and superselection sectors) [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=40) {#sec-8.3.2.1-labels}
 
 粒子の異なるタイプを区別するラベルには、ラテン文字 $\{a, b, c, \dots\}$ を使用します（非アーベル超伝導体の場合、ラベルは共役類と正規化群の既約表現を指定する $(\alpha, R^{(\alpha)})$ でしたが、今や私たちの表記法はよりコンパクトになります）。可能なラベルの集合は有限であると仮定します。記号 $a$ は、粒子によって運ばれる保存電荷の値を表します。時に、このラベルは理論の**超選択セクター（superselection sector）**を指定すると言われます。この用語は単に、ラベル $a$ が局所化された物体の属性であり、いかなる局所的な物理過程によっても変更できないことを意味します。すなわち、1つの粒子が常に他の粒子から十分に隔離されているならば、そのラベルは決して変化しません。特に、粒子とその環境との間の局所的な相互作用は粒子を揺さぶるかもしれませんが、ラベルを変更することはありません。この電荷の局所的保存こそが、エニオンがフォールトトレラントな量子情報処理に適している本質的な理由です。
 
@@ -193,7 +193,7 @@ $$ {#eq-8.64}
 
 私たちは、粒子が指定された順序を持つような $n$ 個の粒子の状態を考えたいとします。したがって、粒子が特定の直線（実軸など）上に左から右へと連続的な順序で並んでいると想像するのが便利です。$n$ 個の粒子には $(a_1, a_2, a_3, \dots, a_n)$ とラベルが付けられ、ここで $a_1$ は最も左にある粒子、$a_n$ は最も右にある粒子に付与されます。
 
-#### 8.3.2.2 融合空間とダイアグラム表記 (Fusion spaces and diagrammatic notation) {#sec-8.3.2.2-fusion-spaces}
+#### 8.3.2.2 融合空間とダイアグラム表記 (Fusion spaces and diagrammatic notation) [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=41) {#sec-8.3.2.2-fusion-spaces}
 
 2つの粒子が結合されると、その複合物体も電荷を持ちます。モデルの**融合規則（fusion rules）**は、構成粒子が電荷 $a$ と $b$ を持つときに、全電荷 $c$ の可能な値を指定します。これらは次のように書くことができます：
 

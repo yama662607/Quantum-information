@@ -385,3 +385,35 @@ div.cell {
   content-visibility: auto;
   contain-intrinsic-size: auto 500px;
 }
+
+/* ========================================
+ * 見出し内の原本PDFリンクバッジ
+ * ========================================
+ */
+h2 > a[href*=".pdf"],
+h3 > a[href*=".pdf"],
+h4 > a[href*=".pdf"] {
+  font-size: 0.55em;
+  font-weight: 500;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background-color: #f1f5f9;
+  color: #475569;
+  text-decoration: none;
+  border: 1px solid #cbd5e1;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.15s ease-in-out;
+}
+
+h2 > a[href*=".pdf"]:hover,
+h3 > a[href*=".pdf"]:hover,
+h4 > a[href*=".pdf"]:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  text-decoration: none;
+}
+

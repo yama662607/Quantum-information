@@ -1,6 +1,6 @@
-## 10.6 達成可能情報 (Accessible Information) {#sec-10.6-accessible-information}
+## 10.6 達成可能情報 (Accessible Information) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=46) {#sec-10.6-accessible-information}
 
-### 10.6.1 測定からどれだけの情報を得られるか？ (How much can we learn from a measurement?) {#sec-10.6.1-measurement-information}
+### 10.6.1 測定からどれだけの情報を得られるか？ (How much can we learn from a measurement?) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=46) {#sec-10.6.1-measurement-information}
 
 アリスとボブによって行われるゲームを考えましょう。アリスはアンサンブル $\mathcal{E} = \{\boldsymbol{\rho}(x), p(x)\}$ から選ばれた量子状態を準備し、それをボブに送ります。ボブはこのアンサンブルを知っていますが、アリスが送るために選んだ特定の内訳の状態は知りません。状態を受け取ったボブは、アリスが何を送信したかについてできるだけ多くのことを知りたいと考え、要素 $\{\boldsymbol{E}(y)\} \equiv \boldsymbol{E}$ を持つ POVM を実行します。アリスが $\boldsymbol{\rho}(x)$ を送ったときにボブが結果 $y$ を得る条件付き確率は $p(y|x) = \mathrm{tr}\left(\boldsymbol{E}(y)\boldsymbol{\rho}(x)\right)$ であり、アリスの準備とボブの測定を支配する結合分布は $p(x, y) = p(y|x)p(x)$ となります。
 
@@ -30,7 +30,7 @@ $$ {#eq-10.206}
 
 達成可能情報ゲームは、実験物理学者が量子系をプローブとして使用して未知の古典的な力を測定しようとする際にも現れます。例えば、磁場の $z$ 成分を測定するために、私たちは $x$ 方向にスピンが向いたスピン $\frac{1}{2}$ 粒子を準備するかもしれません。スピンは未知の磁場中で時間 $t$ だけ歳差運動し、可能な最終状態のアンサンブルを生成します（初期準備が不完全であるか、実験中にデコヒーレンスが発生する場合、これは混合状態のアンサンブルになります）。スピンの最終状態に関して私たちがより多くの情報を得ることができればできるほど、磁場の値をより正確に決定することができます。
 
-### 10.6.2 ホレボ限界 (Holevo bound) {#sec-10.6.2-holevo-bound}
+### 10.6.2 ホレボ限界 (Holevo bound) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=47) {#sec-10.6.2-holevo-bound}
 
 量子相互情報量が単調性（monotonicity）を満たすことを思い出しましょう。すなわち、量子通信路が $B$ を $B'$ に写像するならば、$I(A; B) \ge I(A; B')$ です。私たちは相互情報量の単調性を達成可能情報ゲームに適用することによってホレボ限界を導出します。アリスが自分が選んだ状態を古典レジスタ $X$ に記録し、ボブも同様に自分の測定結果を別のレジスタ $Y$ に記録すると仮定します。これにより、ボブの情報利得は2つのレジスタの相互情報量 $I(X; Y)$ となります。アリスが自身の系 $A$ を準備した後、$XA$ の結合状態は
 $$
@@ -76,7 +76,7 @@ $$
 $$ {#eq-10.214}
 純粋状態のアンサンブルの場合、$\chi$ はアンサンブルから生じる密度作用素のエントロピーそのものですが、混合状態のアンサンブル $\mathcal{E}$ の場合は、それよりも厳密に小さい量になります。すなわち、信号状態の凸結合のエントロピー $H(\boldsymbol{\rho}_\mathcal{E})$ と、信号状態のエントロピーの凸結合 $\langle H\rangle_\mathcal{E}$ との差です。この差は、エントロピー関数の凹性（concavity）（あるいは相互情報量が非負であること）により、常に非負です。
 
-### 10.6.3 ホレボ $\chi$ の単調性 (Monotonicity of Holevo chi) {#sec-10.6.3-monotonicity-holevo-chi}
+### 10.6.3 ホレボ $\chi$ の単調性 (Monotonicity of Holevo chi) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=48) {#sec-10.6.3-monotonicity-holevo-chi}
 
 ホレボ $\chi$ は古典レジスタ $X$ と量子系 $A$ の相互情報量 $I(X; A)$ であるため、相互情報量の単調性は $\chi$ の単調性も意味します。もし $\mathcal{N}: A \to A'$ が量子通信路であるならば、$I(X; A') \le I(X; A)$ であり、したがって
 $$
@@ -102,7 +102,7 @@ q \ge \frac{1}{n}\chi(\tilde{\mathcal{E}}'^{(n)}) \ge H(\boldsymbol{\rho}) - \de
 $$ {#eq-10.218}
 となります。私たちは、圧縮および伸張の写像が任意の通信路である場合であっても、1文字あたり $H(\boldsymbol{\rho})$ 個未満の量子ビットへの高忠実度圧縮は漸近的に不可能であると結論付けます。
 
-### 10.6.4 符号化による識別性の向上：一例 (Improved distinguishability through coding: an example) {#sec-10.6.4-improved-distinguishability}
+### 10.6.4 符号化による識別性の向上：一例 (Improved distinguishability through coding: an example) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=49) {#sec-10.6.4-improved-distinguishability}
 
 達成可能情報の概念をより深く理解するために、単一量子ビットの例を考えてみましょう。アリスは3つの可能な純粋状態のうちの1つを準備します：
 $$
@@ -225,7 +225,7 @@ $$ {#eq-10.238}
 
 第2に、ボブは各量子ビットを個別に測定する代わりに集団測定を実行すると、より多くの情報を読み取ることができます。彼の最適直交測定は、アリスの信号を**もつれた状態の基底（basis of entangled states）**へと射影します。
 
-### 10.6.5 量子通信路の古典容量 (Classical capacity of a quantum channel) {#sec-10.6.5-classical-capacity}
+### 10.6.5 量子通信路の古典容量 (Classical capacity of a quantum channel) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=52) {#sec-10.6.5-classical-capacity}
 
 この例は、符号化と集団測定が達成可能情報をどのように向上させることができるかを示していますが、符号を用いることで達成可能情報とアンサンブルのホレボ $\chi$ との間のギャップは狭まったものの、完全に埋まったわけではありませんでした。情報理論でよくあるように、漸近的 i.i.d. 設定を考えることによって、達成可能情報をより正確に特徴づけることができます。具体的には、ノイズのある量子通信路 $\mathcal{N}^{A \to B}$ を通じて古典情報を確実に送信するタスクを考えます。
 
@@ -327,7 +327,7 @@ $$ {#eq-10.254}
 
 ここでは詳細は省略します。しかし幾分驚くべきことに、古典情報を送信する以外の他のタスクに量子通信路が使用される場合、容量定理を証明する方が容易であることが判明します。私たちは §10.7 でその問題に移ります。
 
-### 10.6.6 もつれ破壊通信路 (Entanglement-breaking channels) {#sec-10.6.6-entanglement-breaking-channels}
+### 10.6.6 もつれ破壊通信路 (Entanglement-breaking channels) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=56) {#sec-10.6.6-entanglement-breaking-channels}
 
 一部の量子通信路に対してはホレボ $\chi$ は超加法的ですが、$\chi$ が加法的である通信路のクラスが存在し、そのような任意の通信路 $\mathcal{N}$ に対して古典容量は正則化を必要とせずに $C = \chi(\mathcal{N})$ となります。例えば、**もつれ破壊通信路（entanglement-breaking channels）**を考えてみましょう。任意の入力状態 $\boldsymbol{\rho}_{RA}$ に対して $I \otimes \mathcal{N}(\boldsymbol{\rho}_{RA})$ が $RA$ 上の可分状態であるとき、$\mathcal{N}^{A \to B}$ はもつれ破壊的であると言います --- $A$ への $\mathcal{N}$ の作用は、常に $R$ との量子もつれを破壊します。私たちは、もし $\mathcal{N}_1$ がもつれ破壊的であり、$\mathcal{N}_2$ が任意の通信路であるならば、
 $$

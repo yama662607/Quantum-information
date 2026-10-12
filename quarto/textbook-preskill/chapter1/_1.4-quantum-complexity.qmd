@@ -1,4 +1,4 @@
-## 1.4 量子計算量 (Quantum complexity) {#sec-1.4-quantum-complexity}
+## 1.4 量子計算量 (Quantum complexity) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=6) {#sec-1.4-quantum-complexity}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **Qubit の幾何学的理解**: 0 と 1 の線形結合（重ね合わせ）としての Qubit を理解する。

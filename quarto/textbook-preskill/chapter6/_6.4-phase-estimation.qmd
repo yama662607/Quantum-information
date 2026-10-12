@@ -1,4 +1,4 @@
-## 6.4 位相推定 (Phase Estimation) {#sec-6.4-phase-estimation}
+## 6.4 位相推定 (Phase Estimation) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=24) {#sec-6.4-phase-estimation}
 
 素因数分解アルゴリズムには、それがなぜ機能するのかについて私たちの洞察を深める別の見方（キタエフ (Kitaev) による）が存在します。それは、**あるユニタリ演算子の固有値を効率的かつ高精度に測定できるからこそ、素因数分解ができる**という視点です。
 

@@ -1,4 +1,4 @@
-## 7.2 量子誤り訂正の条件 (Conditions for quantum error correction) {#sec-7.2-conditions}
+## 7.2 量子誤り訂正の条件 (Conditions for quantum error correction) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=10) {#sec-7.2-conditions}
 
 9量子ビット符号を用いた誤り復旧の議論では、各量子ビットがビット反転誤りまたは位相スピン誤り（あるいはその両方）のいずれかを受けると仮定しました。これは誤りに対する現実的なモデルではなく、より一般的な条件下で量子誤り訂正をどのように実装するかを理解する必要があります。
 

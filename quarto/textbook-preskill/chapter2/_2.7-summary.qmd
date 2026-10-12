@@ -1,4 +1,4 @@
-## 2.7 まとめ (Summary) {#sec-2.7-summary}
+## 2.7 まとめ (Summary) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=41) {#sec-2.7-summary}
 
 **公理 (Axioms)**。量子力学の舞台はヒルベルト空間 $\mathcal{H}$ です。基本的な仮定は以下の通りです：
 

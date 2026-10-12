@@ -1,6 +1,6 @@
-## 4.2 ベルの不等式 (The Bell inequality) {#sec-4.2-the-bell-inequality}
+## 4.2 ベルの不等式 (The Bell inequality) [📄 p.10](/assets/pdf/preskill/chap4.pdf#page=10) {#sec-4.2-the-bell-inequality}
 
-### 4.2.1 3つの量子コイン (Three quantum coins) {#sec-4.2.1-three-quantum-coins}
+### 4.2.1 3つの量子コイン (Three quantum coins) [📄 p.10](/assets/pdf/preskill/chap4.pdf#page=10) {#sec-4.2.1-three-quantum-coins}
 
 局所隠れた変数理論は、単なる量子力学の再定式化にすぎないのでしょうか、それとも検証可能な仮説なのでしょうか？ ジョン・ベル（John Bell）の実り豊かなアイデアは、エンタングルした状態を共有する2者、アリスとボブによって得られる測定結果間の相関の定量的性質を考察することによって、アインシュタイン局所性を検証することでした。アリスとボブが説明したいと望むような相関の例を考えてみましょう。
 
@@ -104,7 +104,7 @@ $$ {#eq-4.20}
 
 アリスとボブは優れた実験家でしたが、もっともらしい理論的解釈を見出せない限り、これほど不穏な結果を発表する勇気はありませんでした。ついに彼らは絶望のあまり、量子力学が何らかの救いを提供してくれるかどうかを確かめるために図書館を訪れます……。
 
-### 4.2.2 量子エンタングルメント vs. アインシュタイン局所性 (Quantum entanglement vs. Einstein locality) {#sec-4.2.2-quantum-entanglement-vs-einstein-locality}
+### 4.2.2 量子エンタングルメント vs. アインシュタイン局所性 (Quantum entanglement vs. Einstein locality) [📄 p.13](/assets/pdf/preskill/chap4.pdf#page=13) {#sec-4.2.2-quantum-entanglement-vs-einstein-locality}
 
 アリスとボブが読んだのは量子エンタングルメントについてでした。やがて彼らは、自分たちの魔法のコインが2量子ビットの最大エンタングル状態によって支配されていることを知ります。アリスとボブが実際に共有していたのは、状態 $|\psi^-\rangle$ の多数のコピーだったのです。アリスがコインをめくるとき、彼女は自分の量子ビットを
 
