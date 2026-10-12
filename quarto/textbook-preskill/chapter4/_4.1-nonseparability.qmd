@@ -1,6 +1,6 @@
-## 4.1 EPR対の非分離性 (Nonseparability of EPR pairs) [📄 p.4](/assets/pdf/preskill/chap4.pdf#page=4) {#sec-4.1-nonseparability-of-epr-pairs}
+## 4.1 EPR対の非分離性 (Nonseparability of EPR pairs) {#sec-4.1-nonseparability-of-epr-pairs}
 
-### 4.1.1 隠れた量子情報 (Hidden quantum information) [📄 p.4](/assets/pdf/preskill/chap4.pdf#page=4) {#sec-4.1.1-hidden-quantum-information}
+### 4.1.1 隠れた量子情報 (Hidden quantum information) {#sec-4.1.1-hidden-quantum-information}
 
 量子情報が古典情報と本質的に異なる深遠な側面は、**量子エンタングルメント（quantum entanglement）**の性質、含意、およびその応用にあります。§2.4.1 で振り返ったように、2体純粋状態は、そのシュミット数（Schmidt number）が 1 より大きい場合にエンタングルしています。エンタングルした状態が興味深いのは、古典的な類似物をもたない相関を示すからです。本章では、これらの相関について探究します。
 
@@ -156,7 +156,7 @@ $$ {#eq-4.13}
 
 もちろん、$\boldsymbol{H}$ は量子ビットの片方だけに作用します。回路の「非局所的」な部分は制御NOTゲートです――これこそがエンタングルメントを確立したり解消したりする操作です。もし「恒星間 CNOT（interstellar CNOT）」を実行することさえできれば、遠く離れたペア間にエンタングルメントを生成したり、エンタングルメントにエンコードされた情報を抽出したりすることができるでしょう。しかし、それは不可能です。その役目を果たすために、CNOTゲートは制御ビットの値を明かすことなく標的に作用しなければなりません。局所操作と古典通信（LOCC）だけでは十分ではないのです。
 
-### 4.1.2 アインシュタイン局所性と隠れた変数 (Einstein locality and hidden variables) [📄 p.8](/assets/pdf/preskill/chap4.pdf#page=8) {#sec-4.1.2-einstein-locality-and-hidden-variables}
+### 4.1.2 アインシュタイン局所性と隠れた変数 (Einstein locality and hidden variables) {#sec-4.1.2-einstein-locality-and-hidden-variables}
 
 アインシュタイン（Einstein）は量子エンタングルメントに不安を抱いていました。やがて彼とポドルスキー（Podolsky）、ローゼン（Rosen）（EPR）は、その違和感をパラドックスとみなす形に研ぎ澄ましました。後にボーム（Bohm）によって再解釈されたように、彼らが記述した状況は実のところ §2.5.3 で議論されたものと同一です。アリスとボブの間で共有された2量子ビットの最大エンタングル状態が与えられたとき、アリスは自分のスピンに対して実行するいくつかの可能な測定の中から1つを選択することで、ボブの密度行列の異なる可能なアンサンブル解釈を実現できます。例えば、彼女は $\boldsymbol{\sigma}_1$ または $\boldsymbol{\sigma}_3$ の固有状態を準備できます。
 

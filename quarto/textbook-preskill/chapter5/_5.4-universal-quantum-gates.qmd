@@ -1,4 +1,4 @@
-## 5.4 汎用量子ゲート (Universal Quantum Gates) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=33) {#sec-5.4-universal-quantum-gates}
+## 5.4 汎用量子ゲート (Universal Quantum Gates) {#sec-5.4-universal-quantum-gates}
 
 量子計算に関して、私たちはもう一つ根本的な問題に取り組まなければなりません。どのようにして十分な量子ゲートの集合を構築すればよいのでしょうか？ 言い換えれば、何をもって**汎用量子コンピュータ（universal quantum computer）**が構成されるのでしょうか？
 
@@ -6,7 +6,7 @@
 
 この一般的な結果とは別に、物理的に実装が特に容易であるような特定の汎用ゲートセットを提示することも大いに関心を持たれます。ここではいくつかの例について議論します。
 
-### 5.4.1 汎用性の概念 (Notions of Universality) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=33) {#sec-5.4.1-notions-of-universality}
+### 5.4.1 汎用性の概念 (Notions of Universality) {#sec-5.4.1-notions-of-universality}
 
 量子計算の標準的な回路モデルにおいて、回路には「ハードワイヤード（固定）」された有限の量子ゲート集合
 $$
@@ -68,7 +68,7 @@ T \operatorname{polylog}(T/\delta) \ge 2^{2n} \frac{\log(C/2\delta)}{\log n}.
 $$ {#eq-5.87}
 必要な回路サイズは、指数関数的サイズよりも高々 $\operatorname{poly}(n)$ の因子だけ小さいにすぎません。群 $U(2^n)$ が想像を絶するほど広大であるのは、私たちが離散的なゲートセットに制限されているからではなく、一度に定数個の量子ビットしか操作できないからなのです。
 
-### 5.4.2 2量子ビットゲートは厳密に汎用である (Two-Qubit Gates are Exactly Universal) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=36) {#sec-5.4.2-two-qubit-gates-are-exactly-universal}
+### 5.4.2 2量子ビットゲートは厳密に汎用である (Two-Qubit Gates are Exactly Universal) {#sec-5.4.2-two-qubit-gates-are-exactly-universal}
 
 $U(2^n)$ の任意の元が2量子ビットゲートの有限回路によって達成できることを、2つのステップで示します。まず、$U(N)$ の元を「$2 \times 2$」ユニタリの積として表現する方法を示し、次に、任意の $2 \times 2$ ユニタリを2量子ビットユニタリの回路から得る方法を示します。
 
@@ -167,7 +167,7 @@ $$
 $$ {#eq-5.98}
 これは右から左へと読まれ、まず $\boldsymbol{\Sigma}$ が作用し、最後に $\boldsymbol{\Sigma}^{-1}$ が作用します。しかし、私たちはすでに §5.2.2 において、$\Lambda^{n-1}(\boldsymbol{X})$ ゲートと（単一量子ビットの）NOT ゲートを用いて計算基底状態の任意の置換を構築する方法を見ており、また今や $\Lambda^{n-1}(\boldsymbol{X})$（$\Lambda^{n-1}(\boldsymbol{U})$ の特別な場合）を2量子ビットゲートから構築する方法も知っています。したがって、2量子ビットゲートを用いて、式 (@eq-5.98) のように（計算基底における）一般的な $2 \times 2$ ユニタリを構築できました。これで、$U(2^n)$ の任意の元が2量子ビットゲートの回路によって達成できることの証明が完了します。実際、私たちはさらに強い結果を証明しました：$\boldsymbol{U}$ を任意の単一量子ビットゲートとするとき、2量子ビットゲート $\{\Lambda(\boldsymbol{U})\}$ は厳密に汎用なゲートセットを構成します。
 
-### 5.4.3 有限汎用ゲートセット (Finite Universal Gate Sets) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=39) {#sec-5.4.3-finite-universal-gate-sets}
+### 5.4.3 有限汎用ゲートセット (Finite Universal Gate Sets) {#sec-5.4.3-finite-universal-gate-sets}
 
 **円周上の稠密性（Denseness on the circle）**: 有限ゲートセットを用いて構築された回路が $U(2^n)$ において稠密であるとき、そのゲートセットは汎用です。稠密性の最初の単純な例として、円の回転の群 $U(1)$、例えばブロッホ球の $\hat{z}$ 軸のまわりの回転を考えます：
 $$
@@ -218,7 +218,7 @@ $$ {#eq-5.104}
 
 非ジェネリックな汎用ゲート、特に固有値がすべて $\pi$ の有理数倍であるようなゲートであっても、汎用性に十分な場合があります。演習で議論される一例はゲートセット $\{\mathrm{CNOT}, \boldsymbol{H}, \boldsymbol{T}\}$ です。ここで $\boldsymbol{H}$ は軸 $\frac{1}{\sqrt{2}}(\hat{x} + \hat{z})$ のまわりにブロッホ球を角度 $\pi$ だけ回転させ、$\boldsymbol{T}$ は $\hat{z}$ 軸のまわりにブロッホ球を角度 $\pi/4$ だけ回転させます。もし $\boldsymbol{T}$ を $\pi/2$ 回転である $\boldsymbol{T}^2$ に置き換えたとすると、ゲートセットは汎用ではなくなります。その場合、達成可能な単一量子ビット回転は、$SU(2)$ の有限部分群（立方体の対称群）に属するものだけになってしまうからです。しかし、$SU(2)$ にはこのような有限非可換部分群はほとんど存在しません（回転群 $SO(3)$ の有限非可換部分群は、正多角形および正多面体（プラトン立体）の対称群のみです）。ゲートセットがこれらの有限部分群を越えて到達するならば、$SU(2)$ の $U(1)$ 部分群か、$SU(2)$ 全体のいずれかに到達することになります。
 
-### 5.4.4 ソロヴェイ・キタエフ近似 (The Solovay-Kitaev Approximation) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=42) {#sec-5.4.4-solovay-kitaev-approximation}
+### 5.4.4 ソロヴェイ・キタエフ近似 (The Solovay-Kitaev Approximation) {#sec-5.4.4-solovay-kitaev-approximation}
 
 ここまでの汎用ゲートに関する議論は到達可能性に焦点を当てており、計算量を無視してきました。しかし、有限の汎用ゲートセットを手にしているとき、所望のユニタリ変換を精度 $\varepsilon$ で近似できるか*どうか*だけでなく、その近似を達成することが*どれほど困難か*も知る必要があります。どれほどの大きさの回路があれば十分でしょうか？ この問いには実質的に2つの部分があります。(1) ユニタリ変換 $\boldsymbol{U}$ が与えられたとき、$\|\tilde{\boldsymbol{U}} - e^{i\phi}\boldsymbol{U}\|_{\sup} \le \varepsilon$ となる $\tilde{\boldsymbol{U}}$ を構築するには、どれほどの大きさの量子回路が必要か？
 

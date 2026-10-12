@@ -1,4 +1,4 @@
-## 7.11 5量子ビット符号 (The 5-Qubit Code) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=40) {#sec-7.11-five-qubit-code}
+## 7.11 5量子ビット符号 (The 5-Qubit Code) {#sec-7.11-five-qubit-code}
 
 私たちがこれまでに考察してきたすべての QECC は CSS 型のものでした――各安定化生成元は $\boldsymbol{Z}$ の積であるか、あるいは $\boldsymbol{X}$ の積であるかのいずれかでした。しかし、すべての安定化符号がこの性質を持つわけではありません。非 CSS 安定化符号の一例が、完全かつ非縮退の $[[5, 1, 3]]$ 符号です。
 

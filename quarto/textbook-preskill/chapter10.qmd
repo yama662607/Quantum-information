@@ -2,6 +2,10 @@
 title: "Chapter 10: Quantum Shannon Theory"
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap10.pdf](../assets/pdf/preskill/chap10.pdf)
+
+:::
 
 {{< include chapter10/_10.1-shannon-for-dummies.qmd >}}
 

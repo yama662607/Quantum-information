@@ -1,6 +1,6 @@
-## 4.3 その他のベル不等式 (More Bell inequalities) [📄 p.17](/assets/pdf/preskill/chap4.pdf#page=17) {#sec-4.3-more-bell-inequalities}
+## 4.3 その他のベル不等式 (More Bell inequalities) {#sec-4.3-more-bell-inequalities}
 
-### 4.3.1 CHSH不等式 (CHSH inequality) [📄 p.17](/assets/pdf/preskill/chap4.pdf#page=17) {#sec-4.3.1-chsh-inequality}
+### 4.3.1 CHSH不等式 (CHSH inequality) {#sec-4.3.1-chsh-inequality}
 
 アインシュタイン局所性の実験的検証は、典型的にはベル不等式の別の形式に基づいています。これは、アリスが2つの観測可能量 $a$ と $a'$ のいずれか一方を測定でき、ボブが $b$ または $b'$ のいずれか一方を測定できるという状況に適用されます。観測可能量 $a, a', b, b'$ は $\{\pm 1\}$ の値をとり、隠れた確率変数の関数であると仮定しましょう。
 
@@ -50,7 +50,7 @@ $$
 $$ {#eq-4.38}
 となり、これは量子力学的予測によって明らかに破られます。
 
-### 4.3.2 最大の破れ (Maximal violation) [📄 p.18](/assets/pdf/preskill/chap4.pdf#page=18) {#sec-4.3.2-maximal-violation}
+### 4.3.2 最大の破れ (Maximal violation) {#sec-4.3.2-maximal-violation}
 
 実際、今考察したケースは CHSH 不等式の量子力学的に可能な最大の破れを与えます。それは以下の議論から分かります。$a, a', b, b'$ が固有値 $\pm 1$ をもつエルミート演算子であると仮定すると、
 $$
@@ -117,7 +117,7 @@ $$
 $$ {#eq-4.49}
 $a', b, a, b'$ が連続して $45^\circ$ の角度で離れているケースにおいて、この上限値が飽和することを見ました。したがって、私たちが見出した CHSH 不等式の破れは、量子理論によって許容される最大の破れなのです。
 
-### 4.3.3 量子戦略は古典戦略を凌駕する (Quantum strategies outperform classical strategies) [📄 p.20](/assets/pdf/preskill/chap4.pdf#page=20) {#sec-4.3.3-quantum-strategies-outperform-classical-strategies}
+### 4.3.3 量子戦略は古典戦略を凌駕する (Quantum strategies outperform classical strategies) {#sec-4.3.3-quantum-strategies-outperform-classical-strategies}
 
 CHSH 不等式は2部古典系の2つの部分間の相関の強さに対する制限であり、チレルソンの不等式は2部量子系の2つの部分間の相関の強さに対する制限です。量子戦略が古典戦略を凌駕するようなゲームを考察することによって、量子相関が古典相関とどのように異なるのかについての理解をさらに深めることができます。
 
@@ -195,7 +195,7 @@ $$ {#eq-4.59}
 
 こうして、アリスとボブは量子エンタングルメントを用いることで、それを用いない場合よりも高い成功率でゲームをプレイできることが分かりました。少なくともこの目的においては、共有された量子エンタングルメントは共有された古典的ランダム性よりも強力なリソースです。しかし、エンタングルメントがもたらす力にさえ限界があり、その限界はチレルソンの不等式によって具現化されているのです。
 
-### 4.3.4 すべてのエンタングルした純粋状態はベル不等式を破る (All entangled pure states violate Bell inequalities) [📄 p.22](/assets/pdf/preskill/chap4.pdf#page=22) {#sec-4.3.4-all-entangled-pure-states-violate-bell-inequalities}
+### 4.3.4 すべてのエンタングルした純粋状態はベル不等式を破る (All entangled pure states violate Bell inequalities) {#sec-4.3.4-all-entangled-pure-states-violate-bell-inequalities}
 
 分離可能状態（separable states）はベル不等式を破りません。例えば分離可能な純粋状態の場合、$a$ がアリスの量子ビットに作用する観測可能量であり、$b$ がボブの量子ビットに作用する観測可能量であるならば、
 $$
@@ -255,7 +255,7 @@ $$ {#eq-4.68}
 
 私たちは、2量子ビットの*任意の*エンタングルした純粋状態が何らかのベル不等式を破ることを示しました。この議論を任意の2部純粋状態へと一般化することは難しくありません。したがって、2部純粋状態に対しては、「エンタングルしている」ことは「ベル不等式を破る」ことと同値です。しかし、2部混合状態に対しては、状況がより微妙であることを後ほど見ることになります。
 
-### 4.3.5 光子 (Photons) [📄 p.24](/assets/pdf/preskill/chap4.pdf#page=24) {#sec-4.3.5-photons}
+### 4.3.5 光子 (Photons) {#sec-4.3.5-photons}
 
 ベル不等式を検証する実験は、通常、スピン $1/2$ の物体ではなくエンタングルした光子を用いて行われます。光子に対する量子力学的予測はどのようなものでしょうか？
 
@@ -334,7 +334,7 @@ $$
 $$ {#eq-4.80}
 となります。
 
-### 4.3.6 実験と抜け穴 (Experiments and loopholes) [📄 p.26](/assets/pdf/preskill/chap4.pdf#page=26) {#sec-4.3.6-experiments-and-loopholes}
+### 4.3.6 実験と抜け穴 (Experiments and loopholes) {#sec-4.3.6-experiments-and-loopholes}
 
 *局所性の抜け穴（Locality loophole）。* エンタングルした光子対を用いた実験によって、式 (@eq-4.79) の形式の CHSH 不等式が検証されてきました。実験は量子力学的予測を確認し、CHSH 不等式が破られることを説得力をもって実証しています。したがって、これらの実験は、自然界が局所隠れた変数理論によって正確に記述され得ないことを示しているように思われます。
 

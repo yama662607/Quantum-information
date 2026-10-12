@@ -1,6 +1,6 @@
-## 4.5 量子暗号 (Quantum cryptography) [📄 p.36](/assets/pdf/preskill/chap4.pdf#page=36) {#sec-4.5-quantum-cryptography}
+## 4.5 量子暗号 (Quantum cryptography) {#sec-4.5-quantum-cryptography}
 
-### 4.5.1 EPR量子鍵配送 (EPR quantum key distribution) [📄 p.36](/assets/pdf/preskill/chap4.pdf#page=36) {#sec-4.5.1-epr-quantum-key-distribution}
+### 4.5.1 EPR量子鍵配送 (EPR quantum key distribution) {#sec-4.5.1-epr-quantum-key-distribution}
 
 アリスとボブを含め、誰もが秘密を持っています。アリスはボブに極めて機密性の高いメッセージを送る必要がありますが、アリスとボブには非常に詮索好きな友人イブ（Eve）がおり、彼女が盗み聞きを試みることを2人は知っています。イブが決して盗聴できないという確証を持って、2人は通信することができるでしょうか？
 
@@ -68,7 +68,7 @@ $$ {#eq-4.103}
 
 チャネルのエラー率が十分に低ければ、誤り訂正とプライバシー増幅で補完された量子鍵配送は、イブが仕掛けてくる可能性のあるいかなる攻撃に対しても無敵である（イブが獲得する情報を任意に小さくできることが保証されるという意味で）ことを示すことができます。量子鍵配送の安全性を証明する問題については、第7章で再び取り上げます。
 
-### 4.5.2 複製不可能定理 (No cloning) [📄 p.39](/assets/pdf/preskill/chap4.pdf#page=39) {#sec-4.5.2-no-cloning}
+### 4.5.2 複製不可能定理 (No cloning) {#sec-4.5.2-no-cloning}
 
 量子鍵配送の安全性は、量子情報と古典情報の間の本質的な違いに基づいています。直交しない量子状態同士を**乱すことなしに区別する**情報を得ることは不可能です。
 

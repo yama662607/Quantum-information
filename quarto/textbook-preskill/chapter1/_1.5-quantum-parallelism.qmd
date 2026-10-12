@@ -1,4 +1,4 @@
-## 1.5 量子並列性 (Quantum parallelism) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=10) {#sec-1.5-quantum-parallelism}
+## 1.5 量子並列性 (Quantum parallelism) {#sec-1.5-quantum-parallelism}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **量子並列性**: 重ね合わせ状態に対して一度の演算を行うことで、全ての入力に対する結果を同時に保持する概念を理解する。

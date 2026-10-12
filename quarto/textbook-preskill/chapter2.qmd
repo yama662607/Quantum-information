@@ -13,6 +13,10 @@ pyodide:
     - jsonschema
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap2.pdf](../assets/pdf/preskill/chap2.pdf)
+
+:::
 
 {{< include chapter2/_2.1-axioms.qmd >}}
 

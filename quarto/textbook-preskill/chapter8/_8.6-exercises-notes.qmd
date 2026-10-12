@@ -1,8 +1,8 @@
-## 8.6 エピローグ、チャーン・サイモンズ理論、$S$ 行列、端励起、および文献ノート [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=63) {#sec-8-6-epilogue-notes}
+## 8.6 エピローグ、チャーン・サイモンズ理論、$S$ 行列、端励起、および文献ノート {#sec-8-6-epilogue-notes}
 
 講義でカバーできた内容はここまでです。ここでは、時間が許せば触れたかったであろういくつかの発展的トピックについて簡潔に概説します。
 
-### 8.6.1 チャーン・サイモンズ理論 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=63) {#sec-8-6-chern-simons-theory}
+### 8.6.1 チャーン・サイモンズ理論 {#sec-8-6-chern-simons-theory}
 
 これまで、多項式方程式（五角形方程式および六角形方程式）を力ずく（brute-force）で解くことによってエニオンモデルを構築する方法を議論してきました。この手法は確実ですが、実際にはより効率的な他の手法を用いてモデルが構築されることが一般的です。実際、既知のエニオンモデルの大部分は**チャーン・サイモンズ理論（Chern-Simons theory）**の具体例として発見されてきました。
 
@@ -73,7 +73,7 @@ Zhenghan Wang（未公刊）は、4個以下のラベルを持つすべてのエ
 
 ---
 
-### 8.6.2 モジュラー $S$ 行列とフェルリンデの公式 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=64) {#sec-8-6-s-matrix}
+### 8.6.2 モジュラー $S$ 行列とフェルリンデの公式 {#sec-8-6-s-matrix}
 
 エニオンモデルの**モジュラー $S$ 行列（modular $S$-matrix）**は、ホップ絡み（Hopf link）を形成する2つのエニオン世界線によって定義できます：
 
@@ -142,7 +142,7 @@ $$
 
 ---
 
-### 8.6.3 1次元の端励起とカイラル中心電荷 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=65) {#sec-8-6-edge-excitations}
+### 8.6.3 1次元の端励起とカイラル中心電荷 {#sec-8-6-edge-excitations}
 
 エニオンモデルの定式化において、ここまでは2次元バルク（bulk）における粒子の融合と組み紐を議論してきました。しかし、2次元媒質の物理には、まだ議論していないもう1つの重要な側面が存在します。それが試料の**1次元の端（edge）**の性質です。
 
@@ -172,7 +172,7 @@ $$
 
 ---
 
-### 8.6.4 文献ノート [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=65) {#sec-8-6-bibliographical-notes}
+### 8.6.4 文献ノート {#sec-8-6-bibliographical-notes}
 
 エニオン理論の先駆的論文のいくつかは [1] に再録されています。
 
@@ -190,7 +190,7 @@ $$
 
 ---
 
-### 参考文献 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=67) {#sec-8-6-references}
+### 参考文献 {#sec-8-6-references}
 
 [1] F. Wilczek, *Fractional statistics and anyon superconductivity* (World Scientific, Singapore, 1990).
 

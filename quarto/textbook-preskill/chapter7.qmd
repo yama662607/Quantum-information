@@ -2,6 +2,10 @@
 title: "Chapter 7: Quantum Error Correction"
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap7.pdf](../assets/pdf/preskill/chap7.pdf)
+
+:::
 
 {{< include chapter7/_7.1-code.qmd >}}
 

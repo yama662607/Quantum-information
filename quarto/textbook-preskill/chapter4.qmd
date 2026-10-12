@@ -2,6 +2,10 @@
 title: "Chapter 4: Quantum Entanglement"
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap4.pdf](../assets/pdf/preskill/chap4.pdf)
+
+:::
 
 {{< include chapter4/_4.1-nonseparability.qmd >}}
 

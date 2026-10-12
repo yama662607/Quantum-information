@@ -1,4 +1,4 @@
-## 6.10 局所ハミルトニアン問題のQMA完全性 (QMA-completeness of the local Hamiltonian problem) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=52) {#sec-6.10-qma-completeness}
+## 6.10 局所ハミルトニアン問題のQMA完全性 (QMA-completeness of the local Hamiltonian problem) {#sec-6.10-qma-completeness}
 
 これまで議論してきたように、古典的には困難であるケースにおいて、量子コンピュータが局所ハミルトニアンの基底状態エネルギーを計算できることが期待されており、これは量子コンピュータの重要な応用先となり得ます。他方で、局所ハミルトニアンの基底状態エネルギーの計算は、量子コンピュータにとっても依然として困難であるケースが存在すると私たちは信じています。この信念の理由をより深く理解してみましょう。
 
@@ -16,7 +16,7 @@
 
 (5) は、スピングラスが現実的な物理過程において効率的に基底状態に緩和できないことを意味します（これは物理学者が「グラス（ガラス）」という言葉で意味することの一部です）。
 
-### 6.10.1 3-SATはNP完全である (3-SAT is NP-complete) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=53) {#sec-6.10.1-3sat-np-complete}
+### 6.10.1 3-SATはNP完全である (3-SAT is NP-complete) {#sec-6.10.1-3sat-np-complete}
 
 **言語（Language）:** （以前議論したように）$f$ が可変入力サイズをもつブール関数の統一的（uniform）な族 $f : \{0, 1\}^* \to \{0, 1\}$ であるとき、$f$ によって受理される入力文字列の集合を**言語**と呼びます：
 
@@ -69,7 +69,7 @@ $$ {#eq-6.235}
 
 です。このとき、すべての節を満たす割り当てが存在するならば $\min_x H(x) = 0$ であり、充足割り当てが存在しないならば $\min_x H(x) \ge 1$ です（任意の割り当てに対して違反する節の数が $\ge 1$ であるため）。私たちは、古典的な 3-局所ハミルトニアンの最小値を見つけることは **NP困難**であると結論づけます：もしそれができれば 3-SAT を解くことができ、したがって NP に属する任意の問題を解くことができるからです。この結論は、先に主張したように、$\mathrm{NP} \subseteq \mathrm{BQP}$ でない限り、古典的な 3-局所ハミルトニアンの基底状態エネルギーを一定の精度で求めることも一般には量子コンピュータにとって困難でなければならないことを意味します。
 
-### 6.10.2 フラストレートしたスピングラス (Frustrated spin glasses) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=55) {#sec-6.10.2-frustrated-spin-glasses}
+### 6.10.2 フラストレートしたスピングラス (Frustrated spin glasses) {#sec-6.10.2-frustrated-spin-glasses}
 
 実際、基底状態エネルギーを一定の精度で求めることは、古典的な 2-局所ハミルトニアンに対してさえ NP困難です：
 
@@ -105,7 +105,7 @@ $$ {#eq-6.238}
 
 このように、フラストレーションのために、幾何学的 2-局所古典ハミルトニアンのエネルギーを最小化することは NP困難になり得ることが分かります — すべての節を満たす方法はなく、大域的最小値ではないエネルギーの局所的最小値が多数存在します。量子局所ハミルトニアン問題では、$H = \sum_a H_a$ であり、$\{H_a\}$ は互いに可換ではない可能性があります。したがって、問題はさらに困難になると予想されるかもしれません — $H_a$ を同時に対角化できないことが、フラストレーションをさらに悪化させます。実際、基底状態は簡潔な古典的記述を持たない高度にエンタングルした状態になり得ます。量子問題の困難性を特徴づけてみましょう。
 
-### 6.10.3 量子k-局所ハミルトニアン問題 (The quantum k-local Hamiltonian problem) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=56) {#sec-6.10.3-quantum-k-local-hamiltonian}
+### 6.10.3 量子k-局所ハミルトニアン問題 (The quantum k-local Hamiltonian problem) {#sec-6.10.3-quantum-k-local-hamiltonian}
 
 $H = \sum_a H_a$ を $k$-局所的な $n$ 量子ビットハミルトニアンとします — 各 $H_a$ は高々 $k$ 個の量子ビットに非自明に作用し（ここで $k$ は定数）、$\|H_a\| \le h = \text{定数}$ です。$2^k \times 2^k$ 行列 $H_a$ は $\mathrm{poly}(n)$ ビットの精度で指定されます。
 
@@ -154,7 +154,7 @@ $$ {#eq-6.241}
 
 ここで $|\psi(t)\rangle = (U_t U_{t-1} \dots U_1)|\psi_{\mathrm{initial}}\rangle$ です。ここで $|\psi_{\mathrm{initial}}\rangle = |x\rangle \otimes |0\rangle^* \otimes |\psi_x\rangle$ であり、$|x\rangle$ は QMA 問題のインスタンスを指定し、$|0\rangle^*$ は検証器によって使用されるスクラッチ空間の初期状態、$|\psi_x\rangle$ は $x$ が受理されるべきであることを証言する量子証拠であり、$|\psi(t)\rangle$ は検証器回路の最初の $t$ ステップが実行された後に得られる量子コンピュータの状態です。状態 $|t\rangle$ は時間 $t \in \{0, 1, \dots, T\}$ を記録するクロックレジスタの状態です。$\langle t|s\rangle = \delta_{ts}$ であるため、状態 $|\eta\rangle$ の重ね合わせに現れる $T+1$ 個の状態は互いに直交しており、したがって $|\eta\rangle$ は適切に規格化されています：$\langle\eta|\eta\rangle = 1$。
 
-### 6.10.4 ハミルトニアンの構築と解析 (Constructing and analyzing the Hamiltonian) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=57) {#sec-6.10.4-constructing-hamiltonian}
+### 6.10.4 ハミルトニアンの構築と解析 (Constructing and analyzing the Hamiltonian) {#sec-6.10.4-constructing-hamiltonian}
 
 ここで、ハミルトニアン $H$ が $|\eta\rangle$ にエンコードされた履歴を局所的に「チェック」するように選択したいと考えます。すなわち、$H$ は回路内のステップが無効である場合、あるいは入力が受理されない場合にエネルギーペナルティを課します。
 
@@ -224,7 +224,7 @@ $$ {#eq-6.250}
 
 クロックのエンコードの問題には後で戻ります。まず、$H = H_{\mathrm{in}} + H_{\mathrm{out}} + H_{\mathrm{prop}}$ のスペクトルをより深く理解しましょう。
 
-#### $H_{\mathrm{prop}}$ の対角化 (Diagonalizing $H_{\mathrm{prop}}$) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=59) {#sec-6.10.4-diagonalizing-hprop}
+#### $H_{\mathrm{prop}}$ の対角化 (Diagonalizing $H_{\mathrm{prop}}$) {#sec-6.10.4-diagonalizing-hprop}
 
 まず $H_{\mathrm{prop}}$ を考えることから始めましょう。正当な履歴状態が $H_{\mathrm{prop}}$ の零ベクトルである（固有値 0 をもつ）ことを見てきました。$H_{\mathrm{prop}}$ の他の固有空間と固有値は何でしょうか？
 
@@ -377,7 +377,7 @@ $$ {#eq-6.270}
 
 $T = \mathrm{poly}(n)$ であるならば、$H_{\mathrm{prop}}$ の固有値ギャップは $E_1 - E_0 \ge \frac{1}{\mathrm{poly}(n)}$ となります。
 
-#### 証拠が拒絶される場合のエネルギーの下界 (Lower bound on the energy when the witness is rejected) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=61) {#sec-6.10.4-lower-bound-energy}
+#### 証拠が拒絶される場合のエネルギーの下界 (Lower bound on the energy when the witness is rejected) {#sec-6.10.4-lower-bound-energy}
 
 しかし、私たちは完全なハミルトニアン $H = H_{\mathrm{in}} + H_{\mathrm{out}} + H_{\mathrm{prop}}$（とりあえず $H_{\mathrm{clock}}$ は無視します）のスペクトルを考慮したいと考えます。$H_{\mathrm{in}} + H_{\mathrm{out}}$ については、零空間は $t = 0$ で正当な入力を持ち、$t = T$ で YES と答える（受理される）すべてのベクトルによって張られます：
 
@@ -462,7 +462,7 @@ $$ {#eq-6.284}
 
 要約すると、受理確率が $\ge 1 - \epsilon$ であるならば $E_0 \le \frac{\epsilon}{T+1}$ であり、受理確率が $\le \epsilon$ であるならば $E_0 \ge \text{定数} \times \frac{1-\sqrt{\epsilon}}{(T+1)^3}$ であることを示しました。答えが YES である場合に（$1/(T+1)^3$ と比較して）$\epsilon$ を小さくするための適切な増幅を行うことで、私たちは QMA 問題を局所ハミルトニアン問題のインスタンスへと還元しました。
 
-#### クロックの符号化 (Encoding the clock) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=63) {#sec-6.10.4-encoding-clock}
+#### クロックの符号化 (Encoding the clock) {#sec-6.10.4-encoding-clock}
 
 ただし……ハミルトニアンを局所的にできることを確認することがまだ残っています。量子ビットを用いてクロックレジスタをエンコードしたいと考えます。一つの方法は、$i = \{1, 2, 3, \dots, T\}$ でラベル付けされた $T$ 個の量子ビットによる**単項符号化（unary encoding）**を用いることです：
 
@@ -511,7 +511,7 @@ $$ {#eq-6.289}
 
 これで、任意の QMA 問題が 5-局所ハミルトニアンの基底状態エネルギーを（$1/\mathrm{poly}(n)$ の約束ギャップをもって）推定する問題に還元可能であることの実証が完了しました。
 
-### 6.10.5 コメントと展望 (Comments) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=64) {#sec-6.10.5-comments}
+### 6.10.5 コメントと展望 (Comments) {#sec-6.10.5-comments}
 
 このようにして、3-SAT が自然な NP完全問題であるのと同様に、5-局所ハミルトニアン問題が「自然な」QMA完全問題であることを示しました。しかし、古典的な場合には多くの実際的な問題が NP完全であることが示されているのに対し、QMA完全であることが示されている問題の族は依然としてかなり小さく、それらの問題は比較的「人工的」に見えます。いずれにせよ、量子局所ハミルトニアン問題が古典的なものよりも困難であるように思われることを見るのは興味深いことです（$\mathrm{QMA} \ne \mathrm{NP}$ である場合）。
 

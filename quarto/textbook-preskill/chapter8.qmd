@@ -2,6 +2,10 @@
 title: "Chapter 8: Topological Quantum Computation"
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap8.pdf](../assets/pdf/preskill/chap8.pdf)
+
+:::
 
 {{< include chapter8/_8.1-anyons.qmd >}}
 

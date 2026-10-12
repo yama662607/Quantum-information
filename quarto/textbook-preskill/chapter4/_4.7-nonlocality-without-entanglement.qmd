@@ -1,4 +1,4 @@
-## 4.7 エンタングルメントを伴わない非局所性 (Nonlocality without entanglement) [📄 p.45](/assets/pdf/preskill/chap4.pdf#page=45) {#sec-4.7-nonlocality-without-entanglement}
+## 4.7 エンタングルメントを伴わない非局所性 (Nonlocality without entanglement) {#sec-4.7-nonlocality-without-entanglement}
 
 量子エンタングルメントは、局所操作と古典通信（LOCC: local operations and classical communication）のみを用いては実装できない2体量子操作が存在するという原理を典型的に示しています。例えば、アリスとボブが事前のエンタングルメントを共有していない場合、彼らが直接合流しない限り、ベル測定を行ったり、エンタングルした状態 $|\phi^+\rangle_{AB}$ を準備したりすることはできません。ここで、興味深い驚きに出くわします。アリスとボブが LOCC では実行できない事柄の一部は、少なくとも直接的には量子エンタングルメントを*伴わない*（do not involve）のです。
 

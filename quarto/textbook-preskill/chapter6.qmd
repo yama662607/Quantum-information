@@ -2,6 +2,10 @@
 title: "Chapter 6: Quantum Algorithms"
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap6.pdf](../assets/pdf/preskill/chap6.pdf)
+
+:::
 
 {{< include chapter6/_6.1-quantum-algorithms.qmd >}}
 

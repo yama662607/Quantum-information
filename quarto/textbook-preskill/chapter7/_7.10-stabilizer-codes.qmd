@@ -1,6 +1,6 @@
-## 7.10 安定化符号 (Stabilizer Codes) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=33) {#sec-7.10-stabilizer-codes}
+## 7.10 安定化符号 (Stabilizer Codes) {#sec-7.10-stabilizer-codes}
 
-### 7.10.1 一般的定式化 (General formulation) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=33) {#sec-7.10.1-general-formulation}
+### 7.10.1 一般的定式化 (General formulation) {#sec-7.10.1-general-formulation}
 
 私たちは（非縮退の）$[[5, 1, 3]]$ 量子符号を構築できるようになりますが、そのためには CSS の手順よりも強力な量子符号構築の手順が必要となります。
 
@@ -126,7 +126,7 @@ $|\psi\rangle \in \mathcal{H}_S$ に $\boldsymbol{n}$ を適用すると、第1�
 
 距離 $d$ を持つ安定化符号は、重みが $d$ 未満である各 $\boldsymbol{E} \in G_n$ が安定化群内に存在するか、あるいは安定化群の何らかの元と反可換であるという性質を持ちます。安定化群が重み $d$ 未満の元を含まない場合、その符号は非縮退です。距離 $d = 2t + 1$ の符号は $t$ 個の誤りを訂正でき、距離 $s + 1$ の符号は $s$ 個の誤りを検出、または位置の判明している $s$ 個の誤りを訂正できます。
 
-### 7.10.2 シンプレクティック記法 (Symplectic Notation) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=36) {#sec-7.10.2-symplectic-notation}
+### 7.10.2 シンプレクティック記法 (Symplectic Notation) {#sec-7.10.2-symplectic-notation}
 
 安定化符号の性質は、線形代数の言語を用いて説明および表現するのが最も適している場合がよくあります。すべての元が自乗して恒等演算子になる位数 $2^{n-k}$ のパウリ群の可換部分群である符号の安定化群 $S$ は、同値として、ある（シンプレクティック）内積に関して自己直交である $\mathbb{F}_2^{2n}$ の次元 $n - k$ の閉じた線形部分空間とみなすことができます。
 
@@ -200,7 +200,7 @@ $$ {#eq-7.137}
 
 非縮退符号の場合、各誤りは相異なるシンドロームを持ちます。符号が縮退している場合、同一のシンドロームを持つ誤りが複数存在する可能性がありますが、復元を行うためには観測されたシンドロームに対応する $\boldsymbol{E}_a^\dagger$ のいずれか1つを適用すればよいことになります。
 
-### 7.10.3 安定化符号のいくつかの例 (Some examples of stabilizer codes) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=37) {#sec-7.10.3-examples-of-stabilizer-codes}
+### 7.10.3 安定化符号のいくつかの例 (Some examples of stabilizer codes) {#sec-7.10.3-examples-of-stabilizer-codes}
 
 **(a) 9量子ビット符号 (The nine-qubit code):** この $[[9, 1, 3]]$ 符号は、次のように表現できる8個の安定化生成元を持ちます：
 
@@ -296,7 +296,7 @@ $$ {#eq-7.146}
 
 しかし注意点があります。式 @eq-7.144 によって定義される符号は、誤りが重み $d = \min(d_Z, d_X)$ 未満に制限されるならば非縮退となります（ここで $d_Z$ は $C_Z$ の距離、$d_X$ は $C_X$ の距離）。しかし QECC の真の距離は $d$ を超えることがあります。例えば、9量子ビット符号はこの一般化された意味において CSS 符号です。しかしその場合、古典符号 $C_X$ の距離は 1 であり、これは例えば $\boldsymbol{Z}_1\boldsymbol{Z}_2$ が安定化群に含まれていることを反映しています。それにもかかわらず、重み 2 のパウリ演算子は $S^\perp \setminus S$ 内に存在しないため、CSS 符号の距離は $d = 3$ です。
 
-### 7.10.4 符号化された量子ビット (Encoded qubits) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=39) {#sec-7.10.4-encoded-qubits}
+### 7.10.4 符号化された量子ビット (Encoded qubits) {#sec-7.10.4-encoded-qubits}
 
 厄介な誤りは $S^\perp \setminus S$ 内にある誤り――すなわち安定化群と可換でありながら、その外部にある誤りであることを私たちは見てきました。これらのパウリ演算子は別の理由からも興味深いものです：それらは、符号によって保護されている符号化されたデータに作用する「論理（logical）」演算とみなすことができるからです。
 

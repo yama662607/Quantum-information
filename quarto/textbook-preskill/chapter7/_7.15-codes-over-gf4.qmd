@@ -1,4 +1,4 @@
-## 7.15 $\mathrm{GF}(4)$ 上の符号 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=50) {#sec-7-15-codes-over-gf4}
+## 7.15 $\mathrm{GF}(4)$ 上の符号 {#sec-7-15-codes-over-gf4}
 
 我々はスタビライザー生成元を推測し、$d = 3$ であることを確認することで $[[5, 1, 3]]$ 符号を構成しました。より体系的な方法はあるでしょうか？
 

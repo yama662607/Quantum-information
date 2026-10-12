@@ -2,6 +2,10 @@
 title: "Chapter 3: Foundations II: Measurement and Evolution"
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap3.pdf](../assets/pdf/preskill/chap3.pdf)
+
+:::
 
 {{< include chapter3/_3.1-orthogonal-measurement.qmd >}}
 

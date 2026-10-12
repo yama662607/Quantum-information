@@ -1,4 +1,4 @@
-## 7.16 良い量子符号 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=53) {#sec-7-16-good-quantum-codes}
+## 7.16 良い量子符号 {#sec-7-16-good-quantum-codes}
 
 $[[n, k, d]]$ 符号の族は、その「符号化率（rate）」$R = k/n$ と「誤り確率（error probability）」$p = t/n$（ここで $t = (d - 1)/2$）がともに $n \to \infty$ において非ゼロの極限に近づく符号を含む場合、**良い（good）**符号族であると言われます。スタビライザー形式を用いて「量子ギルバート・バルシャモフ（Gilbert-Varshamov）限界」を証明でき、それによって良い量子符号の存在を示すことができます。実際、良い符号として非縮退符号を選ぶことができます。
 
@@ -30,7 +30,7 @@ $$ {#eq-7.209}
 
 [^note-gv-ref]: 原文では「eq.(7.327)」と参照されていますが、文脈上式 (7.207) を指しています。
 
-### 7.16.1 かつての議論 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=54) {#sec-7-16-1-the-old-argument}
+### 7.16.1 かつての議論 {#sec-7-16-1-the-old-argument}
 
 必要な数え上げを厳密に行うことなく、議論の概略のみをスケッチします。$\mathcal{E} = \{\boldsymbol{E}_a\}$ を訂正すべき誤りの集合とし、$\mathcal{E}$ の元のペアの積を $\mathcal{E}^{(2)} = \{\boldsymbol{E}_a^\dagger \boldsymbol{E}_b\}$ と表します。このとき、$\mathcal{E}$ 内の誤りを訂正できる非縮退符号を構成するには、$\mathcal{E}^{(2)}$ の各元とある生成元が反可換になるようなスタビライザー生成元の組を見つけなければなりません。
 

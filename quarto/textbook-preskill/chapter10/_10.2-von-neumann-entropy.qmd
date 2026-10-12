@@ -1,4 +1,4 @@
-## 10.2 フォン・ノイマン・エントロピー (Von Neumann Entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=19) {#sec-10.2-von-neumann-entropy}
+## 10.2 フォン・ノイマン・エントロピー (Von Neumann Entropy) {#sec-10.2-von-neumann-entropy}
 
 古典情報理論において、私たちはしばしば、$n$ 個の文字（$n \gg 1$）からなるメッセージを準備する情報源を考えます。ここで各文字はアンサンブル $X = \{x, p(x)\}$ から独立に取り出されます。私たちは、シャノン・エントロピー $H(X)$ が（$n \to \infty$ の漸近的極限において）1文字あたりに運ばれる圧縮不可能な情報ビット数であることを確認しました。
 
@@ -56,7 +56,7 @@ $$ {#eq-10.62}
 
 実際のところ、量子情報理論を展開するために必要な数学的枠組みは、シャノンの数学（典型列、ランダム符号化など）と非常によく似ています。あまりに似ているため、概念的な文脈が実際にはまったく異なるという事実が見えにくくなることさえあります。量子情報理論の中心的な論点は、**非直交な量子状態は完全には識別できない**ということであり、これは古典的には類似物のない特徴です。
 
-### 10.2.1 $H(\rho)$ の数学的性質 (Mathematical properties of H(ρ)) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=21) {#sec-10.2.1-mathematical-properties}
+### 10.2.1 $H(\rho)$ の数学的性質 (Mathematical properties of H(ρ)) {#sec-10.2.1-mathematical-properties}
 
 フォン・ノイマン・エントロピー $H(\rho)$ には頻繁に役立つ一握りの性質があり、その多くはシャノン・エントロピー $H(X)$ の対応する性質と密接に類似しています。これらのいくつかの証明は演習 10.1、10.2、10.3 にあります。
 
@@ -145,7 +145,7 @@ $$ {#eq-10.73}
 
 $X$ と $Y$ が完全に相関している場合、$H(XY) = H(X) = H(Y)$ であり、条件付きエントロピーは $H(X|Y) = H(Y|X) = 0$、相互情報量は $I(X; Y) = H(X)$ となります。対照的に、$AB$ の2体純粋状態（$A$ と $B$ が完全に相関していると見なせる量子状態）に対しては、相互情報量は $I(A; B) = 2H(A) = 2H(B)$ となります。この意味において、量子相関は古典相関よりも強力です。
 
-### 10.2.2 混合、測定、およびエントロピー (Mixing, measurement, and entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=22) {#sec-10.2.2-mixing-measurement-entropy}
+### 10.2.2 混合、測定、およびエントロピー (Mixing, measurement, and entropy) {#sec-10.2.2-mixing-measurement-entropy}
 
 シャノン・エントロピーには**シューア凹性（Schur concavity）**と呼ばれる性質もあります。これは、$X = \{x, p(x)\}$ と $Y = \{y, q(y)\}$ が $p \prec q$ を満たす2つのアンサンブルである場合、$H(X) \ge H(Y)$ となることを意味します。$p \prec q$（$q$ が $p$ を**優越する（majorizes）**）とは、ある二重確率行列（doubly stochastic matrix）$D$ に対して $p = Dq$ となるという意味で「$p$ は少なくとも $q$ と同等にランダムである」ことを意味することを思い出してください。したがって、$H$ のシューア凹性は、よりランダム性の高いアンサンブルがより高いエントロピーを持つことを述べています。
 
@@ -167,7 +167,7 @@ $$ {#eq-10.75}
 
 が成り立ちます。ここで不等式は、基底 $\{|e_i\rangle\}$ における $\rho$ の対角成分が $\rho$ の固有値によって優越されることから従います。言い換えれば、$\Lambda$ またはその直交補空間 $\Lambda^\perp$ のいずれかへの2値直交測定を行う場合、$\Lambda$ へ射影される確率は $\rho$ の最大の $d'$ 個の固有値の和以下となります（**Ky Fanの優越原理; Ky Fan dominance principle**）。
 
-### 10.2.3 強劣加法性 (Strong subadditivity) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=23) {#sec-10.2.3-strong-subadditivity}
+### 10.2.3 強劣加法性 (Strong subadditivity) {#sec-10.2.3-strong-subadditivity}
 
 劣加法性の性質 $I(X; Y) \ge 0$ に加えて、古典的な確率変数の相関は**強劣加法性（strong subadditivity）**と呼ばれるさらなる性質に従います：
 
@@ -264,7 +264,7 @@ $$ {#eq-10.88}
 
 となります。あまり自明でないのは、その逆も真であるということです――$I(A; C|B) = 0$ を満たす任意の状態は @eq-10.87 のような分解を持ちます。これは有用な事実ですが、ここでは証明を与えません。
 
-### 10.2.4 相互情報量の単調性 (Monotonicity of mutual information) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=25) {#sec-10.2.4-monotonicity-mutual-information}
+### 10.2.4 相互情報量の単調性 (Monotonicity of mutual information) {#sec-10.2.4-monotonicity-mutual-information}
 
 強劣加法性は、量子相互情報量のもうひとつの重要な性質である**単調性（monotonicity）**――系 $B$ に作用する量子チャネルは $A$ と $B$ の相互情報量を増加させ得ない――を含意します。単調性を導出するために、量子チャネル $\mathcal{N}^{B \to B'}$ が $B$ を $B'$ に写像すると仮定します。任意の量子チャネルと同様に、$\mathcal{N}$ は等長拡大（isometric extension）であるシュタインスプリング拡張（Stinespring dilation） $U^{B \to B'E}$ を持ち、$B$ を $B'$ および適切な環境系 $E$ に写像します。等長写像 $U$ は密度演算子の固有値を変えないため、$B$ および $AB$ のエントロピーを保存します：
 
@@ -289,7 +289,7 @@ $$ {#eq-10.91}
 
 が得られ、これが望まれていた単調性の主張です。
 
-### 10.2.5 エントロピーと熱力学 (Entropy and thermodynamics) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=26) {#sec-10.2.5-entropy-and-thermodynamics}
+### 10.2.5 エントロピーと熱力学 (Entropy and thermodynamics) {#sec-10.2.5-entropy-and-thermodynamics}
 
 エントロピーの概念は熱力学の研究を通じて科学に初めて導入され、私たちが列挙してきたエントロピーの数学的性質は多くの興味深い熱力学的帰結を持ちます。ここでは、量子相対エントロピーの非負性と単調性が熱力学で遭遇するアイデアとどのように関連しているかについて、いくつかの側面を述べるにとどめます。
 
@@ -362,7 +362,7 @@ $$ {#eq-10.100}
 
 量子情報理論が熱力学をどのように照らし出すかについては、§10.8.4 でさらに詳しく述べる予定です。
 
-### 10.2.6 ベッケンシュタインのエントロピー上限 (Bekenstein's entropy bound) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=27) {#sec-10.2.6-bekenstein-entropy-bound}
+### 10.2.6 ベッケンシュタインのエントロピー上限 (Bekenstein's entropy bound) {#sec-10.2.6-bekenstein-entropy-bound}
 
 同様のアイデアが、場の量子論におけるベッケンシュタインのエントロピー上限（Bekenstein's bound）へとつながります。場の理論の細部は興味深いものですが、深入りすると本筋から大きく外れてしまいます。要点は、ベッケンシュタインが有界な空間領域におけるエネルギーとエントロピーを関係づける不等式を提唱したということです。この上限は重力物理学に着想を得たものですが、重力を参照せずに定式化することができ、相対エントロピーの性質から従います。
 
@@ -386,7 +386,7 @@ $$ {#eq-10.102}
 
 ベッケンシュタインはブラックホールの熱力学を考えることによってこのような上限を予想するに至りました。物事の桁感を掴むために数値因子を省くと、円周 $\sim R$ を持つブラックホールのエントロピーは $S \sim R^2/G$ であり、その質量（エネルギー）は $E \sim R/G$ です（ここで $G$ はニュートンの重力定数）。したがって、ブラックホールに対して $S \sim ER$ となります。ベッケンシュタインは、任意の状態と領域に対して $S = O(ER)$ でない限り、領域に追加の物質を投げ込んで初期状態よりもエントロピーの低いブラックホールを作ることができ、それによって（一般化された）熱力学第二法則を破ることができることに気付きました。ブラックホールが動機を提供しましたが、$G$ は不等式から消去され、重力のない相対論的場の量子論においても成立します。
 
-### 10.2.7 エントロピー的不確定性関係 (Entropic uncertainty relations) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=28) {#sec-10.2.7-entropic-uncertainty-relations}
+### 10.2.7 エントロピー的不確定性関係 (Entropic uncertainty relations) {#sec-10.2.7-entropic-uncertainty-relations}
 
 不確定性原理は、非可換な観測量が同時に確定した値を持つことができないことを主張します。この言明を数学に翻訳するために、エルミート観測量 $A$ がスペクトル表現
 

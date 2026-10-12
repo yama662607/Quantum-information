@@ -2,6 +2,10 @@
 title: "Chapter 5: Classical Circuits & Quantum Circuits"
 ---
 
+::: {.callout-note appearance="simple" icon=false}
+📄 **講義録 原本 PDF**: [chap5.pdf](../assets/pdf/preskill/chap5.pdf)
+
+:::
 
 {{< include chapter5/_5.1-classical-circuits.qmd >}}
 

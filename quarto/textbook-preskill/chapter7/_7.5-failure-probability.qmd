@@ -1,6 +1,6 @@
-## 7.5 失敗確率 (Failure probability) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=21) {#sec-7.5-failure-probability}
+## 7.5 失敗確率 (Failure probability) {#sec-7.5-failure-probability}
 
-### 7.5.1 忠実度の限界 (Fidelity bound) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=21) {#sec-7.5.1-fidelity-bound}
+### 7.5.1 忠実度の限界 (Fidelity bound) {#sec-7.5.1-fidelity-bound}
 
 誤り写像の台が、訂正方法を知っている集合 $\mathcal{E}$ 内のパウリ演算子のみを含む場合、符号化された量子情報を完全な忠実度（fidelity）で復元することができます。しかし現実的な誤りモデルでは、$\mathcal{E}$ に属さない誤りに対してわずかではあってもゼロでない振幅が存在し、そのため復元された状態は完全なものにはなりません。復元された状態の忠実度について、何が言えるでしょうか？
 
@@ -99,7 +99,7 @@ $$ {#eq-7.68}
 
 これが復元操作の「失敗確率（failure probability）」に対する私たちの一般的な限界です。結果 @eq-7.63 は、$|\text{GOOD}\rangle$ と $|\text{BAD}\rangle$ が直交状態である特別な場合として、式 @eq-7.68 から回復できます。
 
-### 7.5.2 無相関ノイズ (Uncorrelated noise) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=23) {#sec-7.5.2-uncorrelated-noise}
+### 7.5.2 無相関ノイズ (Uncorrelated noise) {#sec-7.5.2-uncorrelated-noise}
 
 相異なる量子ビットに作用する誤りが完全に無相関である場合について、これらの結果の意味合いを考えてみましょう。その場合、誤りチャンネルは単一量子ビットチャンネルのテンソル積になります。ノイズがすべての量子ビットに同一の形で作用する場合、符号ブロック内の $n$ 量子ビットに作用するノイズは $\mathcal{N}^{\otimes n}$ であり、ここで単一量子ビットチャンネル $\mathcal{N}$ は次のディレーションを持ちます：
 

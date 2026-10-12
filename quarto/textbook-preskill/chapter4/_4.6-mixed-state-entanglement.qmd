@@ -1,4 +1,4 @@
-## 4.6 混合状態のエンタングルメント (Mixed-state entanglement) [📄 p.41](/assets/pdf/preskill/chap4.pdf#page=41) {#sec-4.6-mixed-state-entanglement}
+## 4.6 混合状態のエンタングルメント (Mixed-state entanglement) {#sec-4.6-mixed-state-entanglement}
 
 量子エンタングルメントの決定的な性質は、それが**局所的に**生成できないということです。本章のここまではエンタングルした**純粋**状態の性質に考察を限定してきましたが、混合状態もまたエンタングルし得ることを認識することが重要です。
 
@@ -29,7 +29,7 @@ $$ {#eq-4.115}
 他方で、LOCC を用いれば、アリスとボブは**任意の**分離可能状態を準備できます。式 (@eq-4.112) の $\bm{\rho}_{AB}$ を準備するために、アリスは乱数を生成して確率分布 $\{p_i\}$ をサンプリングします。結果 $i$ が得られたら彼女はボブにその旨を知らせ、アリスは $|\alpha_i\rangle_A$ を準備し、ボブは $|\beta_i\rangle_B$ を準備します。
 
 <!-- Page 43 -->
-### 4.6.1 分離可能性に対する正値部分転置判定基準 (Positive-partial-transpose criterion for separability) [📄 p.43](/assets/pdf/preskill/chap4.pdf#page=43) {#sec-4.6.1-positive-partial-transpose-criterion-for-separability}
+### 4.6.1 分離可能性に対する正値部分転置判定基準 (Positive-partial-transpose criterion for separability) {#sec-4.6.1-positive-partial-transpose-criterion-for-separability}
 
 ここで、$\mathcal{H}_A \otimes \mathcal{H}_B$ 上の2部系密度演算子 $\bm{\rho}_{AB}$ が、ある基底における行列などとして提示されたとしましょう。我々は $\bm{\rho}_{AB}$ が分離可能であるかどうかを知りたいとします。どのように判断すればよいでしょうか？ $\bm{\rho}_{AB}$ が積状態のアンサンブルとして実現できるか否かを決定的に判定する効率的なアルゴリズムを考案することは自明ではありません。しかし、簡単にチェックできる分離可能性の必要条件が存在することに着目すると有益です。
 
