@@ -1,0 +1,192 @@
+## 6.6 量子探索 (Quantum Searching) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=34) {#sec-6.6-quantum-searching}
+
+NP困難問題の最も困難なインスタンスに対しては、解のしらみつぶし探索（全探索、exhaustive search）よりも優れた方法は知られていません。例えば、ある効率的に計算可能なブール関数
+
+$$
+f : \{0, 1\}^n \longrightarrow \{0, 1\}
+$$ {#eq-6.147}
+
+に対して、$f(x) = 1$ となるような $x$ が存在するかどうかを判定したいとします。入力 $x$ の可能な $N = 2^n$ 個のすべての値を試すことによって解を探索することができますが、これには（$f$ を $O(\text{polylog} N)$ の時間で評価できると仮定して）$O(N \text{polylog} N)$ の時間が必要となる可能性があります。これは非常に低速ですが、$f$ に利用できる構造が存在しない場合、これよりうまくやる方法は分からないかもしれません。
+
+[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=35) この状況をブラックボックス設定でモデル化できます。ボックスによって評価される関数が次の形をもつという約束が与えられているとしましょう：
+
+$$
+f_w(x) = \begin{cases} 0 & x \neq w, \\ 1 & x = w, \end{cases}
+$$ {#eq-6.148}
+
+ここで $x \in \{0, 1, 2, \dots, N - 1\}$ であり、$w$ は未知の値です。私たちの課題は、**マークされた文字列（marked string）** $w$ を見つけることです。古典的には、$1/2$ を超える成功確率で $w$ を見つけるには、ボックスに $N/2$ 回を超えて問い合わせる必要があります。これは NP 困難問題のブラックボックス版であり、回路によって受理される唯一の証拠（witness）が存在しますが、問題に構造がないため、全探索以外の選択肢はありません。
+
+では、量子コンピュータを用いれば全探索をより高速に行うことができるでしょうか？ その答えは**グローバーのアルゴリズム（Grover's algorithm）**を用いて「可能」です。量子クエリを用いることで、$O(\sqrt{N})$ 回のクエリでマークされた文字列を見つけることができます。したがって、$O(\sqrt{N} \text{polylog} N)$ の時間で全探索によって NP 困難問題を解くことができます。
+
+グローバーのアルゴリズムは、古典コンピュータ上の全探索に対して**2次の高速化（quadratic speedup）**を達成するといわれます。この高速化は指数関数的ではなく2次にとどまりますが、グローバーのアルゴリズムはその適用の広さゆえに極めて興味深いものです。そして、$O(\sqrt{N})$ 個の質問を投げかけることで実質的に $N$ 個の潜在的な証拠を調べることができるというのは、極めて驚くべきことです。
+
+量子の設定では、ブラックボックスは次のユニタリ演算子を適用します：
+
+$$
+U_w : |x\rangle \otimes |y\rangle \mapsto |x\rangle \otimes |y \oplus f_w(x)\rangle,
+$$ {#eq-6.149}
+
+ここで $x \in \{0, 1\}^n$ かつ $y \in \{0, 1\}^n$ です。標準的な手法により、$U_w$ は**位相オラクル（phase oracle）**になります：
+
+$$
+U_w : |x\rangle \otimes |-\rangle \mapsto (-1)^{f_w(x)}|x\rangle \otimes |-\rangle,
+$$ {#eq-6.150}
+
+ここで
+
+$$
+(-1)^{f_w(x)} = \begin{cases} 1 & x \neq w, \\ -1 & x = w \end{cases}
+$$ {#eq-6.151}
+
+です。（$U_w$ によって影響を受けない）出力レジスタを無視すると、入力に作用する $U_w$ を次のように表すことができます：
+
+$$
+U_w = I - 2|w\rangle\langle w|.
+$$ {#eq-6.152}
+
+一般の $n$ 量子ビット状態 $|\psi\rangle$ を次のように表すことができます：
+
+$$
+U_w : |\psi\rangle = a|w\rangle + b|\psi^\perp\rangle \mapsto -a|w\rangle + b|\psi^\perp\rangle,
+$$ {#eq-6.153}
+
+ここで $\langle w|\psi^\perp\rangle = 0$ です。すなわち、$|\psi\rangle$ を $|w\rangle$ に沿った成分と、$|w\rangle$ に直交する超平面内の成分に分解します。$U_w$ は、この超平面に関するベクトル $|\psi\rangle$ の反射を誘導します。
+
+グローバーのアルゴリズムの最初のステップは、$x$ のすべての値の一様な重ね合わせを準備することです：
+
+$$
+|s\rangle = H^{\otimes n}|0\rangle = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1}|x\rangle;
+$$ {#eq-6.154}
+
+この状態 $|s\rangle$ は、マークされた文字列 $|w\rangle$ と次の重なり（overlap）をもちます：
+
+$$
+\langle w|s\rangle = \frac{1}{\sqrt{N}}.
+$$ {#eq-6.155}
+
+[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=36) 次のステップは、**グローバー反復（Grover iteration）**を連続して何度も適用することです。各反復は、マークされた状態 $|w\rangle$ との量子重ね合わせの重なりを増大させ、$x \neq w$ である各 $|x\rangle$ の振幅を抑制します。この反復は
+
+$$
+U_{\text{Grover}} = U_s U_w
+$$ {#eq-6.156}
+
+であり、ここで $U_w$ はクエリであり、
+
+$$
+U_s = 2|s\rangle\langle s| - I
+$$ {#eq-6.157}
+
+は $|s\rangle$ によって決定される軸に関するベクトルの反射です。$U_s$ は量子回路として容易に構築できることに注目してください。次のように表すことができます：
+
+$$
+U_s = H^{\otimes n}(2|0\rangle\langle 0| - I)H^{\otimes n}.
+$$ {#eq-6.158}
+
+なぜなら $H^{\otimes n}$ は $|s\rangle$ を $|0\rangle$ へと写すからです（ここで $H$ は単一量子ビットのアダマールゲートです）。さらに、多重制御 $Z$ ゲートは、標的量子ビットのゲートの前後にアダマールをもつ多重制御 NOT ゲート $\Lambda^{n-1}(X)$ から形成でき、$\Lambda^{n-1}(X)$ は $O(n)$ 個のトフォリ（Toffoli）ゲートから構築できることが知られています。最後に、$X^{\otimes n}$ で共役を取ることで、位相ゲートが $|11..1\rangle$ ではなく $|00..0\rangle$ によってトリガーされるようにできます。したがって、$U_s$ はサイズ $O(\log N)$ の回路によって実現されます。
+
+$U_{\text{Grover}}$ は何を行うのでしょうか？ それは $|s\rangle$ と $|w\rangle$ によって張られる平面を保存するため、私たちの注意をその平面に限定することができます。まず、$U_w$ は $|s\rangle$ を軸 $|w^\perp\rangle$（$|s\rangle$ と $|w\rangle$ の張る空間において $|w\rangle$ に直交するベクトル）に関して反射します。次に $U_s$ は $U_w|s\rangle$ を軸 $|s\rangle$ に関して反射します。したがって、$U_{\text{Grover}}$ の正味の効果は、平面内での角度 $2\theta$ の反時計回りの回転です。ここで $\theta$ は $|s\rangle$ と $|w^\perp\rangle$ の初期角度です。グローバー反復を繰り返すごとに、状態ベクトルは反時計回りの方向にさらに $2\theta$ ずつ回転します。
+
+$|s\rangle$ と $|w^\perp\rangle$ の間の初期角度 $\theta$ は $\sin\theta = \langle w|s\rangle = 1/\sqrt{N}$ で与えられます。したがって $N \gg 1$ に対しては、$\theta = 1/\sqrt{N} + O(1/N^{3/2})$ です。グローバー反復を $T$ 回繰り返すと、ベクトルは $|w^\perp\rangle$ 軸から $(2T + 1)\theta$ だけ回転します。
+
+$(2T + 1)\theta = \pi/2 + \delta$（ただし $|\delta| \le \theta/2 \approx \frac{1}{2\sqrt{N}}$）となるように $T$ を選ぶことができます。このとき計算基底で測定を行うと、確率 $\text{Prob}(w) = \cos^2\delta \ge 1 - \delta^2 \ge 1 - \frac{1}{4N}$ で結果 $|w\rangle$ が得られます。このようにして、ブラックボックスへの $T$ 回の量子クエリを利用して、$T \approx \frac{\pi}{4\theta} \approx \frac{\pi}{4}\sqrt{N}$ 回のグローバー反復を用いることで、1 に近い成功確率で $|w\rangle$ を見つけることができます。これがグローバーの2次の高速化です。
+
+いま、$r$ 個のマークされた状態が存在し、$r$ が既知であると仮定しましょう。古典的には、各クエリで解（$f(w_i) = 1$ となる $w_i$）を見つける確率は $r/N$ であるため、定数の成功確率で解を見つけるには $O(N/r)$ 回のクエリが必要です。量子計算では、マークされた状態の一様な重ね合わせ
+
+$$
+|\text{marked}\rangle = \frac{1}{\sqrt{r}}\sum_{i=1}^r |w_i\rangle
+$$ {#eq-6.159}
+
+は、$|s\rangle = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1}|x\rangle$ と次の重なりをもちます：
+
+$$
+\langle\text{marked}|s\rangle = \sqrt{\frac{r}{N}} = \sin\theta.
+$$ {#eq-6.160}
+
+そしてグローバー反復は、（クエリが $|\text{marked}\rangle$ に垂直な軸に関して反射するため）再び $|s\rangle$ と $|\text{marked}\rangle$ によって張られる平面内で $2\theta$ だけ回転させます。
+
+上記と同様に、$N/r \gg 1$ に対しては、$T \approx \frac{\pi}{4}\sqrt{N/r}$ 回のクエリで成功確率 $\text{Prob} = 1 - O(r/N)$ を達成します。 [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=37) ここでも高速化は2次的です。すなわち、解を見つけるために必要な量子クエリの回数は
+
+$$
+\#(\text{量子クエリ}) = O(\sqrt{\#(\text{古典クエリ})})
+$$ {#eq-6.161}
+
+となります。もし $r$ が事前に**未知**である場合はどうでしょうか？ クエリ数の関数として成功確率は振動し、その振動の周期は $T \approx \frac{\pi}{2}\sqrt{N/r}$ となります。区間 $T \in \{0, 1, 2, \dots, T_{\max} \approx \frac{\pi}{4}\sqrt{N}\}$ 内で $T$ を一様かつランダムに選択すると、解が存在する場合（$r > 0$）、確率 $\text{Prob} \ge 1/2 + O(1/N)$ で解が見つかります。毎回異なるランダムな値の $T$ をサンプリングしてこれを $m$ 回繰り返すと、小さな失敗確率 $\approx 2^{-m}$ を除いて解を見つけることができます。したがって、グローバーのアルゴリズムを用いて、NP に属する判定問題を高い成功確率で
+
+$$
+\text{時間} = O(\sqrt{N}\text{polylog} N)
+$$ {#eq-6.162}
+
+で解くことができます。なぜなら、$f(x)$ を評価する回路は（古典または量子的な）時間 $O(\text{polylog} N)$ で計算できるからです。
+
+### 6.6.1 一般化された探索 (Generalized Search) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=37) {#sec-6.6.1-generalized-search}
+
+場合によっては、解をより高速に探索するために利用できる構造が問題に備わっていることがあります。その場合、一部の文字列は他の文字列よりも解である可能性が高い候補となり、したがって可能性の低い解ではなく可能性の高い解のテストにより多くの時間を費やすことで、より効率的に探索できるはずです。
+
+目立った構造をもたない関数に対するグローバーの全探索の場合、アルゴリズムの開始時に
+
+$$
+|s\rangle = H^{\otimes n}|0\rangle = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1}|x\rangle
+$$ {#eq-6.163}
+
+を準備しました。これは解 $|w\rangle$ と重なり $\sin\theta = 1/\sqrt{N}$ をもち、したがって計算基底で測定した場合には $x$ 上の一様分布をもたらします。構造をもつ関数の場合、$U|0\rangle = \sin\theta|w\rangle + \cos\theta|\psi^\perp\rangle$（ただし $\sin^2\theta > 1/N$）を満たすような効率的に計算可能なユニタリ演算子 $U$ を構築できるかもしれません。その場合、$H^{\otimes n}$ を $U$ で置き換え、$U_s$ を
+
+$$
+\tilde{U}_s = U(2|0\rangle\langle 0| - I)U^\dagger
+$$ {#eq-6.164}
+
+で置き換えることでグローバーのアルゴリズムを実行できます。したがって、$\tilde{U}_s$ は $|s\rangle$ ではなく軸 $U|0\rangle$ に関して反射します。アルゴリズムの解析は以前と同じであり、唯一の解が存在する場合、$T \approx \frac{\pi}{4\theta} < \frac{\pi}{4}\sqrt{N}$ 回のクエリで高い確率でその解を見つけることができます。
+
+具体的には、関数の構造のおかげで、候補解として $M < N$ 個を除くすべての入力を除外できるかもしれません。その場合、古典的には $O(M)$ 回のクエリで解を見つけることができますが、候補解の一様な重ね合わせである
+
+$$
+U|0\rangle = \frac{1}{\sqrt{M}}\sum_{i=1}^M |x_i\rangle
+$$ {#eq-6.165}
+
+を満たすような $U$ を構築できれば、量子計算ではわずか $O(\sqrt{M})$ 回のクエリで十分です。
+
+例えば、[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=38) 解に対する古典的な探索が古典的ヒューリスティック――すなわち、集合 $R$ 内のランダムに生成されたシード $r$ を試行解へと写す関数 $g$――によって加速できると仮定しましょう：
+
+$$
+g : r \mapsto g(r) \quad \text{ただし } r \in R.
+$$ {#eq-6.166}
+
+ヒューリスティックによって生成された試行解が、一様かつランダムに選ばれた試行解よりも受理される可能性が高い場合、このヒューリスティックは有用です：
+
+$$
+\left\langle \frac{g(R) \text{ 内の解の個数}}{|R|} \right\rangle > \left\langle \frac{\text{解の総数}}{N} \right\rangle,
+$$ {#eq-6.167}
+
+ここでブラケット $\langle\cdot\rangle$ は、ブラックボックス関数上の確率分布に対して評価された期待値を表します。このとき、ヒューリスティックを用いて定数の成功確率で解を見つける古典クエリの回数は
+
+$$
+T_{\text{classical}} = O\left( \left\langle \frac{|R|}{g(R) \text{ 内の解の個数}} \right\rangle \right)
+$$ {#eq-6.168}
+
+となります。量子探索においてヒューリスティックを活用するには、完全な探索空間ではなくシードの空間における探索にグローバーのアルゴリズムを適用します。ヒューリスティックは、効率的に計算可能なユニタリ演算子として実現されます：
+
+$$
+|r\rangle \otimes |0\rangle \mapsto |r\rangle \otimes |g(r)\rangle.
+$$ {#eq-6.169}
+
+$|g(r)\rangle$ を用いてボックスに問い合わせを行い、その後ガベージを消去するために $g$ の評価を逆向きに実行することができます：
+
+$$
+\begin{aligned}
+|r\rangle \otimes |0\rangle \otimes |y\rangle &\mapsto |r\rangle \otimes |g(r)\rangle \otimes |y\rangle \mapsto |r\rangle \otimes |g(r)\rangle \otimes |y \oplus f(g(r))\rangle \\
+&\mapsto |r\rangle \otimes |0\rangle \otimes |y \oplus f(g(r))\rangle.
+\end{aligned}
+$$ {#eq-6.170}
+
+この複合オラクルに問い合わせることで、関数 $f \circ g$ によってマークされた状態（すなわち、$g$ の値域 $g(R)$ において $f$ によってマークされた状態）を $R$ の中から探索することができます。使用される量子クエリの回数は
+
+$$
+T_{\text{quantum}} = O\left( \left\langle \sqrt{\frac{|R|}{g(R) \text{ 内の解の個数}}} \right\rangle \right)
+$$ {#eq-6.171}
+
+となります（各ブラックボックスに対して2次の高速化が存在します）。さらに、平方根関数は凹関数です：$\{p_a\}$ を確率分布とし、$F_a$ を $a$ でラベル付けされたブラックボックス関数の古典クエリ計算量を表すものとすると、$\langle\sqrt{F}\rangle = \sum_a p_a \sqrt{F_a} \le \sqrt{\sum_a p_a F_a} = \sqrt{\langle F\rangle}$ です。したがって
+
+$$
+T_{\text{quantum}} \le O\left( \sqrt{\left\langle \frac{|R|}{g(R) \text{ 内の解の個数}} \right\rangle} \right) = O(\sqrt{T_{\text{classical}}})
+$$ {#eq-6.172}
+
+となります。非構造化探索の場合と同様に、高速化は2次的です。
