@@ -167,3 +167,32 @@ $$ {#eq-2.154}
 $$
 |\psi\rangle = \begin{pmatrix} \cos \theta/2 \\ \sin \theta/2 \end{pmatrix}, \quad |\varphi\rangle = \begin{pmatrix} \sin \theta/2 \\ \cos \theta/2 \end{pmatrix}.
 $$ {#eq-2.155}
+（ある角度 $\theta$ に対して）。このとき
+$$
+|\psi\rangle\langle\psi| - |\varphi\rangle\langle\varphi| = \begin{pmatrix} \cos\theta & 0 \\ 0 & -\cos\theta \end{pmatrix}
+$$ {#eq-2.156}
+かつ
+$$
+|\langle\varphi|\psi\rangle|^2 = \sin^2\theta
+$$ {#eq-2.157}
+となります。したがって、
+$$
+\||\psi\rangle\langle\psi| - |\varphi\rangle\langle\varphi|\|_1^2 = (2\cos\theta)^2 = 4(1 - F(|\psi\rangle\langle\psi|, |\varphi\rangle\langle\varphi|))
+$$ {#eq-2.158}
+となります。
+
+次に、$L^1$ 距離は忠実度と同様に単調性（monotonicity）を持つことに注意してください：
+$$
+\|\boldsymbol{\rho}_{AB} - \boldsymbol{\sigma}_{AB}\|_1 \ge \|\boldsymbol{\rho}_A - \boldsymbol{\sigma}_A\|_1.
+$$ {#eq-2.159}
+これが成り立つのは、$L^1$ 距離が2つの状態を測定した際に得られる確率分布間の最適距離であり、$\boldsymbol{\rho}_A$ と $\boldsymbol{\sigma}_A$ を区別するための最適測定は $\boldsymbol{\rho}_{AB}$ と $\boldsymbol{\sigma}_{AB}$ に対しても可能な測定（たまたまサブシステム $B$ に対して自明に作用する測定）の一つであるためです。
+
+最後に、ウールマンの定理を適用します。もし $\boldsymbol{\rho}_{AB}$ と $\boldsymbol{\sigma}_{AB}$ が、可能な限り最大の重ね合わせを持つ $\boldsymbol{\rho}_A$ と $\boldsymbol{\sigma}_A$ の純粋化であるならば、
+$$
+F(\boldsymbol{\rho}_A, \boldsymbol{\sigma}_A) = F(\boldsymbol{\rho}_{AB}, \boldsymbol{\sigma}_{AB}) = 1 - \frac{1}{4}\|\boldsymbol{\rho}_{AB} - \boldsymbol{\sigma}_{AB}\|_1^2 \le 1 - \frac{1}{4}\|\boldsymbol{\rho}_A - \boldsymbol{\sigma}_A\|_1^2
+$$ {#eq-2.160}
+となります。ここで、第1の等号はウールマンの定理を用い、第2の等号は式 (@eq-2.158) を用い、最後の不等号は単調性を用いています。式 (@eq-2.160) と式 (@eq-2.153) を組み合わせることで、次が得られます：
+$$
+1 - \sqrt{F(\boldsymbol{\rho}, \boldsymbol{\sigma})} \le \frac{1}{2}\|\boldsymbol{\rho} - \boldsymbol{\sigma}\|_1 \le \sqrt{1 - F(\boldsymbol{\rho}, \boldsymbol{\sigma})};
+$$ {#eq-2.161}
+したがって、$\boldsymbol{\rho}$ と $\boldsymbol{\sigma}$ が $L^1$ ノルムにおいて互いに近いことと、それらの忠実度が1に近いことは同値です。
