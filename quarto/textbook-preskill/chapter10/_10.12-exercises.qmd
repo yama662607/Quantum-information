@@ -1,0 +1,673 @@
+## 10.12 演習問題 (Exercises) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=87) {#sec-10.12-exercises}
+
+### 演習 10.1 量子相対エントロピーの非負性 (Positivity of quantum relative entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=87) {#ex-10.1}
+
+a) すべての正の実数 $x$ に対して $\ln x \le x - 1$ が成り立ち、等号成立は $x = 1$ のときに限ることを示せ。
+
+b) 確率分布 $\{q(x)\}$ に対する確率分布 $\{p(x)\}$ の（古典）相対エントロピーは以下のように定義される：
+$$
+D(p\|q) \equiv \sum_x p(x) (\log p(x) - \log q(x)) .
+$$ {#eq-10.377}
+
+このとき
+$$
+D(p\|q) \ge 0 ,
+$$ {#eq-10.378}
+
+であり、等号成立は確率分布が同一（$p(x) = q(x)$）であるときに限ることを示せ。**ヒント:** (a) の不等式を $\ln(q(x)/p(x))$ に適用せよ。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=88)  
+c) 密度演算子 $\boldsymbol{\sigma}$ に対する密度演算子 $\boldsymbol{\rho}$ の量子相対エントロピーは以下のように定義される：
+$$
+D(\boldsymbol{\rho}\|\boldsymbol{\sigma}) = \mathrm{tr}\,\boldsymbol{\rho}(\log \boldsymbol{\rho} - \log \boldsymbol{\sigma}) .
+$$ {#eq-10.379}
+
+$\{p_i\}$ を $\boldsymbol{\rho}$ の固有値、$\{q_a\}$ を $\boldsymbol{\sigma}$ の固有値とする。このとき
+$$
+D(\boldsymbol{\rho}\|\boldsymbol{\sigma}) = \sum_i p_i \left( \log p_i - \sum_a D_{ia} \log q_a \right) ,
+$$ {#eq-10.380}
+
+となることを示せ。ここで $D_{ia}$ は二重確率行列（doubly stochastic matrix）である。$D_{ia}$ を $\boldsymbol{\rho}$ および $\boldsymbol{\sigma}$ の固有状態で表せ。（各成分が非負の実数であり、各行の和および各列の和がともに 1 である行列を二重確率行列と呼ぶ。）
+
+d) $D_{ia}$ が二重確率行列であるならば、（各 $i$ に対して）以下が成り立つことを示せ：
+$$
+\log \left( \sum_a D_{ia} q_a \right) \ge \sum_a D_{ia} \log q_a ,
+$$ {#eq-10.381}
+
+ここで等号成立はある $a$ に対して $D_{ia} = 1$ であるときに限る。
+
+e) 以下を示せ：
+$$
+D(\boldsymbol{\rho}\|\boldsymbol{\sigma}) \ge D(p\|r) ,
+$$ {#eq-10.382}
+
+ここで $r_i = \sum_a D_{ia} q_a$ である。
+
+f) $D(\boldsymbol{\rho}\|\boldsymbol{\sigma}) \ge 0$ であり、等号成立は $\boldsymbol{\rho} = \boldsymbol{\sigma}$ のときに限ることを示せ。
+
+### 演習 10.2 フォン・ノイマン・エントロピーの性質 (Properties of von Neumann entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=88) {#ex-10.2}
+
+a) 量子相対エントロピーの非負性を用いて、フォン・ノイマン・エントロピーの**劣加法性（subadditivity）**
+$$
+H(\boldsymbol{\rho}_{AB}) \le H(\boldsymbol{\rho}_A) + H(\boldsymbol{\rho}_B) ,
+$$ {#eq-10.383}
+
+を証明せよ。また、等号成立は $\boldsymbol{\rho}_{AB} = \boldsymbol{\rho}_A \otimes \boldsymbol{\rho}_B$ のときに限ることを示せ。**ヒント:** $\boldsymbol{\rho}_{AB}$ と $\boldsymbol{\rho}_A \otimes \boldsymbol{\rho}_B$ の相対エントロピーを考えよ。
+
+b) 劣加法性を用いて、フォン・ノイマン・エントロピーの**凹性（concavity）**を証明せよ：
+$$
+H\left( \sum_x p_x \boldsymbol{\rho}_x \right) \ge \sum_x p_x H(\boldsymbol{\rho}_x) .
+$$ {#eq-10.384}
+
+**ヒント:** 状態集合 $\{|x\rangle_B\}$ が互いに直交する基底であるとして、
+$$
+\boldsymbol{\rho}_{AB} = \sum_x p_x (\boldsymbol{\rho}_x)_A \otimes (|x\rangle\langle x|)_B ,
+$$ {#eq-10.385}
+
+を考えよ。
+
+c) 等号成立条件
+$$
+H(\boldsymbol{\rho}_{AB}) = H(\boldsymbol{\rho}_A) + H(\boldsymbol{\rho}_B) \quad \iff \quad \boldsymbol{\rho}_{AB} = \boldsymbol{\rho}_A \otimes \boldsymbol{\rho}_B
+$$ {#eq-10.386}
+
+を用いて、すべての $p_x$ が非ゼロである場合に、
+$$
+H\left( \sum_x p_x \boldsymbol{\rho}_x \right) = \sum_x p_x H(\boldsymbol{\rho}_x)
+$$ {#eq-10.387}
+
+が成り立つのはすべての $\boldsymbol{\rho}_x$ が同一であるときに限ることを示せ。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89)  
+### 演習 10.3 量子相対エントロピーの単調性 (Monotonicity of quantum relative entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.3}
+
+量子相対エントロピーは**単調性（monotonicity）**と呼ばれる性質を持ちます：
+$$
+D(\boldsymbol{\rho}_A\|\boldsymbol{\sigma}_A) \le D(\boldsymbol{\rho}_{AB}\|\boldsymbol{\sigma}_{AB}) ;
+$$ {#eq-10.388}
+
+複合系 $AB$ 上の2つの密度演算子の相対エントロピーは、部分系 $A$ に誘導される相対エントロピーより小さくなることはありません。
+
+a) 量子相対エントロピーの単調性を用いて、フォン・ノイマン・エントロピーの**強劣加法性（strong subadditivity）**を証明せよ。**ヒント:** 3部系 $ABC$ において、$\boldsymbol{\rho}_{ABC}$ と $\boldsymbol{\rho}_A \otimes \boldsymbol{\rho}_{BC}$ の相対エントロピーを考えよ。
+
+b) 量子相対エントロピーの単調性を用いて、量子チャネル $\mathcal{N}$ の作用が相対エントロピーを増加させないことを示せ：
+$$
+D(\mathcal{N}(\boldsymbol{\rho})\|\mathcal{N}(\boldsymbol{\sigma})) \le D(\boldsymbol{\rho}\|\boldsymbol{\sigma}) ,
+$$ {#eq-10.389}
+
+**ヒント:** 任意の量子チャネルは等長拡大を持つことを思い出せ。
+
+### 演習 10.4 仮説検定 (Hypothesis testing) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.4}
+
+（古典）相対エントロピー $D(p\|q)$ は、仮説検定に役立つ意味で分布 $p(x)$ と $q(x)$ の差異を特徴付けます。未知の分布から $n \gg 1$ 回サンプリングを行い、結果 $x$ が $np(x)$ 回生起したとします。私たちは、これらの結果が仮説の分布 $q(x)$ からのサンプリングと両立するかどうかを評価したいと考えます。§10.1.4 で議論したように、実際に $q(x)$ からサンプリングしている場合にこの結果が得られる確率は以下のように見積もられます：
+$$
+\text{Probability} = 2^{-nD(p\|q)} .
+$$ {#eq-10.390}
+
+a) 以下を仮定します：
+$$
+q(x) = p(x) + \varepsilon(x), \quad \sum_x \varepsilon(x) = 0 .
+$$ {#eq-10.391}
+
+$D(p\|q)$ を $p(x)$ と $\varepsilon(x)$ の関数として書き、$\varepsilon(x)$ の2次まで展開せよ。この目的のため、相対エントロピーの定義における対数は底 2 ではなく自然対数であると仮定せよ。
+
+b) 以下を仮定します：
+$$
+\|\varepsilon\|_1 = \sum_x |\varepsilon(x)| = \delta .
+$$ {#eq-10.392}
+
+(a) で求めた2次近似を用いて、$D(p\|q)$ の最小値、およびそれを最小化する仮説分布 $q(x) = p(x) + \varepsilon(x)$ を求めよ。
+
+c) コインを $n$ 回トスし、「表」が $n\left(\frac{1}{2} + \frac{\delta}{2}\right)$ 回観測されたとします。したがって $p(\text{表}) = \frac{1}{2} + \frac{\delta}{2}$、$p(\text{裏}) = \frac{1}{2} - \frac{\delta}{2}$ です。コインに偏りがないという仮説 $q(\text{表}) = q(\text{裏}) = \frac{1}{2}$ を考えます。相対エントロピー $D(p\|q)$ を $\delta$ の2次まで計算せよ。
+
+d) コインが 100 万回トスされます。(c) の結果を用いて、コインに偏りがないと仮定した場合に表が 505,000 回出る確率を見積もれ。
+
+### 演習 10.5 可分性と優劣関係 (Separability and majorization) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.5}
+
+エンタングルメントの顕著な特徴は、エンタングルした状態では全体がその各部分よりもランダムではない（無秩序度が低い）という点にあります。しかし可分な状態では、相関は本質的に [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=90) 古典的であり、したがって「部分は全体よりも無秩序ではない」という古典的な原理に従うことが期待されます。この問題の目的は、2部（混合）状態 $\boldsymbol{\rho}_{AB}$ が可分であるならば
+$$
+\lambda(\boldsymbol{\rho}_{AB}) \prec \lambda(\boldsymbol{\rho}_A) , \quad \lambda(\boldsymbol{\rho}_{AB}) \prec \lambda(\boldsymbol{\rho}_B) .
+$$ {#eq-10.393}
+
+が成り立つことを示すことで、この期待を厳密にすることです。ここで $\lambda(\boldsymbol{\rho})$ は $\boldsymbol{\rho}$ の固有値ベクトルを表し、$\prec$ は優劣関係（majorization; 劣調和順序）を表します。
+
+可分状態は純粋積状態のアンサンブルとして実現できるため、$\boldsymbol{\rho}_{AB}$ が可分であれば次のように表すことができます：
+$$
+\boldsymbol{\rho}_{AB} = \sum_a p_a |\psi_a\rangle\langle\psi_a| \otimes |\varphi_a\rangle\langle\varphi_a| .
+$$ {#eq-10.394}
+
+また、$\boldsymbol{\rho}_{AB}$ を対角化して次のように表すこともできます：
+$$
+\boldsymbol{\rho}_{AB} = \sum_j r_j |e_j\rangle\langle e_j| ,
+$$ {#eq-10.395}
+
+ここで $\{|e_j\rangle\}$ は $AB$ の正規直交基底を表します。このとき HJW 定理により、以下を満たすユニタリ行列 $V$ が存在します：
+$$
+\sqrt{r_j}|e_j\rangle = \sum_a V_{ja} \sqrt{p_a} |\psi_a\rangle \otimes |\varphi_a\rangle .
+$$ {#eq-10.396}
+
+また、$\boldsymbol{\rho}_A$ も対角化可能であることに注意すると、
+$$
+\boldsymbol{\rho}_A = \sum_a p_a |\psi_a\rangle\langle\psi_a| = \sum_\mu s_\mu |f_\mu\rangle\langle f_\mu| ;
+$$ {#eq-10.397}
+
+となります。ここで $\{|f_\mu\rangle\}$ は $A$ の正規直交基底を表し、HJW 定理により以下を満たすユニタリ行列 $U$ が存在します：
+$$
+\sqrt{p_a}|\psi_a\rangle = \sum_\mu U_{a\mu}\sqrt{s_\mu}|f_\mu\rangle .
+$$ {#eq-10.398}
+
+ここで、以下を満たす二重確率行列 $D$ が存在することを示せ：
+$$
+r_j = \sum_\mu D_{j\mu} s_\mu .
+$$ {#eq-10.399}
+
+すなわち、$D_{j\mu}$ の成分が実数かつ非負であり、$\sum_j D_{j\mu} = 1 = \sum_\mu D_{j\mu}$ を満たすことを確認せよ。これにより、$\lambda(\boldsymbol{\rho}_{AB}) \prec \lambda(\boldsymbol{\rho}_A)$ であると結論付けられます。$A$ と $B$ を入れ替えるだけで、全く同じ議論により $\lambda(\boldsymbol{\rho}_{AB}) \prec \lambda(\boldsymbol{\rho}_B)$ も示されます。
+
+::: {.callout-note appearance="simple" icon=false}
+**注意 (Remark):** シャノン・エントロピーのシューア凹性（Schur concavity）から、$\boldsymbol{\rho}_{AB}$ が可分であるならば、フォン・ノイマン・エントロピーは $H(AB) \ge H(A)$ および $H(AB) \ge H(B)$ という性質を持つことが従います。したがって、可分状態では条件付きエントロピーは非負です：$H(A|B) = H(AB) - H(B) \ge 0$ かつ $H(B|A) = H(AB) - H(A) \ge 0$。対照的に、$H(A|B)$ が負である場合、ハッシング不等式（hashing inequality）により $AB$ の状態は正の蒸留可能エンタングルメント $-H(A|B)$ を持ち、したがって確実に可分ではありません。
+
+:::
+
+### 演習 10.6 スカッシュド・エンタングルメントの加法性 (Additivity of squashed entanglement) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=90) {#ex-10.6}
+
+Alice がシステム $A, A'$ を保持し、Bob がシステム $B, B'$ を保持しているとします。$AA'$ と $BB'$ のエンタングルメントは、$A$ と $B$、および $A'$ と $B'$ のエンタングルメントとどのように関係しているでしょうか？ この問題では、スカッシュド・エンタングルメント（squashed entanglement）が超加法的（superadditive）であること、
+$$
+E_{\text{sq}}(\boldsymbol{\rho}_{ABA'B'}) \ge E_{\text{sq}}(\boldsymbol{\rho}_{AB}) + E_{\text{sq}}(\boldsymbol{\rho}_{A'B'})
+$$ {#eq-10.400}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=91)  
+そしてテンソル積に対して厳密に加法的（strictly additive）であること、
+$$
+E_{\text{sq}}(\boldsymbol{\rho}_{AB} \otimes \boldsymbol{\rho}_{A'B'}) = E_{\text{sq}}(\boldsymbol{\rho}_{AB}) + E_{\text{sq}}(\boldsymbol{\rho}_{A'B'}) .
+$$ {#eq-10.401}
+
+を示します。
+
+a) 相互情報量の連鎖律 eq.(10.201) および eq.(10.202) と、量子条件付き相互情報量の非負性を用いて、以下を示せ：
+$$
+I(AA'; BB'|C) \ge I(A; B|C) + I(A'; B'|AC) ,
+$$ {#eq-10.402}
+
+そして eq.(10.400) が従うことを示せ。
+
+b) 積状態 $\boldsymbol{\rho}_{AB} \otimes \boldsymbol{\rho}_{A'B'}$ の任意の拡大 $\boldsymbol{\rho}_{ABC} \otimes \boldsymbol{\rho}_{A'B'C'}$ に対して、以下が成り立つことを示せ：
+$$
+I(AA'; BB'|CC') \le I(A; B|C) + I(A'; B'|C') .
+$$ {#eq-10.403}
+
+これより、
+$$
+E_{\text{sq}}(\boldsymbol{\rho}_{AB} \otimes \boldsymbol{\rho}_{A'B'}) \le E_{\text{sq}}(\boldsymbol{\rho}_{AB}) + E_{\text{sq}}(\boldsymbol{\rho}_{A'B'}) ,
+$$ {#eq-10.404}
+
+が成り立つと結論付けよ。これが eq.(10.400) と組み合わさることで、eq.(10.401) が導かれます。
+
+### 演習 10.7 フォン・ノイマン・エントロピーの熱力学第1法則 (The first law of von Neumann entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=91) {#ex-10.7}
+
+§10.2.6 のように密度演算子を**モジュラー・ハミルトニアン（modular Hamiltonian）** $\boldsymbol{K}$ で表し、
+$$
+\boldsymbol{\rho} = \frac{e^{-\boldsymbol{K}}}{\mathrm{tr}(e^{-\boldsymbol{K}})} ,
+$$ {#eq-10.405}
+
+密度演算子がわずかに摂動されたときにエントロピー $S(\boldsymbol{\rho}) = -\mathrm{tr}\,(\boldsymbol{\rho}\ln \boldsymbol{\rho})$ がどのように変化するかを考察します：
+$$
+\boldsymbol{\rho} \to \boldsymbol{\rho}' = \boldsymbol{\rho} + \delta\boldsymbol{\rho} .
+$$ {#eq-10.406}
+
+$\boldsymbol{\rho}$ と $\boldsymbol{\rho}'$ はともに規格化された密度演算子であるため、$\mathrm{tr}(\delta\boldsymbol{\rho}) = 0$ です。このとき以下を示せ：
+$$
+S(\boldsymbol{\rho}') - S(\boldsymbol{\rho}) = \mathrm{tr}(\boldsymbol{\rho}'\boldsymbol{K}) - \mathrm{tr}(\boldsymbol{\rho}\boldsymbol{K}) + O\left((\delta\boldsymbol{\rho})^2\right) ;
+$$ {#eq-10.407}
+
+すなわち、$\boldsymbol{\rho}$ の微小変化の1次において
+$$
+\delta S = \delta \langle\boldsymbol{K}\rangle
+$$ {#eq-10.408}
+
+となります。この主張は熱力学第1法則を一般化するものです。$\boldsymbol{K} = \boldsymbol{H}/T$（ここで $\boldsymbol{H}$ はハミルトニアン、$T$ は温度）である熱平衡密度演算子の場合、これはより馴染み深い以下の表現になります：
+$$
+\delta E = \delta\langle\boldsymbol{H}\rangle = T\delta S .
+$$ {#eq-10.409}
+
+### 演習 10.8 2つの非直交純粋状態の識別 (Distinguishing two nonorthogonal pure states) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=91) {#ex-10.8}
+
+a) 単一 qubit の2つの純粋状態
+$$
+|\varphi_0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |\varphi_1\rangle = \begin{pmatrix} \cos(\theta/2) \\ \sin(\theta/2) \end{pmatrix}
+$$ {#eq-10.410}
+
+が等確率で生起するアンサンブルを考えます（ここで $\theta \in [0, 2\pi)$）。これら2つの状態はともにブロッホ球の $xz$ 平面に存在し、それらの間の角度は $\theta$ です。このアンサンブルから1つの状態が抽出され、パウリ観測量
+$$
+\boldsymbol{Z} = |0\rangle\langle 0| - |1\rangle\langle 1|
+$$ {#eq-10.411}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=92)  
+が測定されるとします。この測定によって達成される情報利得（information gain）を計算せよ。
+
+b) 次に、$\boldsymbol{Z}$ の代わりに、回転された観測量
+$$
+\boldsymbol{Z}' = |\psi\rangle\langle\psi| - |\psi^\perp\rangle\langle\psi^\perp|
+$$ {#eq-10.412}
+
+が測定されるとします。ここで
+$$
+|\psi\rangle = \begin{pmatrix} \cos(\theta/4 - \pi/4) \\ \sin(\theta/4 - \pi/4) \end{pmatrix}, \quad |\psi^\perp\rangle = \begin{pmatrix} \cos(\theta/4 + \pi/4) \\ \sin(\theta/4 + \pi/4) \end{pmatrix} .
+$$ {#eq-10.413}
+
+です。この場合の情報利得を計算せよ。(a) と (b) で計算された $\theta$ の2つの関数を示すプロットを作成せよ。どちらが高い情報利得を持つか？
+
+c) $\theta = \pi/2$ および $\theta = 2\pi/3$ に対して、$\boldsymbol{Z}$ および $\boldsymbol{Z}'$ を測定することによって得られる情報利得の数値（ビット単位）を求めよ。
+
+### 演習 10.9 ペレス・ウッターズ POVM (The Peres–Wootters POVM) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=92) {#ex-10.9}
+
+§10.6.4 で説明されたペレス・ウッターズ（Peres–Wootters）情報源を考えます。これは3つの状態
+$$
+|\Phi_a\rangle = |\varphi_a\rangle \otimes |\varphi_a\rangle, \quad a = 1, 2, 3,
+$$ {#eq-10.414}
+
+のうち1つを準備します。各状態は事前確率 $\frac{1}{3}$ で生起し、ここで $|\varphi_a\rangle$ は eq.(10.219) で定義されています。
+
+a) 密度行列
+$$
+\boldsymbol{\rho} = \frac{1}{3} \left( \sum_a |\Phi_a\rangle\langle\Phi_a| \right) ,
+$$ {#eq-10.415}
+
+を最大エンタングル状態の Bell 基底 $\{|\phi^\pm\rangle, |\psi^\pm\rangle\}$ で表し、$H(\boldsymbol{\rho})$ を計算せよ。
+
+b) 3つのベクトル $|\Phi_a\rangle, a = 1, 2, 3$ に対して、eq.(10.232) で定義された「プリティ・グッド測定（pretty good measurement; PGM）」を構成せよ。（再び $|\Phi_a\rangle$ を Bell 基底で展開せよ。）この場合、PGM は直交測定になります。PGM 基底の元を Bell 基底で表せ。
+
+c) PGM の測定結果と状態準備の相互情報量を計算せよ。
+
+### 演習 10.10 適応プロトコル (An adaptive protocol) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=92) {#ex-10.10}
+
+3つの 2-qubit 状態
+$$
+|\Phi_a\rangle = |\varphi_a\rangle \otimes |\varphi_a\rangle, \quad a = 1, 2, 3
+$$ {#eq-10.416}
+
+が等確率で生起するペレス・ウッターズ・アンサンブルを再び考えます。このアンサンブルから1つの状態が抽出され、$a$ の値に関する情報を得ることを目的としてこの 2-qubit 状態を測定することにします。§10.6.4 で説明された集団測定を行う代わりに、2つの qubit が個別に測定される適応戦略（adaptive strategy）を考えます。最初の qubit に対して、3つの結果を持つ POVM
+$$
+\boldsymbol{E}_a = \frac{2}{3} (\boldsymbol{I} - |\varphi_a\rangle\langle\varphi_a|) , \quad a = 1, 2, 3 ;
+$$ {#eq-10.417}
+
+を実行します。この測定は3つの状態のうち1つを除外しますが、残りの2つの状態を区別するための情報は提供しません。次に、第1の測定結果を条件として、第2の qubit に対する測定を行います。演習 10.8 の結果を参考にして、第2の qubit に行う [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) 最も情報量の多い測定を選択し、この適応手順によって達成される情報利得を計算せよ。§10.6.4 で説明された集団測定によって達成される情報利得と比較せよ。
+
+### 演習 10.11 4つの純粋状態のアンサンブル (An ensemble of four pure states) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) {#ex-10.11}
+
+a) 単一 qubit の4つの純粋状態
+$$
+|\varphi_0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |\varphi_1\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}, \quad |\varphi_2\rangle = \begin{pmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{pmatrix}, \quad |\varphi_3\rangle = \begin{pmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{pmatrix} ,
+$$ {#eq-10.418}
+
+が等確率で生起するアンサンブルを考えます。このアンサンブルから抽出された状態に対して $\boldsymbol{Z}$ を測定することによって得られる情報利得を計算せよ。
+
+b) 次に、$\theta = \pi/2$ に対する $\boldsymbol{Z}'$ を測定することによって得られる情報利得を計算せよ。(a) の結果と比較せよ。
+
+### 演習 10.12 無限アンサンブル (An infinite ensemble) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) {#ex-10.12}
+
+a) 無限個の可能な純粋状態を持つアンサンブル、すなわち $\theta \in [0, 2\pi)$ 上の一様分布を考えます。ここで
+$$
+|\varphi(\theta)\rangle = \begin{pmatrix} \cos(\theta/2) \\ \sin(\theta/2) \end{pmatrix} .
+$$ {#eq-10.419}
+
+です。すなわち、このアンサンブルから状態がサンプリングされるとき、区間 $[\theta, \theta + d\theta]$ 内の値は確率 $d\theta/2\pi$ で生起します。$\boldsymbol{Z}$ を測定することによって、私たちは $\theta$ の値に関する情報をどれだけ獲得するでしょうか？ 無限の量の差を取ることを避けるため、条件付きエントロピー $H(Y|\theta)$ を計算し、
+$$
+I(\theta; Y) = H(Y) - H(Y|\theta) ,
+$$ {#eq-10.420}
+
+を用いることによってこの問いに答えよ。ここで $Y$ は測定結果の確率分布を表します。
+
+b) より多くの情報を得ることを期待して、2つの結果を持つ直交測定ではなく、多数の結果を持つ POVM を試してみましょう。POVM 要素を次のように選びます：
+$$
+\boldsymbol{E}_k = \frac{2}{n} |\varphi(\theta_k)\rangle\langle\varphi(\theta_k)| , \quad k = 0, 1, 2, \dots, n-1 ,
+$$ {#eq-10.421}
+
+ここで
+$$
+\theta_k = \frac{2\pi k}{n} .
+$$ {#eq-10.422}
+
+です。規格化条件
+$$
+\sum_k \boldsymbol{E}_k = \boldsymbol{I} ,
+$$ {#eq-10.423}
+
+を確認し、この測定によって得られる情報利得を計算せよ。(a) の結果と比較せよ。
+
+### 演習 10.13 近似複製と脱分極チャネル (Approximate cloning and the depolarizing channel) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) {#ex-10.13}
+
+正規直交基底に以下のように作用する等長拡大 $U_\theta^{A \to BEF}$ を持つ qubit チャネル $\mathcal{N}_\theta^{A \to B}$ を考えます：
+$$
+|0\rangle_A \mapsto |\phi_0\rangle_{BEF} = \cos\theta |00\rangle_{BE}|0\rangle_F + \sin\theta |\psi^+\rangle_{BE}|1\rangle_F ,
+$$ {#eq-10.424}
+$$
+|1\rangle_A \mapsto |\phi_1\rangle_{BEF} = \cos\theta |11\rangle_{BE}|1\rangle_F + \sin\theta |\psi^+\rangle_{BE}|0\rangle_F ,
+$$ {#eq-10.425}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=94)  
+ここで
+$$
+|\psi^+\rangle = \frac{1}{\sqrt{2}} (|01\rangle + |10\rangle) ,
+$$ {#eq-10.426}
+
+であり、$0 \le \theta \le \pi/2$ です。ここではチャネルの環境系を $E$ および $F$ とラベル付けされた2つの部分に分割し、等長変換が $B$ と $E$ の入れ替えに対して対称になるように構成しました。したがって、$EF$ をトレースアウトして得られるチャネル $\mathcal{N}_\theta^{A \to B}$ は、$BF$ をトレースアウトして得られるチャネル $\mathcal{N}_\theta^{A \to E}$ と同一です。これより、$\mathcal{N}_\theta^{A \to B}$ は容量ゼロを持つことが従います。この結論に達するために、Alice が等長変換 $U^{A \to BEF}$ を多数回使用して Bob に量子状態を送信し、Bob（出力系 $B$ を受け取る）が高い忠実度で状態を復号できるとすれば、Eve（出力系 $E$ を受け取る）も Bob と同じ出力を受け取るため彼女も状態を復号できることに注意してください。したがって、量子複製不可能定理（no-cloning theorem）により、出力の高忠実度な復号は不可能であることが保証されます。
+
+a) チャネル $\mathcal{N}_\theta^{A \to B}$ は実はパウリチャネル（Pauli channel）であり、次のように表すことができます：
+$$
+\mathcal{N}_\theta(\rho) = f(\theta)\rho + g(\theta)Z\rho Z + h(\theta)\frac{I}{2} .
+$$ {#eq-10.427}
+
+関数 $f, g, h$ を求めよ。
+
+b) $g(\theta_0) = 0$ となる値 $\theta = \theta_0$ を選ぶことができ、この場合 $\mathcal{N}$ は誤り確率 $p$ を持つ脱分極チャネルになります：
+$$
+\mathcal{N}_{\theta_0}(\rho) = \left( 1 - \frac{4p}{3} \right) \rho + \left( \frac{4p}{3} \right) \frac{I}{2} .
+$$ {#eq-10.428}
+
+この値 $\theta_0$ と、対応する $p$ の値を求めよ。私たちの複製不可能論法は、この誤り確率 $p$ を持つ脱分極チャネルが容量ゼロを持つことを示しています。
+
+c) 等長変換 $U^{A \to BEF}$ から $F$ をトレースアウトすると、近似複製機（approximate cloning machine）と見なすことができるチャネル $\mathcal{N}^{A \to BE}$ が得られます。Alice が純粋状態 $|\psi\rangle$ をこのチャネルを通して送信すると、Bob と Eve が受け取る周辺密度演算子 $\rho_B$ と $\rho_E$ は同一であり、それぞれ忠実度
+$$
+F = \langle\psi|\rho_B|\psi\rangle = \langle\psi|\rho_E|\psi\rangle .
+$$ {#eq-10.429}
+
+で入力状態を近似します。(b) で求めた値 $\theta = \theta_0$ について、この近似複製機によって達成される忠実度を計算せよ。
+
+d) $\theta \neq \theta_0$ の場合、$g(\theta) \neq 0$ であり、したがって近似複製機によって達成される忠実度は純粋状態入力 $|\psi\rangle$ に依存します。その場合、$\mathcal{N}^{A \to BE}$ への任意の純粋状態入力に対して達成される $F$ の最小値である最悪値忠実度 $F_{\min}(\theta)$ を考えることができます。この最悪値忠実度が可能な限り大きくなるような値 $\theta = \theta_1$ を求め、$F_{\min}(\theta_1)$ を計算せよ。（$g(\theta)$ が $\theta = \theta_0$ で符号を変えることを忘れずに考慮せよ。）
+
+### 演習 10.14 一様アンサンブルから選ばれた量子状態の情報利得 (Information gain for a quantum state drawn from the uniform ensemble) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=94) {#ex-10.14}
+
+Alice がアンサンブル $\{\boldsymbol{\rho}(x), p(x)\}$ から選ばれた量子状態を準備し、Bob が確率 $p(y|x) = \mathrm{tr}\,(\boldsymbol{E}(y)\boldsymbol{\rho}(x))$ で結果 $y$ を与える測定 $\{\boldsymbol{E}(y)\}$ を行うとします。§10.6.1 で述べたように、Alice の準備に関する [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=95) Bob の情報利得は相互情報量 $I(X; Y) = H(X) - H(X|Y)$ です。$x$ が連続変数で $y$ が離散変数である場合、相互情報量の対称性を用いて $I(X; Y) = H(Y) - H(Y|X)$ と書く方が便利です。ここで
+$$
+H(Y|X) = \sum_y \int dx \cdot p(x) \cdot p(y|x) \cdot \log p(y|x) ;
+$$ {#eq-10.430}
+
+であり、$p(x)$ は確率密度（すなわち、$p(x)dx$ は $x$ が区間 $[x, x + dx]$ に入る確率）です。
+
+例えば、Alice が $d$ 次元ヒルベルト空間の一様アンサンブルから選ばれた任意の純粋状態 $|\varphi\rangle$ を準備し、Bob が Alice が準備したものについて何かを知ることを期待して基底 $\{|e_y\rangle\}$ への射影直交測定を行うとします。このとき Bob は確率
+$$
+p(y|\theta) = |\langle e_y|\varphi\rangle|^2 \equiv \cos^2 \theta
+$$ {#eq-10.431}
+
+で結果 $y$ を得ます。ここで $\theta$ は $|\varphi\rangle$ と $|e_y\rangle$ の間の角度です。Alice のアンサンブルは一様であるため、Bob の結果も一様に分布します。したがって $H(Y) = \log d$ です。さらに、測定結果 $y$ は $\theta$ に関する情報のみを明らかにし、Bob は $|\varphi\rangle$ に関してそれ以外の何も知り得ません。したがって、eq.(10.430) は情報利得が以下のように表されることを意味します：
+$$
+I(X; Y) = \log d - d \int d\theta \cdot p(\theta) \cdot \cos^2 \theta \cdot \log \cos^2 \theta .
+$$ {#eq-10.432}
+
+ここで $p(\theta)d\theta$ は、ベクトル $|\varphi\rangle$ が軸 $|e_y\rangle$ と角度 $\theta$ をなす方向を向く確率密度です（$0 \le \theta \le \pi/2$）。
+
+a) 以下を示せ：
+$$
+p(\theta) \cdot d\theta = -(d - 1) \left[ 1 - \cos^2 \theta \right]^{d-2} \cdot d\cos^2 \theta .
+$$ {#eq-10.433}
+
+**ヒント:** 固定軸 $|e_y\rangle$ が
+$$
+|e_y\rangle = (1, \vec{0})
+$$ {#eq-10.434}
+
+となる基底を選び、
+$$
+|\varphi\rangle = (e^{i\phi}\cos\theta, \psi^\perp) ,
+$$ {#eq-10.435}
+
+と書け。ここで $\theta \in [0, \pi/2]$ であり、$|\psi^\perp\rangle$ は長さ $\sin\theta$ を持つ複素 $(d-1)$ 成分ベクトルを表します。ここで、位相 $\phi$ は半径 $\cos\theta$ の円周上（したがって円周の長さは $2\pi\cos\theta$）にあり、一方で $|\psi^\perp\rangle$ は半径 $\sin\theta$ の球面上にある（したがって球の体積は、乗法的な数値定数を除いて $\sin^{2d-3}\theta$ である）ことに注意せよ。
+
+b) 積分 eq. (10.432) を評価して、測定による情報利得（nat 単位）が
+$$
+I(X; Y) = \ln d - \left( \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{d} \right) .
+$$ {#eq-10.436}
+
+であることを示せ。（対数が自然対数である場合、情報は nat 単位で表されます。nat 単位の $I$ は $I_{\text{bits}} = I_{\text{nats}}/\ln 2$ によってビット単位の $I$ に変換されます。）**ヒント:** 積分
+$$
+\int_0^1 dx\,(1 - x)^p x \ln x ,
+$$ {#eq-10.437}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=96)  
+を評価するために、
+$$
+x \ln x = \left. \frac{d}{ds} x^s \right|_{s=1} ,
+$$ {#eq-10.438}
+
+に注意し、部分積分を繰り返すことで $\int_0^1 dx\,(1 - x)^p x^s$ を計算せよ。
+
+c) 大きな $d$ の極限において、情報利得（ビット単位）が以下に近づくことを示せ：
+$$
+I_{d=\infty} = \frac{1 - \gamma}{\ln 2} = .60995\dots ,
+$$ {#eq-10.439}
+
+ここで $\gamma = .57721\dots$ はオイラー定数（Euler's constant）である。
+
+::: {.callout-note appearance="simple" icon=false}
+私たちが計算した $H(Y|X)$ の値は、別の方法で解釈することもできます：ある直交測定を固定し、典型的な状態を選び、その選ばれた状態に対して測定を繰り返し実行するとします。このとき、測定結果は一様には分布しません。代わりに、結果のエントロピーは、大きなヒルベルト空間次元の極限において、最大値よりも 0.60995 ビットだけ小さくなります。
+
+:::
+
+### 演習 10.15 ファノの不等式 (Fano’s inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=96) {#ex-10.15}
+
+$X = \{x, p(x)\}$ を $d$ 個の可能な文字からなるアルファベットから選ばれた文字 $x$ の確率分布とし、$XY$ を $x$ と、$x$ と相関する別の確率変数 $y$ の同時分布とします。$y$ を受け取ったとき、私たちは関数 $\hat{x}(y)$ を評価することによって $x$ の値を推定します。私たちの推定が通常正しければ、条件付きエントロピー $H(X|Y)$ は小さくなければならないと予想されます。この問題ではその期待を確認します。
+
+$x = \hat{x}(y)$ のときに値 $e = 0$ をとり、$x \neq \hat{x}(y)$ のときに値 $e = 1$ をとる2値確率変数を $e \in \{0, 1\}$ とし、$XYE$ を $x, y, e$ の同時分布とします。**誤り確率（error probability）** $P_e$ は、この分布上で平均された $e = 1$ となる確率です。私たちの目標は、$P_e$ に依存する $H(X|Y)$ の上界を導出することです。
+
+a) 以下を示せ：
+$$
+H(X|Y) = H(X|YE) + H(E|Y) - H(E|XY) .
+$$ {#eq-10.440}
+
+$x$ と $y$ が既知のとき $e$ は確定するため $H(E|XY) = 0$ であること、および相互情報量の非負性により $H(E|Y) \le H(E)$ であることに注意せよ。したがって、
+$$
+H(X|Y) \le H(X|YE) + H(E) .
+$$ {#eq-10.441}
+
+b) 以下に注意して、
+$$
+H(X|YE) = p(e = 0) H(X|Y, e = 0) + p(e = 1) H(X|Y, e = 1) ,
+$$ {#eq-10.442}
+
+かつ $H(X|Y, e = 0) = 0$（誤りがない場合、$x = \hat{x}(y)$ は $y$ によって確定するため）であることから、以下を示せ：
+$$
+H(X|YE) \le P_e \log_2(d - 1) .
+$$ {#eq-10.443}
+
+c) 最後に、以下を示せ：
+$$
+H(X|Y) \le H_2(P_e) + P_e \log_2(d - 1) ,
+$$ {#eq-10.444}
+
+これは**ファノの不等式（Fano's inequality）**です。
+
+d) ファノの不等式を用いて eq.(10.55) を導出し、古典通信路容量 $C$ が、無視できる誤り確率を持つノイズのあるチャネルを介した通信の達成可能レートの上界であることを証明せよ。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=97)  
+### 演習 10.16 量子版ファノの不等式 (A quantum version of Fano’s inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=97) {#ex-10.16}
+
+a) $d$ 次元システムにおいて、密度演算子 $\boldsymbol{\rho}$ が純粋状態 $|\psi\rangle$ を忠実度
+$$
+F = \langle\psi|\boldsymbol{\rho}|\psi\rangle = 1 - \varepsilon .
+$$ {#eq-10.445}
+
+で近似するとします。このとき以下を示せ：
+$$
+H(\boldsymbol{\rho}) \le H_2(\varepsilon) + \varepsilon \log_2(d - 1) .
+$$ {#eq-10.446}
+
+**ヒント:** 状態 $\boldsymbol{\rho}$ に対して行われた完全直交測定が結果の分布 $X$ を持つ場合、$H(\boldsymbol{\rho}) \le H(X)$（ここで $H(X)$ は $X$ のシャノン・エントロピー）であることを思い出せ。
+
+b) §10.7.2 のように、ノイズのあるチャネル $\mathcal{N}^{A \to B}$ が純粋状態 $\psi_{RA}$ に作用し、その後に復号マップ $\mathcal{D}^{B \to C}$ が続くとします。このとき以下を示せ：
+$$
+H(R)_\rho - I_c(R\rangle B)_\rho \le 2H(RC)_\sigma ,
+$$ {#eq-10.447}
+
+ここで
+$$
+\boldsymbol{\rho}_{RB} = \mathcal{N}(\psi_{RA}), \quad \boldsymbol{\sigma}_{RC} = \mathcal{D} \circ \mathcal{N}(\psi_{RA}) .
+$$ {#eq-10.448}
+
+したがって、復号器の出力（$RC$ の状態）がほぼ純粋であるならば、チャネル $\mathcal{N}$ のコヒーレント情報は入力エントロピーとほぼ一致します。**ヒント:** データ処理不等式 $I_c(R\rangle C)_\sigma \le I_c(R\rangle B)_\rho$ とフォン・ノイマン・エントロピーの劣加法性を用いよ。参照系、出力、ならびに $\mathcal{N}$ と $\mathcal{D}$ の拡大の環境系の同時純粋状態を考えると便利です。
+
+c) 復号マップが高い忠実度でチャネル入力を復元するとします：
+$$
+F(\mathcal{D} \circ \mathcal{N}(\psi_{RA}), \psi_{RC}) = 1 - \varepsilon .
+$$ {#eq-10.449}
+
+$R$ と $C$ が $d$ 次元であると仮定して、以下を示せ：
+$$
+H(R)_\rho - I_c(R\rangle B)_\rho \le 2H_2(\varepsilon) + 2\varepsilon \log_2(d^2 - 1) ,
+$$ {#eq-10.450}
+
+これは量子版ファノの不等式であり、$\mathcal{N}$ の量子通信路容量の上界を導出するために使用できます。
+
+### 演習 10.17 GHZ状態に対するマザー・プロトコル (Mother protocol for the GHZ state) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=97) {#ex-10.17}
+
+マザー資源不等式は、Alice, Bob, Eve が純粋状態 $\phi_{ABE}$ の $n$ 個のコピーを共有している場合に達成できる漸近的資源変換を表現します：Bob に $\frac{n}{2}I(A; E)$ 個の量子ビットを送信することにより、Alice は彼女の状態と Eve の状態との相関を破壊することができ、それによって Bob だけが Eve の状態の浄化系を保持するようになり、さらにプロトコルの終了時に Alice と Bob は $\frac{n}{2}I(A; B)$ ebit のエンタングルメントを共有します。ここで $I(A; E)$ および $I(A; B)$ は状態 $\phi_{ABE}$ において評価された量子相互情報量を表します。
+
+通常、この資源変換は $n \to \infty$ の極限でのみ任意に高い忠実度で実現できます。しかしこの問題では、Alice, Bob, Eve が 3-qubit GHZ 状態
+$$
+|\phi\rangle_{ABE} = \frac{1}{\sqrt{2}} (|000\rangle + |111\rangle) .
+$$ {#eq-10.451}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=98)  
+のわずか $n = 2$ 個のコピーを共有しているだけで、完全な変換が可能であることを確認します。この完全変換を達成するプロトコルは、第4章で定義された**コヒーレント古典通信（coherent classical communication）**の概念を用います。
+
+a) GHZ 状態 $|\phi\rangle_{ABE}$ において、$I(A; E) = I(A; B) = 1$ であることを示せ。したがって、この状態に対してマザー不等式は以下のようになります：
+$$
+2\langle\phi_{ABE}\rangle + [q \to q]_{AB} \ge [qq]_{AB} + 2\langle\phi'_{B_1E}\rangle .
+$$ {#eq-10.452}
+
+b) GHZ 状態において Alice がパウリ演算子 $X$ を測定し、結果 $+1$ を得てその結果を Bob と Eve にブロードキャストするとします。このとき Bob と Eve はどのような状態を共有しますか？ Alice が代わりに結果 $-1$ を得た場合はどうなりますか？
+
+c) Alice, Bob, Eve が GHZ 状態 $\phi^{ABE}$ の 1 つのコピーだけを共有しているとします。Alice から Bob への 1 単位の**コヒーレント古典通信**の後に、共有状態が $|\phi^+\rangle_{AB} \otimes |\phi^+\rangle_{BE}$（ここで $|\phi^+\rangle = (|00\rangle + |11\rangle)/\sqrt{2}$ は最大エンタングル Bell ペア）となるようなプロトコルを見出せ。
+
+d) 次に、Alice, Bob, Eve が GHZ 状態の 2 つのコピーから開始し、資源変換を触媒するために Alice と Bob が 1 ebit のエンタングルメントを借り（後で返却される）、それを利用できると仮定します。コヒーレント高密度符号化を用いて、eq. (10.452) の（触媒的）変換を**完全に（perfectly）**達成するプロトコルを構成せよ。
+
+### 演習 10.18 振幅減衰と消失の劣化可能性 (Degradability of amplitude damping and erasure) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=98) {#ex-10.18}
+
+§3.4.3 で議論された qubit 振幅減衰チャネル $\mathcal{N}_{\text{a.d.}}^{A \to B}(p)$ は、以下を満たす等長拡大 $\boldsymbol{U}^{A \to BE}$ を持ちます：
+$$
+\begin{aligned}
+\boldsymbol{U} : |0\rangle_A &\mapsto |0\rangle_B \otimes |0\rangle_E , \\
+|1\rangle_A &\mapsto \sqrt{1 - p}\,|1\rangle_B \otimes |0\rangle_E + \sqrt{p}\,|0\rangle_B \otimes |1\rangle_E ;
+\end{aligned}
+$$
+「基底状態」$|0\rangle_A$ にある qubit はチャネルの影響を受けず、「励起状態」$|1\rangle_A$ にある qubit は確率 $p$ で基底状態に減衰し、減衰プロセスは環境系を励起します。$\boldsymbol{U}$ は、変換 $p \leftrightarrow (1 - p)$ を伴うシステム $B$ と $E$ の入れ替えに対して不変であることに注意してください。したがって、$\mathcal{N}_{\text{a.d.}}^{A \to B}(p)$ の相補チャネルは $\mathcal{N}_{\text{a.d.}}^{A \to E}(1 - p)$ です。
+
+a) $\mathcal{N}_{\text{a.d.}}^{A \to B}(p)$ は $p \le 1/2$ に対して劣化可能（degradable）であることを示せ。したがって、振幅減衰チャネルの量子容量はその最適化された 1-shot コヒーレント情報に一致します。**ヒント:** 以下を示すことで十分です：
+$$
+\mathcal{N}_{\text{a.d.}}^{A \to E}(1 - p) = \mathcal{N}_{\text{a.d.}}^{B \to E}(q) \circ \mathcal{N}_{\text{a.d.}}^{A \to B}(p) ,
+$$ {#eq-10.453}
+
+ここで $0 \le q \le 1$ です。
+
+**消失チャネル（erasure channel）** $\mathcal{N}_{\text{erase}}^{A \to B}(p)$ は、以下を満たす等長拡大 $\boldsymbol{U}^{A \to BE}$ を持ちます：
+$$
+\boldsymbol{U} : |\psi\rangle_A \mapsto \sqrt{1 - p}\,|\psi\rangle_B \otimes |e\rangle_E + \sqrt{p}\,|e\rangle_B \otimes |\psi\rangle_E ;
+$$ {#eq-10.454}
+
+Alice のシステムは確率 $1 - p$ で Bob に、確率 $p$ で Eve に渡り、他方の当事者は Alice のヒルベルト空間に直交する「消失シンボル」$|e\rangle$ を受け取ります。$\boldsymbol{U}$ は変換 $p \leftrightarrow (1 - p)$ を伴うシステム $B$ と $E$ の入れ替えに対して不変であるため、$\mathcal{N}_{\text{erase}}^{A \to B}(p)$ の相補チャネルは $\mathcal{N}_{\text{erase}}^{A \to E}(1 - p)$ です。
+
+b) $\mathcal{N}_{\text{erase}}^{A \to B}(p)$ は $p \le 1/2$ に対して劣化可能であることを示せ。したがって、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) 消失チャネルの量子容量はその最適化された 1-shot コヒーレント情報に一致します。**ヒント:** 以下を示すことで十分です：
+$$
+\mathcal{N}_{\text{erase}}^{A \to E}(1 - p) = \mathcal{N}_{\text{erase}}^{B \to E}(q) \circ \mathcal{N}_{\text{erase}}^{A \to B}(p) ,
+$$ {#eq-10.455}
+
+ここで $0 \le q \le 1$ です。
+
+c) $p \le 1/2$ に対して消失チャネルの量子通信路容量は以下になることを示せ：
+$$
+Q(\mathcal{N}_{\text{erase}}^{A \to B}(p)) = (1 - 2p) \log_2 d ,
+$$ {#eq-10.456}
+
+ここで $A$ は $d$ 次元であり、また $1/2 \le p \le 1$ に対して容量はゼロになることを示せ。
+
+### 演習 10.19 量子シングルトン限界 (Quantum Singleton bound) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) {#ex-10.19}
+
+第7章で述べたように、$[[n, k, d]]$ 量子誤り訂正符号（$n$ 量子ビットのブロック内で保護された $k$ 量子ビット、符号距離 $d$）は以下の制約に従わなければなりません：
+$$
+n - k \ge 2(d - 1) ,
+$$ {#eq-10.457}
+
+これは**量子シングルトン限界（quantum Singleton bound）**と呼ばれます。この限界は、実はこの演習で証明するより強力な命題の系（corollary）です。
+
+純粋状態 $\phi_{RA}$ において、参照系 $R$ が $A$ の符号部分空間と最大エンタングルしており、$E_1$ と $E_2$ がシステム $A$ の2つの互いに素な訂正可能部分系であるとします（$E_1$ または $E_2$ のいずれかの消失が訂正可能）。このとき以下を示せ：
+$$
+\log |A| - \log |R| \ge \log |E_1| + \log |E_2| .
+$$ {#eq-10.458}
+
+$E^c$ を $E_1 E_2$ に対する $A$ の補部分系と定義し、$A = E^c E_1 E_2$ とします。
+
+a) 誤り訂正条件 $\boldsymbol{\rho}_{RE_1} = \boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_{E_1}$ および $\boldsymbol{\rho}_{RE_2} = \boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_{E_2}$ を思い出し、$\phi_{RE^c E_1 E_2}$ が以下の性質を持つことを示せ：
+$$
+H(R) = H(E^c) - \frac{1}{2} I(E^c; E_1) - \frac{1}{2} I(E^c; E_2) .
+$$ {#eq-10.459}
+
+b) eq.(10.459) から eq.(10.458) が従うことを示せ。
+
+### 演習 10.20 ノイズのある超高密度符号化とテレポーテーション (Noisy superdense coding and teleportation) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) {#ex-10.20}
+
+a) マザー・プロトコルによって達成されたエンタングルメントを古典通信に変換することにより、ノイズのある超高密度符号化資源不等式を証明せよ：
+$$
+\text{Noisy } SD : \quad \langle\phi_{ABE}\rangle + H(A)[q \to q] \ge I(A; B)[c \to c] .
+$$ {#eq-10.460}
+
+$\phi$ が $AB$ の最大エンタングル状態であるとき、これが通常の無雑音超高密度符号化資源不等式と一致することを確認せよ。
+
+b) マザー・プロトコルによって達成されたエンタングルメントを量子通信に変換することにより、ノイズのあるテレポーテーション資源不等式を証明せよ：
+$$
+\text{Noisy } TP : \quad \langle\phi_{ABE}\rangle + I(A; B)[c \to c] \ge I_c(A\rangle B)[q \to q] .
+$$ {#eq-10.461}
+
+$\phi$ が $AB$ の最大エンタングル状態であるとき、これが通常の無雑音テレポーテーション資源不等式と一致することを確認せよ。
+
+### 演習 10.21 消失の熱力学的コスト (The cost of erasure) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) {#ex-10.21}
+
+ビットの**消失（erasure）**とは、ビットの状態が 0 にリセットされるプロセスです。消失は**不可逆（irreversible）**です――消失後の最終状態 0 のみを知っていても、消失前の初期状態が 0 であったか 1 であったかを判断することはできません。この不可逆性は、消失が不可避の熱力学的コストを招くことを意味します。**ランダウアーの原理（Landauer's Principle）**によれば、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=100) 温度 $T$ で 1 ビットを消去するには仕事 $W \ge kT \ln 2$ が必要です。この問題では、消失を達成する特定の手順がランダウアーの原理に従うことを検証します。
+
+ビットの2つの状態がともにエネルギーゼロを持つと仮定します。私たちはビットを2つのステップで消去します。第1ステップでは、温度 $T > 0$ の熱浴（reservoir）にビットを接触させ、ビットが熱浴と熱平衡に達するのを待ちます。このステップでビットはその初期値を「忘れ」ますが、まだリセットされていないため消去は完了していません。
+
+第2ステップでは、2つの状態の縮退を解く制御場 $\lambda$ をゆっくりとオンにすることによってビットをリセットします。$\lambda \ge 0$ に対し、状態 0 はエネルギー $E_0 = 0$ を持ち、状態 1 はエネルギー $E_1 = \lambda$ を持ちます。ビットが第1ステップで熱平衡化した後、$\lambda$ の値は初期値 $\lambda = 0$ から最終値 $\lambda = \infty$ まで徐々に増加します。$\lambda$ の増加は十分に遅く、qubit は常に熱浴と熱平衡を保ちます。$\lambda$ が増加するにつれて、qubit が状態 0 にある確率 $P(0)$ は 1 に近づきます。すなわち、ビットはエネルギーゼロを持つ状態 0 にリセットされます。
+
+(a) $\lambda \neq 0$ に対し、qubit が状態 0 にある確率 $P(0)$ および状態 1 にある確率 $P(1)$ を求めよ。
+
+(b) 制御場を $\lambda$ から $\lambda + d\lambda$ に増加させるために必要な仕事はいくらか？
+
+(c) $\lambda$ が $\lambda = 0$ から $\lambda = \infty$ までゆっくりと増加するとき、費やされる仕事はいくらか？（解析的に計算できる積分を評価する必要があります。）
+
+### 演習 10.22 デカップリング不等式の証明 (Proof of the decoupling inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=100) {#ex-10.22}
+
+この問題では、§10.9.1 で概略を述べたデカップリング不等式の導出を完了します。
+
+a) eq.(10.350) を検証せよ。
+
+eq.(10.354) における $\mathbb{E}_{\boldsymbol{U}}[\boldsymbol{M}_{AA'}(\boldsymbol{U})]$ の表現を導出するために、まず不変性の性質 eq.(10.339) により、任意のユニタリ $\boldsymbol{V}$ に対して $\mathbb{E}_{\boldsymbol{U}}[\boldsymbol{M}_{AA'}(\boldsymbol{U})]$ が $\boldsymbol{V} \otimes \boldsymbol{V}$ と可換であることを指摘します。したがって、シューアの補題（Schur's lemma）により、$\mathbb{E}_{\boldsymbol{U}}[\boldsymbol{M}_{AA'}(\boldsymbol{U})]$ はユニタリ群の既約表現への射影の重み付き和になります。$U(d)$ の2つの基本表現のテンソル積は、2つの既約表現――対称テンソル表現と反対称テンソル表現――を含みます。したがって、以下のように書くことができます：
+$$
+\mathbb{E}_{\boldsymbol{U}}[\boldsymbol{M}_{AA'}(\boldsymbol{U})] = c_{\text{sym}} \boldsymbol{\Pi}_{AA'}^{(\text{sym})} + c_{\text{anti}} \boldsymbol{\Pi}_{AA'}^{(\text{anti})} ;
+$$ {#eq-10.462}
+
+ここで $\boldsymbol{\Pi}_{AA'}^{(\text{sym})}$ は $A$ と $A'$ の入れ替えに対して対称な $AA'$ の部分空間への直交射影であり、$\boldsymbol{\Pi}_{AA'}^{(\text{anti})}$ は反対称部分空間への射影であり、$c_{\text{sym}}, c_{\text{anti}}$ は適切な定数です。以下に注意してください：
+$$
+\begin{aligned}
+\boldsymbol{\Pi}_{AA'}^{(\text{sym})} &= \frac{1}{2} (\boldsymbol{I}_{AA'} + \boldsymbol{S}_{AA'}) , \\
+\boldsymbol{\Pi}_{AA'}^{(\text{anti})} &= \frac{1}{2} (\boldsymbol{I}_{AA'} - \boldsymbol{S}_{AA'}) ,
+\end{aligned}
+$$ {#eq-10.463}
+
+ここで $\boldsymbol{S}_{AA'}$ はスワップ演算子であり、対称部分空間と反対称部分空間の次元はそれぞれ $\frac{1}{2}|A|(|A| + 1)$ および $\frac{1}{2}|A|(|A| - 1)$ です。
+
+群の表現論に詳しくなくても、eq.(10.462) は明白であると見なせるかもしれません。$\boldsymbol{M}_{AA'}(\boldsymbol{U})$ を、$A$ と $A'$ の入れ替えに対して対称な項と反対称な項の2つの和として書くことができます。[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=101) 対称部分の期待値は対称でなければならず、反対称部分の期待値は反対称でなければなりません。さらに、ユニタリ群全体で平均することにより、特定の対称状態が他の対称状態より優先されないことが保証されます。
+
+b) 定数 $c_{\text{sym}}$ を評価するために、eq.(10.462) の両辺に $\boldsymbol{\Pi}_{AA'}^{(\text{sym})}$ を掛けて両辺のトレースを取ることで、以下を見出せ：
+$$
+c_{\text{sym}} = \frac{|A_1| + |A_2|}{|A| + 1} .
+$$ {#eq-10.464}
+
+c) 定数 $c_{\text{anti}}$ を評価するために、eq.(10.462) の両辺に $\boldsymbol{\Pi}_{AA'}^{(\text{anti})}$ を掛けて両辺のトレースを取ることで、以下を見出せ：
+$$
+c_{\text{anti}} = \frac{|A_1| - |A_2|}{|A| - 1} .
+$$ {#eq-10.465}
+
+d) 以下を用いて、
+$$
+c_{\boldsymbol{I}} = \frac{1}{2} (c_{\text{sym}} + c_{\text{anti}}) , \quad c_{\boldsymbol{S}} = \frac{1}{2} (c_{\text{sym}} - c_{\text{anti}})
+$$ {#eq-10.466}
+
+eq.(10.355) を証明せよ。
