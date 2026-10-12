@@ -1,4 +1,4 @@
-## 7.8 7量子ビット符号 (The 7-Qubit Code) {#sec-7.8-seven-qubit-code}
+## 7.8 7量子ビット符号 (The 7-Qubit Code) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=29) {#sec-7.8-seven-qubit-code}
 
 CSS 符号の中で最も単純なものは、Andrew Steane によって最初に定式化された $[[n, k, d]] = [7, 1, 3]$ 量子符号です。これは古典的な 7 ビットハミング符号から構築されます。
 

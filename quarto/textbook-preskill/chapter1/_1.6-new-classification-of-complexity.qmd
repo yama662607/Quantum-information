@@ -1,4 +1,4 @@
-## 1.6 計算量の新しい分類 (A new classification of complexity) {#sec-1.6-new-classification-of-complexity}
+## 1.6 計算量の新しい分類 (A new classification of complexity) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=13) {#sec-1.6-new-classification-of-complexity}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **マシンの独立性**: 「多項式時間」という分類が、具体的なコンピューターの性能によらない普遍的な概念であることを理解する。

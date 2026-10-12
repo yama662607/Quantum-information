@@ -1,4 +1,4 @@
-## 6.5 隠れ部分群問題 (Hidden Subgroup Problem) {#sec-6.5-hidden-subgroup-problem}
+## 6.5 隠れ部分群問題 (Hidden Subgroup Problem) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=27) {#sec-6.5-hidden-subgroup-problem}
 
 サイモンの問題（Simon's problem）と周期発見問題（period finding）は、量子コンピュータが指数関数的な高速化をもたらす2つのブラックボックス問題です。量子コンピュータには他に何ができるのでしょうか？ これら2つの問題は類似した構造をもっており、この共通基盤を認識することはさらなる一般化を示唆するため極めて有用です。
 
@@ -72,7 +72,7 @@ $$ {#eq-6.110}
 
 アルゴリズムを説明する前に、もう1つの応用について議論しましょう：
 
-### 6.5.1 離散対数問題 (Discrete Log Problem) {#sec-6.5.1-discrete-log-problem}
+### 6.5.1 離散対数問題 (Discrete Log Problem) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=29) {#sec-6.5.1-discrete-log-problem}
 
 $q$ が素数である場合、群 $\mathbb{Z}_q^*$（元 $\{1, 2, \dots, q - 1\}$ をもつ $\bmod q$ の乗法群）は巡回群であることを思い出してください。これは $\mathbb{Z}_q^*$ が単一の元 $a$ によって生成されることを意味します。したがって
 
@@ -110,7 +110,7 @@ $$ {#eq-6.113}
 
 この一方向関数には暗号理論における応用が存在します。例えば：
 
-### 6.5.2 ディフィー・ヘルマン鍵交換 (Diffie-Hellman key exchange) {#sec-6.5.2-diffie-hellman-key-exchange}
+### 6.5.2 ディフィー・ヘルマン鍵交換 (Diffie-Hellman key exchange) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=29) {#sec-6.5.2-diffie-hellman-key-exchange}
 
 このプロトコルの安全性は、離散対数を計算することの推定される困難性に基づいています。目的は、アリスとボブが敵対者イブに知られることのない共有秘密鍵を生成することです。
 
@@ -147,7 +147,7 @@ $$ {#eq-6.117}
 
 $H$ は元 $(r, 1), (q - 1, 0)$ によって生成されるため、生成元を見つければ $r$ を決定できます。
 
-### 6.5.3 アーベル隠れ部分群の発見 (Finding abelian hidden subgroups) {#sec-6.5.3-finding-abelian-hidden-subgroups}
+### 6.5.3 アーベル隠れ部分群の発見 (Finding abelian hidden subgroups) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=30) {#sec-6.5.3-finding-abelian-hidden-subgroups}
 
 #### 主格子と双対格子 (Primal lattice and dual lattice)
 

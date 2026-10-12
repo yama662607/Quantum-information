@@ -1,4 +1,4 @@
-## 7.24 要約 (Summary) {#sec-7-24-summary}
+## 7.24 要約 (Summary) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=85) {#sec-7-24-summary}
 
 **量子誤り訂正符号 (Quantum error-correcting codes):**
 量子誤り訂正は、デコヒーレンスと量子ゲートの不完全な実装に起因する「ユニタリ誤り」の双方から量子情報を保護することができる。(2元の) 量子誤り訂正符号 (QECC) において、$k$ 個の符号化量子ビットが成す $2^k$ 次元のヒルベルト空間 $\mathcal{H}_{\mathrm{code}}$ は、$n$ 個の量子ビットが成す $2^n$ 次元のヒルベルト空間に埋め込まれる。$n$ 個の量子ビットに作用する誤りは、誤りスーパーオペレータの展開に現れる任意の2つのクラウス演算子 $\boldsymbol{M}_{\mu}, \boldsymbol{M}_{\nu}$ および任意の $|\psi\rangle \in \mathcal{H}_{\mathrm{code}}$ に対して、比

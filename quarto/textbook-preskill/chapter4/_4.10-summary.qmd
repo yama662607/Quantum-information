@@ -1,4 +1,4 @@
-## 4.10 まとめ (Summary) {#sec-4.10-summary}
+## 4.10 まとめ (Summary) [📄 chap4.pdf](/assets/pdf/preskill/chap4.pdf#page=59) {#sec-4.10-summary}
 
 ::: {.callout-note}
 ### 原著草稿におけるまとめの注記
@@ -18,7 +18,7 @@
 
 :::
 
-## 4.11 文献ノート (Bibliographical notes) {#sec-4.11-bibliographical-notes}
+## 4.11 文献ノート (Bibliographical notes) [📄 chap4.pdf](/assets/pdf/preskill/chap4.pdf#page=59) {#sec-4.11-bibliographical-notes}
 
 ::: {.callout-note}
 ### 原著草稿における文献ノートの注記

@@ -1,4 +1,4 @@
-## 6.1 量子アルゴリズムのいくつか (Some Quantum Algorithms) {#sec-6.1-quantum-algorithms}
+## 6.1 量子アルゴリズムのいくつか (Some Quantum Algorithms) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=7) {#sec-6.1-quantum-algorithms}
 
 現時点では $\text{BPP} \neq \text{BQP}$ であることを示すことはまだできていませんが、古典コンピュータと量子コンピュータの能力の差異を調べるために追求できるアプローチが3つあります：
 

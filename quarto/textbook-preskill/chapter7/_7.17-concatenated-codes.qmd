@@ -1,4 +1,4 @@
-## 7.17 連結符号 {#sec-7-17-concatenated-codes}
+## 7.17 連結符号 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=54) {#sec-7-17-concatenated-codes}
 
 これまでのところ、陽に構成してきたすべての量子誤り訂正符号（QECC）は $d = 3$（または $d = 2$）であり、したがって（せいぜい）1 つの誤りしか訂正できませんでした。ここでは、より大きな距離を持つ符号の例をいくつか説明します。
 

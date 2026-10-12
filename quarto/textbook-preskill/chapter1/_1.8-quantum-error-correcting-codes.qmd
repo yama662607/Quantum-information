@@ -1,4 +1,4 @@
-## 1.8 量子誤り訂正符号 (Quantum error-correcting codes) {#sec-1.8-quantum-error-correcting-codes}
+## 1.8 量子誤り訂正符号 (Quantum error-correcting codes) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=20) {#sec-1.8-quantum-error-correcting-codes}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **エラーのデジタル化**: 連続的なエラーが、測定によって離散的なエラー（ビット反転 or 位相反転）に「射影」される原理を理解する。

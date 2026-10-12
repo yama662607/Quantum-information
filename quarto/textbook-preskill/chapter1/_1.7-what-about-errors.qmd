@@ -1,4 +1,4 @@
-## 1.7 エラーについては？ (What about errors?) {#sec-1.7-what-about-errors}
+## 1.7 エラーについては？ (What about errors?) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=15) {#sec-1.7-what-about-errors}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **デコヒーレンス**: 量子系が環境と相互作用することで、量子情報が急速に失われる仕組みを理解する。

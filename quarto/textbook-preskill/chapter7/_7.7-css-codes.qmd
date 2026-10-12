@@ -1,4 +1,4 @@
-## 7.7 CSS符号 (CSS Codes) {#sec-7.7-css-codes}
+## 7.7 CSS符号 (CSS Codes) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=27) {#sec-7.7-css-codes}
 
 古典線形符号の理論からの諸原理は、量子誤り訂正符号の構築へと適合させることができます。ここでは、双対符号の概念を活用する QECC のファミリである**カルダーバンク・ショア・スティーン（Calderbank–Shor–Steane；CSS）符号**について解説します。
 

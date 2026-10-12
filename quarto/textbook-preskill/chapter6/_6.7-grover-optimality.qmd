@@ -1,4 +1,4 @@
-## 6.7 グローバーのアルゴリズムの最適性 (The Grover Algorithm Is Optimal) {#sec-6.7-grover-optimality}
+## 6.7 グローバーのアルゴリズムの最適性 (The Grover Algorithm Is Optimal) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=38) {#sec-6.7-grover-optimality}
 
 全探索に対するグローバーの2次の量子高速化は、すでに十分に興味深く潜在的に重要ですが、より巧妙な工夫を用いればさらに優れた結果を得ることができるのではないでしょうか？
 

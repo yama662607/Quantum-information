@@ -1,4 +1,4 @@
-## 6.2 周期性と量子フーリエ変換 (Periodicity & QFT) {#sec-6.2-periodicity-and-qft}
+## 6.2 周期性と量子フーリエ変換 (Periodicity & QFT) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=13) {#sec-6.2-periodicity-and-qft}
 
 これまでのところ、量子アルゴリズムの速度とそれに対応する古典アルゴリズムの速度との間に指数関数的な分離を見出した唯一のケースは、サイモンの問題の場合です。サイモンのアルゴリズムは、関数の周期探索を高速化するために量子並列性を活用します。その成功は、他の種類の周期発見のために設計された他の量子アルゴリズムを模索することを私たちに促します。
 
@@ -30,7 +30,7 @@ $$ {#eq-6.29}
 
 量子周期発見の基礎となる重要なアイデアは、フーリエ変換が（ピーター・ショア（Peter Shor）によって発見されたように）効率的な量子回路によって評価できるということです。**量子フーリエ変換（quantum Fourier transform: QFT）**は、量子並列性の力を利用して、よく知られた（古典的な）高速フーリエ変換（FFT）の指数関数的な高速化を達成します。FFT には非常に多様な応用があるため、おそらく QFT もいつの日か広く利用されるようになるでしょう。
 
-### 6.2.1 周期の発見 (Finding the period) {#sec-6.2.1-finding-the-period}
+### 6.2.1 周期の発見 (Finding the period) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=14) {#sec-6.2.1-finding-the-period}
 
 QFT は、計算基底に対して以下のように作用するユニタリ変換です：
 
@@ -168,7 +168,7 @@ $$ {#eq-6.49}
 
 となります（ここで $\zeta(z)$ はリーマンゼータ関数を表します）。したがって、アルゴリズムを一定回数（$N$ に依存しない回数）反復すれば、周期 $r$ の発見に成功する可能性が高いと言えます。
 
-### 6.2.2 高速フーリエ変換から量子フーリエ変換へ (From FFT to QFT) {#sec-6.2.2-from-fft-to-qft}
+### 6.2.2 高速フーリエ変換から量子フーリエ変換へ (From FFT to QFT) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=16) {#sec-6.2.2-from-fft-to-qft}
 
 次に、量子フーリエ変換の実装を考えてみましょう。フーリエ変換
 
