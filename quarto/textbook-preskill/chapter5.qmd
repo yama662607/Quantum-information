@@ -2,7 +2,6 @@
 title: "Chapter 5: Classical Circuits & Quantum Circuits"
 ---
 
-# Chapter 5: Classical Circuits & Quantum Circuits {#chapter-5-preskill}
 
 {{< include chapter5/_5.1-classical-circuits.qmd >}}
 

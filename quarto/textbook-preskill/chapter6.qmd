@@ -2,7 +2,6 @@
 title: "Chapter 6: Quantum Algorithms"
 ---
 
-# Chapter 6: Quantum Algorithms {#chapter-6-preskill}
 
 {{< include chapter6/_6.1-quantum-algorithms.qmd >}}
 

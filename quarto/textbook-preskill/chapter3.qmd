@@ -2,7 +2,6 @@
 title: "Chapter 3: Foundations II: Measurement and Evolution"
 ---
 
-# Chapter 3: Foundations II: Measurement and Evolution {#chapter-3-preskill}
 
 {{< include chapter3/_3.1-orthogonal-measurement.qmd >}}
 

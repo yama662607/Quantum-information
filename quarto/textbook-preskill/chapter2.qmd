@@ -13,7 +13,6 @@ pyodide:
     - jsonschema
 ---
 
-# Chapter 2: Foundations I: States and Ensembles {#chapter-2-preskill}
 
 {{< include chapter2/_2.1-axioms.qmd >}}
 

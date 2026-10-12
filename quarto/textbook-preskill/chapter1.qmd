@@ -13,7 +13,6 @@ pyodide:
     - jsonschema
 ---
 
-# Chapter 1: Introduction and Overview {#chapter-1-preskill}
 
 {{< include chapter1/_1.1-introduction.qmd >}}
 

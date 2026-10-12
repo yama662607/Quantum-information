@@ -2,7 +2,6 @@
 title: "Chapter 8: Topological Quantum Computation"
 ---
 
-# Chapter 8: Topological Quantum Computation {#chapter-8-preskill}
 
 {{< include chapter8/_8.1-anyons.qmd >}}
 

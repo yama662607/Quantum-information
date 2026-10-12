@@ -2,7 +2,6 @@
 title: "Chapter 7: Quantum Error Correction"
 ---
 
-# Chapter 7: Quantum Error Correction {#chapter-7-preskill}
 
 {{< include chapter7/_7.1-code.qmd >}}
 
