@@ -12,7 +12,7 @@ Mac Studio 側の環境構築および全自動テスト（`just check`）の動
 | :--- | :--- | :--- |
 | **Tailscale ホスト名 / IP** | `studio` (`100.94.63.34`) | `ssh studio` で相互ログイン可能 |
 | **メインリポジトリ** | `/Users/daisukeyamashiki/Code/Learning/Quantum-information` | `master` ブランチ |
-| **作業用 Worktree** | `/Users/daisukeyamashiki/Code/Learning/Quantum-information-worktrees/phase1-transcription` | `feature/phase1-transcription-and-faithful-translation` |
+| **作業用 Worktree** | `/Users/daisukeyamashiki/Code/Learning/Quantum-information` | `feature/phase1-transcription-and-faithful-translation` |
 | **Python / 仮想環境** | `uv 0.11.15` (CPython 3.12.13) | `.venv` 同期済み (`qiskit`, `torch`, `pymupdf` 完備) |
 | **Node / JavaScript** | `bun 1.3.14` | `jsdom`, `mermaid`, `dompurify` 完備 |
 | **タスクランナー** | `just 1.58.0` | `/opt/homebrew/bin/just` |
@@ -54,7 +54,7 @@ Mac Studio 上で作業するエージェントは、以下の手順を厳守し
 
 ```bash
 # 作業ディレクトリへ移動
-cd /Users/daisukeyamashiki/Code/Learning/Quantum-information-worktrees/phase1-transcription
+cd /Users/daisukeyamashiki/Code/Learning/Quantum-information
 
 # 1. PDF ページの画像化 (例: Section 2.1 の p.1〜p.8)
 just render-pdf quarto/assets/pdf/preskill/chap2.pdf 1 8
