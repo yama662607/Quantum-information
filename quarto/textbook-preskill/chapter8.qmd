@@ -1,0 +1,17 @@
+---
+title: "Chapter 8: Topological Quantum Computation"
+---
+
+# Chapter 8: Topological Quantum Computation {#chapter-8-preskill}
+
+{{< include chapter8/_8.1-anyons.qmd >}}
+
+{{< include chapter8/_8.2-braid-group.qmd >}}
+
+{{< include chapter8/_8.3-fusion-rules.qmd >}}
+
+{{< include chapter8/_8.4-pentagon-hexagon.qmd >}}
+
+{{< include chapter8/_8.5-fibonacci-anyons.qmd >}}
+
+{{< include chapter8/_8.6-exercises-notes.qmd >}}

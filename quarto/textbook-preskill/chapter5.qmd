@@ -1,0 +1,15 @@
+---
+title: "Chapter 5: Classical Circuits & Quantum Circuits"
+---
+
+# Chapter 5: Classical Circuits & Quantum Circuits {#chapter-5-preskill}
+
+{{< include chapter5/_5.1-classical-circuits.qmd >}}
+
+{{< include chapter5/_5.2-reversible-computation.qmd >}}
+
+{{< include chapter5/_5.3-quantum-circuits.qmd >}}
+
+{{< include chapter5/_5.4-universal-quantum-gates.qmd >}}
+
+{{< include chapter5/_5.5-summary.qmd >}}

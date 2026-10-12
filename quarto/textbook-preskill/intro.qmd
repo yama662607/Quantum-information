@@ -1,0 +1,24 @@
+---
+title: "John Preskill 教授 講義ノート"
+---
+
+# John Preskill 教授『Quantum Computation』講義ノート {.unnumbered}
+
+このノートは、カリフォルニア工科大学（Caltech）の John Preskill 教授による名著講義録『Quantum Computation』に基づいた学習記録および完全解説リサーチ環境です。
+Watrous 教授の教科書（数学的・線形代数的アプローチ）に比べ、より物理学的な直感と量子情報理論の結びつきに重点を置いて解説します。
+
+各チャプターは独立したページとして読み込みが最適化されています。以下の目次またはサイドバーから各章へお進みください。
+
+## チャプター一覧
+
+| 章 | タイトル | 主なトピック | 原文 PDF |
+| :--- | :--- | :--- | :--: |
+| [**Chapter 1**](chapter1.qmd) | Introduction and Overview | 量子情報の物理、量子計算の複雑性、量子ハードウェア | [📄 chap1.pdf](../assets/pdf/preskill/chap1.pdf) |
+| [**Chapter 2**](chapter2.qmd) | Foundations I: States and Ensembles | 量子状態の公理、Bloch球、密度演算子、Schmidt分解、状態間距離 | [📄 chap2.pdf](../assets/pdf/preskill/chap2.pdf) |
+| [**Chapter 3**](chapter3.qmd) | Foundations II: Measurement and Evolution | 一般化測定 (POVM)、量子チャネル、Kraus表現、Lindblad方程式 | [📄 chap3.pdf](../assets/pdf/preskill/chap3.pdf) |
+| [**Chapter 4**](chapter4.qmd) | Quantum Entanglement | 非可分性、Bell/CHSH不等式、量子暗号、混合状態エンタングルメント | [📄 chap4.pdf](../assets/pdf/preskill/chap4.pdf) |
+| [**Chapter 5**](chapter5.qmd) | Classical Circuits & Quantum Circuits | 可逆計算、Toffoliゲート、量子回路、ユニバーサル量子ゲート | [📄 chap5.pdf](../assets/pdf/preskill/chap5.pdf) |
+| [**Chapter 6**](chapter6.qmd) | Quantum Algorithms | 量子フーリエ変換 (QFT)、Shorの因数分解、Grover検索、QMA完全性 | [📄 chap6.pdf](../assets/pdf/preskill/chap6.pdf) |
+| [**Chapter 7**](chapter7.qmd) | Quantum Error Correction | 9量子ビット符号、CSS符号、スタビライザー符号、Toric Code | [📄 chap7.pdf](../assets/pdf/preskill/chap7.pdf) |
+| [**Chapter 8**](chapter8.qmd) | Topological Quantum Computation | エニオン、Braid群、Fusion則、Pentagon/Hexagon関係式、Fibonacciエニオン | [📄 chap8.pdf](../assets/pdf/preskill/chap8.pdf) |
+| [**Chapter 10**](chapter10.qmd) | Quantum Shannon Theory | Shannon理論、von Neumannエントロピー、強劣加法性、母・父プロトコル | [📄 chap10.pdf](../assets/pdf/preskill/chap10.pdf) |

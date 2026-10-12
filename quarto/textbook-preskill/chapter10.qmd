@@ -1,0 +1,27 @@
+---
+title: "Chapter 10: Quantum Shannon Theory"
+---
+
+# Chapter 10: Quantum Shannon Theory {#chapter-10-preskill}
+
+{{< include chapter10/_10.1-shannon-for-dummies.qmd >}}
+
+{{< include chapter10/_10.2-von-neumann-entropy.qmd >}}
+
+{{< include chapter10/_10.3-quantum-source-coding.qmd >}}
+
+{{< include chapter10/_10.4-entanglement-concentration-dilution.qmd >}}
+
+{{< include chapter10/_10.5-mixed-state-entanglement.qmd >}}
+
+{{< include chapter10/_10.6-accessible-information.qmd >}}
+
+{{< include chapter10/_10.7-quantum-channel-capacities.qmd >}}
+
+{{< include chapter10/_10.8-quantum-protocols.qmd >}}
+
+{{< include chapter10/_10.9-decoupling-inequality.qmd >}}
+
+{{< include chapter10/_10.10-summary.qmd >}}
+
+{{< include chapter10/_10.12-exercises.qmd >}}

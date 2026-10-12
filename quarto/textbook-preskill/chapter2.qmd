@@ -1,0 +1,30 @@
+---
+title: "Chapter 2: Foundations I: States and Ensembles"
+engine: markdown
+filters:
+  - r-wasm/live
+pyodide:
+  packages:
+    - numpy
+    - matplotlib
+    - pandas
+    - plotly
+    - nbformat
+    - jsonschema
+---
+
+# Chapter 2: Foundations I: States and Ensembles {#chapter-2-preskill}
+
+{{< include chapter2/_2.1-axioms.qmd >}}
+
+{{< include chapter2/_2.2-qubit.qmd >}}
+
+{{< include chapter2/_2.3-density-operator.qmd >}}
+
+{{< include chapter2/_2.4-schmidt-decomposition.qmd >}}
+
+{{< include chapter2/_2.5-ambiguity.qmd >}}
+
+{{< include chapter2/_2.6-distance-between-quantum-states.qmd >}}
+
+{{< include chapter2/_2.7-summary.qmd >}}

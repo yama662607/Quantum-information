@@ -30,6 +30,7 @@ node_modules/
 # AI agent config (machine-local)
 .codex/
 .gemini/
+.playwright-mcp/
 
 # LaTeX build artifacts
 quarto/*.aux

@@ -1,0 +1,19 @@
+---
+title: "Chapter 3: Foundations II: Measurement and Evolution"
+---
+
+# Chapter 3: Foundations II: Measurement and Evolution {#chapter-3-preskill}
+
+{{< include chapter3/_3.1-orthogonal-measurement.qmd >}}
+
+{{< include chapter3/_3.2-quantum-channels.qmd >}}
+
+{{< include chapter3/_3.3-channel-state-duality.qmd >}}
+
+{{< include chapter3/_3.4-three-quantum-channels.qmd >}}
+
+{{< include chapter3/_3.5-master-equations.qmd >}}
+
+{{< include chapter3/_3.6-non-markovian-noise.qmd >}}
+
+{{< include chapter3/_3.7-summary.qmd >}}
