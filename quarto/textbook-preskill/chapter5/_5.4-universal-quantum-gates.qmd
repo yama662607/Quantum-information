@@ -1,0 +1,280 @@
+## 5.4 汎用量子ゲート (Universal Quantum Gates) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=33) {#sec-5.4-universal-quantum-gates}
+
+量子計算に関して、私たちはもう一つ根本的な問題に取り組まなければなりません。どのようにして十分な量子ゲートの集合を構築すればよいのでしょうか？ 言い換えれば、何をもって**汎用量子コンピュータ（universal quantum computer）**が構成されるのでしょうか？
+
+これには喜ばしい答えが見出されます。**任意の典型的（ジェネリック, generic）な2量子ビットゲートがあれば、汎用量子計算には十分**です。すなわち、$4 \times 4$ ユニタリ行列のうち測度ゼロの集合を除くすべての行列について、その行列を任意の量子ビットの対に適用できるならば、$n$ 個の量子ビットに作用し、$U(2^n)$ の任意の元にいくらでも近い変換を計算する回路を構築できます。数学的には、これは特に深遠な結果というわけではありませんが、物理的には極めて重要です。量子力学の世界において、任意の2つの量子ビット間にジェネリックな相互作用を考案でき、その相互作用を高精度に実装できる限り、どれほど複雑であっても任意の量子計算を組み上げることができるということを意味するからです。非自明な計算は、量子論において至る所に偏在（ubiquitous）しています。
+
+この一般的な結果とは別に、物理的に実装が特に容易であるような特定の汎用ゲートセットを提示することも大いに関心を持たれます。ここではいくつかの例について議論します。
+
+### 5.4.1 汎用性の概念 (Notions of Universality) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=33) {#sec-5.4.1-notions-of-universality}
+
+量子計算の標準的な回路モデルにおいて、回路には「ハードワイヤード（固定）」された有限の量子ゲート集合
+$$
+\mathcal{G} = \{\boldsymbol{U}_1, \boldsymbol{U}_2, \dots, \boldsymbol{U}_m\},
+$$ {#eq-5.80}
+が備わっていると考えます。ここで $\boldsymbol{U}_j$ は $k_j$ 個の量子ビットに作用し、各 $j$ について $k_j \le k$（定数）です。通常、ゲート $\boldsymbol{U}_j$ はコンピュータ内の $n$ 個の量子ビットのうち任意の $k_j$ 個に適用できるとも仮定します。実際には、ゲートセットを用いてSWAPゲート（隣接する2つの量子ビットの位置を入れ替えるゲート）を（良好な精度で近似して）構築できる限り、ゲートに何らかの幾何学的な局所性制約を課したとしても、計算量の解析が劇的に変わることはありません。遠く離れた $k_j$ 個の量子ビットに対して $\boldsymbol{U}_j$ を実行したい場合、まず一連のSWAPゲートを実行して量子ビットを近づけ、
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=34) ゲートを実行した後に、最後にSWAPゲートを実行して量子ビットを元の位置に戻せばよいからです。
+
+ゲートセット $\mathcal{G}$ が**汎用（universal）**であると言うとき、それはこのゲートセットを用いて量子回路として構築できるユニタリ変換が、全位相を除いてユニタリ群 $U(2^n)$ において**稠密（dense）**であることを意味します。すなわち、任意の $V \in U(2^n)$ および任意の $\delta > 0$ に対して、有限個の回路によって実現されるユニタリ $\tilde{V}$ が存在し、ある位相 $e^{i\phi}$ に対して
+$$
+\|\tilde{V} - e^{i\phi}V\|_{\sup} \le \delta
+$$ {#eq-5.81}
+が成り立ちます。（回路の目標ユニタリからの偏差を定義するために作用素ノルム（sup norm）を用いるのは自然ですが、$U(2^n)$ 上の任意の合理的な位相構造を用いても同様の結論に至ります。）場合によっては、この汎用性の定義を緩和することが有用なこともあります。例えば、回路が $U(2^n)$ 全体ではなく、$N$ が $n$ に対して指数関数的（あるいは少なくとも超多項式的）であるような部分群 $U(N)$ において稠密であるという「符号化された汎用性（encoded universality）」で満足することもあります。
+
+汎用性の概念には、一般的な理論を明らかにしたり応用に役立ったりする、注目すべきいくつかのバリエーションがあります：
+
+(1) **厳密な汎用性（Exact universality）**: 非可算なゲートセットを許容するならば、特定のゲートセットに対して任意のユニタリ変換を*厳密に*実現する回路を構築できると主張できます。後ほど見るように、2量子ビットゲートは厳密に汎用です——$U(2^n)$ の任意の元は、2量子ビットゲートの有限回路として構築できます。別の例として、2量子ビットの CNOT ゲートと任意の単一量子ビットゲートの組み合わせも厳密に汎用です（演習 5.2）。
+
+実際、この点に関して CNOT ゲートは特別なものではありません。**エンタングルメントを生成する（entangling）任意の2量子ビットゲート**は、任意の単一量子ビットゲートと組み合わせることで汎用となります（演習 5.6）。ある2量子ビットゲートが、ある積状態を積状態でない状態へと写すとき、そのゲートはエンタングルメントを生成すると言います。
+
+エンタングルメントを生成しない2量子ビットゲートの例は、「局所ゲート（local gate）」——積ユニタリ $\boldsymbol{V} = \boldsymbol{A} \otimes \boldsymbol{B}$ です。もう一つの例は SWAP ゲート、または SWAP と「局所同値（locally equivalent）」な任意のゲート、すなわち次の形のゲートです：
+$$
+\boldsymbol{V} = (\boldsymbol{A} \otimes \boldsymbol{B})(\mathbf{SWAP})(\boldsymbol{C} \otimes \boldsymbol{D}).
+$$ {#eq-5.82}
+実は、これらがエンタングルメントを生成しない唯一の2量子ビットゲートです。局所的でなく、SWAP と局所同値でもないすべての2量子ビットユニタリはエンタングルメントを生成し、したがって任意の単一量子ビットゲートと組み合わせたときに汎用となります。
+
+(2) **典型的（ジェネリック）汎用性（Generic universality）**: 2個以上の量子ビットに作用する局所的でないゲートは、典型的（ジェネリック）に汎用です。例えば、ゲートを $n$ 個の量子ビットの任意のペアに適用できるとすれば、ほとんどすべての2量子ビットゲートが汎用となります。「ほとんどすべて」とは、$U(4)$ において測度ゼロの集合を除くという意味です。
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=35) (3) **特定の有限汎用ゲートセット（Particular finite universal gate sets）**: 演習 5.3–5.5 で示されるように、以下のゲートセットはいずれも汎用です：
+$$
+\mathcal{G} = \{\boldsymbol{H}, \Lambda(\boldsymbol{S})\}, \quad \{\boldsymbol{H}, \boldsymbol{T}, \Lambda(\boldsymbol{X})\}, \quad \{\boldsymbol{H}, \boldsymbol{S}, \Lambda^2(\boldsymbol{X})\},
+$$ {#eq-5.83}
+ここで $\boldsymbol{H}, \boldsymbol{S}, \boldsymbol{T}$ は以下の単一量子ビットゲートです：
+$$
+\boldsymbol{H} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}, \quad \boldsymbol{S} = \begin{pmatrix} e^{-i\pi/4} & 0 \\ 0 & e^{i\pi/4} \end{pmatrix}, \quad \boldsymbol{T} = \begin{pmatrix} e^{-i\pi/8} & 0 \\ 0 & e^{i\pi/8} \end{pmatrix}.
+$$ {#eq-5.84}
+ブロッホ球の言葉で言えば、「アダマールゲート」 $\boldsymbol{H} = \frac{1}{\sqrt{2}}(\boldsymbol{X} + \boldsymbol{Z})$ は軸 $\hat{x} + \hat{z}$ のまわりの $\pi$ 回転であり、$\boldsymbol{S} = \exp\left(-i\frac{\pi}{4}\boldsymbol{Z}\right)$ は $\hat{z}$ 軸のまわりの $\pi/2$ 回転、$\boldsymbol{T} = \exp\left(-i\frac{\pi}{8}\boldsymbol{Z}\right)$ は $\hat{z}$ 軸のまわりの $\pi/4$ 回転です。$\Lambda(\boldsymbol{S})$ は、制御量子ビットが $|1\rangle$ の場合にのみ標的量子ビットに $\boldsymbol{S}$ を適用する2量子ビットゲートを意味します。より一般的には、$\boldsymbol{U}$ が単一量子ビットゲートであるとき、記法 $\Lambda(\boldsymbol{U})$ を用いて2量子ビットゲート
+$$
+\Lambda(\boldsymbol{U}) = |0\rangle\langle 0| \otimes \boldsymbol{I} + |1\rangle\langle 1| \otimes \boldsymbol{U};
+$$ {#eq-5.85}
+を表し、同様に $\Lambda^2(\boldsymbol{U})$ を用いて3量子ビットゲート
+$$
+\Lambda^2(\boldsymbol{U}) = (\boldsymbol{I} - |11\rangle\langle 11|) \otimes \boldsymbol{I} + |11\rangle\langle 11| \otimes \boldsymbol{U},
+$$ {#eq-5.86}
+などを表します。
+
+特定の有限ゲートセットが汎用であることは、誤り耐性量子計算の理論において特に重要です。この理論では、符号化された量子状態に作用する高精度な論理ゲートが、ノイズのある物理ゲートから構築されます。第8章で議論するように、ノイズから十分に保護できる論理ゲートは離散的な集合に限られており、その集合は量子情報がどのように符号化されているかに依存します。誤り耐性ゲート構成の目標は、そのような保護されたゲートからなる汎用セットを達成することです。
+
+(4) **汎用ゲートの効率的な回路（Efficient circuits of universal gates）**: 上記の結果は、任意の $n$ 量子ビットユニタリの「到達可能性（reachability）」に関するものにすぎず、良好な近似に必要な回路サイズについては何も述べていません。しかし、ある汎用ゲートセットを別のゲートセットを用いて近似したい場合や、理想的な量子アルゴリズムのステップを許容可能な精度まで近似したい場合、回路サイズは極めて重要になります。
+
+有限ゲートセットを用いて任意の $n$ 量子ビットユニタリを近似するには、$n$ に対して指数関数的なサイズの回路が必要であることはすでに分かっています。しかし、任意の固定された $k$ に対して、$k$ 量子ビットユニタリは、誤差に対して $\operatorname{polylog}(1/\varepsilon)$ でスケールするサイズの回路を用いて精度 $\varepsilon$ で近似できることが分かります。この結果である**ソロヴェイ・キタエフの定理（Solovay-Kitaev theorem）**は、「逆元で閉じている（closed under inverse）」——すなわち、セット内の各ゲートの逆元が有限回路を用いて厳密に構築できるような、任意の汎用ゲートセットに対して成り立ちます。
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=36) ソロヴェイ・キタエフの定理（§5.4.4 で証明します）は、ある汎用ゲートセットが別の汎用ゲートセットを控えめなコストで高精度に近似できることを示しています。したがって、量子回路サイズに基づく計算量の特徴づけは、汎用ゲートセットがどのように選ばれるかにあまり敏感ではありません。例えば、ゲートセット $\mathcal{G}_1$ から選ばれた $T$ 個のゲートを用いてユニタリ変換 $\boldsymbol{U}$ を構築し、ゲートセット $\mathcal{G}_2$ から選ばれたゲートを用いて $\boldsymbol{U}$ を一定の精度 $\varepsilon$ で近似したいとします。$\mathcal{G}_1$ の各ゲートを精度 $\varepsilon/T$ で近似すれば十分であり、これは $\mathcal{G}_2$ の $\operatorname{polylog}(T/\varepsilon)$ 個のゲートからなる回路を用いて達成できます。したがって、$\boldsymbol{U}$ は全体として $O(T \operatorname{polylog}(T))$ 個の $\mathcal{G}_2$ ゲートで近似できます。
+
+ソロヴェイ・キタエフの定理のもう一つの帰結は、多項式サイズの回路が $U(2^n)$ のごくわずかな一部分にしか（一定の精度で）到達できないという以前の結論に関するものです。有限ゲートセットから選ばれたゲートではなく、任意の $k$ 量子ビットユニタリ（$k$ は定数）を用いて回路を構築する場合、この結論はどのように修正されるでしょうか？ 有限ゲートセットを用いて $k$ 量子ビットユニタリを近似しても回路サイズは $\operatorname{polylog}(T)$ の因子だけしか増大しないため、任意の $k$ 量子ビットユニタリから構築されたサイズ $T$ の回路を用いて精度 $\delta$ の近似を達成できるならば、有限ゲートセットから構築されたサイズ $T \operatorname{polylog}(T/\delta)$ の回路を用いても精度 $(2\delta)$ の近似を達成できます。したがって、有限ゲートセットから構築されたサイズ $T$ の回路を用いてすべてのユニタリに精度 $\delta$ で到達するための基準式 (@eq-5.79) は、任意の $k$ 量子ビットゲートから構築された回路を用いる場合、次式で置き換えられます：
+$$
+T \operatorname{polylog}(T/\delta) \ge 2^{2n} \frac{\log(C/2\delta)}{\log n}.
+$$ {#eq-5.87}
+必要な回路サイズは、指数関数的サイズよりも高々 $\operatorname{poly}(n)$ の因子だけ小さいにすぎません。群 $U(2^n)$ が想像を絶するほど広大であるのは、私たちが離散的なゲートセットに制限されているからではなく、一度に定数個の量子ビットしか操作できないからなのです。
+
+### 5.4.2 2量子ビットゲートは厳密に汎用である (Two-Qubit Gates are Exactly Universal) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=36) {#sec-5.4.2-two-qubit-gates-are-exactly-universal}
+
+$U(2^n)$ の任意の元が2量子ビットゲートの有限回路によって達成できることを、2つのステップで示します。まず、$U(N)$ の元を「$2 \times 2$」ユニタリの積として表現する方法を示し、次に、任意の $2 \times 2$ ユニタリを2量子ビットユニタリの回路から得る方法を示します。
+
+$2 \times 2$ ユニタリとは何でしょうか？ $N$ 次元空間の標準正規直交基底 $\{|0\rangle, |1\rangle, |2\rangle, \dots |N - 1\rangle\}$ を固定します。ユニタリ変換 $\boldsymbol{U}$ が、2つの基底元 $|i\rangle$ と $|j\rangle$ で張られる2次元部分空間においてのみ非自明に作用するとき、$\boldsymbol{U}$ は $2 \times 2$ であると言います。すなわち、$\boldsymbol{U}$ は直和として
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=37) 次のように分解されます：
+$$
+\boldsymbol{U} = \boldsymbol{U}^{(2)} \oplus \boldsymbol{I}^{(N-2)},
+$$ {#eq-5.88}
+ここで $\boldsymbol{U}^{(2)}$ は $|i\rangle$ と $|j\rangle$ の張る空間に作用する $2 \times 2$ ユニタリ行列であり、$\boldsymbol{I}^{(N-2)}$ は相補的な $(N-2)$ 次元部分空間に作用する恒等行列です。
+
+$2 \times 2$ ユニタリを、次元 $N = 2^n$ の $n$ 量子ビット空間に作用する2量子ビットユニタリと混同しないように注意する必要があります。2量子ビットユニタリ $\boldsymbol{U}$ はテンソル積として
+$$
+\boldsymbol{U} = \boldsymbol{U}^{(4)} \otimes \boldsymbol{I}^{(2^{n-2})},
+$$ {#eq-5.89}
+と分解されます。ここで $\boldsymbol{U}^{(4)}$ は量子ビットのペアに作用する $4 \times 4$ ユニタリ行列であり、$\boldsymbol{I}^{(2^{n-2})}$ は残りの $n - 2$ 個の量子ビットに作用する恒等行列です。2量子ビットユニタリは、$(n-2)$ 量子ビットヒルベルト空間の基底状態でラベルづけされた $2^{n-2}$ 個の $4 \times 4$ ブロックの直和と見なすことができ、各ブロックに $\boldsymbol{U}^{(4)}$ が作用しています。
+
+$U \in U(N)$ を $2 \times 2$ ユニタリの積として表現する方法を見てみましょう。基底状態 $|0\rangle$ に対する $\boldsymbol{U}$ の作用を考えます：
+$$
+\boldsymbol{U}|0\rangle = \sum_{i=0}^{N-1} a_i |i\rangle.
+$$ {#eq-5.90}
+$\boldsymbol{U}|0\rangle$ は $\boldsymbol{W}_0 |0\rangle$ と書くことができます。ここで $\boldsymbol{W}_0$ は、次のように作用する $(N-1)$ 個の $2 \times 2$ ユニタリの積です：
+$$
+\begin{aligned}
+|0\rangle &\mapsto a_0 |0\rangle + b_0 |1\rangle, \\
+b_0 |1\rangle &\mapsto a_1 |1\rangle + b_1 |2\rangle, \\
+b_1 |2\rangle &\mapsto a_2 |2\rangle + b_2 |3\rangle, \\
+&\ \ \vdots \\
+b_{N-2} |N-2\rangle &\mapsto a_{N-2} |N-2\rangle + a_{N-1} |N-1\rangle.
+\end{aligned}
+$$ {#eq-5.91}
+次に $\boldsymbol{U}_1 = \boldsymbol{W}_0^{-1} \boldsymbol{U}$ と定義すると、$\boldsymbol{U}_1 |0\rangle = |0\rangle$ であるため、$\boldsymbol{U}_1$ は $\{|1\rangle, |2\rangle, \dots |N - 1\rangle\}$ の張る $(N-1)$ 次元空間においてのみ非自明に作用します。上記と同じ構成により、$\boldsymbol{W}_1 |0\rangle = |0\rangle$ かつ $\boldsymbol{W}_1 |1\rangle = \boldsymbol{U}_1 |1\rangle$ となるような $(N-2)$ 個の $2 \times 2$ ユニタリの積として $\boldsymbol{W}_1$ を構築し、$\boldsymbol{U}_2 = \boldsymbol{W}_1^{-1} \boldsymbol{U}_1$ を定義すると、$\boldsymbol{U}_2$ は $|0\rangle$ と $|1\rangle$ の両方を保存します。このように進めることで、次を満たす $\boldsymbol{W}_2, \boldsymbol{W}_3, \dots \boldsymbol{W}_{N-2}$ を構築できます：
+$$
+\boldsymbol{W}_{N-2}^{-1} \boldsymbol{W}_{N-3}^{-1} \dots \boldsymbol{W}_1^{-1} \boldsymbol{W}_0^{-1} \boldsymbol{U} = \boldsymbol{I};
+$$ {#eq-5.92}
+すなわち、$\boldsymbol{U}$ を次のように表すことができます：
+$$
+\boldsymbol{U} = \boldsymbol{W}_0 \boldsymbol{W}_1 \dots \boldsymbol{W}_{N-3} \boldsymbol{W}_{N-2},
+$$ {#eq-5.93}
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=38) これは $(N - 1) + (N - 2) + \dots + 2 + 1 = \frac{1}{2}N(N - 1)$ 個の $2 \times 2$ ユニタリの積です。
+
+あとは、任意の $2 \times 2$ ユニタリを2量子ビットユニタリの回路として構築できることを示すのみです。3量子ビットゲート $\Lambda^2(\boldsymbol{U}^2)$ が、$\Lambda(\boldsymbol{U})$, $\Lambda(\boldsymbol{U}^\dagger)$, および $\Lambda(\boldsymbol{X})$ ゲートの回路として構築できることに注目すると役立ちます。$\Lambda(\boldsymbol{U})$ ゲートに対して次の記法を用いると：
+```text
+     │
+  ───●───
+     │
+   ┌───┐
+   │ U │
+   └───┘
+     │
+```
+次の回路が目的を果たします：
+```text
+x ───●───────────────●───────●─────── x
+     │               │       │
+y ───●───────●───┼───●───┼───│─────── y
+     │       │   │   │   │   │
+   ┌────┐  ┌───┐ │ ┌────┐│ ┌───┐
+   │U^2 │ =│ U │ │ │ U† ││ │ U │
+   └────┘  └───┘ │ └────┘│ └───┘
+                 └───●───┴───●
+```
+第3の量子ビットに適用される $\boldsymbol{U}$ のべき乗が次のようになることを確認できます：
+$$
+y - (x \oplus y) + x = y - (x + y - 2xy) + x = 2xy.
+$$ {#eq-5.94}
+すなわち、$x = y = 1$ の場合に $\boldsymbol{U}^2$ が適用され、それ以外の場合は恒等変換が適用されます。したがって、この回路は $\Lambda^2(\boldsymbol{U}^2)$ ゲートを達成します。すべてのユニタリ $\boldsymbol{V}$ は $\boldsymbol{V} = \boldsymbol{U}^2$ となる平方根 $\boldsymbol{U}$ を持つため、この構成は2量子ビットゲートを用いて任意の単一量子ビット $\boldsymbol{V}$ に対する $\Lambda^2(\boldsymbol{V})$ を達成できることを示しています。
+
+この構成を一般化することで、$\Lambda^{m-1}(\boldsymbol{U})$, $\Lambda^{m-1}(\boldsymbol{X})$, $\Lambda(\boldsymbol{U})$, および $\Lambda(\boldsymbol{U}^\dagger)$ ゲートを用いて $\Lambda^m(\boldsymbol{U}^2)$ を構築する回路を見つけることができます。前の回路の $\Lambda(\boldsymbol{X})$ ゲートを $\Lambda^{m-1}(\boldsymbol{X})$ ゲートで置き換え、最後の $\Lambda(\boldsymbol{U})$ ゲートを $\Lambda^{m-1}(\boldsymbol{U})$ で置き換えると、$m$ 個の制御ビットを $x_1, x_2, x_3, \dots x_m$ と表すとき、最後の量子ビットに適用される $\boldsymbol{U}$ のべき乗は次のようになります：
+$$
+\begin{aligned}
+&x_m + x_1 x_2 x_3 \dots x_{m-1} - (x_m \oplus x_1 x_2 x_3 \dots x_{m-1}) \\
+&= x_m + x_1 x_2 x_3 \dots x_{m-1} - (x_m + x_1 x_2 x_3 \dots x_{m-1} - 2x_1 x_2 x_3 \dots x_{m-1} x_m) \\
+&= 2x_1 x_2 x_3 \dots x_{m-1} x_m,
+\end{aligned}
+$$ {#eq-5.95}
+ここで等式 $x \oplus y = x + y - 2xy$ を用いました。これで $x_1 = x_2 = \dots = x_m = 1$ の場合に $\boldsymbol{U}^2$ が適用され、それ以外の場合は恒等変換が適用されます。この回路は $\Lambda^m(\boldsymbol{U}^2)$ ゲートを達成します。
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=39) この構成を再帰的に用いることで、2量子ビットゲートを用いて任意の $\boldsymbol{V}$ に対する $\Lambda^2(\boldsymbol{V})$ を構築でき、次いでこれらのゲートと2量子ビットゲートを用いて任意の $\boldsymbol{V}$ に対する $\Lambda^3(\boldsymbol{V})$ を構築でき、それによって任意の $\boldsymbol{V}$ に対する $\Lambda^4(\boldsymbol{V})$ を構築できる、といった具合になります。したがって、2量子ビットゲートの回路を用いて、任意の $\boldsymbol{V}$ に対する $n$ 量子ビットゲート $\Lambda^{n-1}(\boldsymbol{V})$ を構築する方法が示されました。
+
+$U(2^n)$ の任意の元が2量子ビットユニタリの積であることを示す論証を完成させるには、$\Lambda^{n-1}(\boldsymbol{V})$ と2量子ビットゲートから任意の $2 \times 2$ ユニタリを構築できることを示せば十分です。$\Lambda^{n-1}(\boldsymbol{V})$ は実際には $2 \times 2$ ユニタリであることに注意してください——これは2つの計算基底状態
+$$
+\{|111\dots 110\rangle, \quad |111\dots 111\rangle\}
+$$ {#eq-5.96}
+で張られる2次元空間において $\boldsymbol{V}$ を適用します。代わりに計算基底状態 $\{|x\rangle, |y\rangle\}$ で張られる空間において $\boldsymbol{V}$ を適用したい場合は、次のように作用する計算基底状態の置換 $\boldsymbol{\Sigma}$ を用いることができます：
+$$
+\begin{aligned}
+\boldsymbol{\Sigma} : \quad &|x\rangle \mapsto |111\dots 110\rangle, \\
+&|y\rangle \mapsto |111\dots 111\rangle,
+\end{aligned}
+$$ {#eq-5.97}
+そして次を構成します：
+$$
+\boldsymbol{\Sigma}^{-1} \circ \Lambda^{n-1}(\boldsymbol{V}) \circ \boldsymbol{\Sigma}.
+$$ {#eq-5.98}
+これは右から左へと読まれ、まず $\boldsymbol{\Sigma}$ が作用し、最後に $\boldsymbol{\Sigma}^{-1}$ が作用します。しかし、私たちはすでに §5.2.2 において、$\Lambda^{n-1}(\boldsymbol{X})$ ゲートと（単一量子ビットの）NOT ゲートを用いて計算基底状態の任意の置換を構築する方法を見ており、また今や $\Lambda^{n-1}(\boldsymbol{X})$（$\Lambda^{n-1}(\boldsymbol{U})$ の特別な場合）を2量子ビットゲートから構築する方法も知っています。したがって、2量子ビットゲートを用いて、式 (@eq-5.98) のように（計算基底における）一般的な $2 \times 2$ ユニタリを構築できました。これで、$U(2^n)$ の任意の元が2量子ビットゲートの回路によって達成できることの証明が完了します。実際、私たちはさらに強い結果を証明しました：$\boldsymbol{U}$ を任意の単一量子ビットゲートとするとき、2量子ビットゲート $\{\Lambda(\boldsymbol{U})\}$ は厳密に汎用なゲートセットを構成します。
+
+### 5.4.3 有限汎用ゲートセット (Finite Universal Gate Sets) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=39) {#sec-5.4.3-finite-universal-gate-sets}
+
+**円周上の稠密性（Denseness on the circle）**: 有限ゲートセットを用いて構築された回路が $U(2^n)$ において稠密であるとき、そのゲートセットは汎用です。稠密性の最初の単純な例として、円の回転の群 $U(1)$、例えばブロッホ球の $\hat{z}$ 軸のまわりの回転を考えます：
+$$
+\left\{ \boldsymbol{U}(\theta) = \exp\left( i\frac{\theta}{2}\boldsymbol{\sigma}_3 \right), \quad \theta \in [0, 4\pi) \right\}.
+$$ {#eq-5.99}
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=40) $\alpha \in [0, 1)$ が無理数であるとき、$\boldsymbol{U}(4\pi\alpha)$ の正の整数乗は $U(1)$ において稠密であると主張します。同値なことですが、点集合
+$$
+\{n\alpha \pmod 1, \quad n = 1, 2, 3, \dots\}
+$$ {#eq-5.100}
+は単位区間において稠密です。
+
+その理由を見るために、まず整数 $k$ および $n \neq m$ に対して $n\alpha = m\alpha + k$ となると $\alpha$ が有理数 $\alpha = k/(n - m)$ であることを意味してしまうため、点集合 $\{n\alpha \pmod 1\}$ はすべて相異なることに注意してください。ここで、$N$ 個の点 $\{n\alpha \pmod 1, n = 1, 2, 3, \dots, N\}$ のそれぞれを中心とする幅 $\varepsilon$ の開区間を考えます。$N\varepsilon > 1$ のとき、これらの区間のうち少なくとも2つは交差しなければなりません——すべての区間が互いに素であれば、その全長の和 $N\varepsilon$ が区間の長さを超えてしまうからです。したがって、$1/\varepsilon$ より小さい相異なる正の整数 $n$ と $m$ が存在して $|n - m|\alpha \pmod 1 < \varepsilon$ となります。言い換えれば、正の整数 $r = |n - m| < 1/\varepsilon$ は $r\alpha \pmod 1 < \varepsilon$ を満たします。いま、$r\alpha \pmod 1$ の正の整数倍は、$\varepsilon$ 未満の間隔で隔てられた単位区間上の等間隔の点となります。したがって、十分に大きな $M$ に対して、点集合 $\{kr\alpha \pmod 1, k = 1, 2, 3, \dots, M\}$ を中心とする幅 $\varepsilon$ の区間は単位区間を埋め尽くします。$\varepsilon$ は任意の正の実数を取り得るため、点集合 $\{n\alpha \pmod 1, n = 1, 2, 3, \dots\}$ は区間において稠密であると結論づけられます。
+
+**ジェネリックゲートの巾乗（Powers of a generic gate）**: この議論を一般化して、$U(N)$ のジェネリックな元の正の整数乗を考えます。適切な基底において、$\boldsymbol{U} \in U(N)$ は対角化され、固有値は
+$$
+\{e^{i\theta_1/2}, e^{i\theta_2/2}, \dots, e^{i\theta_N/2}\}
+$$ {#eq-5.101}
+となります。有理数は可算であり実数は非可算であるため、ジェネリックな $\boldsymbol{U}$（すなわち、測度ゼロの集合を除く $U(N)$ のすべての元）について、各 $\theta_i/\pi$ および $\theta_i/\theta_j$ は無理数です。各正の整数 $k$ に対して、$\boldsymbol{U}^k$ の固有値 $\{e^{-ik\theta_i/2}, i = 1, 2, \dots, N\}$ は $N$ 次元トーラス（$N$ 個の円の直積）上の点を定め、$k$ がすべての正の整数を動くとき、これらの点は $N$ 次元トーラス全体を稠密に埋め尽くします。したがって、任意のジェネリックな $\boldsymbol{U}$ について、元集合 $\{\boldsymbol{U}^k, k = 1, 2, 3, \dots\}$ は群 $U(1)^N$ において稠密である、すなわち $\boldsymbol{U}$ と同じ基底で対角であるすべてのユニタリ行列にいくらでも近づくことができると結論づけられます。
+
+この議論は、$\boldsymbol{U}^k$ が $U(1)^N$ の指定された元に $\varepsilon$ の近さになるために $k$ がどれほど大きくなければならないかについての上界を一切与えていないことに注意してください。実際、ある $m$ と $i$ について $|m\theta_i \pmod{4\pi}| \ll \varepsilon$ である場合、必要な $k$ の値は極めて大きくなる可能性があります。可換な量子ゲートの回路を用いて指定されたユニタリ変換を近似することは困難である（すなわち多数のゲートを必要とする）かもしれません。なぜなら、回路によって達成されるユニタリは各ゲートが何回適用されるかだけに依存し、ゲートが適用される順序には依存しないからです。非可換なゲートの回路を用いれば、良好な近似を達成することははるかに容易です（より少ないゲートで済みます）。
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=41) ゲートが非可換である場合、ゲートが適用される順序が重要になり、ゲートが可換である場合よりも、指定されたサイズの回路によって到達可能なユニタリがはるかに多くなります。
+
+**完全なリー代数への到達（Reaching the full Lie algebra）**: $\boldsymbol{A}$ と $\boldsymbol{B}$ を $N \times N$ エルミート行列として、2つのゲート $\boldsymbol{U} = \exp(i\boldsymbol{A}), \boldsymbol{V} = \exp(i\boldsymbol{B}) \in U(N)$ を構築できると仮定します。これらがジェネリックなゲートである場合、$\boldsymbol{U}$ の正のべき乗は任意の実数 $\alpha$ に対して $e^{i\alpha\boldsymbol{A}}$ にいくらでも近づき、$\boldsymbol{V}$ の正のべき乗は任意の実数 $\beta$ に対して $e^{i\beta\boldsymbol{B}}$ にいくらでも近づきます。これは、$\boldsymbol{C}$ を $\boldsymbol{A}$ と $\boldsymbol{B}$ によって生成されるリー代数の任意のエルミート元とするとき、$\boldsymbol{U}$ ゲートと $\boldsymbol{V}$ ゲートから構築された有限回路によって $e^{i\boldsymbol{C}}$ にいくらでも近づくことができることを保証するのに十分です。
+
+任意の $\varepsilon > 0$ に対して、作用素ノルムで $\boldsymbol{U}$ に $\varepsilon$ 近い $\tilde{\boldsymbol{U}}$ を達成する有限回路が存在するとき、ユニタリ変換 $\boldsymbol{U}$ は**到達可能（reachable）**であると言います。
+$$
+\lim_{n\to\infty} (e^{i\alpha\boldsymbol{A}/n}e^{i\beta\boldsymbol{B}/n})^n = \lim_{n\to\infty} \left( 1 + \frac{i}{n}(\alpha\boldsymbol{A} + \beta\boldsymbol{B}) + O\left(\frac{1}{n^2}\right) \right)^n = e^{i(\alpha\boldsymbol{A} + \beta\boldsymbol{B})},
+$$ {#eq-5.102}
+に注目すると、各 $e^{i\alpha\boldsymbol{A}/n}$ と $e^{i\beta\boldsymbol{B}/n}$ が到達可能であれば、任意の $e^{i(\alpha\boldsymbol{A} + \beta\boldsymbol{B})}$ も到達可能であることが分かります。さらに、
+$$
+\lim_{n\to\infty} \left( e^{i\boldsymbol{A}/\sqrt{n}}e^{i\boldsymbol{B}/\sqrt{n}}e^{-i\boldsymbol{A}/\sqrt{n}}e^{-i\boldsymbol{B}/\sqrt{n}} \right)^n = \lim_{n\to\infty} \left( 1 - \frac{1}{n}(\boldsymbol{AB} - \boldsymbol{BA}) + O\left(\frac{1}{n^{3/2}}\right) \right)^n = e^{-[\boldsymbol{A}, \boldsymbol{B}]},
+$$ {#eq-5.103}
+であることから、$e^{-[\boldsymbol{A}, \boldsymbol{B}]}$ も到達可能であることが分かります。
+
+例えば、$SU(2)$ のジェネリックな元の正の整数乗によって、$U(1)$ 部分群に到達できます。ブロッホ球上の軸を適切に配向すれば、これはパウリ演算子 $\boldsymbol{Z}$ によって生成される部分群です。$SU(2)$ の第2のジェネリックな元の正の整数乗によって、軸を適切に選ぶことで $\tilde{\boldsymbol{X}} = \boldsymbol{X} + \gamma\boldsymbol{Z}$（ある実数 $\gamma$）によって生成される別の $U(1)$ 部分群に到達できます。$[\boldsymbol{Z}, \boldsymbol{X}] = i\boldsymbol{Y}$ であるため、元集合 $\{\boldsymbol{Z}, \tilde{\boldsymbol{X}}, -i[\boldsymbol{Z}, \tilde{\boldsymbol{X}}]\}$ は3次元の $SU(2)$ リー代数を張ります。したがって、$SU(2)$ の任意の2つのジェネリックな元から構築された回路によって、$SU(2)$ の任意の元に到達するのに十分であることが従います。
+
+この考察は、より高次元のリー代数にも同様に適用されます。例えば、$SU(4)$ リー代数は15次元です。これは、$SU(4)$ の部分群 $U(1)^3$, $SU(2) \times SU(2) \times U(1)$, $SU(3) \times U(1)$ などのリー代数といった、様々な低次元部分代数を含んでいます。しかし、$SU(4)$ リー代数の2つのジェネリックな元があれば、それだけで完全なリー代数を生成するのに十分です。生成された代数が低次元部分代数のいずれか上で閉じるのは、いくつかの入れ子になった交換子が「偶然に」ゼロになる場合に限られ、
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=42) これは $SU(4)$ の生成元のすべての対のうち測度ゼロの集合によってのみ満たされる基準です。実際、すでに述べたように、$SU(4)$ のジェネリックな元はトーラス $U(1)^3$ への到達を可能にし、$SU(4)$ のいかなる非自明な部分群も2つのジェネリックな $U(1)^3$ 部分群を含むことはありません。したがって、2つのジェネリックな2量子ビットゲートから構築された回路は、（全位相を除いて）任意の2量子ビットゲートに到達するのに十分です。そして2量子ビットゲートによって $U(2^n)$ の任意の元に到達できるため、ゲートを任意の量子ビットの対に適用できると仮定すれば、1対のジェネリックな2量子ビットゲートが汎用ゲートセットを提供します。
+
+しかし実際には、ゲートが作用する量子ビットの対だけでなく、量子ビットの順序も自由に選べるのであれば、**たった1つのジェネリックな2量子ビットゲートですでに十分**です。すなわち、ジェネリックな2量子ビットゲートは、2つの量子ビットを入れ替える演算子 SWAP と交換しません。$\boldsymbol{U}$ がジェネリックな2量子ビットゲートである場合、
+$$
+\boldsymbol{V} = \mathbf{SWAP} \circ \boldsymbol{U} \circ \mathbf{SWAP}
+$$ {#eq-5.104}
+（同じ2つの量子ビットに、ただし逆の順序で適用された同じゲート）は、$\boldsymbol{U}$ と交換しない別の2量子ビットゲートとなります。$\boldsymbol{U}$ の正のべき乗は $SU(4)$ のある $U(1)^3$ 部分群に到達し、$\boldsymbol{V}$ の正のべき乗は異なる $U(1)^3$ に到達するため、$\boldsymbol{U}$ と $\boldsymbol{V}$ から構築された回路は $SU(4)$ の全体に到達します。
+
+非ジェネリックな汎用ゲート、特に固有値がすべて $\pi$ の有理数倍であるようなゲートであっても、汎用性に十分な場合があります。演習で議論される一例はゲートセット $\{\mathrm{CNOT}, \boldsymbol{H}, \boldsymbol{T}\}$ です。ここで $\boldsymbol{H}$ は軸 $\frac{1}{\sqrt{2}}(\hat{x} + \hat{z})$ のまわりにブロッホ球を角度 $\pi$ だけ回転させ、$\boldsymbol{T}$ は $\hat{z}$ 軸のまわりにブロッホ球を角度 $\pi/4$ だけ回転させます。もし $\boldsymbol{T}$ を $\pi/2$ 回転である $\boldsymbol{T}^2$ に置き換えたとすると、ゲートセットは汎用ではなくなります。その場合、達成可能な単一量子ビット回転は、$SU(2)$ の有限部分群（立方体の対称群）に属するものだけになってしまうからです。しかし、$SU(2)$ にはこのような有限非可換部分群はほとんど存在しません（回転群 $SO(3)$ の有限非可換部分群は、正多角形および正多面体（プラトン立体）の対称群のみです）。ゲートセットがこれらの有限部分群を越えて到達するならば、$SU(2)$ の $U(1)$ 部分群か、$SU(2)$ 全体のいずれかに到達することになります。
+
+### 5.4.4 ソロヴェイ・キタエフ近似 (The Solovay-Kitaev Approximation) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=42) {#sec-5.4.4-solovay-kitaev-approximation}
+
+ここまでの汎用ゲートに関する議論は到達可能性に焦点を当てており、計算量を無視してきました。しかし、有限の汎用ゲートセットを手にしているとき、所望のユニタリ変換を精度 $\varepsilon$ で近似できるか*どうか*だけでなく、その近似を達成することが*どれほど困難か*も知る必要があります。どれほどの大きさの回路があれば十分でしょうか？ この問いには実質的に2つの部分があります。(1) ユニタリ変換 $\boldsymbol{U}$ が与えられたとき、$\|\tilde{\boldsymbol{U}} - e^{i\phi}\boldsymbol{U}\|_{\sup} \le \varepsilon$ となる $\tilde{\boldsymbol{U}}$ を構築するには、どれほどの大きさの量子回路が必要か？
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=43) (2) $\tilde{\boldsymbol{U}}$ を達成する量子回路を見つけるには、どれほどの大きさの古典回路が必要か？ 定数次元のユニタリ群の元を近似するために用いられる（逆元で閉じている）任意の汎用ゲートセットに対して、両方の問いに対する答えが $\operatorname{polylog}(1/\varepsilon)$ であることを見ることになります。私たちが第2の問いへの答えに関心を持つのは、$\boldsymbol{U}$ を小さな量子回路で良好に近似できると知ったとしても、それらの回路を見つけることが極めて困難であるならば、あまり役に立たないからです。
+
+逐次的に優れた近似を達成する再帰的アルゴリズムを考案することによって、この結果を証明します。$U(N)$ のすべての元が、作用素ノルムで有限のユニタリ変換のレパートリー $\mathcal{R}$ のある元から距離 $\varepsilon$ 以内にあるとき、$\mathcal{R}$ は $U(N)$ における「$\varepsilon$-ネット（$\varepsilon$-net）」であると言い、$\mathcal{R}$ のすべての元の逆元もまた $\mathcal{R}$ に含まれるとき、$\mathcal{R}$ は「逆元で閉じている（closed under inverse）」と言います。再帰的アルゴリズムの鍵となるステップは、$\mathcal{R}$ が逆元で閉じている $\varepsilon$-ネットであるとき、以下の性質を持つ新しいレパートリー $\mathcal{R}'$（これも逆元で閉じている）を構築できることを示すことです：(1) $\mathcal{R}'$ の各元は、$\mathcal{R}$ からの多くとも5個のゲートの回路によって達成される。(2) $\mathcal{R}'$ は $\varepsilon'$-ネットであり、ここで
+$$
+\varepsilon' = C\varepsilon^{3/2},
+$$ {#eq-5.105}
+であり、$C$ は定数です。
+
+このステップがどのように機能するかを説明する前に、なぜこれによって精度に対してポリ対数的なサイズの量子回路を用いて任意のユニタリを近似できることが保証されるのかを見ておきましょう。まず手始めに、逆元で閉じている $\varepsilon_0$-ネット $\mathcal{R}_0$ が見つかっており、$\mathcal{R}_0$ の各元が汎用ゲートセットから選ばれた多くとも $L_0$ 個のゲートを持つ回路によって達成できると仮定します。$\varepsilon_0 < 1/C^2$ であれば、再帰的ステップを発動して $\varepsilon_1$-ネット $\mathcal{R}_1$ を見つけることができます。ここで $\varepsilon_1 < \varepsilon_0$ であり、$\mathcal{R}_1$ の各元は $L_1 = 5L_0$ 個のゲートからなる回路によって達成できます。このステップを $k$ 回繰り返すことで、誤差 $\varepsilon_k$ をレベル0の誤差 $\varepsilon_0$ よりもはるかに小さくすることができます。関係式
+$$
+C^2\varepsilon_k = (C^2\varepsilon_{k-1})^{3/2}
+$$ {#eq-5.106}
+を $k$ 回反復すると、次が得られます：
+$$
+C^2\varepsilon_k = (C^2\varepsilon_0)^{(3/2)^k},
+$$ {#eq-5.107}
+両辺の対数を取ることで、次が分かります：
+$$
+\left(\frac{3}{2}\right)^k = \frac{\log(1/C^2\varepsilon_k)}{\log(1/C^2\varepsilon_0)}.
+$$ {#eq-5.108}
+$k$ 回の再帰的ステップの後、$\varepsilon_k$-ネット $\mathcal{R}_k$ 内の各ユニタリに対する回路サイズは、
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=44) 次式で与えられる $L_k$ 以下となります：
+$$
+L_k / L_0 = 5^k = \left( \left(\frac{3}{2}\right)^k \right)^{\log 5 / \log(3/2)} = \left( \frac{\log(1/C^2\varepsilon_k)}{\log(1/C^2\varepsilon_0)} \right)^{\log 5 / \log(3/2)}.
+$$ {#eq-5.109}
+したがって、回路サイズは精度 $\varepsilon_k$ に対して $[\log(1/\varepsilon_k)]^{3.97}$ としてスケールします。
+
+次に、$\varepsilon$-ネット $\mathcal{R}$ から $\varepsilon'$-ネット $\mathcal{R}'$ がどのように構築されるかを見てみましょう。任意の $\boldsymbol{U} \in SU(N)$ に対して、$\|\boldsymbol{U} - \tilde{\boldsymbol{U}}\|_{\sup} \le \varepsilon$、あるいは同値ですが $\|\boldsymbol{U}\tilde{\boldsymbol{U}}^{-1} - \boldsymbol{I}\|_{\sup} \le \varepsilon$ を満たす元 $\tilde{\boldsymbol{U}} \in \mathcal{R}$ が存在します。ここで、$\mathcal{R}$ の4つの元からなる回路として構築され、$\|\boldsymbol{U}\tilde{\boldsymbol{U}}^{-1} - \boldsymbol{W}\|_{\sup} \le \varepsilon'$、あるいは同値ですが $\|\boldsymbol{U} - \boldsymbol{W}\tilde{\boldsymbol{U}}\|_{\sup} \le \varepsilon'$ を満たす $\boldsymbol{W}$ を見つけます。これにより、$\boldsymbol{U}$ は $\mathcal{R}$ の5つの元からなる回路によって達成される $\boldsymbol{W}\tilde{\boldsymbol{U}}$ によって精度 $\varepsilon'$ で近似されます。
+
+$\boldsymbol{A} = O(\varepsilon)$ として、$\boldsymbol{U}\tilde{\boldsymbol{U}}^{-1} = e^{i\boldsymbol{A}}$ と書くことができます。（$\boldsymbol{A} = O(\varepsilon)$ とは、$\|\boldsymbol{A}\|_{\sup} = O(\varepsilon)$、すなわち十分に小さい $\varepsilon$ に対して $\|\boldsymbol{A}\|_{\sup}$ が定数掛ける $\varepsilon$ で上から抑えられることを意味します。）$[\boldsymbol{B}, \boldsymbol{C}] = -i\boldsymbol{A}$ を満たす、ともに $O(\varepsilon^{1/2})$ であるエルミート行列 $\boldsymbol{B}, \boldsymbol{C}$ を見つけることが可能です。さらに、$\mathcal{R}$ は $\varepsilon$-ネットであるため、$\mathcal{R}$ には $e^{i\boldsymbol{B}}$ に $\varepsilon$ 近い元 $e^{i\tilde{\boldsymbol{B}}}$ と、$e^{i\boldsymbol{C}}$ に $\varepsilon$ 近い元 $e^{i\tilde{\boldsymbol{C}}}$ が存在します。したがって、$\boldsymbol{B} - \tilde{\boldsymbol{B}} = O(\varepsilon)$ および $\boldsymbol{C} - \tilde{\boldsymbol{C}} = O(\varepsilon)$ が従います。
+
+いま、次の回路を考えます：
+$$
+\boldsymbol{W} = e^{i\tilde{\boldsymbol{B}}} e^{i\tilde{\boldsymbol{C}}} e^{-i\tilde{\boldsymbol{B}}} e^{-i\tilde{\boldsymbol{C}}} = \boldsymbol{I} - [\tilde{\boldsymbol{B}}, \tilde{\boldsymbol{C}}] + O(\varepsilon^{3/2});
+$$ {#eq-5.110}
+剰余項は $\tilde{\boldsymbol{B}}$ と $\tilde{\boldsymbol{C}}$ の3次の項であるため、$O(\varepsilon^{3/2})$ です。まず、この回路の逆元 $e^{i\tilde{\boldsymbol{C}}} e^{i\tilde{\boldsymbol{B}}} e^{-i\tilde{\boldsymbol{C}}} e^{-i\tilde{\boldsymbol{B}}}$ もまた、$\mathcal{R}$ のゲートからなるサイズ4の回路として構築できることに注意してください。さらに、
+$$
+\begin{aligned}
+\boldsymbol{W} &= \boldsymbol{I} - [\boldsymbol{B} + O(\varepsilon), \boldsymbol{C} + O(\varepsilon)] + O(\varepsilon^{3/2}) = \boldsymbol{I} + i\boldsymbol{A} + O(\varepsilon^{3/2}) \\
+&= e^{i\boldsymbol{A}} + O(\varepsilon^{3/2});
+\end{aligned}
+$$ {#eq-5.111}
+となります。したがって、$\mathcal{R}$ の4つのゲートからなる回路 $\boldsymbol{W}$ は、私たちが示したかった通り、$\boldsymbol{U}\tilde{\boldsymbol{U}}^{-1}$ を $O(\varepsilon^{3/2})$ の精度で近似します。
+
+最後に、ユニタリ変換を近似する量子回路を見つけるための古典計算コストについて考えましょう。古典アルゴリズムは入力としてユニタリ変換 $\boldsymbol{U}$ を受け取り、出力として $\boldsymbol{U}$ を精度 $\varepsilon$ で近似する $\tilde{\boldsymbol{U}}$ を評価する量子回路を生成します。近似の精度を $\varepsilon'$ に改善するには、精度 $\varepsilon$ のアルゴリズムを3回呼び出して、$\tilde{\boldsymbol{U}}$, $e^{i\tilde{\boldsymbol{B}}}$, および $e^{i\tilde{\boldsymbol{C}}}$ を評価する回路を見つける必要があります。したがって、精度 $\varepsilon$ のアルゴリズムの古典コストを $t$ とすると、改善された精度 $\varepsilon'$ のアルゴリズムの古典コストは $t' = 3t + \text{定数}$ となります。ここで加法的な定数は、
+
+[📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=45) $[\boldsymbol{B}, \boldsymbol{C}] = -i\boldsymbol{A}$ を満たす行列 $\boldsymbol{B}$ と $\boldsymbol{C}$ を見つけるなど、$\varepsilon$ に応じてスケールしないタスクのコストを賄うために必要です。$k$ 回の反復の後、古典コストは次のようにスケールします：
+$$
+O(3^k) = O\left( \left[ \log(1/\varepsilon_k) \right]^{\log 3 / \log(3/2)} \right) = O\left( \left[ \log(1/\varepsilon_k) \right]^{2.71} \right),
+$$ {#eq-5.112}
+これは、アルゴリズムのレベル $k$ のバージョンによって達成される精度に対してポリ対数的です。
+
+私たちが成し遂げたことは少し驚くべきことです。$O(\varepsilon)$ の誤差を持つユニタリ変換を合成することによって、より小さな $O(\varepsilon^{3/2})$ の誤差を持つユニタリ変換を得たのです。このような粗い道具を用いて、どうしてこれほど精密な結果を達成できたのでしょうか？ その秘密は、$O(\varepsilon)$ の誤差が相殺し、より高次の誤差だけが残るように回路を構築した点にあります。もし $\mathcal{R}$ が逆元で閉じていなかったならば、この手法は機能しなかったでしょう。$e^{i\tilde{\boldsymbol{B}}}$ と $e^{i\tilde{\boldsymbol{C}}}$ の逆元の代わりに、それらの逆元に対する $O(\varepsilon)$ 近似を使用せざるを得なかったとすれば、誤差の相殺は起こらず、改善された近似を求める探求は失敗に終わっていたはずです。しかし、私たちの汎用ゲートセットがゲートセットの各元の厳密な逆元を構築することを許しているならば、ソロヴェイ・キタエフのアプローチを用いて再帰的に近似を改善できます。
+
+このスキームは、逆元で閉じている任意の汎用ゲートセットに対して機能します。特定のゲートセットに対しては、より優れた近似が可能です。例えば、ゲートセット $\{\boldsymbol{H}, \boldsymbol{T}\}$ を用いると、$O(\log(1/\varepsilon))$ 個のゲートを用いて任意の単一量子ビットユニタリを精度 $\varepsilon$ で近似できます。これは一般的な議論によって確立された $O([\log(1/\varepsilon)]^{3.97})$ に対する大幅な改善であり、この改善されたオーバーヘッドコストを達成する回路は効率的に構築できます。
