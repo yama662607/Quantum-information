@@ -1,0 +1,344 @@
+## 7.10 安定化符号 (Stabilizer Codes) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=33) {#sec-7.10-stabilizer-codes}
+
+### 7.10.1 一般的定式化 (General formulation) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=33) {#sec-7.10.1-general-formulation}
+
+私たちは（非縮退の）$[[5, 1, 3]]$ 量子符号を構築できるようになりますが、そのためには CSS の手順よりも強力な量子符号構築の手順が必要となります。
+
+誤り復元が可能となる条件を確立するために、誤りスーパーオペレータを $n$ 量子ビットのパウリ演算子で展開することが非常に有用であることを以前に見出しました。しかし今までのところ、これらの演算子の群構造（パウリ演算子の積はパウリ演算子であること）を活用してきませんでした。実際、群論は QECC を構築するための強力なツールであることがわかります。
+
+単一の量子ビットに対して、すべてのパウリ演算子が実行列によって表現されるように選ぶ方が都合が良いため、ここでは $\boldsymbol{Y}$ が次の反エルミート行列を表す記法を用います：
+
+$$
+\boldsymbol{Y} = \boldsymbol{Z}\boldsymbol{X} = i\sigma_y = \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}.
+$$ {#eq-7.116}
+
+これは $\boldsymbol{Y}^2 = -\boldsymbol{I}$ を満たします。このとき、演算子
+
+$$
+\{\pm\boldsymbol{I}, \pm\boldsymbol{X}, \pm\boldsymbol{Y}, \pm\boldsymbol{Z}\} \equiv \pm\{\boldsymbol{I}, \boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}\}
+$$ {#eq-7.117}
+
+は位数 8 の群の元です^[これは四元数群ではなく、位数 8 のもう1つの非可換群――正方形の対称群（二面体群 $D_4$）です。位数 4 の元 $\boldsymbol{Y}$ は平面の $90^\circ$ 回転とみなすことができ、$\boldsymbol{X}$ と $\boldsymbol{Z}$ は2つの直交する軸に関する鏡映です。]。
+
+単一量子ビットのパウリ演算子の $n$ 重テンソル積もまた群を形成します：
+
+$$
+G_n = \pm\{\boldsymbol{I}, \boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}\}^{\otimes n}.
+$$ {#eq-7.118}
+
+その位数は $|G_n| = 2^{2n+1}$ です（$4^n$ 通りのテンソル積が存在し、$\pm$ 符号のためにさらに 2 の因子が掛かるため）。私たちは $G_n$ を **$n$ 量子ビットパウリ群（$n$-qubit Pauli group）**と呼びます。（実際には、「パウリ群」という用語を、抽象群 $G_n$ と、$2 \times 2$ 行列のテンソル積によるその次元 $2^n$ の忠実なユニタリ表現――次元が 1 より大きい唯一の既約表現――の双方を指すために用います。）$G_n$ は2元からなる中心 $Z_2 = \{\pm\boldsymbol{I}^{\otimes n}\}$ を持つことに注意してください。その中心で剰余群を作ると、群 $\bar{G}_n \equiv G_n/Z_2$ が得られます。この群は次元 $2^{2n}$ の 2 元ベクトル空間（binary vector space）^[元の個数が $2^{2n}$ 個であるため、体 $\mathbb{F}_2$ 上のベクトル空間としての次元は $2n$ です。]ともみなすことができ、この性質は後で活用します。
+
+パウリ群 $G_n$ の（$2^n$ 次元表現）は、明らかに次の性質を持っています：
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=34)
+
+(i) 各 $\boldsymbol{M} \in G_n$ はユニタリであり、$\boldsymbol{M}^{-1} = \boldsymbol{M}^\dagger$ である。  
+(ii) 各元 $\boldsymbol{M} \in G_n$ に対して、$\boldsymbol{M}^2 = \pm\boldsymbol{I} \equiv \pm\boldsymbol{I}^{\otimes n}$ である。さらに、テンソル積内の $\boldsymbol{Y}$ の個数が偶数であれば $\boldsymbol{M}^2 = \boldsymbol{I}$ であり、$\boldsymbol{Y}$ の個数が奇数であれば $\boldsymbol{M}^2 = -\boldsymbol{I}$ である。  
+(iii) もし $\boldsymbol{M}^2 = \boldsymbol{I}$ ならば $\boldsymbol{M}$ はエルミート（$\boldsymbol{M} = \boldsymbol{M}^\dagger$）であり、もし $\boldsymbol{M}^2 = -\boldsymbol{I}$ ならば $\boldsymbol{M}$ は反エルミート（$\boldsymbol{M} = -\boldsymbol{M}^\dagger$）である。  
+(iv) 任意の2元 $\boldsymbol{M}, \boldsymbol{n} \in G_n$ は可換か反可換のいずれかである：$\boldsymbol{M}\boldsymbol{n} = \pm\boldsymbol{n}\boldsymbol{M}$。  
+
+パウリ群を用いて、次のように QECC を特徴付けます：$S$ を $n$ 量子ビットパウリ群 $G_n$ の可換部分群とします。したがって、$\mathcal{H}_{2^n}$ 上に作用する $S$ のすべての元は同時対角化可能です。このとき、$S$ に関連付けられた**安定化符号（スタビライザー符号；stabilizer code）** $\mathcal{H}_S \subseteq \mathcal{H}_{2^n}$ は、$S$ のすべての元の固有値 1 に対する同時固有空間です。すなわち、
+
+$$
+|\psi\rangle \in \mathcal{H}_S \quad \Longleftrightarrow \quad \boldsymbol{M}|\psi\rangle = |\psi\rangle \quad (\forall \boldsymbol{M} \in S).
+$$ {#eq-7.119}
+
+群 $S$ はすべての符号語を不変に保つ（安定化する）ため、符号の**安定化群（スタビライザー；stabilizer）**と呼ばれます。
+
+群 $S$ はその生成元によって特徴付けることができます。これらは**独立**であり（どの元も他の元の積として表現できない）、かつ $S$ の各元が $\{\boldsymbol{M}_i\}$ の元の積として表現できるような元集合 $\{\boldsymbol{M}_i\}$ です。もし $S$ が $n - k$ 個の生成元を持つならば、符号空間 $\mathcal{H}_S$ は次元 $2^k$ を持つこと――すなわち $k$ 個の符号化された量子ビットが存在することを示すことができます。
+
+これを検証するために、まず各 $\boldsymbol{M} \in S$ は $\boldsymbol{M}^2 = \boldsymbol{I}$ を満たさなければならないことに注意します。もし $\boldsymbol{M}^2 = -\boldsymbol{I}$ であれば、$\boldsymbol{M}$ は固有値 $+1$ を持つことができません。さらに、自乗して 1 になる $G_n$ 内の各 $\boldsymbol{M} \neq \pm\boldsymbol{I}$ に対して、固有値 $+1$ と $-1$ は等しい縮退度を持ちます。なぜなら、$\boldsymbol{M} \neq \pm\boldsymbol{I}$ の各々に対して、$\boldsymbol{M}$ と反可換な $\boldsymbol{n} \in G_n$ が存在するからです：
+
+$$
+\boldsymbol{n}\boldsymbol{M} = -\boldsymbol{M}\boldsymbol{n}.
+$$ {#eq-7.120}
+
+したがって、$\boldsymbol{M}|\psi\rangle = |\psi\rangle$ であることと $\boldsymbol{M}(\boldsymbol{n}|\psi\rangle) = -\boldsymbol{n}|\psi\rangle$ であることは同値であり、ユニタリ演算子 $\boldsymbol{n}$ の作用は $\boldsymbol{M}$ の $+1$ 固有状態と $-1$ 固有状態の間の 1 対 1 対応を確立します。ゆえに、
+
+$$
+\boldsymbol{M}_1|\psi\rangle = |\psi\rangle
+$$ {#eq-7.121}
+
+を満たす互いに直交する状態は $\frac{1}{2}(2^n) = 2^{n-1}$ 個存在します（ここで $\boldsymbol{M}_1$ は $S$ の生成元の1つです）。
+
+いま、$\boldsymbol{M}_1$ と可換であり、かつ $\boldsymbol{M}_2 \neq \pm\boldsymbol{I}, \pm\boldsymbol{M}_1$ を満たす $G_n$ の別の元を $\boldsymbol{M}_2$ とします。$\boldsymbol{M}_1$ と可換でありながら $\boldsymbol{M}_2$ と反可換であるような $\boldsymbol{n} \in G_n$ を見出すことができます。したがって $\boldsymbol{n}$ は $\boldsymbol{M}_1$ の $+1$ 固有空間を保存しますが、この空間内において $\boldsymbol{M}_2$ の $+1$ 固有状態と $-1$ 固有状態を入れ替えます。このことから、
+
+$$
+\boldsymbol{M}_1|\psi\rangle = \boldsymbol{M}_2|\psi\rangle = |\psi\rangle
+$$ {#eq-7.122}
+
+を満たす空間は次元 $2^{n-2}$ を持つことが従います。
+
+このように続けていくと、もし $\boldsymbol{M}_j$ が $\{\boldsymbol{M}_1, \boldsymbol{M}_2, \dots, \boldsymbol{M}_{j-1}\}$ から独立であるならば、$\boldsymbol{M}_1, \dots, \boldsymbol{M}_{j-1}$ と可換であり、かつ $\boldsymbol{M}_j$ と反可換であるような $\boldsymbol{n}$ が存在することに注意します（このような $\boldsymbol{n}$ をどのように見出すことができるかは後で詳しく論じます）。したがって、$\boldsymbol{M}_1 = \boldsymbol{M}_2 = \dots = \boldsymbol{M}_{j-1} = 1$ の空間に制限すると、$\boldsymbol{M}_j$ は $-1$ 固有ベクトルと同じ数の $+1$ 固有ベクトルを持ちます。そのため、別の生成元を追加するたびに、同時固有空間の次元は常に半分に削減されます。$n - k$ 個の生成元が存在する場合、残る空間の次元は $2^n (1/2)^{n-k} = 2^k$ となります。
+
+安定化群の言語が有用であるのは、符号が検出および訂正できる誤りを特徴付ける単純な方法を提供するためです。$n - k$ 個の安定化生成元 $\boldsymbol{M}_1, \dots, \boldsymbol{M}_{n-k}$ を、符号の**検査演算子（チェック演算子；check operators）**、すなわち誤りを診断するために測定する集団的観測可能量と考えることができます。もし符号化された情報が損傷を受けていなければ、
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=35)
+各生成元に対して $\boldsymbol{M}_i = 1$ であることが見出されます。しかし、ある $i$ に対して $\boldsymbol{M}_i = -1$ であれば、データは符号部分空間に直交しており、誤りが検出されたことになります。
+
+誤りスーパーオペレータはパウリ群の元 $\boldsymbol{E}_a$ で展開できることを思い出してください。特定の $\boldsymbol{E}_a$ は、特定の安定化生成元 $\boldsymbol{M}$ と可換であるか反可換であるかのいずれかです。もし $\boldsymbol{E}_a$ と $\boldsymbol{M}$ が可換であれば、$|\psi\rangle \in \mathcal{H}_S$ に対して
+
+$$
+\boldsymbol{M}\boldsymbol{E}_a|\psi\rangle = \boldsymbol{E}_a\boldsymbol{M}|\psi\rangle = \boldsymbol{E}_a|\psi\rangle
+$$ {#eq-7.123}
+
+となり、誤りは値 $\boldsymbol{M} = 1$ を保存します。しかし、もし $\boldsymbol{E}_a$ と $\boldsymbol{M}$ が反可換であれば、
+
+$$
+\boldsymbol{M}\boldsymbol{E}_a|\psi\rangle = -\boldsymbol{E}_a\boldsymbol{M}|\psi\rangle = -\boldsymbol{E}_a|\psi\rangle
+$$ {#eq-7.124}
+
+となり、誤りは $\boldsymbol{M}$ の値を反転させるため、$\boldsymbol{M}$ を測定することによって誤りを検出できます。安定化生成元 $\boldsymbol{M}_i$ と誤り $\boldsymbol{E}_a$ に対して、次のように書くことができます：
+
+$$
+\boldsymbol{M}_i\boldsymbol{E}_a = (-1)^{s_{ia}} \boldsymbol{E}_a\boldsymbol{M}_i.
+$$ {#eq-7.125}
+
+$s_{ia}$（$i = 1, \dots, n-k$）は誤り $\boldsymbol{E}_a$ に対する**シンドローム（syndrome）**を構成します。誤り $\boldsymbol{E}_a$ が発生した場合、$\boldsymbol{M}_i$ の測定結果は $(-1)^{s_{ia}}$ となるからです。非縮退符号の場合、$s_{ia}$ はすべての $\boldsymbol{E}_a \in \mathcal{E}$ に対して相異なるため、$n - k$ 個の安定化生成元を測定することによって誤りを完全に診断できます。
+
+より一般的に、誤り復元が可能であることを保証するのに十分な、安定化群が満たすべき条件を見出しましょう。各 $\boldsymbol{E}_a, \boldsymbol{E}_b \in \mathcal{E}$ および符号部分空間内の規格化された $|\psi\rangle$ に対して、
+
+$$
+\langle\psi|\boldsymbol{E}_a^\dagger\boldsymbol{E}_b|\psi\rangle = C_{ab}
+$$ {#eq-7.126}
+
+（ここで $C_{ab}$ は $|\psi\rangle$ に依存しない）が満たされれば十分であることを思い出してください。各 $\boldsymbol{E}_a, \boldsymbol{E}_b \in \mathcal{E}$ に対して、次のいずれかが成り立つならば、この条件が満たされることを見出すことができます：
+
+1. $\boldsymbol{E}_a^\dagger\boldsymbol{E}_b \in S$
+2. $\boldsymbol{E}_a^\dagger\boldsymbol{E}_b$ と反可換な $\boldsymbol{M} \in S$ が存在する。
+
+**証明:** (1) の場合、$|\psi\rangle \in \mathcal{H}_S$ に対して $\langle\psi|\boldsymbol{E}_a^\dagger\boldsymbol{E}_b|\psi\rangle = \langle\psi|\psi\rangle = 1$ です。(2) の場合、$\boldsymbol{M} \in S$ かつ $\boldsymbol{M}\boldsymbol{E}_a^\dagger\boldsymbol{E}_b = -\boldsymbol{E}_a^\dagger\boldsymbol{E}_b\boldsymbol{M}$ と仮定します。このとき、
+
+$$
+\begin{aligned}
+\langle\psi|\boldsymbol{E}_a^\dagger\boldsymbol{E}_b|\psi\rangle &= \langle\psi|\boldsymbol{E}_a^\dagger\boldsymbol{E}_b\boldsymbol{M}|\psi\rangle \\
+&= -\langle\psi|\boldsymbol{M}\boldsymbol{E}_a^\dagger\boldsymbol{E}_b|\psi\rangle = -\langle\psi|\boldsymbol{E}_a^\dagger\boldsymbol{E}_b|\psi\rangle
+\end{aligned}
+$$ {#eq-7.127}
+
+となり、したがって $\langle\psi|\boldsymbol{E}_a^\dagger\boldsymbol{E}_b|\psi\rangle = 0$ です。 $\square$
+
+このように、$\{\mathcal{E}\}$ を訂正する**安定化符号**とは、パウリ群の可換部分群 $S$ によって固定される空間 $\mathcal{H}_S$ であり、ここで $\boldsymbol{E}_{a,b} \in \mathcal{E}$ を持つ各 $\boldsymbol{E}_a^\dagger\boldsymbol{E}_b$ に対して (1) または (2) のいずれかが満たされます。どの $\boldsymbol{E}_a^\dagger\boldsymbol{E}_b$ に対しても条件 (1) が満たされない場合、その符号は**非縮退（nondegenerate）**です。
+
+明らかに、符号部分空間として、$G_n$ の $n - k$ 個の独立な可換元の $2^{n-k}$ 個の同時固有空間のいずれか1つを同様に選ぶこともできます。しかし実際には、これらすべての符号は同値です。2つの安定化符号が、量子ビットのラベル付けの方法や各単一量子ビットヒルベルト空間の基底の選び方のみにおいて異なる場合――すなわち、一方の符号の安定化群が、量子ビットの置換と単一量子ビット変換のテンソル積によって他方の符号の安定化群へと変換される場合――それらは**同値（equivalent）**であるとみなすことができます。もし安定化生成元を2つの集合 $\{\boldsymbol{M}_1, \dots, \boldsymbol{M}_j\}$ と $\{\boldsymbol{M}_{j+1}, \dots, \boldsymbol{M}_{n-k}\}$ に分割するならば、第1の集合の各元と可換であり、かつ第2の集合の各元と反可換であるような $\boldsymbol{n} \in G_n$ が存在します。
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=36)
+$|\psi\rangle \in \mathcal{H}_S$ に $\boldsymbol{n}$ を適用すると、第1の集合の固有値は保存されたまま、第2の集合の固有値が反転します。$\boldsymbol{n}$ は単一量子ビットユニタリ変換の単なるテンソル積であるため、（同値性を除いて）すべての固有値を 1 と選択することに一般性を失うことはありません。さらに、安定化群を指定する際にはマイナス符号は実質的に重要ではないため、位相を除いて、安定化群が $n$ 個の量子ビットの置換と各量子ビット上での演算子 $\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}$ の置換によって異なっている場合にも、2つの符号は同値であると言うことができます。
+
+もし安定化群と**可換**でありながら安定化群内には存在しない $\boldsymbol{E}_a^\dagger\boldsymbol{E}_b$ が存在するならば、復元は失敗する可能性があります。これは符号部分空間 $\mathcal{H}_S$ を保存するものの、その空間内で非自明に作用し得る演算子です。したがって、符号化された情報を改変してしまう可能性があります。$\boldsymbol{E}_a|\psi\rangle$ と $\boldsymbol{E}_b|\psi\rangle$ は同一のシンドロームを持つため、$\boldsymbol{E}_a$ 誤りを誤って $\boldsymbol{E}_b$ 誤りと解釈してしまう可能性があり、その場合、誤りの効果と復元の試みの全体としての効果はデータに $\boldsymbol{E}_b^\dagger\boldsymbol{E}_a$ が適用されることになり、損傷を引き起こす可能性があります。
+
+距離 $d$ を持つ安定化符号は、重みが $d$ 未満である各 $\boldsymbol{E} \in G_n$ が安定化群内に存在するか、あるいは安定化群の何らかの元と反可換であるという性質を持ちます。安定化群が重み $d$ 未満の元を含まない場合、その符号は非縮退です。距離 $d = 2t + 1$ の符号は $t$ 個の誤りを訂正でき、距離 $s + 1$ の符号は $s$ 個の誤りを検出、または位置の判明している $s$ 個の誤りを訂正できます。
+
+### 7.10.2 シンプレクティック記法 (Symplectic Notation) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=36) {#sec-7.10.2-symplectic-notation}
+
+安定化符号の性質は、線形代数の言語を用いて説明および表現するのが最も適している場合がよくあります。すべての元が自乗して恒等演算子になる位数 $2^{n-k}$ のパウリ群の可換部分群である符号の安定化群 $S$ は、同値として、ある（シンプレクティック）内積に関して自己直交である $\mathbb{F}_2^{2n}$ の次元 $n - k$ の閉じた線形部分空間とみなすことができます。
+
+群 $\bar{G}_n = G_n/Z_2$ は 2 元ベクトル空間 $\mathbb{F}_2^{2n}$ と同型です。$\boldsymbol{Y} = \boldsymbol{Z}\boldsymbol{X}$ であるため、パウリ群の任意の元 $\boldsymbol{M}$ は（$\pm$ 符号を除いて）$\boldsymbol{Z}$ と $\boldsymbol{X}$ の積として表現できることに注目することによって、これを確立します：
+
+$$
+\boldsymbol{M} = \boldsymbol{Z}_M \cdot \boldsymbol{X}_M.
+$$ {#eq-7.128}
+
+ここで $\boldsymbol{Z}_M$ は $\boldsymbol{Z}$ のテンソル積であり、$\boldsymbol{X}_M$ は $\boldsymbol{X}$ のテンソル積です。より明示的には、パウリ演算子は次のように書くことができます：
+
+$$
+(\alpha|\beta) \equiv \boldsymbol{Z}(\alpha)\boldsymbol{X}(\beta) = \bigotimes_{i=1}^n \boldsymbol{Z}^{\alpha_i} \cdot \bigotimes_{i=1}^n \boldsymbol{X}^{\beta_i}.
+$$ {#eq-7.129}
+
+ここで $\alpha$ と $\beta$ は長さ $n$ の 2 値文字列です（このとき $\boldsymbol{Y}$ は $\alpha$ と $\beta$ が「衝突（collide）」する位置で作用します）。$\bar{G}_n$ における乗算は $\mathbb{F}_2^{2n}$ における加算へと写像されます：
+
+$$
+(\alpha|\beta)(\alpha'|\beta') = (-1)^{\alpha' \cdot \beta} (\alpha + \alpha' | \beta + \beta').
+$$ {#eq-7.130}
+
+この位相が生じるのは、積を式 @eq-7.129 の標準形へと並べ替える際に、$\alpha' \cdot \beta$ が $\boldsymbol{Z}$ と $\boldsymbol{X}$ を入れ替える回数を数えるためです。
+
+式 @eq-7.130 から、パウリ演算子の交換関係は次の形式で表現できることが従います：
+
+$$
+(\alpha|\beta)(\alpha'|\beta') = (-1)^{\alpha \cdot \beta' + \alpha' \cdot \beta} (\alpha'|\beta')(\alpha|\beta).
+$$ {#eq-7.131}
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=37)
+したがって、2つのパウリ演算子が可換であることと、対応するベクトルが「シンプレクティック」内積
+
+$$
+\alpha \cdot \beta' + \alpha' \cdot \beta
+$$ {#eq-7.132}
+
+に関して直交していることは同値です。
+
+また、パウリ演算子の自乗は
+
+$$
+(\alpha|\beta)^2 = (-1)^{\alpha \cdot \beta} \boldsymbol{I}
+$$ {#eq-7.133}
+
+であることにも注意します。なぜなら $\alpha \cdot \beta$ は演算子内の $\boldsymbol{Y}$ の個数を数えるためです。それが恒等演算子へと自乗されるための必要十分条件は
+
+$$
+\alpha \cdot \beta = 0
+$$ {#eq-7.134}
+
+です。各元がこの性質を持つ閉じた部分空間は、自動的に自己直交であることに注意してください：
+
+$$
+\alpha \cdot \beta' + \alpha' \cdot \beta = (\alpha + \alpha') \cdot (\beta + \beta') - \alpha \cdot \beta - \alpha' \cdot \beta' = 0.
+$$ {#eq-7.135}
+
+群の言語で言えば、各元が自乗して $\boldsymbol{I}$ になる $G_n$ の部分群は、自動的に可換群となります。
+
+線形代数の言語を用いると、パウリ群について以前になされた言明のいくつかは、線形制約を数えることによって容易に検証できます。対応するベクトルが $\mathbb{F}_2^{2n}$ 上で線形独立であるならば元は独立であるため、安定化群の $n - k$ 個の生成元を次元 $n - k$ の線形部分空間の基底と考えることができます。線形空間とそれに対応する可換群の双方を表すために記号 $S$ を用います。このとき $S^\perp$ は、（シンプレクティック内積に関して）$S$ 内の各ベクトルに直交するベクトルの次元 $n + k$ の空間を表します。$S$ 内のすべてのベクトルは互いに直交しているため、$S^\perp$ は $S$ を含むことに注意してください。群の言語において、$S^\perp$ に対応するのは $G_n$ における $S$ の**正規化群（あるいは中心化群）** $N(S)$（$\equiv S^\perp$）――すなわち $S$ の各元と可換であるすべての元を含む $G_n$ の部分群です。$S$ は可換であるため、自身の正規化群に含まれており、この正規化群は他の元も含んでいます（後でさらに論じます）。距離 $d$ の符号の安定化群は、その重み $\sum_i (\alpha_i \lor \beta_i)$ が $d$ 未満である各 $(\alpha|\beta)$ が、安定化部分空間 $S$ の**内部**にあるか、あるいは直交空間 $S^\perp$ の**外部**にあるという性質を持ちます。
+
+符号はその安定化群によって特徴付けることができ、安定化群はその生成元によって特徴付けることができ、$n - k$ 個の生成元は $(n - k) \times 2n$ 行列
+
+$$
+H = (H_Z | H_X)
+$$ {#eq-7.136}
+
+によって表現することができます。ここで各行は $(\alpha|\beta)$ 記法で表されたパウリ演算子です。誤り $\boldsymbol{E}_a = (\alpha_a | \beta_a)$ のシンドロームは、生成元 $\boldsymbol{M}_i = (\alpha'_i | \beta'_i)$ との交換関係によって決定されます：
+
+$$
+s_{ia} = (\alpha_a | \beta_a) \cdot (\alpha'_i | \beta'_i) = \alpha_a \cdot \beta'_i + \alpha'_i \cdot \beta_a.
+$$ {#eq-7.137}
+
+非縮退符号の場合、各誤りは相異なるシンドロームを持ちます。符号が縮退している場合、同一のシンドロームを持つ誤りが複数存在する可能性がありますが、復元を行うためには観測されたシンドロームに対応する $\boldsymbol{E}_a^\dagger$ のいずれか1つを適用すればよいことになります。
+
+### 7.10.3 安定化符号のいくつかの例 (Some examples of stabilizer codes) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=37) {#sec-7.10.3-examples-of-stabilizer-codes}
+
+**(a) 9量子ビット符号 (The nine-qubit code):** この $[[9, 1, 3]]$ 符号は、次のように表現できる8個の安定化生成元を持ちます：
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=38)
+
+$$
+\begin{aligned}
+&\boldsymbol{Z}_1\boldsymbol{Z}_2, \quad \boldsymbol{Z}_2\boldsymbol{Z}_3, \quad \boldsymbol{Z}_4\boldsymbol{Z}_5, \quad \boldsymbol{Z}_5\boldsymbol{Z}_6, \quad \boldsymbol{Z}_7\boldsymbol{Z}_8, \quad \boldsymbol{Z}_8\boldsymbol{Z}_9, \\
+&\boldsymbol{X}_1\boldsymbol{X}_2\boldsymbol{X}_3\boldsymbol{X}_4\boldsymbol{X}_5\boldsymbol{X}_6, \quad \boldsymbol{X}_4\boldsymbol{X}_5\boldsymbol{X}_6\boldsymbol{X}_7\boldsymbol{X}_8\boldsymbol{X}_9.
+\end{aligned}
+$$ {#eq-7.138}
+
+式 @eq-7.136 の記法では、これらは次のようになります：
+
+$$
+\left(\begin{array}{ccc|ccc|ccc|ccccccccc}
+1 & 1 & 0 & & & & & & & & & & & & & & & \\
+0 & 1 & 1 & & 0 & & & 0 & & & & & & & & & & \\
+\hline
+& & & 1 & 1 & 0 & & & & & & & & & & & & \\
+& 0 & & 0 & 1 & 1 & & 0 & & & & & 0 & & & & & \\
+\hline
+& & & & & & 1 & 1 & 0 & & & & & & & & & \\
+& 0 & & & 0 & & 0 & 1 & 1 & & & & & & & & & \\
+\hline
+& & & & & & & & & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 \\
+& & & & 0 & & & & & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1
+\end{array}\right)
+$$
+
+**(b) 7量子ビット符号 (The seven-qubit code):** この $[[7, 1, 3]]$ 符号は6個の安定化生成元を持ち、次のように表現できます：
+
+$$
+\tilde{H} = \begin{pmatrix} H_{\text{ham}} & 0 \\ 0 & H_{\text{ham}} \end{pmatrix}.
+$$ {#eq-7.139}
+
+ここで $H_{\text{ham}}$ は古典 $[7, 4, 3]$ ハミング符号の $3 \times 7$ パリティ検査行列です。3つの検査演算子
+
+$$
+\begin{aligned}
+\boldsymbol{M}_1 &= \boldsymbol{Z}_1\boldsymbol{Z}_3\boldsymbol{Z}_5\boldsymbol{Z}_7, \\
+\boldsymbol{M}_2 &= \boldsymbol{Z}_2\boldsymbol{Z}_3\boldsymbol{Z}_6\boldsymbol{Z}_7, \\
+\boldsymbol{M}_3 &= \boldsymbol{Z}_4\boldsymbol{Z}_5\boldsymbol{Z}_6\boldsymbol{Z}_7
+\end{aligned}
+$$ {#eq-7.140}
+
+はビット反転を検出し、3つの検査演算子
+
+$$
+\begin{aligned}
+\boldsymbol{M}_4 &= \boldsymbol{X}_1\boldsymbol{X}_3\boldsymbol{X}_5\boldsymbol{X}_7, \\
+\boldsymbol{M}_5 &= \boldsymbol{X}_2\boldsymbol{X}_3\boldsymbol{X}_6\boldsymbol{X}_7, \\
+\boldsymbol{M}_6 &= \boldsymbol{X}_4\boldsymbol{X}_5\boldsymbol{X}_6\boldsymbol{X}_7
+\end{aligned}
+$$ {#eq-7.141}
+
+は位相誤りを検出します。$\boldsymbol{M}_1 = \boldsymbol{M}_2 = \boldsymbol{M}_3 = 1$ を満たす空間は、ハミングパリティ検査を満たす符号語によって張られます。基底のアダマール変換が $\boldsymbol{Z}$ と $\boldsymbol{X}$ を入れ替えることを思い出すと、$\boldsymbol{M}_4 = \boldsymbol{M}_5 = \boldsymbol{M}_6 = 1$ を満たす空間は、アダマール回転された基底においてハミングパリティ検査を満たす符号語によって張られることがわかります。実際、私たちはハミングパリティ検査が双方の基底において満たされることを要求することによって7量子ビット符号を構築しました。ハミング符号が自身の双対符号を含むため（すなわち $H_{\text{ham}}$ の各行がハミングパリティ検査を満たすため）、生成元は互いに可換です。
+
+**(c) CSS符号 (CSS codes):** $[n, k, d]$ 古典符号 $C$ が自身の双対符号 $C^\perp$ を含むときは常に、CSS 構成を実行して $[[n, 2k - n, d]]$ 量子符号を得ることができることを思い出してください。この符号の安定化群は次のように書くことができます：
+
+$$
+\tilde{H} = \begin{pmatrix} H & 0 \\ 0 & H \end{pmatrix}.
+$$ {#eq-7.142}
+
+ここで $H$ は $C$ の $(n - k) \times n$ パリティ検査行列です。7量子ビット符号と同様に、$C$ が $C^\perp$ を含むために安定化生成元は互いに可換であり、符号部分空間は
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=39)
+$F$ 基底と $P$ 基底の双方において $H$ パリティ検査を満たす状態によって張られます。同値として、符号語は $H$ パリティ検査を満たし、かつ次のもとで不変です：
+
+$$
+|v\rangle \to |v + w\rangle.
+$$ {#eq-7.143}
+
+ここで $w \in C^\perp$ です。
+
+**(d) より一般的なCSS符号 (More general CSS codes):** より一般的に、各生成元が $\boldsymbol{Z}$ の積 $(\alpha|0)$ または $\boldsymbol{X}$ の積 $(0|\beta)$ のいずれかとして選択できるような安定化群を考えましょう。このとき生成元は次の形式を持ちます：
+
+$$
+\tilde{H} = \begin{pmatrix} H_Z & 0 \\ 0 & H_X \end{pmatrix}.
+$$ {#eq-7.144}
+
+さて、$\boldsymbol{Z}$ 生成元と $\boldsymbol{X}$ 生成元が互いに可換であるためには、$H_X$ と $H_Z$ はどのような条件を満たさなければならないでしょうか？ $\boldsymbol{Z}$ は $\boldsymbol{X}$ と偶数回衝突しなければならないため、次が成り立ちます：
+
+$$
+H_X H_Z^T = H_Z H_X^T = 0.
+$$ {#eq-7.145}
+
+しかしこれは、パリティ検査が $H_X$ である符号の双対 $C_X^\perp$ が、パリティ検査が $H_Z$ である符号 $C_Z$ に含まれているという要求にほかなりません。言い換えれば、この QECC は次の関係をもって CSS の枠組みに適合します：
+
+$$
+C_2 = C_X^\perp \subseteq C_1 = C_Z.
+$$ {#eq-7.146}
+
+したがって、CSS 符号を、安定化群が式 @eq-7.144 の形式の生成元を持つもの、かつそのようなもののみとして特徴付けることができます。
+
+しかし注意点があります。式 @eq-7.144 によって定義される符号は、誤りが重み $d = \min(d_Z, d_X)$ 未満に制限されるならば非縮退となります（ここで $d_Z$ は $C_Z$ の距離、$d_X$ は $C_X$ の距離）。しかし QECC の真の距離は $d$ を超えることがあります。例えば、9量子ビット符号はこの一般化された意味において CSS 符号です。しかしその場合、古典符号 $C_X$ の距離は 1 であり、これは例えば $\boldsymbol{Z}_1\boldsymbol{Z}_2$ が安定化群に含まれていることを反映しています。それにもかかわらず、重み 2 のパウリ演算子は $S^\perp \setminus S$ 内に存在しないため、CSS 符号の距離は $d = 3$ です。
+
+### 7.10.4 符号化された量子ビット (Encoded qubits) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=39) {#sec-7.10.4-encoded-qubits}
+
+厄介な誤りは $S^\perp \setminus S$ 内にある誤り――すなわち安定化群と可換でありながら、その外部にある誤りであることを私たちは見てきました。これらのパウリ演算子は別の理由からも興味深いものです：それらは、符号によって保護されている符号化されたデータに作用する「論理（logical）」演算とみなすことができるからです。
+
+「線形代数」の観点に訴えることで、安定化群の正規化群 $S^\perp$ は $n + k$ 個の独立な生成元を含むことがわかります――$(\alpha|\beta)$ の $2n$ 次元空間において、$n - k$ 個の線形独立なベクトルの各々に直交するベクトルを含む部分空間は、次元 $2n - (n - k) = n + k$ を持ちます。この空間を張る $n + k$ 個のベクトルのうち、$n - k$ 個は安定化群自身の生成元として選ぶことができます。残りの $2k$ 個の生成元は、安定化群と可換であるため符号部分空間を保存しますが、$k$ 個の符号化された量子ビット上には非自明に作用します。
+
+実際、これら $2k$ 個の演算は、単一量子ビット演算子 $\bar{\boldsymbol{Z}}_i, \bar{\boldsymbol{X}}_i$（$i = 1, 2, \dots, k$）として選ぶことができます。ここで $\bar{\boldsymbol{Z}}_i, \bar{\boldsymbol{X}}_i$ は、$i$ でラベル付けされた符号化された量子ビットに作用するパウリ演算子 $\boldsymbol{Z}$ および $\boldsymbol{X}$ です。まず、$n - k$ 個の安定化生成元を $n$ 個の可換演算子の極大集合へと拡張できることに注意します。
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=40)
+この集合に追加する $k$ 個の演算子を $\bar{\boldsymbol{Z}}_1, \dots, \bar{\boldsymbol{Z}}_k$ と表すことができます。このとき、（符号部分空間 $\mathcal{H}_S$ 内における）$\bar{\boldsymbol{Z}}_1, \dots, \bar{\boldsymbol{Z}}_k$ の同時固有状態を論理基底状態 $|\bar{z}_1, \dots, \bar{z}_k\rangle$ とみなすことができます。ここで $\bar{z}_j = 0$ は $\bar{\boldsymbol{Z}}_j = 1$ に対応し、$\bar{z}_j = 1$ は $\bar{\boldsymbol{Z}}_j = -1$ に対応します。
+
+正規化群の残りの $k$ 個の生成元は、互いに可換であり、かつ安定化群とも可換であるように選ぶことができますが、その場合、どの $\bar{\boldsymbol{Z}}_i$ とも可換にはなりません。グラム・シュミットの正規直交化法を適用することにより、シンプレクティック形式を対角化するように、これらの生成元（$\bar{\boldsymbol{X}}_i$ と表記）を選択できます：
+
+$$
+\bar{\boldsymbol{Z}}_i\bar{\boldsymbol{X}}_j = (-1)^{\delta_{ij}}\bar{\boldsymbol{X}}_j\bar{\boldsymbol{Z}}_i.
+$$ {#eq-7.147}
+
+したがって、各 $\bar{\boldsymbol{X}}_j$ は対応する $\bar{\boldsymbol{Z}}_j$ の固有値を反転させ、符号化された量子ビット $j$ に作用するパウリ演算子 $\boldsymbol{X}$ とみなすことができます。
+
+**(a) 9量子ビット符号 (The 9-qubit Code):** 以前に議論したように、論理演算子は次のように選ぶことができます：
+
+$$
+\begin{aligned}
+\bar{\boldsymbol{Z}} &= \boldsymbol{X}_1\boldsymbol{X}_2\boldsymbol{X}_3, \\
+\bar{\boldsymbol{X}} &= \boldsymbol{Z}_1\boldsymbol{Z}_4\boldsymbol{Z}_7.
+\end{aligned}
+$$ {#eq-7.148}
+
+これらは互いに反可換であり（位置 1 で $\boldsymbol{X}$ と $\boldsymbol{Z}$ が衝突する）、安定化生成元と可換であり、かつ生成元から独立です（安定化群のどの元も3つの $\boldsymbol{X}$ や3つの $\boldsymbol{Z}$ を含みません）。
+
+**(b) 7量子ビット符号 (The 7-qubit code):** 私たちはすでに次を見てきました：
+
+$$
+\begin{aligned}
+\bar{\boldsymbol{X}} &= \boldsymbol{X}_1\boldsymbol{X}_2\boldsymbol{X}_3, \\
+\bar{\boldsymbol{Z}} &= \boldsymbol{Z}_1\boldsymbol{Z}_2\boldsymbol{Z}_3.
+\end{aligned}
+$$ {#eq-7.149}
+
+このとき $\bar{\boldsymbol{X}}$ は奇数ハミング符号語を加算し、$\bar{\boldsymbol{Z}}$ は奇数ハミング符号語の位相を反転させます。これらの演算は、式 @eq-7.102 で定義された基底 $\{|\bar{0}\rangle_F, |\bar{1}\rangle_F\}$ において、それぞれビット反転および位相反転を実装します。
