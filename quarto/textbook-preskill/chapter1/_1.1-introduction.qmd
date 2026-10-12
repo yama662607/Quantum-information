@@ -1,4 +1,12 @@
-# 1.1 情報の物理学 (Physics of information) [📄 p.1](/assets/pdf/preskill/chap1.pdf#page=1) {#sec-1.1-physics-of-information}
+この講義のウェブサイトは以下にあります：
+```
+http://www.theory.caltech.edu/~preskill/ph229
+```
+そこには、講義の概要や関連する参考文献へのリンクを含む一般的な情報が掲載されています。
+
+私たちのトピックには様々な視点からアプローチすることができますが、これらの講義では理論物理学者の視点を採用します（つまり、私の視点であり、私は理論物理学者です）。この主題の学際的な性格のため、受講生は幅広いバックグラウンドを持っていることを承知しており、講義ではそれを考慮するよう努めます。もし私が皆さんの知らないことを前提としている場合は、フィードバックをください。
+
+## 1.1 情報の物理学 (Physics of information) [📄 chap1.pdf](/assets/pdf/preskill/chap1.pdf#page=1) {#sec-1.1-physics-of-information}
 
 ::: {.callout-note appearance="simple" title="この節の学習目標"}
 1. **情報の物理性**: 情報は物理的な状態に依存していることを理解する。
