@@ -1,136 +1,138 @@
-# Quantum Information 教科書制作 引き継ぎ書 (HANDOFF.md)
+# Quantum Information 教科書制作 引き継ぎ書 (Phase 2: 解説・視覚化・シミュレーション拡充)
 
 > [!IMPORTANT]
-> **エージェントへの指示**: 本プロジェクトに参加したエージェントは、**このドキュメントを先頭から読むだけで直ちに作業を開始・引き継ぎできるように設計されています**。他のドキュメントを探す必要はありません。
+> **後続エージェントへの指示**: 本ドキュメントは、**Phase 1（全章完全忠実翻訳・英語文字起こし）の完了を受けて、Phase 2（解説・視覚化・シミュレーションの拡充）を担当するエージェント向け**の引き継ぎ書です。このドキュメントを読むだけで、プロジェクトの現状、規約、Phase 2 の目標および作業手順を即座に把握し、作業を開始できるように設計されています。
 
 ---
 
-## 1. プロジェクトの全体像と二段階体制 (Phase 1 / Phase 2)
+## 1. プロジェクトの現状と実績 (Phase 1 完了)
 
-本プロジェクトは、ジョン・プレスキル（John Preskill）の講義録を中心とした量子情報科学の教科書を、世界最高品質の Web 教科書（Quarto）として構築するプロジェクトです。
-専門性と作業精度を最大化するため、**二段階のエージェント分業体制** を採用しています。
+John Preskill 教授の講義ノート全 9 章（Chapter 1〜10、※Chapter 9 欠番）について、**省略ゼロの忠実翻訳および完全英語文字起こし（Phase 1）が 100% 完了**し、本番環境に公開されています。
 
-```mermaid
-flowchart LR
-    PDF["原文講義録 PDF"] --> Phase1["【Phase 1 エージェント】<br/>・完全英語文字起こし<br/>・省略なき忠実日本語訳"]
-    Phase1 --> Artifacts["資産の蓄積<br/>① research/transcripts/ (英語)<br/>② quarto/textbook/ (日本語)"]
-    Artifacts --> Phase2["【Phase 2 物理エージェント】<br/>・物理的直感の解説 (Callout)<br/>・可換図式・状態遷移 (Mermaid)<br/>・シミュレーション (Qiskit / Quarto Live)"]
-```
+- **公開 URL**: [https://yama662607.github.io/Quantum-information/](https://yama662607.github.io/Quantum-information/)
+- **教科書本体**: [https://yama662607.github.io/Quantum-information/textbook-preskill/textbook.html](https://yama662607.github.io/Quantum-information/textbook-preskill/textbook.html)
+- **マージ済み PR**: [#3 (feat(preskill): complete Phase 1 for all chapters (Ch 1-10))](https://github.com/yama662607/Quantum-information/pull/3)
+- **現在のベースラインブランチ**: `master` (最新コミットで同期済み、`just check` 全件 PASS)
 
-### 役割分担の原則
-1. **Phase 1（現担当）**:
-   - 原文の記述、数式、定理、証明、式番号、脚注を **1つも省略せずに日本語化** する（ゴールデンルール）。
-   - 後続の Phase 2 エージェントが PDF 画像を再読取しなくて済むよう、数式を含めた **高精度な英語原文文字起こし（Transcripts）** を作成して保存する。
-2. **Phase 2（物理専門エージェント）**:
-   - Phase 1 が作成した文字起こしをベースに、物理的背景の解説、直感的図解、Qiskit ノートブック、対話シミュレーションを追記・拡充する。
+### 全 9 章の収録実績
 
----
-
-## 2. 作業環境 (Mac Studio 単一ディレクトリ)
-
-作業は計算資源の豊富な **Mac Studio (`studio`)** 上の **単一ディレクトリ** で行います。
-
-| 項目 | 設定値 / パス | 備考 |
-| :--- | :--- | :--- |
-| **マシン名 / IP** | `studio` (`100.94.63.34`) | Tailscale 接続済み |
-| **作業ディレクトリ** | `/Users/daisukeyamashiki/Code/Learning/Quantum-information` | **エディタ・エージェントはこのディレクトリを開いて作業** |
-| **作業ブランチ** | `feature/phase1-transcription-and-faithful-translation` | PR #2 に紐づくブランチ |
-| **パッケージ管理** | `uv` (Python 3.12), `bun` (JavaScript) | Mac 共通ポリシー準拠 (bare pip / npm 禁止) |
-| **タスクランナー** | `just` | ビルド・検証・PDF処理はすべて `just` 経由で実行 |
-| **主要ツール** | `quarto 1.10.x`, `mineru 4.0.x` (UniMERNet) | インストール・動作確認済み |
+| 章 | タイトル | ページ数 | 収録数式・演習 | 翻訳断片ファイル |
+| :--- | :--- | :---: | :---: | :--- |
+| **Chapter 1** | Introduction and Overview | 30p | 式 1.1〜1.37 | `quarto/textbook-preskill/chapter1/` |
+| **Chapter 2** | Foundations I: States and Ensembles | 53p | 式 2.1〜2.187, 演習 2.1〜2.9 | `quarto/textbook-preskill/chapter2/` |
+| **Chapter 3** | Foundations II: Measurement and Evolution | 65p | 式 3.1〜3.257, 演習 3.1〜3.13 | `quarto/textbook-preskill/chapter3/` |
+| **Chapter 4** | Quantum Entanglement | 70p | 式 4.1〜4.192, 演習 4.1〜4.10 | `quarto/textbook-preskill/chapter4/` |
+| **Chapter 5** | Classical Circuits & Quantum Circuits | 54p | 式 5.1〜5.142, 演習 5.1〜5.6 | `quarto/textbook-preskill/chapter5/` |
+| **Chapter 6** | Quantum Algorithms | 64p | 式 6.1〜6.290, §6.1〜§6.10 | `quarto/textbook-preskill/chapter6/` |
+| **Chapter 7** | Quantum Error Correction | 92p | 式 7.1〜7.240, §7.1〜§7.24, 演習全問 | `quarto/textbook-preskill/chapter7/` |
+| **Chapter 8** | Topological Quantum Computation | 68p | 式 8.1〜8.118, §8.1〜§8.6, 演習全問 | `quarto/textbook-preskill/chapter8/` |
+| **Chapter 10** | Quantum Shannon Theory | 103p | 式 10.1〜10.373, §10.1〜§10.12, 演習全問 | `quarto/textbook-preskill/chapter10/` |
 
 ---
 
-## 3. 確定した標準ワークフロー（三重照合 Tri-Stream パイプライン）
+## 2. Phase 2 の目的と 4 つのミッション
 
-Phase 1 の文字起こしおよび忠実和訳は、以下の **「三重照合パイプライン」** に完全に従って進めます。
+Phase 2 の目的は、忠実な翻訳テキストという盤石の土台の上に、**読者の直感的理解を飛躍的に高める「解説・視覚化・対話シミュレーション」を組み込み、世界最高の量子情報 Web 教科書を創り上げること**です。
 
 ```mermaid
 flowchart TD
-    Step1["① 300 DPI 画像化<br/><code>just render-pdf &lt;pdf&gt; &lt;start&gt; &lt;end&gt;</code>"]
-    Step2["② 数式OCR抽出<br/><code>just extract-content</code> または <code>mineru</code>"]
-    Step1 --> Step3["③ エージェント自身による画像直接目視読取<br/><code>view_file /tmp/page_*.png</code>"]
-    Step2 --> Step3
-    Step3 --> Step4["④ 英語文字起こし確定<br/><code>research/transcripts/preskill/chapterX/_sec*.md</code>"]
-    Step4 --> Step5["⑤ Quarto 忠実日本語訳の作成<br/><code>quarto/textbook-preskill/chapterX/_*.qmd</code>"]
-    Step5 --> Step6["⑥ 品質ゲート自動検証<br/><code>just check</code>"]
+    subgraph Phase1["Phase 1 (完了・基盤)"]
+        Base["全9章 忠実和訳 + 英語文字起こし<br/>定義・定理・証明・数式 100% 収録"]
+    end
+
+    subgraph Phase2["Phase 2 (担当領域・拡充)"]
+        M1["① 物理的直感・解説<br/><code>.callout-note</code> / <code>.callout-tip</code>"]
+        M2["② Mermaid 図解・可換図式<br/>量子プロトコル / 状態遷移 / 回路図"]
+        M3["③ 原本『– Figure –』の具現化<br/>回路図・格子図・トポロジカル組み紐"]
+        M4["④ 対話シミュレーション<br/>Quarto Live (Pyodide) / Qiskit 連携"]
+    end
+
+    Base --> M1
+    Base --> M2
+    Base --> M3
+    Base --> M4
 ```
 
-### なぜこの手順が必要か？（三重照合の理由）
-- 最新の数式 OCR（MinerU や Marker）であっても、微細な上付き・下付き添字（例: $\boldsymbol{\sigma}_1$ と $\boldsymbol{\sigma}_3$）、太字表記（$\boldsymbol{\rho}$）、式番号の欠落が稀に発生します。
-- そのため、**エージェント自身が画像ファイル（`/tmp/page_XX.png`）を `view_file` で直接目視確認し、OCR テキストと突き合わせて 100% の精度に校正します**。
+### ミッション詳細
+
+1. 💡 **物理的直感と解説 (`callout-note` / `callout-tip`)**:
+   - 抽象的・技巧的な数式展開に対して、「物理的に何を意味しているのか」「実験系ではどう測るのか」「なぜこの定義が自然なのか」を直感的な言葉で補足します。
+   - 歴史的経緯や関連するノーベル賞級の発見（Einstein-Podolsky-Rosen、Bell、Aspect、Shor、Kitaev 等）の文脈を挿入します。
+
+2. 🧜 **Mermaid 可換図式 & プロトコルフロー**:
+   - 量子テレポーテーション、超高密度符号化、量子暗号（BB84 / E91）の通信・測定シーケンス図。
+   - 量子演算（Kraus表現、Stinespring拡張）の可換図式。
+   - アルゴリズム（Deutsch-Jozsa、Grover、Shor）の計算フロー。
+
+3. 📐 **原本の「– Figure –」箇所の完全具現化**:
+   - Preskill の原本講義ノートでは、多数の箇所で `– Figure –` とだけ書かれ、手書き図や量子回路図が本文中に直接埋め込まれていない場所があります（例: Chapter 7 のシンドローム測定回路、Chapter 8 の組み紐、Chapter 10 のチャネル容量図など）。
+   - これらを Mermaid、ASCII アート、SVG、または Matplotlib/Qiskit 回路図として具現化します。
+
+4. 🐍 **対話シミュレーション & Qiskit 連携**:
+   - **Quarto Live (Pyodide)**: ブラウザ上で動く Python コードスニペット（Bloch球回転、CHSH 不等式の相関値プロット、イオントラップのモード解析など）。
+   - **Qiskit ノートブック連携**: `quarto/qiskit/` 配下の既存実装と本文の対応リンクを強化。
 
 ---
 
-## 4. 現在の進捗状況 (Preskill Chapter 2)
+## 3. 鉄則ルール・執筆規約（Guideline）
 
-| セクション | 物理ページ | 英語文字起こし (`research/transcripts/`) | Quarto 忠実和訳 (`quarto/textbook-preskill/`) | ステータス |
-| :--- | :--- | :--- | :--- | :--- |
-| **2.1 状態の重ね合わせ** | p.1 〜 p.8 | ⏳ 未着手 | 既存草稿あり（要照合・追記） | **👉 次の着手タスク** |
-| **2.2 シュミット分解** | p.9 〜 p.14 | ⏳ 未着手 | 既存草稿あり（要照合・追記） | 次期タスク |
-| **2.3 エンタングルメントの幾何学** | p.15 〜 p.20 | ⏳ 未着手 | 既存草稿あり（要照合・追記） | 次期タスク |
-| **2.4 デコヒーレンス** | p.21 〜 p.25 | ⏳ 未着手 | 既存草稿あり（要照合・追記） | 次期タスク |
-| **2.5 アンサンブル解釈の曖昧さ** | p.26 〜 p.35 | ✅ `_sec2.5_ambiguity.md` (式 2.97-2.121) | ✅ `_2.5-ambiguity.qmd` (HJW, 遅延選択完了) | **完了 (PR #2)** |
-| **2.6 状態間の距離** | p.36 〜 p.41 | ✅ `_sec2.6_distance.md` (式 2.122-2.161) | ✅ `_2.6-distance-between-quantum-states.qmd` | **完了 (PR #2)** |
-| **2.7 演習問題** | p.42 〜 p.45 | ⏳ 未着手 | 既存草稿あり | 次期タスク |
+> [!CAUTION]
+> **Phase 2 における絶対ルール**:
+> 1. **Phase 1 テキストの保護**: 原文の記述、定義、定理、補題、証明、式番号、脚注を**削除・要約・改変してはならない**。Phase 2 の解説や図は、該当する段落の直後または節の末尾に**追記（Enrichment）**の形で挿入する。
+> 2. **Fenced Div の空行**: `::: {.callout-...}` などの囲みを使用する場合、**閉じ括弧 `:::` の直前には必ず空行を挿入**する（Quarto/Pandoc のパースエラー防止）。
+> 3. **数式ラベル構文**: 数式番号・クロスリファレンスは必ず `$$ {#eq-X.Y}` の形式を厳守する（数式内に `\tag{...}{#eq-...}` と書かない）。
+> 4. **小さく刻む**: 1セクションずつ編集し、都度 `just check` で検証する。
+
+### Quarto Live (Pyodide) の利用ルール
+- 追加パッケージは親ファイル（`textbook.qmd`）の YAML `pyodide.packages` で宣言する（セル内 `micropip.install` は race するため禁止）。
+- 日本語フォントは `assets/fonts/NotoSansJP-Regular.ttf` を `pyfetch` で読み込み、描画セル内に inline で設定する（詳細は `docs/quarto-live.md` 参照）。
+- `{ojs}` が 1 つも無いファイルに `{pyodide}` を置く場合は、ダミー `{ojs}` セル（`_quarto_live_loader = 1`）を配置する。
 
 ---
 
-## 5. 次のエージェントが今すぐ実行する作業手順 (Step-by-Step)
+## 4. 章別 Phase 2 推奨処方箋（ロードマップ）
 
-次のエージェントは、**Section 2.1（状態の重ね合わせ: p.1〜p.8）** から作業を開始してください。
+| 章 | 推奨追加要素 | 優先度 |
+| :--- | :--- | :---: |
+| **Chapter 4<br/>(Entanglement)** | - Bell/CHSH不等式の古典限界 vs 量子限界の可視化プロット<br/>- 量子テレポーテーション & 超高密度符号化の Mermaid シーケンス図<br/>- BB84 / Ekert91 量子鍵配送プロトコルのフロー図 | ⭐️⭐️⭐️ (高) |
+| **Chapter 6<br/>(Algorithms)** | - 量子位相推定（QPE）の回路図とステップ解説<br/>- Shor 因数分解アルゴリズムの古典-量子ハイブリッドフロー図<br/>- Grover 検索の幾何学的回転（状態ベクトルの反転）の図解 | ⭐️⭐️⭐️ (高) |
+| **Chapter 7<br/>(Error Correction)** | - 原本で `– Figure –` となっている**シンドローム測定回路**の具現化<br/>- Shor 9量子ビット符号、Steane 7量子ビット符号のスタビライザー表と回路図<br/>- Toric Code（トーリック符号）の星型演算子・プラケット演算子の格子図 | ⭐️⭐️⭐️ (高) |
+| **Chapter 8<br/>(Topological QC)** | - エニオンの組み紐（Braid群 $B_n$）の交差図<br/>- Pentagon / Hexagon 関係式の可換図式（Mermaid）<br/>- Fibonacci エニオンの融合則と量子ゲート構成図 | ⭐️⭐️ (中) |
+| **Chapter 2<br/>(States & Ensembles)** | - Bloch球上のユニタリ回転と密度行列の可視化（既存 OJS/Plotly の磨き込み）<br/>- Schmidt分解とエンタングルメントの特異値分解対応の解説図<br/>- 状態間距離（Trace distance vs Fidelity）の幾何学的意味 | ⭐️⭐️ (中) |
+| **Chapter 3<br/>(Measurement)** | - POVM 測定の Neumark 拡張定理（補助系結合）の可換図式<br/>- 3 つの量子チャネル（ビット反転、位相反転、振幅減衰）の Bloch 球収縮図<br/>- Kraus表現とStinespring表現の対応図 | ⭐️⭐️ (中) |
+| **Chapter 10<br/>(Shannon Theory)** | - 古典 Shannon 情報理論（AEP、典型集合）の直感図<br/>- von Neumann エントロピーの強劣加法性（SSA）の幾何学的ベン図<br/>- 母プロトコル・父プロトコル・量子逆シャノン定理の階層図 | ⭐️ (低〜中) |
 
-### 手順 1: PDF の画像化
+---
+
+## 5. 作業環境と必須コマンド集
+
+### 作業環境
+- **作業ディレクトリ**: `/Users/daisukeyamashiki/Code/Learning/Quantum-information`
+- **ランタイム**: `uv` (Python 3.12), `bun` (Node/JS)
+- **ブランチ運用**: `master` から章ごとにトピックブランチを作成（例: `feature/phase2-ch4-entanglement`）
+
+### 必須コマンド (`just`)
+
 ```bash
-cd /Users/daisukeyamashiki/Code/Learning/Quantum-information
-just render-pdf quarto/assets/pdf/preskill/chap2.pdf 1 8
-```
-- `/tmp/page_1.png` 〜 `/tmp/page_8.png` が生成されます。
+# 1. プレビューの起動 (ブラウザでリアルタイム確認)
+just docs
 
-### 手順 2: テキスト・数式の抽出
-```bash
-just extract-content quarto/assets/pdf/preskill/chap2.pdf 1 8
-```
-- コンソールに OCR テキストと LaTeX 数式が出力されます。
-
-### 手順 3: エージェントによる画像直接目視確認
-- `view_file` ツールで `/tmp/page_1.png` から順に開き、OCR 出力と比較して誤植や欠落を修正します。
-
-### 手順 4: 英語文字起こしファイルの作成
-- 保存先: `research/transcripts/preskill/chapter2/_sec2.1_superposition.md`
-- ルール: 原文の文章を忠実に書き起こし、数式には `$$ ... $$ {#eq-2.XX}` 形式で式番号を付与します。
-
-### 手順 5: Quarto 日本語忠実和訳の反映
-- 反映先: `quarto/textbook-preskill/chapter2/_2.1-superposition-of-states.qmd`
-- ルール:
-  - 定義・定理・証明・式番号を 1 つも省略しない。
-  - 見出しは `## 2.1 ...` の配下を `### 2.1.X ...` で統一する。
-  - 既存のわかりやすい解説 Callout があれば破壊せず保持する。
-
-### 手順 6: 品質検証とコミット
-```bash
-# 全体検証 (Lint, Format, Quarto HTML ビルド, Mermaid)
+# 2. 全体品質検証 (コード・LaTeX・Mermaid・Quarto構文チェック)
+# ※ 編集後は必ず実行し、エラーがないことを確認する
 just check
 
-# コミット & プッシュ
-git add research/transcripts/preskill/chapter2/_sec2.1_superposition.md quarto/textbook-preskill/chapter2/_2.1-superposition-of-states.qmd
-git commit -m "feat(preskill): complete Section 2.1 transcription and faithful translation"
-git push origin feature/phase1-transcription-and-faithful-translation
+# 3. 書式・構造エラーの自動修正
+just fix
+
+# 4. Quarto 単体整合性チェック
+just validate-docs
 ```
 
 ---
 
-## 6. Phase 2（物理専門エージェント）への引き継ぎルール
+## 6. 次のエージェントへの最初のアクション推奨
 
-Phase 1 が完了したセクション（現在は Section 2.5, 2.6）について Phase 2 エージェントを起動する場合のプロトコルです：
-
-1. **入力ソース**:
-   - Phase 2 エージェントは、PDF 画像を読み直す必要はありません。
-   - `research/transcripts/preskill/chapter2/` 配下の Markdown を直接読み込んで物理的内容を把握します。
-2. **追記・拡充ルール**:
-   - `quarto/textbook-preskill/chapter2/` の既存の翻訳テキストや数式は絶対に削除・要約しないでください。
-   - 物理的直感の解説は `::: {.callout-note appearance="simple"}` で追加します。
-   - 状態遷移やプロトコルは Mermaid 図式（`graph TD`, `sequenceDiagram` 等）で可視化します。
-   - 計算の具体例やシミュレーションは `quarto/qiskit/` 配下のノートブックや Quarto Live コードで提供します。
-3. **完了検証**:
-   - 変更後は必ず `just check` を実行し、Mermaid 構文や数式エラーがないことを確認します。
+1. `git checkout -b feature/phase2-ch4-entanglement` でトピックブランチを作成する。
+2. `just docs` でプレビューサーバーを起動し、ブラウザで Chapter 4 を開く。
+3. `quarto/textbook-preskill/chapter4/_4.4-using-entanglement.qmd` に、**量子テレポーテーションの Mermaid シーケンス図** と直感的解説の `callout-note` を追加してみる。
+4. `just check` を実行して合格することを確認する。
