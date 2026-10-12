@@ -388,3 +388,169 @@ h4 > a[href*=".pdf"]:hover {
   text-decoration: none;
 }
 
+/* ========================================
+ * サイドバー開閉＆最大化システム
+ * ========================================
+ */
+
+/* 1. ナビゲーションバーの「最大化」ボタン */
+.qi-nav-maximize-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.qi-nav-maximize-btn:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+.qi-nav-maximize-btn.is-maximized {
+  background-color: #2563eb;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+
+.qi-nav-maximize-btn .qi-btn-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* 2. 左サイドバー折りたたみボタン */
+.qi-sidebar-close-btn {
+  width: calc(100% - 1.5rem);
+  margin: 0.5rem 0.75rem 0.75rem 0.75rem;
+  padding: 0.35rem 0.6rem;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+}
+
+.qi-sidebar-close-btn:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+/* 3. 右目次折りたたみボタン */
+#toc-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qi-toc-close-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  line-height: 1.2;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.qi-toc-close-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+/* 4. 展開用フローティングタブ（折りたたみ時に出現） */
+.qi-floating-open-tab {
+  position: fixed;
+  top: 4.5rem;
+  z-index: 1040;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1e40af;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+
+.qi-floating-open-tab:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
+  transform: translateY(-1px);
+}
+
+.qi-tab-left {
+  left: 0.5rem;
+}
+
+.qi-tab-right {
+  right: 0.5rem;
+}
+
+body.qi-left-collapsed #qi-left-open-tab {
+  display: flex;
+}
+
+body.qi-right-collapsed #qi-right-open-tab {
+  display: flex;
+}
+
+/* 5. 折りたたみ時の非表示 */
+body.qi-left-collapsed #quarto-sidebar {
+  display: none !important;
+}
+
+body.qi-right-collapsed #quarto-margin-sidebar {
+  display: none !important;
+}
+
+/* 6. グリッドとコンテンツ幅の真の最大化！ */
+body.qi-left-collapsed.qi-right-collapsed main.content {
+  grid-column: page-start / page-end !important;
+  max-width: 1400px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+body.qi-left-collapsed:not(.qi-right-collapsed) main.content {
+  grid-column: page-start / body-content-end !important;
+}
+
+body.qi-right-collapsed:not(.qi-left-collapsed) main.content {
+  grid-column: body-content-start / page-end !important;
+}
+
+main.content {
+  transition: max-width 0.25s ease, margin 0.25s ease;
+}
+
+

@@ -24,5 +24,127 @@ document.addEventListener('DOMContentLoaded', function () {
   tocLinks.forEach(function (a) {
     a.innerHTML = a.innerHTML.replace(/\s*📄[\s\S]*$/i, '').trim();
   });
+
+  // ── 左右サイドバーの開閉＆最大化システム ───────────────────
+  const leftSidebar = document.getElementById('quarto-sidebar');
+  const rightSidebar = document.getElementById('quarto-margin-sidebar');
+  const navbarCollapse = document.querySelector('.navbar-collapse');
+
+  // localStorage から状態を復元（デフォルトは両方開いた状態）
+  let leftCollapsed = localStorage.getItem('qi-left-collapsed') === 'true';
+  let rightCollapsed = localStorage.getItem('qi-right-collapsed') === 'true';
+
+  function updateLayout() {
+    document.body.classList.toggle('qi-left-collapsed', leftCollapsed);
+    document.body.classList.toggle('qi-right-collapsed', rightCollapsed);
+    localStorage.setItem('qi-left-collapsed', leftCollapsed);
+    localStorage.setItem('qi-right-collapsed', rightCollapsed);
+    updateMaximizeBtnState();
+  }
+
+  // 1. ヘッダーの「最大化 / 標準幅」ボタン
+  let maxBtn = document.getElementById('qi-maximize-btn');
+  if (!maxBtn) {
+    maxBtn = document.createElement('button');
+    maxBtn.id = 'qi-maximize-btn';
+    maxBtn.className = 'btn btn-sm qi-nav-maximize-btn';
+    maxBtn.type = 'button';
+    maxBtn.setAttribute('aria-label', '画面最大化（サイドバーの開閉）');
+
+    const toolsContainer = document.querySelector('.quarto-navbar-tools') || navbarCollapse;
+    if (toolsContainer) {
+      toolsContainer.prepend(maxBtn);
+    }
+
+    maxBtn.addEventListener('click', function () {
+      const isMaximized = leftCollapsed && rightCollapsed;
+      if (isMaximized) {
+        // 元に戻す（両方開く）
+        leftCollapsed = false;
+        rightCollapsed = false;
+      } else {
+        // 最大化（両方閉じる）
+        leftCollapsed = true;
+        rightCollapsed = true;
+      }
+      updateLayout();
+    });
+  }
+
+  function updateMaximizeBtnState() {
+    if (!maxBtn) return;
+    const isMax = leftCollapsed && rightCollapsed;
+    maxBtn.classList.toggle('is-maximized', isMax);
+    maxBtn.innerHTML = isMax
+      ? '<span class="qi-btn-icon">🗗</span> <span class="qi-btn-text">標準幅</span>'
+      : '<span class="qi-btn-icon">⛶</span> <span class="qi-btn-text">最大化</span>';
+    maxBtn.title = isMax ? 'サイドバーを表示して標準幅に戻す' : 'サイドバーを閉じて画面を最大化';
+  }
+
+  // 2. 左サイドバーの開閉ボタン
+  if (leftSidebar) {
+    // 閉じるボタン（サイドバー内の一番上）
+    const leftCloseBtn = document.createElement('button');
+    leftCloseBtn.className = 'qi-sidebar-close-btn qi-left-close';
+    leftCloseBtn.type = 'button';
+    leftCloseBtn.title = 'サイドバーを折りたたむ';
+    leftCloseBtn.innerHTML = '◀ 折りたたむ';
+    leftSidebar.insertBefore(leftCloseBtn, leftSidebar.firstElementChild);
+
+    leftCloseBtn.addEventListener('click', function () {
+      leftCollapsed = true;
+      updateLayout();
+    });
+
+    // 開くボタン（画面左端のフローティングタブ）
+    const leftOpenTab = document.createElement('button');
+    leftOpenTab.id = 'qi-left-open-tab';
+    leftOpenTab.className = 'qi-floating-open-tab qi-tab-left';
+    leftOpenTab.type = 'button';
+    leftOpenTab.title = '章一覧を展開';
+    leftOpenTab.innerHTML = '<span class="tab-arrow">▶</span> <span class="tab-label">章一覧</span>';
+    document.body.appendChild(leftOpenTab);
+
+    leftOpenTab.addEventListener('click', function () {
+      leftCollapsed = false;
+      updateLayout();
+    });
+  }
+
+  // 3. 右サイドバー（目次）の開閉ボタン
+  if (rightSidebar) {
+    const tocTitle = rightSidebar.querySelector('#toc-title');
+    if (tocTitle) {
+      const rightCloseBtn = document.createElement('button');
+      rightCloseBtn.className = 'qi-toc-close-btn';
+      rightCloseBtn.type = 'button';
+      rightCloseBtn.title = '目次を折りたたむ';
+      rightCloseBtn.innerHTML = '✕ 閉じる';
+      tocTitle.appendChild(rightCloseBtn);
+
+      rightCloseBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        rightCollapsed = true;
+        updateLayout();
+      });
+    }
+
+    // 開くボタン（画面右端のフローティングタブ）
+    const rightOpenTab = document.createElement('button');
+    rightOpenTab.id = 'qi-right-open-tab';
+    rightOpenTab.className = 'qi-floating-open-tab qi-tab-right';
+    rightOpenTab.type = 'button';
+    rightOpenTab.title = '目次を展開';
+    rightOpenTab.innerHTML = '<span class="tab-label">目次</span> <span class="tab-arrow">◀</span>';
+    document.body.appendChild(rightOpenTab);
+
+    rightOpenTab.addEventListener('click', function () {
+      rightCollapsed = false;
+      updateLayout();
+    });
+  }
+
+  // 初期レイアウト適用
+  updateLayout();
 });
 </script>
