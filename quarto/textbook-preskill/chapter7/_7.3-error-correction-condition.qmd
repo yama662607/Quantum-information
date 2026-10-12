@@ -27,7 +27,6 @@ $$ {#eq-7.27}
 
 が $\boldsymbol{E}_a, \boldsymbol{E}_b \in \mathcal{E}$ に対して満たされることがわかります。このように、基底状態 $|\bar{0}\rangle, |\bar{1}\rangle$ と共役基底状態の双方について完全な識別可能性が維持されることが、符号空間内の量子情報をノイズから完全に保護できることを保証するのに十分です。
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=15)
 ノイズは符号状態 $|\bar{0}\rangle$ と $|\bar{1}\rangle$ を大幅に変形させるかもしれませんが、そのことは符号化された量子情報が取り返しのつかない形で失われたことを必ずしも意味しません。直交する符号ベクトルが系の識別可能な（混合）状態に写される限り、誤りからの復元は可能です。
 
 ### 7.3.2 環境への情報の漏洩 (Leakage of information to the environment) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=15) {#sec-7.3.2-leakage}
@@ -69,7 +68,7 @@ $$ {#eq-7.31}
 
 $R$ と符号空間の最大エンタングルメントを回復します。
 
-誤り訂正条件 @eq-7.15 は、ノイズが作用した後の $RE$ の周辺状態の特徴付けを提供します。 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=16) 系 $S$ をトレースアウトすると、以下が得られます：
+誤り訂正条件 @eq-7.15 は、ノイズが作用した後の $RE$ の周辺状態の特徴付けを提供します。系 $S$ をトレースアウトすると、以下が得られます：
 
 $$
 \begin{aligned}
@@ -96,7 +95,6 @@ $$ {#eq-7.33}
 
 ここで $|e\rangle$ は**消失記号（erasure symbol）**と呼ばれ、系のヒルベルト空間 $\mathcal{H}_S$ に直交するベクトルです。その考え方は、消失が発生したかどうかを検出する2出力の直交測定を実行できるというものです――結果 $|e\rangle\langle e|$ は消失を確認し、結果 $I - |e\rangle\langle e| = \boldsymbol{\Pi}_S$（$\mathcal{H}_S$ への射影演算子）は $S$ がまだ利用可能であることを確認します。
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=17)
 この消失写像の等長ディレーションは次のように作用します：
 
 $$
@@ -142,7 +140,6 @@ $$
 \end{aligned}
 $$ {#eq-7.39}
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=18)
 – 図 –  
 式 @eq-7.39 に対応する、$B$ の消失から保護する符号の符号化回路。
 

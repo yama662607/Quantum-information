@@ -12,7 +12,7 @@ $$ {#eq-7.9}
 
 いま、私たちは復元操作 $\mathcal{R}$ を適用することによって、誤りによって引き起こされた損傷を元に戻したいと考えます。$\mathcal{R}$ もまた TPCP 写像であり、したがって $S$ から $SA$（ここで $A$ は私たちが制御できる追加の系である**アンシラ（ancilla）**）への等長ディレーション $\boldsymbol{V}$ を持ちます。残念ながら、何という誤りが発生したかが分からず、かつ環境 $E$ が私たちの制御を超えている場合、@eq-7.9 の形式の任意の誤りに対して成功裏に復元を行うことは不可能です。せいぜい、限定された種類の誤りを元に戻すことしかできません。
 
-誤りが部分集合 $\mathcal{E} \subset \{\boldsymbol{E}_a\}$ によって張られる空間内にあるような、ノイズ操作の制限されたクラスを考えましょう。この制限された形式の任意の誤り [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=11)
+誤りが部分集合 $\mathcal{E} \subset \{\boldsymbol{E}_a\}$ によって張られる空間内にあるような、ノイズ操作の制限されたクラスを考えましょう。この制限された形式の任意の誤り
 
 $$
 \tilde{\boldsymbol{U}}_{S\to SE} : |\psi\rangle_S \mapsto \sum_{\boldsymbol{E}_a \in \mathcal{E}} \boldsymbol{E}_a|\psi\rangle_S \otimes |\varphi_a\rangle_E
@@ -60,7 +60,7 @@ $$
 \boldsymbol{\Pi} = \sum_i |\bar{i}\rangle\langle\bar{i}|
 $$ {#eq-7.16}
 
-を用いて表すと、 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=12) @eq-7.15 は次のようになります：
+を用いて表すと、@eq-7.15 は次のようになります：
 
 $$
 \boldsymbol{\Pi}\boldsymbol{E}_b^\dagger \boldsymbol{E}_a\boldsymbol{\Pi} = C_{ba}\boldsymbol{\Pi}.
@@ -104,7 +104,7 @@ $$ {#eq-7.22}
 
 を満たし、誤り部分空間への射影となります。これらの射影演算子は $\mathcal{H}_S$ の完全な分割を提供しないかもしれませんが、$\oplus_a \tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ の直交補空間への追加の射影を1つ加えることで、直交測定を定義できます。測定結果 $\boldsymbol{\Pi}_a$ は、誤り空間 $\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ を指し示す**誤りシンドローム（error syndrome）**を提供します。ここで、ノイズ写像が @eq-7.18 で与えられ、誤り演算子が @eq-7.20 に従う場合、この結果は確率 $\text{prob}(a) = \langle\tilde{\chi}_a|\tilde{\chi}_a\rangle$ で発生します。結果 $a$ が判明したら、$\mathcal{H}_S$ に適用されるユニタリ変換 $\boldsymbol{U}_a$ が誤りを訂正します。変換 $\boldsymbol{U}_a$ は、部分空間 $\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ 上で $\boldsymbol{\Pi}\tilde{\boldsymbol{E}}_a^\dagger$ として作用するように選択され、$\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ の補空間に対するその作用は任意に選ぶことができます。
 
-この議論は、@eq-7.17 が満たされ、かつ符号が非縮退である場合に誤りからの復元が可能であることを示しています。しかし、符号が**縮退（degenerate）**している場合――すなわち、いくつかの誤り演算子に対して $\tilde{\boldsymbol{E}}_a\boldsymbol{\Pi} = 0$ となる場合はどうでしょうか？ これは、訂正可能な誤りの基底が過剰完全（overcomplete）であり、符号空間を消滅させる $\mathcal{E}$ の要素の線形結合が存在する場合に起こります。 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=13) その場合、これらの冗長な誤り演算子を訂正可能誤りの集合から単に排除し、訂正可能誤りの集合 $\mathcal{E}$ をより小さな集合 $\tilde{\mathcal{E}} \subset \mathcal{E}$ に置き換えることができます。
+この議論は、@eq-7.17 が満たされ、かつ符号が非縮退である場合に誤りからの復元が可能であることを示しています。しかし、符号が**縮退（degenerate）**している場合――すなわち、いくつかの誤り演算子に対して $\tilde{\boldsymbol{E}}_a\boldsymbol{\Pi} = 0$ となる場合はどうでしょうか？ これは、訂正可能な誤りの基底が過剰完全（overcomplete）であり、符号空間を消滅させる $\mathcal{E}$ の要素の線形結合が存在する場合に起こります。その場合、これらの冗長な誤り演算子を訂正可能誤りの集合から単に排除し、訂正可能誤りの集合 $\mathcal{E}$ をより小さな集合 $\tilde{\mathcal{E}} \subset \mathcal{E}$ に置き換えることができます。
 
 私たちはすでに縮退符号の例に遭遇しています――9量子ビット符号です。そこでは、3量子ビットの同一クラスタに作用する位相誤りは、符号部分空間に同一の影響を与えます（例えば、$|\psi\rangle \in \mathcal{H}_{\text{code}}$ に対して $\boldsymbol{Z}_1|\psi\rangle = \boldsymbol{Z}_2|\psi\rangle$）。これは、誤り $\boldsymbol{Z}_1$ と $\boldsymbol{Z}_2$ のどちらが発生したかを区別できるシンドローム測定が存在しないことを意味し、それに対応して、符号空間を消滅させる誤り $\boldsymbol{Z}_1 - \boldsymbol{Z}_2$ が存在します。この「誤り」は振幅ゼロで発生するため、何も変更することなく @eq-7.18 の $\tilde{\boldsymbol{E}}_a$ の和からそれを除外できます。このような振幅ゼロの誤りがすべて排除されれば、非縮退の場合とまったく同様に誤りシンドロームを測定し、誤りを訂正することができます。したがって、量子誤り訂正条件 @eq-7.17 は、符号が縮退しているかどうかにかかわらず、誤りを反転（修復）する復元写像が存在するための必要十分条件です。
 
@@ -128,7 +128,7 @@ $$ {#eq-7.24}
 – Figure –  
 Show $|\psi\rangle$ subjected to noise, and then decoded as ancilla is discarded.
 
-復元写像 $\boldsymbol{V}$ の構成は、符号空間 $\mathcal{H}_{\text{code}}$ と訂正可能誤り集合 $\mathcal{E}$ のみに依存することを強調しておく必要があります。復元は、@eq-7.10 におけるベクトル $\{|\varphi_a\rangle_E\}$ のいかなる選択に対しても成功します。私たちは誤りについてそれ以上のことを知る必要はなく、ただそれが $\mathcal{E}$ 内の誤り演算子の張る空間内にあるということだけを知っていれば十分です。特に、 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=14) $\mathcal{E}$ の外部の誤りが無視できる振幅でしか発生しない限り、符号はユニタリ制御誤りとデヒーレンス誤りの両方から保護されます。
+復元写像 $\boldsymbol{V}$ の構成は、符号空間 $\mathcal{H}_{\text{code}}$ と訂正可能誤り集合 $\mathcal{E}$ のみに依存することを強調しておく必要があります。復元は、@eq-7.10 におけるベクトル $\{|\varphi_a\rangle_E\}$ のいかなる選択に対しても成功します。私たちは誤りについてそれ以上のことを知る必要はなく、ただそれが $\mathcal{E}$ 内の誤り演算子の張る空間内にあるということだけを知っていれば十分です。特に、$\mathcal{E}$ の外部の誤りが無視できる振幅でしか発生しない限り、符号はユニタリ制御誤りとデヒーレンス誤りの両方から保護されます。
 
 シンドロームの直交測定は復元手順の必須部分ではありませんが、アンシラは絶対に不可欠です。事実上、ノイズは量子メモリ $S$ を「加熱（heat up）」し、復元操作はそれを再び「冷却（cool down）」します。アンシラ $A$ は、この余剰な熱が蓄積される低温熱浴です。
 

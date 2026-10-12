@@ -8,7 +8,7 @@
 
 量子誤り訂正符号（QECC）は、$k$ 個の量子ビット（次元 $2^k$ のヒルベルト空間）から $n$ 個の量子ビット（次元 $2^n$ のヒルベルト空間）への写像とみなすことができます（ここで $n > k$）。この $k$ 量子ビットは、誤りから保護したい「論理量子ビット（logical qubits）」または「符号化された量子ビット（encoded qubits）」です。追加の $n-k$ 量子ビットにより、$k$ 個の論理量子ビットを冗長な形で保存することが可能となり、符号化された情報が容易には損傷しないようになります。
 
-第1章で導入された例である、$n = 9$ かつ $k = 1$ のショア（Shor）の符号を再訪することで、QECC の概念をより深く理解することができます。符号空間の2つの基底状態を指定することによって符号を特徴づけることができます。これらの基底状態を「論理ゼロ」 $|\bar{0}\rangle$ および「論理イチ」 $|\bar{1}\rangle$ と呼びます。これらは次のように与えられます： [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=8)
+第1章で導入された例である、$n = 9$ かつ $k = 1$ のショア（Shor）の符号を再訪することで、QECC の概念をより深く理解することができます。符号空間の2つの基底状態を指定することによって符号を特徴づけることができます。これらの基底状態を「論理ゼロ」 $|\bar{0}\rangle$ および「論理イチ」 $|\bar{1}\rangle$ と呼びます。これらは次のように与えられます：
 
 $$
 \begin{aligned}
@@ -33,7 +33,7 @@ $$ {#eq-7.2}
 
 – Figure –
 
-そして最後にアンシラ量子ビットを測定します。量子ビット1と2が $\boldsymbol{Z}_1\boldsymbol{Z}_2 = -1$ の状態（$|0\rangle_1|1\rangle_2$ または $|1\rangle_1|0\rangle_2$）にある場合、アンシラ量子ビットは1回反転し、測定結果は $|1\rangle$ となります。しかし、量子ビット1と2が $\boldsymbol{Z}_1\boldsymbol{Z}_2 = 1$ の状態（$|0\rangle_1|0\rangle_2$ または $|1\rangle_1|1\rangle_2$）にある場合、アンシラ量子ビットは2回反転するか、あるいはまったく反転せず、測定結果は [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=9) $|0\rangle$ となります。同様に、2量子ビット演算子
+そして最後にアンシラ量子ビットを測定します。量子ビット1と2が $\boldsymbol{Z}_1\boldsymbol{Z}_2 = -1$ の状態（$|0\rangle_1|1\rangle_2$ または $|1\rangle_1|0\rangle_2$）にある場合、アンシラ量子ビットは1回反転し、測定結果は $|1\rangle$ となります。しかし、量子ビット1と2が $\boldsymbol{Z}_1\boldsymbol{Z}_2 = 1$ の状態（$|0\rangle_1|0\rangle_2$ または $|1\rangle_1|1\rangle_2$）にある場合、アンシラ量子ビットは2回反転するか、あるいはまったく反転せず、測定結果は$|0\rangle$ となります。同様に、2量子ビット演算子
 
 $$
 \begin{aligned}
@@ -81,7 +81,7 @@ $$
 \boldsymbol{X}_1\boldsymbol{X}_2\boldsymbol{X}_3 : a|\bar{0}\rangle + b|\bar{1}\rangle \to a|\bar{0}\rangle - b|\bar{1}\rangle.
 $$ {#eq-7.7}
 
-符号化された情報は、位相誤りが2つの異なる [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=10) クラスタで発生した場合にも損傷を受けます。その場合、私たちの見当違いな復旧の試みによって3番目のクラスタに位相誤りが導入され、結果として全体で $\boldsymbol{Z}_1\boldsymbol{Z}_4\boldsymbol{Z}_7$ が適用されたことになり、これは論理量子ビットを反転させます：
+符号化された情報は、位相誤りが2つの異なるクラスタで発生した場合にも損傷を受けます。その場合、私たちの見当違いな復旧の試みによって3番目のクラスタに位相誤りが導入され、結果として全体で $\boldsymbol{Z}_1\boldsymbol{Z}_4\boldsymbol{Z}_7$ が適用されたことになり、これは論理量子ビットを反転させます：
 
 $$
 \boldsymbol{Z}_1\boldsymbol{Z}_4\boldsymbol{Z}_7 : a|\bar{0}\rangle + b|\bar{1}\rangle \to a|\bar{1}\rangle + b|\bar{0}\rangle.

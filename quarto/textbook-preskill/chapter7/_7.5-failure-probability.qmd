@@ -20,7 +20,6 @@ $$
 |\text{GOOD}'\rangle + |\text{BAD}'\rangle;
 $$ {#eq-7.56}
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=22)
 ここで（復元は良性状態に対して完全に作用するため）
 
 $$
@@ -92,7 +91,6 @@ $$
 F \ge 1 - \||\text{BAD}'_\perp\rangle\|^2.
 $$ {#eq-7.67}
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=23)
 最後に、$|\text{BAD}'_\perp\rangle$ のノルムは $|\text{BAD}'\rangle$ のノルムを超えることはできないため、次のように結論付けられます：
 
 $$
@@ -126,7 +124,6 @@ $$ {#eq-7.71}
 
 単一量子ビットに作用する一般的なノイズ写像に対しては、「誤り確率」という明確な概念は存在しません。パウリ演算子 $\boldsymbol{I}$ が作用したときに得られる量子ビットとその環境の状態は、パウリ演算子 $\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}$ が作用したときに得られる状態と直交しない（したがって完全に区別できない）からです。環境とのエンタングルメントがまったく存在しない極端な場合では、誤りは量子ビットに未知のユニタリ変換が作用することによって生じます。
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=24)
 符号ブロック内の $n$ 量子ビットに作用する無相関なユニタリ誤りを考えます。これらはそれぞれ（無関係な位相因子を除いて）次の形をとります：
 
 $$

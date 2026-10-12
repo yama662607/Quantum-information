@@ -15,6 +15,29 @@ book:
     left:
       - text: "ホーム"
         href: index.qmd
+      - text: "Preskill 講義ノート"
+        menu:
+          - text: "概要・全体目次"
+            href: textbook-preskill/intro.qmd
+          - text: "---"
+          - text: "Chapter 1: Introduction"
+            href: textbook-preskill/chapter1.qmd
+          - text: "Chapter 2: Foundations I (States)"
+            href: textbook-preskill/chapter2.qmd
+          - text: "Chapter 3: Foundations II (Measurement)"
+            href: textbook-preskill/chapter3.qmd
+          - text: "Chapter 4: Quantum Entanglement"
+            href: textbook-preskill/chapter4.qmd
+          - text: "Chapter 5: Circuits"
+            href: textbook-preskill/chapter5.qmd
+          - text: "Chapter 6: Quantum Algorithms"
+            href: textbook-preskill/chapter6.qmd
+          - text: "Chapter 7: Error Correction"
+            href: textbook-preskill/chapter7.qmd
+          - text: "Chapter 8: Topological QC"
+            href: textbook-preskill/chapter8.qmd
+          - text: "Chapter 10: Shannon Theory"
+            href: textbook-preskill/chapter10.qmd
     right:
       - text: "Qiskit 実装"
         href: qiskit/index.qmd

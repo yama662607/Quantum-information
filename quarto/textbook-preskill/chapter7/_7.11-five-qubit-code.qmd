@@ -17,7 +17,6 @@ $\boldsymbol{M}_{2,3,4}$ は $\boldsymbol{M}_1$ から量子ビットの巡回�
 
 明らかに、各 $\boldsymbol{M}_i$ は $\boldsymbol{Y}$ を含まず、したがって自乗して $\boldsymbol{I}$ となります。
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=41)
 生成元の各ペアに対して、$\boldsymbol{X}$ と $\boldsymbol{Z}$ の間の衝突が2箇所存在するため、生成元同士は互いに可換です。重み 1 または重み 2 の各パウリ演算子が少なくとも1つの生成元と反可換であることを迅速に確認できるため、この符号の距離は 3 です。
 
 例えば、最初の2つの量子ビット上に台（support）を持ち、4つの生成元のすべてと可換である誤り演算子が存在するかどうかを考えてみましょう。$\boldsymbol{M}_2$ 内の $\boldsymbol{I}\boldsymbol{X}$ および $\boldsymbol{M}_3$ 内の $\boldsymbol{X}\boldsymbol{I}$ と可換であるためには、重み 2 の演算子は $\boldsymbol{X}\boldsymbol{X}$ でなければなりません。しかし $\boldsymbol{X}\boldsymbol{X}$ は $\boldsymbol{M}_1$ 内の $\boldsymbol{X}\boldsymbol{Z}$ および $\boldsymbol{M}_4$ 内の $\boldsymbol{Z}\boldsymbol{X}$ と反可換です。
@@ -64,7 +63,6 @@ $\boldsymbol{Y}$ は $\boldsymbol{X}$ と $\boldsymbol{Z}$ の双方と反可換
 
 符号の巡回性のおかげで、安定化群の15個の非自明な元すべてを
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=42)
 容易に特徴付けることができます。$\boldsymbol{M}_1 = \boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}$ および量子ビットの巡回置換によって得られる4つの演算子のほかに、安定化群は次も含みます：
 
 $$
@@ -121,7 +119,6 @@ $$
 \end{aligned}
 $$ {#eq-7.158}
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=43)
 続いて、$|\bar{0}\rangle$ に $\bar{\boldsymbol{X}}$ を適用することによって、すなわち全5量子ビットを反転させることによって、$|\bar{1}\rangle$ を見出すことができます：
 
 $$
@@ -180,7 +177,6 @@ $$
 \end{aligned}
 $$ {#eq-7.164}
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=44)
 この形式において、$\boldsymbol{M}_i$ はブロック内の量子ビット $i$ と 5 にのみ $\boldsymbol{X}$（反転）を適用します。
 
 安定化群に対してこの形式を採用すると、次の回路を実行することによって、状態 $|0, z_2, z_3, z_4, z_5\rangle$ に $\frac{1}{\sqrt{2}}(\boldsymbol{I} + \boldsymbol{M}_1)$ を適用することができます：

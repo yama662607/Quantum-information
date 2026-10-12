@@ -10,7 +10,7 @@ $$ {#eq-10.270}
 
 ノイズのある古典通信路を通じた古典通信に関するシャノンの理論は、
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=58) 完璧で優雅ですが、ノイズのある量子通信路を通じた通信の理論については、少なくとも現在の状態では同じことは言えません。それはまだ発展途上の研究です。おそらくいつの日か、シャノンのような別の天才が量子容量の美しい理論を構築するでしょう。今のところ、少なくとも私たちが達成可能レートについて言える興味深い事柄はたくさんあります。さらに、量子容量に関する問いに対処するために開発されたツールは、通信理論を超えた他の応用を持っています。
+完璧で優雅ですが、ノイズのある量子通信路を通じた通信の理論については、少なくとも現在の状態では同じことは言えません。それはまだ発展途上の研究です。おそらくいつの日か、シャノンのような別の天才が量子容量の美しい理論を構築するでしょう。今のところ、少なくとも私たちが達成可能レートについて言える興味深い事柄はたくさんあります。さらに、量子容量に関する問いに対処するために開発されたツールは、通信理論を超えた他の応用を持っています。
 
 古典通信路の古典容量の最も直接的な類似物は、共有エンタングルメントやフィードバックの支援を受けない、量子通信路の**量子容量（quantum capacity）**です。量子通信路 $\mathcal{N}^{A \to B}$ は $\mathcal{H}_A$ から $\mathcal{H}_B$ への TPCP 写像であり、アリスは高い忠実度でボブに量子状態を伝達するために通信路を $n$ 回使用します。彼女は符号部分空間
 $$
@@ -49,7 +49,7 @@ H(R|B) = H(RB) - H(B) = H(E) - H(B)
 $$ {#eq-10.274}
 です。最後の等号では、$RBE$ の純粋状態において $H(RB) = H(E)$ であることを用いました。この量
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=59) $-H(R|B)$ は、量子通信理論において極めて重要な役割を果たしているため、特別な名前を持つに値します。私たちはこれを $R$ から $B$ への**コヒーレント情報量（coherent information）**と呼び、次のように表記します：
+$-H(R|B)$ は、量子通信理論において極めて重要な役割を果たしているため、特別な名前を持つに値します。私たちはこれを $R$ から $B$ への**コヒーレント情報量（coherent information）**と呼び、次のように表記します：
 $$
 I_c(R \rangle B)_\phi = -H(R|B)_\phi = H(B)_\phi - H(E)_\phi.
 $$ {#eq-10.275}
@@ -84,7 +84,7 @@ $$
 H(R) - H(R|A) \ge H(R) - H(R|B) \ge H(R) - H(R|C).
 $$ {#eq-10.280}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=60) したがって、
+したがって、
 $$
 I_c(R \rangle A) \ge I_c(R \rangle B) \ge I_c(R \rangle C)
 $$ {#eq-10.281}
@@ -115,7 +115,7 @@ $$ {#eq-10.285}
 
 私たちは、ノイズのある通信路を通じて送信される浄化された量子情報は、参照系が通信路の環境と完全に無相関である場合、すなわち環境から**切り離されている（decoupled）**場合にのみ、正確に訂正可能であることを見出しました。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=61) これが**デカップリング原理（decoupling principle）**であり、量子通信路の理論における多くの重要な結果の基礎となる強力な概念です。
+これが**デカップリング原理（decoupling principle）**であり、量子通信路の理論における多くの重要な結果の基礎となる強力な概念です。
 
 これまでのところ、私たちは完全な訂正可能性が完全なデカップリングに対応することを示しました。しかし同様に、近似的な訂正可能性が近似的なデカップリングに対応することも分かります。例えば、$RE$ の状態が $L^1$ ノルムにおいて積状態に近いと仮定しましょう：
 $$
@@ -155,7 +155,7 @@ $$ {#eq-10.293}
 
 これで量子通信路容量 $Q(\mathcal{N})$ の上限を導出するためのツールが揃いました。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=62) 通信路の $n$ 回の使用に対して、$\psi^{(n)}$ を参照系 $\mathcal{H}_R^{(n)} \subseteq \mathcal{H}_R^{\otimes n}$ と符号空間 $\mathcal{H}_A^{(n)} \subseteq \mathcal{H}_A^{\otimes n}$（ここで $\dim \mathcal{H}_A^{(n)} = 2^{n\bar{R}}$）の最大もつれ状態とします。これにより、
+通信路の $n$ 回の使用に対して、$\psi^{(n)}$ を参照系 $\mathcal{H}_R^{(n)} \subseteq \mathcal{H}_R^{\otimes n}$ と符号空間 $\mathcal{H}_A^{(n)} \subseteq \mathcal{H}_A^{\otimes n}$（ここで $\dim \mathcal{H}_A^{(n)} = 2^{n\bar{R}}$）の最大もつれ状態とします。これにより、
 $$
 I_c(R^n \rangle A^n)_{\psi^{(n)}} = H(R^n)_{\psi^{(n)}} = n\bar{R}
 $$ {#eq-10.294}
@@ -189,7 +189,7 @@ $$ {#eq-10.298}
 
 ここで、$\boldsymbol{U}_1^{A_1 \to B_1 E_1}$ と $\boldsymbol{U}_2^{A_2 \to B_2 E_2}$ が分解可能通信路 $\mathcal{N}_1$ と $\mathcal{N}_2$ の拡大であると仮定します。アリスは参照系 $R$ を導入して入力純粋状態
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=63) $\psi_{R A_1 A_2}$ を準備し、$\mathcal{N}_1 \otimes \mathcal{N}_2$ を介してその状態をボブに送信し、出力純粋状態 $\phi_{R B_1 B_2 E_1 E_2}$ を準備します。私たちはこの状態におけるコヒーレント情報量 $I_c(R \rangle B_1 B_2)_\phi$ を評価したいと考えます。
+$\psi_{R A_1 A_2}$ を準備し、$\mathcal{N}_1 \otimes \mathcal{N}_2$ を介してその状態をボブに送信し、出力純粋状態 $\phi_{R B_1 B_2 E_1 E_2}$ を準備します。私たちはこの状態におけるコヒーレント情報量 $I_c(R \rangle B_1 B_2)_\phi$ を評価したいと考えます。
 
 重要な点は、両方の通信路が分解可能であるため、$B_1 B_2$ を $E_1 E_2$ に写像する積通信路 $\mathcal{T}_1 \otimes \mathcal{T}_2$ が存在し、したがって相互情報量の単調性から次が導かれることです：
 $$
@@ -232,7 +232,7 @@ $$
 \mathcal{N}_c^{A \to E} : \boldsymbol{\rho} \mapsto \sum_x |\alpha_x\rangle\langle x|\boldsymbol{\rho}|x\rangle\langle \alpha_x|.
 $$ {#eq-10.306}
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=64) 状態 $\{|\alpha_x\rangle_E = |x\rangle_E\}$ が正規直交系である特別な場合、**完全位相緩和通信路（completely dephasing channel）**
+状態 $\{|\alpha_x\rangle_E = |x\rangle_E\}$ が正規直交系である特別な場合、**完全位相緩和通信路（completely dephasing channel）**
 $$
 \Delta^{A \to B} : \boldsymbol{\rho} \mapsto \sum_x |x\rangle\langle x|\boldsymbol{\rho}|x\rangle\langle x|
 $$ {#eq-10.307}
@@ -275,7 +275,7 @@ H(RB) &= -(1-p)\log_2(1-p) - p\log_2\left(\frac{p}{3}\right) = H_2(p) + p\log_2 
 &\implies I_c(R \rangle B) = 1 - H_2(p) - p\log_2 3
 \end{aligned}
 $$ {#eq-10.313}
-が得られ、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=65) これは $p < p_1 \approx .18929$ に対して正となります。したがって、単発容量 $Q_1(\mathcal{N}_p)$ は誤り確率 $p < p_1$ に対して非ゼロです。
+が得られ、これは $p < p_1 \approx .18929$ に対して正となります。したがって、単発容量 $Q_1(\mathcal{N}_p)$ は誤り確率 $p < p_1$ に対して非ゼロです。
 
 $Q_1(\mathcal{N}_p)$ に対するこの表現には単純な解釈があります --- それは、復号誤りの確率が漸近的に消失するようなランダムスタビライザー符号によって達成される通信レートです。その理由を理解するために、通信路の使用回数 $n$ が非常に大きく、誤りを持つ送信量子ビットの数が高い確率で $pn$ に近いと仮定しましょう。どの量子ビットに誤りがあるかを選択する方法の数を $\binom{n}{np}$ で近似し、損傷した各量子ビットに対して一様に分布する3つの可能なパウリ誤りが存在することに注目すると、典型的誤りの数は
 $$
@@ -297,7 +297,7 @@ $$ {#eq-10.315}
 
 $m > 1$ のいくつかの値に対して、長さ $m$ の量子反復符号とランダムスタビライザー符号を連接することによって、$p_1$ をわずかに超える $p$ に対しても正の容量を達成できることが判明します。これに対応して、通信路使用回数 $m$ と誤り確率 $p$ のいくつかの値に対して、通信路使用1回あたりのコヒーレント情報量は $Q_1(\mathcal{N}_p)$ よりも高くなります。
 
-[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=66) $m$ 回の通信路使用への入力を考えます：
+$m$ 回の通信路使用への入力を考えます：
 $$
 |\Phi\rangle_{R A_1 A_2 \cdots A_m} = \frac{1}{\sqrt{2}}\left(|0\rangle^{\otimes(m+1)} + |1\rangle^{\otimes(m+1)}\right)_{R A_1 A_2 \cdots A_m}.
 $$ {#eq-10.316}

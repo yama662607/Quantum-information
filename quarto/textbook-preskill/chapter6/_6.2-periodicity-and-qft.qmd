@@ -80,7 +80,7 @@ $$
 \text{Prob}(y) = \frac{A}{N} \left| \frac{1}{A} \sum_{j=0}^{A-1} e^{2\pi i j r y / N} \right|^2
 $$ {#eq-6.36}
 
-となります。この分布は、$yr/N$ が整数に近いような $y$ の値を強く選好します。 [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=15) 例えば、$N/r$ がたまたま整数であった（したがって $A$ に等しい）場合、次が得られます：
+となります。この分布は、$yr/N$ が整数に近いような $y$ の値を強く選好します。例えば、$N/r$ がたまたま整数であった（したがって $A$ に等しい）場合、次が得られます：
 
 $$
 \text{Prob}(y) = \frac{1}{r} \left| \frac{1}{A} \sum_{j=0}^{A-1} e^{2\pi i j y / A} \right|^2 = \begin{cases} \frac{1}{r} & y = A \cdot (\text{整数}) \\ 0 & \text{それ以外.} \end{cases}
@@ -142,7 +142,7 @@ $$
 \text{Prob}(y) \ge \left(\frac{4}{\pi^2}\right) \frac{1}{r}
 $$ {#eq-6.46}
 
-が得られます。 [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=16) これは式 (@eq-6.40) を満たす $r$ 個の $y$ の値のそれぞれについて成り立ちます。したがって、少なくとも $4/\pi^2$ の確率で、測定値 $y$ は
+が得られます。これは式 (@eq-6.40) を満たす $r$ 個の $y$ の値のそれぞれについて成り立ちます。したがって、少なくとも $4/\pi^2$ の確率で、測定値 $y$ は
 
 $$
 k \frac{N}{r} - \frac{1}{2} \le y \le k \frac{N}{r} + \frac{1}{2},
@@ -176,7 +176,7 @@ $$
 \sum_x f(x)|x\rangle \to \sum_y \left(\frac{1}{\sqrt{N}}\sum_x e^{2\pi i x y / N} f(x)\right)|y\rangle
 $$ {#eq-6.50}
 
-は、$N \times N$ ユニタリ行列による乗算であり、その $(x, y)$ 行列要素は $(e^{2\pi i / N})^{xy}$ です。単純に考えると、この変換には $O(N^2)$ 回の基本演算が必要です。しかし、演算回数を $O(N \log N)$ に削減する、よく知られた非常に有用な（古典的）手順が存在します。 [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=17) $N = 2^n$ と仮定して、$x$ と $y$ を2進展開（バイナリ展開）として表します：
+は、$N \times N$ ユニタリ行列による乗算であり、その $(x, y)$ 行列要素は $(e^{2\pi i / N})^{xy}$ です。単純に考えると、この変換には $O(N^2)$ 回の基本演算が必要です。しかし、演算回数を $O(N \log N)$ に削減する、よく知られた非常に有用な（古典的）手順が存在します。$N = 2^n$ と仮定して、$x$ と $y$ を2進展開（バイナリ展開）として表します：
 
 $$
 \begin{aligned}
@@ -239,7 +239,7 @@ $$
 \boldsymbol{R}_d = \begin{pmatrix} 1 & 0 \\ 0 & e^{i\pi / 2^d} \end{pmatrix}
 $$ {#eq-6.57}
 
-であり、 [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=18) $d = (k - j)$ は量子ビット間の「距離」です。
+であり、$d = (k - j)$ は量子ビット間の「距離」です。
 
 $n = 3$ の場合、QFT は3つの $\boldsymbol{H}$ ゲートと3つの制御 $\boldsymbol{R}$ ゲートから構成されます。一般的な $n$ に対して、この回路の自明な一般化には $n$ 個の $\boldsymbol{H}$ ゲートと $\binom{n}{2} = \frac{1}{2}n(n-1)$ 個の制御 $\boldsymbol{R}$ ゲートが必要です。量子ビットの各ペアに2量子ビットゲートが適用され、ここでも制御された相対位相 $\pi/2^d$ が付与されます（ここで $d$ は量子ビット間の「距離」です）。したがって、QFT を実装する回路族のサイズは $(\log N)^2$ のオーダーとなります。
 

@@ -47,7 +47,6 @@ $$
 \boldsymbol{E}_e^{(\text{phase})} : |v\rangle \to (-1)^{v \cdot e}|v\rangle
 $$ {#eq-7.93}
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=28)
 であり、アダマール回転された基底では次のように表されます：
 
 $$
@@ -90,5 +89,4 @@ CSS 符号は、復元手順を2つの独立した操作（1つはビット反�
 
 – 図 –  
 
-[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=29)
 ビット反転誤りと位相誤りを診断するために、別個のシンドロームが測定されます。CSS 構成の重要な特別な場合は、符号 $C$ が自身の双対 $C^\perp$ を含む場合に生じます。その場合、$C_1 = C$ かつ $C_2 = C^\perp \subseteq C$ と選択することができます。$C$ のパリティ検査は $F$ 基底と $P$ 基底の両方で計算され、2つのシンドロームが決定されます。
