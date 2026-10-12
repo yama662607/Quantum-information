@@ -20,6 +20,12 @@ John Preskill 教授の講義ノート『Quantum Computation』の内容を数�
 | **Chapter 1: Introduction** | [📄 chap1.pdf](assets/pdf/preskill/chap1.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-1-preskill) |
 | **Chapter 2: Foundations I: States and Ensembles** | [📄 chap2.pdf](assets/pdf/preskill/chap2.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-2-preskill) |
 | **Chapter 3: Foundations II: Measurement and Evolution** | [📄 chap3.pdf](assets/pdf/preskill/chap3.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-3-preskill) |
+| **Chapter 4: Quantum Entanglement** | [📄 chap4.pdf](assets/pdf/preskill/chap4.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-4-preskill) |
+| **Chapter 5: Classical Circuits & Quantum Circuits** | [📄 chap5.pdf](assets/pdf/preskill/chap5.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-5-preskill) |
+| **Chapter 6: Quantum Algorithms** | [📄 chap6.pdf](assets/pdf/preskill/chap6.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-6-preskill) |
+| **Chapter 7: Quantum Error Correction** | [📄 chap7.pdf](assets/pdf/preskill/chap7.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-7-preskill) |
+| **Chapter 8: Topological Quantum Computation** | [📄 chap8.pdf](assets/pdf/preskill/chap8.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-8-preskill) |
+| **Chapter 10: Quantum Shannon Theory** | [📄 chap10.pdf](assets/pdf/preskill/chap10.pdf) | [📖 Textbook](textbook-preskill/textbook.qmd#chapter-10-preskill) |
 
 ---
 

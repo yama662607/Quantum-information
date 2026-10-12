@@ -4,22 +4,22 @@
 
 アンサンブル
 $$
-\{|\varphi(x)\rangle, p(x)\} \tag{10.122}{#eq-10.122}
-$$
+\{|\varphi(x)\rangle, p(x)\}
+$$ {#eq-10.122}
 からサンプリングすることによって各文字が選ばれる、$n$ 文字からなる長いメッセージを考えてみましょう。もしこのアンサンブルの状態が互いに直交しているならば、メッセージは古典的なものと見なしても差し支えありません。興味深い量子的ケースは、状態が互いに直交しておらず、したがって完全には識別できない場合です。このアンサンブルによって実現される密度演算子は
 $$
-\bm{\rho} = \sum_x p(x) |\varphi(x)\rangle \langle\varphi(x)| \tag{10.123}{#eq-10.123}
-$$
+\bm{\rho} = \sum_x p(x) |\varphi(x)\rangle \langle\varphi(x)|
+$$ {#eq-10.123}
 であり、$n$ 文字のメッセージ全体の密度演算子は
 $$
-\bm{\rho}^{\otimes n} = \bm{\rho} \otimes \cdots \otimes \bm{\rho} \tag{10.124}{#eq-10.124}
-$$
+\bm{\rho}^{\otimes n} = \bm{\rho} \otimes \cdots \otimes \bm{\rho}
+$$ {#eq-10.124}
 となります。このメッセージに含まれる量子情報はどれほど冗長なのでしょうか？ 私たちはメッセージの忠実度（fidelity）を大きく損なうことなく、より小さなヒルベルト空間へとメッセージを圧縮できるような量子符号を考案したいと考えます。例えば、量子メモリ装置があり、記録されたデータの統計的性質、具体的には $\bm{\rho}$ が分かっているとしましょう。（非常に高価な）量子ハードドライブの容量を節約するために、データを圧縮したいのです。
 
 達成可能な最適圧縮はシューマッハー（Schumacher）によって見出されました。予想される通り、メッセージは
 $$
-\dim \mathcal{H} = 2^{n(H(\bm{\rho}) + o(1))} \tag{10.125}{#eq-10.125}
-$$
+\dim \mathcal{H} = 2^{n(H(\bm{\rho}) + o(1))}
+$$ {#eq-10.125}
 を満たすヒルベルト空間 $\mathcal{H}$ へと、$n \to \infty$ において無視できる忠実度の損失で圧縮することができます。一方で、次元 $2^{n(H(\bm{\rho}) - \Omega(1))}$ への無誤差圧縮は不可能です。この意味において、フォン・ノイマンエントロピーはメッセージの1文字あたりに運ばれる量子情報の量子ビット（qubit）数となります。情報源が一様ランダムでない限り古典メッセージを常に圧縮できるのと全く同様に、$\bm{\rho}$ が最大混合状態でない限り圧縮は常に可能です。この結果はフォン・ノイマンエントロピーに対して正確な操作的解釈（operational interpretation）を与えます。
 
 シャノンの結果が既知であり理解されていれば、シューマッハーの圧縮定理の証明は難しくありません。必要な数学的アイデアはシャノンが用いたものと非常に似ているからです。しかし概念的には、非直交量子状態の不完全な識別可能性が中心的なアイデアとなるため、量子圧縮はその古典的な対応物とは大きく異なっています。
@@ -28,38 +28,38 @@ $$
 
 シューマッハーの量子圧縮プロトコルを完全に一般的な形で議論する前に、簡単な例を考えることが有益です。各文字が次のアンサンブルから選ばれる単一量子ビットであると仮定しましょう：
 $$
-|\uparrow_z\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad p = \frac{1}{2}, \tag{10.126}{#eq-10.126}
+|\uparrow_z\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad p = \frac{1}{2},
+$$ {#eq-10.126}
 $$
-$$
-|\uparrow_x\rangle = \begin{pmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{pmatrix}, \quad p = \frac{1}{2}. \tag{10.127}{#eq-10.127}
-$$
+|\uparrow_x\rangle = \begin{pmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{pmatrix}, \quad p = \frac{1}{2}.
+$$ {#eq-10.127}
 各文字の密度演算子は次のようになります：
 $$
 \begin{aligned}
 \bm{\rho} &= \frac{1}{2} |\uparrow_z\rangle\langle\uparrow_z| + \frac{1}{2} |\uparrow_x\rangle\langle\uparrow_x| \\
 &= \frac{1}{2} \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} + \frac{1}{2} \begin{pmatrix} \frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2} \end{pmatrix} = \begin{pmatrix} \frac{3}{4} & \frac{1}{4} \\ \frac{1}{4} & \frac{1}{4} \end{pmatrix}.
-\end{aligned} \tag{10.128}{#eq-10.128}
-$$
+\end{aligned}
+$$ {#eq-10.128}
 対称性から明らかなように、$\bm{\rho}$ の固有状態は軸 $\hat{n} = \frac{1}{\sqrt{2}}(\hat{x} + \hat{z})$ に沿って上向きおよび下向きを向いた量子ビットです：
 $$
-|0'\rangle \equiv |\uparrow_{\hat{n}}\rangle = \begin{pmatrix} \cos\frac{\pi}{8} \\ \sin\frac{\pi}{8} \end{pmatrix}, \quad |1'\rangle \equiv |\downarrow_{\hat{n}}\rangle = \begin{pmatrix} \sin\frac{\pi}{8} \\ -\cos\frac{\pi}{8} \end{pmatrix}. \tag{10.129}{#eq-10.129}
-$$
+|0'\rangle \equiv |\uparrow_{\hat{n}}\rangle = \begin{pmatrix} \cos\frac{\pi}{8} \\ \sin\frac{\pi}{8} \end{pmatrix}, \quad |1'\rangle \equiv |\downarrow_{\hat{n}}\rangle = \begin{pmatrix} \sin\frac{\pi}{8} \\ -\cos\frac{\pi}{8} \end{pmatrix}.
+$$ {#eq-10.129}
 固有値は
 $$
-\lambda(0') = \frac{1}{2} + \frac{1}{2\sqrt{2}} = \cos^2\frac{\pi}{8}, \quad \lambda(1') = \frac{1}{2} - \frac{1}{2\sqrt{2}} = \sin^2\frac{\pi}{8} \tag{10.130}{#eq-10.130}
-$$
+\lambda(0') = \frac{1}{2} + \frac{1}{2\sqrt{2}} = \cos^2\frac{\pi}{8}, \quad \lambda(1') = \frac{1}{2} - \frac{1}{2\sqrt{2}} = \sin^2\frac{\pi}{8}
+$$ {#eq-10.130}
 です。明らかに $\lambda(0') + \lambda(1') = 1$ かつ $\lambda(0')\lambda(1') = \frac{1}{8} = \det\bm{\rho}$ です。固有状態 $|0'\rangle$ は両方の信号状態と等しい（そして比較的大きな）重なりを持ちます：
 $$
-|\langle 0'|\uparrow_z\rangle|^2 = |\langle 0'|\uparrow_x\rangle|^2 = \cos^2\frac{\pi}{8} = .8535, \tag{10.131}{#eq-10.131}
-$$
+|\langle 0'|\uparrow_z\rangle|^2 = |\langle 0'|\uparrow_x\rangle|^2 = \cos^2\frac{\pi}{8} = .8535,
+$$ {#eq-10.131}
 一方、$|1'\rangle$ は両方と等しい（そして比較的小さな）重なりを持ちます：
 $$
-|\langle 1'|\uparrow_z\rangle|^2 = |\langle 1'|\uparrow_x\rangle|^2 = \sin^2\frac{\pi}{8} = .1465. \tag{10.132}{#eq-10.132}
-$$
+|\langle 1'|\uparrow_z\rangle|^2 = |\langle 1'|\uparrow_x\rangle|^2 = \sin^2\frac{\pi}{8} = .1465.
+$$ {#eq-10.132}
 したがって、$|\uparrow_z\rangle$ と $|\uparrow_x\rangle$ のどちらが送られたか分からない場合、私たちにできる最善の推測は $|\psi\rangle = |0'\rangle$ です。この推測は、あらゆる可能な単一量子ビット状態 $|\psi\rangle$ の中で、$\bm{\rho}$ との最大忠実度
 $$
-F = \frac{1}{2}|\langle\uparrow_z|\psi\rangle|^2 + \frac{1}{2}|\langle\uparrow_x|\psi\rangle|^2 \tag{10.133}{#eq-10.133}
-$$
+F = \frac{1}{2}|\langle\uparrow_z|\psi\rangle|^2 + \frac{1}{2}|\langle\uparrow_x|\psi\rangle|^2
+$$ {#eq-10.133}
 を達成します ($F = .8535$)。
 
 ここで、アリスがボブに3文字を送る必要があるものの、2量子ビットしか送る余裕がない場合を想像してみましょう。それでも彼女は、ボブができる限り高い忠実度で彼女の状態を再構成することを望んでいます。彼女は3文字のうち2文字をボブに送り、3文字目については $|0'\rangle$ と推測するようボブに頼むことができます。その場合、ボブは2文字を完全な忠実度で受け取り、3文字目に対する彼の推測の忠実度は $F = .8535$ となるため、全体として $F = .8535$ となります。しかし、より高い忠実度を達成するさらに巧妙な手順はあるでしょうか？
@@ -71,55 +71,55 @@ $$
 |\langle 0'0'1'|\psi\rangle|^2 &= |\langle 0'1'0'|\psi\rangle|^2 = |\langle 1'0'0'|\psi\rangle|^2 = \cos^4 \frac{\pi}{8} \sin^2 \frac{\pi}{8} = .1067, \\
 |\langle 0'1'1'|\psi\rangle|^2 &= |\langle 1'0'1'|\psi\rangle|^2 = |\langle 1'1'0'|\psi\rangle|^2 = \cos^2 \frac{\pi}{8} \sin^4 \frac{\pi}{8} = .0183, \\
 |\langle 1'1'1'|\psi\rangle|^2 &= \sin^6 \frac{\pi}{8} = .0031.
-\end{aligned} \tag{10.134}{#eq-10.134}
-$$
+\end{aligned}
+$$ {#eq-10.134}
 したがって、空間を $\{|0'0'0'\rangle, |0'0'1'\rangle, |0'1'0'\rangle, |1'0'0'\rangle\}$ によって張られる確からしい部分空間 $\Lambda$ と、その直交補空間 $\Lambda^\perp$ に分解することができます。信号状態を $\Lambda$ または $\Lambda^\perp$ に射影する不完全直交測定を行うと、確からしい部分空間 $\Lambda$ に射影される確率は
 $$
-p_{\mathrm{likely}} = .6219 + 3(.1067) = .9419 \tag{10.135}{#eq-10.135}
-$$
+p_{\mathrm{likely}} = .6219 + 3(.1067) = .9419
+$$ {#eq-10.135}
 であり、確からしくない部分空間に射影される確率は
 $$
-p_{\mathrm{unlikely}} = 3(.0183) + .0031 = .0581 \tag{10.136}{#eq-10.136}
-$$
+p_{\mathrm{unlikely}} = 3(.0183) + .0031 = .0581
+$$ {#eq-10.136}
 です。
 
 この測定を実行するために、例えばアリスはまず、4つの高確率基底状態を
 $$
-|\cdot\rangle \otimes |\cdot\rangle \otimes |0\rangle \tag{10.137}{#eq-10.137}
-$$
+|\cdot\rangle \otimes |\cdot\rangle \otimes |0\rangle
+$$ {#eq-10.137}
 へと回転させ、4つの低確率基底状態を
 $$
-|\cdot\rangle \otimes |\cdot\rangle \otimes |1\rangle \tag{10.138}{#eq-10.138}
-$$
+|\cdot\rangle \otimes |\cdot\rangle \otimes |1\rangle
+$$ {#eq-10.138}
 へと回転させるユニタリ変換 $\bm{U}$ を適用することができます。その後、アリスは第3量子ビットを測定して射影を実行します。結果が $|0\rangle$ であれば、アリスの入力状態は実質的に $\Lambda$ へと射影されたことになります。彼女は測定されていない残りの2量子ビットをボブに送信します。ボブはこの圧縮された2量子ビット状態 $|\psi_{\mathrm{comp}}\rangle$ を受け取ると、$|0\rangle$ を付加して $\bm{U}^{-1}$ を適用することにより復元（伸長）し、
 $$
-|\psi'\rangle = \bm{U}^{-1}(|\psi_{\mathrm{comp}}\rangle \otimes |0\rangle) \tag{10.139}{#eq-10.139}
-$$
+|\psi'\rangle = \bm{U}^{-1}(|\psi_{\mathrm{comp}}\rangle \otimes |0\rangle)
+$$ {#eq-10.139}
 を得ます。
 
 もしアリスによる第3量子ビットの測定結果が $|1\rangle$ であった場合、彼女は入力状態を低確率部分空間 $\Lambda^\perp$ へと射影したことになります。この場合、彼女ができる最善の行動は、ボブが復元したときに最も確からしい状態 $|0'0'0'\rangle$ となるような状態を送ることです。すなわち、
 $$
-|\psi'\rangle = \bm{U}^{-1}(|\psi_{\mathrm{comp}}\rangle \otimes |0\rangle) = |0'0'0'\rangle \tag{10.140}{#eq-10.140}
-$$
+|\psi'\rangle = \bm{U}^{-1}(|\psi_{\mathrm{comp}}\rangle \otimes |0\rangle) = |0'0'0'\rangle
+$$ {#eq-10.140}
 を満たす状態 $|\psi_{\mathrm{comp}}\rangle$ を送信します。
 
 このようにして、アリスが3量子ビットの信号状態 $|\psi\rangle$ を符号化し、2量子ビットをボブに送信し、ボブが今述べたように復号すると、ボブは状態 $\bm{\rho}'$ を得ます：
 $$
-|\psi\rangle\langle\psi| \to \bm{\rho}' = \bm{E}|\psi\rangle\langle\psi|\bm{E} + |0'0'0'\rangle\langle\psi|(\bm{I} - \bm{E})|\psi\rangle\langle 0'0'0'|. \tag{10.141}{#eq-10.141}
-$$
+|\psi\rangle\langle\psi| \to \bm{\rho}' = \bm{E}|\psi\rangle\langle\psi|\bm{E} + |0'0'0'\rangle\langle\psi|(\bm{I} - \bm{E})|\psi\rangle\langle 0'0'0'|.
+$$ {#eq-10.141}
 ここで $\bm{E}$ は $\Lambda$ への射影演算子です。この手順によって達成される忠実度は
 $$
 \begin{aligned}
 F &= \langle\psi|\bm{\rho}'|\psi\rangle = (\langle\psi|\bm{E}|\psi\rangle)^2 + (\langle\psi|(\bm{I} - \bm{E})|\psi\rangle)(\langle\psi|0'0'0'\rangle)^2 \\
 &= (.9419)^2 + (.0581)(.6219) = .9234
-\end{aligned} \tag{10.142}{#eq-10.142}
-$$
+\end{aligned}
+$$ {#eq-10.142}
 となります。これは確かに、3量子ビットのうち2量子ビットをそれぞれ完全な忠実度で送信するナイーブな手順よりも優れています。
 
 より多くの文字を持つ長いメッセージを考えるにつれて、圧縮しすぎない限り、圧縮の忠実度は向上します。1量子ビットアンサンブルのフォン・ノイマンエントロピーは
 $$
-H(\bm{\rho}) = H\left(\cos^2\frac{\pi}{8}\right) = .60088\dots \tag{10.143}{#eq-10.143}
-$$
+H(\bm{\rho}) = H\left(\cos^2\frac{\pi}{8}\right) = .60088\dots
+$$ {#eq-10.143}
 です。したがって、シューマッハーの定理によれば、私たちは長いメッセージを例えば係数 $.6009$ で短縮しても、なお非常に優れた忠実度を達成することができます。
 
 ### 10.3.2 一般のシューマッハー圧縮 (Schumacher compression in general) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=34) {#sec-10-3-2}
@@ -128,41 +128,41 @@ $$
 
 各文字がアンサンブル $\{|\varphi(x)\rangle, p(x)\}$ から選ばれる純粋量子状態である、$n$ 文字のメッセージを考えます。単一文字の密度演算子は
 $$
-\bm{\rho} = \sum_x p(x) |\varphi(x)\rangle\langle\varphi(x)| \tag{10.144}{#eq-10.144}
-$$
+\bm{\rho} = \sum_x p(x) |\varphi(x)\rangle\langle\varphi(x)|
+$$ {#eq-10.144}
 です。文字は独立に選ばれるため、メッセージ全体の密度演算子は
 $$
-\bm{\rho}^{\otimes n} \equiv \bm{\rho} \otimes \cdots \otimes \bm{\rho} \tag{10.145}{#eq-10.145}
-$$
+\bm{\rho}^{\otimes n} \equiv \bm{\rho} \otimes \cdots \otimes \bm{\rho}
+$$ {#eq-10.145}
 となります。$n$ が大きいとき、この密度行列はその台（support）のほぼすべてをメッセージ全体の全ヒルベルト空間のある部分空間上に持っており、その部分空間の次元は漸近的に $2^{nH(\bm{\rho})}$ に近づく、と私たちは主張します。
 
 この主張は対応する古典的な言明から直接導かれます。なぜなら、$\bm{\rho}$ はその固有状態からなる正規直交純粋状態アンサンブルによって実現され、各固有状態に割り当てられる確率は対応する固有値であると見なすことができるからです。この基底において、私たちの量子情報源は実質的に古典的であり、$\bm{\rho}$ の固有状態のテンソル積であるメッセージを生成し、それぞれの確率は対応する固有値の積で与えられます。指定された $n$ と $\delta$ に対して、次を満たす固有値 $\lambda$ を持つ $\bm{\rho}^{\otimes n}$ の固有ベクトルによって張られる空間として、$\delta$-典型部分空間 $\Lambda$ を定義します：
 $$
-2^{-n(H-\delta)} \ge \lambda \ge 2^{-n(H+\delta)}. \tag{10.146}{#eq-10.146}
-$$
+2^{-n(H-\delta)} \ge \lambda \ge 2^{-n(H+\delta)}.
+$$ {#eq-10.146}
 シャノンの議論から直接借りてくると、任意の $\delta, \varepsilon > 0$ および十分に大きな $n$ に対して、この条件を満たす $\bm{\rho}^{\otimes n}$ の固有値の和は次を満たすと推論できます：
 $$
-\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}) \ge 1 - \varepsilon. \tag{10.147}{#eq-10.147}
-$$
+\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}) \ge 1 - \varepsilon.
+$$ {#eq-10.147}
 ここで $\bm{E}$ は典型部分空間 $\Lambda$ への射影を表し、そのような固有値の個数 $\dim(\Lambda)$ は次を満たします：
 $$
-2^{n(H+\delta)} \ge \dim(\Lambda) \ge (1-\varepsilon)2^{n(H-\delta)}. \tag{10.148}{#eq-10.148}
-$$
+2^{n(H+\delta)} \ge \dim(\Lambda) \ge (1-\varepsilon)2^{n(H-\delta)}.
+$$ {#eq-10.148}
 私たちの符号化戦略は、典型部分空間内の状態を忠実に送信することです。入力メッセージを $\Lambda$ または $\Lambda^\perp$ のいずれかに射影する測定を行うことができます。その結果は確率 $p_\Lambda = \mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}) \ge 1 - \varepsilon$ で $\Lambda$ となります。その場合、射影された状態が符号化されて送信されます。漸近的にはもう一方の結果の確率は無視できるほど小さくなるため、その場合に何を行うかはほとんど問題になりません。
 
 射影された状態の符号化は、それを最小限の量子ビット数で運べるようにパッケージ化するだけのことです。例えば、$\Lambda$ 内の各状態 $|\psi_{\mathrm{typ}}\rangle$ を次のような形式の状態へと写す基底のユニタリ変換 $\bm{U}$ を適用します：
 $$
-\bm{U}|\psi_{\mathrm{typ}}\rangle = |\psi_{\mathrm{comp}}\rangle \otimes |0_{\mathrm{rest}}\rangle. \tag{10.149}{#eq-10.149}
-$$
+\bm{U}|\psi_{\mathrm{typ}}\rangle = |\psi_{\mathrm{comp}}\rangle \otimes |0_{\mathrm{rest}}\rangle.
+$$ {#eq-10.149}
 ここで $|\psi_{\mathrm{comp}}\rangle$ は $n(H + \delta)$ 量子ビットの状態であり、$|0_{\mathrm{rest}}\rangle$ は残りの量子ビットの状態 $|0\rangle \otimes \cdots \otimes |0\rangle$ を表します。アリスは $|\psi_{\mathrm{comp}}\rangle$ をボブに送り、ボブは $|0_{\mathrm{rest}}\rangle$ を付加して $\bm{U}^{-1}$ を適用することにより復号します。
 
 $$
-|\varphi(\vec{x})\rangle = |\varphi(x_1)\rangle \otimes \cdots \otimes |\varphi(x_n)\rangle \tag{10.150}{#eq-10.150}
-$$
+|\varphi(\vec{x})\rangle = |\varphi(x_1)\rangle \otimes \cdots \otimes |\varphi(x_n)\rangle
+$$ {#eq-10.150}
 が送信される可能性のある $n$ 文字の純粋状態メッセージのいずれかを表すとしましょう。今説明したように符号化、送信、復号が実行された後、ボブは次のような状態を再構成しています：
 $$
-|\varphi(\vec{x})\rangle\langle\varphi(\vec{x})| \mapsto \bm{\rho}'(\vec{x}) = \bm{E}|\varphi(\vec{x})\rangle\langle\varphi(\vec{x})|\bm{E} + \bm{\rho}_{\mathrm{Junk}}(\vec{x})\langle\varphi(\vec{x})|(\bm{I}-\bm{E})|\varphi(\vec{x})\rangle. \tag{10.151}{#eq-10.151}
-$$
+|\varphi(\vec{x})\rangle\langle\varphi(\vec{x})| \mapsto \bm{\rho}'(\vec{x}) = \bm{E}|\varphi(\vec{x})\rangle\langle\varphi(\vec{x})|\bm{E} + \bm{\rho}_{\mathrm{Junk}}(\vec{x})\langle\varphi(\vec{x})|(\bm{I}-\bm{E})|\varphi(\vec{x})\rangle.
+$$ {#eq-10.151}
 ここで $\bm{\rho}_{\mathrm{Junk}}(\vec{x})$ は測定が結果 $\Lambda^\perp$ を生じた場合に私たちが送信することを選んだ状態です。この手順の忠実度について何が言えるでしょうか？
 
 忠実度はメッセージごとに異なるため、可能なメッセージのアンサンブルにわたって平均された忠実度を考えます：
@@ -171,51 +171,51 @@ $$
 \bar{F} &= \sum_{\vec{x}} p(\vec{x}) \langle\varphi(\vec{x})|\bm{\rho}'(\vec{x})|\varphi(\vec{x})\rangle \\
 &= \sum_{\vec{x}} p(\vec{x}) \langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle \langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle + \sum_{\vec{x}} p(\vec{x}) \langle\varphi(\vec{x})|\bm{\rho}_{\mathrm{Junk}}(\vec{x})|\varphi(\vec{x})\rangle \langle\varphi(\vec{x})|(\bm{I}-\bm{E})|\varphi(\vec{x})\rangle \\
 &\ge \sum_{\vec{x}} p(\vec{x}) \langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle^2.
-\end{aligned} \tag{10.152}{#eq-10.152}
-$$
+\end{aligned}
+$$ {#eq-10.152}
 ここで最後の不等式は、「ジャンク（Junk）」項が非負であることから成り立ちます。任意の実数 $z$ は
 $$
-(z-1)^2 \ge 0, \quad \text{すなわち} \quad z^2 \ge 2z - 1 \tag{10.153}{#eq-10.153}
-$$
+(z-1)^2 \ge 0, \quad \text{すなわち} \quad z^2 \ge 2z - 1
+$$ {#eq-10.153}
 を満たすので、$z = \langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle$ とおくことにより、
 $$
-\langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle^2 \ge 2\langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle - 1 \tag{10.154}{#eq-10.154}
-$$
+\langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle^2 \ge 2\langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle - 1
+$$ {#eq-10.154}
 が得られ、したがって
 $$
 \begin{aligned}
 \bar{F} &\ge \sum_{\vec{x}} p(\vec{x})(2\langle\varphi(\vec{x})|\bm{E}|\varphi(\vec{x})\rangle - 1) \\
 &= 2\,\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}) - 1 \ge 2(1-\varepsilon) - 1 = 1 - 2\varepsilon
-\end{aligned} \tag{10.155}{#eq-10.155}
-$$
+\end{aligned}
+$$ {#eq-10.155}
 となります。$\varepsilon$ と $\delta$ は望むだけ小さくできるため、メッセージを $n(H + o(1))$ 量子ビットへと圧縮しつつ、$n$ が大きくなるにつれて任意に良好となる平均忠実度を達成できることが示されました。
 
 さらなる圧縮は可能でしょうか？ ボブは受け取ったメッセージ $\bm{\rho}_{\mathrm{comp}}(\vec{x})$ を、補助量子ビットを付加してユニタリ変換 $\bm{U}^{-1}$ を適用することによって復号し、
 $$
-\bm{\rho}'(\vec{x}) = \bm{U}^{-1}(\bm{\rho}_{\mathrm{comp}}(\vec{x}) \otimes |0\rangle\langle 0|)\bm{U} \tag{10.156}{#eq-10.156}
-$$
+\bm{\rho}'(\vec{x}) = \bm{U}^{-1}(\bm{\rho}_{\mathrm{comp}}(\vec{x}) \otimes |0\rangle\langle 0|)\bm{U}
+$$ {#eq-10.156}
 を得ると仮定しましょう（「ユニタリ復号（unitary decoding）」）。そして、$\bm{\rho}_{\mathrm{comp}}(\vec{x})$ は $n(H - \delta')$ 量子ビットに圧縮されたと仮定します。このとき、入力メッセージがどのように符号化されていたとしても、復号されたメッセージはすべて $\dim(\Lambda') = 2^{n(H-\delta')}$ を持つボブのヒルベルト空間の部分空間 $\Lambda'$ 内に含まれます。
 
 入力メッセージが $|\varphi(\vec{x})\rangle$ である場合、ボブによって再構成された密度演算子は
 $$
-\bm{\rho}'(\vec{x}) = \sum_{a_{\vec{x}}} |a_{\vec{x}}\rangle \lambda_{a_{\vec{x}}} \langle a_{\vec{x}}| \tag{10.157}{#eq-10.157}
-$$
+\bm{\rho}'(\vec{x}) = \sum_{a_{\vec{x}}} |a_{\vec{x}}\rangle \lambda_{a_{\vec{x}}} \langle a_{\vec{x}}|
+$$ {#eq-10.157}
 と対角化できます。ここで $|a_{\vec{x}}\rangle$ は $\Lambda'$ 内の互いに直交する状態です。再構成されたメッセージの忠実度は
 $$
 \begin{aligned}
 F(\vec{x}) &= \langle\varphi(\vec{x})|\bm{\rho}'(\vec{x})|\varphi(\vec{x})\rangle \\
 &= \sum_{a_{\vec{x}}} \lambda_{a_{\vec{x}}} \langle\varphi(\vec{x})|a_{\vec{x}}\rangle \langle a_{\vec{x}}|\varphi(\vec{x})\rangle \\
 &\le \sum_{a_{\vec{x}}} \langle\varphi(\vec{x})|a_{\vec{x}}\rangle \langle a_{\vec{x}}|\varphi(\vec{x})\rangle \le \langle\varphi(\vec{x})|\bm{E}'|\varphi(\vec{x})\rangle
-\end{aligned} \tag{10.158}{#eq-10.158}
-$$
+\end{aligned}
+$$ {#eq-10.158}
 となります。ここで $\bm{E}'$ は部分空間 $\Lambda'$ への直交射影を表します。したがって、平均忠実度は次を満たします：
 $$
-\bar{F} = \sum_{\vec{x}} p(\vec{x}) F(\vec{x}) \le \sum_{\vec{x}} p(\vec{x}) \langle\varphi(\vec{x})|\bm{E}'|\varphi(\vec{x})\rangle = \mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}'). \tag{10.159}{#eq-10.159}
-$$
+\bar{F} = \sum_{\vec{x}} p(\vec{x}) F(\vec{x}) \le \sum_{\vec{x}} p(\vec{x}) \langle\varphi(\vec{x})|\bm{E}'|\varphi(\vec{x})\rangle = \mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}').
+$$ {#eq-10.159}
 しかし、§10.2.2で議論したファン・キーの優越原理（Ky Fan dominance principle）によれば、$\bm{E}'$ は次元 $2^{n(H-\delta')}$ の空間への射影であるため、$\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}')$ は $\bm{\rho}^{\otimes n}$ の最大の $2^{n(H-\delta')}$ 個の固有値の和より大きくなることはできません。$\bm{\rho}^{\otimes n}$ の $\delta$-典型固有値は $2^{-n(H-\delta)}$ 以上であるため、最大の $2^{n(H-\delta')}$ 個の固有値の和は上から評価できます：
 $$
-\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}') \le 2^{n(H-\delta')} 2^{-n(H-\delta)} + \varepsilon = 2^{-n(\delta'-\delta)} + \varepsilon. \tag{10.160}{#eq-10.160}
-$$
+\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}') \le 2^{n(H-\delta')} 2^{-n(H-\delta)} + \varepsilon = 2^{-n(\delta'-\delta)} + \varepsilon.
+$$ {#eq-10.160}
 ここで $+ \varepsilon$ は非典型固有値からの寄与を考慮したものです。十分に大きな $n$ に対して $\varepsilon$ と $\delta$ は望むだけ小さく選ぶことができるため、もし文字あたり $H(\bm{\rho}) - \Omega(1)$ 量子ビットへと圧縮するならば、$n \to \infty$ において平均忠実度 $\bar{F}$ は小さくなってしまうと結論付けられます。
 
 したがって、$n$ が無限大に向かう際に良好な忠実度を得ようとするならば、1文字あたり $H(\bm{\rho})$ 量子ビットが達成可能な量子情報の最適圧縮であることが分かります。これが**シューマッハーの量子情報源符号化定理（Schumacher's quantum source coding theorem）**です。
@@ -224,16 +224,16 @@ $$
 
 シューマッハーの量子圧縮プロトコルについて考えるもう一つの有用な方法があります。アリスの密度演算子 $\bm{\rho}_A^{\otimes n}$ が、アリスがロバート（Robert）と共有する純粋化 $|\psi\rangle_{RA}$ を持っていると仮定しましょう。アリスはボブにできる限り少ない量子ビットを送信することで、$|\psi\rangle_{RA}$ の自身の持ち分を高忠実度でボブへと伝達したいと考えています。この課題を達成するために、アリスは上で説明したのと同じ手順を用い、その典型部分空間 $\Lambda$ へと射影することによって $A$ の状態を圧縮することを試みることができます。アリスの射影は確率
 $$
-P(\bm{E}) = \langle\psi|\bm{I} \otimes \bm{E}|\psi\rangle = \mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}) \ge 1 - \varepsilon \tag{10.161}{#eq-10.161}
-$$
+P(\bm{E}) = \langle\psi|\bm{I} \otimes \bm{E}|\psi\rangle = \mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E}) \ge 1 - \varepsilon
+$$ {#eq-10.161}
 で成功します。ここで $\bm{E}$ は $\Lambda$ への射影であり、成功したときには状態
 $$
-\frac{(\bm{I}\otimes\bm{E})|\psi\rangle}{\sqrt{P(\bm{E})}} \tag{10.162}{#eq-10.162}
-$$
+\frac{(\bm{I}\otimes\bm{E})|\psi\rangle}{\sqrt{P(\bm{E})}}
+$$ {#eq-10.162}
 を準備します。したがって、ボブが伸長した後、彼がロバートと共有する状態は $|\psi\rangle$ との間で次を満たす忠実度 $F_e$ を持ちます：
 $$
-F_e \ge \langle\psi|\bm{I} \otimes \bm{E}|\psi\rangle \langle\psi|\bm{I} \otimes \bm{E}|\psi\rangle = \left(\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E})\right)^2 = P(\bm{E})^2 \ge (1-\varepsilon)^2 \ge 1-2\varepsilon. \tag{10.163}{#eq-10.163}
-$$
+F_e \ge \langle\psi|\bm{I} \otimes \bm{E}|\psi\rangle \langle\psi|\bm{I} \otimes \bm{E}|\psi\rangle = \left(\mathrm{tr}(\bm{\rho}^{\otimes n}\bm{E})\right)^2 = P(\bm{E})^2 \ge (1-\varepsilon)^2 \ge 1-2\varepsilon.
+$$ {#eq-10.163}
 アリスは $nH(\bm{\rho}) + o(n)$ 量子ビットをボブに送信することによって、純粋状態 $|\psi\rangle_{RA}$ の自身の持ち分をボブへと転送でき、$n \to \infty$ において任意に優れた**エンタングルメント忠実度（entanglement fidelity）** $F_e$ を達成できると結論付けられます。§10.8.2 では、この結果のより一般的なバージョンを導出します。
 
 要約すると、シャノンの古典情報源符号化定理とシューマッハーの量子情報源符号化定理の間には密接な類似関係があります。古典的な場合、ほぼすべての長いメッセージは典型系列であるため、これらのみを符号化すればなお誤差確率は小さく抑えられます。量子的な場合、ほぼすべての長いメッセージは典型部分空間とほぼ完全な重なりを持つため、典型部分空間のみを符号化すればなお良好な忠実度を達成できます。
