@@ -16,17 +16,17 @@ John Preskill 教授の講義ノート全 9 章（Chapter 1〜10、※Chapter 9 
 
 ### 全 9 章の収録実績
 
-| 章 | タイトル | ページ数 | 収録数式・演習 | 翻訳断片ファイル |
-| :--- | :--- | :---: | :---: | :--- |
-| **Chapter 1** | Introduction and Overview | 30p | 式 1.1〜1.37 | `quarto/textbook-preskill/chapter1/` |
-| **Chapter 2** | Foundations I: States and Ensembles | 53p | 式 2.1〜2.187, 演習 2.1〜2.9 | `quarto/textbook-preskill/chapter2/` |
-| **Chapter 3** | Foundations II: Measurement and Evolution | 65p | 式 3.1〜3.257, 演習 3.1〜3.13 | `quarto/textbook-preskill/chapter3/` |
-| **Chapter 4** | Quantum Entanglement | 70p | 式 4.1〜4.192, 演習 4.1〜4.10 | `quarto/textbook-preskill/chapter4/` |
-| **Chapter 5** | Classical Circuits & Quantum Circuits | 54p | 式 5.1〜5.142, 演習 5.1〜5.6 | `quarto/textbook-preskill/chapter5/` |
-| **Chapter 6** | Quantum Algorithms | 64p | 式 6.1〜6.290, §6.1〜§6.10 | `quarto/textbook-preskill/chapter6/` |
-| **Chapter 7** | Quantum Error Correction | 92p | 式 7.1〜7.240, §7.1〜§7.24, 演習全問 | `quarto/textbook-preskill/chapter7/` |
-| **Chapter 8** | Topological Quantum Computation | 68p | 式 8.1〜8.118, §8.1〜§8.6, 演習全問 | `quarto/textbook-preskill/chapter8/` |
-| **Chapter 10** | Quantum Shannon Theory | 103p | 式 10.1〜10.373, §10.1〜§10.12, 演習全問 | `quarto/textbook-preskill/chapter10/` |
+| 章 | タイトル | ページ数 | 収録数式・演習 | 親ファイル | 断片ディレクトリ |
+| :--- | :--- | :---: | :---: | :--- | :--- |
+| **Chapter 1** | Introduction and Overview | 30p | 式 1.1〜1.37 | `chapter1.qmd` | `chapter1/_*.qmd` |
+| **Chapter 2** | Foundations I: States and Ensembles | 53p | 式 2.1〜2.187, 演習 2.1〜2.9 | `chapter2.qmd` | `chapter2/_*.qmd` |
+| **Chapter 3** | Foundations II: Measurement and Evolution | 65p | 式 3.1〜3.257, 演習 3.1〜3.13 | `chapter3.qmd` | `chapter3/_*.qmd` |
+| **Chapter 4** | Quantum Entanglement | 70p | 式 4.1〜4.192, 演習 4.1〜4.10 | `chapter4.qmd` | `chapter4/_*.qmd` |
+| **Chapter 5** | Classical Circuits & Quantum Circuits | 54p | 式 5.1〜5.142, 演習 5.1〜5.6 | `chapter5.qmd` | `chapter5/_*.qmd` |
+| **Chapter 6** | Quantum Algorithms | 64p | 式 6.1〜6.290, §6.1〜§6.10 | `chapter6.qmd` | `chapter6/_*.qmd` |
+| **Chapter 7** | Quantum Error Correction | 92p | 式 7.1〜7.240, §7.1〜§7.24, 演習全問 | `chapter7.qmd` | `chapter7/_*.qmd` |
+| **Chapter 8** | Topological Quantum Computation | 68p | 式 8.1〜8.118, §8.1〜§8.6, 演習全問 | `chapter8.qmd` | `chapter8/_*.qmd` |
+| **Chapter 10** | Quantum Shannon Theory | 103p | 式 10.1〜10.373, §10.1〜§10.12, 演習全問 | `chapter10.qmd` | `chapter10/_*.qmd` |
 
 ---
 
