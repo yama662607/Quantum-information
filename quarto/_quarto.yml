@@ -11,6 +11,7 @@ book:
   title: "Quantum Information"
   author: "Daisuke Yamashiki"
   date: "2025-01-23"
+  reader-mode: true
   navbar:
     left:
       - text: "ホーム"
