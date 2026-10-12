@@ -1,0 +1,401 @@
+## 10.6 達成可能情報 (Accessible Information) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=46) {#sec-10.6-accessible-information}
+
+### 10.6.1 測定からどれだけの情報を得られるか？ (How much can we learn from a measurement?) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=46) {#sec-10.6.1-measurement-information}
+
+アリスとボブによって行われるゲームを考えましょう。アリスはアンサンブル $\mathcal{E} = \{\boldsymbol{\rho}(x), p(x)\}$ から選ばれた量子状態を準備し、それをボブに送ります。ボブはこのアンサンブルを知っていますが、アリスが送るために選んだ特定の内訳の状態は知りません。状態を受け取ったボブは、アリスが何を送信したかについてできるだけ多くのことを知りたいと考え、要素 $\{\boldsymbol{E}(y)\} \equiv \boldsymbol{E}$ を持つ POVM を実行します。アリスが $\boldsymbol{\rho}(x)$ を送ったときにボブが結果 $y$ を得る条件付き確率は $p(y|x) = \mathrm{tr}\left(\boldsymbol{E}(y)\boldsymbol{\rho}(x)\right)$ であり、アリスの準備とボブの測定を支配する結合分布は $p(x, y) = p(y|x)p(x)$ となります。
+
+測定を行う前、アリスの状態に関するボブの無知（不確実性）は $x$ を指定するのに必要な「1文字あたりのビット数」である $H(X)$ によって定量化されます。測定を行った後、彼の無知は $H(X|Y) = H(XY) - H(Y)$ へと減少します。測定によって達成されるボブの知識の向上はボブの**情報利得（information gain）**であり、これは相互情報量
+$$
+I(X; Y) = H(X) - H(X|Y)
+$$ {#eq-10.204}
+で与えられます。
+
+ボブの最善の戦略（彼の**最適測定 (optimal measurement)**）は、この情報利得を最大化することです。ボブが達成できる最大の情報利得、
+$$
+\mathrm{Acc}(\mathcal{E}) = \max_{\boldsymbol{E}} I(X; Y)
+$$ {#eq-10.205}
+はアンサンブル $\mathcal{E}$ の特性であり、$\mathcal{E}$ の**達成可能情報（accessible information）**と呼ばれます。
+
+もし状態群 $\{\boldsymbol{\rho}(x)\}$ が互いに直交しているならば、それらは完全に識別可能です。ボブは $\boldsymbol{E}(x)$ を $\boldsymbol{\rho}(x)$ の台（support）への射影作用素として選ぶことで、アリスの状態を確実に特定できます。このとき $p(y|x) = \delta_{x,y} = p(x|y)$ となり、したがって $H(X|Y) = \langle -\log p(x|y)\rangle = 0$ かつ $\mathrm{Acc}(\mathcal{E}) = H(X)$ となります。アリスの状態が直交していない場合、ボブの課題はずっと難しくなります。その場合、状態を完全に特定できる測定は存在しないため、$H(X|Y)$ は必ず正となり、$\mathrm{Acc}(\mathcal{E}) < H(X)$ となります。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=47) アンサンブルの達成可能情報に対する単純な一般公式は存在しませんが、**ホレボ限界（Holevo bound）**と呼ばれる有用な上限を導くことができます。純粋状態のアンサンブル $\mathcal{E} = \{|\varphi(x)\rangle, p(x)\}$ という特別な場合、ホレボ限界は次のように表されます：
+$$
+\mathrm{Acc}(\mathcal{E}) \le H(\boldsymbol{\rho}), \quad \text{ここで} \quad \boldsymbol{\rho} = \sum_x p(x) |\varphi(x)\rangle\langle\varphi(x)|.
+$$ {#eq-10.206}
+そして後で見るように、混合状態のアンサンブルに対してはより鋭い言明が可能です。次元 $d$ の量子系に対するエントロピーは $\log d$ より大きくはなり得ないため、ホレボ限界は、アリスがボブに $n$ 個の量子ビット（$d = 2^n$）を送信することによって、最大でも $n$ ビットの情報しか伝達できないことを主張しています。これは、ボブが量子ビットを1つずつ測定するのではなく、すべての量子ビットに対して一度に高度な集団測定（collective measurement）を実行した場合でも成り立ちます。
+
+したがって、アリスが量子ビットを送信することによってボブに古典情報を伝達したい場合、彼女は量子ビットをあたかも古典的であるかのように扱い、1ビットを伝送するために2つの直交状態 $\{|0\rangle, |1\rangle\}$ のいずれかで各量子ビットを送信する以上のことはできません。この主張はそれほど自明ではありません。アリスは、ブロッホ球上に一様に分布する純粋な1量子ビット信号状態の大きなアルファベットから選ばれた状態を送信することによって、単一の量子ビットにより多くの古典情報を詰め込もうと試みるかもしれません。しかし、可能な信号の数が増加するにつれて信号同士の識別可能性も低下し、ボブはアリスが量子ビットに預けようと望んだ余分な情報を抽出することができないため、アルファベットを拡大しても無駄になります。
+
+互いに直交する状態のアルファベットを使用することでより効率的に情報を送信できるのであれば、なぜ私たちは非直交状態のアンサンブルに対する達成可能情報に関心を持つべきなのでしょうか？ 考えられる理由はたくさんあります。おそらくアリスにとっては、互いに直交する信号よりも、コヒーレント状態のように不完全にしか識別できない信号を送信する方が容易であるかもしれません。あるいは、アリスがノイズのある通信路を通じてボブに信号を送信するため、通信路に入るときには直交していた信号がボブに届く頃には不完全にしか識別できなくなっているのかもしれません。
+
+達成可能情報ゲームは、実験物理学者が量子系をプローブとして使用して未知の古典的な力を測定しようとする際にも現れます。例えば、磁場の $z$ 成分を測定するために、私たちは $x$ 方向にスピンが向いたスピン $\frac{1}{2}$ 粒子を準備するかもしれません。スピンは未知の磁場中で時間 $t$ だけ歳差運動し、可能な最終状態のアンサンブルを生成します（初期準備が不完全であるか、実験中にデコヒーレンスが発生する場合、これは混合状態のアンサンブルになります）。スピンの最終状態に関して私たちがより多くの情報を得ることができればできるほど、磁場の値をより正確に決定することができます。
+
+### 10.6.2 ホレボ限界 (Holevo bound) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=47) {#sec-10.6.2-holevo-bound}
+
+量子相互情報量が単調性（monotonicity）を満たすことを思い出しましょう。すなわち、量子通信路が $B$ を $B'$ に写像するならば、$I(A; B) \ge I(A; B')$ です。私たちは相互情報量の単調性を達成可能情報ゲームに適用することによってホレボ限界を導出します。アリスが自分が選んだ状態を古典レジスタ $X$ に記録し、ボブも同様に自分の測定結果を別のレジスタ $Y$ に記録すると仮定します。これにより、ボブの情報利得は2つのレジスタの相互情報量 $I(X; Y)$ となります。アリスが自身の系 $A$ を準備した後、$XA$ の結合状態は
+$$
+\boldsymbol{\rho}_{XA} = \sum_x p(x) |x\rangle\langle x| \otimes \boldsymbol{\rho}(x)
+$$ {#eq-10.207}
+となります。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=48) ボブの測定は、次のように $A$ を $AY$ に写像する量子通信路です：
+$$
+\boldsymbol{\rho}(x) \mapsto \sum_y \boldsymbol{M}(y)\boldsymbol{\rho}(x)\boldsymbol{M}(y)^\dagger \otimes |y\rangle\langle y|.
+$$ {#eq-10.208}
+ここで $\boldsymbol{M}(y)^\dagger \boldsymbol{M}(y) = \boldsymbol{E}(y)$ であり、これにより $XAY$ の状態
+$$
+\boldsymbol{\rho}'_{XAY} = \sum_{x,y} p(x) |x\rangle\langle x| \otimes \boldsymbol{M}(y)\boldsymbol{\rho}(x)\boldsymbol{M}(y)^\dagger \otimes |y\rangle\langle y|
+$$ {#eq-10.209}
+が得られます。ここで、
+$$
+I(X; Y)_{\boldsymbol{\rho}'} \le I(X; AY)_{\boldsymbol{\rho}'} \le I(X; A)_{\boldsymbol{\rho}}
+$$ {#eq-10.210}
+が成り立ちます。添字は相互情報量が評価される状態を示しています。最初の不等式は状態 $\boldsymbol{\rho}'$ における強劣加法性（strong subadditivity）を用い、2番目の不等式は $\boldsymbol{\rho}$ を $\boldsymbol{\rho}'$ に写像する通信路のもとでの単調性を用いています。
+
+量 $I(X; A)$ はアンサンブル $\mathcal{E}$ の固有の性質です。これは $\chi(\mathcal{E})$ と表記され、アンサンブルの**ホレボ $\chi$（Holevo chi）**と呼ばれます。私たちは、ボブがどのように測定を選んだとしても、彼の情報利得はホレボ $\chi$ によって上から抑えられることを示しました。したがって、
+$$
+\mathrm{Acc}(\mathcal{E}) \le \chi(\mathcal{E}) := I(X; A)_{\boldsymbol{\rho}}
+$$ {#eq-10.211}
+です。これがホレボ限界です。
+
+それでは、$I(X; A)_{\boldsymbol{\rho}}$ を明示的に計算してみましょう。
+$$
+\begin{aligned}
+H(XA) &= -\mathrm{tr}_{XA}\left(\sum_x p(x)|x\rangle\langle x| \otimes \boldsymbol{\rho}(x) \log\left(\sum_{x'} p(x')|x'\rangle\langle x'| \otimes \boldsymbol{\rho}(x')\right)\right) \\
+&= -\sum_x \mathrm{tr}_A \, p(x)\boldsymbol{\rho}(x)(\log p(x) + \log \boldsymbol{\rho}(x)) \\
+&= H(X) + \sum_x p(x)H(\boldsymbol{\rho}(x))
+\end{aligned}
+$$ {#eq-10.212}
+であり、したがって
+$$
+H(A|X) = H(XA) - H(X) = \sum_x p(x) H(\boldsymbol{\rho}(x))
+$$ {#eq-10.213}
+であることに注意します。$I(X; A) = H(A) - H(A|X)$ を用いると、次が得られます：
+$$
+\chi(\mathcal{E}) = I(X; A) = H(\boldsymbol{\rho}_A) - \sum_x p(x) H(\boldsymbol{\rho}_A(x)) \equiv H(A)_\mathcal{E} - \langle H(A)\rangle_\mathcal{E}.
+$$ {#eq-10.214}
+純粋状態のアンサンブルの場合、$\chi$ はアンサンブルから生じる密度作用素のエントロピーそのものですが、混合状態のアンサンブル $\mathcal{E}$ の場合は、それよりも厳密に小さい量になります。すなわち、信号状態の凸結合のエントロピー $H(\boldsymbol{\rho}_\mathcal{E})$ と、信号状態のエントロピーの凸結合 $\langle H\rangle_\mathcal{E}$ との差です。この差は、エントロピー関数の凹性（concavity）（あるいは相互情報量が非負であること）により、常に非負です。
+
+### 10.6.3 ホレボ $\chi$ の単調性 (Monotonicity of Holevo chi) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=48) {#sec-10.6.3-monotonicity-holevo-chi}
+
+ホレボ $\chi$ は古典レジスタ $X$ と量子系 $A$ の相互情報量 $I(X; A)$ であるため、相互情報量の単調性は $\chi$ の単調性も意味します。もし $\mathcal{N}: A \to A'$ が量子通信路であるならば、$I(X; A') \le I(X; A)$ であり、したがって
+$$
+\chi(\mathcal{E}') \le \chi(\mathcal{E})
+$$ {#eq-10.215}
+となります。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=49) ここで、
+$$
+\mathcal{E} = \{\boldsymbol{\rho}(x), p(x)\} \quad \text{および} \quad \mathcal{E}' = \{\boldsymbol{\rho}'(x) = \mathcal{N}(\boldsymbol{\rho}(x)), p(x)\}
+$$ {#eq-10.216}
+です。通信路がアンサンブルのホレボ $\chi$ を増加させることはできません。
+
+その単調性は、$\chi(\mathcal{E})$ が量子状態のアンサンブルに符号化された情報の有用な尺度であることをさらに示唆しています。量子通信路によって記述されるデコヒーレンスはこの量を減少させることはできますが、決して増加させることはありません。対照的に、フォン・ノイマンエントロピーは通信路の作用によって増加することも減少することもあります。純粋状態を混合状態に写像すると $H$ が増加する可能性がありますが、代わりに通信路がアンサンブル内の混合状態を固定された純粋状態 $|0\rangle\langle 0|$ に写像することもあり、その場合は $H$ が減少し、各信号状態の純粋度が向上しますが、状態の識別可能性が向上するわけではありません。
+
+私たちは §10.3.2 において、1文字あたりの量子圧縮に対する漸近的限界 $H(\boldsymbol{\rho})$ について議論しました。そこではユニタリ復号を考えました。ホレボ $\chi$ の単調性を援用することで、より一般的な復号器がそれ以上の性能を発揮できない理由が明確になります。符号化器 $\mathcal{N}_e$ と復号器 $\mathcal{N}_d$ を用いてアンサンブル $\mathcal{E}^{\otimes n}$ を圧縮および復元すると仮定します。ここで両方の写像は量子通信路です：
+$$
+\mathcal{E}^{\otimes n} \xrightarrow{\mathcal{N}_e} \tilde{\mathcal{E}}^{(n)} \xrightarrow{\mathcal{N}_d} \tilde{\mathcal{E}}'^{(n)} \approx \mathcal{E}^{\otimes n}.
+$$ {#eq-10.217}
+入力純粋状態積アンサンブルのホレボ $\chi$ は加法的であり、$\chi(\mathcal{E}^{\otimes n}) = H(\boldsymbol{\rho}^{\otimes n}) = n H(\boldsymbol{\rho})$ であり、$d$ 次元系の $\chi$ は $\log_2 d$ より大きくはなりません。したがって、アンサンブル $\tilde{\mathcal{E}}^{(n)}$ が1文字あたり $q$ 量子ビットに圧縮される場合、$\chi$ の単調性により、復元されたアンサンブル $\tilde{\mathcal{E}}'^{(n)}$ の1文字あたりのホレボ $\chi$ は $\frac{1}{n}\chi(\tilde{\mathcal{E}}'^{(n)}) \le q$ となります。復元された出力アンサンブルが入力アンサンブルと高い忠実度を持つ場合、その1文字あたりの $\chi$ は入力アンサンブルの1文字あたりの $\chi$ とほぼ一致するはずであり、したがって、任意の正の $\delta$ と十分に大きな $n$ に対して
+$$
+q \ge \frac{1}{n}\chi(\tilde{\mathcal{E}}'^{(n)}) \ge H(\boldsymbol{\rho}) - \delta
+$$ {#eq-10.218}
+となります。私たちは、圧縮および伸張の写像が任意の通信路である場合であっても、1文字あたり $H(\boldsymbol{\rho})$ 個未満の量子ビットへの高忠実度圧縮は漸近的に不可能であると結論付けます。
+
+### 10.6.4 符号化による識別性の向上：一例 (Improved distinguishability through coding: an example) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=49) {#sec-10.6.4-improved-distinguishability}
+
+達成可能情報の概念をより深く理解するために、単一量子ビットの例を考えてみましょう。アリスは3つの可能な純粋状態のうちの1つを準備します：
+$$
+\begin{aligned}
+|\varphi_1\rangle &= |\!\uparrow_{\hat{n}_1}\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \\
+|\varphi_2\rangle &= |\!\uparrow_{\hat{n}_2}\rangle = \begin{pmatrix} -\frac{1}{2} \\ \frac{\sqrt{3}}{2} \end{pmatrix}, \\
+|\varphi_3\rangle &= |\!\uparrow_{\hat{n}_3}\rangle = \begin{pmatrix} -\frac{1}{2} \\ -\frac{\sqrt{3}}{2} \end{pmatrix};
+\end{aligned}
+$$ {#eq-10.219}
+スピン $\frac{1}{2}$ の対象は、$xz$ 平面内に対称的に分布する3つの方向の1つを向いています。各状態はアプリオリ確率 $\frac{1}{3}$ を持ちます。明らかに、アリスの信号状態は非直交です：
+$$
+\langle\varphi_1|\varphi_2\rangle = \langle\varphi_1|\varphi_3\rangle = \langle\varphi_2|\varphi_3\rangle = -\frac{1}{2}.
+$$ {#eq-10.220}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=50) ボブの課題は、適切な測定を行うことによって、アリスが準備したものについてできるだけ多くのことを知ることです。アリスのアンサンブルの密度行列は
+$$
+\boldsymbol{\rho} = \frac{1}{3}\left(|\varphi_1\rangle\langle\varphi_1| + |\varphi_2\rangle\langle\varphi_2| + |\varphi_3\rangle\langle\varphi_3|\right) = \frac{1}{2}\boldsymbol{I}
+$$ {#eq-10.221}
+であり、これは $H(\boldsymbol{\rho}) = 1$ を持ちます。したがって、ホレボ限界は、アリスの準備とボブの測定結果の相互情報量が 1 ビットを超えられないことを教えてくれます。
+
+しかし実際には、達成可能情報はホレボ限界によって許容される 1 ビットよりもかなり小さくなります。この場合、アリスのアンサンブルには十分な対称性があるため、最適測定を推測することは難しくありません。ボブは3つの結果を持つ POVM を選ぶことができます：
+$$
+\boldsymbol{E}_a = \frac{2}{3}(\boldsymbol{I} - |\varphi_a\rangle\langle\varphi_a|), \quad a = 1, 2, 3;
+$$ {#eq-10.222}
+このとき、
+$$
+p(a|b) = \langle\varphi_b|\boldsymbol{E}_a|\varphi_b\rangle = \begin{cases}
+0 & a = b, \\
+\frac{1}{2} & a \neq b
+\end{cases}
+$$ {#eq-10.223}
+であることが分かります。測定結果 $a$ は、アリスが $a$ を準備した可能性を**排除**しますが、他の2つの状態に対しては等しいアポステリオリ確率（$p = \frac{1}{2}$）を残します。ボブの情報利得は
+$$
+I = H(X) - H(X|Y) = \log_2 3 - 1 = .58496
+$$ {#eq-10.224}
+です。この測定が真に最適であることを示すために、私たちはデイヴィス（Davies）の定理の変形に訴えることができます。この定理は、入力アンサンブル内の3つの状態と同じ3回対称性を共有する3つの $\boldsymbol{E}_a$ を持つ最適 POVM を選ぶことができることを保証しています。この結果は可能な POVM を十分に制限するため、明示的な計算によって式 (@eq-10.222) が最適であることを確認できます。したがって、アンサンブル $\mathcal{E} = \{|\varphi_a\rangle, p_a = \frac{1}{3}\}$ の達成可能情報は
+$$
+\mathrm{Acc}(\mathcal{E}) = \log_2\left(\frac{3}{2}\right) = .58496\dots
+$$ {#eq-10.225}
+であることが分かりました。ホレボ限界は飽和していません。
+
+さて、アリスが十分な資金を持っており、ボブに2つの量子ビットを送る余裕があると仮定しましょう。ここでも各量子ビットはアンサンブル $\mathcal{E}$ から選ばれます。アリスが最初に行う明白な行動は、それぞれ $p_{ab} = 1/9$ の確率を持つ**9個**の状態
+$$
+|\varphi_a\rangle \otimes |\varphi_b\rangle, \quad a, b = 1, 2, 3
+$$ {#eq-10.226}
+のいずれかを準備することです。その場合、ボブの最善の戦略は、2つの量子ビットのそれぞれに対して式 (@eq-10.222) の POVM を実行することであり、前と同様に1量子ビットあたり $.58496$ ビットの相互情報量を達成します。
+
+しかし、さらに良い結果を得ようと決意したアリスとボブは、異なる戦略を決定します。アリスは、それぞれアプリオリ確率 $p_a = 1/3$ で生じる**3個**の2量子ビット状態
+$$
+|\Phi_a\rangle = |\varphi_a\rangle \otimes |\varphi_a\rangle, \quad a = 1, 2, 3
+$$ {#eq-10.227}
+のいずれかを準備します。1量子ビットずつ見ると、アリスの選択はアンサンブル $\mathcal{E}$ に従いますが、今や彼女の2つの量子ビットは（古典的な）相関を持っています --- 両方とも同じように準備されています。
+
+3つの $|\Phi_a\rangle$ は線形独立であるため、4次元の2量子ビットヒルベルト空間の3次元部分空間を張ります。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=51) 演習10.9において、密度作用素
+$$
+\boldsymbol{\rho} = \frac{1}{3}\left(\sum_{a=1}^3 |\Phi_a\rangle\langle\Phi_a|\right)
+$$ {#eq-10.228}
+が非ゼロの固有値 $1/2, 1/4, 1/4$ を持つことを示します。したがって、
+$$
+H(\boldsymbol{\rho}) = -\frac{1}{2}\log_2\frac{1}{2} - 2\left(\frac{1}{4}\log_2\frac{1}{4}\right) = \frac{3}{2}
+$$ {#eq-10.229}
+となります。ホレボ限界は、**1量子ビットあたり**の達成可能情報が $3/4$ ビット以下であることを要求します。これは、9状態の手法で達成された1量子ビットあたり $.58496$ ビットを超える可能性と少なくとも矛盾しません。
+
+ナイーブには、9個ではなく3個の可能な状態の1つだけを送ることを選ぶと、アリスはボブにそれほど多くの古典情報を伝達できないように思えるかもしれません。しかし、さらに熟考すると、この結論は自明ではありません。確かにアリスが選択できる信号の数は少なくなっていますが、信号の**識別可能性は向上**しています。式 (@eq-10.220) の代わりに、
+$$
+\langle\Phi_a|\Phi_b\rangle = \frac{1}{4}, \quad a \neq b
+$$ {#eq-10.230}
+が成り立ちます。測定の選択においてこの改善された識別可能性を活用できるかどうかはボブ次第です。特にボブは、2つの量子ビットを1つずつ測定するのではなく、2つの量子ビットに対して**集団測定（collective measurement）**を実行することが有利であると気付くでしょう。
+
+ボブの最適測定が何になるかは、もはや自明ではありません。しかしボブは、最適であることは保証されないものの、通常は少なくとも「かなり良い」一般的な手順を援用することができます。この手順によって構築される POVM を「**かなり良い測定 (pretty good measurement: PGM)**」と呼ぶことにします。
+
+直交していることも規格化されていることも仮定されていないベクトルの集合 $\{|\tilde{\Phi}_a\rangle\}$ を考えます。これらのベクトルを適度にうまく識別できる POVM を考案したいとします。まず、
+$$
+\boldsymbol{G} = \sum_a |\tilde{\Phi}_a\rangle\langle\tilde{\Phi}_a|
+$$ {#eq-10.231}
+を構築します。これは $|\tilde{\Phi}_a\rangle$ によって張られる空間上の正作用素です。したがって、その部分空間上で $\boldsymbol{G}$ は逆作用素 $\boldsymbol{G}^{-1}$ を持ち、その逆作用素は正の平方根 $\boldsymbol{G}^{-1/2}$ を持ちます。ここで
+$$
+\boldsymbol{E}_a = \boldsymbol{G}^{-1/2}|\tilde{\Phi}_a\rangle\langle\tilde{\Phi}_a|\boldsymbol{G}^{-1/2}
+$$ {#eq-10.232}
+と定義すると、$\{|\tilde{\Phi}_a\rangle\}$ の張る空間上で
+$$
+\sum_a \boldsymbol{E}_a = \boldsymbol{G}^{-1/2}\left(\sum_a |\tilde{\Phi}_a\rangle\langle\tilde{\Phi}_a|\right)\boldsymbol{G}^{-1/2} = \boldsymbol{G}^{-1/2}\boldsymbol{G}\boldsymbol{G}^{-1/2} = \boldsymbol{I}
+$$ {#eq-10.233}
+となることが分かります。必要であれば、これらの $\boldsymbol{E}_a$ にもう1つの正作用素、すなわち $\{|\tilde{\Phi}_a\rangle\}$ の張る空間の直交補空間への射影 $\boldsymbol{E}_0$ を追加することで、POVM を構築できます。この POVM が、ベクトル $\{|\tilde{\Phi}_a\rangle\}$ に関連付けられた PGM です。
+
+$|\tilde{\Phi}_a\rangle$ が直交している特別な場合、
+$$
+|\tilde{\Phi}_a\rangle = \sqrt{\lambda_a}|\phi_a\rangle
+$$ {#eq-10.234}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=52) （ここで $|\phi_a\rangle$ は正規直交系）であり、
+$$
+\begin{aligned}
+\boldsymbol{E}_a &= \sum_{b,c} (|\phi_b\rangle \lambda_b^{-1/2}\langle\phi_b|)(|\phi_a\rangle \lambda_a \langle\phi_a|)(|\phi_c\rangle \lambda_c^{-1/2}\langle\phi_c|) \\
+&= |\phi_a\rangle\langle\phi_a|
+\end{aligned}
+$$ {#eq-10.235}
+となります。これは $|\phi_a\rangle$ を完全に識別する直交測定であり、明らかに最適です。$|\tilde{\Phi}_a\rangle$ が線形独立であるが直交していない場合、PGM はやはり直交測定となりますが（$n$ 次元空間における $n$ 個の1次元作用素が POVM を構成できるのは、それらが互いに直交している場合のみだからです --- 演習3.11を参照）、その場合、測定は最適ではない可能性があります。
+
+演習10.9において、式 (@eq-10.227) のベクトル $|\Phi_a\rangle$ に対する PGM を構築し、次が成り立つことを示します：
+$$
+\begin{aligned}
+p(a|a) &= \langle\Phi_a|\boldsymbol{E}_a|\Phi_a\rangle = \frac{1}{3}\left(1 + \frac{1}{\sqrt{2}}\right)^2 = .971405, \\
+p(b|a) &= \langle\Phi_a|\boldsymbol{E}_b|\Phi_a\rangle = \frac{1}{6}\left(1 - \frac{1}{\sqrt{2}}\right)^2 = .0142977
+\end{aligned}
+$$ {#eq-10.236}
+（$b \neq a$ に対して）。これより、入力の条件付きエントロピーは
+$$
+H(X|Y) = .215894
+$$ {#eq-10.237}
+となり、$H(X) = \log_2 3 = 1.58496$ であるため、情報利得は
+$$
+I(X; Y) = H(X) - H(X|Y) = 1.369068
+$$ {#eq-10.238}
+となります。これは1量子ビットあたり $.684534$ ビットの相互情報量です。このように、アリスの信号の識別可能性の向上は確かに報われました。私たちは単一の量子ビットから抽出できる $.58496$ ビットを超えたのです。ホレボ限界（この場合は $I \le 1.5$）を飽和するには至りませんでしたが、以前よりもずっと近づきました。
+
+ペレス（Peres）とウーターズ（Wootters）によって最初に記述されたこの例は、いくつかの有用な教訓を与えてくれます。第1に、アリスは符号語の集合を「間引く（pruning）」ことによって、ボブにより多くの情報を伝達することができます。彼女にとっては、識別可能性の低い多数の信号の中から選ぶよりも、識別可能性の高い少数の信号の中から選ぶ方が有利です。3文字のアルファベットは、9文字のアルファベットよりも多くの情報を符号化します。
+
+第2に、ボブは各量子ビットを個別に測定する代わりに集団測定を実行すると、より多くの情報を読み取ることができます。彼の最適直交測定は、アリスの信号を**もつれた状態の基底（basis of entangled states）**へと射影します。
+
+### 10.6.5 量子通信路の古典容量 (Classical capacity of a quantum channel) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=52) {#sec-10.6.5-classical-capacity}
+
+この例は、符号化と集団測定が達成可能情報をどのように向上させることができるかを示していますが、符号を用いることで達成可能情報とアンサンブルのホレボ $\chi$ との間のギャップは狭まったものの、完全に埋まったわけではありませんでした。情報理論でよくあるように、漸近的 i.i.d. 設定を考えることによって、達成可能情報をより正確に特徴づけることができます。具体的には、ノイズのある量子通信路 $\mathcal{N}^{A \to B}$ を通じて古典情報を確実に送信するタスクを考えます。
+
+アリスによって準備された入力信号状態のアンサンブル $\mathcal{E} = \{\boldsymbol{\rho}(x), p(x)\}$ は、通信路によって出力信号のアンサンブル $\mathcal{E}' = \{\mathcal{N}(\boldsymbol{\rho}(x)), p(x)\}$ に写像されます。ボブが
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=53) 出力を測定する場合、彼の最適情報利得
+$$
+\mathrm{Acc}(\mathcal{E}') \le I(X; B) = \chi(\mathcal{E}')
+$$ {#eq-10.239}
+は出力アンサンブル $\mathcal{E}'$ のホレボ $\chi$ によって上から抑えられます。通信路を通じて可能な限り多くの情報を伝達するために、アリスとボブは出力アンサンブル $\mathcal{E}'$ のホレボ $\chi$ を最大化する入力アンサンブル $\mathcal{E}$ を選ぶことができます。$\chi(\mathcal{E}')$ の最大値
+$$
+\chi(\mathcal{N}) := \max_{\mathcal{E}} \chi(\mathcal{E}') = \max_{\mathcal{E}} I(X; B)
+$$ {#eq-10.240}
+は通信路の特性であり、これを**$\mathcal{N}$ のホレボ $\chi$** と呼びます。
+
+これまで見てきたように、この単発（single-shot）設定におけるボブの実際の最適情報利得は、一般には $\chi(\mathcal{E}')$ に達しない可能性があります。しかし、通信路を1回だけ使用する代わりに、アリスとボブが通信路を $n \gg 1$ 回使用すると仮定しましょう。ここでアリスはある符号から選ばれた信号状態を送信し、ボブは受信した信号を復号するために最適測定を実行します。そのとき、$n \to \infty$ の漸近極限において、1文字あたり $\chi(\mathcal{N})$ ビットの情報利得が実際に達成可能となります。
+
+アリスの符号化された $n$ 文字の信号状態のアンサンブルを $\tilde{\mathcal{E}}^{(n)}$ と表記し、信号によって運ばれる古典ラベルのアンサンブルを $\tilde{X}^n$ と表記し、ボブの測定結果のアンサンブルを $\tilde{Y}^n$ と表記します。アリスが送信するために $2^{nR}$ 個の可能な信号の中から選ぶことができる場合、その符号はレート $R$ を持つと言います。$n \to \infty$ の極限でボブが無視できる誤り確率で信号を復号できるようにレート $R - o(1)$ で通信路を通じて古典情報を送信できる場合、そのレート $R$ は**達成可能（achievable）**であると言います。量子通信路 $\mathcal{N}^{A \to B}$ の**古典容量（classical capacity）** $C(\mathcal{N})$ は、すべての達成可能レートの上限（supremum）です。
+
+§10.1.5 における古典通信路の容量の議論と同様に、$\tilde{X}^n$ は $2^{nR}$ 個の可能なメッセージ上の等確率アンサンブルであると仮定し、$H(\tilde{X}^n) = nR$ とします。さらに、誤り確率が漸近的に無視できる場合、1文字あたりの条件付きエントロピー $\frac{1}{n}H(\tilde{X}^n|\tilde{Y}^n)$ は $n \to \infty$ でゼロに近づきます。したがって、
+$$
+\begin{aligned}
+R &\le \frac{1}{n}\left(I(\tilde{X}^n; \tilde{Y}^n) + o(1)\right) \\
+&\le \frac{1}{n}\left(\max_{\mathcal{E}^{(n)}} I(X^n; B^n) + o(1)\right) = \frac{1}{n}\left(\chi(\mathcal{N}^{\otimes n}) + o(1)\right)
+\end{aligned}
+$$ {#eq-10.241}
+となります。ここで、最初の不等式は式 (10.52) と同様に得られ、2番目の不等式はすべての可能な $n$ 文字入力アンサンブルにわたって最適化されたホレボ限界を援用することによって得られます。したがって、私たちは
+$$
+C(\mathcal{N}) \le \lim_{n \to \infty} \frac{1}{n}\chi(\mathcal{N}^{\otimes n})
+$$ {#eq-10.242}
+と推論します。すなわち、古典容量は積通信路 $\mathcal{N}^{\otimes n}$ の1文字あたりの漸近的ホレボ $\chi$ によって上から抑えられます。
+
+実際、この上限は実際に達成可能なレートであり、したがって古典容量 $C(\mathcal{N})$ に等しくなります。しかし、古典容量に対するこの公式は、任意の長さのメッセージアンサンブルにわたってホレボ $\chi$ を最適化する必要があるため、現状のままではあまり有用ではありません。通信路の使用回数が無限大に向かう極限を取ることを含む場合、容量の公式は**正則化されている（regularized）**と言います。$C(\mathcal{N})$ に対する表現を、通信路の1回の使用のみを含む**単一文字公式（single-letter formula）**に簡約できる方がはるかに望ましいです。古典通信路の場合、通信路の $n$ 回の使用に対する条件付きエントロピーが式 (10.49) のように加法的であったため、正則化された表現を単一文字公式に簡約することが可能でした。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=54) 量子通信路の場合、ホレボ $\chi$ が真に超加法的（strictly superadditive）である通信路が存在することが知られているため、状況はより複雑です：
+$$
+\chi(\mathcal{N}_1 \otimes \mathcal{N}_2) > \chi(\mathcal{N}_1) + \chi(\mathcal{N}_2).
+$$ {#eq-10.243}
+したがって、少なくともいくつかの通信路に対しては、古典容量に対するあまり有用ではない正則化公式に甘んじざるを得ません。しかし、アリスとボブによって使用される符号に制限を課すならば、最適達成可能通信レートに対する単一文字公式を得ることができます。一般に、アリスには通信路の多数回使用にわたってもつれた入力符号語を選択する権利があり、そのようなもつれた符号が許可されている場合、古典通信路容量の計算は困難になる可能性があります。しかし、アリスのすべての符号語が積状態であると要求すると仮定しましょう。その条件のもとではホレボ $\chi$ は劣加法的になり、最適なレートを次のように表現できます：
+$$
+C_1(\mathcal{N}) = \chi(\mathcal{N}).
+$$ {#eq-10.244}
+$C_1(\mathcal{N})$ は通信路の**積状態容量（product-state capacity）**と呼ばれます。
+
+積状態符号に対する $\chi$ の劣加法性を検証しましょう。積通信路 $\mathcal{N}^{\otimes n}$ は積状態を積状態に写像します。したがって、アリスの入力信号が積状態であるならば、ボブの出力信号も積状態であり、ボブの $n$ 文字アンサンブルを
+$$
+\mathcal{E}^{(n)} = \{\boldsymbol{\rho}(x_1) \otimes \boldsymbol{\rho}(x_2) \otimes \dots \otimes \boldsymbol{\rho}(x_n), p(x_1 x_2 \dots x_n)\}
+$$ {#eq-10.245}
+と表すことができます。これは次のホレボ $\chi$ を持ちます：
+$$
+\chi(\mathcal{E}^{(n)}) = I(X^n; B^n) = H(B^n) - H(B^n|X^n).
+$$ {#eq-10.246}
+（ここで $\mathcal{E}^{(n)}$ はアリスが積状態符号語を送信したときにボブが受信する出力アンサンブルですが、表記を簡単にするために、以前（例えば式 (@eq-10.239) や式 (@eq-10.241)）で使用したプライム（出力を示す）とチルダ（符号語を示す）は省略しました。確率分布 $p(x_1 x_2 \dots x_n)$ が因数分解することは仮定していません。したがって、ボブが受信する $n$ 文字は、もつれてはいないものの、古典的に相関している可能性があります。）フォン・ノイマンエントロピーは劣加法的ですが、
+$$
+H(B^n) \le \sum_{i=1}^n H(B_i);
+$$ {#eq-10.247}
+（負の）条件付きエントロピー
+$$
+-H(B^n|X^n) = -\sum_{\vec{x}} p(\vec{x}) H(\boldsymbol{\rho}(\vec{x}))
+$$ {#eq-10.248}
+（式 (@eq-10.214) 参照）は一般には劣加法的ではありません。しかし積状態アンサンブル式 (@eq-10.245) については、積のエントロピーは加法的であるため、
+$$
+\begin{aligned}
+H(B^n|X^n) &= \sum_{x_1, x_2, \dots, x_n} p(x_1 x_2 \dots x_n)\left(\sum_{i=1}^n H(\boldsymbol{\rho}(x_i))\right) \\
+&= \sum_{i=1}^n \sum_{x_i} p_i(x_i) H(\boldsymbol{\rho}(x_i)) = \sum_{i=1}^n H(B_i|X_i)
+\end{aligned}
+$$ {#eq-10.249}
+となります。ここで $X_i = \{x_i, p_i(x_i)\}$ は $i$ 番目の文字に対する周辺確率分布です。式 (@eq-10.249) は式 (10.49) の量子版であり、積状態アンサンブルに対しては成り立ちますが、
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=55) 一般のもつれたアンサンブルに対しては成り立ちません。式 (@eq-10.246), (@eq-10.247), (@eq-10.249) を組み合わせると、
+$$
+I(X^n; B^n) \le \sum_{i=1}^n (H(B_i) - H(B_i|X_i)) = \sum_i I(X_i; B_i) \le n\chi(\mathcal{N})
+$$ {#eq-10.250}
+が得られます。したがって、示したかったように、通信路のホレボ $\chi$ は積状態符号語に制限された場合に劣加法的となります。
+
+ここでは $C_1(\mathcal{N})$ が積状態符号語を用いて漸近的に達成可能なレートであることの厳密な論証は行わず、アイデアの概略のみを述べることにします。私たちはシャノンと同様のランダム符号化の議論によって達成可能性を示します。アリスは入力アンサンブル $\mathcal{E} = \{\boldsymbol{\rho}(x), p(x)\}$ を固定し、符号語を生成するために積アンサンブル $\mathcal{E}^{\otimes n}$ からサンプリングします。すなわち、符号語
+$$
+\boldsymbol{\rho}(\vec{x}) = \boldsymbol{\rho}(x_1) \otimes \boldsymbol{\rho}(x_2) \otimes \dots \otimes \boldsymbol{\rho}(x_n)
+$$ {#eq-10.251}
+は確率 $p(\vec{x}) = p(x_1)p(x_2)\dots p(x_n)$ で選択されます。（実際には、通信レートを最適化するためにアリスは各 $\boldsymbol{\rho}(\vec{x})$ を純粋状態に選ぶべきです。）この符号語は通信路 $\mathcal{N}$ の $n$ 回の使用を介して送信され、ボブは積状態
+$$
+\mathcal{N}^{\otimes n}(\boldsymbol{\rho}(\vec{x})) = \mathcal{N}(\boldsymbol{\rho}(x_1)) \otimes \mathcal{N}(\boldsymbol{\rho}(x_2)) \otimes \dots \otimes \mathcal{N}(\boldsymbol{\rho}(x_n))
+$$ {#eq-10.252}
+を受信します。符号語にわたって平均すると、アリスの古典レジスタ $X^n$ とボブの系 $B^n$ の結合状態は
+$$
+\boldsymbol{\rho}_{X^n B^n} = \sum_{\vec{x}} p(\vec{x}) |\vec{x}\rangle\langle\vec{x}| \otimes \mathcal{N}^{\otimes n}(\boldsymbol{\rho}(\vec{x}))
+$$ {#eq-10.253}
+となります。
+
+復号するために、ボブは符号語を効果的に識別するように設計された POVM を実行します。§10.6.4 で説明した「かなり良い測定」の変形が十分にうまく機能します。ボブが受信する状態は次元 $2^{n(H(B) + o(1))}$ の典型的部分空間（typical subspace）に大部分が台を持ち、アリスが送信する各典型的符号語に対してボブが受信する状態は次元 $2^{n(H(B|X) + o(1))}$ のはるかに小さな典型的部分空間に大部分が台を持ちます。重要な点は、これらの空間の次元の比が $X$ と $B$ の相互情報量に対して指数関数的であることです：
+$$
+\frac{2^{n(H(B|X) + o(1))}}{2^{n(H(B) - o(1))}} = 2^{-n(I(X; B) - o(1))}.
+$$ {#eq-10.254}
+ボブの各 POVM 要素は、アリスの特定の符号語の1つから生じる典型的部分空間上に台を持ちます。任意の符号語が単なる偶然によって別の符号語の復号部分空間に写像される確率は、式 (@eq-10.254) の比によって抑制されます。したがって、$R = I(X; B) - o(1)$ に対して識別すべき $2^{nR}$ 個の符号語が存在する場合であっても、復号誤りの確率は依然として小さく保たれます。
+
+私たちは標準的なシャノン流の手法（Shannonisms）で論証を完了します。符号にわたって平均したときの復号誤り確率が小さいならば、特定の符号列に対しても符号語にわたって平均した誤り確率は小さいはずです。そして符号語の半分を間引く（pruning）ことでレートを無視できる量だけ減少させれば、符号内のすべての符号語に対して復号誤りが発生しにくくなるように保証できます。したがって、$I(X; B)$ は古典通信の達成可能レートです。すべての積状態入力アンサンブルにわたって最適化することで、式 (@eq-10.244) が得られます。
+
+これを厳密な論証にするためには、ボブの復号測定をより明示的に指定し、注意深い誤り解析を行う必要があります。これは少々技術的になるため、
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=56) ここでは詳細は省略します。しかし幾分驚くべきことに、古典情報を送信する以外の他のタスクに量子通信路が使用される場合、容量定理を証明する方が容易であることが判明します。私たちは §10.7 でその問題に移ります。
+
+### 10.6.6 もつれ破壊通信路 (Entanglement-breaking channels) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=56) {#sec-10.6.6-entanglement-breaking-channels}
+
+一部の量子通信路に対してはホレボ $\chi$ は超加法的ですが、$\chi$ が加法的である通信路のクラスが存在し、そのような任意の通信路 $\mathcal{N}$ に対して古典容量は正則化を必要とせずに $C = \chi(\mathcal{N})$ となります。例えば、**もつれ破壊通信路（entanglement-breaking channels）**を考えてみましょう。任意の入力状態 $\boldsymbol{\rho}_{RA}$ に対して $I \otimes \mathcal{N}(\boldsymbol{\rho}_{RA})$ が $RA$ 上の可分状態であるとき、$\mathcal{N}^{A \to B}$ はもつれ破壊的であると言います --- $A$ への $\mathcal{N}$ の作用は、常に $R$ との量子もつれを破壊します。私たちは、もし $\mathcal{N}_1$ がもつれ破壊的であり、$\mathcal{N}_2$ が任意の通信路であるならば、
+$$
+\chi(\mathcal{N}_1 \otimes \mathcal{N}_2) \le \chi(\mathcal{N}_1) + \chi(\mathcal{N}_2)
+$$ {#eq-10.255}
+であることを主張します。
+
+積通信路の $\chi$ を抑えるために、入力アンサンブル
+$$
+\boldsymbol{\rho}_{X A_1 A_2} = \sum_x p(x) |x\rangle\langle x| \otimes \boldsymbol{\rho}(x)_{A_1 A_2}
+$$ {#eq-10.256}
+を考えます。これは $\mathcal{N}_1 \otimes \mathcal{N}_2$ によって次へと写像されます：
+$$
+\boldsymbol{\rho}'_{X B_1 B_2} = (I \otimes \mathcal{N}_1 \otimes \mathcal{N}_2)(\boldsymbol{\rho}_{X A_1 A_2}).
+$$ {#eq-10.257}
+2番目の出力系を部分トレースすることにより、次が得られます：
+$$
+\boldsymbol{\rho}'_{X B_1} = I \otimes \mathcal{N}_1(\boldsymbol{\rho}_{X A_1}) = \sum_x p(x) |x\rangle\langle x| \otimes \mathcal{N}_1(\boldsymbol{\rho}(x)_{A_1}).
+$$ {#eq-10.258}
+これは $\chi(\mathcal{N}_1)$ の定義より次を意味します：
+$$
+I(X; B_1)_{\boldsymbol{\rho}'} \le \chi(\mathcal{N}_1).
+$$ {#eq-10.259}
+任意の3つの系 $A, B, C$ に対して、
+$$
+I(A; BC) = I(A; B) + I(AB; C) - I(C; B) \le I(A; B) + I(AB; C)
+$$ {#eq-10.260}
+であることを簡単に確認できます。したがって特に、
+$$
+I(X; B_1 B_2)_{\boldsymbol{\rho}'} \le \chi(\mathcal{N}_1) + I(X B_1; B_2)_{\boldsymbol{\rho}'}
+$$ {#eq-10.261}
+が成り立ちます。式 (@eq-10.261) は任意の通信路 $\mathcal{N}_1, \mathcal{N}_2$ に対して成り立ちます。式 (@eq-10.255) を得るためには、もつれ破壊通信路 $\mathcal{N}_1$ に対して
+$$
+I(X B_1; B_2)_{\boldsymbol{\rho}'} \le \chi(\mathcal{N}_2)
+$$ {#eq-10.262}
+を示すだけで十分です。
+
+もし $\mathcal{N}_1$ がもつれ破壊的であるならば、$\boldsymbol{\rho}(x)_{A_1 A_2}$ は $\mathcal{N}_1$ によって可分状態に写像されます：
+$$
+\mathcal{N}_1 \otimes I : \boldsymbol{\rho}(x)_{A_1 A_2} \mapsto \sum_y p(y|x) \boldsymbol{\sigma}(x, y)_{B_1} \otimes \boldsymbol{\tau}(x, y)_{A_2}.
+$$ {#eq-10.263}
+したがって、
+$$
+\boldsymbol{\rho}'_{X B_1 B_2} = \sum_{x,y} p(x) p(y|x) |x\rangle\langle x| \otimes \boldsymbol{\sigma}(x, y)_{B_1} \otimes [\mathcal{N}_2(\boldsymbol{\tau}(x, y))]_{B_2}
+$$ {#eq-10.264}
+は、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=57)
+$$
+\boldsymbol{\omega}'_{XY B_1 B_2} = \sum_{x,y} p(x, y) |x, y\rangle\langle x, y| \otimes \boldsymbol{\sigma}(x, y) \otimes \mathcal{N}_2(\boldsymbol{\tau}(x, y))
+$$ {#eq-10.265}
+の（$Y$ を部分トレースした後の）周辺状態と見なすことができます。さらに、$\boldsymbol{\omega}'$ は $(x, y)$ で条件付けると積状態になるため、
+$$
+I(B_1; B_2 | XY)_{\boldsymbol{\omega}'} = 0
+$$ {#eq-10.266}
+であることが分かり、強劣加法性と条件付き相互情報量の定義を用いることで、次が得られます：
+$$
+\begin{aligned}
+I(XB_1; B_2)_{\boldsymbol{\rho}'} &= I(XB_1; B_2)_{\boldsymbol{\omega}'} \le I(XY B_1; B_2)_{\boldsymbol{\omega}'} \\
+&= I(XY; B_2)_{\boldsymbol{\omega}'} + I(B_1; B_2 | XY)_{\boldsymbol{\omega}'} = I(XY; B_2)_{\boldsymbol{\omega}'}.
+\end{aligned}
+$$ {#eq-10.267}
+最後に、
+$$
+\mathrm{tr}_{B_1}\boldsymbol{\omega}'_{XY B_1 B_2} = \sum_{x,y} p(x, y) |x, y\rangle\langle x, y| \otimes \mathcal{N}_2(\boldsymbol{\tau}(x, y))
+$$ {#eq-10.268}
+に注目し、$\chi(\mathcal{N}_2)$ の定義を思い出すと、$I(XY; B_2)_{\boldsymbol{\omega}'} \le \chi(\mathcal{N}_2)$ であることが分かり、これにより式 (@eq-10.262) が確立され、したがって式 (@eq-10.255) が証明されます。
+
+もつれ破壊通信路の一例は**古典・量子通信路（classical-quantum channel）**であり、**c-q 通信路**とも呼ばれます。これは次のように作用します：
+$$
+\mathcal{N}^{A \to B} : \boldsymbol{\rho}_A \mapsto \sum_x \langle x|\boldsymbol{\rho}_A|x\rangle \boldsymbol{\sigma}(x)_B.
+$$ {#eq-10.269}
+ここで $\{|x\rangle\}$ は正規直交基底です。実質的に、この通信路は入力状態に対して完全な直交測定を実行し、測定結果に応じて条件付けられた出力状態を準備します。この測定は、系 $A$ とそれが最初に量子もつれを形成していた他の任意の系との間のエンタングルメントを破壊します。したがって、c-q 通信路はもつれ破壊的であり、加法的なホレボ $\chi$ を持ちます。
