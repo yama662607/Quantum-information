@@ -1,0 +1,25 @@
+---
+title: "Chapter 4: Quantum Entanglement"
+---
+
+# Chapter 4: Quantum Entanglement {#chapter-4-preskill}
+
+{{< include chapter4/_4.1-nonseparability.qmd >}}
+
+{{< include chapter4/_4.2-bell-inequality.qmd >}}
+
+{{< include chapter4/_4.3-more-bell-inequalities.qmd >}}
+
+{{< include chapter4/_4.4-using-entanglement.qmd >}}
+
+{{< include chapter4/_4.5-quantum-cryptography.qmd >}}
+
+{{< include chapter4/_4.6-mixed-state-entanglement.qmd >}}
+
+{{< include chapter4/_4.7-nonlocality-without-entanglement.qmd >}}
+
+{{< include chapter4/_4.8-multipartite-entanglement.qmd >}}
+
+{{< include chapter4/_4.9-manipulating-entanglement.qmd >}}
+
+{{< include chapter4/_4.10-summary.qmd >}}

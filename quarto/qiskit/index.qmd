@@ -116,7 +116,7 @@ $$
 
 ::: {.callout-note title="理論との接続"}
 この話は、[Watrous 版の registers and states](../textbook-watrous/textbook.qmd#chapter-2-watrous) や
-[Preskill 版の density operator](../textbook-preskill/textbook.qmd#chapter-2-preskill)
+[Preskill 版の density operator](../textbook-preskill/chapter2.qmd)
 で扱っている二部系・混合状態の話と直接つながります。
 
 :::
@@ -235,6 +235,6 @@ print(rho_out.data)
 ## 関連リンク
 
 - [ホーム](../index.qmd)
-- [Preskill 教授 講義ノート](../textbook-preskill/textbook.qmd)
+- [Preskill 教授 講義ノート](../textbook-preskill/intro.qmd)
 - [Watrous 教授アーカイブ](../textbook-watrous/textbook.qmd)
 - [サポート & ガイド](../support/index.qmd)

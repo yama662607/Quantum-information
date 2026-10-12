@@ -1,0 +1,36 @@
+---
+title: "Chapter 1: Introduction and Overview"
+engine: markdown
+filters:
+  - r-wasm/live
+pyodide:
+  packages:
+    - numpy
+    - matplotlib
+    - pandas
+    - plotly
+    - nbformat
+    - jsonschema
+---
+
+# Chapter 1: Introduction and Overview {#chapter-1-preskill}
+
+{{< include chapter1/_1.1-introduction.qmd >}}
+
+{{< include chapter1/_1.2-quantum-information.qmd >}}
+
+{{< include chapter1/_1.3-efficient-quantum-algorithms.qmd >}}
+
+{{< include chapter1/_1.4-quantum-complexity.qmd >}}
+
+{{< include chapter1/_1.5-quantum-parallelism.qmd >}}
+
+{{< include chapter1/_1.6-new-classification-of-complexity.qmd >}}
+
+{{< include chapter1/_1.7-what-about-errors.qmd >}}
+
+{{< include chapter1/_1.8-quantum-error-correcting-codes.qmd >}}
+
+{{< include chapter1/_1.9-quantum-hardware.qmd >}}
+
+{{< include chapter1/_1.10-summary.qmd >}}

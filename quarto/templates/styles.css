@@ -330,3 +330,16 @@ main a.btn,
   text-transform: uppercase;
   letter-spacing: 0.05rem;
 }
+
+/* ========================================
+ * パフォーマンス最適化: レンダリング仮想化
+ * ========================================
+ * 画面外のセクションや数式のスタイル・レイアウト計算を
+ * スクロール接近時までスキップし、初期描画とスクロールを高速化
+ */
+section.level2,
+section.level3,
+div.cell {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}

@@ -1,0 +1,55 @@
+---
+title: "Chapter 7: Quantum Error Correction"
+---
+
+# Chapter 7: Quantum Error Correction {#chapter-7-preskill}
+
+{{< include chapter7/_7.1-code.qmd >}}
+
+{{< include chapter7/_7.2-conditions.qmd >}}
+
+{{< include chapter7/_7.3-error-correction-condition.qmd >}}
+
+{{< include chapter7/_7.4-general-properties.qmd >}}
+
+{{< include chapter7/_7.5-failure-probability.qmd >}}
+
+{{< include chapter7/_7.6-classical-linear-codes.qmd >}}
+
+{{< include chapter7/_7.7-css-codes.qmd >}}
+
+{{< include chapter7/_7.8-seven-qubit-code.qmd >}}
+
+{{< include chapter7/_7.9-constraints-on-code-parameters.qmd >}}
+
+{{< include chapter7/_7.10-stabilizer-codes.qmd >}}
+
+{{< include chapter7/_7.11-five-qubit-code.qmd >}}
+
+{{< include chapter7/_7.12-quantum-secret-sharing.qmd >}}
+
+{{< include chapter7/_7.13-other-stabilizer-codes.qmd >}}
+
+{{< include chapter7/_7.14-cleaning-lemma.qmd >}}
+
+{{< include chapter7/_7.15-codes-over-gf4.qmd >}}
+
+{{< include chapter7/_7.16-good-quantum-codes.qmd >}}
+
+{{< include chapter7/_7.17-concatenated-codes.qmd >}}
+
+{{< include chapter7/_7.18-toric-code.qmd >}}
+
+{{< include chapter7/_7.19-bound-on-topological-codes.qmd >}}
+
+{{< include chapter7/_7.20-string-operators-self-correcting.qmd >}}
+
+{{< include chapter7/_7.21-reed-muller-codes.qmd >}}
+
+{{< include chapter7/_7.22-golay-code.qmd >}}
+
+{{< include chapter7/_7.23-quantum-channel-capacity.qmd >}}
+
+{{< include chapter7/_7.24-summary.qmd >}}
+
+{{< include chapter7/_7.exercises.qmd >}}

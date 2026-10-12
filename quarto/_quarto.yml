@@ -26,9 +26,17 @@ book:
     collapse-level: 4
   chapters:
     - index.qmd
-    - part: "Preskill 教授 講義ノート"
+    - part: textbook-preskill/intro.qmd
       chapters:
-        - textbook-preskill/textbook.qmd
+        - textbook-preskill/chapter1.qmd
+        - textbook-preskill/chapter2.qmd
+        - textbook-preskill/chapter3.qmd
+        - textbook-preskill/chapter4.qmd
+        - textbook-preskill/chapter5.qmd
+        - textbook-preskill/chapter6.qmd
+        - textbook-preskill/chapter7.qmd
+        - textbook-preskill/chapter8.qmd
+        - textbook-preskill/chapter10.qmd
     - part: "Watrous 教授 (アーカイブ)"
       chapters:
         - textbook-watrous/textbook.qmd

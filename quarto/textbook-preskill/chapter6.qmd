@@ -1,0 +1,25 @@
+---
+title: "Chapter 6: Quantum Algorithms"
+---
+
+# Chapter 6: Quantum Algorithms {#chapter-6-preskill}
+
+{{< include chapter6/_6.1-quantum-algorithms.qmd >}}
+
+{{< include chapter6/_6.2-periodicity-and-qft.qmd >}}
+
+{{< include chapter6/_6.3-factoring.qmd >}}
+
+{{< include chapter6/_6.4-phase-estimation.qmd >}}
+
+{{< include chapter6/_6.5-hidden-subgroup-problem.qmd >}}
+
+{{< include chapter6/_6.6-quantum-searching.qmd >}}
+
+{{< include chapter6/_6.7-grover-optimality.qmd >}}
+
+{{< include chapter6/_6.8-simulating-quantum-physics.qmd >}}
+
+{{< include chapter6/_6.9-classical-simulation.qmd >}}
+
+{{< include chapter6/_6.10-qma-completeness.qmd >}}
