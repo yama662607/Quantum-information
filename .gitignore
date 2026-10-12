@@ -37,3 +37,7 @@ quarto/*.log
 quarto/*.tex
 quarto/*.toc
 quarto/*.pdf
+
+# Lockfiles and local combined drafts
+package-lock.json
+quarto/textbook-preskill/combined/

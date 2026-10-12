@@ -49,11 +49,20 @@ def check_quarto():
 def main():
     print("🔍 Checking development environment...\n")
 
+    # JavaScript package manager check (prefer bun)
+    js_pm_ok = False
+    if shutil.which("bun"):
+        js_pm_ok = check_command("bun", "Bun")
+    elif shutil.which("npm"):
+        js_pm_ok = check_command("npm", "Node/npm")
+    else:
+        print("❌ Bun / npm  NOT FOUND. Please install bun (or npm).")
+
     results = [
         check_command("uv", "uv"),
         check_command("just", "just"),
         check_quarto(),
-        check_command("npm", "Node/npm"),
+        js_pm_ok,
     ]
 
     print("\n--- Python Environment ---")

@@ -27,7 +27,7 @@ check-env:
 setup: check-env
     @echo "📦 Setting up environment..."
     {{pm}} sync --all-extras
-    npm install
+    bun install
     @echo "✅ Environment setup complete!"
 
 # 全体品質検証: コードを変更せずに品質を検証 (CIゲート)
@@ -140,4 +140,4 @@ render-pdf pdf_path start end *args="":
 # ※事前に just render-pdf を実行しておく必要があります。
 extract-content pdf_path start end *args="":
     @echo "🔍 Extracting content from PDF pages {{start}}-{{end}}..."
-    @export PYTHONPATH=${PYTHONPATH:-}:. && {{python}} tools/extract_pdf_content.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}
+    @{{python}} tools/extract_pdf_content.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}
