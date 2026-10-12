@@ -321,36 +321,7 @@ nav.page-navigation .pagination-link:hover {
 }
 
 
-/* サイドバー折りたたみボタン */
-#right-sidebar-toggle {
-  position: fixed;
-  top: 5rem;
-  z-index: 1050;
-  width: 18px;
-  height: 32px;
-  padding: 0;
-  background: #e5e7eb;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  color: #6b7280;
-  line-height: 1;
-  transition: background 0.15s, left 0.25s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-#right-sidebar-toggle:hover {
-  background: #d1d5db;
-  color: #374151;
-}
-
-/* 右サイドバーのアニメーション */
-#quarto-margin-sidebar {
-  transition: width 0.25s ease, min-width 0.25s ease, padding 0.25s ease;
-}
 /* 分野非依存の汎用 callout (テンプレ系列で共通利用)。
    `.physics-notes` の汎用版で、量子情報以外の文脈にも使える。 */
 .field-notes {
