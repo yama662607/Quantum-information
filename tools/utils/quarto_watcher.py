@@ -10,21 +10,12 @@ class QuartoWatcherHandler(FileSystemEventHandler):
         self.last_triggered = 0
         self.debounce_seconds = 1
 
-        # マッピング定義: 変更検知ディレクトリ -> タッチすべきファイル
-        self.chapter_map = {
-            "chapter1": self.project_root
-            / "quarto"
-            / "textbook-preskill"
-            / "textbook.qmd",
-            "chapter2": self.project_root
-            / "quarto"
-            / "textbook-preskill"
-            / "textbook.qmd",
-            "chapter3": self.project_root
-            / "quarto"
-            / "textbook-preskill"
-            / "textbook.qmd",
-        }
+        self.preskill_target = (
+            self.project_root / "quarto" / "textbook-preskill" / "textbook.qmd"
+        )
+        self.watrous_target = (
+            self.project_root / "quarto" / "textbook-watrous" / "textbook.qmd"
+        )
         self.default_target = self.project_root / "quarto" / "index.qmd"
 
     def on_modified(self, event):
@@ -61,13 +52,13 @@ class QuartoWatcherHandler(FileSystemEventHandler):
     def _determine_target(self, src_path):
         """変更されたファイルのパスから、タッチすべきファイルを決定する"""
         try:
-            # パスの中に "chapterX" が含まれているか探す
             parts = src_path.parts
-            for part in parts:
-                if part in self.chapter_map:
-                    target = self.chapter_map[part]
-                    if target.exists():
-                        return target
+            if "textbook-preskill" in parts:
+                if self.preskill_target.exists():
+                    return self.preskill_target
+            elif "textbook-watrous" in parts:
+                if self.watrous_target.exists():
+                    return self.watrous_target
 
             # デフォルト
             if self.default_target.exists():
@@ -88,8 +79,8 @@ class QuartoWatcherHandler(FileSystemEventHandler):
 
 
 def main():
-    # プロジェクトのルートディレクトリを基準にする
-    project_root = Path(__file__).parent.parent.resolve()
+    # プロジェクトのルートディレクトリを基準にする (tools/utils/ から見て3階層上)
+    project_root = Path(__file__).resolve().parent.parent.parent
     watch_path = project_root / "quarto"
 
     print("Starting Quarto Watcher...")

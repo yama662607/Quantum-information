@@ -757,7 +757,6 @@ $|0\rangle$ を基底状態、$|1\rangle$ を励起状態とする系で、エ�
 
 
 ### Hermitian-preserving and Trace-preserving maps [📄 p.86](../assets/pdf/watrous/Quantum_Information.pdf#page=94) {#channel-characterizations}
-### Hermitian-preserving and Trace-preserving maps [📄 p.86](../assets/pdf/watrous/Quantum_Information.pdf#page=94) {#channel-characterizations}
 
 #### エルミート保存写像 (Hermitian-preserving maps)
 

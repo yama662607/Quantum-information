@@ -1,9 +1,12 @@
 import argparse
-import sys
 import os
+import sys
+import tempfile
 
-# Add tools/utils to path
-sys.path.append(os.path.join(os.path.dirname(__file__), "utils"))
+# Add tools/utils and project root to path
+tools_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(tools_dir, "utils"))
+sys.path.append(os.path.abspath(os.path.join(tools_dir, "..")))
 
 try:
     from pdf_processing import extract_pdf_images
@@ -18,7 +21,11 @@ def main():
     parser.add_argument("--start", type=int, default=1, help="Start page (1-based)")
     parser.add_argument("--end", type=int, default=1, help="End page (1-based)")
     parser.add_argument("--dpi", type=int, default=300, help="DPI for images")
-    parser.add_argument("--out_dir", default="/tmp", help="Output directory for images")
+    parser.add_argument(
+        "--out_dir",
+        default=tempfile.gettempdir(),
+        help="Output directory for images",
+    )
 
     args = parser.parse_args()
 
