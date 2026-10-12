@@ -52,10 +52,12 @@ def load_cache() -> Dict[str, Any]:
 
 
 def save_cache(cache: Dict[str, Any]):
-    """Saves validation cache to JSON file."""
+    """Saves validation cache to JSON file atomically to prevent concurrency corruption."""
     try:
-        with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        tmp_file = f"{CACHE_FILE}.tmp.{os.getpid()}"
+        with open(tmp_file, "w", encoding="utf-8") as f:
             json.dump(cache, f, indent=2, ensure_ascii=False)
+        os.replace(tmp_file, CACHE_FILE)
     except Exception as e:
         print(f"⚠️  Could not save cache: {e}")
 

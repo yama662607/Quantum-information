@@ -1,7 +1,6 @@
 import argparse
 import os
 import sys
-import tempfile
 
 # Add tools/utils and project root to path
 tools_dir = os.path.dirname(os.path.abspath(__file__))
@@ -9,7 +8,7 @@ sys.path.append(os.path.join(tools_dir, "utils"))
 sys.path.append(os.path.abspath(os.path.join(tools_dir, "..")))
 
 try:
-    from pdf_processing import extract_pdf_images
+    from pdf_processing import extract_pdf_images, get_default_img_dir
 except ImportError:
     print("Error: Could not import pdf_processing from utils.", file=sys.stderr)
     sys.exit(1)
@@ -23,8 +22,8 @@ def main():
     parser.add_argument("--dpi", type=int, default=300, help="DPI for images")
     parser.add_argument(
         "--out_dir",
-        default=tempfile.gettempdir(),
-        help="Output directory for images",
+        default=None,
+        help="Output directory for images (default: /tmp/preskill_<pdf_name>)",
     )
 
     args = parser.parse_args()
@@ -33,7 +32,8 @@ def main():
         print(f"Error: File not found: {args.pdf_path}", file=sys.stderr)
         sys.exit(1)
 
-    print(f"🎨 Rendering PDF pages {args.start}-{args.end} to {args.out_dir}...")
+    target_dir = args.out_dir if args.out_dir else get_default_img_dir(args.pdf_path)
+    print(f"🎨 Rendering PDF pages {args.start}-{args.end} to {target_dir}...")
     image_paths = extract_pdf_images(
         args.pdf_path, args.start, args.end, out_dir=args.out_dir, dpi=args.dpi
     )
