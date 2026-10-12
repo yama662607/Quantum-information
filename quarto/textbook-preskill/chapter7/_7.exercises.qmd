@@ -1,0 +1,79 @@
+## 7. 演習問題 (Exercises) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=86) {#sec-7-exercises}
+
+### 7.1 位相誤り訂正符号 (Phase error-correcting code) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=86) {#sec-7-ex-1}
+
+a) 単一ビット反転を訂正できる $n = 3, k = 1$ 符号のスタビライザー生成元を構成せよ。すなわち、誤りの集合
+$$
+\mathcal{E} = \{\boldsymbol{I}\boldsymbol{I}\boldsymbol{I}, \boldsymbol{X}\boldsymbol{I}\boldsymbol{I}, \boldsymbol{I}\boldsymbol{X}\boldsymbol{I}, \boldsymbol{I}\boldsymbol{I}\boldsymbol{X}\}
+$$
+に含まれる任意の誤りに対して回復が可能であることを保証せよ。2次元の符号部分空間の正規直交基底を求めよ。
+
+b) 単一の位相誤りを訂正できる $n = 3, k = 1$ 符号のスタビライザー生成元を構成せよ。すなわち、誤りの集合
+$$
+\mathcal{E} = \{\boldsymbol{I}\boldsymbol{I}\boldsymbol{I}, \boldsymbol{Z}\boldsymbol{I}\boldsymbol{I}, \boldsymbol{I}\boldsymbol{Z}\boldsymbol{I}, \boldsymbol{I}\boldsymbol{I}\boldsymbol{Z}\}
+$$
+に含まれる任意の誤りに対して回復が可能であることを保証せよ。2次元の符号部分空間の正規直交基底を求めよ。
+
+---
+
+### 7.2 誤り検出符号 (Error-detecting codes) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=86) {#sec-7-ex-2}
+
+a) $[[n, k, d]] = [[3, 0, 2]]$ 量子符号のスタビライザー生成元を構成せよ。この符号により、任意の単一量子ビット誤りを検出することができる。符号化状態を求めよ。（見覚えはあるだろうか？）
+
+b) 同じ符号長 $n$ を持つ2つの QECC $C_1$ と $C_2$ は、量子ビットの置換と単一量子ビットユニタリ変換を組み合わせて $C_1$ の符号部分空間を $C_2$ の符号部分空間へと変換できるとき、**等価 (equivalent)** であるという。すべての $[[3, 0, 2]]$ スタビライザー符号は等価であるか？
+
+c) $[[3, 1, 2]]$ スタビライザー符号は存在するか？
+
+---
+
+### 7.3 最大エンタングルメント (Maximal entanglement) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=86) {#sec-7-ex-3}
+
+スタビライザー生成元が $M_1 = \boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}$ および $M_1$ の巡回置換によって得られる $M_{2,3,4}$ であり、論理演算子 $\bar{\boldsymbol{Z}}$ が $\bar{\boldsymbol{Z}} = \boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}$ として選ばれた $[[5, 1, 3]]$ 量子符号を考える。$\bar{\boldsymbol{Z}}|\bar{0}\rangle = |\bar{0}\rangle$ を満たす符号化状態 $|\bar{0}\rangle$ および $\bar{\boldsymbol{Z}}|\bar{1}\rangle = -|\bar{1}\rangle$ を満たす $|\bar{1}\rangle$ から、符号化状態が
+$$
+\frac{1}{\sqrt{2}} (|0\rangle \otimes |\bar{0}\rangle + |1\rangle \otimes |\bar{1}\rangle) \tag{7.314}
+$$
+である $n = 6, k = 0$ 符号を構成せよ。
+
+a) この $n = 6, k = 0$ 符号に対するスタビライザー生成元の組を構成せよ。
+
+b) この符号の距離を求めよ。（$k = 0$ の符号に対して、距離はスタビライザーの任意の元の最小重みとして定義されることを思い出せ。）
+
+c) 任意の3つの量子ビットを選択し、残りの3つの量子ビットをトレースアウトしたときに得られる密度行列 $\boldsymbol{\rho}^{(3)}$ を求めよ。
+
+---
+
+### 7.4 符号語と非局所性 (Codewords and nonlocality) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=87) {#sec-7-ex-4}
+
+前問のスタビライザー生成元と論理演算子を持つ $[[5, 1, 3]]$ 符号について、
+
+a) $\bar{\boldsymbol{Z}}$ を、重み 3 のパウリ演算子、すなわち $\boldsymbol{I}, \boldsymbol{X}, \boldsymbol{Z}$ のテンソル積 ($\boldsymbol{Y}$ は含まない) として表せ。符号が巡回的であるため、求めた表現のすべての巡回置換も $\bar{\boldsymbol{Z}}$ を表す等価な方法であることに注意せよ。
+
+b) アインシュタインの局所性の仮定 (局所隠れた変数) を用いて、(a) で見出した5つの (巡回的に関係づけられた) 観測可能量と、観測可能量 $\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}$ との間の関係を予測せよ。観測可能量間のこの関係は、状態 $|\bar{0}\rangle$ について満たされているか？
+
+c) アインシュタインなら何と言うだろうか？
+
+---
+
+### 7.5 一般化 Shor 符号 (Generalized Shor code) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=87) {#sec-7-ex-5}
+
+整数 $m \ge 2$ に対し、Shor の 9 量子ビット符号の $n = m^2, k = 1$ への一般化を考える。ここで符号部分空間は次の2つの状態で張られる：
+$$
+\begin{aligned}
+|\bar{0}\rangle &= (|000\dots 0\rangle + |111\dots 1\rangle)^{\otimes m} , \\
+|\bar{1}\rangle &= (|000\dots 0\rangle - |111\dots 1\rangle)^{\otimes m} .
+\end{aligned} \tag{7.315}
+$$
+
+a) この符号に対するスタビライザー生成元を構成し、さらに次を満たす論理演算 $\bar{\boldsymbol{Z}}$ および $\bar{\boldsymbol{X}}$ を構成せよ：
+$$
+\begin{aligned}
+\bar{\boldsymbol{Z}}|\bar{0}\rangle &= |\bar{0}\rangle , & \bar{\boldsymbol{X}}|\bar{0}\rangle &= |\bar{1}\rangle , \\
+\bar{\boldsymbol{Z}}|\bar{1}\rangle &= -|\bar{1}\rangle , & \bar{\boldsymbol{X}}|\bar{1}\rangle &= |\bar{0}\rangle .
+\end{aligned} \tag{7.316}
+$$
+
+b) この符号の距離はいくらか？
+
+c) $m$ が奇数であるとし、$n = m^2$ 個の各量子ビットが誤り確率 $p$ の脱分極通信路に晒されると仮定する。この符号は符号化量子ビットをどの程度保護できるか？ 具体的には、(i) 論理ビット反転誤り $|\bar{0}\rangle \leftrightarrow |\bar{1}\rangle$ の確率を $p$ の最低次の非自明な次数で評価し、(ii) 論理位相反転誤り $|\bar{0}\rangle \to |\bar{0}\rangle, |\bar{1}\rangle \to -|\bar{1}\rangle$ の確率を $p$ の最低次の非自明な次数で評価せよ。
+
+d) $m$ が大きいときの (c) の解答の漸近的挙動を考察せよ。$n \to \infty$ の極限において、符号が (i) ビット反転および (ii) 位相誤りに対して良好な保護を提供するためには、$p$ に関してどのような条件が満たされるべきか？

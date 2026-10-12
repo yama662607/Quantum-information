@@ -1,0 +1,761 @@
+## 8.5 フィボナッチ・エニオン、量子次元、五角形・六角形方程式、および普遍的量子計算 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=51) {#sec-8-5-fibonacci-anyons}
+
+前節で示したように、$n$ 個のエニオンの状態は、定数次元 $d = \sum_{a,b,c} N_{abc}^1$ を持つ $n - 2$ 個の量子系（qudit）のヒルベルト空間 $(\mathcal{H}_d)^{\otimes (n-2)}$ に符号化できます。この qudit の基底状態は $\{|a, b, c; \mu\rangle\}$ として選ぶことができます。ここで $\mu$ は融合空間 $V_{abc}^1$ の基底のラベルです。
+
+### トポロジカル量子計算の量子回路シミュレーション（続）：組み紐と融合 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=51) {#sec-8-5-circuit-simulation-braiding-fusion}
+
+**組み紐（Braiding）**  
+トポロジカル量子コンピュータにおいて、組み紐は隣接する粒子の対にそれぞれ作用する一連の交換操作を実行することによって実現されます。標準基底における各交換の効果は $B$ 行列によって記述されます。では、（qudit を用いた）トポロジカル・ベクトル空間の符号化において、$B$ 行列はどのように表現されるでしょうか。
+
+融合状態のラベルを省略すると、隣接する2つの qudit 状態の基底は $|a, b, \bar{c}\rangle |d, e, \bar{f}\rangle$ と表すことができます。しかし、トポロジカル量子コンピュータでは、ラベル $d$ と $\bar{c}$ は常に一致していなければなりません（すなわち $\bar{c} = \bar{d}$、すなわち $c = d$）。したがって、組み紐のシミュレーションを実行するためには、この意味でラベルが一致している2つの qudit 状態のみを考慮すれば十分です：
+
+::: {.callout-note appearance="simple"}
+#### 2つの qudit に対する $B$ 行列の作用
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <!-- 入力状態と組み紐交差 -->
+  <svg width="180" height="160" viewBox="0 0 180 160">
+    <defs>
+      <marker id="arr-b1" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+      </marker>
+    </defs>
+    <!-- 上部流入線 a, e, b -->
+    <line x1="30" y1="10" x2="30" y2="40" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="20" y="25" font-family="serif" font-size="14" font-style="italic">a</text>
+    
+    <!-- 組み紐交差: e が手前、b が奥 -->
+    <path d="M 150 10 Q 150 50 90 70" fill="none" stroke="#1e293b" stroke-width="2"/>
+    <text x="155" y="25" font-family="serif" font-size="14" font-style="italic">b</text>
+    
+    <!-- 手前の線 e -->
+    <path d="M 90 10 Q 90 50 150 70" fill="none" stroke="#1e293b" stroke-width="2"/>
+    <text x="95" y="25" font-family="serif" font-size="14" font-style="italic">e</text>
+    
+    <!-- 中間結合線 d -->
+    <line x1="60" y1="70" x2="120" y2="70" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="85" y="62" font-family="serif" font-size="14" font-style="italic">d</text>
+    
+    <!-- 結合頂点 -->
+    <circle cx="60" cy="70" r="4" fill="#3b82f6"/>
+    <circle cx="120" cy="70" r="4" fill="#3b82f6"/>
+    
+    <!-- 下部線 f -->
+    <line x1="90" y1="70" x2="90" y2="140" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="98" y="120" font-family="serif" font-size="14" font-style="italic">f</text>
+  </svg>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$= \displaystyle\sum_g (B_{aeb}^f)_d^g$</span>
+
+  <!-- 展開後の非交差基底状態 -->
+  <svg width="180" height="160" viewBox="0 0 180 160">
+    <line x1="30" y1="10" x2="30" y2="40" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="20" y="25" font-family="serif" font-size="14" font-style="italic">a</text>
+    
+    <line x1="90" y1="10" x2="90" y2="40" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="80" y="25" font-family="serif" font-size="14" font-style="italic">e</text>
+    
+    <line x1="150" y1="10" x2="150" y2="40" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="155" y="25" font-family="serif" font-size="14" font-style="italic">b</text>
+    
+    <!-- 中間線 g -->
+    <line x1="60" y1="70" x2="120" y2="70" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="85" y="62" font-family="serif" font-size="14" font-style="italic">g</text>
+    
+    <circle cx="60" cy="70" r="4" fill="#10b981"/>
+    <circle cx="120" cy="70" r="4" fill="#10b981"/>
+    
+    <line x1="90" y1="70" x2="90" y2="140" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-b1)"/>
+    <text x="98" y="120" font-family="serif" font-size="14" font-style="italic">f</text>
+  </svg>
+</div>
+```
+
+:::
+
+これらの一致する基底状態に対する $B$ 行列の作用は次のようになります：
+
+$$
+B: |a, b, \bar{d}\rangle |d, e, \bar{f}\rangle \mapsto \sum_g |a, e, \bar{g}\rangle |g, b, \bar{f}\rangle \left(B_{aeb}^f\right)_d^g.
+$$ {#eq-8.94}
+
+望み通り、$B$ を隣接する2つの qudit の対に作用する $d^2 \times d^2$ ユニタリ行列として表現できました。
+
+**融合（Fusion）**  
+2つのエニオンの融合は、2つの qudit に対する測定によってシミュレートできます。これは、$F$ 行列の助けを借りることで単一 qudit の測定へと帰着させることができます：
+
+::: {.callout-note appearance="simple"}
+#### $F$ 行列を用いた融合のシミュレーション
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <!-- 非結合基底 -->
+  <svg width="180" height="150" viewBox="0 0 180 150">
+    <line x1="30" y1="10" x2="30" y2="50" stroke="#1e293b" stroke-width="2"/>
+    <text x="20" y="25" font-family="serif" font-size="14" font-style="italic">a</text>
+    <line x1="80" y1="10" x2="80" y2="50" stroke="#1e293b" stroke-width="2"/>
+    <text x="70" y="25" font-family="serif" font-size="14" font-style="italic">b</text>
+    <line x1="140" y1="10" x2="140" y2="50" stroke="#1e293b" stroke-width="2"/>
+    <text x="145" y="25" font-family="serif" font-size="14" font-style="italic">e</text>
+    
+    <line x1="55" y1="65" x2="110" y2="65" stroke="#1e293b" stroke-width="2"/>
+    <text x="80" y="58" font-family="serif" font-size="14" font-style="italic">d</text>
+    
+    <circle cx="55" cy="65" r="4" fill="#3b82f6"/>
+    <circle cx="110" cy="65" r="4" fill="#3b82f6"/>
+    
+    <line x1="82" y1="65" x2="82" y2="135" stroke="#1e293b" stroke-width="2"/>
+    <text x="90" y="115" font-family="serif" font-size="14" font-style="italic">f</text>
+  </svg>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$\xrightarrow{\quad F \quad} \displaystyle\sum_g (F_{abe}^f)_d^g$</span>
+
+  <!-- 融合基底 (b と e が先に融合して g を形成) -->
+  <svg width="180" height="150" viewBox="0 0 180 150">
+    <line x1="30" y1="10" x2="30" y2="70" stroke="#1e293b" stroke-width="2"/>
+    <text x="20" y="25" font-family="serif" font-size="14" font-style="italic">a</text>
+    
+    <path d="M 85 10 L 110 50" stroke="#1e293b" stroke-width="2"/>
+    <text x="75" y="25" font-family="serif" font-size="14" font-style="italic">b</text>
+    <path d="M 135 10 L 110 50" stroke="#1e293b" stroke-width="2"/>
+    <text x="140" y="25" font-family="serif" font-size="14" font-style="italic">e</text>
+    
+    <!-- 融合中間線 g -->
+    <line x1="110" y1="50" x2="110" y2="90" stroke="#1e293b" stroke-width="2"/>
+    <text x="118" y="75" font-family="serif" font-size="14" font-style="italic">g</text>
+    <circle cx="110" cy="50" r="4" fill="#ef4444"/>
+    
+    <path d="M 30 70 L 70 100" stroke="#1e293b" stroke-width="2"/>
+    <path d="M 110 90 L 70 100" stroke="#1e293b" stroke-width="2"/>
+    <circle cx="70" cy="100" r="4" fill="#3b82f6"/>
+    
+    <line x1="70" y1="100" x2="70" y2="140" stroke="#1e293b" stroke-width="2"/>
+    <text x="78" y="125" font-family="serif" font-size="14" font-style="italic">f</text>
+  </svg>
+</div>
+```
+
+:::
+
+隣接する2つの qudit の基底状態 $|a, b, \bar{d}\rangle |d, e, \bar{f}\rangle$ を考えます。エニオン対 $(be)$ が自明な全電荷を持つ振幅はいくらでしょうか？ $F$ 移動を用いると、この状態は次のように展開できます：
+
+$$
+\begin{aligned}
+F: |a, b, \bar{d}\rangle |d, e, \bar{f}\rangle &\mapsto \sum_g |a, g, \bar{f}\rangle |b, \bar{g}, e\rangle \left(F_{abe}^f\right)_d^g \\
+&= |a, 1, \bar{f}\rangle |b, 1, e\rangle \left(F_{abe}^f\right)_d^1 + \sum_{g \neq 1} |a, g, \bar{f}\rangle |b, \bar{g}, e\rangle \left(F_{abe}^f\right)_d^g;
+\end{aligned}
+$$ {#eq-8.95}
+
+ここでは $g$ に関する和を、$(be)$ が $1$ に融合する成分とそれ以外の残余の成分に分離しました。この $F$ 移動（これは特定の2-qudit ユニタリゲートにすぎません）を実行した後、基底 $\{|b, \bar{g}, e\rangle\}$ において第2の qudit に対して射影測定を行い、$g = 1$ であるかどうかを記録することによって、$(be)$ が $1$ に融合する確率をサンプリングできます。
+
+以上により、**量子回路がトポロジカル量子コンピュータを効率的にシミュレートできること**の証明が完了しました。
+
+---
+
+### 8.5.1 フィボナッチ・エニオン（Yang-Lee モデル） [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=52) {#sec-8-5-fibonacci-anyons-intro}
+
+ここまでで、トポロジカル量子計算が量子回路モデルよりも強力ではないこと、すなわち非アーベル・エニオンの組み紐によって効率的に解ける任意の計算問題は量子回路によっても効率的に解けることが確立されました。
+
+しかし、**トポロジカル量子計算は通常の量子回路と同じくらい強力でしょうか？** すなわち、エニオンを編み込むことによって普遍的量子コンピュータをシミュレートできるでしょうか？
+
+その答えは、エニオンの具体的な性質に依存します。一部の非アーベル・エニオンモデルは計算普遍的（universal）ですが、そうでないものもあります。特定のエニオンモデルに対する答えを見出すためには、$F$ 行列と $R$ 行列によって定まる組み紐群の表現の性質を理解する必要があります。
+
+一般的な議論を行うのではなく、極めてシンプルな1つの非アーベル・エニオンモデルを取り上げ、その計算普遍性を実証します。このモデルは**最も単純な非アーベルモデル**であり、共形場理論（CFT）では「**Yang-Lee モデル**」と呼ばれますが、ここではすぐに明らかになる理由から「**フィボナッチ・モデル（Fibonacci model）**」と呼びます。
+
+フィボナッチ・モデルには2つのラベルしか存在しません。すなわち、自明なラベル（ここでは $0$ と表記）と、単一の非自明なラベル（$1$ と表記、$\bar{1} = 1$）です。そして、非自明な融合規則は唯1つだけ存在します：
+
+$$
+1 \times 1 = 0 + 1;
+$$ {#eq-8.96}
+
+2つのエニオンを近づけたとき、それらは真空に対消滅（$0$）するか、あるいは融合して単一のエニオン（$1$）になります。2つのエニオンが2つの区別可能な方法で融合できるため、このモデルは非アーベル的です。
+
+$n$ 個のエニオンのヒルベルト空間 $V_{1^n}^b$ の標準基底を考えます。ここで各基底元は、$n$ 個のエニオンが融合して全電荷 $b \in \{0, 1\}$ を生じる区別可能な方法を記述します。一番左の2つのエニオンが最初に融合されると、結果の電荷は $0$ または $1$ になります。この電荷が3番目のエニオンと融合して全電荷 $0$ または $1$ を生じ、これを繰り返します。最後に、最後の $n$ 番目のエニオンが最初の $n - 1$ 個のエニオンの全電荷と融合して全電荷 $b$ を与えます。この融合過程の記述には、合計で $n - 2$ 個の中間電荷 $b_1, b_2, b_3, \dots, b_{n-2}$ が現れます。したがって、対応する基底元は長さ $n - 2$ の二進文字列（bit string）によって指定できます。全電荷が $0$ である場合、最初の $n - 1$ 個のエニオンを融合した結果は必ず $1$ でなければならないため、基底状態は長さ $n - 3$ の文字列でラベル付けされます。
+
+しかし、**すべての二進文字列が許されるわけではありません**。$0$ の直後には必ず $1$ が続かなければなりません。電荷 $0$ が $1$ と融合したとき、結果の全電荷は $1$ のみが唯一可能な結果であるため、$0$ が2つ連続することはあり得ません（$0 \times 1 = 1$）。これ以外の制限はありません。したがって、基底状態は**「$0$ が2つ連続しない二進文字列」**と1対1に対応します。
+
+これにより、トポロジカル・ヒルベルト空間 $V_{1^n}^0$ の次元 $N_n^0 \equiv N_{1^n}^0$ は単純な漸化式に従います。最初の2粒子の融合が自明な全電荷（$0$）を生じる場合、残りの $n - 2$ 粒子は $N_{n-2}^0$ 通りの区別可能な方法で融合でき、最初の2粒子の融合が非自明な電荷（$1$）を生じる場合、そのエニオンは他の $n - 2$ 粒子と $N_{n-1}^0$ 通りの方法で融合できます。したがって、
+
+$$
+N_n^0 = N_{n-1}^0 + N_{n-2}^0.
+$$ {#eq-8.97}
+
+境界条件 $N_1^0 = 0$ および $N_2^0 = 1$ より、この漸化式の解は
+
+$$
+\begin{array}{rcccccccccc}
+n &=& 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \dots \\
+N_n^0 &=& 0 & 1 & 1 & 2 & 3 & 5 & 8 & 13 & 21 \dots
+\end{array}
+$$ {#eq-8.98}
+
+となります。すなわち、**次元はフィボナッチ数となります**（これが本モデルを「フィボナッチ・モデル」と呼ぶ理由です）。
+
+フィボナッチ数は $n$ の増大に伴って $N_n^0 \approx C \phi^n$ のレートで成長します。ここで $\phi$ は黄金比（golden mean）です：
+
+$$
+\phi = \frac{1 + \sqrt{5}}{2} \approx 1.618.
+$$
+
+エニオンが追加されるにつれてヒルベルト空間が拡大するレートを $\phi$ が支配しているため、$d = \phi$ をフィボナッチ・エニオンの**量子次元（quantum dimension）**と呼びます。この「次元」が無理数であるという事実は、トポロジカル・ヒルベルト空間が部分系のテンソル積としての自然な分解を持たないこと、すなわちトポロジカルに符号化された量子情報が $n$ 個のエニオンの**集団的性質（collective property）**であることを鮮やかに物語っています。
+
+---
+
+### 8.5.2 量子次元の幾何学的・代数的性質 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=53) {#sec-8-5-quantum-dimension}
+
+フィボナッチ・モデルの性質に戻る前に、まず量子次元の概念をより深く探求します。一般的なエニオンモデルにおいて、ラベル $a$ の次元 $d_a$ はどのように定義されるべきでしょうか？
+
+この目的のために、2つの $a\bar{a}$ 対が生成され（各対は自明な全電荷を持つ）、次に右側の対の粒子 $a$ が左側の対の反粒子 $\bar{a}$ と融合する物理過程を想像すると便利です。これらの粒子は対消滅するでしょうか？
+
+適切な位相の規約のもとで、対消滅が起こる**振幅（amplitude）**は単位区間 $[0, 1]$ 内の実数となります。この数値を
+
+$$
+\frac{1}{d_a}
+$$
+
+と定義します。ここで $d_a$ は $a$ の量子次元です（したがって対消滅が起こる**確率（probability）**は $1/d_a^2$ です）。この定義から $d_a = d_{\bar{a}}$ であることは明らかです。
+
+ラベル $a$ が群 $G$ の既約表現 $R_a$ のラベルである場合、量子次元は単に表現の次元 $d_a = |R_a|$ と一致します。これは図式的に容易に理解できます：
+
+::: {.callout-note appearance="simple"}
+#### ループ対消滅とパートナー交換の振幅
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <!-- 独立な2つのループ = 1 -->
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+    <svg width="150" height="120" viewBox="0 0 150 120">
+      <ellipse cx="40" cy="60" rx="25" ry="45" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <ellipse cx="110" cy="60" rx="25" ry="45" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <text x="35" y="65" font-family="serif" font-size="14" fill="#1e293b">a</text>
+      <text x="105" y="65" font-family="serif" font-size="14" fill="#1e293b">a</text>
+    </svg>
+    <span style="font-family: serif; font-size: 1.1rem; color: #475569;">規格化された独立ループ $= 1$</span>
+  </div>
+
+  <div style="width: 1px; height: 120px; background: #cbd5e1;"></div>
+
+  <!-- パートナー交換した単一ループ = 1/d_a -->
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+    <svg width="180" height="120" viewBox="0 0 180 120">
+      <path d="M 30 60 C 30 10, 80 10, 80 60 C 80 110, 150 110, 150 60 C 150 10, 100 10, 100 60 C 100 110, 30 110, 30 60 Z" fill="none" stroke="#dc2626" stroke-width="2"/>
+      <text x="90" y="65" font-family="serif" font-size="14" fill="#1e293b">a</text>
+    </svg>
+    <span style="font-family: serif; font-size: 1.1rem; color: #475569;">パートナー交換 $= \dfrac{1}{d_a}$</span>
+  </div>
+</div>
+```
+
+:::
+
+2つの対が生成されてから各対が直ちに対消滅する場合、それらの対の世界線は2つの閉じたループを形成し、$|R|$ は各ループを伝播する相異なる「色（color）」の数をカウントします。しかし、各対の粒子がもう一方の対の反粒子と対消滅する場合、閉じたループは1つしか存在せず、したがって色に関する和は1回しか取られません。左側の過程を $1$ に規格化すると、右側の過程の振幅は $1/|R|$ の係数で抑制されます。
+
+同じことを数式で表現すると、規格化された $R\bar{R}$ 対の状態は
+
+$$
+|R\bar{R}\rangle = \frac{1}{\sqrt{|R|}} \sum_i |i\rangle |\bar{i}\rangle
+$$ {#eq-8.99}
+
+です。ここで $\{|i\rangle\}$ は $R$ の正規直交基底、$|\bar{i}\rangle$ は $\bar{R}$ の基底を表します。2つの対 $|R\bar{R}\rangle$ と $|R'\bar{R}'\rangle$ が生成されたと仮定します。パートナーを交換した後にそれらが融合すると、対消滅の振幅は
+
+$$
+\begin{aligned}
+\langle R\bar{R}, R'\bar{R}' | R\bar{R}', R'\bar{R}\rangle &= \frac{1}{|R|^2} \sum_{i, i', j, j'} \langle j\bar{j}, j'\bar{j}' | i\bar{i}', i'\bar{i}\rangle \\
+&= \frac{1}{|R|^2} \sum_{i, i', j, j'} \delta_{ji} \delta_{ji'} \delta_{j'i'} \delta_{j'i} = \frac{1}{|R|^2} \sum_i \delta_{ii} = \frac{1}{|R|}
+\end{aligned}
+$$ {#eq-8.100}
+
+となります。
+
+しかし一般には、量子次元は「色の数」をカウントするという直接的な解釈を持たず、**整数である必然性もまったくありません**。
+
+このような量子次元はトポロジカル・ヒルベルト空間の次元とどのように関係しているでしょうか？ この結びつきを見るためには、規格化の規約を変更することが極めて有用です。多数の $a\bar{a}$ 対を生成し、各対の粒子を隣接する対の反粒子と融合させることによって、粒子 $a$ の世界線に多数の「ジグザグ（zigzag）」を導入できることに注意してください。しかし、各ジグザグは振幅をさらに $1/d_a$ 倍減少させます。もし各対生成あるいは対消滅の事象に **$\sqrt{d_a}$ の重み係数**を付与すれば、この $1/d_a$ の係数を補償できます。
+
+この新しい規約のもとでは、何のペナルティも支払うことなく粒子の世界線を時間的に前方または後方へと曲げることができます：
+
+::: {.callout-note appearance="simple"}
+#### ジグザグ世界線の規格化補正と位相幾何的不変性
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <!-- ジグザグ線 -->
+    <svg width="120" height="150" viewBox="0 0 120 150">
+      <path d="M 30 140 L 30 90 Q 30 60 60 60 Q 90 60 90 90 Q 90 120 60 120 Q 30 120 30 90" fill="none" stroke="#1e293b" stroke-width="2"/>
+      <path d="M 60 60 L 90 20" stroke="#1e293b" stroke-width="2"/>
+      <!-- 各曲がりに sqrt(d_a) -->
+      <circle cx="60" cy="60" r="4" fill="#f59e0b"/>
+      <text x="70" y="55" font-family="serif" font-size="12" fill="#d97706">√d_a</text>
+      <circle cx="60" cy="120" r="4" fill="#f59e0b"/>
+      <text x="70" y="130" font-family="serif" font-size="12" fill="#d97706">√d_a</text>
+      <text x="15" y="135" font-family="serif" font-size="14" font-style="italic">a</text>
+    </svg>
+    <span style="font-size: 1.4rem; font-family: serif;">$=$</span>
+    <!-- まっすぐな線 -->
+    <svg width="60" height="150" viewBox="0 0 60 150">
+      <line x1="30" y1="140" x2="30" y2="20" stroke="#1e293b" stroke-width="2"/>
+      <text x="38" y="80" font-family="serif" font-size="14" font-style="italic">a</text>
+    </svg>
+  </div>
+</div>
+```
+
+:::
+
+これによって世界線に割り当てられる重みは**トポロジカル不変量**となり（線を歪めても変化しません）、タイプ $a$ の世界線が形成する閉じたループには **$d_a$ の重み**が割り当てられます。
+
+この新しい規約を用いて、次の一連の図式的変形を正当化することができます：
+
+::: {.callout-note appearance="simple"}
+#### 代数方程式 $d_a d_b = \sum_c N_{ab}^c d_c$ の図式的導出
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <!-- ループ a と ループ b -->
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <span style="font-size: 1.3rem; font-family: serif;">$d_a d_b =$</span>
+    <svg width="100" height="100" viewBox="0 0 100 100">
+      <circle cx="35" cy="50" r="22" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <text x="30" y="55" font-family="serif" font-size="14">a</text>
+      <circle cx="70" cy="50" r="22" fill="none" stroke="#10b981" stroke-width="2"/>
+      <text x="65" y="55" font-family="serif" font-size="14">b</text>
+    </svg>
+  </div>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$=$</span>
+
+  <!-- 同心ループ -->
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <svg width="100" height="100" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <text x="45" y="20" font-family="serif" font-size="14">a</text>
+      <circle cx="50" cy="50" r="24" fill="none" stroke="#10b981" stroke-width="2"/>
+      <text x="45" y="42" font-family="serif" font-size="14">b</text>
+    </svg>
+  </div>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$= \displaystyle\sum_{c, \mu}$</span>
+
+  <!-- 融合分解されたバブル -->
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <svg width="110" height="110" viewBox="0 0 110 110">
+      <path d="M 25 55 Q 55 15 85 55" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <path d="M 25 55 Q 55 95 85 55" fill="none" stroke="#10b981" stroke-width="2"/>
+      <line x1="55" y1="35" x2="55" y2="75" stroke="#ef4444" stroke-width="2"/>
+      <text x="60" y="58" font-family="serif" font-size="14" fill="#dc2626">c</text>
+      <circle cx="55" cy="35" r="4" fill="#3b82f6"/>
+      <circle cx="55" cy="75" r="4" fill="#3b82f6"/>
+    </svg>
+  </div>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$= \displaystyle\sum_c N_{ab}^c d_c$</span>
+</div>
+```
+
+:::
+
+各図は（通常とは異なる規格化を施した）2つの状態の内積を表しています。$a$ と $b$ が融合した際に生じうるラベル（$c$）と対応する融合状態（$\mu$）に関する完全系を挿入しました。図式の位相的不変性を利用してそれを「裏返し（inside out）」にし、融合状態を縮約することで（$\mu$ の取りうる値をカウントする係数 $N_{ab}^c$ を得て）、次の等式が導かれます：
+
+$$
+d_a d_b = \sum_c N_{ab}^c d_c \equiv \sum_c (N_a)_b^c d_c.
+$$ {#eq-8.101}
+
+この式は、量子次元を成分とするベクトル $\vec{d}$ が、ラベル $a$ が他のラベルとどのように融合するかを記述する行列 $N_a$ の固有値 $d_a$ に属する固有ベクトルであることを意味します：
+
+$$
+N_a \vec{d} = d_a \vec{d}.
+$$ {#eq-8.102}
+
+さらに、$N_a$ の成分は非負であり、$\vec{d}$ のすべての成分は正であるため、**$d_a$ は $N_a$ の最大固有値であり、非退化です**（この単純な事実は**ペロン・フロベニウスの定理（Perron-Frobenius theorem）**と呼ばれます）。
+
+全電荷 $b$ を持つセクターにおける、$a$ のラベルを持つ $n$ 個のエニオンのトポロジカル・ヒルベルト空間 $V_{aaa\cdots a}^b$ の次元は
+
+$$
+N_{aaa\cdots a}^b = \sum_{\{b_i\}} N_{aa}^{b_1} N_{ab_1}^{b_2} N_{ab_2}^{b_3} \cdots N_{ab_{n-2}}^b = \langle b | (N_a)^{n-1} |a\rangle
+$$ {#eq-8.103}
+
+となります。行列 $N_a$ は対角化可能であり、次のように展開できます：
+
+$$
+N_a = |v\rangle d_a \langle v| + \cdots,
+$$ {#eq-8.104}
+
+ここで
+
+$$
+|v\rangle = \frac{\vec{d}}{\mathcal{D}}, \quad \mathcal{D} = \sqrt{\sum_c d_c^2}
+$$ {#eq-8.105}
+
+であり、劣位の固有値（subleading eigenvalues）は省略されています。$\mathcal{D}$ は**全量子次元（total quantum dimension）**と呼ばれます。したがって、
+
+$$
+N_{aaa\cdots a}^b = \frac{d_a^n d_b}{\mathcal{D}^2} + \cdots
+$$ {#eq-8.106}
+
+が得られます。ここで省略記号は大きな $n$ に対して指数関数的に抑制される項を表します。このように、**量子次元 $d_a$ はタイプ $a$ のエニオンに対する $n$ 粒子ヒルベルト空間の成長率を支配している**ことが分かります。
+
+自明な電荷を持つラベル $0$ は自明に融合するため、$d_0 = 1$ です。フィボナッチ・モデルの場合、融合規則 $1 \times 1 = 0 + 1$ より $d_1^2 = 1 + d_1$ が従い、これは先ほど求めたように $d_1 = \phi$ によって解かれます。したがって
+
+$$
+\mathcal{D}^2 = d_0^2 + d_1^2 = 1 + \phi^2 = 2 + \phi
+$$
+
+となります。式 (@eq-8.106) より、フィボナッチ・エニオンに対する公式は
+
+$$
+N_{111\cdots 1}^0 = \left(\frac{1}{2 + \phi}\right) \phi^n
+$$ {#eq-8.107}
+
+となり、これは穏やかな $n$ の値に対してもフィボナッチ数の極めて優れた近似を与えます。
+
+**融合確率とアニーリング定常分布**  
+$a\bar{a}$ 対と $b\bar{b}$ 対が共に生成されたとします。$a$ と $b$ の粒子が融合するとき、それらの全電荷が $c$ となる確率 $p(ab \to c)$ はいくらでしょうか？ この問いも同様の図式的操作によって答えることができます：
+
+::: {.callout-note appearance="simple"}
+#### 融合確率 $p(ab \to c)$ の図式的計算
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <span style="font-size: 1.2rem; font-family: serif;">$d_a d_b \, p(ab \to c) = \displaystyle\sum_\mu$</span>
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <ellipse cx="60" cy="30" rx="35" ry="18" fill="none" stroke="#2563eb" stroke-width="2"/>
+    <line x1="60" y1="48" x2="60" y2="80" stroke="#ef4444" stroke-width="2"/>
+    <text x="68" y="68" font-family="serif" font-size="14" fill="#dc2626">c</text>
+    <circle cx="60" cy="48" r="4" fill="#3b82f6"/>
+    <circle cx="60" cy="80" r="4" fill="#3b82f6"/>
+    <ellipse cx="60" cy="98" rx="35" ry="18" fill="none" stroke="#10b981" stroke-width="2"/>
+    <text x="15" y="35" font-family="serif" font-size="14">a</text>
+    <text x="15" y="105" font-family="serif" font-size="14">b</text>
+  </svg>
+  <span style="font-size: 1.2rem; font-family: serif;">$= N_{ab}^c d_c$</span>
+</div>
+```
+
+:::
+
+内積の適切な規格化を復元するために $d_a d_b$ で割ることにより、次の式が結論付けられます：
+
+$$
+p(ab \to c) = \frac{N_{ab}^c d_c}{d_a d_b}.
+$$ {#eq-8.108}
+
+これは量子次元を定義するために用いた公式 $p(a\bar{a} \to 1) = 1/d_a^2$ を一般化したものであり、規格化条件
+
+$$
+\sum_c p(ab \to c) = 1
+$$ {#eq-8.109}
+
+を満たします。
+
+量子次元のもう1つの解釈に到達するために、高密度のエニオン気体が生成され、しばらくの間**アニーリング（anneal）**が進行する状況を想像してみましょう。エニオン同士が衝突して融合し、粒子の総数が徐々に減少します。やがて、熱平衡に達するよりもずっと前に衝突頻度が極めて稀になり、融合過程が事実上停止します。この段階に達すると、粒子の種類の初期分布が何であれ、衝突によって保存される定常状態の分布に達します。定常状態においてタイプ $a$ の粒子が確率 $p_a$ で現れるとすれば、
+
+$$
+\sum_{ab} p_a p_b p(ab \to c) = p_c
+$$ {#eq-8.110}
+
+が成り立ちます。
+
+$$
+\sum_a N_{ab}^c d_a = \sum_a N_{b\bar{c}}^{\bar{a}} d_{\bar{a}} = d_b d_{\bar{c}} = d_b d_c
+$$ {#eq-8.111}
+
+を用いれば、この条件が
+
+$$
+p_a = \frac{d_a^2}{\mathcal{D}^2}
+$$ {#eq-8.112}
+
+によって満たされることが容易に確認できます。
+
+したがって、エニオンがランダムな過程で生成される場合、**より大きな量子次元を持つラベルを担う粒子ほど生成されやすい**ことが結論付けられます。これは、より大きな次元を持つエニオンほど多くの量子状態を持つという性質と完全に整合しています。
+
+---
+
+### 8.5.3 五角形方程式と六角形方程式（Moore-Seiberg 多項式方程式） [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=58) {#sec-8-5-pentagon-hexagon-equations}
+
+フィボナッチ・モデルのようなエニオンモデルの計算能力を評価するためには、$R$ 行列と $F$ 行列によって定まるエニオンの組み紐の性質を知る必要があります。組み紐の規則は、代数学的整合性条件（consistency conditions）によって極めて強く制約されます。フィボナッチ・モデルに対しては、これらの整合性条件によって融合規則と両立する組み紐の規則が一意に決定されます。
+
+整合性条件が生じる理由は、2つのトポロジカル・ヒルベルト空間を結ぶ同型写像を得るために、一連の「$F$ 移動」と「$R$ 移動」を行うことができるからです。この同型写像は、2つの異なる空間の標準正規直交基底を結ぶユニタリ行列とみなすことができます。**このユニタリ変換は、同型写像を構成するために用いた特定の移動の系列には依存せず、最初と最後の基底のみに依存しなければなりません**。
+
+例えば、4つの粒子を（粒子の交換なしに）融合する方法は5通り存在し、それらは $F$ 移動によって結び付けられます：
+
+::: {.callout-note appearance="simple"}
+#### 五角形図式（The Pentagon Diagram）
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; margin: 20px 0; background: #fdfdfd; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <svg width="680" height="420" viewBox="0 0 680 420">
+    <defs>
+      <marker id="arr-p" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+      </marker>
+    </defs>
+    
+    <!-- 頂点 1: 左標準基底 ((12)3)4 -->
+    <rect x="20" y="170" width="130" height="70" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <text x="85" y="200" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e3a8a">左標準基底</text>
+    <text x="85" y="222" font-family="serif" font-size="14" text-anchor="middle" fill="#1e40af">|left; a, b⟩</text>
+    <text x="85" y="236" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#64748b">((12)a 3)b 4 → 5</text>
+
+    <!-- 頂点 2: 上左 (1(23))4 -->
+    <rect x="200" y="30" width="130" height="70" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="265" y="60" font-family="serif" font-size="13" text-anchor="middle" fill="#0f172a">(1(23)e)b 4 → 5</text>
+    <text x="265" y="82" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#475569">F_123 適用</text>
+
+    <!-- 頂点 3: 上右 1((23)4) -->
+    <rect x="470" y="30" width="130" height="70" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="535" y="60" font-family="serif" font-size="13" text-anchor="middle" fill="#0f172a">1((23)e 4)d → 5</text>
+    <text x="535" y="82" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#475569">F_1e4 適用</text>
+
+    <!-- 頂点 4: 右標準基底 1(2(34)) -->
+    <rect x="530" y="170" width="130" height="70" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <text x="595" y="200" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e3a8a">右標準基底</text>
+    <text x="595" y="222" font-family="serif" font-size="14" text-anchor="middle" fill="#1e40af">|right; c, d⟩</text>
+    <text x="595" y="236" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#64748b">1(2(34)c)d → 5</text>
+
+    <!-- 頂点 5: 下 ((12)(34)) -->
+    <rect x="275" y="320" width="140" height="70" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="345" y="350" font-family="serif" font-size="13" text-anchor="middle" fill="#0f172a">(12)a (34)c → 5</text>
+    <text x="345" y="372" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#475569">結合対の再編成</text>
+
+    <!-- 矢印: 上回り (3ステップ) -->
+    <!-- 1 -> 2 -->
+    <path d="M 120 170 Q 150 95 195 75" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-p)"/>
+    <text x="135" y="115" font-family="serif" font-size="13" fill="#2563eb">(F_{123}^b)_a^e</text>
+    
+    <!-- 2 -> 3 -->
+    <line x1="335" y1="65" x2="465" y2="65" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-p)"/>
+    <text x="400" y="55" font-family="serif" font-size="13" fill="#2563eb" text-anchor="middle">(F_{1e4}^5)_b^d</text>
+    
+    <!-- 3 -> 4 -->
+    <path d="M 570 105 Q 600 130 605 165" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-p)"/>
+    <text x="615" y="135" font-family="serif" font-size="13" fill="#2563eb">(F_{234}^d)_e^c</text>
+
+    <!-- 矢印: 下回り (2ステップ) -->
+    <!-- 1 -> 5 -->
+    <path d="M 130 240 Q 190 320 270 345" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-p)"/>
+    <text x="175" y="315" font-family="serif" font-size="13" fill="#059669">(F_{a34}^5)_b^c</text>
+    
+    <!-- 5 -> 4 -->
+    <path d="M 420 345 Q 500 320 545 245" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-p)"/>
+    <text x="500" y="315" font-family="serif" font-size="13" fill="#059669">(F_{12c}^5)_a^d</text>
+  </svg>
+</div>
+```
+
+:::
+
+この五角形図式の最左端に示されている基底は「左標準基底」$\{|\text{left}; a, b\rangle\}$ であり、粒子 1 と 2 が最初に融合し、得られた電荷 $a$ が粒子 3 と融合して電荷 $b$ を生じ、最後に $b$ が粒子 4 と融合して全電荷 5 を与えます。最右端に示されている基底は「右標準基底」$\{|\text{right}; c, d\rangle\}$ であり、粒子は左から右へではなく右から左へと融合されます。
+
+五角形の上辺を経由すると、これら2つの基底は2回の $F$ 移動によって関係付けられます：
+
+$$
+|\text{left}; a, b\rangle = \sum_{c, d} |\text{right}; c, d\rangle (F_{12c}^5)_a^d (F_{a34}^5)_b^c.
+$$ {#eq-8.113}
+
+五角形の下辺を経由すると、基底は3回の $F$ 移動によって関係付けられます：
+
+$$
+|\text{left}; a, b\rangle = \sum_{c, d, e} |\text{right}; c, d\rangle (F_{234}^d)_e^c (F_{1e4}^5)_b^d (F_{123}^b)_a^e.
+$$ {#eq-8.114}
+
+$|\text{left}; a, b\rangle$ に対する2つの表現を等置することにより、**五角形方程式（pentagon equation）**が得られます：
+
+$$
+(F_{12c}^5)_a^d (F_{a34}^5)_b^c = \sum_e (F_{234}^d)_e^c (F_{1e4}^5)_b^d (F_{123}^b)_a^e.
+$$ {#eq-8.115}
+
+もう1つの非自明な整合性条件は、3つの粒子が融合する様々な方法を考察することによって見出されます：
+
+::: {.callout-note appearance="simple"}
+#### 六角形図式（The Hexagon Diagram）
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; margin: 20px 0; background: #fdfdfd; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <svg width="680" height="380" viewBox="0 0 680 380">
+    <defs>
+      <marker id="arr-h" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+      </marker>
+    </defs>
+
+    <!-- 頂点 1: 左端 (12)3 -->
+    <rect x="20" y="150" width="120" height="60" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <text x="80" y="175" font-family="serif" font-size="13" text-anchor="middle" fill="#1e40af">|left; a⟩</text>
+    <text x="80" y="195" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#64748b">(12)_a 3 → 4</text>
+
+    <!-- 頂点 2: 上左 1(23) -->
+    <rect x="180" y="40" width="120" height="60" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="240" y="65" font-family="serif" font-size="13" text-anchor="middle">1(23)_b → 4</text>
+    <text x="240" y="85" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#475569">F 適用</text>
+
+    <!-- 頂点 3: 上右 (23)1 -->
+    <rect x="380" y="40" width="120" height="60" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="440" y="65" font-family="serif" font-size="13" text-anchor="middle">(23)_b 1 → 4</text>
+    <text x="440" y="85" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#475569">R 適用</text>
+
+    <!-- 頂点 4: 右端 2(31) = 2(13) -->
+    <rect x="540" y="150" width="120" height="60" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <text x="600" y="175" font-family="serif" font-size="13" text-anchor="middle" fill="#1e40af">|right; c⟩</text>
+    <text x="600" y="195" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#64748b">2(31)_c → 4</text>
+
+    <!-- 頂点 5: 下左 (21)3 -->
+    <rect x="180" y="260" width="120" height="60" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="240" y="285" font-family="serif" font-size="13" text-anchor="middle">(21)_a 3 → 4</text>
+    <text x="240" y="305" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#475569">R 適用</text>
+
+    <!-- 頂点 6: 下右 2(13) -->
+    <rect x="380" y="260" width="120" height="60" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="440" y="285" font-family="serif" font-size="13" text-anchor="middle">2(13)_c → 4</text>
+    <text x="440" y="305" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#475569">F 適用</text>
+
+    <!-- 上回り矢印 (F -> R -> F) -->
+    <path d="M 125 150 Q 150 90 175 75" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-h)"/>
+    <text x="125" y="100" font-family="serif" font-size="13" fill="#2563eb">(F_{123}^4)_a^b</text>
+
+    <line x1="305" y1="70" x2="375" y2="70" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-h)"/>
+    <text x="340" y="60" font-family="serif" font-size="13" fill="#2563eb" text-anchor="middle">R_{1b}^4</text>
+
+    <path d="M 505 75 Q 535 95 555 145" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-h)"/>
+    <text x="545" y="100" font-family="serif" font-size="13" fill="#2563eb">(F_{231}^4)_b^c</text>
+
+    <!-- 下回り矢印 (R -> F -> R) -->
+    <path d="M 125 210 Q 150 270 175 285" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-h)"/>
+    <text x="125" y="260" font-family="serif" font-size="13" fill="#059669">R_{12}^a</text>
+
+    <line x1="305" y1="290" x2="375" y2="290" stroke="#059669" stroke-width="2" marker-end="url(#arr-h)"/>
+    <text x="340" y="310" font-family="serif" font-size="13" fill="#059669" text-anchor="middle">(F_{213}^4)_a^c</text>
+
+    <path d="M 505 285 Q 535 265 555 215" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-h)"/>
+    <text x="545" y="260" font-family="serif" font-size="13" fill="#059669">R_{13}^c</text>
+  </svg>
+</div>
+```
+
+:::
+
+この六角形図式の最左端の基底 $\{|\text{left}; a\rangle\}$ は、粒子が順序 $123$ で配置され、粒子 1 と 2 が最初に融合される場合に得られます。一方、最右端の基底 $\{|\text{right}; c\rangle\}$ は、粒子が順序 $231$ で配置され、粒子 1 と 3 が最初に融合される場合に得られます。
+
+六角形の上辺を経由すると、2つの基底は一連の移動 $FRF$ によって関係付けられます：
+
+$$
+|\text{left}; a\rangle = \sum_{b, c} |\text{right}; c\rangle (F_{231}^4)_b^c R_{1b}^4 (F_{123}^4)_a^b.
+$$ {#eq-8.116}
+
+六角形の下辺を経由すると、基底は一連の移動 $RFR$ によって関係付けられます：
+
+$$
+|\text{left}; a\rangle = \sum_c |\text{right}; c\rangle R_{13}^c (F_{213}^4)_a^c R_{12}^a.
+$$ {#eq-8.117}
+
+$|\text{left}; a\rangle$ に対する2つの表現を等置することにより、**六角形方程式（hexagon equation）**が得られます：
+
+$$
+R_{13}^c (F_{213}^4)_a^c R_{12}^a = \sum_b (F_{231}^4)_b^c R_{1b}^4 (F_{123}^4)_a^b.
+$$ {#eq-8.118}
+
+ここで証明は行いませんが、極めて美しい定理により、**組み紐と融合の整合性を保証するために課すべき条件はこれ以上存在しない**ことが知られています。すなわち、$n$ 個のエニオンに対する初期基底と最終基底の任意の選択に対して、初期基底を最終基底へと変換する $R$ 移動と $F$ 移動の**すべての**系列は、五角形方程式と六角形方程式が満たされている限り、**全く同一の同型写像**を与えます。この定理は圏論における基本結果である**マックレーンのコヒーレンス定理（MacLane coherence theorem）**の一例です。五角形方程式と六角形方程式は合わせて**ムーア・サイバーグの多項式方程式（Moore-Seiberg polynomial equations）**と呼ばれ、物理学におけるその重要性は1980年代の (1+1) 次元共形場理論の研究において初めて認識されました。
+
+多項式方程式の解は、物理的に実現可能なエニオンモデルを定義します。したがって、エニオンモデルを構築するための体系的な手続きが存在します：
+
+1. ラベルの集合を選択し、融合規則を仮定する。
+2. $R$ と $F$ について多項式方程式を解く。
+
+もし解が存在しなければ、その仮定された融合規則は局所量子物理の諸原理と両立しないため、棄却されなければなりません。もし複数の解が存在する場合（ラベルの並べ替えや基底の再定義などによって互いに移り変わらないもの）、相異なる各解は、仮定された融合規則を持つ相異なるモデルを定義します。
+
+**フィボナッチ・モデルの多項式方程式の解**  
+この手続きを説明するために、フィボナッチの融合規則に対する多項式方程式を考えます。現れる $F$ 行列は2つしかなく、それらを次のように表します：
+
+$$
+F_{0111} \equiv F_0, \quad F_{1111} \equiv F_1.
+$$ {#eq-8.119}
+
+$F_0$ は実質的に $1 \times 1$ 行列
+
+$$
+(F_0)_a^b = \delta_a^1 \delta_1^b
+$$ {#eq-8.120}
+
+であり、$F_1$ は $2 \times 2$ 行列です。五角形方程式は次のように簡約されます：
+
+$$
+(F_c)_a^d (F_a)_b^c = \sum_e (F_d)_e^c (F_e)_b^d (F_b)_a^e.
+$$ {#eq-8.121}
+
+$F \equiv F_1$ に対する一般解は
+
+$$
+F = \begin{pmatrix} \tau & e^{i\phi}\sqrt{\tau} \\ e^{-i\phi}\sqrt{\tau} & -\tau \end{pmatrix}
+$$ {#eq-8.122}
+
+となります。ここで $e^{i\phi}$ は任意の位相因子であり（適切な位相規約により $1$ に設定できます）、$\tau$ は
+
+$$
+\tau = \frac{\sqrt{5} - 1}{2} = \phi - 1 \approx 0.618
+$$
+
+であり、関係式
+
+$$
+\tau^2 + \tau = 1
+$$ {#eq-8.123}
+
+を満たします。
+
+2つのフィボナッチ・エニオンの反時計回りの交換を記述する $2 \times 2$ の $R$ 行列は2つの固有値を持ちます。エニオン対の全電荷が自明である場合の $R^0$ と、全電荷が非自明である場合の $R^1$ です。六角形方程式は
+
+$$
+R^c (F)_a^c R^a = (F)_0^c (F)_a^0 + (F)_1^c R^1 (F)_a^1
+$$ {#eq-8.124}
+
+となります。五角形方程式を解いて得られた $F$ の表式を用いることで、六角形方程式を $R$ について解くことができ、
+
+$$
+R = \begin{pmatrix} e^{4\pi i/5} & 0 \\ 0 & -e^{2\pi i/5} \end{pmatrix}, \quad F = \begin{pmatrix} \tau & \sqrt{\tau} \\ \sqrt{\tau} & -\tau \end{pmatrix}
+$$ {#eq-8.125}
+
+が得られます。唯一の他の解はこの解の複素共役です。この第2の解は、時計回りと反時計回りの組み紐を入れ替えただけであり、本質的に同一のモデルを記述しています。
+
+したがって、フィボナッチの融合規則を持つエニオンモデルは**真に存在し、本質的に一意であること**が分かります。
+
+---
+
+### 8.5.4 フィボナッチ・エニオンによる量子回路のシミュレーションと普遍性 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=61) {#sec-8-5-fibonacci-quantum-computation}
+
+ここまでの知見により、フィボナッチ・エニオンを用いて普遍的量子コンピュータをシミュレートできるかどうかを論じる準備が整いました。エニオンを用いて量子ビット（qubit）をどのように符号化するか、そして普遍的な量子ゲート集合をどのように実現できるかを説明する必要があります。
+
+まず、ヒルベルト空間 $V_4^0 \equiv V_{1111}^0$ の次元が $N_4^0 = 2$ であることに注目します。したがって、**自明な全電荷を持つ4つのエニオンによって1つの量子ビットを符号化できます**。
+
+エニオンは左から右へ番号を振って $1, 2, 3, 4$ の順序で一列に並べられます。標準基底状態 $|0\rangle$ では、エニオン 1 と 2 が融合して全電荷 $0$ を生じ、標準基底状態 $|1\rangle$ では、エニオン 1 と 2 が融合して全電荷 $1$ を生じます。この標準基底に作用する組み紐群の生成元 $\sigma_1$（粒子 1 と 2 の反時計回りの交換）は
+
+$$
+\sigma_1 \mapsto R = \begin{pmatrix} e^{4\pi i/5} & 0 \\ 0 & -e^{2\pi i/5} \end{pmatrix}
+$$ {#eq-8.126}
+
+によって表現され、生成元 $\sigma_2$（粒子 2 と 3 の反時計回りの交換）は
+
+$$
+\sigma_2 \mapsto B = F^{-1} R F, \quad F = \begin{pmatrix} \tau & \sqrt{\tau} \\ \sqrt{\tau} & -\tau \end{pmatrix}
+$$ {#eq-8.127}
+
+によって表現されます。
+
+これらの行列は、3本のストランド上の組み紐群 $B_3$ の表現を生成し、その像（image）は **$\text{SU}(2)$ において稠密（dense）**です。実際、$R$ と $B$ は2つの異なる軸のまわりの $\text{U}(2)$ の $\mathbb{Z}_{10}$ 部分群を生成し、これら双方の部分群を含む $\text{U}(2)$ の有限部分群は存在しません。したがって、この表現は行列式が 1 の 10 乗根に等しい $\text{U}(2)$ のすべての元を含む群上で稠密に閉じます。同様に、自明な全電荷を持つ $n$ 個のエニオンに対して、組み紐群の表現の像は $\text{SU}(N_n^0)$ において稠密となります。
+
+$n$ 個の量子ビットに作用する量子回路をシミュレートするためには、合計で $4n$ 個のエニオンが使用されます。各4エニオンのクラスター内で組み紐を行うことにより、任意の単一量子ビットゲートを実現できることを先ほど確認しました。普遍的なゲート集合を完成させるためには、2量子ビットゲートも必要となります。しかし、隣接する2つの量子ビットは8つのエニオンによって符号化され、これらのエニオンの交換は像が $\text{SU}(N_8^0) = \text{SU}(13)$ において稠密であるような $B_8$ の表現を生成します。この $\text{SU}(13)$ は当然ながら、2つの符号化された量子ビットに作用する $\text{SU}(4)$ を含んでいます。したがって、**普遍集合の各ゲートは、ある有限の組み紐によって任意の精度でシミュレートできます**。
+
+反時計回りのみならず時計回りにもエニオンを編み込むことができるため、各交換ゲートの逆元もまたレパートリーに含まれています。したがって、**ソロベイ・キタエフの定理（Solovay-Kitaev theorem）**を適用することにより、回路モデルの普遍ゲートを、長さ $\text{poly}(\log(1/\varepsilon))$ の組み紐を用いて精度 $\varepsilon$ でシミュレートできると結論付けられます。
+
+これより、合計 $n$ 個の量子ビットに作用する $L$ 個のゲートを持つ理想的な量子回路は、$4n$ 個のエニオンと長さ
+
+$$
+O(L \cdot \text{poly}(\log L))
+$$
+
+の組み紐を用いて、一定の精度でシミュレートできることが従います。望み通り、**普遍的量子コンピュータがフィボナッチ・エニオンを用いて効率的にシミュレートできること**が示されました。非アーベル超伝導体モデルを用いたシミュレーションとは対照的に、**普遍ゲートを実現するために中間の測定は一切必要とされない**ことに注意してください。
+
+**誤り耐性と漏れ（Leakage）の制御**  
+上記の解析では、理想的なゲートに対するソロベイ・キタエフ近似の精度を制限するもの以外の誤りはシミュレーションに存在しないと仮定しました。したがって、熱励起されたエニオンが問題を引き起こすには稀すぎるほど温度がモデルのエネルギーギャップに比べて十分に小さいこと、制御不能な電荷の交換が無視できるほどエニオン同士が互いに十分離れて保たれていること、そして一般にトポロジカル量子計算における誤りが無視できることが暗黙のうちに仮定されています。
+
+もし誤り率が小さいものの完全に無視できるわけではない場合、標準的な量子誤り耐性理論（quantum fault tolerance）を援用して、ゲート数 $L$ に対するポリ対数的な追加のオーバーヘッドコストを伴って、必要に応じてシミュレーションの精度を高めることができます。誤り耐性手続きには、符号化された量子ビットの**「漏れ（leakage）」を制御する方法**が含まれる必要があります。すなわち、4エニオンのクラスターが2次元の計算空間 $V_4^0$ から、その3次元の直交補空間 $V_4^1$ へとドリフトするのを防止する方法です。

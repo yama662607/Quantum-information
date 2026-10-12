@@ -1,0 +1,135 @@
+## 7.2 量子誤り訂正の条件 (Conditions for quantum error correction) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=10) {#sec-7.2-conditions}
+
+9量子ビット符号を用いた誤り復旧の議論では、各量子ビットがビット反転誤りまたは位相スピン誤り（あるいはその両方）のいずれかを受けると仮定しました。これは誤りに対する現実的なモデルではなく、より一般的な条件下で量子誤り訂正をどのように実装するかを理解する必要があります。
+
+ノイズを受ける、ヒルベルト空間 $\mathcal{H}_S$ を持つ量子メモリの系 $S$ を考えます。ノイズはトレース保存完全正（TPCP）写像 $\mathcal{N}$ によって記述されます。第3章で詳細に議論したように、$\mathcal{N}$ はディレーション（拡張）、すなわち $S$ から $SE$（ここで $E$ は系の環境）への等長（内積を保存する）写像 $\boldsymbol{U}$ を持ちます。$\{\boldsymbol{E}_a\}$ が $S$ から $S$ への線形演算子の空間を張る演算子の集合である場合、$\boldsymbol{U}$ は次のように展開できます：
+
+$$
+\boldsymbol{U}_{S\to SE} : |\psi\rangle_S \mapsto \sum_a \boldsymbol{E}_a|\psi\rangle_S \otimes |\varphi_a\rangle_E.
+$$ {#eq-7.9}
+
+ここで、ベクトル $\{|\varphi_a\rangle\}$ は規格化されていることも互いに直交していることも仮定**されていません**。したがって、@eq-7.9 は一般性を失いません。すべての $|\varphi_a\rangle$ が平行である場合、それはユニタリ誤りを記述し、そこでは $S$ の純粋状態は純粋なままであるものの、ヒルベルト空間内で未知の回転を受けます。$\{|\varphi_a\rangle\}$ が互いに直交するベクトルを含む場合、それは強いデヒーレンスを記述し、そこでは環境とのエンタングルメントのために $S$ の初期純粋状態が混合状態になります。
+
+いま、私たちは復元操作 $\mathcal{R}$ を適用することによって、誤りによって引き起こされた損傷を元に戻したいと考えます。$\mathcal{R}$ もまた TPCP 写像であり、したがって $S$ から $SA$（ここで $A$ は私たちが制御できる追加の系である**アンシラ（ancilla）**）への等長ディレーション $\boldsymbol{V}$ を持ちます。残念ながら、何という誤りが発生したかが分からず、かつ環境 $E$ が私たちの制御を超えている場合、@eq-7.9 の形式の任意の誤りに対して成功裏に復元を行うことは不可能です。せいぜい、限定された種類の誤りを元に戻すことしかできません。
+
+誤りが部分集合 $\mathcal{E} \subset \{\boldsymbol{E}_a\}$ によって張られる空間内にあるような、ノイズ操作の制限されたクラスを考えましょう。この制限された形式の任意の誤り [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=11)
+
+$$
+\tilde{\boldsymbol{U}}_{S\to SE} : |\psi\rangle_S \mapsto \sum_{\boldsymbol{E}_a \in \mathcal{E}} \boldsymbol{E}_a|\psi\rangle_S \otimes |\varphi_a\rangle_E
+$$ {#eq-7.10}
+
+から復旧できるとき、$\mathcal{E}$ 内の誤りは**訂正可能（correctable）**であると言います。
+
+$\mathcal{E}$ の選択は、ノイズの物理的性質によって動機付けられます。例えば、$S$ が $n$ 量子ビット系であり、ノイズが弱く各量子ビットにほぼ独立に作用する場合、$n$ 量子ビットの大部分に非自明に作用する任意の $\boldsymbol{E}_a$ は、@eq-7.9 の和において非常に小さな振幅 $\|\varphi_a\| \ll 1$ でしか現れないと予想できます。その場合、$\mathcal{E}$ を低重量（比較的少数の量子ビットにのみ非自明に作用する）の演算子のみを含むように選択することができます。$\mathcal{E}$ 内のすべての誤りを訂正できれば、@eq-7.9 における $\boldsymbol{E}_a \notin \mathcal{E}$ から生じる小さな残留誤りのみを除いて、$\boldsymbol{U}$ の効果をほぼ反転（復元）することができます。
+
+しかし、誤りを訂正可能な集合 $\mathcal{E}$ に限定したとしても、$\mathcal{H}_S$ 内の任意の純粋状態を誤りから保護することはできません。せいぜい**符号部分空間（code subspace）** $\mathcal{H}_{\text{code}} \subset \mathcal{H}_S$ 内にある状態のみを保護できるにすぎません。$\mathcal{H}_{\text{code}}$ と $\mathcal{E}$ が適切に選択されている場合、すべての $|\psi\rangle_S \in \mathcal{H}_{\text{code}}$ および $\boldsymbol{E}_a \in \mathcal{E}$、ならびにあるベクトルの集合 $\{|\chi_a\rangle_A \in \mathcal{H}_A\}$ に対して
+
+$$
+\boldsymbol{V}_{S\to SA} : \boldsymbol{E}_a|\psi\rangle_S \mapsto |\psi\rangle_S \otimes |\chi_a\rangle_A
+$$ {#eq-7.11}
+
+となるような復元等長写像 $\boldsymbol{V}$（TPCP 写像 $\mathcal{R}$ のディレーション）を構成することができます。このとき、次のようになります：
+
+$$
+|\psi\rangle_S \stackrel{\tilde{\boldsymbol{U}}}{\mapsto} \sum_{\boldsymbol{E}_a\in\mathcal{E}} \boldsymbol{E}_a|\psi\rangle_S \otimes |\varphi_a\rangle_E \stackrel{\boldsymbol{V}}{\mapsto} |\psi\rangle_S \otimes \left( \sum_a |\varphi_a\rangle_E \otimes |\chi_a\rangle_A \right).
+$$ {#eq-7.12}
+
+一般に、ノイズ写像 $\tilde{\boldsymbol{U}}$ は $S$ と $E$ の間にエンタングルメントを生成します。私たちは $E$ を制御できないため、$E$ が何かとエンタングルしたという事実を元に戻すことはできません。しかし、適切な条件下で私たちにできることは、@eq-7.12 のように $S$ を純粋化しながら、$E$ と $S$ のエンタングルメントを $E$ と $A$ のエンタングルメントへと変換することです。
+
+復元操作が存在するためには、符号空間 $\mathcal{H}_{\text{code}}$ と訂正可能な誤りの集合 $\mathcal{E}$ は、$\boldsymbol{V}$ が等長的であるという要件から導かれる必要条件を満たさなければなりません。符号空間内の任意の規格化された純粋状態 $|\psi\rangle_S$ に対して、@eq-7.11 は以下を意味します：
+
+$$
+\langle\psi|\boldsymbol{E}_b^\dagger \boldsymbol{E}_a|\psi\rangle = \langle\psi|\psi\rangle \langle\chi_b|\chi_a\rangle = \langle\chi_b|\chi_a\rangle := C_{ba};
+$$ {#eq-7.13}
+
+ここで $C_{ba}$ は非負のエルミート行列であり、$|\psi\rangle$ には依存しません。この条件を別の形で書くと便利な場合があります。$\{|\bar{i}\rangle\}$ を $\mathcal{H}_{\text{code}}$ の正規直交基底とし、符号空間内の任意の状態 $|\psi\rangle = \sum_i \psi_i |\bar{i}\rangle$ に対して @eq-7.13 が成り立つとすると、
+
+$$
+\sum_{i,j} \psi_j^* \psi_i \langle\bar{j}|\boldsymbol{E}_b^\dagger \boldsymbol{E}_a|\bar{i}\rangle = C_{ba} \sum_i \psi_i^* \psi_i
+$$ {#eq-7.14}
+
+となり、したがって
+
+$$
+\langle\bar{j}|\boldsymbol{E}_b^\dagger \boldsymbol{E}_a|\bar{i}\rangle = \delta_{ji} C_{ba}
+$$ {#eq-7.15}
+
+となります。符号空間への直交射影
+
+$$
+\boldsymbol{\Pi} = \sum_i |\bar{i}\rangle\langle\bar{i}|
+$$ {#eq-7.16}
+
+を用いて表すと、 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=12) @eq-7.15 は次のようになります：
+
+$$
+\boldsymbol{\Pi}\boldsymbol{E}_b^\dagger \boldsymbol{E}_a\boldsymbol{\Pi} = C_{ba}\boldsymbol{\Pi}.
+$$ {#eq-7.17}
+
+訂正可能集合 $\mathcal{E}$ 内の誤り演算子の各対 $\boldsymbol{E}_a$ と $\boldsymbol{E}_b$ に対して成り立たなければならない @eq-7.17 は、**量子誤り訂正条件（quantum error correction condition）**または**ニル・ラフラム条件（Knill-Laflamme condition）**と呼ばれます。
+
+実際、@eq-7.17 は、符号空間を $\mathcal{E}$ 内の誤りから保護する復元演算子が存在するための必要十分条件です。$C_{ba}$ はエルミートかつ非負であるため、それが対角化される基底 $\tilde{\mathcal{E}} = \{\tilde{\boldsymbol{E}}_a\}$ を選ぶことができます：$\tilde{C}_{ba} = c_a \delta_{ba}$ かつ $c_a \ge 0$。したがって、
+
+$$
+\tilde{\boldsymbol{U}}_{S\to SE} : |\psi\rangle_S \mapsto \sum_{\tilde{\boldsymbol{E}}_a \in \tilde{\mathcal{E}}} \tilde{\boldsymbol{E}}_a |\psi\rangle_S \otimes |\tilde{\varphi}_a\rangle_E
+$$ {#eq-7.18}
+
+となります。ここで
+
+$$
+\boldsymbol{\Pi}\tilde{\boldsymbol{E}}_b^\dagger \tilde{\boldsymbol{E}}_a\boldsymbol{\Pi} = c_a \delta_{ba}\boldsymbol{\Pi}
+$$ {#eq-7.19}
+
+です。誤り演算子をリスケールする自由もあるため（ベクトル $\{|\tilde{\varphi}_a\rangle_E\}$ の相殺的なリスケールを行いながら）、各 $c_a$ は 0 または 1 であると仮定できます。
+
+まず、各 $a$ に対して $c_a > 0$ である**非縮退符号（nondegenerate code）**のケースを考えましょう。このとき（必要に応じて適切にリスケールした後）、
+
+$$
+\boldsymbol{\Pi}\tilde{\boldsymbol{E}}_b^\dagger \tilde{\boldsymbol{E}}_a\boldsymbol{\Pi} = \delta_{ba}\boldsymbol{\Pi}
+$$ {#eq-7.20}
+
+となります。非縮退符号の場合、すべての「誤り部分空間」 $\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ は互いに直交し、したがって完全に区別可能です。訂正可能な誤り $\tilde{\boldsymbol{E}}_a \in \mathcal{E}$ が符号空間に作用した場合、適切な直交測定を実行することによって $\tilde{\boldsymbol{E}}_a$ を曖昧さなく特定できます。さらに、誤り $\tilde{\boldsymbol{E}}_a$ は符号空間を対応する誤り空間へと等長的に写像します。したがって、ひとたび $\tilde{\boldsymbol{E}}_a$ が特定されれば、誤り空間を符号空間へと戻すユニタリ写像を適用して、誤りを訂正することができます。
+
+より具体的に言えば、直交射影
+
+$$
+\{\boldsymbol{\Pi}_a = \tilde{\boldsymbol{E}}_a \boldsymbol{\Pi} \tilde{\boldsymbol{E}}_a^\dagger\}
+$$ {#eq-7.21}
+
+は
+
+$$
+\boldsymbol{\Pi}_a \boldsymbol{\Pi}_b = \delta_{ab}\boldsymbol{\Pi}_a
+$$ {#eq-7.22}
+
+を満たし、誤り部分空間への射影となります。これらの射影演算子は $\mathcal{H}_S$ の完全な分割を提供しないかもしれませんが、$\oplus_a \tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ の直交補空間への追加の射影を1つ加えることで、直交測定を定義できます。測定結果 $\boldsymbol{\Pi}_a$ は、誤り空間 $\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ を指し示す**誤りシンドローム（error syndrome）**を提供します。ここで、ノイズ写像が @eq-7.18 で与えられ、誤り演算子が @eq-7.20 に従う場合、この結果は確率 $\text{prob}(a) = \langle\tilde{\chi}_a|\tilde{\chi}_a\rangle$ で発生します。結果 $a$ が判明したら、$\mathcal{H}_S$ に適用されるユニタリ変換 $\boldsymbol{U}_a$ が誤りを訂正します。変換 $\boldsymbol{U}_a$ は、部分空間 $\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ 上で $\boldsymbol{\Pi}\tilde{\boldsymbol{E}}_a^\dagger$ として作用するように選択され、$\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}$ の補空間に対するその作用は任意に選ぶことができます。
+
+この議論は、@eq-7.17 が満たされ、かつ符号が非縮退である場合に誤りからの復元が可能であることを示しています。しかし、符号が**縮退（degenerate）**している場合――すなわち、いくつかの誤り演算子に対して $\tilde{\boldsymbol{E}}_a\boldsymbol{\Pi} = 0$ となる場合はどうでしょうか？ これは、訂正可能な誤りの基底が過剰完全（overcomplete）であり、符号空間を消滅させる $\mathcal{E}$ の要素の線形結合が存在する場合に起こります。 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=13) その場合、これらの冗長な誤り演算子を訂正可能誤りの集合から単に排除し、訂正可能誤りの集合 $\mathcal{E}$ をより小さな集合 $\tilde{\mathcal{E}} \subset \mathcal{E}$ に置き換えることができます。
+
+私たちはすでに縮退符号の例に遭遇しています――9量子ビット符号です。そこでは、3量子ビットの同一クラスタに作用する位相誤りは、符号部分空間に同一の影響を与えます（例えば、$|\psi\rangle \in \mathcal{H}_{\text{code}}$ に対して $\boldsymbol{Z}_1|\psi\rangle = \boldsymbol{Z}_2|\psi\rangle$）。これは、誤り $\boldsymbol{Z}_1$ と $\boldsymbol{Z}_2$ のどちらが発生したかを区別できるシンドローム測定が存在しないことを意味し、それに対応して、符号空間を消滅させる誤り $\boldsymbol{Z}_1 - \boldsymbol{Z}_2$ が存在します。この「誤り」は振幅ゼロで発生するため、何も変更することなく @eq-7.18 の $\tilde{\boldsymbol{E}}_a$ の和からそれを除外できます。このような振幅ゼロの誤りがすべて排除されれば、非縮退の場合とまったく同様に誤りシンドロームを測定し、誤りを訂正することができます。したがって、量子誤り訂正条件 @eq-7.17 は、符号が縮退しているかどうかにかかわらず、誤りを反転（修復）する復元写像が存在するための必要十分条件です。
+
+私たちはこの復元手順を2段階のプロセスとして説明しました。第1段階で誤りシンドロームを測定し、第2段階でシンドローム測定の結果を条件とする誤り訂正ユニタリ演算子を実行します。しかし、復元を行うために、誤りシンドロームを古典的な世界へと増幅する測定を実行することは必須ではありません。代わりに、可能なシンドロームにわたってコヒーレントに和をとることで、等長復元写像 $\boldsymbol{V}$ を得ることができます。$\{\tilde{\boldsymbol{E}}_a\mathcal{H}_{\text{code}}, \tilde{\boldsymbol{E}}_a \in \tilde{\mathcal{E}}\}$ の張る空間に作用するこの等長写像は、次のように与えられます：
+
+$$
+\boldsymbol{V} : |\varphi\rangle_S \mapsto \sum_b \boldsymbol{\Pi} \tilde{\boldsymbol{E}}_b^\dagger |\varphi\rangle_S \otimes |b\rangle_A
+$$ {#eq-7.23}
+
+ここで $\{|b\rangle_A\}$ はアンシラの正規直交基底です（誤り演算子が @eq-7.20 に従う場合、@eq-7.13 から導かれます）。この復元写像は、符号空間に作用する @eq-7.18 の形式の任意の誤りを訂正できます：
+
+$$
+\begin{aligned}
+\boldsymbol{V}\tilde{\boldsymbol{U}} : |\psi\rangle_S &\mapsto \sum_{a,b} \boldsymbol{\Pi} \tilde{\boldsymbol{E}}_b^\dagger \tilde{\boldsymbol{E}}_a \boldsymbol{\Pi} |\psi\rangle \otimes |\tilde{\varphi}_a\rangle_E \otimes |b\rangle_A \\
+&= |\psi\rangle_S \otimes \left( \sum_a |\tilde{\varphi}_a\rangle_E \otimes |a\rangle_A \right).
+\end{aligned}
+$$ {#eq-7.24}
+
+@eq-7.20 により、$\boldsymbol{V}$ が $\text{span}\{\boldsymbol{E}_a\mathcal{H}_{\text{code}}\}$ に作用する等長写像であることが保証され、これは $\mathcal{H}_S$ 全体に作用する等長写像へと拡張できます。アンシラが標準的な純粋状態 $|0\rangle_A$ に初期化されている場合、等長写像 $\boldsymbol{V}$ は $SA$ をそれ自身に写すユニタリ変換として実現できます。適切に構成された量子回路がこの復元変換を実行できます。シンドロームの測定は必要ありません。
+
+– Figure –  
+Show $|\psi\rangle$ subjected to noise, and then decoded as ancilla is discarded.
+
+復元写像 $\boldsymbol{V}$ の構成は、符号空間 $\mathcal{H}_{\text{code}}$ と訂正可能誤り集合 $\mathcal{E}$ のみに依存することを強調しておく必要があります。復元は、@eq-7.10 におけるベクトル $\{|\varphi_a\rangle_E\}$ のいかなる選択に対しても成功します。私たちは誤りについてそれ以上のことを知る必要はなく、ただそれが $\mathcal{E}$ 内の誤り演算子の張る空間内にあるということだけを知っていれば十分です。特に、 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=14) $\mathcal{E}$ の外部の誤りが無視できる振幅でしか発生しない限り、符号はユニタリ制御誤りとデヒーレンス誤りの両方から保護されます。
+
+シンドロームの直交測定は復元手順の必須部分ではありませんが、アンシラは絶対に不可欠です。事実上、ノイズは量子メモリ $S$ を「加熱（heat up）」し、復元操作はそれを再び「冷却（cool down）」します。アンシラ $A$ は、この余剰な熱が蓄積される低温熱浴です。
+
+量子メモリに保存された量子情報を長時間保護したい場合、メモリが継続的にノイズにさらされている間、誤り復元写像を何度も連続して実行する必要があります。各復元ステップでは新しいアンシラが使用され、使用後に破棄されることがあります。しかし、供給可能なアンシラ量子ビットが限られている場合、さらなる誤り復元ステップのためにリサイクルする前にアンシラを消去しなければなりません。すなわち、アンシラを標準的な初期状態 $|0\rangle_A$ に戻す必要があり、実質的にそれを極低温まで冷却しなければなりません。この消去は散逸過程（dissipative process）であり、アンシラから環境へと熱を汲み出すために仕事が必要です。したがって、新しいアンシラ量子ビットの無制限の供給がない限り、誤り復旧には不可避な熱力学的コストが発生します。私たちは量子（または古典）の誤り訂正を無料で行うことはできません。

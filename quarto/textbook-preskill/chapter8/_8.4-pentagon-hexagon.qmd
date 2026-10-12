@@ -1,0 +1,592 @@
+## 8.4 一般化されたエニオンモデル：$R$ 行列、$F$ 行列、$B$ 行列と量子回路シミュレーション [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=43) {#sec-8-4-generalized-anyon-models}
+
+前節で導入した融合空間 $V_{ab}^c$ とその基底 $|ab; c, \mu\rangle$ に対し、直交関係および完全性関係は次のように図式的に表現されます。
+
+::: {.callout-note appearance="simple"}
+#### 融合基底の直交性と完全性の図式表現（バブル図）
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <!-- 直交性バブル -->
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <svg width="120" height="150" viewBox="0 0 120 150">
+      <defs>
+        <marker id="arr1" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="black"/>
+        </marker>
+      </defs>
+      <!-- 入力 c' -->
+      <line x1="60" y1="10" x2="60" y2="40" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <text x="68" y="25" font-family="serif" font-size="14" font-style="italic">c'</text>
+      <!-- 頂点 μ' -->
+      <circle cx="60" cy="48" r="12" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+      <text x="60" y="52" font-family="serif" font-size="12" font-style="italic" text-anchor="middle">μ'</text>
+      <!-- 分岐線 a, b -->
+      <path d="M 52 56 Q 30 75 52 94" fill="none" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <path d="M 68 56 Q 90 75 68 94" fill="none" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <text x="22" y="78" font-family="serif" font-size="14" font-style="italic">a</text>
+      <text x="94" y="78" font-family="serif" font-size="14" font-style="italic">b</text>
+      <!-- 頂点 μ -->
+      <circle cx="60" cy="102" r="12" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+      <text x="60" y="106" font-family="serif" font-size="12" font-style="italic" text-anchor="middle">μ</text>
+      <!-- 出力 c -->
+      <line x1="60" y1="114" x2="60" y2="145" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <text x="68" y="135" font-family="serif" font-size="14" font-style="italic">c</text>
+    </svg>
+    <span style="font-size: 1.3rem; font-family: serif;">$= \delta_c^{c'} \delta_\mu^{\mu'}$</span>
+  </div>
+
+  <div style="width: 1px; height: 130px; background: #cbd5e1;"></div>
+
+  <!-- 完全性バブル -->
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <span style="font-size: 1.4rem; font-family: serif;">$\displaystyle\sum_{c, \mu}$</span>
+    <svg width="110" height="150" viewBox="0 0 110 150">
+      <!-- 上部 a, b -->
+      <line x1="35" y1="10" x2="48" y2="40" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <line x1="75" y1="10" x2="62" y2="40" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <text x="25" y="25" font-family="serif" font-size="14" font-style="italic">a</text>
+      <text x="80" y="25" font-family="serif" font-size="14" font-style="italic">b</text>
+      <!-- 頂点 μ -->
+      <circle cx="55" cy="48" r="12" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+      <text x="55" y="52" font-family="serif" font-size="12" font-style="italic" text-anchor="middle">μ</text>
+      <!-- 中間線 c -->
+      <line x1="55" y1="60" x2="55" y2="90" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <text x="63" y="78" font-family="serif" font-size="14" font-style="italic">c</text>
+      <!-- 頂点 μ -->
+      <circle cx="55" cy="102" r="12" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+      <text x="55" y="106" font-family="serif" font-size="12" font-style="italic" text-anchor="middle">μ</text>
+      <!-- 下部 a, b -->
+      <line x1="48" y1="110" x2="35" y2="140" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <line x1="62" y1="110" x2="75" y2="140" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <text x="25" y="140" font-family="serif" font-size="14" font-style="italic">a</text>
+      <text x="80" y="140" font-family="serif" font-size="14" font-style="italic">b</text>
+    </svg>
+    <span style="font-size: 1.3rem; font-family: serif;">$=$</span>
+    <svg width="60" height="150" viewBox="0 0 60 150">
+      <line x1="20" y1="10" x2="20" y2="140" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <line x1="45" y1="10" x2="45" y2="140" stroke="black" stroke-width="2" marker-end="url(#arr1)" />
+      <text x="10" y="75" font-family="serif" font-size="14" font-style="italic">a</text>
+      <text x="52" y="75" font-family="serif" font-size="14" font-style="italic">b</text>
+    </svg>
+  </div>
+</div>
+```
+
+:::
+
+### 融合空間の自然な同型写像と非アーベル性 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=43) {#sec-8-4-fusion-space-isomorphisms}
+
+融合空間の間にはいくつかの自然な同型写像（isomorphisms）が存在します。まず第一に、
+$$
+V_{ab}^c \cong V_{ba}^c
+$$
+です。これら2つのベクトル空間は2つの粒子の異なるラベル付けに対応しており（$a \neq b$ の場合）、別々の空間として見なされるべきですが、融合が対称的（$a \times b = b \times a$）であるため同型となります。
+
+さらに、ラベルをその共役ラベル（反粒子）に置き換えることで、融合空間の「添字の上げ下げ（raising and lowering indices）」を行うことができます：
+
+$$
+V_{ab}^c \cong V_{a\bar{c}}^{\bar{b}} \cong V_{ab\bar{c}}^1 \cong V_a^{\bar{b}c} \cong V_{\bar{c}}^{\bar{a}\bar{b}} \cong \cdots ;
+$$ {#eq-8.70}
+
+図式記法において、これは**線の向き（矢印の向き）を反転させると同時に、その線のラベルを共役電荷に置き換える自由度**に対応します。空間 $V_{ab\bar{c}}^1$ は3本の入力線を持つ図式として表され、ラベル $a, b, \bar{c}$ を持つ3粒子を融合したときに自明な全電荷 $1$ を生じる区別可能な方法によって張られる空間です。
+
+自明な電荷 $1$ は、他の粒子と自明に融合することからその名が付けられています：
+
+$$
+a \times 1 = a.
+$$ {#eq-8.71}
+
+同型 $V_{a1}^a \cong V_{a\bar{a}}^1$ により、粒子 $a$ と融合して $1$ を生成できるラベルは $\bar{a}$ のみ（一意）であり、かつこの融合は唯1つの方法でのみ起こることが結論付けられます。同様に、$V_{a1}^a \cong V_1^{a\bar{a}}$ は、真空から生成される粒子対が互いに共役な電荷を持つことを意味します。
+
+エニオンモデルは、少なくともあるラベルの対 $ab$ に対して
+
+$$
+\dim\left(\bigoplus_c V_{ab}^c\right) = \sum_c N_{ab}^c \ge 2
+$$ {#eq-8.72}
+
+を満たすとき**非アーベル（nonabelian）**と呼ばれ、そうでない場合は**アーベル（abelian）**と呼ばれます。アーベルモデルでは任意の2粒子は一意的に融合しますが、非アーベルモデルでは複数の方法で融合できる粒子対が存在し、これらの区別可能な状態によって2次元以上のヒルベルト空間が張られます。
+
+この空間を、エニオン対の「**トポロジカル・ヒルベルト空間（topological Hilbert space）**」と呼びます [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=44)。これは、この量子情報が**非局所的に符号化されている（nonlocally encoded）**こと、すなわちどちらか一方の粒子に局所化しているのではなく、対全体の集団的性質であることを強調するためです。実際、ラベル $a$ と $b$ を持つ2粒子が遠く離れているとき、トポロジカル・ヒルベルト空間内の異なる状態は局所的にはまったく同一に見えます。したがって、この量子情報は環境との局所的な相互作用によるデコヒーレンスに対して強固に保護されています。
+
+これこそが、量子コンピュータの動作に非アーベル・エニオンを採用することを提案する理由です。もちろん、非局所的に符号化された情報は環境から隠されているだけでなく、私たち自身も直接局所的に読み出すことはできません。しかし、非アーベル・エニオンを用いれば、量子計算の終了時に両立が可能となります。読み出し（readout）を行う段階になったら、エニオンを対にして近づけ、その融合結果を観測すればよいのです。実際には、合成粒子の電荷が $c = 1$ であるか $c \neq 1$ であるかを区別するだけで十分です。すなわち、非自明な保存電荷のために崩壊できない残留粒子が存在するか、それとも全く粒子が存在しないか（真空へ完全対消滅したか）を判別することに対応します。
+
+なお、各エニオン対について、このトポロジカル・ヒルベルト空間は有限次元です。この性質を持つエニオンモデルは**有理（rational）**であると言われます。アーベルモデルのトポロジカルに縮退した基底状態の議論と同様に、有理非アーベルモデルのエニオンは常に1の冪根（roots of unity）であるトポロジカルスピンを持ちます。
+
+### 9.12.3 組み紐操作：$R$ 行列 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=44) {#sec-8-4-braiding-r-matrix}
+
+ラベル $a$ と $b$ を持つ2つの粒子が反時計回りの交換を受けるとき、それらの全電荷 $c$ は不変です。したがって、2つの粒子が線上での位置を入れ替えるため、この交換はヒルベルト空間 $V_{ba}^c$ から $V_{ab}^c$ への自然な同型写像を誘導します。この写像が**組み紐演算子（braid operator）** $R$ です：
+
+$$
+R: V_{ba}^c \to V_{ab}^c.
+$$ {#eq-8.73}
+
+これら2つの空間に対して正規直交基底 $\{|ba; c, \mu\rangle\}$ および $\{|ab; c, \mu'\rangle\}$ を選ぶと、$R$ はユニタリ行列として表現されます：
+
+$$
+R: |ba; c, \mu\rangle \mapsto \sum_{\mu'} |ab; c, \mu'\rangle (R_{ab}^c)_\mu^{\mu'}.
+$$ {#eq-8.74}
+
+ここで、$R$ は融合状態に対して非自明に作用しうることに注意してください。$R$ の作用を図式的に表現する場合、入力線上のラベル $a$ と $b$ の位置を固定し、融合頂点 $(\mu)$ に向かう途中で線を反時計回りにひねる（ツイストする）と便利です [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=45)。ひねられた線を持つグラフは、$|ba; c, \mu\rangle$ に $R$ を適用して得られる $V_{ab}^c$ の状態を表し、これは $V_{ab}^c$ の標準基底で展開できます：
+
+::: {.callout-note appearance="simple"}
+#### $R$ 行列の図式表現（$R$-move）
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <!-- ひねられた入力 -->
+  <svg width="120" height="140" viewBox="0 0 120 140">
+    <defs>
+      <marker id="arrR" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="black"/>
+      </marker>
+    </defs>
+    <!-- 入力ラベル -->
+    <text x="25" y="20" font-family="serif" font-size="14" font-style="italic">a</text>
+    <text x="85" y="20" font-family="serif" font-size="14" font-style="italic">b</text>
+    <!-- 交叉線: a が下(奥)、b が上(手前)を通る反時計回り交換 -->
+    <path d="M 30 25 L 50 48" stroke="black" stroke-width="2" />
+    <path d="M 60 58 L 60 70" stroke="black" stroke-width="2" />
+    <path d="M 90 25 L 45 70" stroke="black" stroke-width="2" />
+    <!-- 頂点 μ -->
+    <circle cx="60" cy="85" r="14" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="60" y="90" font-family="serif" font-size="13" font-style="italic" text-anchor="middle">μ</text>
+    <!-- 出力線 c -->
+    <line x1="60" y1="99" x2="60" y2="130" stroke="black" stroke-width="2" marker-end="url(#arrR)" />
+    <text x="68" y="125" font-family="serif" font-size="14" font-style="italic">c</text>
+  </svg>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$\displaystyle= \sum_{\mu'} (R_{ba}^c)_\mu^{\mu'}$</span>
+
+  <!-- 標準基底 -->
+  <svg width="110" height="140" viewBox="0 0 110 140">
+    <text x="25" y="20" font-family="serif" font-size="14" font-style="italic">a</text>
+    <text x="85" y="20" font-family="serif" font-size="14" font-style="italic">b</text>
+    <line x1="30" y1="25" x2="50" y2="72" stroke="black" stroke-width="2" />
+    <line x1="80" y1="25" x2="60" y2="72" stroke="black" stroke-width="2" />
+    <circle cx="55" cy="85" r="14" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="55" y="90" font-family="serif" font-size="13" font-style="italic" text-anchor="middle">μ'</text>
+    <line x1="55" y1="99" x2="55" y2="130" stroke="black" stroke-width="2" marker-end="url(#arrR)" />
+    <text x="63" y="125" font-family="serif" font-size="14" font-style="italic">c</text>
+  </svg>
+</div>
+```
+
+:::
+
+**モノドロミー演算子（monodromy operator）**
+
+$$
+R^2: V_{ab}^c \to V_{ab}^c
+$$ {#eq-8.75}
+
+は $V_{ab}^c$ からそれ自身への同型写像であり、$a$ を $b$ の周りで反時計回りに1周（$2\pi$）巻き付ける効果を表します。非アーベル超伝導体の議論ですでに述べたように、モノドロミー演算子は $c$ を $2\pi$ 回転させると同時に $a$ と $b$ を $-2\pi$ 回転させることと等価です。したがって、モノドロミー演算子の固有値は粒子のトポロジカルスピンによって決定されます：
+
+$$
+(R_{ab}^c)^2 = e^{-2\pi i J_c} e^{2\pi i J_a} e^{2\pi i J_b} \equiv e^{i(\theta_c - \theta_a - \theta_b)}.
+$$ {#eq-8.76}
+
+さらに、アーベル・エニオンの場合と同様に、自明な全電荷を持つ粒子・反粒子対に作用する組み紐演算子によってトポロジカルスピンが決定されます：
+
+$$
+e^{-i\theta_a} = R_{a\bar{a}}^1
+$$ {#eq-8.77}
+
+（対生成、交換、そして対消滅を行うことは、粒子を $-2\pi$ 回転させることと等価であるためです）。
+
+### 9.12.4 融合の結合律：$F$ 行列 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=45) {#sec-8-4-associativity-f-matrix}
+
+融合は結合律を満たします：
+
+$$
+(a \times b) \times c = a \times (b \times c).
+$$ {#eq-8.78}
+
+数学的には、これはエニオンモデルの融合則が満たすべき公理です。物理的には、3粒子系の全電荷は3つの粒子の内在的な性質であり、まず $a$ と $b$ を融合させてからその結果を $c$ と融合させるか、あるいはまず $b$ と $c$ を融合させてからその結果を $a$ と融合させるかに依存してはならないため要請されます。
+
+したがって、電荷 $a, b, c$ を持つ3つの粒子が融合して全電荷 $d$ を生じるとき、トポロジカル・ヒルベルト空間を粒子の対の融合空間によって分解する自然な方法が2通り存在します：
+
+$$
+V_{abc}^d \cong \bigoplus_e V_{ab}^e \otimes V_{ec}^d \cong \bigoplus_{e'} V_{ae'}^d \otimes V_{bc}^{e'}.
+$$ {#eq-8.79}
+
+これに対応して、$V_{abc}^d$ には2つの自然な正規直交基底が存在し [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=46)、これらを
+
+$$
+\begin{aligned}
+|(ab)c \to d; e\mu\nu\rangle &\equiv |ab; e, \mu\rangle \otimes |ec; d, \nu\rangle, \\
+|a(bc) \to d; e'\mu'\nu'\rangle &\equiv |ae'; d, \nu'\rangle \otimes |bc; e', \mu'\rangle
+\end{aligned}
+$$ {#eq-8.80}
+
+と表すことができます。これらはユニタリ変換 $F$ によって互いに結び付けられます：
+
+$$
+|(ab)c \to d; e\mu\nu\rangle = \sum_{e'\mu'\nu'} |a(bc) \to d; e'\mu'\nu'\rangle \left(F_{abc}^d\right)_{e\mu\nu}^{e'\mu'\nu'}.
+$$ {#eq-8.81}
+
+::: {.callout-note appearance="simple"}
+#### $F$ 行列の図式表現（$F$-move）
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <!-- (ab)c -> d の木 -->
+  <svg width="150" height="150" viewBox="0 0 150 150">
+    <defs>
+      <marker id="arrF" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="black"/>
+      </marker>
+    </defs>
+    <text x="20" y="20" font-family="serif" font-size="14" font-style="italic">a</text>
+    <text x="65" y="20" font-family="serif" font-size="14" font-style="italic">b</text>
+    <text x="125" y="20" font-family="serif" font-size="14" font-style="italic">c</text>
+    <!-- a, b -> e (頂点 μ) -->
+    <line x1="25" y1="25" x2="42" y2="52" stroke="black" stroke-width="2" />
+    <line x1="65" y1="25" x2="48" y2="52" stroke="black" stroke-width="2" />
+    <circle cx="45" cy="60" r="11" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="45" y="64" font-family="serif" font-size="11" font-style="italic" text-anchor="middle">μ</text>
+    <!-- e と c -> d (頂点 ν) -->
+    <line x1="49" y1="70" x2="72" y2="95" stroke="black" stroke-width="2" marker-end="url(#arrF)" />
+    <text x="50" y="90" font-family="serif" font-size="13" font-style="italic">e</text>
+    <line x1="125" y1="25" x2="82" y2="95" stroke="black" stroke-width="2" />
+    <circle cx="77" cy="104" r="11" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="77" y="108" font-family="serif" font-size="11" font-style="italic" text-anchor="middle">ν</text>
+    <!-- 出力 d -->
+    <line x1="77" y1="115" x2="77" y2="142" stroke="black" stroke-width="2" marker-end="url(#arrF)" />
+    <text x="85" y="135" font-family="serif" font-size="14" font-style="italic">d</text>
+  </svg>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$\displaystyle= \sum_{e'\mu'\nu'} \left(F_{abc}^d\right)_{e\mu\nu}^{e'\mu'\nu'}$</span>
+
+  <!-- a(bc) -> d の木 -->
+  <svg width="150" height="150" viewBox="0 0 150 150">
+    <text x="20" y="20" font-family="serif" font-size="14" font-style="italic">a</text>
+    <text x="80" y="20" font-family="serif" font-size="14" font-style="italic">b</text>
+    <text x="125" y="20" font-family="serif" font-size="14" font-style="italic">c</text>
+    <!-- b, c -> e' (頂点 μ') -->
+    <line x1="85" y1="25" x2="102" y2="52" stroke="black" stroke-width="2" />
+    <line x1="125" y1="25" x2="108" y2="52" stroke="black" stroke-width="2" />
+    <circle cx="105" cy="60" r="11" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="105" y="64" font-family="serif" font-size="11" font-style="italic" text-anchor="middle">μ'</text>
+    <!-- a と e' -> d (頂点 ν') -->
+    <line x1="25" y1="25" x2="68" y2="95" stroke="black" stroke-width="2" />
+    <line x1="101" y1="70" x2="78" y2="95" stroke="black" stroke-width="2" marker-end="url(#arrF)" />
+    <text x="100" y="90" font-family="serif" font-size="13" font-style="italic">e'</text>
+    <circle cx="73" cy="104" r="11" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="73" y="108" font-family="serif" font-size="11" font-style="italic" text-anchor="middle">ν'</text>
+    <!-- 出力 d -->
+    <line x1="73" y1="115" x2="73" y2="142" stroke="black" stroke-width="2" marker-end="url(#arrF)" />
+    <text x="81" y="135" font-family="serif" font-size="14" font-style="italic">d</text>
+  </svg>
+</div>
+```
+
+:::
+
+ユニタリ行列 $F_{abc}^d$ は**融合行列（fusion matrices）**と呼ばれることもありますが、$F$ と融合則 $N_{ab}^c$ との混同を避けるため、ここでは単に **$F$ 行列（$F$-matrix）**と呼びます。
+
+### 9.12.5 多数のエニオン：標準基底 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=46) {#sec-8-4-standard-basis}
+
+エニオン量子コンピュータでは、$n$ 個のエニオンを組み紐操作することによってトポロジカル量子状態を処理します。この計算を記述するためには、このようなヒルベルト空間に対して**標準基底（standard basis）**を採用すると便利です。
+
+線上に順に並んだ全電荷 $c$ を持つ $n$ 個のエニオンがラベル $a_1, a_2, a_3, \dots, a_n$ を持っていると仮定します。まずエニオン 1 と 2 を融合し、その結果をエニオン 3 と融合し、さらにその結果をエニオン 4 と融合し……という順序を考えます。この順序での融合に伴い、$n$ 個のエニオンのトポロジカル・ヒルベルト空間は次のように分解されます：
+
+$$
+V_{a_1 a_2 a_3 \cdots a_n}^c \cong \bigoplus_{b_1, b_2, \dots, b_{n-2}} V_{a_1 a_2}^{b_1} \otimes V_{b_1 a_3}^{b_2} \otimes V_{b_2 a_4}^{b_3} \otimes \cdots \otimes V_{b_{n-2} a_n}^c.
+$$ {#eq-8.82}
+
+この空間は、局所化された粒子に関連付けられた部分系のテンソル積としての自然な分解を**持たない**ことに注意してください。そうではなく、多くのテンソル積の直和として表現されています。非アーベル・エニオンの場合、その次元
+
+$$
+\dim\left(V_{a_1 a_2 a_3 \cdots a_n}^c\right) \equiv N_{a_1 a_2 a_3 \cdots a_n}^c = \sum_{b_1, b_2, b_3, \dots, b_{n-2}} N_{a_1 a_2}^{b_1} N_{b_1 a_3}^{b_2} N_{b_2 a_4}^{b_3} \cdots N_{b_{n-2} a_n}^c
+$$ {#eq-8.83}
+
+は $n$ に対して指数関数的（exponential in $n$）となります [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=47)。したがって、トポロジカル・ヒルベルト空間は強力な量子情報処理を行うための適切な舞台となります。
+
+$V_{a_1 a_2 a_3 \cdots a_n}^c$ のこの分解は、中間電荷 $b_1, b_2, \dots, b_{n-2}$ および融合空間 $V_{b_{j-1} a_{j+1}}^{b_j}$ の基底元 $\{|\mu_j\rangle\}$ によってラベル付けされた標準基底を示唆します：
+
+$$
+\{|a_1 a_2; b_1, \mu_1\rangle |b_1 a_3; b_2, \mu_2\rangle \cdots |b_{n-3} a_{n-1}; b_{n-2}, \mu_{n-2}\rangle |b_{n-2} a_n; c, \mu_{n-1}\rangle\},
+$$ {#eq-8.84}
+
+または図式記法で表すと次のようになります：
+
+::: {.callout-note appearance="simple"}
+#### 多数エニオン系の標準基底（櫛型図式：Comb diagram）
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; margin: 20px 0; background: #fdfdfd; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0; overflow-x: auto;">
+  <svg width="680" height="120" viewBox="0 0 680 120">
+    <defs>
+      <marker id="arrC" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="black"/>
+      </marker>
+    </defs>
+    <!-- a1 入力 -->
+    <text x="15" y="70" font-family="serif" font-size="14" font-style="italic">a₁</text>
+    <line x1="35" y1="65" x2="70" y2="65" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+    <!-- 頂点 μ1 -->
+    <circle cx="85" cy="65" r="14" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="85" y="70" font-family="serif" font-size="12" font-style="italic" text-anchor="middle">μ₁</text>
+    <!-- a2 入力 -->
+    <text x="85" y="20" font-family="serif" font-size="14" font-style="italic" text-anchor="middle">a₂</text>
+    <line x1="85" y1="25" x2="85" y2="48" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+
+    <!-- b1 線 -->
+    <line x1="99" y1="65" x2="160" y2="65" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+    <text x="125" y="85" font-family="serif" font-size="13" font-style="italic">b₁</text>
+
+    <!-- 頂点 μ2 -->
+    <circle cx="175" cy="65" r="14" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="175" y="70" font-family="serif" font-size="12" font-style="italic" text-anchor="middle">μ₂</text>
+    <!-- a3 入力 -->
+    <text x="175" y="20" font-family="serif" font-size="14" font-style="italic" text-anchor="middle">a₃</text>
+    <line x1="175" y1="25" x2="175" y2="48" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+
+    <!-- b2 線 -->
+    <line x1="189" y1="65" x2="250" y2="65" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+    <text x="215" y="85" font-family="serif" font-size="13" font-style="italic">b₂</text>
+
+    <!-- 頂点 μ3 -->
+    <circle cx="265" cy="65" r="14" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="265" y="70" font-family="serif" font-size="12" font-style="italic" text-anchor="middle">μ₃</text>
+    <!-- a4 入力 -->
+    <text x="265" y="20" font-family="serif" font-size="14" font-style="italic" text-anchor="middle">a₄</text>
+    <line x1="265" y1="25" x2="265" y2="48" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+
+    <!-- b3 線 と 点線 -->
+    <line x1="279" y1="65" x2="310" y2="65" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+    <text x="295" y="85" font-family="serif" font-size="13" font-style="italic">b₃</text>
+    <line x1="320" y1="65" x2="430" y2="65" stroke="black" stroke-width="2" stroke-dasharray="4,4" />
+
+    <!-- bn-3 線 -->
+    <line x1="440" y1="65" x2="475" y2="65" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+    <text x="445" y="85" font-family="serif" font-size="13" font-style="italic">b_{n-3}</text>
+
+    <!-- 頂点 μn-2 -->
+    <circle cx="490" cy="65" r="14" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="490" y="70" font-family="serif" font-size="11" font-style="italic" text-anchor="middle">μ_{n-2}</text>
+    <!-- an-1 入力 -->
+    <text x="490" y="20" font-family="serif" font-size="13" font-style="italic" text-anchor="middle">a_{n-1}</text>
+    <line x1="490" y1="25" x2="490" y2="48" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+
+    <!-- bn-2 線 -->
+    <line x1="504" y1="65" x2="565" y2="65" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+    <text x="525" y="85" font-family="serif" font-size="13" font-style="italic">b_{n-2}</text>
+
+    <!-- 頂点 μn-1 -->
+    <circle cx="580" cy="65" r="14" fill="#e0e0e0" stroke="black" stroke-width="1.5" />
+    <text x="580" y="70" font-family="serif" font-size="11" font-style="italic" text-anchor="middle">μ_{n-1}</text>
+    <!-- an 入力 -->
+    <text x="580" y="20" font-family="serif" font-size="13" font-style="italic" text-anchor="middle">aₙ</text>
+    <line x1="580" y1="25" x2="580" y2="48" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+
+    <!-- c 出力 -->
+    <line x1="594" y1="65" x2="645" y2="65" stroke="black" stroke-width="2" marker-end="url(#arrC)" />
+    <text x="655" y="70" font-family="serif" font-size="14" font-style="italic">c</text>
+  </svg>
+</div>
+```
+
+:::
+
+もちろん、この基底は任意に選ばれたものです。望むならば異なる順序で粒子を融合させることを考えることもでき、その場合は $F$ 行列の助けを借りて標準基底の項で表すことができる別の基底が得られます。
+
+### 9.12.6 標準基底における組み紐操作：$B$ 行列 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=47) {#sec-8-4-b-matrix}
+
+粒子同士が交換されるときに、$n$ 個のエニオンのトポロジカル・ベクトル空間 $V_{a_1 a_2 a_3 \cdots a_n}^c$ の状態に何が起こるかを考えます。実際には、交換によって異なるラベルを持つ粒子の位置が入れ替わる可能性があるため、ラベルを置換することによってあるトポロジカル・ベクトル空間を別の空間へと写像することがあります。それにもかかわらず、ラベルのすべての可能な置換に関連付けられたベクトル空間の直和を考えることができ、これは組み紐群 $B_n$ の表現を与えます。
+
+この表現がこれらの空間の標準基底に対してどのように作用するかを記述したいと考えます。隣接する粒子の交換がどのように表現されるか、すなわち組み紐群の生成元の作用を指定すれば十分です。しかし、これまでのところ、確定した全電荷を持つ2粒子の対に対する組み紐群の作用（$R$ 行列）しか議論しておらず、これ自体は標準基底に対する作用を教えてくれるのには十分ではありません。
+
+この困難を打開する方法は、$F$ 行列を適用することで標準基底から $R$ 行列がブロック対角となる基底へと移行し、$R$ を適用してから、$F^{-1}$ を適用して標準基底に戻ることです [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=48)：
+
+::: {.callout-note appearance="simple"}
+#### 組み紐操作の合成分解：$F \to R \to F^{-1}$
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; flex-wrap: wrap;">
+  <!-- 交叉した櫛 -->
+  <svg width="90" height="90" viewBox="0 0 90 90">
+    <line x1="10" y1="65" x2="80" y2="65" stroke="black" stroke-width="2" />
+    <path d="M 30 20 L 50 45" stroke="black" stroke-width="2" />
+    <path d="M 60 20 L 25 65" stroke="black" stroke-width="2" />
+    <path d="M 50 45 L 65 65" stroke="black" stroke-width="2" />
+  </svg>
+
+  <span style="font-size: 1.5rem; color: #dc2626; font-weight: bold;">$\xrightarrow{F}$</span>
+
+  <!-- 木結合での交叉 -->
+  <svg width="90" height="90" viewBox="0 0 90 90">
+    <line x1="10" y1="75" x2="80" y2="75" stroke="black" stroke-width="2" />
+    <path d="M 25 20 L 45 40" stroke="black" stroke-width="2" />
+    <path d="M 65 20 L 35 50" stroke="black" stroke-width="2" />
+    <path d="M 45 40 L 55 50" stroke="black" stroke-width="2" />
+    <line x1="45" y1="50" x2="45" y2="75" stroke="black" stroke-width="2" />
+  </svg>
+
+  <span style="font-size: 1.5rem; color: #dc2626; font-weight: bold;">$\xrightarrow{R}$</span>
+
+  <!-- ひねりを解消した木結合 -->
+  <svg width="90" height="90" viewBox="0 0 90 90">
+    <line x1="10" y1="75" x2="80" y2="75" stroke="black" stroke-width="2" />
+    <line x1="25" y1="20" x2="45" y2="50" stroke="black" stroke-width="2" />
+    <line x1="65" y1="20" x2="45" y2="50" stroke="black" stroke-width="2" />
+    <line x1="45" y1="50" x2="45" y2="75" stroke="black" stroke-width="2" />
+  </svg>
+
+  <span style="font-size: 1.5rem; color: #dc2626; font-weight: bold;">$\xrightarrow{F^{-1}}$</span>
+
+  <!-- 標準の櫛 -->
+  <svg width="90" height="90" viewBox="0 0 90 90">
+    <line x1="10" y1="65" x2="80" y2="65" stroke="black" stroke-width="2" />
+    <line x1="30" y1="20" x2="30" y2="65" stroke="black" stroke-width="2" />
+    <line x1="60" y1="20" x2="60" y2="65" stroke="black" stroke-width="2" />
+  </svg>
+</div>
+```
+
+:::
+
+これら3つの操作の合成は、標準基底における組み紐操作の効果を表し、$B$ と表記され、「組み紐行列（braid matrix）」と呼ばれることもあります。しかし、$B$ と $R$ の混同を避けるため、ここでは単に **$B$ 行列（$B$-matrix）**と呼びます。
+
+線上の位置 $j$ と $j+1$ にあるエニオンの交換を考えます。$V_{a_1 a_2 a_3 \cdots a_n}^c$ の分解において、この交換は次の空間に作用します：
+
+$$
+V_{b_{j-2}, a_j, a_{j+1}}^{b_j} = \bigoplus_{b_{j-1}} V_{b_{j-2}, a_j}^{b_{j-1}} \otimes V_{b_{j-1}, a_{j+1}}^{b_j}.
+$$ {#eq-8.85}
+
+添字の数を減らすために、この空間を $V_{acb}^d$ と呼ぶことにします。これは交換によって次のように変換されます：
+
+$$
+B: V_{acb}^d \to V_{abc}^d.
+$$ {#eq-8.86}
+
+$B$ の作用を2つの空間 $V_{acb}^d$ と $V_{abc}^d$ の標準基底の項で表してみましょう。
+
+::: {.callout-note appearance="simple"}
+#### $B$ 行列の作用の図式
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; gap: 25px; margin: 20px 0; background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+  <svg width="140" height="130" viewBox="0 0 140 130">
+    <text x="10" y="85" font-family="serif" font-size="14" font-style="italic">a</text>
+    <text x="45" y="20" font-family="serif" font-size="14" font-style="italic">b</text>
+    <text x="95" y="20" font-family="serif" font-size="14" font-style="italic">c</text>
+    <line x1="25" y1="80" x2="65" y2="80" stroke="black" stroke-width="2" />
+    <line x1="65" y1="80" x2="115" y2="80" stroke="black" stroke-width="2" />
+    <text x="45" y="98" font-family="serif" font-size="13" font-style="italic">e</text>
+    <text x="125" y="85" font-family="serif" font-size="14" font-style="italic">d</text>
+    <!-- 交叉 b と c -->
+    <path d="M 50 25 L 70 50" stroke="black" stroke-width="2" />
+    <path d="M 95 25 L 55 80" stroke="black" stroke-width="2" />
+    <path d="M 70 50 L 85 80" stroke="black" stroke-width="2" />
+  </svg>
+
+  <span style="font-size: 1.4rem; font-family: serif;">$\displaystyle= \sum_{e'\mu'\nu'} \left(B_{abc}^d\right)_{e\mu\nu}^{e'\mu'\nu'}$</span>
+
+  <svg width="140" height="130" viewBox="0 0 140 130">
+    <text x="10" y="85" font-family="serif" font-size="14" font-style="italic">a</text>
+    <text x="50" y="20" font-family="serif" font-size="14" font-style="italic">b</text>
+    <text x="90" y="20" font-family="serif" font-size="14" font-style="italic">c</text>
+    <line x1="25" y1="80" x2="60" y2="80" stroke="black" stroke-width="2" />
+    <line x1="60" y1="80" x2="100" y2="80" stroke="black" stroke-width="2" />
+    <line x1="100" y1="80" x2="120" y2="80" stroke="black" stroke-width="2" />
+    <line x1="55" y1="25" x2="60" y2="80" stroke="black" stroke-width="2" />
+    <line x1="95" y1="25" x2="100" y2="80" stroke="black" stroke-width="2" />
+    <text x="75" y="98" font-family="serif" font-size="13" font-style="italic">e'</text>
+    <text x="128" y="85" font-family="serif" font-size="14" font-style="italic">d</text>
+  </svg>
+</div>
+```
+
+:::
+
+数式が煩雑になるのを避けるため、融合空間の基底ラベル（$\mu, \nu$ 等）は省略します（それらがどこに入るかは自明です）。したがって、次のように書きます：
+
+$$
+\begin{aligned}
+B|(ac)b \to d; e\rangle &= \sum_f B|a(cb) \to d; f\rangle \left(F_{acb}^d\right)_e^f \\
+&= \sum_f |a(bc) \to d; f\rangle R_{bc}^f \left(F_{acb}^d\right)_e^f \\
+&= \sum_{f, g} |(ab)c \to d; g\rangle \left[(F^{-1})_{abc}^d\right]_f^g R_{bc}^f \left(F_{acb}^d\right)_e^f,
+\end{aligned}
+$$ {#eq-8.87}
+
+あるいは [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=49)、
+
+$$
+B: |(ac)b \to d; e\rangle \mapsto \sum_g |(ab)c \to d; g\rangle \left(B_{abc}^d\right)_e^g,
+$$ {#eq-8.88}
+
+ここで
+
+$$
+\left(B_{abc}^d\right)_e^g = \sum_f \left[(F^{-1})_{abc}^d\right]_f^g R_{bc}^f \left(F_{acb}^d\right)_e^f
+$$ {#eq-8.89}
+
+です。所望の通り、標準基底における $B$ 行列の作用を $F$ 行列と $R$ 行列の項で表すことができました。
+
+このように、$n$ 個のエニオンによって実現される組み紐群の表現は、$F$ 行列と $R$ 行列によって完全に特徴付けられます。さらに、$R$ 行列はエニオンのトポロジカルスピンも決定することを見たため、隣接する粒子の交換と粒子の $2\pi$ 回転の両方を生成元として含む、より大きな群の表現を実際に構成したことになります。この群に対するふさわしい名前は**リボン群（ribbon group）**でしょう。なぜなら、その元は組み紐状の紐（string）ではなく、（ひねりを加えることができる）組み紐状のリボン（ribbon）のトポロジカルな同値類と1対1に対応しているからです。しかし、数学者たちはすでにこれを「**$n$ 個の穴（パンクチャー）を持つ球面の写像類群（mapping class group for the sphere with $n$ punctures）**」と名付けています。
+
+この考察によって、この一般的な設定におけるエニオンモデルの記述が完成しました。モデルは以下の4要素によって指定されます：
+
+1. **ラベル集合（label set）**
+2. **融合則（fusion rules）**
+3. **$R$ 行列（$R$-matrix）**
+4. **$F$ 行列（$F$-matrix）**
+
+私たちが構築した数学的対象は**ユニタリ・トポロジカル・モジュラー・関手（unitary topological modular functor）**と呼ばれ、広く研究されてきた他の2つの対象と密接に関連しています：
+
+- 2+1 次元時空における**トポロジカル量子場理論（topological quantum field theories, TQFT）**
+- 1+1 次元時空における**共形場理論（conformal field theories, CFT）**
+
+しかし、ここでは単に**エニオンモデル（anyon model）**と呼ぶことにします。
+
+---
+
+## 9.13 量子回路によるエニオンのシミュレーション [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=49) {#sec-8-4-simulating-anyons}
+
+**トポロジカル量子計算（topological quantum computation）**は、次の3つのステップで実行されます：
+
+1. **初期化（Initialization）**: 粒子・反粒子対 $c_1\bar{c}_1, c_2\bar{c}_2, c_3\bar{c}_3, \dots, c_m\bar{c}_m$ が生成されます。各対は指定された型であり、自明な全電荷（真空電荷 $1$）を持ちます。
+2. **処理（Processing）**: $n = 2m$ 個の粒子が指定された軌道に沿って動かされ、それらの世界線が指定された組み紐を形成します。
+3. **読み出し（Readout）**: 隣接する粒子の対が融合され、各対が完全に真空に対消滅したか否かが記録されます。この記録が計算の出力となります。
+
+（非アーベル超伝導体モデルの計算では、処理段階で行われた融合の結果に基づいて組み紐操作を条件分岐させることを許容しました。しかし、ここではすべての測定が最終的な読み出しまで遅延されるモデルを考えています [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=50)。）
+
+この計算モデルはどれほど強力でしょうか？ 著者は、**このトポロジカル量子コンピュータは量子回路によって効率的にシミュレートできる**と主張します。$n$ 個のエニオンのトポロジカル・ヒルベルト空間は小さな部分系のテンソル積としての単純で自然な分解を持たないため、この主張は直ちには自明ではないかもしれません。これを示すためには、次の3点を説明する必要があります：
+
+1. 通常の量子ビットを用いてトポロジカル・ヒルベルト空間をどのように**符号化（encode）**するか。
+2. 量子ゲートを用いて組み紐操作をどのように効率的に表現するか。
+3. エニオン対の融合をどのようにシミュレートするか。
+
+### 符号化（Encoding）
+
+初期化中に生成された各対は自明な全電荷を持つため、$n$ 個のエニオンの初期状態もまた自明な全電荷 $1$ を持ちます。したがって、トポロジカル・ヒルベルト空間は次のように表されます：
+
+$$
+V_{a_1 a_2 a_3 \cdots a_n}^1 \cong \bigoplus_{b_1, b_2, \dots, b_{n-3}} V_{a_1 a_2}^{b_1} \otimes V_{b_1 a_3}^{b_2} \otimes \cdots \otimes V_{b_{n-3} a_{n-1}}^{\bar{a}_n}.
+$$ {#eq-8.90}
+
+ここでラベル $a_1, a_2, a_3, \dots, a_n$ のある選択に対して、各直和項には $n - 3$ 個の中間電荷と $n - 2$ 個の融合空間が現れます。粒子の交換はラベルを入れ替えますが、各交換後もベクトル空間は元のラベルのある置換によって与えられるラベルを持つ式 (@eq-8.90) の形式を保ちます。
+
+各 $n$ エニオン・トポロジカル・ヒルベルト空間自体は部分系のテンソル積ではありませんが、これらの空間はすべて
+
+$$
+(\mathcal{H}_d)^{\otimes (n-2)}
+$$ {#eq-8.91}
+
+に含まれます。ここで
+
+$$
+\mathcal{H}_d = \bigoplus_{a, b, c} V_{abc}^1
+$$ {#eq-8.92}
+
+です。ここで $a, b, c$ はモデルの完全なラベル集合（有限集合と仮定）全体にわたって和が取られるため、$\mathcal{H}_d$ は3粒子のすべての可能な融合状態を含み、$\mathcal{H}_d$ の次元 $d$ は
+
+$$
+d = \sum_{a, b, c} N_{abc}^1
+$$ {#eq-8.93}
+
+となります。
+
+したがって、$n$ 個のエニオンの状態は、ある定数 $d$（エニオンモデルに依存しますが、$n$ には依存しません）に対する **$n - 2$ 個の $d$ 次元量子系（qudit）**のヒルベルト空間に符号化することができます。

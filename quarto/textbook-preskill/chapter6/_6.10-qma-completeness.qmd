@@ -1,0 +1,526 @@
+## 6.10 局所ハミルトニアン問題のQMA完全性 (QMA-completeness of the local Hamiltonian problem) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=52) {#sec-6.10-qma-completeness}
+
+これまで議論してきたように、古典的には困難であるケースにおいて、量子コンピュータが局所ハミルトニアンの基底状態エネルギーを計算できることが期待されており、これは量子コンピュータの重要な応用先となり得ます。他方で、局所ハミルトニアンの基底状態エネルギーの計算は、量子コンピュータにとっても依然として困難であるケースが存在すると私たちは信じています。この信念の理由をより深く理解してみましょう。
+
+物理学者は、すべての量子ビットが隣接ビットと同様に相互作用する（試料の境界にある量子ビットを除く）**並進不変な幾何学的局所ハミルトニアン**に関心を持つことがよくあります。なぜなら、そのようなハミルトニアンは一部の実在の物質の良好なモデルを提供するからです。しかし、並進不変ではないハミルトニアンも物理学において有用です（たとえば、試料内の不純物やその他の欠陥による「無秩序（disorder）」をもつ物質をモデル化する場合など）。ハミルトニアンが並進不変でない場合、系内のサイトごとにハミルトニアンがどのように変化するかを指定することによって、$n$ 量子ビットの局所ハミルトニアン問題のインスタンスを定式化できます。物理学者は、このような（並進不変でない）系を**スピングラス（spin glasses）**と呼ぶことがあります。各サイトの変数が量子ビットではなく古典ビットである場合でさえ、スピングラスの基底状態エネルギーを一定の精度で求めることは **NP困難（NP-hard）**な問題になり得ます。したがって、古典コンピュータも量子コンピュータも一般にはこの問題を解決できないと予想されます（$\mathrm{NP} \subseteq \mathrm{BQP}$ でない限り。これはありそうにありません）。
+
+まず、古典的なスピングラス問題がなぜ NP困難になり得るのかを理解しましょう。次に、量子問題の困難性について議論します。量子の場合、局所ハミルトニアンの基底状態エネルギーを求めることは **QMA困難（QMA-hard）**であることを示します。（QMA は [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=53) NP の量子版であり、適切な「量子証拠（quantum witness）」が提供されれば、解を量子コンピュータを用いて効率的に検証できる問題のクラスであることを思い出してください。）
+
+古典的な場合について、ある計算問題から別の計算問題への「**還元（reduction）**」（$A$ を解く機械を用いて $B$ を解くことができる場合、$B$ は $A$ に還元される）の概念を想起し、以下の還元の連鎖を考えます：
+
+1. NP に属する任意の問題は CIRCUIT-SAT に還元される（すでに以前議論しました）。すなわち、CIRCUIT-SAT は NP完全（NP-complete）です。
+2. CIRCUIT-SAT は 3-SAT に還元される（3-SAT は NP完全です）。
+3. 3-SAT は、古典的な 3-局所ハミルトニアンの基底状態エネルギーを一定の精度で求める問題として定式化できます。
+4. MAX 2-SAT もまた NP困難であり、古典的な 2-局所ハミルトニアンの基底状態エネルギーを一定の精度で求める問題として定式化できます。
+5. 古典的な 2-局所ハミルトニアン問題は、ハミルトニアンが3次元、あるいは2次元において幾何学的に局所的である場合（実在のスピングラスを記述する上での関心対象）でも依然として困難です。
+
+(5) は、スピングラスが現実的な物理過程において効率的に基底状態に緩和できないことを意味します（これは物理学者が「グラス（ガラス）」という言葉で意味することの一部です）。
+
+### 6.10.1 3-SATはNP完全である (3-SAT is NP-complete) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=53) {#sec-6.10.1-3sat-np-complete}
+
+**言語（Language）:** （以前議論したように）$f$ が可変入力サイズをもつブール関数の統一的（uniform）な族 $f : \{0, 1\}^* \to \{0, 1\}$ であるとき、$f$ によって受理される入力文字列の集合を**言語**と呼びます：
+
+$$
+L = \{x \in \{0, 1\}^* : f(x) = 1\}.
+$$ {#eq-6.232}
+
+**NP:** 多項式サイズの統一的な古典回路族（検証器 $V(x, y)$）が存在し、以下を満たすとき、言語は **NP** に属すると言います：
+
+- $x \in L$ ならば、$V(x, y) = 1$ となる証拠（witness）$y$ が存在する（**完全性; completeness**）。
+- $x \notin L$ ならば、すべての $y$ について $V(x, y) = 0$ である（**健全性; soundness**）。
+
+**還元（Reduction）:** $x$ を $R(x)$ に写す多項式サイズの統一的古典回路族 $R$ が存在し、$B$ が $x$ を受理することと $A$ が $R(x)$ を受理することが同値であるとき、$B$ は $A$ に**還元される**と言います。これは、$A$ を解く機械に $R$ を接続して $B$ を解く機械を構築できることを意味します。
+
+NP における重要な問題は **CIRCUIT-SAT** です。この問題への入力はブール回路 $C$（$n$ ビットの入力と $G = \mathrm{poly}(n)$ 個のゲートをもつ）であり、ブール関数 $f(C)$ を評価することが求められます。ここで、$C(x) = 1$ となる入力 $x$ が存在するならば $f(C) = 1$、それ以外は $f(C) = 0$ です。回路 $C$ をシミュレートできるため、CIRCUIT-SAT は NP に属します。$C$ が受理する $x$ の値が証拠として与えられれば、$C(x) = 1$ であることを効率的に検証できます。さらに、以前議論したように、CIRCUIT-SAT は NP完全です（NP に属する任意の問題は CIRCUIT-SAT に還元されます）。$V(x, \cdot)$ が固定されたインスタンス $x$ をもつ NP 問題の検証器である場合、$V(x, \cdot)$ を証拠 $y$ を入力とする回路とみなすことができます。このブール回路に対する CIRCUIT-SAT 問題を解くことは、検証器が受理する証拠が存在するかどうかを教えてくれるため、NP 問題を解決します。
+
+ここで、以前には議論しなかったさらなる還元に至ります：CIRCUIT-SAT は **3-SAT** に還元され、したがって 3-SAT もまた NP完全問題となります（**クック・レビンの定理; Cook-Levin theorem**）。SAT 問題において、入力は各変数がビットである $n$ 変数の「ブール論理式」です。[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=54] 論理式は節（clause）の連言（conjunction; かつ）であり、論理式はすべての節が真である場合に限り真となります。$k$-SAT 問題では、各節は定数である高々 $k$ 個の変数に依存します。（$k$-SAT の一部の定式化では、各節は $k$ 個のリテラル（変数またはその否定）の選言（disjunction; または）であることが要求されますが、これは重要な要件ではありません。任意の論理式、特に任意の $k$ ビット論理式は連言標準形（CNF）で表現できるからです。）$f$ がブール論理式である場合、SAT 関数は以下の通りです：
+
+$$
+\begin{aligned}
+\mathrm{SAT}(f) &= 1 \quad \text{（} f(x) = 1 \text{ となる } x \text{ が存在する場合）}, \\
+\mathrm{SAT}(f) &= 0 \quad \text{（それ以外）}.
+\end{aligned}
+$$ {#eq-6.233}
+
+ここで、CIRCUIT-SAT が 3-SAT に還元されることを示しましょう。与えられた回路 $C$（CIRCUIT-SAT への入力）に対して、対応するブール論理式 $R(C)$（3-SAT への入力）をどのように構築すればよいでしょうか？
+
+回路 $C$ 内のゲートが普遍集合（AND, OR, NOT）、あるいは各ゲートが高々2つの入力ビットと1つの出力ビットを持つような他の任意のゲート集合から選ばれていると仮定します。各ゲートの出力に対して変数を導入し、論理式 $R(C)$ に各ゲートに対応する節を含めます。
+
+ここで、3変数節 $C_g(x, y, z)$ は、入力が $(x, y)$ であるときに $z$ がゲート $g$ の正当な出力である場合に限り真となります。回路は変数ではなく定数である入力を持つこともあります。その場合、たとえば1つが定数である2入力ビットをもつゲートは、ゲートと定数の値によって決定される2変数節になります。あるいは同値ですが、定数の入力を1ビット出力をもつゲートとみなすことができます。対応する1ビット節は、$x$ が正しい値を持つ場合に真となります。回路はまた解答ビットを持ち、これは $x = 1$ である場合（すなわち答えが YES である場合）に限り真となる1ビット節 $C_g(x)$ となります。
+
+論理式 $R(C)$ は、回路 $C$ への入力 $x$ を変数として持ち、さらに回路 $C$ 内のすべてのゲートの出力に対応する追加の変数も持ちます。$R(C)$ は、$C$ のすべての節を満たす真理値割り当てが、入力 $x$ に作用する回路 $C$ の計算の**正当な履歴（valid history）**に対応するように構築されており、ここで入力は受理されます。回路 $C$ によって受理される入力 $x$ が存在するならば、3-SAT 論理式 $R(C)$ に対する充足割り当てが存在し、逆に $C$ が受理する入力が存在しないならば、$R(C)$ に対する充足割り当ては存在しません。こうして、CIRCUIT-SAT から 3-SAT への所望の還元が得られました。
+
+CIRCUIT-SAT を 3-SAT に還元するために私たちが活用した重要なアイデアは、3-SAT の証拠が、入力 $x$ を受理する計算 $C$ 全体の正当な履歴であるということです。回路 $C$ は多項式サイズを持ち、回路の実行における $\mathrm{poly}(n)$ 個の各ゲートをチェックすることは容易であるため、履歴を効率的にチェックできます。後ほど、このアイデア — **計算の正当な履歴が効率的にチェック可能な証拠であること** — を量子設定へと拡張します。
+
+論理式 $f$ の節を、古典的な 3-局所ハミルトニアンの項とみなすことができることに注意してください：
+
+$$
+H(x) = \sum_c H_c(x_{c1}, x_{c2}, x_{c3});
+$$ {#eq-6.234}
+
+ここで和は論理式内の節にわたるものであり、
+
+$$
+H_c(x_{c1}, x_{c2}, x_{c3}) = \begin{cases}
+0 & \text{（割り当て } x_{c1}, x_{c2}, x_{c3} \text{ に対して節 } c \text{ が真の場合）}, \\
+1 & \text{（それ以外）}
+\end{cases}
+$$ {#eq-6.235}
+
+です。[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=55) このとき、すべての節を満たす割り当てが存在するならば $\min_x H(x) = 0$ であり、充足割り当てが存在しないならば $\min_x H(x) \ge 1$ です（任意の割り当てに対して違反する節の数が $\ge 1$ であるため）。私たちは、古典的な 3-局所ハミルトニアンの最小値を見つけることは **NP困難**であると結論づけます：もしそれができれば 3-SAT を解くことができ、したがって NP に属する任意の問題を解くことができるからです。この結論は、先に主張したように、$\mathrm{NP} \subseteq \mathrm{BQP}$ でない限り、古典的な 3-局所ハミルトニアンの基底状態エネルギーを一定の精度で求めることも一般には量子コンピュータにとって困難でなければならないことを意味します。
+
+### 6.10.2 フラストレートしたスピングラス (Frustrated spin glasses) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=55) {#sec-6.10.2-frustrated-spin-glasses}
+
+実際、基底状態エネルギーを一定の精度で求めることは、古典的な 2-局所ハミルトニアンに対してさえ NP困難です：
+
+$$
+H(x) = \sum_c H_c(x_{c1}, x_{c2}).
+$$ {#eq-6.236}
+
+2-SAT（2-SAT 論理式が充足可能かどうかを判定すること）は容易ですが（多項式時間アルゴリズムが存在します）、**MAX-2SAT** は NP困難問題です。MAX-2SAT とは、任意の割り当てに対して違反する節の最小数を見つける問題であり、ハミルトニアン関数 $H$ を最小化することと同値です。
+
+さらに、困難性を失うことなく、2-局所ハミルトニアンを幾何学的に局所化することができます。一例は3次元のイジング・スピングラス模型です。二値変数が立方格子のサイトに配置されたスピンであり、格子内のサイト $i$ で値 $Z_i \in \{\pm 1\}$ をとると仮定します。以下のハミルトニアンを考えます：
+
+$$
+H = -\sum_{\langle ij\rangle} J_{ij} Z_i Z_j.
+$$ {#eq-6.237}
+
+ここで $\langle ij\rangle$ は、ラベル $i$ と $j$ をもつ2つの最近接サイトを結ぶ格子内のエッジにラベルを付けます。
+
+$J_{ij} \in \{\pm 1\}$ は問題のインスタンスをエンコードします。$J_{ij} = +1$ の場合、エッジ $\langle ij\rangle$ は強磁性的（ferromagnetic）であると言います。すなわち、隣接するスピンが整列すること（両方 $+1$ または両方 $-1$）がエネルギー的に有利です。$J_{ij} = -1$ の場合、エッジ $\langle ij\rangle$ は反強磁性的（anti-ferromagnetic）であると言います。すなわち、隣接するスピンが逆平行に整列すること（$+1$ と $-1$、または $-1$ と $+1$）がエネルギー的に有利です。すべてのエッジが強磁性的であれば、エネルギーを最小化することは容易です — すべてのスピンが整列します。しかし、反強磁性的なエッジは**フラストレーション（frustration）**を引き起こす可能性があります。これは、すべてのエッジに対して $-J_{ij}Z_i Z_j$ を同時に最小化することが不可能であることを意味します。
+
+視覚化のために、格子セルによってスピンを表現すると便利です — すなわち、2次元正方格子では正方形、3次元立方格子では立方体で表します。2つの正方形が接する各エッジ（2D）または2つの立方体が接する各面（3D）に関連する、隣接スピンを結合する $-J_{ij}Z_i Z_j$ 項が存在します。
+
+4つのエッジが集まる2Dのサイトを考えます。これらのエッジの1つが反強磁性的であり、他の3つが強磁性的である場合、このサイトには奇数個の励起エッジが集まらなければなりません。より一般に、反強磁性エッジの数が奇数である場合、奇数個の励起エッジが存在しなければならず、反強磁性エッジの数が偶数である場合、偶数個の励起エッジが存在しなければなりません。あるサイトに集まる $J = -1$ のエッジの数が奇数である場合、そのサイトに**イジング渦（Ising vortex）**が存在すると言います。任意のスピン配位に対して、励起エッジのドメイン壁が存在し、その壁はイジング渦で終端します。
+
+エネルギーを最小化することは、2D においては、[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=56) イジング渦の位置に境界点をもつ励起エッジの最小の「鎖」を見つけることと同値です。最小の鎖を見つける多項式時間の古典アルゴリズムが存在します。3D では、あるエッジに集まる $J = -1$ の面が奇数個ある場合、そのエッジ上にイジング渦が存在します。これらの渦は閉ループを形成し、各スピン配位は渦ループによって境界付けられた励起面のドメイン壁を持ちます。エネルギーを最小化するためには、指定された1次元境界をもつ最小面積曲面を見つけます。この問題は NP困難です。最小エネルギー配位を見つけることが困難である理由は、ドメイン壁が「ピン留め（pinned）」される — エネルギーの局所的最小値に捕捉され、より低いエネルギー配位を見つけるためには多くのスピンを一度に反転させる必要がある — 方法が多数存在するためです。大域的エネルギー最小値に対する局所探索は失敗します。
+
+実際、反強磁性項に加えて $H$ に局所磁場項を導入すれば、2D においても NP困難なスピングラス問題が存在します。たとえば、正方格子上で次を考えます：
+
+$$
+H = -\sum_{\langle ij\rangle} J_{ij} Z_i Z_j - \sum_i h_i Z_i,
+$$ {#eq-6.238}
+
+ここで $J_{ij} \in \{1, 0, -1\}$ および $h_i \in \{1, 0, -1\}$ です。局所磁場 $\{h_i\}$ はフラストレーションを複合化します：各スピンは局所磁場と整列することを望みますが、そうすることによってスピンを結ぶエッジが励起される可能性があります。
+
+このように、フラストレーションのために、幾何学的 2-局所古典ハミルトニアンのエネルギーを最小化することは NP困難になり得ることが分かります — すべての節を満たす方法はなく、大域的最小値ではないエネルギーの局所的最小値が多数存在します。量子局所ハミルトニアン問題では、$H = \sum_a H_a$ であり、$\{H_a\}$ は互いに可換ではない可能性があります。したがって、問題はさらに困難になると予想されるかもしれません — $H_a$ を同時に対角化できないことが、フラストレーションをさらに悪化させます。実際、基底状態は簡潔な古典的記述を持たない高度にエンタングルした状態になり得ます。量子問題の困難性を特徴づけてみましょう。
+
+### 6.10.3 量子k-局所ハミルトニアン問題 (The quantum k-local Hamiltonian problem) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=56) {#sec-6.10.3-quantum-k-local-hamiltonian}
+
+$H = \sum_a H_a$ を $k$-局所的な $n$ 量子ビットハミルトニアンとします — 各 $H_a$ は高々 $k$ 個の量子ビットに非自明に作用し（ここで $k$ は定数）、$\|H_a\| \le h = \text{定数}$ です。$2^k \times 2^k$ 行列 $H_a$ は $\mathrm{poly}(n)$ ビットの精度で指定されます。
+
+基底状態エネルギー $E_0$（$H$ の最低固有値）が以下のいずれかを満たすことが約束（promise）されています：
+
+1. $E_0 \le E_{\mathrm{low}}$、または
+2. $E_0 > E_{\mathrm{high}}$、
+
+ここで $E_{\mathrm{high}} - E_{\mathrm{low}} > \frac{1}{\mathrm{poly}(n)}$ です。
+
+私たちは以下を出力することを求められます：
+
+$$
+f(H) = \begin{cases}
+1 & \text{（} E_0 \le E_{\mathrm{low}} \text{ の場合）}, \\
+0 & \text{（} E_0 > E_{\mathrm{high}} \text{ の場合）}.
+\end{cases}
+$$ {#eq-6.239}
+
+問題の定式化において、$E_0$ を $1/\mathrm{poly}(n)$ の精度で決定することによって YES/NO の質問に答えることができるように約束ギャップ（promise gap）が存在することに注意してください。
+
+$H$ が古典的（すべての $H_a$ が可換）である特殊な場合においてさえ、この問題が NP困難であることはすでに分かっています。また、確率的計算（MA）および量子計算（QMA）に対する NP の類似クラスが存在することを思い出してください：言語 $L$ が **QMA** に属するとは、[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=57) 多項式サイズの統一的量子回路族（検証器 $V$）と単一量子ビット測定 $\{\Pi_0, \Pi_1\}$ が存在し、以下を満たす場合を言います：
+
+1. $x \in L$ ならば、次を満たす証拠 $|\psi_x\rangle$ が存在する：
+$$
+\langle\Psi|\Pi_1|\Psi\rangle \ge 2/3 \quad \text{（ここで } |\Psi\rangle = V(|\psi_x\rangle \otimes |x\rangle \otimes |0\rangle^*) \text{）}.
+$$ {#eq-6.240}
+2. $x \notin L$ ならば、すべての $|\psi_x\rangle$ について $\langle\Psi|\Pi_1|\Psi\rangle \le 1/3$ である。
+
+**主張：** $k$-局所ハミルトニアン問題は、$k \ge 5$ に対して **QMA完全（QMA-complete）**である（キタエフによって見事に証明されました：KSV の第14章を参照）。この結果は、2D における幾何学的 2-局所 $H$（量子ビットの場合）、あるいは1D における幾何学的 2-局所 $H$（局所次元 $d$ が十分に大きい高次元 qudit の場合）へと改良できます。
+
+この主張を検証するために、以下を示す必要があります：
+
+1. $k$-局所ハミルトニアン問題が QMA に属すること。
+2. QMA に属する任意の問題が $k$-局所ハミルトニアン問題に還元可能であること。キタエフの最初の発見のように、$k = 5$ かつ幾何学的制約なしの場合についてこれを示します。
+
+私たちはすでに (1) を示しました。基底状態 $|\psi_0\rangle$ が証拠として提供されれば、位相推定アルゴリズムを実行するサイズ $\mathrm{poly}(n)$ の回路を用いて $E_0$ を $1/\mathrm{poly}(n)$ の精度で計算できることを見てきました。しかし、還元 (2) をどのように達成するのでしょうか？
+
+還元のために、3-SAT が NP完全であることを示すために使用された戦略に従います：QMA に属する任意の問題に対して、検証器によって実行される計算の**履歴全体をエンコードする証拠**と、$H$ の基底状態エネルギーを計算することが計算の各ステップが正当であることをチェックすることに帰着するようなハミルトニアン $H$ を構築します。
+
+QMA における与えられた問題に対して、検証器回路 $V_T$ が普遍集合から選ばれた $T$ 個のゲート $U_1, U_2, \dots U_T$ を持ち、各 $U_t$ が高々2つの量子ビットに作用すると仮定します。対応する $k$-局所ハミルトニアン問題に対して、マーリン（Merlin）が検証器によって実行された計算をエンコードする**履歴状態（history state）**を提供すると仮定します：
+
+$$
+|\eta\rangle = \frac{1}{\sqrt{T+1}}\sum_{t=0}^T |\psi(t)\rangle \otimes |t\rangle,
+$$ {#eq-6.241}
+
+ここで $|\psi(t)\rangle = (U_t U_{t-1} \dots U_1)|\psi_{\mathrm{initial}}\rangle$ です。ここで $|\psi_{\mathrm{initial}}\rangle = |x\rangle \otimes |0\rangle^* \otimes |\psi_x\rangle$ であり、$|x\rangle$ は QMA 問題のインスタンスを指定し、$|0\rangle^*$ は検証器によって使用されるスクラッチ空間の初期状態、$|\psi_x\rangle$ は $x$ が受理されるべきであることを証言する量子証拠であり、$|\psi(t)\rangle$ は検証器回路の最初の $t$ ステップが実行された後に得られる量子コンピュータの状態です。状態 $|t\rangle$ は時間 $t \in \{0, 1, \dots, T\}$ を記録するクロックレジスタの状態です。$\langle t|s\rangle = \delta_{ts}$ であるため、状態 $|\eta\rangle$ の重ね合わせに現れる $T+1$ 個の状態は互いに直交しており、したがって $|\eta\rangle$ は適切に規格化されています：$\langle\eta|\eta\rangle = 1$。
+
+### 6.10.4 ハミルトニアンの構築と解析 (Constructing and analyzing the Hamiltonian) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=57) {#sec-6.10.4-constructing-hamiltonian}
+
+ここで、ハミルトニアン $H$ が $|\eta\rangle$ にエンコードされた履歴を局所的に「チェック」するように選択したいと考えます。すなわち、$H$ は回路内のステップが無効である場合、あるいは入力が受理されない場合にエネルギーペナルティを課します。
+
+$H$ を以下の形式に選びます：
+
+$$
+H = H_{\mathrm{in}} + H_{\mathrm{out}} + H_{\mathrm{prop}} + H_{\mathrm{clock}}.
+$$ {#eq-6.242}
+
+$H_{\mathrm{in}}$ の目的は、検証器回路の入力量子ビット（[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=58) 証拠自体を除く）が正しい初期値に設定されていることを強制することです。たとえば、時間 $t = 0$ において状態 $|0\rangle$ にあるべき $j$ とラベル付けされた各スクラッチ量子ビットについて、$H_{\mathrm{in}}$ に以下の項を含めます：
+
+$$
+H_{\mathrm{in}}^{(j)} = (|1\rangle\langle 1|)^{(j)} \otimes \boldsymbol{I}^{(\mathrm{else})} \otimes (|0\rangle\langle 0|)^{(\mathrm{clock})}.
+$$ {#eq-6.243}
+
+検証器回路の実行が開始されるとき（時間 $t = 0$）、スクラッチ量子ビットが $|0\rangle$ ではなく $|1\rangle$ に設定されている場合、1 のエネルギーペナルティが課されます。$H_{\mathrm{in}}$ 内の同様の項は、入力レジスタが所望の値 $x$ に設定されていることを強制します。$H_{\mathrm{out}}$ の目的は、QMA 問題の検証器回路が受理に失敗した場合にペナルティを課すことです：
+
+$$
+H_{\mathrm{out}} = (|0\rangle\langle 0|)^{(\mathrm{output})} \otimes \boldsymbol{I}^{(\mathrm{else})} \otimes (|T\rangle\langle T|)^{(\mathrm{clock})}.
+$$ {#eq-6.244}
+
+検証器回路が完全に実行された後（時間 $t = T$）、出力量子ビットが $|1\rangle$ ではなく $|0\rangle$ の値を持つ場合、1 のエネルギーコストが課されます。$H_{\mathrm{clock}}$ の目的は、クロックレジスタが正しくエンコードされていない場合にペナルティを課すことです（この問題には後で戻ります）。
+
+$H_{\mathrm{prop}}$ の目的は、状態 $|\psi(t)\rangle$ が $U_t |\psi(t-1)\rangle$ の形をしていない場合、すなわち検証器回路のステップ $t$ を忠実に実行することによって得られなかった場合にペナルティを課すことです。したがって、次のように書きます：
+
+$$
+H_{\mathrm{prop}} = \sum_{t=1}^T H_{\mathrm{prop}}(t),
+$$ {#eq-6.245}
+
+ここで
+
+$$
+H_{\mathrm{prop}}(t) = \frac{1}{2}\left(\boldsymbol{I} \otimes |t\rangle\langle t| + \boldsymbol{I} \otimes |t-1\rangle\langle t-1| - U_t \otimes |t\rangle\langle t-1| - U_t^\dagger \otimes |t-1\rangle\langle t|\right).
+$$ {#eq-6.246}
+
+正当な履歴状態 $|\eta\rangle$ の関連部分に対する $H_{\mathrm{prop}}(t)$ の作用は以下の通りです：
+
+$$
+\begin{aligned}
+|\psi(t-1)\rangle \otimes |t-1\rangle &\mapsto \frac{1}{2}\left(|\psi(t-1)\rangle \otimes |t-1\rangle - U_t|\psi(t-1)\rangle \otimes |t\rangle + \dots\right), \\
+|\psi(t)\rangle \otimes |t\rangle &\mapsto \frac{1}{2}\left(|\psi(t)\rangle \otimes |t\rangle - U_t^\dagger|\psi(t)\rangle \otimes |t-1\rangle + \dots\right).
+\end{aligned}
+$$ {#eq-6.247}
+
+$|\eta\rangle$ に作用させると、$H_{\mathrm{prop}}$ 内の項 $\boldsymbol{I} \otimes |t\rangle\langle t|$ と $-U_t \otimes |t\rangle\langle t-1|$ は相殺する寄与を与えます。したがって、
+
+$$
+H_{\mathrm{prop}}|\eta\rangle = 0 \quad \text{（} |\eta\rangle \text{ が正当な履歴状態である場合）}.
+$$ {#eq-6.248}
+
+したがって、正当な履歴状態（時間 $t$ の状態が時間 $t-1$ の状態から適切なゲートを適用することによって得られるもの）であり初期状態も正当であるものは、$H_{\mathrm{prop}}$ と $H_{\mathrm{in}}$ の両方の零ベクトル（固有値 0 の固有ベクトル）となります。さらに、量子検証器が確率 $1 - \epsilon$ で入力を受理するならば、
+
+$$
+E_0 \le \langle\eta|H_{\mathrm{out}}|\eta\rangle = \frac{\epsilon}{T+1}.
+$$ {#eq-6.249}
+
+（履歴が正当である場合、ハミルトニアンの中で $\langle H\rangle$ に非零の寄与を与える唯一の項は、誤った最終読み出しを罰する項です。）証拠の複数のコピーの検証を繰り返すことによって成功確率を増幅できることにも注意してください。実際、この増幅は少し微妙です：マーリンはアーサー（Arthur）を騙そうとするかもしれません。証拠の積状態 $|\psi_x\rangle^{\otimes m}$（証拠の $m$ 個のコピー）を送る代わりに、エンタングルした状態を送るかもしれません。しかし、増幅はその場合でも依然として機能します。マーリンから送られた各コピーは（他のコピーにわたる部分トレースから得られる）混合状態であり得、検証器が確率 $\ge 2/3$ で受理する状態と [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=59) 拒絶するかもしれない別の状態との混合物です。しかしマーリンは、純粋状態のアンサンブルの中に各試行で高い確率で受理される何らかの状態が存在しない限り、多くの試行の後にアーサーに受理させるよう騙すことはできません。
+
+これで、検証器が高い確率で受理するような QMA の問題に対して、対応するハミルトニアン $H$ がゼロに近い固有値をもつ固有ベクトルを持つことを見てきました。示すべきことは残り2つあります：
+
+- 検証器が高い確率で拒絶する場合、次が成り立つこと：
+$$
+E_0 \ge 1/\mathrm{poly}(n)
+$$ {#eq-6.250}
+（これにより、YES の答えに対して $E_0 \le E_{\mathrm{low}}$、NO の答えに対して $E_0 > E_{\mathrm{high}}$ となるように、サイズ $1/\mathrm{poly}(n)$ の約束ギャップを選ぶことができます）。
+- これまでのところ、$H_{\mathrm{prop}}$ は局所的ではありません！ それは $(T+1)$ 次元の系であるクロックレジスタに作用し、$T = \mathrm{poly}(n)$ です。$H_{\mathrm{prop}} + H_{\mathrm{clock}}$ が $k$-局所的になるように、量子ビットを用いてクロックをエンコードできることを示す必要があります。
+
+クロックのエンコードの問題には後で戻ります。まず、$H = H_{\mathrm{in}} + H_{\mathrm{out}} + H_{\mathrm{prop}}$ のスペクトルをより深く理解しましょう。
+
+#### $H_{\mathrm{prop}}$ の対角化 (Diagonalizing $H_{\mathrm{prop}}$) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=59) {#sec-6.10.4-diagonalizing-hprop}
+
+まず $H_{\mathrm{prop}}$ を考えることから始めましょう。正当な履歴状態が $H_{\mathrm{prop}}$ の零ベクトルである（固有値 0 をもつ）ことを見てきました。$H_{\mathrm{prop}}$ の他の固有空間と固有値は何でしょうか？
+
+状態 $|\psi(t)\rangle$ の運動を「凍結（freezes）」させる**回転座標系基底（rotating frame basis）**へと変換することにより、$H_{\mathrm{prop}}$ のスペクトルを計算する方が容易です。すなわち、以下のように定義します：
+
+$$
+V_t = U_t U_{t-1} \dots U_1
+$$ {#eq-6.251}
+
+（回路の最初の $t$ ステップの後に適用されるユニタリ）。そして $V = \sum_{t=0}^T V_t \otimes |t\rangle\langle t|$ を考えます。このとき、履歴状態 $|\eta\rangle = \frac{1}{\sqrt{T+1}}\sum_{t=0}^T V_t|\psi(0)\rangle \otimes |t\rangle$ は、$V^\dagger$ によって $|\psi(t)\rangle$ が $t$ にまったく依存しない場合の「履歴」状態へと写されます：
+
+$$
+V^\dagger|\eta\rangle = \frac{1}{\sqrt{T+1}}\sum_{t=0}^T V_t^\dagger V_t |\psi(0)\rangle \otimes |t\rangle = |\psi(0)\rangle \otimes \frac{1}{\sqrt{T+1}}\sum_{t=0}^T |t\rangle.
+$$ {#eq-6.252}
+
+この基底変換のもとで、ハミルトニアンは以下のように変換されます：
+
+$$
+\begin{aligned}
+H'_{\mathrm{prop}} = V^\dagger H_{\mathrm{prop}} V &= \sum_{t=1}^T \frac{1}{2}(\boldsymbol{I} \otimes |t\rangle\langle t| + \boldsymbol{I} \otimes |t-1\rangle\langle t-1|) \\
+&\quad - \sum_{t=1}^T \frac{1}{2}(V_t^\dagger U_t V_{t-1} \otimes |t\rangle\langle t-1| + V_{t-1}^\dagger U_t^\dagger V_t \otimes |t-1\rangle\langle t|) \\
+&= \sum_{t=1}^T \frac{1}{2}(|t\rangle\langle t| + |t-1\rangle\langle t-1| - |t\rangle\langle t-1| - |t-1\rangle\langle t|).
+\end{aligned}
+$$ {#eq-6.253}
+
+この変換されたハミルトニアン $H'_{\mathrm{prop}}$ は、クロックレジスタに対してのみ非自明に作用します。これは重複する $2 \times 2$ ブロックの和です：
+
+$$
+H'_{\mathrm{prop}} = \sum_{t=1}^T \begin{pmatrix} \frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2} \end{pmatrix}_{t-1, t},
+$$ {#eq-6.254}
+
+ここで下付き文字は、行列が $\{|t-1\rangle, |t\rangle\}$ によって張られる空間に作用することを意味します。[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=60) 重複があるため、$H'_{\mathrm{prop}}$ は各ブロックにおいて実際には $\begin{pmatrix} 1 & -\frac{1}{2} \\ -\frac{1}{2} & 1 \end{pmatrix}$ ですが、例外として $\{|0\rangle, |1\rangle\}$ および $\{|T-1\rangle, |T\rangle\}$ によって張られる空間では以下のようになります：
+
+$$
+\begin{pmatrix} \frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{2} & 1 \end{pmatrix}_{0, 1} \quad \text{および} \quad \begin{pmatrix} 1 & -\frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2} \end{pmatrix}_{T-1, T}.
+$$ {#eq-6.255}
+
+すなわち、$H'_{\mathrm{prop}}$ はクロックに対して $(T+1) \times (T+1)$ 行列として作用します：
+
+$$
+H'_{\mathrm{prop}} = \begin{pmatrix}
+\frac{1}{2} & -\frac{1}{2} & 0 & \dots & & \\
+-\frac{1}{2} & 1 & -\frac{1}{2} & 0 & \dots & \\
+0 & -\frac{1}{2} & 1 & -\frac{1}{2} & 0 & \dots \\
+& & \ddots & & & \\
+& & & \ddots & & \\
+& \dots & 0 & -\frac{1}{2} & 1 & -\frac{1}{2} \\
+& & \dots & 0 & -\frac{1}{2} & \frac{1}{2}
+\end{pmatrix};
+$$ {#eq-6.256}
+
+その成分は、対角線の直上および直下で $(-\frac{1}{2}, -\frac{1}{2}, \dots, -\frac{1}{2})$、対角線上で $(\frac{1}{2}, 1, 1, \dots, 1, \frac{1}{2})$、それ以外では 0 です。
+
+これを $H'_{\mathrm{prop}} = \boldsymbol{I} - \frac{1}{2}M$ と表現できます。ここで
+
+$$
+M = \begin{pmatrix}
+1 & 1 & 0 & \dots & & \\
+1 & 0 & 1 & 0 & \dots & \\
+0 & 1 & 0 & 1 & 0 & \dots \\
+& & \ddots & & & \\
+& & & \ddots & & \\
+& \dots & 0 & 1 & 0 & 1 \\
+& & \dots & 0 & 1 & 1
+\end{pmatrix}.
+$$ {#eq-6.257}
+
+すなわち、
+
+$$
+\begin{aligned}
+M &: |t\rangle \mapsto |t+1\rangle + |t-1\rangle, \quad t \in \{1, 2, \dots, T-1\}, \\
+M &: |0\rangle \mapsto |0\rangle + |1\rangle, \\
+M &: |T\rangle \mapsto |T-1\rangle + |T\rangle.
+\end{aligned}
+$$ {#eq-6.258}
+
+$M$ を対角化することは、$H'_{\mathrm{prop}}$ を対角化することにもなります。
+
+フーリエ変換によって $M$ を対角化できます。固有ベクトルは以下の形を持ちます：
+
+$$
+|\omega\rangle = \sum_{t=0}^T e^{i\omega t} |t\rangle.
+$$ {#eq-6.259}
+
+$M|\omega\rangle$ の展開において、$t \in \{1, 2, \dots, T-1\}$ に対する $|t\rangle$ の係数は以下のようになります：
+
+$$
+\begin{aligned}
+e^{i\omega(t-1)} + e^{i\omega(t+1)} &= (e^{i\omega} + e^{-i\omega})e^{i\omega t} \\
+&= (2\cos\omega)e^{i\omega t}.
+\end{aligned}
+$$ {#eq-6.260} {#eq-6.261}
+
+したがって、$|t\rangle$ に対する作用は $2\cos\omega$ の掛け算であり、これは $\omega$ の符号に依存しません。したがって、$M$ の固有状態を構築するために、$|\omega\rangle$ と $|-\omega\rangle$ の線形結合を考えることができます。ここで $|\omega\rangle$ の値は、$M$ が境界の状態 — すなわち $|t = 0\rangle$ および $|t = T\rangle$ — に対して適切に作用するように選ばれます。
+
+[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=61) $M|\omega\rangle$ における $|0\rangle$ の係数は $1 + e^{i\omega}$ です。したがって、$M(e^{i\omega/2}|\omega\rangle + e^{-i\omega/2}|-\omega\rangle)$ における $|0\rangle$ の係数は以下のようになります：
+
+$$
+\begin{aligned}
+e^{i\omega/2}(1 + e^{i\omega}) + e^{-i\omega/2}(1 + e^{-i\omega}) &= (e^{i\omega} + e^{-i\omega})(e^{i\omega/2} + e^{-i\omega/2}) \\
+&= 2\cos\omega(e^{i\omega/2} + e^{-i\omega/2}).
+\end{aligned}
+$$ {#eq-6.262}
+
+$t = 0$ における「境界条件」は、$\omega$ の任意の値に対して、ベクトル $e^{i\omega/2}|\omega\rangle + e^{-i\omega/2}|-\omega\rangle$ に対する固有値 $2\cos\omega$ と無矛盾であることが従います。
+
+しかし、私たちは $t = T$ におけるもう一方の境界も考慮しなければなりません。$e^{i\omega/2}|\omega\rangle + e^{-i\omega/2}|-\omega\rangle$ における $|T\rangle$ の係数は $e^{i\omega/2}e^{i\omega T} + e^{-i\omega/2}e^{-i\omega T}$ であり、$M(e^{i\omega/2}|\omega\rangle + e^{-i\omega/2}|-\omega\rangle)$ における $|T\rangle$ の係数は
+
+$$
+(1 + e^{-i\omega})e^{i\omega/2}e^{i\omega T} + (1 + e^{i\omega})e^{-i\omega/2}e^{-i\omega T}
+$$ {#eq-6.263}
+
+です。私たちは次を満たすように $\omega$ を選びます：
+
+$$
+(1 + e^{-i\omega})e^{i\omega/2}e^{i\omega T} + (1 + e^{i\omega})e^{-i\omega/2}e^{-i\omega T} = (e^{i\omega} + e^{-i\omega})(e^{i\omega/2}e^{i\omega T} + e^{-i\omega/2}e^{-i\omega T}).
+$$ {#eq-6.264}
+
+いくつかの相殺の後、この条件は以下のようになります：
+
+$$
+\begin{aligned}
+e^{i\omega/2}e^{i\omega T} + e^{-i\omega/2}e^{-i\omega T} &= e^{3i\omega/2}e^{i\omega T} + e^{-3i\omega/2}e^{-i\omega T} \\
+\implies \cos\left(\omega\left(T + \frac{1}{2}\right)\right) &= \cos\left(\omega\left(T + \frac{3}{2}\right)\right).
+\end{aligned}
+$$ {#eq-6.265} {#eq-6.266}
+
+この条件は、以下が成り立つ限り満たされます：
+
+$$
+\omega(T + 1) = \pi k \quad \text{（ここで } k \text{ は整数）}.
+$$ {#eq-6.267}
+
+したがって、$k \in \{0, 1, 2, \dots, T\}$ に対する $\omega_k = \frac{\pi}{T+1}k$ について、$\{2\cos\omega_k\}$ が $M$ の $T + 1$ 個の異なる固有値であり、対応する固有ベクトルが（規格化を除いて）
+
+$$
+|\psi_k\rangle = \sum_{t=0}^T \cos\left(\omega_k\left(t + \frac{1}{2}\right)\right)|t\rangle
+$$ {#eq-6.268}
+
+であることが確立されました。したがって、$H'_{\mathrm{prop}}$ の固有値は $E_k = 1 - \cos\omega_k = 2\sin^2\frac{\omega_k}{2}$ です。これらの $T + 1$ 個の固有状態は完全系をなし、最も小さい2つの固有値は以下の通りです：
+
+$$
+E_0 = 0,
+$$ {#eq-6.269}
+
+$$
+E_1 = 2\sin^2\left(\frac{\pi}{2(T+1)}\right) \approx \frac{\pi^2}{2(T+1)^2}.
+$$ {#eq-6.270}
+
+$T = \mathrm{poly}(n)$ であるならば、$H_{\mathrm{prop}}$ の固有値ギャップは $E_1 - E_0 \ge \frac{1}{\mathrm{poly}(n)}$ となります。
+
+#### 証拠が拒絶される場合のエネルギーの下界 (Lower bound on the energy when the witness is rejected) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=61) {#sec-6.10.4-lower-bound-energy}
+
+しかし、私たちは完全なハミルトニアン $H = H_{\mathrm{in}} + H_{\mathrm{out}} + H_{\mathrm{prop}}$（とりあえず $H_{\mathrm{clock}}$ は無視します）のスペクトルを考慮したいと考えます。$H_{\mathrm{in}} + H_{\mathrm{out}}$ については、零空間は $t = 0$ で正当な入力を持ち、$t = T$ で YES と答える（受理される）すべてのベクトルによって張られます：
+
+$$
+(H_{\mathrm{in}} + H_{\mathrm{out}})|\text{正当な入力, 受理される出力}\rangle = 0,
+$$ {#eq-6.271}
+
+一方、この零空間に直交するすべてのベクトルに対して $\langle H_{\mathrm{in}} + H_{\mathrm{out}}\rangle \ge 1$ です。したがって、$H_{\mathrm{in}} + H_{\mathrm{out}}$ の固有値ギャップは 1 です。ここで、検証器が確率 1 で入力を受理するならば、[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=62) $H_{\mathrm{prop}}$ と $H_{\mathrm{in}} + H_{\mathrm{out}}$ の同時零固有ベクトルが存在します。すなわち、出力が受理される正当な入力を伴う正当な履歴が存在します。しかし受理確率が小さい場合、これら2つの零空間の間の角度はあまり小さくはなり得ません。両方の零空間内に横たわることに近づくベクトルが存在しないためです。この角度を完全なハミルトニアン $H = H_{\mathrm{in}} + H_{\mathrm{out}} + H_{\mathrm{prop}}$ の基底状態エネルギーに関連付けることができます。
+
+一般に、$H_1$ と $H_2$ が最低固有値が 0 であり、固有値ギャップが少なくとも $\Delta$ である2つのエルミート演算子であると仮定します。このとき、
+
+$$
+\begin{aligned}
+H_1 &\ge \Delta(\boldsymbol{I} - \Pi_1) \quad \text{（ここで } \Pi_1 \text{ は } H_1 \text{ の零空間への射影演算子）}, \\
+H_2 &\ge \Delta(\boldsymbol{I} - \Pi_2) \quad \text{（ここで } \Pi_2 \text{ は } H_2 \text{ の零空間への射影演算子）}.
+\end{aligned}
+$$ {#eq-6.272} {#eq-6.273}
+
+したがって $H_1 + H_2 \ge \Delta(2\boldsymbol{I} - \Pi_1 - \Pi_2)$ であり、$\langle H_1 + H_2\rangle \ge 2\Delta - \Delta\langle\Pi_1 + \Pi_2\rangle$ です。ここで、$|\psi_1\rangle$ と $|\psi_2\rangle$ が $0 \le \theta \le \pi/2$ に対して $|\langle\psi_1|\psi_2\rangle| = \cos\theta$ を満たす2つのベクトルであるとします。適切な位相の約束のもとで、$|\psi_1\rangle$ と $|\psi_2\rangle$ によって張られる2次元空間において以下の基底を選ぶことができます：
+
+$$
+\begin{aligned}
+|\psi_1\rangle &= \begin{pmatrix} \cos\theta/2 \\ \sin\theta/2 \end{pmatrix}, \quad |\psi_2\rangle = \begin{pmatrix} \cos\theta/2 \\ -\sin\theta/2 \end{pmatrix} \implies \\
+|\psi_1\rangle\langle\psi_1| + |\psi_2\rangle\langle\psi_2| &= \begin{pmatrix} 2\cos^2\theta/2 & 0 \\ 0 & 2\sin^2\theta/2 \end{pmatrix},
+\end{aligned}
+$$ {#eq-6.274} {#eq-6.275}
+
+したがって、任意の状態において
+
+$$
+\langle |\psi_1\rangle\langle\psi_1| + |\psi_2\rangle\langle\psi_2| \rangle \le 2\cos^2\theta/2 = 1 + \cos\theta
+$$ {#eq-6.276}
+
+が成り立ちます。$\Pi_1$ と $\Pi_2$ が射影演算子であり、$\Pi_1$ と $\Pi_2$ によって射影される空間間の最大重なりが $|\langle\psi_1|\psi_2\rangle| = \cos\theta$ であるならば、$\langle\Pi_1 + \Pi_2\rangle \le 1 + \cos\theta$ であることが従います。したがって、
+
+$$
+\begin{aligned}
+\langle H_1 + H_2\rangle &\ge 2\Delta - \Delta\langle\Pi_1 + \Pi_2\rangle \\
+&\ge \Delta(1 - \cos\theta) = 2\Delta\sin^2\theta/2.
+\end{aligned}
+$$ {#eq-6.277} {#eq-6.278}
+
+非負エルミート演算子の和の期待値をそれらの零空間間の角度に関連付けたので、次に $H_1 = H_{\mathrm{in}} + H_{\mathrm{out}}$ と $H_2 = H_{\mathrm{prop}}$ の零空間間の角度を推定する必要があります。すなわち、私たちは次を求めたいと考えます：
+
+$$
+\begin{aligned}
+\cos^2\theta &= \max |\langle\eta_1|\eta_2\rangle|^2 \\
+&= \max \langle\eta_2|\Pi_1|\eta_2\rangle
+\end{aligned}
+$$ {#eq-6.279} {#eq-6.280}
+
+ここで、$H_1$ の零空間内の $\eta_1$ と $H_2$ の零空間内の $\eta_2$ について最大化を行い、$\Pi_1$ は $H_1$ の零空間への射影演算子です。
+
+$H_2 = H_{\mathrm{prop}}$ の零空間内のベクトルは正当な履歴状態 $|\eta_2\rangle = \frac{1}{\sqrt{T+1}}\sum_{t=0}^T |\psi(t)\rangle \otimes |t\rangle$ です。$H_1$ の零空間への射影演算子は $t \in \{1, 2, \dots, T-1\}$ の状態に対して自明に作用するため、回転座標系へと変換した後は以下のようになります：
+
+$$
+\langle\eta'_2|\Pi_1|\eta'_2\rangle = \frac{T-1}{T+1} + \frac{1}{T+1}\langle\tilde{\eta}_2|\Pi_{\mathrm{in}} + \Pi'_{\mathrm{out}}|\tilde{\eta}_2\rangle,
+$$ {#eq-6.281}
+
+ここで $\tilde{\eta}_2$ は非クロック変数の状態であり、$\Pi_{\mathrm{in}}$ は正当な入力状態へ射影し、$\Pi'_{\mathrm{out}}$ は
+
+$$
+V_T^\dagger (|1\rangle_{\mathrm{out}}\langle 1| \otimes \boldsymbol{I}_{\mathrm{else}}) V_T
+$$ {#eq-6.282}
+
+へと射影します（回転座標系へと変換しており、履歴状態が正当であるため）。上で示したように、$\phi$ を $\Pi_{\mathrm{in}}$ と $\Pi'_{\mathrm{out}}$ が射影する空間間の角度とするとき、$\langle\tilde{\eta}_2|\Pi_{\mathrm{in}} + \Pi'_{\mathrm{out}}|\tilde{\eta}_2\rangle \le (1 + \cos\phi)$ であることが分かっています。[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=63] この角度 $\phi$ は $\cos^2\phi = \epsilon$ によって与えられます。ここで $\epsilon$ は最大受理確率です — すなわち、入力が正当であり（$\Pi_{\mathrm{in}}$ の台にあり）、履歴が正当であるならば、$|1\rangle_{\mathrm{out}}$ の確率は高々 $\epsilon$ です。
+
+式 (6.281) を経由して、この上界 $\langle\tilde{\eta}_2|\Pi_{\mathrm{in}} + \Pi'_{\mathrm{out}}|\tilde{\eta}_2\rangle \le 1 + \sqrt{\epsilon}$ は、正当な履歴状態における $\Pi_1$ の期待値に対する上界を与え、したがって $H_1$ と $H_2$ の零固有空間間の角度 $\theta$ に対する下界を与えます：
+
+$$
+\cos^2\theta \le \frac{T-1}{T+1} + \frac{1}{T+1}(1 + \sqrt{\epsilon}) = 1 - \frac{1-\sqrt{\epsilon}}{T+1},
+$$ {#eq-6.283}
+
+ここで $\epsilon$ は最大受理確率です。いま、$\Delta = 2\sin^2\left(\frac{\pi}{2(T+1)}\right)$ は $H_1$ または $H_2$ のギャップの下界であり、$\sin^2\theta = 1 - \cos^2\theta \ge \frac{1-\sqrt{\epsilon}}{T+1}$ として $\langle H_1 + H_2\rangle \ge 2\Delta\sin^2\frac{\theta}{2}$ です。$\sin^2\frac{\theta}{2} = \frac{\sin^2\theta}{4\cos^2\frac{\theta}{2}} \ge \frac{1}{4}\sin^2\theta$ を用いると、次が得られます：
+
+$$
+\begin{aligned}
+E_0 &\ge 4\sin^2\left(\frac{\pi}{2(T+1)}\right) \times \frac{1}{4}\left(\frac{1-\sqrt{\epsilon}}{T+1}\right) \ge \sin^2\left(\frac{\pi}{2(T+1)}\right) \times \left(\frac{1-\sqrt{\epsilon}}{T+1}\right) \\
+&\ge \text{定数} \times \frac{1-\sqrt{\epsilon}}{(T+1)^3} = \frac{1-\sqrt{\epsilon}}{\mathrm{poly}(n)}.
+\end{aligned}
+$$ {#eq-6.284}
+
+要約すると、受理確率が $\ge 1 - \epsilon$ であるならば $E_0 \le \frac{\epsilon}{T+1}$ であり、受理確率が $\le \epsilon$ であるならば $E_0 \ge \text{定数} \times \frac{1-\sqrt{\epsilon}}{(T+1)^3}$ であることを示しました。答えが YES である場合に（$1/(T+1)^3$ と比較して）$\epsilon$ を小さくするための適切な増幅を行うことで、私たちは QMA 問題を局所ハミルトニアン問題のインスタンスへと還元しました。
+
+#### クロックの符号化 (Encoding the clock) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=63) {#sec-6.10.4-encoding-clock}
+
+ただし……ハミルトニアンを局所的にできることを確認することがまだ残っています。量子ビットを用いてクロックレジスタをエンコードしたいと考えます。一つの方法は、$i = \{1, 2, 3, \dots, T\}$ でラベル付けされた $T$ 個の量子ビットによる**単項符号化（unary encoding）**を用いることです：
+
+$$
+\begin{aligned}
+|t = 0\rangle &= |000\dots 0\rangle, \\
+|t = 1\rangle &= |100\dots 0\rangle, \\
+|t = 2\rangle &= |110\dots 0\rangle, \\
+&\dots \\
+|t = T\rangle &= |111\dots 1\rangle.
+\end{aligned}
+$$ {#eq-6.285}
+
+クロックの状態が正当にエンコードされていない場合に、クロックにエネルギーペナルティを課す項をハミルトニアンに追加できます。符号化は、0 の後に 1 が決して続かない場合に正当です。したがって、次のように選びます：
+
+$$
+H_{\mathrm{clock}} = \sum_{i=1}^{T-1} (|01\rangle\langle 01|)_{i, i+1},
+$$ {#eq-6.286}
+
+これにより、$H_{\mathrm{clock}}$ の唯一の零ベクトルは正当なクロック状態となります。
+
+ハミルトニアン内の項 $H_{\mathrm{prop}}$ は、クロックレジスタに作用する演算子 $|t\rangle\langle t|$, $|t\rangle\langle t-1|$, $|t-1\rangle\langle t|$ を含みます。正当にエンコードされたクロック状態のみが許される場合、わずか2つの隣接する量子ビットに作用することによって状態 $|t\rangle$ への射影を行うことができます：
+
+$$
+|t\rangle\langle t| = (|10\rangle\langle 10|)_{t, t+1}
+$$ {#eq-6.287}
+
+（$t = 1, 2, 3, \dots, T-1$ について）。そして $t = 0$ または $t = T$ については、単一の量子ビットに作用するだけで十分です。
+
+[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=64) 時間を進めるまたは遅らせる演算子は、3つの隣接する量子ビットに作用します：
+
+$$
+\begin{aligned}
+|t\rangle\langle t-1| &= (|110\rangle\langle 100|)_{t-1, t, t+1}, \\
+|t-1\rangle\langle t| &= (|100\rangle\langle 110|)_{t-1, t, t+1}
+\end{aligned}
+$$ {#eq-6.288}
+
+（$1 \le t \le T-1$ について）。3つの量子ビットに作用することで、ビット文字列内の 0 と 1 の間の「ドメイン壁」の位置を特定し、その壁を左または右に1つ動かすのに十分です。$t = 0$ についてはわずか2つの量子ビットへの作用で壁を右に1歩動かすのに十分であり、$t = T$ については2つの量子ビットへの作用で壁を左に1歩動かすのに十分です。これらのクロック項は高々3つの量子ビットに作用するため、$U_t$ が 2量子ビットゲートであるならば、項 $U_t \otimes |t\rangle\langle t-1|$ は高々5つの量子ビットに作用します。したがって、このクロック符号化を用いると、ハミルトニアン
+
+$$
+H = H_{\mathrm{in}} + H_{\mathrm{out}} + H_{\mathrm{prop}} + H_{\mathrm{clock}}
+$$ {#eq-6.289}
+
+は **5-局所的（5-local）**になります。クロックハミルトニアンは正当にエンコードされたクロック状態を消滅させるため、ハミルトニアン $H$ の残りの項と自明に可換であり、1 のエネルギーギャップを持ちます。したがって、$H$ の基底状態エネルギーに関する以前の解析はそのまま成立します。
+
+これで、任意の QMA 問題が 5-局所ハミルトニアンの基底状態エネルギーを（$1/\mathrm{poly}(n)$ の約束ギャップをもって）推定する問題に還元可能であることの実証が完了しました。
+
+### 6.10.5 コメントと展望 (Comments) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=64) {#sec-6.10.5-comments}
+
+このようにして、3-SAT が自然な NP完全問題であるのと同様に、5-局所ハミルトニアン問題が「自然な」QMA完全問題であることを示しました。しかし、古典的な場合には多くの実際的な問題が NP完全であることが示されているのに対し、QMA完全であることが示されている問題の族は依然としてかなり小さく、それらの問題は比較的「人工的」に見えます。いずれにせよ、量子局所ハミルトニアン問題が古典的なものよりも困難であるように思われることを見るのは興味深いことです（$\mathrm{QMA} \ne \mathrm{NP}$ である場合）。
+
+QMA完全問題を $k = 2$ に削減するための技巧（摂動論の巧妙な使用を伴う）や、$H$ を幾何学的に局所化するための技巧（とりわけクロックをより巧妙にエンコードすることを伴う）については、ここでは議論しません。
+
+これらのアイデアを用いて追求すべきもう一つの興味深い方向性は、**BQP に属する任意の問題が断熱量子計算を用いて解くことができる**ことを示すことです。そのアイデアは、以下のように置き換えることです：
+
+$$
+H_{\mathrm{prop}} \to H_{\mathrm{prop}}(s) = (1 - s)H_{\mathrm{clock-init}} + s H_{\mathrm{prop}}
+$$ {#eq-6.290}
+
+ここで $H_{\mathrm{clock-init}}$ の零空間はクロックを $|t = 0\rangle$ に固定し、$s$ は $[0, 1]$ 内で変化します。このとき、$H(s = 0)$ の基底状態は容易に構築でき、$H(s = 1)$ の基底状態は正当な履歴状態となります。$H(s)$ の固有値ギャップは $s \in [0, 1]$ に対して $> 1/\mathrm{poly}(n)$ にとどまるため、$s$ を断熱的に変化させることによって履歴状態を多項式時間で準備できます。履歴状態を準備したならば、クロックを測定して確率 $1/(T + 1) = 1/\mathrm{poly}(n)$ で $|t = T\rangle$ を射影抽出できます。そして $|\psi(T)\rangle$ が得られたならば、出力量子ビットを測定して回路が受理するかどうかを見出すことができます。わずかな追加コストで、時間 $t = T$ の後に長い「滑走路（runway）」を追加して $S$ 個の追加タイムステップの間コンピュータの状態を固定しておくことにより、$|\psi(T)\rangle$ を準備する確率を大幅に改善できます。その場合、クロックを測定すると確率 $(S + 1)/(S + T + 1)$ で $|\psi(T)\rangle$ が準備されます。

@@ -1,0 +1,111 @@
+## 6.7 グローバーのアルゴリズムの最適性 (The Grover Algorithm Is Optimal) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=38) {#sec-6.7-grover-optimality}
+
+全探索に対するグローバーの2次の量子高速化は、すでに十分に興味深く潜在的に重要ですが、より巧妙な工夫を用いればさらに優れた結果を得ることができるのではないでしょうか？
+
+しかし、それは**不可能**であることが分かります。オラクルへのクエリ数によって「時間」を測定する場合、グローバーのアルゴリズムは整列されていないデータベースに対する最速の量子探索を提供します。
+
+単一のマークされた状態 $|\omega\rangle$ の場合を考え、$\boldsymbol{U}(\omega, T)$ をオラクルを $T$ 回呼び出す [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=39) 量子回路とします。クエリ数を指定することを除いて、回路には**何の制限も課しません**。特に、量子ゲートの数には制限を設けません。この回路を初期状態 $|\psi(0)\rangle$ に適用し、最終状態
+
+$$
+|\psi_\omega(T)\rangle = \boldsymbol{U}(\omega, T)|\psi(0)\rangle
+$$ {#eq-6.173}
+
+を生成します。いま、$\omega$ の可能な $N$ 個の値を識別するように設計された測定を実行するとします。可能な値の間を完全に識別できるためには、状態 $|\psi_\omega(T)\rangle$ はすべて互いに直交していなければならず、高い確率で正しく識別できるためには、それらはほぼ直交していなければなりません。
+
+ここで、状態集合 $\{|\psi_\omega\rangle\}$ が正規直交基底であるならば、任意の固定された規格化ベクトル $|\varphi\rangle$ に対して以下が成り立ちます：
+
+$$
+\sum_{\omega=0}^{N-1} \| |\psi_\omega\rangle - |\varphi\rangle \|^2 \ge 2N - 2\sqrt{N}.
+$$ {#eq-6.174}
+
+（制約付き極値問題を解くためにラグランジュの未定乗数法を適用することで示せるように、この和は $|\varphi\rangle$ がすべての基底元の等しい重みの重ね合わせ $|\varphi\rangle = \frac{1}{\sqrt{N}}\sum_\omega |\psi_\omega\rangle$ である場合に最小化されます。）私たちの戦略は、オラクル呼び出しの回数 $T$ について何かを学ぶためにこの不等式を利用できるように、状態 $|\varphi\rangle$ を適切に選択することです。
+
+$T$ 回のクエリをもつ回路は、次のユニタリ変換を構築します：
+
+$$
+\boldsymbol{U}(\omega, T) = \boldsymbol{U}_\omega \boldsymbol{U}_T \boldsymbol{U}_\omega \boldsymbol{U}_{T-1} \dots \boldsymbol{U}_\omega \boldsymbol{U}_1,
+$$ {#eq-6.175}
+
+ここで $\boldsymbol{U}_\omega$ はオラクル変換であり、$\boldsymbol{U}_t$ は任意の非オラクル変換です。状態 $|\varphi(T)\rangle$ としては、各 $\boldsymbol{U}_\omega$ を単位行列 $\boldsymbol{I}$ で置き換えたものを除いて、$\boldsymbol{U}(\omega, T)$ を $|\psi(0)\rangle$ に適用した結果を選択します。すなわち、同じ回路ですが、すべてのクエリが「空のオラクル（empty oracle）」に提出される回路です。したがって
+
+$$
+|\varphi(T)\rangle = \boldsymbol{U}_T \boldsymbol{U}_{T-1} \dots \boldsymbol{U}_2 \boldsymbol{U}_1 |\psi(0)\rangle
+$$ {#eq-6.176}
+
+であるのに対し、
+
+$$
+|\psi_\omega(T)\rangle = \boldsymbol{U}_\omega \boldsymbol{U}_T \boldsymbol{U}_\omega \boldsymbol{U}_{T-1} \dots \boldsymbol{U}_\omega \boldsymbol{U}_1 |\psi(0)\rangle
+$$ {#eq-6.177}
+
+となります。$|\varphi(T)\rangle$ と $|\psi_\omega(T)\rangle$ を比較するために、$\omega$ オラクルを空のオラクルの「誤った」実装とみなして、回路の精度に対する誤差の影響に関する以前の解析を参照します。第 $t$ ステップにおける誤差ベクトルのノルムは
+
+$$
+\begin{aligned}
+\| |E(\omega, t)\rangle \| &= \| (\boldsymbol{U}_\omega - \boldsymbol{I})|\varphi(t)\rangle \| \\
+&= 2|\langle\omega|\varphi(t)\rangle|
+\end{aligned}
+$$ {#eq-6.178}
+
+となります。なぜなら $\boldsymbol{U}_\omega = \boldsymbol{I} - 2|\omega\rangle\langle\omega|$ だからです。$T$ 回のクエリの後、次が得られます：
+
+$$
+\| |\psi_\omega(T)\rangle - |\varphi(T)\rangle \| \le 2\sum_{t=1}^T |\langle\omega|\varphi(t)\rangle|.
+$$ {#eq-6.179}
+
+[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=40) 恒等式
+
+$$
+\begin{aligned}
+\left(\sum_{t=1}^T c_t\right)^2 + \frac{1}{2}\sum_{s,t=1}^T (c_s - c_t)^2 &= \sum_{s,t=1}^T \left(c_t c_s + \frac{1}{2}c_s^2 - c_t c_s + \frac{1}{2}c_t^2\right) \\
+&= T\sum_{t=1}^T c_t^2
+\end{aligned}
+$$ {#eq-6.180}
+
+から、次の不等式が得られます：
+
+$$
+\left(\sum_{t=1}^T c_t\right)^2 \le T\sum_{t=1}^T c_t^2.
+$$ {#eq-6.181}
+
+これを式 (@eq-6.179) に適用すると、次が得られます：
+
+$$
+\| |\psi_\omega(T)\rangle - |\varphi(T)\rangle \|^2 \le 4T\left(\sum_{t=1}^T |\langle\omega|\varphi(t)\rangle|^2\right).
+$$ {#eq-6.182}
+
+$\omega$ について和をとると、以下が得られます：
+
+$$
+\sum_\omega \| |\psi_\omega(T)\rangle - |\varphi(T)\rangle \|^2 \le 4T\sum_{t=1}^T \langle\varphi(t)|\varphi(t)\rangle = 4T^2.
+$$ {#eq-6.183}
+
+式 (@eq-6.174) を適用すると、状態 $|\psi_\omega(T)\rangle$ が互いに直交している場合、
+
+$$
+4T^2 \ge 2N - 2\sqrt{N}
+$$ {#eq-6.184}
+
+であると結論付けられます。したがって、マークされた状態のすべての可能な値を識別できる任意の量子アルゴリズムは、以下を満たす $T$ 回だけオラクルに問い合わせる必要があることが分かりました：
+
+$$
+T \ge \sqrt{\frac{N}{2}}
+$$ {#eq-6.185}
+
+（$N \to \infty$ における小さな補正は無視しています）。クエリ数のこの下限は、漸近的に大きな $N$ に対して 1 に近づく成功確率でマークされた状態を特定する場合に適用されます。議論の単純な拡張により、マークされた文字列 $\omega$ の可能な各選択肢に対して少なくとも $1 - \varepsilon$ の成功確率で妥協する場合、
+
+$$
+T \ge \sqrt{\frac{N}{2}}(1 - \sqrt{\varepsilon})^{1/2}
+$$ {#eq-6.186}
+
+となることが示されます。
+
+グローバーのアルゴリズムは $\frac{\pi}{4}\sqrt{N}$ 回のクエリで $\omega$ を見つけますが、これは私たちの下限を約 11% しか上回っていません。実際、より慎重な議論により、グローバーのアルゴリズムが達成するものに漸近的に一致する、クエリ数に関するより厳密な下限を導出することができます。さらに、$T < \frac{\pi}{4}\sqrt{N}$ である場合、$T$ 回のオラクル呼び出しをもつすべての回路の中で、グローバーの回路が最良の成功確率を達成することを示すことができます。
+
+量子探索アルゴリズムがブラックボックス設定において改善できないという認識に、失望の念を抱くと同時に（グローバーに対する賞賛の念も湧き上がります）。量子計算量理論にとって、これにはどのような意味があるのでしょうか？
+
+NP クラスに属する多くの最適化問題に対して、可能なすべての解のしらみつぶし探索よりも優れた方法は知られていません。量子並列性を利用することで、全探索の2次の高速化を達成できます。いま私たちは、[📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=41) 純粋な量子並列性の力に依存する場合――すなわち、解きたい問題の特定の構造を利用するように量子アルゴリズムを設計しない場合――、2次の高速化が達成可能な最善のものであることを学びました。
+
+グローバーのアルゴリズムの最適性は、$\text{BQP} \not\supseteq \text{NP}$ であることの証拠と解釈されるかもしれません。少なくとも、もし $\text{NP} \subseteq \text{BQP}$ かつ $\text{P} \neq \text{NP}$ であることが判明した場合、NP 問題は量子回路の特異な能力とよく適合する（現時点では証拠がない）深く隠された構造を共有していなければなりません。
+
+2次の高速化であっても、様々な NP 完全最適化問題にとって有用であることが証明されるかもしれません。しかし、指数関数的な高速化とは異なり、2次の高速化は解ける問題と扱いにくい（intractable）問題の間の境界を真に動かすものではありません。量子デバイスのクロック速度が古典デバイスのクロック速度から大きく遅れをとらない場合に限り、量子コンピュータは全探索の実行においていつの日か古典コンピュータを凌駕するかもしれません。

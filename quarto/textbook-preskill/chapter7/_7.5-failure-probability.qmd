@@ -1,0 +1,153 @@
+## 7.5 失敗確率 (Failure probability) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=21) {#sec-7.5-failure-probability}
+
+### 7.5.1 忠実度の限界 (Fidelity bound) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=21) {#sec-7.5.1-fidelity-bound}
+
+誤り写像の台が、訂正方法を知っている集合 $\mathcal{E}$ 内のパウリ演算子のみを含む場合、符号化された量子情報を完全な忠実度（fidelity）で復元することができます。しかし現実的な誤りモデルでは、$\mathcal{E}$ に属さない誤りに対してわずかではあってもゼロでない振幅が存在し、そのため復元された状態は完全なものにはなりません。復元された状態の忠実度について、何が言えるでしょうか？
+
+誤り写像のパウリ演算子展開は、「良性の（good）」演算子（$\mathcal{E}$ 内のもの）と「悪性の（bad）」演算子（$\mathcal{E}$ 外のもの）にわたる和に分割でき、符号部分空間内の状態 $|\psi\rangle$ に対して次のように作用します：
+
+$$
+\begin{aligned}
+|\psi\rangle &\mapsto \sum_a \boldsymbol{E}_a|\psi\rangle \otimes |\varphi_a\rangle_E \\
+&= \sum_{\boldsymbol{E}_a \in \mathcal{E}} \boldsymbol{E}_a|\psi\rangle \otimes |\varphi_a\rangle_E + \sum_{\boldsymbol{E}_b \notin \mathcal{E}} \boldsymbol{E}_b|\psi\rangle \otimes |\varphi_b\rangle_E \\
+&:= |\text{GOOD}\rangle + |\text{BAD}\rangle.
+\end{aligned}
+$$ {#eq-7.55}
+
+復元操作は、$|\text{GOOD}\rangle$ をデータ・環境・アンシラの状態 $|\text{GOOD}'\rangle$ に写し、$|\text{BAD}\rangle$ を状態 $|\text{BAD}'\rangle$ に写すため、復元後に次の状態が得られます：
+
+$$
+|\text{GOOD}'\rangle + |\text{BAD}'\rangle;
+$$ {#eq-7.56}
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=22)
+ここで（復元は良性状態に対して完全に作用するため）
+
+$$
+|\text{GOOD}'\rangle = |\psi\rangle \otimes |\chi\rangle_{EA}
+$$ {#eq-7.57}
+
+であり、$|\chi\rangle_{EA}$ は環境とアンシラの（規格化されていない）ある状態です。
+
+状態 $|\text{GOOD}\rangle$ と $|\text{BAD}\rangle$ が直交していると仮定しましょう。これは例えば、環境のすべての「良性」状態がすべての「悪性」状態と直交している場合、すなわち
+
+$$
+\langle\varphi_a|\varphi_b\rangle = 0 \quad (\boldsymbol{E}_a \in \mathcal{E}, \boldsymbol{E}_b \notin \mathcal{E})
+$$ {#eq-7.58}
+
+である場合に成り立ちます。
+環境とアンシラをトレースアウトすることによって得られる復元状態の密度行列を $\boldsymbol{\rho}'$ とし、初期符号状態との忠実度を
+
+$$
+F = \langle\psi|\boldsymbol{\rho}'|\psi\rangle
+$$ {#eq-7.59}
+
+とします。復元写像は等長写像であるため、状態 $|\text{BAD}'\rangle$ と $|\text{GOOD}'\rangle$ もまた直交します（すなわち、$|\text{BAD}'\rangle$ は $|\psi\rangle \otimes |\chi\rangle_{EA}$ に沿った成分を持ちません）。したがって忠実度は、
+
+$$
+F = \langle\psi|\boldsymbol{\rho}_{\text{GOOD}'}|\psi\rangle + \langle\psi|\boldsymbol{\rho}_{\text{BAD}'}|\psi\rangle
+$$ {#eq-7.60}
+
+となります。ここで
+
+$$
+\boldsymbol{\rho}_{\text{GOOD}'} = \text{tr}_{EA}(|\text{GOOD}'\rangle\langle\text{GOOD}'|), \quad \boldsymbol{\rho}_{\text{BAD}'} = \text{tr}_{EA}(|\text{BAD}'\rangle\langle\text{BAD}'|)
+$$ {#eq-7.61}
+
+であり、したがって
+
+$$
+F \ge \langle\psi|\boldsymbol{\rho}_{\text{GOOD}'}|\psi\rangle = \||\chi\rangle_{EA}\|^2 = \||\text{GOOD}'\rangle\|^2
+$$ {#eq-7.62}
+
+となります。さらに、復元操作は等長写像であるため、$\||\text{GOOD}'\rangle\| = \||\text{GOOD}\rangle\|$ であり、したがって
+
+$$
+F \ge \||\text{GOOD}\rangle\|^2 = \left\|\sum_{\boldsymbol{E}_a \in \mathcal{E}} \boldsymbol{E}_a|\psi\rangle \otimes |\varphi_a\rangle_E\right\|^2
+$$ {#eq-7.63}
+
+となります。
+
+しかし一般には、$|\text{BAD}\rangle$ は $|\text{GOOD}\rangle$ と直交している必要はなく、そのため $|\text{BAD}'\rangle$ も $|\text{GOOD}'\rangle$ と直交している必要はありません。その場合、$|\text{BAD}'\rangle$ は $|\text{GOOD}'\rangle$ に沿った成分を持ち、これが $|\text{GOOD}'\rangle$ と破壊的に干渉して忠実度を低下させる可能性があります。このより一般的な場合においても、$|\text{BAD}'\rangle$ を $|\text{GOOD}'\rangle$ に沿った成分と直交成分へと
+
+$$
+|\text{BAD}'\rangle = |\text{BAD}'_\|\rangle + |\text{BAD}'_\perp\rangle
+$$ {#eq-7.64}
+
+のように分解することで、忠実度の下限を得ることができます。上記とまったく同様に推論すると、
+
+$$
+F \ge \||\text{GOOD}'\rangle + |\text{BAD}'_\|\rangle\|^2
+$$ {#eq-7.65}
+
+が得られます。もちろん、誤り操作と復元操作はどちらも等長写像であるため、完全な状態 $|\text{GOOD}'\rangle + |\text{BAD}'\rangle$ は規格化されており、
+
+$$
+\||\text{GOOD}'\rangle + |\text{BAD}'_\|\rangle\|^2 + \||\text{BAD}'_\perp\rangle\|^2 = 1
+$$ {#eq-7.66}
+
+となり、式 @eq-7.65 は次のようになります：
+
+$$
+F \ge 1 - \||\text{BAD}'_\perp\rangle\|^2.
+$$ {#eq-7.67}
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=23)
+最後に、$|\text{BAD}'_\perp\rangle$ のノルムは $|\text{BAD}'\rangle$ のノルムを超えることはできないため、次のように結論付けられます：
+
+$$
+1 - F \le \||\text{BAD}'\rangle\|^2 = \||\text{BAD}\rangle\|^2 \equiv \left\|\sum_{\boldsymbol{E}_b \notin \mathcal{E}} \boldsymbol{E}_b|\psi\rangle \otimes |\varphi_b\rangle_E\right\|^2.
+$$ {#eq-7.68}
+
+これが復元操作の「失敗確率（failure probability）」に対する私たちの一般的な限界です。結果 @eq-7.63 は、$|\text{GOOD}\rangle$ と $|\text{BAD}\rangle$ が直交状態である特別な場合として、式 @eq-7.68 から回復できます。
+
+### 7.5.2 無相関ノイズ (Uncorrelated noise) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=23) {#sec-7.5.2-uncorrelated-noise}
+
+相異なる量子ビットに作用する誤りが完全に無相関である場合について、これらの結果の意味合いを考えてみましょう。その場合、誤りチャンネルは単一量子ビットチャンネルのテンソル積になります。ノイズがすべての量子ビットに同一の形で作用する場合、符号ブロック内の $n$ 量子ビットに作用するノイズは $\mathcal{N}^{\otimes n}$ であり、ここで単一量子ビットチャンネル $\mathcal{N}$ は次のディレーションを持ちます：
+
+$$
+|\psi\rangle \mapsto |\psi\rangle \otimes |\varphi_I\rangle_E + \boldsymbol{X}|\psi\rangle \otimes |\varphi_X\rangle_E + \boldsymbol{Y}|\psi\rangle \otimes |\varphi_Y\rangle_E + \boldsymbol{Z}|\psi\rangle \otimes |\varphi_Z\rangle_E.
+$$ {#eq-7.69}
+
+環境の3つの状態 $|\varphi_{X,Y,Z}\rangle$ のそれぞれが状態 $|\varphi_I\rangle$ に直交しているとさらに仮定すると、符号化された情報に対するノイズの影響を解析することは特に容易になります。その場合、各量子ビットについて誤りが発生したかどうかの記録が環境に恒久的に刻み込まれ、各量子ビットに対して誤り確率 $\varepsilon$ を語ることが合理的になります。ここで
+
+$$
+\langle\varphi_I|\varphi_I\rangle = 1 - \varepsilon
+$$ {#eq-7.70}
+
+です。
+量子符号が $t$ 個の誤りを訂正できる場合、「良性の」パウリ演算子は重量 $t$ 以下を持ち、「悪性の」パウリ演算子は $t$ より大きい重量を持ちます。少なくとも $t + 1$ 個の量子ビットが誤りを受けない限り、復元は確実に成功します。したがって、忠実度は次の限界を満たします：
+
+$$
+1 - F \le \sum_{s=t+1}^n \binom{n}{s} \varepsilon^s (1 - \varepsilon)^{n-s} \le \binom{n}{t+1} \varepsilon^{t+1}.
+$$ {#eq-7.71}
+
+（$t+1$ 箇所の位置を選ぶ $\binom{n}{t+1}$ 通りの方法のそれぞれについて、それらの位置のすべてで誤りが発生する確率は $\varepsilon^{t+1}$ です。ここで残りの $n - t - 1$ 箇所の位置で追加の誤りが発生するかどうかは考慮していません。したがって、式 @eq-7.71 の最後の表現は、$n$ 量子ビットのブロックにおいて少なくとも $t + 1$ 個の誤りが発生する確率の上限です。）$\varepsilon$ が小さく $t$ が大きい場合、符号化されたデータの忠実度は、保護されていない量子ビットによって維持される忠実度 $F = 1 - O(\varepsilon)$ よりも大幅に改善されます。
+
+単一量子ビットに作用する一般的なノイズ写像に対しては、「誤り確率」という明確な概念は存在しません。パウリ演算子 $\boldsymbol{I}$ が作用したときに得られる量子ビットとその環境の状態は、パウリ演算子 $\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}$ が作用したときに得られる状態と直交しない（したがって完全に区別できない）からです。環境とのエンタングルメントがまったく存在しない極端な場合では、誤りは量子ビットに未知のユニタリ変換が作用することによって生じます。
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=24)
+符号ブロック内の $n$ 量子ビットに作用する無相関なユニタリ誤りを考えます。これらはそれぞれ（無関係な位相因子を除いて）次の形をとります：
+
+$$
+\boldsymbol{U}^{(1)} = \sqrt{1 - \varepsilon}\boldsymbol{I} + i\sqrt{\varepsilon} \boldsymbol{W};
+$$ {#eq-7.72}
+
+ここで $\boldsymbol{W}$ は $\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}$ の（トレースがゼロでエルミートな）線形結合であり、$\boldsymbol{W}^2 = \boldsymbol{I}$ を満たします。量子ビットの状態 $|\psi\rangle$ が準備され、その後に式 @eq-7.72 のユニタリ誤りが発生した場合、結果として損傷した状態と初期状態との忠実度は、
+
+$$
+F = |\langle\psi|\boldsymbol{U}^{(1)}|\psi\rangle|^2 = 1 - \varepsilon\left(1 - (\langle\psi|\boldsymbol{W}|\psi\rangle)^2\right) \ge 1 - \varepsilon
+$$ {#eq-7.73}
+
+となります。
+式 @eq-7.72 の形のユニタリ誤りが符号ブロック内の $n$ 個の量子ビットのそれぞれに作用し、結果として生じる状態が式 @eq-7.55 のようにパウリ演算子で展開される場合、状態 $|\text{BAD}\rangle$（これは $\boldsymbol{W}$ が少なくとも $t + 1$ 個の量子ビットに作用する項から生じます）はオーダー $(\sqrt{\varepsilon})^{t+1}$ のノルムを持ち、式 @eq-7.68 は次のようになります：
+
+$$
+1 - F = O(\varepsilon^{t+1}).
+$$ {#eq-7.74}
+
+無相関な誤りがデヒーレンスによるものか、未知のユニタリ変換によるものかにかかわらず、符号化によって忠実度が同じオーダーで改善されることがわかります。
+
+混乱を避けるため、上記の議論における「無相関（uncorrelated）」の意味を強調しておきます。相異なる量子ビットに作用するユニタリ変換が互いにどのように関係しているかにかかわらず、単一量子ビットのユニタリ変換のテンソル積である場合、私たちは $n$ 量子ビットに作用するユニタリ誤りを「無相関」と見なします。例えば、すべての量子ビットが共通の軸の周りに同一の微小角度 $\theta \ll 1$ だけ回転するという「誤り」は、量子誤り訂正によって効果的に対処されます。符号が $t$ 個の誤りから保護できる場合、復元後の忠実度は $F = 1 - O(\theta^{2(t+1)})$ となります。対照的に、より深刻な問題を引き起こす $n$ 量子ビットのユニタリ誤りは、$\boldsymbol{U}^{(n)} \sim \boldsymbol{I} + i\theta\boldsymbol{E}_{\text{bad}}^{(n)}$ という形のものであり、ここで $\boldsymbol{E}_{\text{bad}}^{(n)}$ は重量が $t$ より大きい $n$ 量子ビットパウリ演算子です。その場合、$|\text{BAD}\rangle$ はオーダー $\theta$ のノルムを持ち、復元後の典型的な忠実度は $F = 1 - O(\theta^2)$ となります。
+
+私たちはまた、ユニタリ誤りとデヒーレンス誤りの間のもう1つの重要な相違点にも注意すべきです。第3章で議論したように、デヒーレンスがマルコフ的マスター方程式によって記述される場合、誤りは単位時間あたり一定のレート $\Gamma$ で発生する「量子跳躍（quantum jumps）」によるものであり、長さ $\tau$ の時間間隔の間に誤りが発生する確率 $\varepsilon = \Gamma\tau$ は $\tau$ に比例して線形に増加します。これとは対照的に、系のハミルトニアンの不完全な制御によるユニタリ誤りは、量子状態を角度 $\theta$ だけ回転させ、この $\theta$ は $\tau$ に比例して線形に蓄積するため、対応するインフィデリティ $\sim \theta^2$ は $\tau$ に対して2次関数的に増加します。この区別については、第8章でフォールトトレラント量子計算を議論する際に再び立ち戻ります。

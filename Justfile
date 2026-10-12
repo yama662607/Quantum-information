@@ -141,3 +141,20 @@ render-pdf pdf_path start end *args="":
 extract-content pdf_path start end *args="":
     @echo "🔍 Extracting content from PDF pages {{start}}-{{end}}..."
     @{{python}} tools/extract_pdf_content.py {{pdf_path}} --start {{start}} --end {{end}} {{args}}
+
+# Preskill 各章ショートカット: 画像化
+# 使い方: just render-chap <chap_num> <start_page> <end_page>
+render-chap chap start end *args="":
+    @just render-pdf quarto/assets/pdf/preskill/chap{{chap}}.pdf {{start}} {{end}} {{args}}
+
+# Preskill 各章ショートカット: テキスト・数式抽出
+# 使い方: just extract-chap <chap_num> <start_page> <end_page>
+extract-chap chap start end *args="":
+    @just extract-content quarto/assets/pdf/preskill/chap{{chap}}.pdf {{start}} {{end}} {{args}}
+
+# MinerU による高精度一括解析
+# 使い方: just parse-mineru <pdf_path> [out_dir]
+parse-mineru pdf_path out_dir="/tmp/mineru_out":
+    @echo "⛏️ Running MinerU extraction on {{pdf_path}}..."
+    mineru -p {{pdf_path}} -o {{out_dir}}
+

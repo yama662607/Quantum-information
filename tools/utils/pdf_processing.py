@@ -46,10 +46,24 @@ def extract_pdf_text(pdf_path, start_page=None, end_page=None, quiet=False):
         return []
 
 
-def extract_pdf_images(pdf_path, start_page, end_page, out_dir="/tmp", dpi=300):
+def get_default_img_dir(pdf_path):
+    """
+    Returns a distinct image directory per PDF file under /tmp to prevent collisions.
+    Example: chap1.pdf -> /tmp/preskill_chap1
+    """
+    stem = os.path.splitext(os.path.basename(pdf_path))[0]
+    return os.path.join("/tmp", f"preskill_{stem}")
+
+
+def extract_pdf_images(pdf_path, start_page, end_page, out_dir=None, dpi=300):
     """
     Extracts pages as images from a PDF file.
+    If out_dir is None, defaults to get_default_img_dir(pdf_path).
     """
+    if out_dir is None:
+        out_dir = get_default_img_dir(pdf_path)
+
+    os.makedirs(out_dir, exist_ok=True)
     saved_paths = []
     try:
         doc = fitz.open(pdf_path)

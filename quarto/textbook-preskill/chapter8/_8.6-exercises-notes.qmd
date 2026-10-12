@@ -1,0 +1,232 @@
+## 8.6 エピローグ、チャーン・サイモンズ理論、$S$ 行列、端励起、および文献ノート [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=63) {#sec-8-6-epilogue-notes}
+
+講義でカバーできた内容はここまでです。ここでは、時間が許せば触れたかったであろういくつかの発展的トピックについて簡潔に概説します。
+
+### 8.6.1 チャーン・サイモンズ理論 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=63) {#sec-8-6-chern-simons-theory}
+
+これまで、多項式方程式（五角形方程式および六角形方程式）を力ずく（brute-force）で解くことによってエニオンモデルを構築する方法を議論してきました。この手法は確実ですが、実際にはより効率的な他の手法を用いてモデルが構築されることが一般的です。実際、既知のエニオンモデルの大部分は**チャーン・サイモンズ理論（Chern-Simons theory）**の具体例として発見されてきました。
+
+チャーン・サイモンズ理論の融合規則は、リー群の既約表現の融合規則を切断（truncate）したバージョンとなっています。例えば、群 $\text{SU}(2)$ に関連して、正の整数 $k$ でインデックス付けされたチャーン・サイモンズ理論の系列が存在します。この $k$ は**レベル（level）**と呼ばれます。
+
+$\text{SU}(2)$ の場合、既約表現はスピンラベル $j = 0, \frac{1}{2}, 1, \frac{3}{2}, 2, \frac{5}{2}, \dots$ を持ち、通常の角運動量の合成則としての融合規則は次の形を取ります：
+
+$$
+j_1 \times j_2 = \sum_{j = |j_2 - j_1|}^{j_1 + j_2} j.
+$$ {#eq-8.128}
+
+$\text{SU}(2)_k$ と表記されるチャーン・サイモンズ理論では、半整数ラベルは $j \le k/2$ に制限され、さらにラベル $j$ は
+
+$$
+j_1 + j_2 + j \le k
+$$
+
+を満たす場合にのみ $j_1 \times j_2$ の直和に含まれます。
+
+例えば、$\text{SU}(2)_1$ モデルはアーベル型です。また、$\text{SU}(2)_2$ モデルの非自明な融合規則は次のようになります：
+
+$$
+\begin{aligned}
+\frac{1}{2} \times \frac{1}{2} &= 0 + 1, \\
+\frac{1}{2} \times 1 &= \frac{1}{2}, \\
+1 \times 1 &= 0.
+\end{aligned}
+$$ {#eq-8.129}
+
+したがって、ラベル $\frac{1}{2}$ は量子次元
+
+$$
+d_{1/2} = \sqrt{2}
+$$
+
+を持ち、自明な全電荷 $0$ を持つそのような $2m$ 個のエニオンのトポロジカル・ヒルベルト空間は次元
+
+$$
+N_{(\frac{1}{2})^{2m}}^0 = 2^{m-1}
+$$ {#eq-8.130}
+
+を持ちます（これはイジング・エニオンモデルに相当します）。
+
+これらの融合規則に対する多項式方程式には複数の解が存在します（そのうちの1つだけが $\text{SU}(2)_2$ モデルの組み紐特性を記述します）。しかし、得られるどのモデルも**計算普遍的な組み紐規則を持ちません**。空間 $V_{\frac{1}{2}\frac{1}{2}\frac{1}{2}\frac{1}{2}}^0$ は2次元であり、$2 \times 2$ 行列 $F \equiv F_{\frac{1}{2}\frac{1}{2}\frac{1}{2}\frac{1}{2}}$ および $R \equiv R_{\frac{1}{2}\frac{1}{2}}$ は、全体的な位相と複素共役を除いて次のように与えられます：
+
+$$
+F = H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}, \quad R = P = \begin{pmatrix} 1 & 0 \\ 0 & i \end{pmatrix}.
+$$ {#eq-8.131}
+
+これらは**クリフォード群（Clifford group）**の量子ゲート（アダマールゲート $H$ および位相ゲート $P$）であり、普遍的量子計算を実現するには不十分です。
+
+しかし、$k \ge 3$ に対する $\text{SU}(2)_k$ モデルは**計算普遍的（computationally universal）**となります。$\text{SU}(2)_3$ の非自明な融合規則は次の通りです：
+
+$$
+\begin{aligned}
+\frac{1}{2} \times \frac{1}{2} &= 0 + 1, \\
+\frac{1}{2} \times 1 &= \frac{1}{2} + \frac{3}{2}, \\
+\frac{1}{2} \times \frac{3}{2} &= 1, \\
+1 \times 1 &= 0 + 1, \\
+1 \times \frac{3}{2} &= \frac{1}{2}, \\
+\frac{3}{2} \times \frac{3}{2} &= 0.
+\end{aligned}
+$$ {#eq-8.132}
+
+前節で詳しく学んだフィボナッチ（Yang-Lee）モデルは、この $\text{SU}(2)_3$ をさらに切断し、非整数ラベル $\frac{1}{2}$ と $\frac{3}{2}$ を排除することによって得られます（すなわち、これはチャーン・サイモンズ理論 $\text{SO}(3)_3$ です）。そのとき、残る唯一の非自明な融合規則は $1 \times 1 = 0 + 1$ となります。
+
+Zhenghan Wang（未公刊）は、4個以下のラベルを持つすべてのエニオンモデルを分類・構築し、それらすべてのモデルがチャーン・サイモンズ理論に見出されるモデルと密接に関連していることを明らかにしました。
+
+---
+
+### 8.6.2 モジュラー $S$ 行列とフェルリンデの公式 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=64) {#sec-8-6-s-matrix}
+
+エニオンモデルの**モジュラー $S$ 行列（modular $S$-matrix）**は、ホップ絡み（Hopf link）を形成する2つのエニオン世界線によって定義できます：
+
+::: {.callout-note appearance="simple"}
+#### ホップ絡み（Hopf Link）による $S$ 行列の定義
+
+```{=html}
+<div style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
+  <div style="border: 2px solid #334155; border-radius: 8px; padding: 20px 35px; background: #ffffff; display: flex; align-items: center; gap: 25px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+    <span style="font-size: 1.8rem; font-family: serif;">$S_a^b = \dfrac{1}{\mathcal{D}}$</span>
+    
+    <!-- ホップ絡み SVG -->
+    <svg width="150" height="150" viewBox="0 0 150 150">
+      <defs>
+        <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+        </marker>
+        <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+        </marker>
+      </defs>
+      
+      <!-- 赤いループ a (ひし形) -->
+      <!-- 上半部 -->
+      <path d="M 40 75 L 75 40 L 95 60" fill="none" stroke="#dc2626" stroke-width="3"/>
+      <!-- 下半部 (青の奥を通る部分は途切れる) -->
+      <path d="M 100 65 L 110 75 L 75 110 L 40 75" fill="none" stroke="#dc2626" stroke-width="3" marker-mid="url(#arr-red)"/>
+      <text x="45" y="45" font-family="serif" font-size="18" font-style="italic" fill="#dc2626">a</text>
+      
+      <!-- 青いループ b (ひし形、右にシフト) -->
+      <!-- 上側交差: 青が手前 -->
+      <path d="M 60 75 L 95 40 L 130 75 L 95 110 L 75 90" fill="none" stroke="#2563eb" stroke-width="3" marker-mid="url(#arr-blue)"/>
+      <!-- 下側交差: 赤が手前 (青が途切れる) -->
+      <path d="M 70 85 L 60 75" fill="none" stroke="#2563eb" stroke-width="3"/>
+      <text x="125" y="45" font-family="serif" font-size="18" font-style="italic" fill="#2563eb">b</text>
+    </svg>
+  </div>
+</div>
+```
+
+:::
+
+ここで $\mathcal{D}$ はモデルの全量子次元であり、絡み合っていない（unlinked）独立な2つのループが値 $d_a d_b$ を持つ規格化を採用しています。このとき、行列 $S_a^b$ は**対称行列かつユニタリ行列**となります：
+
+$$
+S = S^T, \quad S S^\dagger = I.
+$$
+
+アーベル・エニオンモデルにおいて、ホップ絡みはトーラス上のトポロジカル縮退の議論に現れました。そこでは、トーラスの閉曲線の1つに沿ってエニオンが一周輸送されたときに、トーラス上の真空状態がどのように変化するかを特徴付けました。非アーベルの場合にも、$S$ 行列は同様の物理的解釈を持ちます。
+
+初等的な図式的推論により、$S$ 行列は融合規則と次のように関係付けられます：
+
+$$
+(N_a)_b^c = \sum_d S_b^d \left(\frac{S_a^d}{S_1^d}\right) (S^{-1})_d^c.
+$$ {#eq-8.133}
+
+これは、**$S$ 行列がすべての融合行列の族 $\{N_a\}$ を同時に一斉に対角化すること**を意味します。この関係式は、共形場理論において極めて名高い**フェルリンデの公式（Verlinde relation / Verlinde formula）**です。
+
+$S$ 行列の定義より、自明な真空ラベル $1$ に対する成分は直ちに
+
+$$
+S_1^a = \frac{d_a}{\mathcal{D}}
+$$
+
+となることが従います。
+
+---
+
+### 8.6.3 1次元の端励起とカイラル中心電荷 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=65) {#sec-8-6-edge-excitations}
+
+エニオンモデルの定式化において、ここまでは2次元バルク（bulk）における粒子の融合と組み紐を議論してきました。しかし、2次元媒質の物理には、まだ議論していないもう1つの重要な側面が存在します。それが試料の**1次元の端（edge）**の性質です。
+
+一般に、2次元系がバルクにエニオンを保持している場合、1次元の端に沿って伝播する**カイラルな質量ゼロ励起（chiral massless excitations）**もまた存在します。ゼロでない有限温度 $T$ において、端に沿って流れるエネルギー流束（energy flux）$J$ は次の式で与えられます：
+
+$$
+J = \frac{\pi}{12} c_- T^2.
+$$ {#eq-8.134}
+
+ここで定数 $c_-$ は端の**カイラル中心電荷（chiral central charge）**と呼ばれ、系の基礎となるハミルトニアンの微小な摂動に対して不変な普遍的物理量（universal property）です。
+
+このカイラル中心電荷は2次元媒質の内在的性質ですが、バルクのエニオンの性質によって完全には決定されません。むしろ、次の関係式が成り立ちます：
+
+$$
+\frac{1}{\mathcal{D}} \sum_a d_a^2 e^{2\pi i J_a} = e^{(2\pi i/8) c_-}.
+$$ {#eq-8.135}
+
+ここで和はエニオンモデルの完全なラベル集合全体にわたって取られ、
+
+$$
+e^{2\pi i J_a} = R_{a\bar{a}}^1
+$$
+
+はラベル $a$ の**トポロジカル・スピン（topological spin）**です。
+
+式 (@eq-8.135) は、端の理論を特徴付ける量 $c_-$ をバルク理論の量子次元およびトポロジカル・スピンに関係付けますが、$c_-$ を **$\bmod 8$ でしか決定しません**。したがって、少なくとも原理的には、**バルク内の単一のエニオン理論に対して、複数の異なる端理論が対応しうる**ことになります。
+
+---
+
+### 8.6.4 文献ノート [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=65) {#sec-8-6-bibliographical-notes}
+
+エニオン理論の先駆的論文のいくつかは [1] に再録されています。
+
+本稿で「非アーベル超伝導体」モデルと呼んだものは、文献ではしばしば「**量子二重（quantum double）**」と呼ばれ、ホップ代数（Hopf algebra）の表現論を用いて研究されています。総説については [2] を参照してください。
+
+非アーベル・エニオンを耐故障性量子計算に利用できるという最初の提案は [3] でなされました。この論文ではトーリックコードや、非アーベル相を持つ関連する格子モデルについても議論されています。非アーベル超伝導体における普遍的量子計算の具体的な実現は [4, 5] で論じられました。本講義における普遍ゲート集合の議論は [6] に基づいており、そこではより一般的なモデルも議論されています。電荷をより広範に利用し、より小さな群（$S_3$ など）に対して普遍的となる他のスキームは [7] に記載されています。
+
+量子次元の議論で用いたような図式的手法は、[8] においてエニオンの性質を導出するために広範に適用されています。(1+1) 次元共形場理論における多項式方程式（五角形方程式および六角形方程式）の役割は [9] で議論されています。
+
+量子回路を用いたエニオンのシミュレーションは [10] で議論されています。$\text{SU}(2)_{k=3}$ チャーン・サイモンズ理論のエニオンを用いた普遍的量子コンピュータのシミュレーションは [11] で論じられました。Yang-Lee モデルもまた計算普遍的であることは [12] で指摘されました。
+
+講義では物理的実装の詳細には立ち入りませんでしたが、関連する文献をいくつか挙げておきます：ジョセフソン接合アレイを用いたアーベルおよび非アーベル・エニオンの実現に関するアイデアは [13] で議論されています。非アーベル・エニオンを持つ（ただし計算普遍的ではない）最近接相互作用スピンモデルが [14] で提案・厳密解が導出され、光格子に捕捉された冷却原子を用いてこのモデルを実現する提案が [15] に記述されています。相互作用する電子系において（計算普遍的な）$\text{SU}(2)_{k=3}$ モデルを実現するいくつかのアイデアは [16] で議論されています。
+
+非アーベル・エニオンを用いた計算理論に関する著者の理解の多くは、Alexei Kitaev 氏との多くの有益な議論から得られたものです。
+
+---
+
+### 参考文献 [📄 chap8.pdf](/assets/pdf/preskill/chap8.pdf#page=67) {#sec-8-6-references}
+
+[1] F. Wilczek, *Fractional statistics and anyon superconductivity* (World Scientific, Singapore, 1990).
+
+[2] M. de Wild Propitius and F. A. Bais, "Discrete gauge theories," [arXiv:hep-th/9511201](https://arxiv.org/abs/hep-th/9511201) (1995).
+
+[3] A. Yu. Kitaev, "Fault-tolerant quantum computation by anyons," *Annals Phys.* **303**, 2-30 (2003), [arXiv:quant-ph/9707021](https://arxiv.org/abs/quant-ph/9707021).
+
+[4] R. W. Ogburn and H. Preskill, "Topological quantum computation," *Lect. Notes in Comp. Sci.* **1509**, 341-356 (1999).
+
+[5] J. Preskill, "Fault-tolerant quantum computation," [arXiv:quant-ph/9712048](https://arxiv.org/abs/quant-ph/9712048) (1997).
+
+[6] C. Mochon, "Anyons from non-solvable finite groups are sufficient for universal quantum computation," *Phys. Rev. A* **67**, 022315 (2003), [arXiv:quant-ph/0206128](https://arxiv.org/abs/quant-ph/0206128).
+
+[7] C. Mochon, "Anyon computers with smaller groups," *Phys. Rev. A* **69**, 032306 (2004), [arXiv:quant-ph/0306063](https://arxiv.org/abs/quant-ph/0306063).
+
+[8] J. Fröhlich and F. Gabbiani, "Braid statistics in local quantum theory," *Rev. Math. Phys.* **2**:3, 251–353 (1990).
+
+[9] G. Moore and N. Seiberg, "Classical and quantum conformal field theory," *Comm. Math. Phys.* **123**, 171–254 (1989).
+
+[10] M. H. Freedman, A. Kitaev, and Z. Wang, "Simulation of topological field theories by quantum computers," *Comm. Math. Phys.* **227**, 587-603 (2002), [arXiv:quant-ph/0001071](https://arxiv.org/abs/quant-ph/0001071).
+
+[11] M. H. Freedman, M. Larsen, and Z. Wang, "A modular functor which is universal for quantum computation," [arXiv:quant-ph/0001108](https://arxiv.org/abs/quant-ph/0001108) (2000).
+
+[12] G. Kuperberg, unpublished.
+
+[13] B. Doucot, L. B. Ioffe, and J. Vidal, "Discrete non-Abelian gauge theories in two-dimensional lattices and their realizations in Josephson-junction arrays," *Phys. Rev. B* **69**, 214501 (2004), [arXiv:cond-mat/0302104](https://arxiv.org/abs/cond-mat/0302104).
+
+[14] A. Kitaev, "Anyons in a spin model on the honeycomb lattice," unpublished.
+
+[15] L.-M. Duan, E. Demler, and M. D. Lukin, "Controlling spin exchange interactions of ultracold atoms in optical lattices," *Phys. Rev. Lett.* **91**, 090402 (2003), [arXiv:cond-mat/0210564](https://arxiv.org/abs/cond-mat/0210564).
+
+[16] M. Freedman, C. Nayak, K. Shtengel, K. Walker, and Zhenghan Wang, "A class of $P, T$-invariant topological phases of interacting electrons," [arXiv:cond-mat/0307511](https://arxiv.org/abs/cond-mat/0307511) (2003).
+
+::: {.callout-note appearance="simple"}
+#### 第8章の演習問題について
+
+原著講義録『Chapter 9: Topological Quantum Computation』には、第1章〜第7章のような章末演習問題（Exercises）は設けられておらず、本エピローグおよび文献一覧をもって第8章の全記述が完結しています。
+
+:::

@@ -1,0 +1,149 @@
+## 10.10 要約 (Summary) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=84) {#sec-10.10-summary}
+
+**シャノン・エントロピーと古典データ圧縮 (Shannon entropy and classical data compression)**:  
+アンサンブル $X = \{x, p(x)\}$ の**シャノン・エントロピー（Shannon entropy）**は $H(X) := \mathbb{E}_X[-\log p(x)]$ であり、古典情報の圧縮可能性を定量化します。各文字が $X$ から独立に抽出される $n$ 文字のメッセージは、文字あたり $H(X)$ ビットまで圧縮可能であり（これ以上は圧縮不可能）、しかも $n \to \infty$ において任意に高い精度で復号できます。
+
+**条件付きエントロピーと情報統合 (Conditional entropy and information merging)**:  
+**条件付きエントロピー（conditional entropy）** $H(X|Y) = H(XY) - H(Y)$ は、$Y$ が既知であるときに情報源 $X$ をどれだけ圧縮できるかを定量化します。Alice が $X$ を保持し Bob が $Y$ を保持している状態で $XY$ から $n$ 文字が抽出される場合、$n \to \infty$ の漸近的極限において、Alice は文字あたり $H(X|Y)$ ビットを Bob に送信することで $X$ を Bob に伝達できます。
+
+**相互情報量と古典通信路容量 (Mutual information and classical channel capacity)**:  
+**相互情報量（mutual information）** $I(X;Y) = H(X) + H(Y) - H(XY)$ は、情報源 $X$ と $Y$ がどのように相関しているかを定量化します。$y$ の値を知ると、私たちは（平均して）$x$ に関する情報を $I(X;Y)$ ビット獲得し、逆もまた同様です。記憶のない（memoryless）ノイズのある古典通信チャネルの通信路容量は $C = \max_X I(X;Y)$ です。これは、最良の符号を用いた場合に、$n \to \infty$ で誤り確率を無視できる程度に抑えつつチャネルの $n$ 回の使用によって伝送できる、文字あたりの古典ビット数の最大値です。
+
+**フォン・ノイマン・エントロピーと量子データ圧縮 (Von Neumann entropy and quantum data compression)**:  
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=85)  
+密度演算子 $\rho$ の**フォン・ノイマン・エントロピー（von Neumann entropy）**は
+
+$$
+H(\rho) = -\mathrm{tr}\,\rho \log \rho;
+$$ {#eq-10.374}
+
+であり、純粋量子状態のアンサンブルの圧縮可能性を定量化します。各文字がアンサンブル $\{|\varphi(x)\rangle, p(x)\}$ から独立に抽出される $n$ 文字のメッセージは、文字あたり $H(\rho)$ 量子ビット（qubit）まで圧縮可能であり（これ以上は圧縮不可能、ここで $\rho = \sum_x p(x) |\varphi(x)\rangle\langle\varphi(x)|$）、しかも $n \to \infty$ において任意に高い忠実度（fidelity）で復号できます。
+
+**エンタングルメントの濃縮と希釈 (Entanglement concentration and dilution)**:  
+2部純粋状態 $|\psi\rangle_{AB}$ の**エンタングルメント（entanglement）** $E$ は $E = H(\rho_A)$ です（ここで $\rho_A = \mathrm{tr}_B(|\psi\rangle\langle\psi|)$）。局所操作および古典通信（LOCC）を用いることで、$nE$ 個の Bell ペアから $|\psi\rangle_{AB}$ の $n$ 個のコピーを調製することができ（これより少ない Bell ペアからは不可能）、また $|\psi\rangle_{AB}$ の $n$ 個のコピーから $nE$ 個の Bell ペアを抽出（蒸留）することができます（これより多くは不可能、$n \to \infty$ の漸近的極限）。
+
+**アクセス可能情報量 (Accessible information)**:  
+量子状態のアンサンブル $\mathcal{E} = \{\rho(x), p(x)\}$ の**ホレボ・カイ（Holevo chi）**は
+
+$$
+\chi(\mathcal{E}) = H\left(\sum_x p(x)\rho(x)\right) - \sum_x p(x) H(\rho(x)).
+$$ {#eq-10.375}
+
+です。量子状態のアンサンブル $\mathcal{E}$ の**アクセス可能情報量（accessible information）**は、最良の可能な測定によって状態の調製に関して（平均して）獲得できる情報の最大ビット数です。アクセス可能情報量はアンサンブルのホレボ・カイを超えることはできません。量子チャネル $\mathcal{N}$ の**積状態容量（product-state capacity）**は
+
+$$
+C_1(\mathcal{N}) = \max_{\mathcal{E}} \chi(\mathcal{N}(\mathcal{E})).
+$$ {#eq-10.376}
+
+です。これは、各符号語が積状態であると仮定した場合に、$n \to \infty$ で誤り確率を無視できる程度に抑えつつ量子チャネルの $n$ 回の使用によって伝送できる、文字あたりの古典ビット数の最大値です。
+
+**デカップリングと量子通信 (Decoupling and quantum communication)**:  
+3部純粋状態 $\phi_{RBE}$ において、$RE$ の周辺密度演算子が積状態であるとき、システム $R$ と $E$ は**デカップル（decouple; 分離・脱結合）**していると言います。この場合、$R$ は $B$ の部分系によって浄化されます。ノイズのある量子チャネル $\mathcal{N}^{A \to B}$（等長拡大を $U^{A \to BE}$ とする）を通じて送信された量子状態は、チャネルの入力 $A$ を浄化する参照系 $R$ がチャネルの環境系 $E$ からほぼデカップルしている場合に、高精度に復号することができます。
+
+**ファーザー・プロトコルとマザー・プロトコル (Father and mother protocols)**:  
+**ファーザー資源不等式（father resource inequality）**および**マザー資源不等式（mother resource inequality）**は、それぞれエンタングルメント支援量子通信および量子状態転送の達成可能レートを規定します。どちらも**デカップリング不等式（decoupling inequality）**から導かれます。デカップリング不等式は、3部混合状態における近似的デカップリングの十分条件を確立するものです。ファーザーおよびマザー・プロトコルを高密度符号化や量子テレポーテーションと組み合わせることで、エンタングルメント支援古典通信、量子通信、エンタングルメント蒸留、量子状態統合（state merging）など、他のプロトコルの達成可能レートを導出することができます。
+
+### ベン・シューマッハーへのオマージュ (Homage to Ben Schumacher) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=85) {#sec-10.10.1-homage}
+
+::: {.callout-note appearance="simple" icon=false}
+**Homage to Ben Schumacher:**
+
+Ben.  
+He rocks.  
+I remember  
+When  
+He showed me how to fit  
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=86)  
+A qubit  
+In a small box.  
+
+I wonder how it feels  
+To be compressed.  
+And then to pass  
+A fidelity test.  
+
+Or does it feel  
+At all, and if it does  
+Would I squeal  
+Or be just as I was?  
+
+If not undone  
+I'd become as I'd begun  
+And write a memorandum  
+On being random.  
+Had it felt like a belt  
+Of rum?  
+
+And might it be predicted  
+That I'd become addicted,  
+Longing for my session  
+Of compression?  
+
+I'd crawl  
+To Ben again.  
+And call,  
+Put down your pen!  
+Don't stall!  
+Make me small!  
+
+---
+
+**（日本語訳）**
+
+ベン。  
+彼は最高だ。  
+覚えているよ、  
+彼が教えてくれたときのことを。  
+小さな箱に  
+qubit を収める方法を。  
+
+どんな気分なんだろう  
+圧縮されるというのは。  
+そしてそのあとで  
+忠実度のテストに合格するというのは。  
+
+そもそも何かを感じるのだろうか、  
+もし感じるなら  
+私は悲鳴をあげるだろうか、  
+それとも元のままでいられるだろうか？  
+
+元に戻されなかったなら  
+始まったときと同じ状態になって  
+ランダムであることについての覚書を  
+書くことになるだろう。  
+ラム酒を一杯あおったような  
+気分だったのだろうか？  
+
+そして予測できるだろうか、  
+私が病みつきになってしまい、  
+圧縮のセッションを  
+熱望するようになるかもしれないと？  
+
+私はまた這ってでも  
+ベンのもとへ行くだろう。  
+そして叫ぶのだ、  
+「ペンを置いてくれ！  
+ためらわないで！  
+私を小さくしてくれ！」と。
+
+:::
+
+## 10.11 文献ノート (Bibliographical Notes) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=86) {#sec-10.11-bibliographical-notes}
+
+Cover と Thomas [2] は古典情報理論に関する優れた教科書です。Shannon の原著論文 [3] は、今日でも読む価値が非常に高いものです。
+
+Nielsen と Chuang [4] は量子シャノン理論のいくつかの側面への明快な入門を提供しています。Wilde [1] はより最新で非常に詳細な解説です。
+
+エントロピーの性質は [5] で概説されています。フォン・ノイマン・エントロピーの強劣加法性（strong subadditivity）は Lieb と Ruskai [6] によって証明され、等号成立条件は Hayden ら [7] によって導出されました。可分性と優劣関係（majorization）の関連は Nielsen と Kempe [8] によって指摘されました。
+
+ベッケンシュタイン（Bekenstein）のエントロピー限界は [9] で定式化され、Casini [10] によって導出されました。エントロピー的不確定性関係は [11] で概説されており、本章の議論はその導出に従っています。Maassen と Uffink [12] による最初の導出は異なる手法を用いています。
+
+シューマッハー圧縮は [13, 14] で初めて議論され、Bennett ら [15] はエンタングルメントの濃縮と希釈のためのプロトコルを考案しました。混合状態のエンタングルメント尺度は [16] で概説されています。混合状態エンタングルメントの可逆理論は Brandão と Plenio [17] によって定式化されました（彼らの解析の欠陥は [18, 19] で対処されました）。スカッシュド・エンタングルメント（Squashed entanglement）は Christandl と Winter [20] によって導入され、そのモノガミー性は Koashi と Winter [21] によって議論されました。Brandão, Christandl, Yard [22] は、任意の非可分（エンタングルした）2部状態に対してスカッシュド・エンタングルメントが正であることを示しました。[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=87) Doherty, Parrilo, Spedalieri [23] は、すべての非可分な2部状態はある有限な $k$ に対して $k$-拡張可能（$k$-extendable）ではないことを示しました。
+
+ホレボ限界（Holevo bound）は [24] で導出されました。Peres–Wootters 符号化は [25] で議論されました。積状態容量の公式は Holevo [26] および Schumacher と Westmoreland [27] によって導出されました。Hastings [28] は、ホレボ・カイが超加法的（superadditive）になり得ることを示しました。Horodecki, Shor, Ruskai [29] はエンタングルメント破壊チャネル（entanglement-breaking channels）を導入し、これらのチャネルに対するホレボ・カイの加法性が Shor [30] によって示されました。
+
+量子誤り訂正の必要十分条件は、Schumacher と Nielsen [31] によってデカップリング原理の観点から定式化されました。（正則化された）コヒーレント情報が量子通信路容量の上界であることは、Schumacher [32]、Schumacher と Nielsen [31]、および Barnum ら [33] によって示されました。コヒーレント情報が量子通信の達成可能レートであることは Lloyd [34] および Schumacher [32] によって予想され、その後 Shor [35] および Devetak [36] によって証明されました。Devetak と Winter [37] は、これがエンタングルメント蒸留の達成可能レートでもあることを示しました。量子ファノの不等式（quantum Fano inequality）は Schumacher [32] によって導出されました。
+
+近似的デカップリングは Schumacher と Westmoreland [38] によって解析され、Devetak [36]、Horodecki ら [39]、Hayden ら [40]、Abeyesinghe ら [41] による通信路容量定理の証明に用いられました。Haar ランダムな部分系のエントロピーは、これ以前に Lubkin [42]、Lloyd と Pagels [43]、Page [44] によって議論されていました。Devetak, Harrow, Winter [45, 46] はマザーおよびファーザー・プロトコルとその派生プロトコルを導入しました。Devetak と Shor [47] は劣化可能（degradable）量子チャネルを導入し、これらのチャネルに対してコヒーレント情報が加法的であることを証明しました。Bennett ら [48, 49] はエンタングルメント支援古典容量の単一文字公式（single-letter formula）を発見しました。コヒーレント情報の超加法性は Shor と Smolin [50] および DiVincenzo ら [51] によって発見されました。Smith と Yard [52] は、2つの容量ゼロのチャネルを併用するとゼロでない容量を持つという超加法性の極端な例を発見しました。量子状態統合（state merging）の達成可能レートは Horodecki ら [39] によって導出され、フォン・ノイマン・エントロピーの強劣加法性を証明するために彼らによって用いられました。
+
+デカップリングは、Reeb と Wolf [53]（注: 原文では Renner et al. と誤記）によってランダウアーの原理に、そして Hayden と Preskill [54] によってブラックホールに適用されました。高速スクランブリング予想（fast scrambling conjecture）は Sekino と Susskind [55] によって提案されました。

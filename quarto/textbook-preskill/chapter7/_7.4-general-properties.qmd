@@ -1,0 +1,114 @@
+## 7.4 量子誤り訂正符号の一般的性質 (Some general properties of QECC's) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=18) {#sec-7.4-general-properties}
+
+量子符号が量子ビット（qubit）によって表現できる場合、その符号を**2値（バイナリ；binary）**符号と呼びます。2値符号では、次元 $2^k$ の符号部分空間 $\mathcal{H}_{\text{code}}$ が次元 $2^n$ の系 $\mathcal{H}_S$ に埋め込まれます。ここで $k$ および $n > k$ は非負の整数です。$n$ を符号の**ブロックサイズ（block size）**または**長さ（length）**と呼び、$k$ を**符号化された（あるいは保護された）量子ビット数（number of encoded or protected qubits）**と呼びます。実際には $\mathcal{H}_S$ および $\mathcal{H}_{\text{code}}$ の次元が2のべき乗であることを要求する必要はありませんが（演習問題参照）、本章では主として2値符号化に焦点を絞ります。これは最も単純な場合であり、量子計算への応用において典型的に生じる場合でもあります。
+
+$n$ 量子ビットのヒルベルト空間に作用する線形演算子の便利な基底は、$2^{2n}$ 個のパウリ演算子
+
+$$
+\{\boldsymbol{I}, \boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}\}^{\otimes n}
+$$ {#eq-7.43}
+
+によって提供されます。
+各パウリ演算子（$n$ 個の $2\times 2$ パウリ行列のテンソル積）には、0から $n$ までの整数である**重量（重み；weight）**を割り当てることができます。重量 $w$ はテンソル積における非自明なパウリ行列の数です。すなわち、重量 $w$ のパウリ演算子は、量子ビットのうち $n - w$ 個に恒等演算子 $\boldsymbol{I}$ を作用させ、残りの $w$ 個の量子ビットのそれぞれに $\{\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}\}$ のいずれかを作用させます。
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=19)
+$n$ 量子ビットの線形演算子 $\boldsymbol{M}$ は、たとえパウリ演算子でなくても、同様に重量を割り当てることができます。パウリ演算子は線形独立であるため、$\boldsymbol{M}$ はパウリ演算子の和として一意の展開を持ち、その展開においてゼロでない係数で重量 $w$ のパウリ演算子が現れ、かつ $w$ より大きい重量を持つパウリ演算子が現れない場合、$\boldsymbol{M}$ は重量 $w$ を持つと言います。$\boldsymbol{M}_1$ が重量 $w_1$ を持ち、$\boldsymbol{M}_2$ が重量 $w_2$ を持つ場合、積 $\boldsymbol{M}_1\boldsymbol{M}_2$ は高々 $w_1 + w_2$ の重量を持つことに注意してください。
+
+### 7.4.1 符号距離 (Distance) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=19) {#sec-7.4.1-distance}
+
+符号長 $n$ と符号化量子ビット数 $k$ に加え、符号を特徴付けるもう1つの重要なパラメータは**距離（distance）** $d$ です。距離 $d$ は、以下を満たす演算子 $\boldsymbol{E}$ の最小重量です：
+
+$$
+\boldsymbol{\Pi}\boldsymbol{E}\boldsymbol{\Pi} \not\propto \boldsymbol{\Pi}.
+$$ {#eq-7.44}
+
+任意の演算子はパウリ演算子の線形結合として展開できるため、同値ですが、$d$ は @eq-7.44 を満たすパウリ演算子 $\boldsymbol{E}$ の最小重量であると言うこともできます。私たちは、ブロックサイズ $n$、符号化量子ビット数 $k$、距離 $d$ を持つ量子符号を「$[[n, k, d]]$ 量子符号」と表記します。古典符号で用いられる $[n, k, d]$ 表記と区別するために、量子符号には二重ブラケット記法を用います。
+
+訂正可能誤りの集合 $\mathcal{E}$ の張る空間が重量 $t$ 以下のすべての演算子を含むとき、すなわち同値ですが、重量 $\le t$ のすべてのパウリ演算子が訂正可能誤りであるとき、量子誤り訂正符号は「$t$ 個の誤りを訂正できる（correct $t$ errors）」と言います。私たちの距離の定義は、誤り訂正の基準
+
+$$
+\boldsymbol{\Pi}\boldsymbol{E}_b^\dagger \boldsymbol{E}_a\boldsymbol{\Pi} = C_{ba}\boldsymbol{\Pi}
+$$ {#eq-7.45}
+
+が、$d \ge 2t+1$ である限り、重量 $t$ 以下のすべての演算子 $\boldsymbol{E}_a, \boldsymbol{E}_b$ に対して満たされることを意味します。なぜなら、演算子 $\boldsymbol{E}_b^\dagger \boldsymbol{E}_a$ の重量は高々 $2t$ だからです。したがって、距離 $d \ge 2t+1$ を持つ量子誤り訂正符号は $t$ 個の誤りを訂正できます。
+
+### 7.4.2 位置特定誤り (Located errors) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=19) {#sec-7.4.2-located-errors}
+
+距離 $d = 2t+1$ の符号は、符号ブロック内の誤りの位置に関係なく、$t$ 個の誤りを訂正できます。しかし場合によっては、符号ブロック内の特定の量子ビットだけが損傷を受けたとあらかじめ分かっていることがあり、この場合は**位置特定誤り（located errors）**と呼びます。誤りが未知の位置ではなく既知の位置で発生する場合、所与の符号はより多くの誤りを防ぐことができます。
+
+位置特定誤りは、例えば符号ブロック内の $n$ 個の量子ビットのうち $t < n$ 個にハンマーが衝突するのを目撃し、残りの $n - t$ 個の量子ビットは十分に保護されたままであった、というような状況で発生するかもしれません。§7.3.4 で考察した消失誤りも、位置特定誤りと見なすことができます。例えば、あなたが私に $n$ 量子ビットのブロックを送信したものの、そのうち $t < n$ 個の量子ビットが失われて届かず、一方で無事に到着した $n - t$ 個の量子ビットは適切に梱包されて無傷で受け取られたと確信できる場合です。これは消失誤りです。もし私が失われた $t$ 個の量子ビットを任意の状態の $t$ 個の量子ビットで置き換えるなら、ブロックの $n$ 個のうちどの $t$ 個の量子ビットが損傷したかが分かっているため、この消失誤りは位置特定誤りになります。
+
+距離 $d = t+1$ を持つ QECC は、既知の位置にある $t$ 個の誤りを訂正できます。この場合、訂正すべき誤りの集合 $\mathcal{E}$ は、指定された $t$ 箇所の位置に台を持つすべてのパウリ演算子の集合です（各 $\boldsymbol{E}_a$ は他の $n - t$ 個の量子ビットには自明に作用します）。しかしその場合、$\mathcal{E}$ 内の各 $\boldsymbol{E}_a$ および $\boldsymbol{E}_b$ に対して、積 $\boldsymbol{E}_b^\dagger \boldsymbol{E}_a$ もまた高々 $t$ の重量しか持ちません。したがって、 [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=20) 符号が少なくとも $t+1$ の距離を持つ限り、誤り訂正基準はすべての $\boldsymbol{E}_{a,b} \in \mathcal{E}$ に対して満たされます。このように、任意の位置にある $t$ 個の誤りを訂正する QECC は、既知の位置にある $2t$ 個の誤りを訂正することができます。
+
+### 7.4.3 誤り検出 (Error detection) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=20) {#sec-7.4.3-error-detection}
+
+場合によっては、誤りを完全に診断または修復できなくても、誤りが発生したかどうかを検出できれば十分であることがあります。誤り検出のために設計された測定には、「正常（good）」と「異常（bad）」の2つの起こり得る結果があります。「正常」の結果が得られた場合、量子状態が無傷であることが保証されます。「異常」の結果が得られた場合、損傷が発生したため、その状態は破棄されるべきです。
+
+もし誤り写像の台が重量 $t$ 以下のすべてのパウリ演算子の集合 $\mathcal{E}$ にあり、誤りが発生したかどうかを正しく診断する測定を行うことが可能であるならば、$t$ 個の誤りを検出できると言います。誤り検出は誤り訂正よりも容易であるため、所与の符号は訂正できる誤りよりも多くの誤りを検出できます。実際、距離 $d = t+1$ を持つ QECC は $t$ 個の誤りを検出できます。
+
+距離 $d = t+1$ の符号は、重量 $t$ 以下のすべてのパウリ演算子 $\boldsymbol{E}_a$ に対して以下の性質を持ちます（ここで $\boldsymbol{\Pi}$ は $\mathcal{H}_{\text{code}}$ への直交射影演算子）：
+
+$$
+\boldsymbol{\Pi}\boldsymbol{E}_a\boldsymbol{\Pi} = C_a\boldsymbol{\Pi}
+$$ {#eq-7.46}
+
+あるいは、
+
+$$
+\boldsymbol{E}_a|\psi\rangle = C_a|\psi\rangle + |\psi_a^\perp\rangle;
+$$ {#eq-7.47}
+
+ここで $|\psi\rangle$ は $\mathcal{H}_{\text{code}}$ 内の任意のベクトルであり、$|\psi_a^\perp\rangle$ は符号部分空間に直交する（規格化されていない）ベクトルです。したがって、すべての誤りが重量 $t$ 以下であるような一般的な誤り写像は、符号状態 $|\psi\rangle_S$ に対して次のように作用します：
+
+$$
+|\psi\rangle_S \mapsto \sum_{\boldsymbol{E}_a \in \mathcal{E}} \boldsymbol{E}_a|\psi\rangle_S \otimes |\varphi_a\rangle_E = |\psi\rangle_S \otimes \left( \sum_{\boldsymbol{E}_a \in \mathcal{E}} C_a|\varphi_a\rangle_E \right) + |\text{orthog}\rangle_{SE};
+$$ {#eq-7.48}
+
+ここで $\mathcal{E}$ は重量 $t$ 以下のすべてのパウリ演算子の集合であり、$|\text{orthog}\rangle$ は符号部分空間に直交するベクトルを表します。
+
+ここで系 $S$ に対して直交測定を実行することができ、2つの結果が考えられます：状態は符号部分空間 $\mathcal{H}_{\text{code}}$ または $\mathcal{H}_S$ の補空間のいずれかに射影されます。第1の（正常な）結果が得られた場合、無傷の状態 $|\psi\rangle$ が復元されます。第2の（異常な）結果が得られた場合、誤りが検出されたことになります。私たちは、距離 $d$ を持つ QECC は $d - 1$ 個の誤りを検出できると結論付けます。したがって、$t$ 個の誤りを訂正する QECC は、$2t$ 個の誤りを検出することができます。
+
+### 7.4.4 量子符号とエンタングルメント (Quantum codes and entanglement) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=20) {#sec-7.4.4-quantum-codes-and-entanglement}
+
+QECC は、量子情報を非局所的（nonlocally）に符号化すること、すなわちブロック内の多数の量子ビット間で共有することによって、情報を誤りから保護します。したがって、量子符号語は高度にエンタングルした状態です。
+
+実際、距離 $d = t+1$ の非縮退符号は次の性質を持ちます：符号部分空間内の任意の純粋状態 $|\psi\rangle$ と、ブロック内の任意の $t$ 個の量子ビットを選びます。残りの $n - t$ 個の量子ビットについてトレースをとると、
+
+$$
+\boldsymbol{\rho}_{(t)} = \text{tr}_{(n-t)}|\psi\rangle\langle\psi|
+$$ {#eq-7.49}
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=21)
+という $t$ 個の量子ビットの密度演算子が得られます。このとき、この密度演算子は最大混合状態になります：
+
+$$
+\boldsymbol{\rho}_{(t)} = \frac{1}{2^t}\boldsymbol{I}.
+$$ {#eq-7.50}
+
+縮退しているかどうかにかかわらず、距離 $t+1$ の任意の符号において、ブロック内の任意の $t$ 個の量子ビットを観測することによって符号化されたデータに関する情報を得ることはできません。すなわち、$\boldsymbol{\rho}_{(t)}$ は符号語に依存しない定数です。しかし、任意の $t$ 個の量子ビットの密度演算子が最大混合状態でなければならないという私たちの結論は、符号が非縮退である場合にのみ適用されます。
+
+性質 @eq-7.50 を検証するために、非縮退な距離 $t+1$ 符号に対しては、重量が $1$ から $t$ までの任意の $\boldsymbol{E}_a$ について
+
+$$
+\boldsymbol{\Pi}\boldsymbol{E}_a\boldsymbol{\Pi} = 0
+$$ {#eq-7.51}
+
+となることに注意します。したがって、恒等演算子以外の任意の $t$ 量子ビットパウリ演算子 $\boldsymbol{E}_a$ に対して、
+
+$$
+\text{tr}(\boldsymbol{\rho}_{(t)}\boldsymbol{E}_a) = \langle\psi|\boldsymbol{E}_a|\psi\rangle = \langle\psi|\boldsymbol{\Pi}\boldsymbol{E}_a\boldsymbol{\Pi}|\psi\rangle = 0
+$$ {#eq-7.52}
+
+が成り立ちます。いま、$\boldsymbol{\rho}_{(t)}$ は任意のエルミート $2^t \times 2^t$ 行列と同様に、パウリ演算子によって展開できます：
+
+$$
+\boldsymbol{\rho}_{(t)} = \left(\frac{1}{2^t}\right)\boldsymbol{I} + \sum_{\boldsymbol{E}_b \ne \boldsymbol{I}} \rho_b \boldsymbol{E}_b.
+$$ {#eq-7.53}
+
+パウリ演算子は以下を満たすため、
+
+$$
+\left(\frac{1}{2^t}\right)\text{tr}(\boldsymbol{E}_b^\dagger \boldsymbol{E}_a) = \delta_{ba},
+$$ {#eq-7.54}
+
+各 $\rho_b = 0$ であることがわかり、$\boldsymbol{\rho}_{(t)}$ は恒等演算子の定数倍であると結論付けられます。すなわち、符号空間内の任意の量子状態に対して、ブロック内の任意の $t$ 量子ビットの集合は、ブロック内の相補的な量子ビットの集合と最大エンタングルしています。

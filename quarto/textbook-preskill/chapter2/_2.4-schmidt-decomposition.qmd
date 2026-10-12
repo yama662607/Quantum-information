@@ -1,4 +1,4 @@
-# 2.4 シュミット分解 (Schmidt decomposition) [📄 p.23](/assets/pdf/preskill/chap2.pdf#page=23) {#sec-2.4-schmidt-decomposition}
+## 2.4 シュミット分解 (Schmidt decomposition) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=23) {#sec-2.4-schmidt-decomposition}
 
 二部系の純粋状態は、しばしば非常に有用な標準形式（**シュミット分解**）で表すことができます。
 
@@ -41,7 +41,7 @@ $$
 $$ {#eq-2.86}
 これは $\mathcal{H}_A$ と $\mathcal{H}_B$ の特定の正規直交基底を用いた表現です。
 
-式(@eq-2.86)は、二部系の純粋状態 $|\psi\rangle_{AB}$ の**シュミット分解**です。任意の二部系の純粋状態はこの形式で表すことができますが、使用される基底は展開される純粋状態に依存します。一般に、$\mathcal{H}_A \otimes \mathcal{H}_B$ 内の2つの状態 $|\psi\rangle_{AB}$ と $|\varphi\rangle_{AB}$ を、$\mathcal{H}_A$ と $\mathcal{H}_B$ の同じ正規直交基底を用いて同時に式(@eq-2.86)の形式に展開することはできません。
+式(@eq-2.86)は、二部系の純粋状態 $|\psi\rangle_{AB}$ の**シュミット分解**です。任意の二部系の純粋状態はこの形式で表すことができますが、使用される基底は展開される純粋状態に依存します。一般に、$\mathcal{H}_A \otimes \mathcal{H}_B$ 内の2つの状態 $|\psi\rangle_{AB}$ と $|\phi\rangle_{AB}$ を、$\mathcal{H}_A$ と $\mathcal{H}_B$ の同じ正規直交基底を用いて同時に式(@eq-2.86)の形式に展開することはできません。
 
 二部系の純粋状態 $|\psi\rangle_{AB}$ のシュミット分解を、一般的な正規直交基底における展開
 $$
@@ -49,11 +49,11 @@ $$
 $$ {#eq-2.87}
 と比較することは有益です。正規直交基底 $\{|a\rangle_A\}$ および $\{|\mu\rangle_B\}$ は、シュミット基底 $\{|i\rangle_A\}$ および $\{|i'\rangle_B\}$ とユニタリ変換 $\boldsymbol{U}_A$ および $\boldsymbol{U}_B$ によって結びついています。したがって
 $$
-|i\rangle_A = \sum_a |a\rangle_A (U_A)_{ai}, \quad |i'\rangle_B = \sum_\mu |\mu\rangle_B (U_B)_{\mu i'}
+|i\rangle_A = \sum_a |a\rangle_A (\boldsymbol{U}_A)_{ai}, \quad |i'\rangle_B = \sum_\mu |\mu\rangle_B (\boldsymbol{U}_B)_{\mu i'}
 $$ {#eq-2.88}
 となります。式(@eq-2.86)と式(@eq-2.87)における $|\psi\rangle_{AB}$ の表現を等置すると
 $$
-\psi_{a\mu} = \sum_i (U_A)_{ai} \sqrt{p_i} (U_B^T)_{i\mu}
+\psi_{a\mu} = \sum_i (\boldsymbol{U}_A)_{ai} \sqrt{p_i} (\boldsymbol{U}_B^T)_{i\mu}
 $$ {#eq-2.89}
 が見出されます。左右からユニタリ変換を施すことで、任意の行列 $\psi$ を対角かつ非負の行列に変換できることがわかります。（ヒルベルト空間 $\mathcal{H}_A$ と $\mathcal{H}_B$ の次元が異なる場合、「対角」行列は正方形ではなく長方形になります。）式(@eq-2.89)は $\psi$ の**特異値分解（singular value decomposition）**であると言われ、シュミット分解における重み $\{\sqrt{p_i}\}$ は $\psi$ の特異値です。
 
@@ -82,26 +82,26 @@ $$
 $$ {#eq-2.93}
 となります。この同時回転は状態 $|\psi\rangle_{AB}$ を不変に保ち、シュミット形式で $|\psi\rangle_{AB}$ を表す際に使用される基底に曖昧さがあることを示しています。
 
-## 2.4.1 エンタングルメント (Entanglement) [📄 p.25](/assets/pdf/preskill/chap2.pdf#page=25) {#sec-2.4.1-entanglement}
+### 2.4.1 エンタングルメント (Entanglement) [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=25) {#sec-2.4.1-entanglement}
 
 任意の二部系の純粋状態 $|\psi\rangle_{AB}$ に対して、正の整数である**シュミット数（Schmidt number）**を関連付けることができます。これは $\boldsymbol{\rho}_A$（または $\boldsymbol{\rho}_B$）の非ゼロ固有値の数であり、したがって $|\psi\rangle_{AB}$ のシュミット分解における項の数です。この量を用いて、二部系の純粋状態が**エンタングル（entangled）**しているとはどういう意味かを定義できます。すなわち、$|\psi\rangle_{AB}$ のシュミット数が1より大きい場合、その状態はエンタングル（または非可分：nonseparable）であり、そうでなければセパラブル（separable：可分またはエンタングルしていない）です。したがって、セパラブルな二部系の純粋状態は、$\mathcal{H}_A$ と $\mathcal{H}_B$ における純粋状態の直積となります：
 $$
-|\psi\rangle_{AB} = |\varphi\rangle_A \otimes |\chi\rangle_B;
+|\psi\rangle_{AB} = |\phi\rangle_A \otimes |\chi\rangle_B;
 $$ {#eq-2.94}
-このとき、簡約密度行列 $\boldsymbol{\rho}_A = |\varphi\rangle\langle\varphi|$ および $\boldsymbol{\rho}_B = |\chi\rangle\langle\chi|$ は純粋状態となります。
+このとき、簡約密度行列 $\boldsymbol{\rho}_A = |\phi\rangle\langle\phi|$ および $\boldsymbol{\rho}_B = |\chi\rangle\langle\chi|$ は純粋状態となります。
 このような直積として表すことができない任意の状態は**エンタングル（量子もつれ）**しており、このとき $\boldsymbol{\rho}_A$ と $\boldsymbol{\rho}_B$ は混合状態となります。
 
 $|\psi\rangle_{AB}$ がエンタングルしているとき、私たちは $A$ と $B$ が**量子相関（quantum correlations）**を持っていると言います。もし $|\psi\rangle_{AB}$ がセパラブルであれば、サブシステム $A$ と $B$ は無相関であると言うのは厳密には正しくありません。結局のところ、セパラブルな状態
 $$
-|\uparrow\rangle_A |\uparrow\rangle_B
+|\!\uparrow\rangle_A |\!\uparrow\rangle_B
 $$ {#eq-2.95}
-にある2つのスピンは、確かに相関しています（両方とも同じ $z$ 軸方向を向いているため）。しかし、エンタングル状態における $A$ と $B$ の間の相関は、セパラブル状態における相関とは異なる性質を持っています。1つの決定的な違いは、**エンタングルメントは局所的に作成できない**ということです。$A$ と $B$ をエンタングルさせる唯一の方法は、2つのサブシステムが互いに直接相互作用することです。
+にある2つのスピンは、確かに相関しています（両方とも同じ方向を向いているため）。しかし、エンタングル状態における $A$ と $B$ の間の相関は、セパラブル状態における相関とは異なる性質を持っています。1つの決定的な違いは、**エンタングルメントは局所的に作成できない**ということです。$A$ と $B$ をエンタングルさせる唯一の方法は、2つのサブシステムが互いに直接相互作用することです。
 
 スピン $A$ と $B$ を互いに接触させることなく、式(@eq-2.95)の状態を準備することができます。2人の準備者（アリスとボブ）に（古典的な！）メッセージを送り、両方に $z$ 軸方向を向いたスピンを準備するように指示するだけで十分です。
 
 しかし、式(@eq-2.95)の状態を以下のようなエンタングル状態
 $$
-\frac{1}{\sqrt{2}} \left( |\uparrow\rangle_A |\uparrow\rangle_B + |\downarrow\rangle_A |\downarrow\rangle_B \right)
+\frac{1}{\sqrt{2}} \left( |\!\uparrow\rangle_A |\!\uparrow\rangle_B + |\!\downarrow\rangle_A |\!\downarrow\rangle_B \right)
 $$ {#eq-2.96}
 に変換する唯一の方法は、状態に対して協調的なユニタリ変換を適用することです。アリスとボブが自分たちの行うことについてどれほど話し合ったとしても、$\boldsymbol{U}_A \otimes \boldsymbol{U}_B$ の形式の局所ユニタリ変換や、アリスまたはボブによって実行される局所測定によって、2クビット状態のシュミット数を増加させることはできません。2つのクビットをエンタングルさせるには、それらを近づけて相互作用させる必要があります。
 
@@ -111,7 +111,7 @@ $$ {#eq-2.96}
 エンタングルメントと古典的相関の最も本質的な違いは、**「局所操作と古典通信 (LOCC: Local Operations and Classical Communication)」によって生成できるか否か**にあります。
 
 #### 1. 可分（セパラブル）状態と古典相関
-可分状態（例: $|\uparrow\rangle_A |\uparrow\rangle_B$ や、その確率的混合状態 $\boldsymbol{\rho} = \sum p_i \boldsymbol{\rho}_i^A \otimes \boldsymbol{\rho}_i^B$）は、アリスとボブが直接会うことなく、電話や光パルスなどの**古典的な通信チャネル（LOCC）**だけを使って準備可能です。
+可分状態（例: $|\!\uparrow\rangle_A |\!\uparrow\rangle_B$ や、その確率的混合状態 $\boldsymbol{\rho} = \sum p_i \boldsymbol{\rho}_i^A \otimes \boldsymbol{\rho}_i^B$）は、アリスとボブが直接会うことなく、電話や光パルスなどの**古典的な通信チャネル（LOCC）**だけを使って準備可能です。
 * **例**: 「アリスは上向き、ボブも上向きのスピンを準備する」という指示を古典的に送れば、離れた場所で独立にこの相関を作ることができます。
 
 #### 2. エンタングル状態と量子相関
@@ -140,4 +140,3 @@ graph TD
 このように、**「局所操作だけではシュミット数を増やせない（エンタングルメントを引き伸ばせない）」**という物理的制約が、量子情報理論における基本定理の出発点となっています。
 
 :::
-

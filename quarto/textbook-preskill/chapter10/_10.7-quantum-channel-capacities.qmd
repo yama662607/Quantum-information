@@ -1,0 +1,308 @@
+## 10.7 量子通信路容量とデカップリング (Quantum Channel Capacities and Decoupling) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=57) {#sec-10.7-quantum-channel-capacities}
+
+### 10.7.1 コヒーレント情報量と量子通信路容量 (Coherent information and the quantum channel capacity) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=57) {#sec-10.7.1-coherent-information}
+
+これまで強調してきたように、古典通信路の容量が、通信路の1回の使用に対する入力と出力の間の最適相関によって表されることは驚くべきことです：
+$$
+C := \max_X I(X; Y).
+$$ {#eq-10.270}
+この公式のもう一つの喜ばしい特徴は、その**頑健性（robustness）**です。例えば、送信者と受信者が共有ランダム性を共有することを許可しても、あるいは受信者から送信者へのフィードバックを許可しても、容量は増加しません。しかし、量子通信路の場合、話はずっと複雑です。通信路の入力間のもつれを許容する場合、量子通信路の古典容量に対して単純な単一文字公式（single-letter formula）が知られていないことをすでに見てきました。そして、量子容量に対しても同様であることがすぐに分かります。さらに、送信者と受信者の間で共有されるエンタングルメントは一部の通信路の古典容量や量子容量を増大させることができ、受信者から送信者への「後方（backward）」通信も同様であることが判明します。量子通信路には様々な異なる容量の概念が存在し、それらはすべて極めて自然であり、すべて異なる達成可能レートを持ちます。
+
+ノイズのある古典通信路を通じた古典通信に関するシャノンの理論は、
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=58) 完璧で優雅ですが、ノイズのある量子通信路を通じた通信の理論については、少なくとも現在の状態では同じことは言えません。それはまだ発展途上の研究です。おそらくいつの日か、シャノンのような別の天才が量子容量の美しい理論を構築するでしょう。今のところ、少なくとも私たちが達成可能レートについて言える興味深い事柄はたくさんあります。さらに、量子容量に関する問いに対処するために開発されたツールは、通信理論を超えた他の応用を持っています。
+
+古典通信路の古典容量の最も直接的な類似物は、共有エンタングルメントやフィードバックの支援を受けない、量子通信路の**量子容量（quantum capacity）**です。量子通信路 $\mathcal{N}^{A \to B}$ は $\mathcal{H}_A$ から $\mathcal{H}_B$ への TPCP 写像であり、アリスは高い忠実度でボブに量子状態を伝達するために通信路を $n$ 回使用します。彼女は符号部分空間
+$$
+\mathcal{H}^{(n)} \subseteq \mathcal{H}_A^{\otimes n}
+$$ {#eq-10.271}
+内の状態 $|\psi\rangle$ を準備し、それをボブに送信します。ボブは $|\psi\rangle$ の復元を試みて復号写像を適用します。符号のレート $\bar{R}$ は、通信路使用1回あたりに送信される符号化された量子ビット数です：
+$$
+\bar{R} = \frac{1}{n} \log_2 \dim\left(\mathcal{H}^{(n)}\right).
+$$ {#eq-10.272}
+（ここでは、以前の慣行から外れて、通信レートを示すために $R$ ではなく $\bar{R}$ を使用しました。今後は、次の段落で導入される参照系（reference system）を示すために $R$ を使用します。）任意の $\varepsilon, \delta > 0$ に対して、$n$ が十分に大きいときにレートが少なくとも $\bar{R} - \delta$ であり、ボブの復元状態 $\boldsymbol{\rho}$ が忠実度 $F = \langle\psi|\boldsymbol{\rho}|\psi\rangle \ge 1 - \varepsilon$ を持つような、増加する $n$ の符号の列が存在する場合、レート $\bar{R}$ は**達成可能（achievable）**であると言います。**量子通信路容量（quantum channel capacity）** $Q(\mathcal{N})$ は、すべての達成可能レートの上限（supremum）です。
+
+$Q(\mathcal{N})$ に対する正則化公式が存在します。この公式を理解するために、まず任意の通信路 $\mathcal{N}^{A \to B}$ が等長的なシュタインスプリング拡大（Stinespring dilation） $\boldsymbol{U}^{A \to BE}$ を持つことを思い出す必要があります。ここで $E$ は通信路の「環境（environment）」です。さらに、任意の入力密度作用素 $\boldsymbol{\rho}_A$ は浄化（purification）を持ちます。**参照系（reference system）** $R$ を導入すると、任意の $\boldsymbol{\rho}_A$ に対して $\boldsymbol{\rho}_A = \mathrm{tr}_R(|\psi\rangle\langle\psi|)$ となる純粋状態 $\psi_{RA}$ が存在します。（文脈から意味が明らかであり、ケット記法が不必要に煩わしく思われる場合、純粋状態ベクトルを表すためにディラックのケット $|\psi\rangle$ ではなく $\psi$ を使用することがあります。）通信路の拡大を $\psi_{RA}$ に適用すると、出力純粋状態 $\phi_{RBE}$ が得られます。これを図で表現すると次のようになります：
+
+```
+  +---+
+  | R |
+  +---+
+    :
+  +---+       +---+       +---+
+  | A | ----> | U | ----> | B |
+  +---+       +---+       +---+
+                |
+                v
+              +---+
+              | E |
+              +---+
+```
+
+そこで、通信路 $\mathcal{N}$ の**単発量子容量（one-shot quantum capacity）**を次のように定義します：
+$$
+Q_1(\mathcal{N}) := \max_A (-H(R|B)_{\phi_{RBE}}).
+$$ {#eq-10.273}
+ここで最大値はすべての可能な入力密度作用素 $\{\boldsymbol{\rho}_A\}$ にわたって取られ、$H(R|B)$ は量子条件付きエントロピー
+$$
+H(R|B) = H(RB) - H(B) = H(E) - H(B)
+$$ {#eq-10.274}
+です。最後の等号では、$RBE$ の純粋状態において $H(RB) = H(E)$ であることを用いました。この量
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=59) $-H(R|B)$ は、量子通信理論において極めて重要な役割を果たしているため、特別な名前を持つに値します。私たちはこれを $R$ から $B$ への**コヒーレント情報量（coherent information）**と呼び、次のように表記します：
+$$
+I_c(R \rangle B)_\phi = -H(R|B)_\phi = H(B)_\phi - H(E)_\phi.
+$$ {#eq-10.275}
+この量は、密度作用素 $\boldsymbol{\rho}_A$ の浄化 $\phi$ がどのように選ばれるかに依存しません。任意の1つの浄化は、$R$ のみに作用するユニタリ変換によって他の任意の浄化から得ることができ、これは $H(B)$ や $H(E)$ を変化させないからです。実際、式 $H(B) - H(E)$ は $BE$ の周辺状態にのみ依存するため、この量を計算する目的においては、参照系 $R$ を部分トレースすることによって $\psi_{RA}$ から得られる混合状態 $\boldsymbol{\rho}_A$ を通信路への入力と見なしても全く同じことです。さらに、コヒーレント情報量は量子通信路の拡大をどのように選ぶかにも依存しません。入力密度作用素 $\boldsymbol{\rho}_A$ の浄化が与えられれば、$I_c(R \rangle B)_\phi = H(B) - H(RB)$ は $RB$ の出力密度作用素によって決定されます。
+
+古典通信路の場合、$H(R|B)$ は常に非負であり、コヒーレント情報量が正になることは決してありません。量子的な設定において、$I_c(R \rangle B)$ は、参照系 $R$ が環境 $E$ とよりも通信路出力 $B$ と強く相関している場合に正になります。実際、コヒーレント情報量を表現する別の方法は
+$$
+I_c(R \rangle B) = \frac{1}{2}(I(R; B) - I(R; E)) = H(B) - H(E)
+$$ {#eq-10.276}
+です。ここで（$\phi_{RBE}$ が純粋状態であるため）次が成り立つことに注意します：
+$$
+\begin{aligned}
+I(R; B) &= H(R) + H(B) - H(RB) = H(R) + H(B) - H(E), \\
+I(R; E) &= H(R) + H(E) - H(RE) = H(R) + H(E) - H(B).
+\end{aligned}
+$$ {#eq-10.277}
+
+これで量子通信路容量に対する正則化公式を述べることができます。それは、1文字あたりの最適な漸近的コヒーレント情報量です：
+$$
+Q(\mathcal{N}^{A \to B}) = \lim_{n \to \infty} \max_{A^n} \frac{1}{n} I_c(R^n \rangle B^n)_{\phi_{R^n B^n E^n}}.
+$$ {#eq-10.278}
+ここで、入力密度作用素 $\boldsymbol{\rho}_{A^n}$ は $n$ 回の通信路使用にわたってもつれていることが許容されます。もしコヒーレント情報量が劣加法的であったならば、この表現を単一文字の量、すなわち単発容量 $Q_1(\mathcal{N})$ に簡約することができたでしょう。しかし不運なことに、一部の通信路に対してはコヒーレント情報量は超加法的（superadditive）になる可能性があり、その場合、正則化公式はあまり有用な情報を与えてくれません。少なくとも、$Q_1(\mathcal{N})$ は達成可能レートであり、したがって容量の下限であると言うことはできます。
+
+### 10.7.2 デカップリング原理 (The decoupling principle) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=59) {#sec-10.7.2-decoupling-principle}
+
+達成可能性に取り組む前に、なぜ式 (@eq-10.278) が容量の上限であるかを理解しましょう。まず、相互情報量の単調性がコヒーレント情報量に対する対応する単調性を意味することに注目します。通信路 $\mathcal{N}_1^{A \to B}$ の後に通信路 $\mathcal{N}_2^{B \to C}$ が続くと仮定します。相互情報量は単調であるため、
+$$
+I(R; A) \ge I(R; B) \ge I(R; C)
+$$ {#eq-10.279}
+が成り立ち、これは次のようにも表現できます：
+$$
+H(R) - H(R|A) \ge H(R) - H(R|B) \ge H(R) - H(R|C).
+$$ {#eq-10.280}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=60) したがって、
+$$
+I_c(R \rangle A) \ge I_c(R \rangle B) \ge I_c(R \rangle C)
+$$ {#eq-10.281}
+となります。量子通信路がコヒーレント情報量を増加させることはできません。これは**量子データ処理不等式（quantum data-processing inequality）**と呼ばれています。
+
+ここで、$\boldsymbol{\rho}_A$ が量子符号状態であり、連続して作用する2つの通信路が、ノイズのある通信路 $\mathcal{N}^{A \to B}$ と、通信路入力を復元するためにボブによって通信路出力に適用される復号写像 $\mathcal{D}^{B \to \hat{B}}$ であると仮定します。ボブが**完全に（perfectly）**復元できるという仮定のもとで、入力浄化 $\psi_{RA}$ に対する $\mathcal{N}$ の拡大 $\boldsymbol{U}^{A \to BE}$ の作用に続く $\mathcal{D}$ の拡大 $\boldsymbol{V}^{B \to \hat{B}B'}$ の作用を考えます：
+$$
+\psi_{RA} \xrightarrow{\boldsymbol{U}} \phi_{RBE} \xrightarrow{\boldsymbol{V}} \tilde{\psi}_{R\hat{B}B'E} = \psi_{R\hat{B}} \otimes \chi_{B'E}.
+$$ {#eq-10.282}
+復号が完全であるならば、復号後、ボブは系 $\hat{B}$ に $R$ の状態の浄化を保持しているため、
+$$
+H(R) = I_c(R \rangle A)_\psi = I_c(R \rangle \hat{B})_{\tilde{\psi}}
+$$ {#eq-10.283}
+となります。初期状態と最終状態が同じコヒーレント情報量を持つため、量子データ処理不等式は、中間状態 $\phi_{RBE}$ に対しても同じことが成り立たなければならないことを意味します：
+$$
+\begin{aligned}
+H(R) &= I_c(R \rangle B) = H(B) - H(E) \\
+&\implies H(B) = H(RE) = H(R) + H(E).
+\end{aligned}
+$$ {#eq-10.284}
+したがって、$RE$ の状態は積状態です。私たちは、純粋状態 $\psi_{RA}$ に対する通信路拡大 $\boldsymbol{U}^{A \to BE}$ の作用からボブが完全に復元できるならば、結果として生じる通信路出力純粋状態 $\phi_{RBE}$ において、周辺状態 $\boldsymbol{\rho}_{RE}$ は積 $\boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_E$ でなければならないことを見出しました。私たちが第7章で量子誤り訂正符号を議論した際に、この復元可能性の基準に遭遇したことを思い出してください。
+
+逆に、$\psi_{RA}$ がもつれた純粋状態であり、アリスがノイズのある通信路 $\boldsymbol{U}^{A \to BE}$ を通じて送信することによって $R$ の浄化をボブに転送したいと仮定しましょう。そして、結果として得られる3体系純粋状態 $\phi_{RBE}$ において、$RE$ の周辺状態が $\boldsymbol{\rho}_{RE} = \boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_E$ と因数分解すると仮定します。そのとき、$B$ は次を満たすような部分系 $B = B_1 B_2$ に分解されます：
+$$
+\phi_{RBE} = \boldsymbol{W}_B \left(\tilde{\psi}_{RB_1} \otimes \chi_{B_2 E}\right).
+$$ {#eq-10.285}
+ここで $\boldsymbol{W}_B$ は $B$ における何らかのユニタリ基底変換です。これは、$\boldsymbol{\rho}_{RE}$ の最も一般的な浄化が、$B$ のみにユニタリ変換を適用することによって特定の浄化から得られるために成り立ちます。今やボブは等長復号器 $\boldsymbol{V}^{B_1 \to \hat{B}}\boldsymbol{W}_B^\dagger$ を構築することができ、これはボブの好みの部分系 $\hat{B}$ へと $R$ の浄化を抽出します。$R$ のすべての浄化はボブ側の等長変換によってのみ異なるため、ボブは状態 $\psi_{R\hat{B}}$ を出力するように復号写像を選ぶことができます。その結果、$RA$ の入力状態は望み通り $R\hat{B}$ へと正常に送信されます。さらに、初期状態を量子符号の符号空間と参照系の最大もつれ状態 $\Phi_{RA}$ に選ぶことができます。結果として生じる出力純粋状態 $\phi_{RBE}$ において $RE$ の周辺状態が因数分解するならば、第3章の相対状態法（relative state method）により、符号空間内の**任意**の状態を通信路を通じて送信し、ボブによって完全な忠実度で復号できると結論付けられます。
+
+私たちは、ノイズのある通信路を通じて送信される浄化された量子情報は、参照系が通信路の環境と完全に無相関である場合、すなわち環境から**切り離されている（decoupled）**場合にのみ、正確に訂正可能であることを見出しました。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=61) これが**デカップリング原理（decoupling principle）**であり、量子通信路の理論における多くの重要な結果の基礎となる強力な概念です。
+
+これまでのところ、私たちは完全な訂正可能性が完全なデカップリングに対応することを示しました。しかし同様に、近似的な訂正可能性が近似的なデカップリングに対応することも分かります。例えば、$RE$ の状態が $L^1$ ノルムにおいて積状態に近いと仮定しましょう：
+$$
+\|\boldsymbol{\rho}_{RE} - \boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_E\|_1 \le \varepsilon.
+$$ {#eq-10.286}
+第2章で学んだように、2つの密度作用素がこのノルムで互いに近い場合、それらは1に近い忠実度を持ち、したがって大きな重なりを持つ浄化を持つことを意味します。積状態 $\boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_E$ の任意の浄化は次の形をしています：
+$$
+\tilde{\phi}_{RBE} = \boldsymbol{W}_B\left(\tilde{\psi}_{RB_1} \otimes \chi_{B_2 E}\right).
+$$ {#eq-10.287}
+そして $\boldsymbol{\rho}_{RE}$ のすべての浄化は浄化系 $B$ に作用する等長変換によって互いに変換できるため、次を満たすように $\boldsymbol{W}_B$ を選ぶ方法が存在します：
+$$
+F(\boldsymbol{\rho}_{RE}, \boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_E) = \left|\langle\phi_{RBE}|\tilde{\phi}_{RBE}\rangle\right|^2 \ge 1 - \|\boldsymbol{\rho}_{RE} - \boldsymbol{\rho}_R \otimes \boldsymbol{\rho}_E\|_1 \ge 1 - \varepsilon.
+$$ {#eq-10.288}
+ここで、2つの密度作用素の忠実度がその密度作用素の浄化の最大重なりに等しいことを主張するウールマン（Uhlmann）の定理を使用しました。さらに、忠実度は $E$ の部分トレースのもとでも、ボブの復号写像の作用のもとでも単調であり、またボブは $\tilde{\phi}_{RBE}$ を完全に復号できるため、ボブが適切な復号写像 $\mathcal{D}$ を選択すれば、
+$$
+F\left(\mathcal{D}^{B \to \hat{B}}(\boldsymbol{\rho}_{RB}), \psi_{R\hat{B}}\right) \ge 1 - \varepsilon
+$$ {#eq-10.289}
+であると結論付けられます。このように、$L^1$ ノルムにおける近似的デカップリングは、高忠実度の訂正可能性を意味します。$\boldsymbol{\rho}_{RE}$ が $L^1$ ノルムにおいて $\tilde{\boldsymbol{\rho}}_R \otimes \tilde{\boldsymbol{\rho}}_E$ に近い場合（ここで $\tilde{\boldsymbol{\rho}}_R$ は必ずしも $\mathrm{tr}_E(\boldsymbol{\rho}_{RE})$ である必要はなく、$\tilde{\boldsymbol{\rho}}_E$ も必ずしも $\mathrm{tr}_R(\boldsymbol{\rho}_{RE})$ である必要はありません）でも、同様の議論が依然として機能することに注意すると便利です。
+
+他方で、（近似的）デカップリングが破れると、ボブの復号状態の忠実度は著しく損なわれます。状態 $\phi_{RBE}$ において
+$$
+I(R; E) = H(R) + H(E) - H(RE) \ge \varepsilon > 0
+$$ {#eq-10.290}
+であると仮定しましょう。そのとき、$\phi$ のコヒーレント情報量は
+$$
+I_c(R \rangle B)_\phi = H(B)_\phi - H(E)_\phi = H(RE)_\phi - H(E)_\phi \le H(R)_\phi - \varepsilon
+$$ {#eq-10.291}
+となります。量子データ処理不等式により、ボブの復号状態 $\tilde{\psi}_{R\hat{B}}$ のコヒーレント情報量はこれより大きくはなり得ないことが分かります。したがって、
+$$
+I_c(R \rangle \hat{B})_{\tilde{\psi}} = H(R)_{\tilde{\psi}} - H(R\hat{B})_{\tilde{\psi}} \le H(R)_\phi - \varepsilon
+$$ {#eq-10.292}
+であり、ゆえに
+$$
+H(R\hat{B})_{\tilde{\psi}} \ge \varepsilon
+$$ {#eq-10.293}
+となります。完全なデカップリングからの逸脱は、復号された $R\hat{B}$ の状態が環境 $E$ とある程度の残留エンタングルメントを持っており、したがって純粋ではないことを意味します。
+
+これで量子通信路容量 $Q(\mathcal{N})$ の上限を導出するためのツールが揃いました。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=62) 通信路の $n$ 回の使用に対して、$\psi^{(n)}$ を参照系 $\mathcal{H}_R^{(n)} \subseteq \mathcal{H}_R^{\otimes n}$ と符号空間 $\mathcal{H}_A^{(n)} \subseteq \mathcal{H}_A^{\otimes n}$（ここで $\dim \mathcal{H}_A^{(n)} = 2^{n\bar{R}}$）の最大もつれ状態とします。これにより、
+$$
+I_c(R^n \rangle A^n)_{\psi^{(n)}} = H(R^n)_{\psi^{(n)}} = n\bar{R}
+$$ {#eq-10.294}
+となります。（ここで $\bar{R}$ は通信レートを表し、$R$ は参照系を表すために使用しています。）さて、$A^n$ は $\left(\boldsymbol{U}^{A \to BE}\right)^{\otimes n}$ を通じて $B^n$ に送信され、$R^n B^n E^n$ の純粋状態 $\phi^{(n)}$ を生成します。もしボブが高い忠実度で復号できるならば、彼の復号状態はコヒーレント情報量 $H(R^n)_{\psi^{(n)}} - o(n)$ を持たなければならず、量子データ処理不等式は
+$$
+I_c(R^n \rangle B^n)_{\phi^{(n)}} = H(R^n)_{\psi^{(n)}} - o(n) = n\bar{R} - o(n)
+$$ {#eq-10.295}
+を意味し、したがって
+$$
+\bar{R} = \frac{1}{n} I_c(R^n \rangle B^n)_{\phi^{(n)}} + o(1)
+$$ {#eq-10.296}
+となります。極限 $n \to \infty$ を取ると、式 (@eq-10.278) における $Q(\mathcal{N})$ の表現が量子通信路容量の上限であることが分かります。演習10.16において、忠実度 $F \ge 1 - \varepsilon$ を達成する復号写像が存在する場合に
+$$
+H(R^n) - I_c(R^n \rangle B^n) \le 2H_2( \varepsilon) + 4\varepsilon n\bar{R}
+$$ {#eq-10.297}
+となることを示し、式 (@eq-10.295) の言明をより精密にします。
+
+単なる上限ではなく、$Q(\mathcal{N})$ が達成可能なレートであることを示すためには、シャノンのランダム符号化の議論の量子版を定式化する必要があります。私たちの戦略（§10.9.3 を参照）は、$R^n$ から $E^n$ の近似的デカップリングを達成する符号の存在を実証することになります。
+
+### 10.7.3 分解可能通信路 (Degradable channels) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=62) {#sec-10.7.3-degradable-channels}
+
+一部のケースではコヒーレント情報量は超加法的になり得ますが、コヒーレント情報量が加法的であり、したがって量子通信路容量が単発容量（単一文字公式が存在する）と一致する通信路のクラスが存在します。そのようなクラスの1つが**分解可能通信路（degradable channels）**のクラスです。
+
+分解可能通信路とは何かを理解するために、まず**補完通信路（complementary channel）**の概念が必要です。任意の通信路 $\mathcal{N}^{A \to B}$ はシュタインスプリング拡大 $\boldsymbol{U}^{A \to BE}$ を持ち、環境 $E$ を部分トレースすることによって $\mathcal{N}^{A \to B}$ が得られます。あるいは、代わりに $B$ を部分トレースすることによって、$\mathcal{N}^{A \to B}$ に相補的な通信路 $\mathcal{N}_c^{A \to E}$ が得られます。$\mathcal{N}^{A \to B}$ を変えることなく $\boldsymbol{U}^{A \to BE}$ に等長変換 $\boldsymbol{V}^{E \to E}$ を合成する自由があるため、補完通信路は $E$ に作用する等長変換の違いを除いてのみ定義されます。補完通信路の対象となる性質はこのような等長変換のもとで不変であるため、この一意性の欠如は問題になりません。
+
+もし $\mathcal{N}^{A \to B}$ に $B$ を $E$ に写像する通信路を合成することによってその補完通信路を得ることができるならば、通信路 $\mathcal{N}^{A \to B}$ は分解可能であると言います：
+$$
+\mathcal{N}_c^{A \to E} = \mathcal{T}^{B \to E} \circ \mathcal{N}^{A \to B}.
+$$ {#eq-10.298}
+この意味で、アリスが通信路を通じて状態を送信するとき、系 $B$ を保持するボブは、系 $E$ を保持するエバよりもノイズの少ないコピーを受け取ります。
+
+ここで、$\boldsymbol{U}_1^{A_1 \to B_1 E_1}$ と $\boldsymbol{U}_2^{A_2 \to B_2 E_2}$ が分解可能通信路 $\mathcal{N}_1$ と $\mathcal{N}_2$ の拡大であると仮定します。アリスは参照系 $R$ を導入して入力純粋状態
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=63) $\psi_{R A_1 A_2}$ を準備し、$\mathcal{N}_1 \otimes \mathcal{N}_2$ を介してその状態をボブに送信し、出力純粋状態 $\phi_{R B_1 B_2 E_1 E_2}$ を準備します。私たちはこの状態におけるコヒーレント情報量 $I_c(R \rangle B_1 B_2)_\phi$ を評価したいと考えます。
+
+重要な点は、両方の通信路が分解可能であるため、$B_1 B_2$ を $E_1 E_2$ に写像する積通信路 $\mathcal{T}_1 \otimes \mathcal{T}_2$ が存在し、したがって相互情報量の単調性から次が導かれることです：
+$$
+I(B_1; B_2) \ge I(E_1; E_2).
+$$ {#eq-10.299}
+したがって、コヒーレント情報量は次を満たします：
+$$
+\begin{aligned}
+I_c(R \rangle B_1 B_2) &= H(B_1 B_2) - H(E_1 E_2) \\
+&= H(B_1) + H(B_2) - I(B_1; B_2) - H(E_1) - H(E_2) + I(E_1; E_2) \\
+&\le H(B_1) - H(E_1) + H(B_2) - H(E_2).
+\end{aligned}
+$$ {#eq-10.300}
+これらの量はすべて状態 $\phi_{R B_1 B_2 E_1 E_2}$ において評価されます。しかし、$H(B_1) - H(E_1)$ の評価においては、等長変換 $\boldsymbol{U}_2^{A_2 \to B_2 E_2}$ は無関係であることに注目してください。この量は実質的にコヒーレント情報量 $I_c(RA_2 \rangle B_1)$ と同じであり、ここでは $A_2$ を通信路 $\mathcal{N}_1$ への入力に対する参照系の一部と見なしています。同様に $H(B_2) - H(E_2) = I_c(RA_1 \rangle B_2)$ であり、したがって
+$$
+I_c(R \rangle B_1 B_2) \le I_c(RA_2 \rangle B_1) + I_c(RA_1 \rangle B_2) \le Q_1(\mathcal{N}_1) + Q_1(\mathcal{N}_2)
+$$ {#eq-10.301}
+となります。ここで最後の不等式では、すべての入力にわたって最大化されたコヒーレント情報量としての単発容量の定義を使用しました。$Q_1(\mathcal{N}_1 \otimes \mathcal{N}_2)$ も同様にコヒーレント情報量 $I_c(R \rangle B_1 B_2)$ を最大化することによって定義されるため、$\mathcal{N}_1$ と $\mathcal{N}_2$ が分解可能であるならば、
+$$
+Q_1(\mathcal{N}_1 \otimes \mathcal{N}_2) \le Q_1(\mathcal{N}_1) + Q_1(\mathcal{N}_2)
+$$ {#eq-10.302}
+であることが分かります。
+
+$\mathcal{N}$ の容量に対する正則化公式は
+$$
+Q(\mathcal{N}) = \lim_{n \to \infty} \frac{1}{n} Q_1(\mathcal{N}^{\otimes n}) \le Q_1(\mathcal{N})
+$$ {#eq-10.303}
+であり、ここで最後の不等式は $\mathcal{N}$ が分解可能であると仮定して式 (@eq-10.302) から従います。後で見るように、$Q_1(\mathcal{N})$ は実際に達成可能なレートであり、したがって分解可能通信路の量子容量に対する単一文字公式となります。
+
+分解可能通信路の具体的な例として、次の拡大を持つ**一般化位相緩和通信路（generalized dephasing channel）**を考えます：
+$$
+U^{A \to BE} : |x\rangle_A \mapsto |x\rangle_B \otimes |\alpha_x\rangle_E.
+$$ {#eq-10.304}
+ここで $\{|x\rangle_A\}$, $\{|x\rangle_B\}$ はそれぞれ $\mathcal{H}_A, \mathcal{H}_B$ の正規直交基底であり、環境の状態 $\{|\alpha_x\rangle_E\}$ は規格化されていますが直交しているとは限りません。（$A$ と $B$ が量子ビットである特別な場合については §3.4.2 で議論しました。）対応する通信路は
+$$
+\mathcal{N}^{A \to B} : \boldsymbol{\rho} \mapsto \sum_{x,x'} |x\rangle\langle x|\boldsymbol{\rho}|x'\rangle\langle x'| \langle \alpha_{x'}|\alpha_x\rangle
+$$ {#eq-10.305}
+であり、これは次の補完通信路を持ちます：
+$$
+\mathcal{N}_c^{A \to E} : \boldsymbol{\rho} \mapsto \sum_x |\alpha_x\rangle\langle x|\boldsymbol{\rho}|x\rangle\langle \alpha_x|.
+$$ {#eq-10.306}
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=64) 状態 $\{|\alpha_x\rangle_E = |x\rangle_E\}$ が正規直交系である特別な場合、**完全位相緩和通信路（completely dephasing channel）**
+$$
+\Delta^{A \to B} : \boldsymbol{\rho} \mapsto \sum_x |x\rangle\langle x|\boldsymbol{\rho}|x\rangle\langle x|
+$$ {#eq-10.307}
+が得られ、その補完通信路 $\Delta^{A \to E}$ は $\Delta^{A \to B}$ と同じ形を持ちます。（ここでは表記が煩雑になるのを避けるために添字を省略していますが、$\mathcal{N}^{A \to B}, \mathcal{N}_c^{A \to E}, \Delta^{A \to B}, \Delta^{A \to E}$ の表現において $|x\rangle$ が $|x\rangle_A, |x\rangle_B, |x\rangle_E$ のいずれを意味するかは文脈から明らかでしょう。）私たちは
+$$
+\mathcal{N}_c^{A \to E} = \mathcal{N}_c^{C \to E} \circ \Delta^{B \to C} \circ \mathcal{N}^{A \to B}
+$$ {#eq-10.308}
+であることを簡単に確認できます。したがって、$\mathcal{N}_c \circ \Delta$ は $\mathcal{N}$ を $\mathcal{N}_c$ へと劣化（degrade）させます。したがって $\mathcal{N}$ は分解可能であり、$Q(\mathcal{N}) = Q_1(\mathcal{N})$ です。
+
+分解可能通信路のさらなる例は演習10.18で議論されます。
+
+また、$\mathcal{N}_c^{A \to E}$ に $E$ を $B$ に写像する通信路を合成することによって補完通信路からその通信路を得ることができる場合、通信路 $\mathcal{N}^{A \to B}$ は**反分解可能（antidegradable）**であると言います：
+$$
+\mathcal{N}^{A \to B} = \mathcal{T}^{E \to B} \circ \mathcal{N}_c^{A \to E}.
+$$ {#eq-10.309}
+この意味で、ボブはエバよりもノイズの多い出力を受け取ります。反分解可能通信路の量子容量がゼロにならなければならないことは容易に理解できます。エバは自身の出力に $\mathcal{T}^{E \to B}$ を適用することでボブの出力をシミュレートできます。したがって、もしアリスからボブへ通信路 $\mathcal{N}^{A \to B}$ を何回も使用して量子状態が送信され、ボブが高い忠実度でその状態を復号できるならば、エバも同様にそれを復号できることになります。ゆえに、反分解可能通信路に対する非ゼロの容量は、量子複製不可能定理（no-cloning theorem）によって禁止されます。
+
+### 10.7.4 脱分極通信路の容量 (Capacity of the depolarizing channel) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=64) {#sec-10.7.4-depolarizing-capacity}
+
+第3章で議論したように、誤り確率 $p$ を持つ脱分極通信路は、単一量子ビットの入力密度作用素 $\boldsymbol{\rho}$ に対して次のように作用します：
+$$
+\mathcal{N}_p^{A \to B}(\boldsymbol{\rho}) = (1-p)\boldsymbol{\rho} + \frac{p}{3}\left(\boldsymbol{X}\boldsymbol{\rho}\boldsymbol{X} + \boldsymbol{Y}\boldsymbol{\rho}\boldsymbol{Y} + \boldsymbol{Z}\boldsymbol{\rho}\boldsymbol{Z}\right).
+$$ {#eq-10.310}
+ここで $\{\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}\}$ はパウリ行列を表します。この通信路の単発容量を計算してみましょう。
+
+通信路の対称性から、コヒーレント情報量は最大混合状態である入力密度作用素によって最適化されると容易に推測できます。そこで、最大もつれ状態 $|\phi^+\rangle_{RA} = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$（ここで $A$ は通信路入力、$R$ は参照系）に対する通信路の作用を考えると、次の出力が得られます：
+$$
+\boldsymbol{\rho}_{RB} = (1-p)|\phi^+\rangle\langle\phi^+| + \frac{p}{3}\left(|\psi^+\rangle\langle\psi^+| + |\psi^-\rangle\langle\psi^-| + |\phi^-\rangle\langle\phi^-|\right).
+$$ {#eq-10.311}
+単発容量は、この量が非負である場合はコヒーレント情報量
+$$
+Q_1(\mathcal{N}_p) = I_c(R \rangle B) = H(B) - H(RB)
+$$ {#eq-10.312}
+であり、それ以外の場合はゼロとなります。
+
+$\boldsymbol{\rho}_{RB}$ はベル状態の混合であるため、周辺密度作用素 $\boldsymbol{\rho}_B$ は最大混合状態であり、したがって $H(B) = 1$ です。$\boldsymbol{\rho}_{RB}$ の固有値は $\left(1-p, \frac{p}{3}, \frac{p}{3}, \frac{p}{3}\right)$ であるため、
+$$
+\begin{aligned}
+H(RB) &= -(1-p)\log_2(1-p) - p\log_2\left(\frac{p}{3}\right) = H_2(p) + p\log_2 3 \\
+&\implies I_c(R \rangle B) = 1 - H_2(p) - p\log_2 3
+\end{aligned}
+$$ {#eq-10.313}
+が得られ、[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=65) これは $p < p_1 \approx .18929$ に対して正となります。したがって、単発容量 $Q_1(\mathcal{N}_p)$ は誤り確率 $p < p_1$ に対して非ゼロです。
+
+$Q_1(\mathcal{N}_p)$ に対するこの表現には単純な解釈があります --- それは、復号誤りの確率が漸近的に消失するようなランダムスタビライザー符号によって達成される通信レートです。その理由を理解するために、通信路の使用回数 $n$ が非常に大きく、誤りを持つ送信量子ビットの数が高い確率で $pn$ に近いと仮定しましょう。どの量子ビットに誤りがあるかを選択する方法の数を $\binom{n}{np}$ で近似し、損傷した各量子ビットに対して一様に分布する3つの可能なパウリ誤りが存在することに注目すると、典型的誤りの数は
+$$
+\approx \binom{n}{np} 3^{pn} \approx 2^{n(H_2(p) + p\log_2 3)}
+$$ {#eq-10.314}
+と結論付けられます。
+
+ここで、$k$ 個の論理量子ビットを持つ $n$ 量子ビットスタビライザー符号を考え、そのような符号全体にわたって一様に平均することを想像してください。これらの符号は $n - k$ 個の独立した可換スタビライザー生成元を持ち、これらすべての生成元を測定することで $n - k$ ビットのエラーシンドロームが得られます。可能なシンドロームの数 $2^{n-k}$ が典型的誤りの数よりもはるかに大きい場合、観測されたシンドロームが単なる偶然によって特定の典型的誤りを指し示す可能性は極めて低くなります。代わりに、高い確率でシンドロームは一意の典型的誤り（実際に発生した誤り）を指し示し、したがって正しく復号することができます。
+
+具体的には、シンドローム復号の曖昧さによる復号誤りの確率は次のように見積もることができます：
+$$
+\text{誤り確率} \approx \frac{\text{典型的誤りの数}}{\text{シンドロームの数}} \approx \frac{2^{n(H_2(p) + p\log_2 3)}}{2^{n-k}} = 2^{-n(Q_1(\mathcal{N}_p) - \bar{R})}.
+$$ {#eq-10.315}
+ここで $\bar{R} = k/n$ は符号化レートです。私たちは、$Q_1(\mathcal{N}_p)$ 未満の任意のレート $\bar{R}$ に対して、誤り確率は $n \to \infty$ でゼロに近づくと結論付けます。
+
+私たちは §10.1.5 において、2値対称通信路の古典容量 $C(p) = 1 - H_2(p)$ に対する下限を得るために同様の数え上げの議論を使用しました。その場合、通信レートが $C(p)$ よりも大きいならば、すべての典型的誤りを識別するのに十分な異なるシンドロームが存在しないことに注目することで、一致する上限を見つけることができました。不思議なことに、この議論は、$p$ が $p_1$ に近い非常にノイズの多い脱分極通信路 $\mathcal{N}_p$ に対してスタビライザー符号によって達成される量子通信レートの上限を提供することには失敗します。
+
+シンドロームを数え上げても量子容量の上限が得られない理由は、量子符号が高度に**縮退（degenerate）**し得るためです。すなわち、符号空間に対して自明に作用する非自明な誤りが多数存在する可能性があるからです。私たちは第7章において、縮退スタビライザー符号の有益な例に遭遇しました：2次元量子ビット格子上で閉じたループを形成する $Z$ 誤り（または双対格子上で閉じたループを形成する $X$ 誤り）が符号スタビライザーに含まれるトーリック符号です。より日常的な例は、符号語 $|0\rangle^{\otimes n}$ と $|1\rangle^{\otimes n}$ によって張られる量子反復符号です。この場合、$Z_i Z_j$ は符号スタビライザーに含まれます（ここで $i$ と $j$ は $n$ 個の量子ビットの中の任意のペアをラベル付けします）。
+
+$m > 1$ のいくつかの値に対して、長さ $m$ の量子反復符号とランダムスタビライザー符号を連接することによって、$p_1$ をわずかに超える $p$ に対しても正の容量を達成できることが判明します。これに対応して、通信路使用回数 $m$ と誤り確率 $p$ のいくつかの値に対して、通信路使用1回あたりのコヒーレント情報量は $Q_1(\mathcal{N}_p)$ よりも高くなります。
+
+[📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=66) $m$ 回の通信路使用への入力を考えます：
+$$
+|\Phi\rangle_{R A_1 A_2 \cdots A_m} = \frac{1}{\sqrt{2}}\left(|0\rangle^{\otimes(m+1)} + |1\rangle^{\otimes(m+1)}\right)_{R A_1 A_2 \cdots A_m}.
+$$ {#eq-10.316}
+ここで $R$ は参照系です。$I \otimes \left(\mathcal{N}_p^{A \to B}\right)^{\otimes m}$ がこの状態に作用した後、$\frac{1}{m}I_c(R \rangle B_1 B_2 \cdots B_m)$ を明示的に計算できます。$m = 5$（これが最適ケースであることが判明します）の場合、この量、したがって $Q(\mathcal{N}_p)$ もまた、$p < p_5$ まで正であることが分かります。ここで $p_5 \approx .19036$ は $p_1$ よりも真に大きくなります。
+
+小さな $p$ に対しては、$\frac{1}{m}I_c(R \rangle B_1 B_2 \cdots B_m)$ は $\frac{1}{m}$ に近いため、$m = 1$ の場合よりも $m > 1$ の場合の方がはるかに小さくなります。しかし、通信路が十分にノイズに富んでいる場合、コヒーレント情報量は超加法的であり、$m > 1$ に対してより高い値が見出され、量子容量が $Q_1(\mathcal{N}_p)$ を超えることを示しています。
+
+容量が非ゼロである $p$ の最大値である $p_*$ の値はかなりの関心を集めていますが、現在でも未解明です。演習10.13は、脱分極通信路が $p \ge .25$ に対して反分解可能である（したがって消失する容量を持つ）ことを示しています。ゆえに $p_* \le .25$ です。他方で、現在知られている最良の下限は $p_* \ge .19088$ です。おそらくいつの日か脱分極通信路の量子容量に対する単一文字公式が見つかるでしょうが、今のところコヒーレント情報量の超加法性は、極めてノイズの多い領域における容量の正確な推定値を得ようとする取り組みの妨げとなっています。謙虚にならざるを得ません。

@@ -8,9 +8,9 @@
 $$
 \mathcal{E}(\boldsymbol{\rho}) = \sum_a \boldsymbol{M}_a \boldsymbol{\rho} \boldsymbol{M}_a^\dagger,
 $$ {#eq-3.32}
-ここで演算子 $\{\boldsymbol{M}_a\}$ は完全性関係式 (@eq-3.26) に従います。線形であるため、$\mathcal{E}$ は式 (@eq-3.32) のように純粋状態だけでなく、任意の密度演算子に対して作用します。 [📄 p.12](/assets/pdf/preskill/chap3.pdf#page=12)
+ここで演算子 $\{\boldsymbol{M}_a\}$ は完全性関係式 (@eq-3.25) に従います。線形であるため、$\mathcal{E}$ は式 (@eq-3.32) のように純粋状態だけでなく、任意の密度演算子に対して作用します。 [📄 p.12](/assets/pdf/preskill/chap3.pdf#page=12)
 
-式 (@eq-3.32) の形式の線形写像（ここで $\{\boldsymbol{M}_a\}$ は式 (@eq-3.26) を満たす）は、**量子チャネル（quantum channel）**と呼ばれます。「チャネル」という言葉は通信理論から取られたものです。私たちは、状態 $\boldsymbol{\rho}$ を通信リンクを通じて別の当事者に送信し、その当事者が修正された状態 $\mathcal{E}(\boldsymbol{\rho})$ を受け取る状況を想像します。量子チャネルの類義語として**スーパーオペレーター（superoperator）**という言葉が使われることもあります。ここで「スーパー」は、その写像がベクトルからベクトルではなく、演算子から演算子への写像であることを伝えています。同じオブジェクトに対するもう一つの名称は、**トレース保存完全正値写像（trace-preserving completely positive map）**、略して **TPCP 写像**です。この名称の正当性はすぐに明らかになります。式 (@eq-3.32) は量子チャネルの**オペレーター和表現（operator-sum representation）**と言われ、演算子 $\{\boldsymbol{M}_a\}$ はチャネルの**クラウス演算子（Kraus operators）**または**演算要素（operation elements）**と呼ばれます。
+式 (@eq-3.32) の形式の線形写像（ここで $\{\boldsymbol{M}_a\}$ は式 (@eq-3.25) を満たす）は、**量子チャネル（quantum channel）**と呼ばれます。「チャネル」という言葉は通信理論から取られたものです。私たちは、状態 $\boldsymbol{\rho}$ を通信リンクを通じて別の当事者に送信し、その当事者が修正された状態 $\mathcal{E}(\boldsymbol{\rho})$ を受け取る状況を想像します。量子チャネルの類義語として**スーパーオペレーター（superoperator）**という言葉が使われることもあります。ここで「スーパー」は、その写像がベクトルからベクトルではなく、演算子から演算子への写像であることを伝えています。同じオブジェクトに対するもう一つの名称は、**トレース保存完全正値写像（trace-preserving completely positive map）**、略して **TPCP 写像**です。この名称の正当性はすぐに明らかになります。式 (@eq-3.32) は量子チャネルの**オペレーター和表現（operator-sum representation）**と言われ、演算子 $\{\boldsymbol{M}_a\}$ はチャネルの**クラウス演算子（Kraus operators）**または**演算要素（operation elements）**と呼ばれます。
 
 量子チャネルは密度演算子を密度演算子へと写像します。すなわち、以下の簡単に検証可能な性質を持っています：
 
@@ -230,6 +230,6 @@ T \otimes I : |\tilde{\Phi}\rangle\langle\tilde{\Phi}| = \sum_{i,j} |i\rangle\la
 $$ {#eq-3.68}
 つまり、それは $|\tilde{\Phi}\rangle\langle\tilde{\Phi}|$ を、システム $A$ と $B$ を入れ替える **SWAP 演算子**へと写像します：
 $$
-\text{SWAP} : |\psi\rangle_A \otimes |\varphi\rangle_B = \sum_{i,j} \psi_i \varphi_j |i, j\rangle \mapsto \sum_{i,j} \varphi_j \psi_i |j, i\rangle = |\varphi\rangle_A \otimes |\psi\rangle_B.
+\text{SWAP} : |\psi\rangle_A \otimes |\phi\rangle_B = \sum_{i,j} \psi_i \phi_j |i, j\rangle \mapsto \sum_{i,j} \phi_j \psi_i |j, i\rangle = |\phi\rangle_A \otimes |\psi\rangle_B.
 $$ {#eq-3.69}
 SWAP の2乗は恒等写像であるため、その固有値は $\pm 1$ です。 $A$ と $B$ の入れ替えに対して対称な状態は固有値 1 を持ち、反対称な状態は固有値 -1 を持ちます。したがって SWAP は負の固有値を持ち、これは $T \otimes I$ が正値ではないこと、したがって $T$ が完全正値ではないことを意味します。

@@ -1,0 +1,200 @@
+## 7.11 5量子ビット符号 (The 5-Qubit Code) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=40) {#sec-7.11-five-qubit-code}
+
+私たちがこれまでに考察してきたすべての QECC は CSS 型のものでした――各安定化生成元は $\boldsymbol{Z}$ の積であるか、あるいは $\boldsymbol{X}$ の積であるかのいずれかでした。しかし、すべての安定化符号がこの性質を持つわけではありません。非 CSS 安定化符号の一例が、完全かつ非縮退の $[[5, 1, 3]]$ 符号です。
+
+その4つの安定化生成元は次のように表すことができます：
+
+$$
+\begin{aligned}
+\boldsymbol{M}_1 &= \boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}, \\
+\boldsymbol{M}_2 &= \boldsymbol{I}\boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}, \\
+\boldsymbol{M}_3 &= \boldsymbol{X}\boldsymbol{I}\boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}, \\
+\boldsymbol{M}_4 &= \boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}\boldsymbol{X}\boldsymbol{Z}.
+\end{aligned}
+$$ {#eq-7.150}
+
+$\boldsymbol{M}_{2,3,4}$ は $\boldsymbol{M}_1$ から量子ビットの巡回置換を実行することによって得られます。（量子ビットの巡回置換によって得られる第5の演算子 $\boldsymbol{M}_5 = \boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}\boldsymbol{X} = \boldsymbol{M}_1\boldsymbol{M}_2\boldsymbol{M}_3\boldsymbol{M}_4$ は、他の4つから独立ではありません。）生成元の巡回置換が別の生成元となるため、符号自体が巡回的（cyclic）です――すなわち、符号語の巡回置換は符号語となります。
+
+明らかに、各 $\boldsymbol{M}_i$ は $\boldsymbol{Y}$ を含まず、したがって自乗して $\boldsymbol{I}$ となります。
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=41)
+生成元の各ペアに対して、$\boldsymbol{X}$ と $\boldsymbol{Z}$ の間の衝突が2箇所存在するため、生成元同士は互いに可換です。重み 1 または重み 2 の各パウリ演算子が少なくとも1つの生成元と反可換であることを迅速に確認できるため、この符号の距離は 3 です。
+
+例えば、最初の2つの量子ビット上に台（support）を持ち、4つの生成元のすべてと可換である誤り演算子が存在するかどうかを考えてみましょう。$\boldsymbol{M}_2$ 内の $\boldsymbol{I}\boldsymbol{X}$ および $\boldsymbol{M}_3$ 内の $\boldsymbol{X}\boldsymbol{I}$ と可換であるためには、重み 2 の演算子は $\boldsymbol{X}\boldsymbol{X}$ でなければなりません。しかし $\boldsymbol{X}\boldsymbol{X}$ は $\boldsymbol{M}_1$ 内の $\boldsymbol{X}\boldsymbol{Z}$ および $\boldsymbol{M}_4$ 内の $\boldsymbol{Z}\boldsymbol{X}$ と反可換です。
+
+シンプレクティック記法において、安定化群は次のように表現できます：
+
+$$
+\tilde{H} = \left(\begin{array}{ccccc|ccccc}
+0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 \\
+0 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 0
+\end{array}\right).
+$$ {#eq-7.151}
+
+この行列には素晴らしい解釈があります。各列を単一量子ビット誤りの**シンドローム**とみなすことができるからです。例えば、単一量子ビットのビット反転演算子 $\boldsymbol{X}_j$ は、$\boldsymbol{M}_i$ の位置 $j$ に $\boldsymbol{I}$ または $\boldsymbol{X}$ がある場合は $\boldsymbol{M}_i$ と可換であり、位置 $j$ に $\boldsymbol{Z}$ がある場合は反可換です。したがって、次の表：
+
+| | $\boldsymbol{X}_1$ | $\boldsymbol{X}_2$ | $\boldsymbol{X}_3$ | $\boldsymbol{X}_4$ | $\boldsymbol{X}_5$ |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| $\boldsymbol{M}_1$ | 0 | 1 | 1 | 0 | 0 |
+| $\boldsymbol{M}_2$ | 0 | 0 | 1 | 1 | 0 |
+| $\boldsymbol{M}_3$ | 0 | 0 | 0 | 1 | 1 |
+| $\boldsymbol{M}_4$ | 1 | 0 | 0 | 0 | 1 |
+
+は、ビット反転が生じた際の $\boldsymbol{M}_{1,2,3,4}$ の測定結果をリストアップしています。（例えば、第1量子ビットが反転した場合、測定結果 $\boldsymbol{M}_1 = \boldsymbol{M}_2 = \boldsymbol{M}_3 = 1, \boldsymbol{M}_4 = -1$ が誤りを診断します。）同様に、$\tilde{H}$ の右半分は位相誤りに対するシンドローム表とみなすことができます：
+
+| | $\boldsymbol{Z}_1$ | $\boldsymbol{Z}_2$ | $\boldsymbol{Z}_3$ | $\boldsymbol{Z}_4$ | $\boldsymbol{Z}_5$ |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| $\boldsymbol{M}_1$ | 1 | 0 | 0 | 1 | 0 |
+| $\boldsymbol{M}_2$ | 0 | 1 | 0 | 0 | 1 |
+| $\boldsymbol{M}_3$ | 1 | 0 | 1 | 0 | 0 |
+| $\boldsymbol{M}_4$ | 0 | 1 | 0 | 1 | 0 |
+
+$\boldsymbol{Y}$ は $\boldsymbol{X}$ と $\boldsymbol{Z}$ の双方と反可換であるため、誤り $\boldsymbol{Y}_i$ に対するシンドロームは、$\boldsymbol{X}$ 表と $\boldsymbol{Z}$ 表の第 $i$ 列を加算することによって得られます：
+
+| | $\boldsymbol{Y}_1$ | $\boldsymbol{Y}_2$ | $\boldsymbol{Y}_3$ | $\boldsymbol{Y}_4$ | $\boldsymbol{Y}_5$ |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| $\boldsymbol{M}_1$ | 1 | 1 | 1 | 1 | 0 |
+| $\boldsymbol{M}_2$ | 0 | 1 | 1 | 1 | 1 |
+| $\boldsymbol{M}_3$ | 1 | 0 | 1 | 1 | 1 |
+| $\boldsymbol{M}_4$ | 1 | 1 | 0 | 1 | 1 |
+
+観察すると、$\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}$ のシンドローム表の15個の列はすべて相異なっており、したがって私たちの符号が1つの誤りを訂正する非縮退符号であることを再確認できます。実際、符号は完全（perfect）です――長さ 4 の15個の非自明な2値文字列の各々が、いずれかの表の列として現れています。
+
+符号の巡回性のおかげで、安定化群の15個の非自明な元すべてを
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=42)
+容易に特徴付けることができます。$\boldsymbol{M}_1 = \boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}$ および量子ビットの巡回置換によって得られる4つの演算子のほかに、安定化群は次も含みます：
+
+$$
+\boldsymbol{M}_3\boldsymbol{M}_4 = -\boldsymbol{Y}\boldsymbol{X}\boldsymbol{X}\boldsymbol{Y}\boldsymbol{I}
+$$ {#eq-7.152}
+
+およびその巡回置換、ならびに
+
+$$
+\boldsymbol{M}_2\boldsymbol{M}_5 = -\boldsymbol{Z}\boldsymbol{Y}\boldsymbol{Y}\boldsymbol{Z}\boldsymbol{I}
+$$ {#eq-7.153}
+
+およびその巡回置換です。明らかに、安定化群のすべての元は重み 4 のパウリ演算子です。
+
+論理演算子として、次を選ぶことができます：
+
+$$
+\begin{aligned}
+\bar{\boldsymbol{Z}} &= \boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}, \\
+\bar{\boldsymbol{X}} &= \boldsymbol{X}\boldsymbol{X}\boldsymbol{X}\boldsymbol{X}\boldsymbol{X}.
+\end{aligned}
+$$ {#eq-7.154}
+
+これらは $\boldsymbol{M}_{1,2,3,4}$ と可換であり、自乗して $\boldsymbol{I}$ となり、互いに反可換です。重み 5 であるため、それら自身は安定化群に含まれていません。したがって、符号化された状態を破壊することを厭わなければ、各量子ビットの $\boldsymbol{Z}$ を測定し、その測定結果のパリティを評価することによって、符号化された量子ビットに対する $\bar{\boldsymbol{Z}}$ の値を決定することができます。実際、符号は距離 3 であるため、$S^\perp \setminus S$ 内には重み 3 の元が存在します。$\bar{\boldsymbol{Z}}$ および $\bar{\boldsymbol{X}}$ に対する別の表現は、安定化群の元を掛けることによって得られます。例えば次を選ぶことができます：
+
+$$
+\bar{\boldsymbol{Z}} = (\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}) \cdot (-\boldsymbol{Z}\boldsymbol{Y}\boldsymbol{Y}\boldsymbol{Z}\boldsymbol{I}) = -\boldsymbol{I}\boldsymbol{X}\boldsymbol{X}\boldsymbol{I}\boldsymbol{Z}
+$$ {#eq-7.155}
+
+（またはその巡回置換の1つ）、および
+
+$$
+\bar{\boldsymbol{X}} = (\boldsymbol{X}\boldsymbol{X}\boldsymbol{X}\boldsymbol{X}\boldsymbol{X}) \cdot (-\boldsymbol{Y}\boldsymbol{X}\boldsymbol{X}\boldsymbol{Y}\boldsymbol{I}) = -\boldsymbol{Z}\boldsymbol{I}\boldsymbol{I}\boldsymbol{Z}\boldsymbol{X}
+$$ {#eq-7.156}
+
+（またはその巡回置換の1つ）です。したがって、ブロック内の5個の量子ビットのうち3個のみの $\boldsymbol{X}$ または $\boldsymbol{Z}$ を測定し、結果のパリティを評価することによって、$\bar{\boldsymbol{X}}$ または $\bar{\boldsymbol{Z}}$ の値を確かめることが可能です。
+
+望むならば、次のようにして符号部分空間の正規直交基底を構築することができます。任意の状態 $|\psi_0\rangle$ から出発して、次を得ることができます：
+
+$$
+|\Psi_0\rangle = \sum_{\boldsymbol{M} \in S} \boldsymbol{M}|\psi_0\rangle.
+$$ {#eq-7.157}
+
+この（未規格化の）状態は、各 $\boldsymbol{M}' \in S$ に対して $\boldsymbol{M}'|\Psi_0\rangle = |\Psi_0\rangle$ を満たします。なぜなら、安定化群の元を掛けることは和の中の項を置換するに過ぎないからです。$\bar{\boldsymbol{Z}} = 1$ の符号化された状態 $|\bar{0}\rangle$ を得るために、同様に $\bar{\boldsymbol{Z}} = 1$ の固有状態でありながら安定化群内にはない状態 $|00000\rangle$ から始めることができます。すると（規格化を除いて）次が見出されます：
+
+$$
+\begin{aligned}
+|\bar{0}\rangle &= \sum_{\boldsymbol{M} \in S} |00000\rangle \\
+&= |00000\rangle + (\boldsymbol{M}_1 + \text{巡回置換}) |00000\rangle \\
+&\quad + (\boldsymbol{M}_3\boldsymbol{M}_4 + \text{巡回置換}) |00000\rangle + (\boldsymbol{M}_2\boldsymbol{M}_5 + \text{巡回置換}) |00000\rangle \\
+&= |00000\rangle + (|10010\rangle + \text{巡回置換}) \\
+&\quad - (|11110\rangle + \text{巡回置換}) \\
+&\quad - (|01100\rangle + \text{巡回置換}).
+\end{aligned}
+$$ {#eq-7.158}
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=43)
+続いて、$|\bar{0}\rangle$ に $\bar{\boldsymbol{X}}$ を適用することによって、すなわち全5量子ビットを反転させることによって、$|\bar{1}\rangle$ を見出すことができます：
+
+$$
+\begin{aligned}
+|\bar{1}\rangle = \bar{\boldsymbol{X}}|\bar{0}\rangle &= |11111\rangle + (|01101\rangle + \text{巡回置換}) \\
+&\quad - (|00001\rangle + \text{巡回置換}) \\
+&\quad - (|10011\rangle + \text{巡回置換}).
+\end{aligned}
+$$ {#eq-7.159}
+
+シンドロームはどのように測定されるのでしょうか？ $\boldsymbol{M}_1 = \boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}$ を測定するために実行できる回路は次の通りです：
+
+– 図 –  
+
+第1および第4量子ビット上のアダマール回転は、$\boldsymbol{M}_1$ を $\boldsymbol{Z}$ のテンソル積 $\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{I}$ へと回転させ、その後に CNOT ゲート群がこの演算子の値をアンシラに転写します。最後のアダマール回転は、符号化されたブロックを標準的な符号部分空間へと戻します。$\boldsymbol{M}_{2,3,4}$ を測定するための回路は、上記の回路から符号ブロック内の5個の量子ビットを巡回置換することによって得られます。
+
+符号化についてはどうでしょうか？ 私たちは次のユニタリ変換を構築したいと考えます：
+
+$$
+\boldsymbol{U}_{\text{encode}} : |0000\rangle \otimes (a|0\rangle + b|1\rangle) \to a|\bar{0}\rangle + b|\bar{1}\rangle.
+$$ {#eq-7.160}
+
+$|00000\rangle$ が $\bar{\boldsymbol{Z}} = 1$ の固有状態であり、$|00001\rangle$ が $\bar{\boldsymbol{Z}} = -1$ の固有状態であることをすでに見てきました。したがって（規格化を除いて）、
+
+$$
+a|\bar{0}\rangle + b|\bar{1}\rangle = \left(\sum_{\boldsymbol{M} \in S} \boldsymbol{M}\right) |0000\rangle \otimes (a|0\rangle + b|1\rangle)
+$$ {#eq-7.161}
+
+となります。そこで、初期状態に $(\sum \boldsymbol{M})$ を適用する回路をどのように構築するかを解明する必要があります。
+
+生成元は独立であるため、安定化群の各元は生成元の積として一意に表現でき、したがって和を次のように書き直すことができます：
+
+$$
+\sum_{\boldsymbol{M} \in S} \boldsymbol{M} = (\boldsymbol{I} + \boldsymbol{M}_4)(\boldsymbol{I} + \boldsymbol{M}_3)(\boldsymbol{I} + \boldsymbol{M}_2)(\boldsymbol{I} + \boldsymbol{M}_1).
+$$ {#eq-7.162}
+
+さらに進めるために、安定化群を別の形で表現することが便利です。安定化群を変更することなく、生成元 $\boldsymbol{M}_i$ を $\boldsymbol{M}_i\boldsymbol{M}_j$ に置き換える自由があることに注意してください。この置き換えは、行列 $\tilde{H}$ において第 $j$ 行を第 $i$ 行に加算することと同値です。このような行基本変形により、$4 \times 5$ 行列 $H_X$ に対してガウスの消去法（掃き出し法）を実行することができ、安定化群に対する新しい表示が得られます：
+
+$$
+\tilde{H}' = \left(\begin{array}{ccccc|ccccc}
+1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 \\
+1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 \\
+1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1
+\end{array}\right),
+$$ {#eq-7.163}
+
+あるいは
+
+$$
+\begin{aligned}
+\boldsymbol{M}_1 &= \boldsymbol{Y}\boldsymbol{Z}\boldsymbol{I}\boldsymbol{Z}\boldsymbol{Y}, \\
+\boldsymbol{M}_2 &= \boldsymbol{I}\boldsymbol{X}\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}, \\
+\boldsymbol{M}_3 &= \boldsymbol{Z}\boldsymbol{Z}\boldsymbol{X}\boldsymbol{I}\boldsymbol{X}, \\
+\boldsymbol{M}_4 &= \boldsymbol{Z}\boldsymbol{I}\boldsymbol{Z}\boldsymbol{Y}\boldsymbol{Y}.
+\end{aligned}
+$$ {#eq-7.164}
+
+[📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=44)
+この形式において、$\boldsymbol{M}_i$ はブロック内の量子ビット $i$ と 5 にのみ $\boldsymbol{X}$（反転）を適用します。
+
+安定化群に対してこの形式を採用すると、次の回路を実行することによって、状態 $|0, z_2, z_3, z_4, z_5\rangle$ に $\frac{1}{\sqrt{2}}(\boldsymbol{I} + \boldsymbol{M}_1)$ を適用することができます：
+
+– 図 –  
+
+アダマールは $\frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ を準備します。第1量子ビットが $|0\rangle$ の場合、他の操作は何もしないため、$\boldsymbol{I}$ が適用されます。しかし第1量子ビットが $|1\rangle$ の場合、この量子ビットに $\boldsymbol{X}$ が適用されており、回路内の他のゲート群は第1量子ビットが $|1\rangle$ であることを条件として $\boldsymbol{Z}\boldsymbol{Z}\boldsymbol{I}\boldsymbol{Z}\boldsymbol{Y}$ を適用します。ゆえに、$\boldsymbol{Y}\boldsymbol{Z}\boldsymbol{I}\boldsymbol{Z}\boldsymbol{Y} = \boldsymbol{M}_1$ が適用されたことになります。同様の回路を構築して、$|z_1, 0, z_3, z_4, z_5\rangle$ に $\frac{1}{\sqrt{2}}(\boldsymbol{I} + \boldsymbol{M}_2)$ を適用することなどができます。アダマールゲートを除いて、これらの各回路は量子ビット 1 から 4 に $\boldsymbol{Z}$ および条件付き $\boldsymbol{Z}$ のみを適用し、これらの量子ビットが反転することはありません。（このことを確実にするために、私たちは $H_X$ に対してガウスの消去法を実行したのです。）したがって、符号化回路を次のように構築できます：
+
+– 図 –  
+
+さらに、$|0\rangle$ に作用する各 $\boldsymbol{Z}$ ゲートは恒等演算子で置き換えることができるため、そのようなゲートをすべて除去して回路を簡略化することができ、次が得られます：
+
+– 図 –  
+
+この手順は、任意の安定化符号に対する符号化回路を構築するように一般化できます。
+
+符号化変換はユニタリであるため、その随伴を用いて復号することができます。また、各ゲートは自乗して $\pm\boldsymbol{I}$ となるため、復号回路は符号化回路を単に逆順に実行したものとなります。
