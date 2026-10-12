@@ -1,92 +1,82 @@
-# 2.5 アンサンブル解釈の曖昧さ (Ambiguity of the ensemble interpretation) [📄 p.26](/assets/pdf/preskill/chap2.pdf#page=26) {#sec-2.5-ambiguity}
+## 2.5 アンサンブル解釈の曖昧さ (Ambiguity of the ensemble interpretation) [📄 p.26](/assets/pdf/preskill/chap2.pdf#page=26) {#sec-2.5-ambiguity}
 
-## 2.5.1 凸性 (Convexity) [📄 p.26](/assets/pdf/preskill/chap2.pdf#page=26) {#sec-2.5.1-convexity}
+### 2.5.1 凸性 (Convexity) [📄 p.26](/assets/pdf/preskill/chap2.pdf#page=26) {#sec-2.5.1-convexity}
 
-ヒルベルト空間 $\mathcal{H}$ に作用する演算子 $\boldsymbol{\rho}$ が密度演算子として解釈できるのは、以下の3つの性質を持つ場合であることを思い出してください：
+ヒルベルト空間 $\mathcal{H}$ に作用する演算子 $\boldsymbol{\rho}$ が密度演算子として解釈できるのは、以下の3つの性質を満たす場合であることを思い出してください：
 
 (1) $\boldsymbol{\rho}$ は自己共役である。
-(2) $\boldsymbol{\rho}$ は非負（正値）である。
+(2) $\boldsymbol{\rho}$ は非負である。
 (3) $\text{tr}(\boldsymbol{\rho}) = 1$。
 
-これらの性質を満たす演算子の集合は**凸集合（convex set）**を形成します。つまり、$\boldsymbol{\rho}_1$ と $\boldsymbol{\rho}_2$ が密度演算子である場合、任意の $0 \le \lambda \le 1$ に対して線形結合
+直ちにわかるように、2つの密度行列 $\boldsymbol{\rho}_1$ と $\boldsymbol{\rho}_2$ が与えられたとき、それらの凸線形結合として常に別の密度行列を構成できます：
 $$
 \boldsymbol{\rho}(\lambda) = \lambda \boldsymbol{\rho}_1 + (1-\lambda) \boldsymbol{\rho}_2
+$$ {#eq-2.97}
+は、$0 \le \lambda \le 1$ を満たす任意の実数 $\lambda$ に対して密度行列です。$\boldsymbol{\rho}_1$ と $\boldsymbol{\rho}_2$ が (1) と (3) を満たすなら、$\boldsymbol{\rho}(\lambda)$ もこれらを満たすことは容易にわかります。(2) を確認するには、次を評価します：
 $$
-もまた密度演算子となります（自己共役で非負であり、トレースが1であるため）。この凸集合を表現する自然な物理的解釈があります：$\boldsymbol{\rho}(\lambda)$ は、確率 $\lambda$ で状態 $\boldsymbol{\rho}_1$ が準備され、確率 $1-\lambda$ で状態 $\boldsymbol{\rho}_2$ が準備された場合の系の状態を表します。
+\langle\psi|\boldsymbol{\rho}(\lambda)|\psi\rangle = \lambda \langle\psi|\boldsymbol{\rho}_1|\psi\rangle + (1-\lambda)\langle\psi|\boldsymbol{\rho}_2|\psi\rangle \ge 0;
+$$ {#eq-2.98}
+$\langle\boldsymbol{\rho}_1\rangle$ と $\langle\boldsymbol{\rho}_2\rangle$ が非負であることが保証されているため、$\langle\boldsymbol{\rho}(\lambda)\rangle$ も非負であることが保証されます。したがって、次元 $d$ のヒルベルト空間 $\mathcal{H}$ において、密度演算子は $d \times d$ エルミート演算子の実ベクトル空間の**凸部分集合（convex subset）**であることを示しました。（ベクトル空間の部分集合が凸であるとは、その集合が集合内の任意の2点を結ぶ線分分を含むことを言います。）
 
-凸集合において、集合内の他の元の凸結合（和）として表現できない元を**極値点（extremal point）**と呼びます。密度演算子の凸集合における極値点は**純粋状態（pure states）**です。純粋状態は、他のいかなる状態のアンサンブルのようにも振る舞うことができません。逆に、すべての混合状態（mixed state）は、極値点である純粋状態の凸結合として表現できます。
+ほとんどの密度演算子は、多くの異なる方法で他の密度演算子の和として表現できます。しかし、純粋状態はこの点において特別です――純粋状態を他の2つの状態の凸結合として表現することは*不可能*です。純粋状態 $\boldsymbol{\rho} = |\psi\rangle\langle\psi|$ を考え、$|\psi_\perp\rangle$ を $|\psi\rangle$ に直交するベクトル（$\langle\psi_\perp|\psi\rangle = 0$）とします。$\boldsymbol{\rho}$ が式 (@eq-2.97) のように展開できると仮定しましょう；すると
+$$
+\langle\psi_\perp|\boldsymbol{\rho}|\psi_\perp\rangle = 0 = \lambda \langle\psi_\perp|\boldsymbol{\rho}_1|\psi_\perp\rangle + (1-\lambda)\langle\psi_\perp|\boldsymbol{\rho}_2|\psi_\perp\rangle
+$$ {#eq-2.99}
+となります。右辺は2つの非負の項の和であり、その和がゼロであるため、両方の項がゼロでなければなりません。$\lambda$ が 0 でも 1 でもない場合、$\boldsymbol{\rho}_1$ と $\boldsymbol{\rho}_2$ は $|\psi_\perp\rangle$ に直交していると結論づけられます。しかし、$|\psi_\perp\rangle$ は $|\psi\rangle$ に直交する*任意の*ベクトルであり得るため、$\boldsymbol{\rho}_1 = \boldsymbol{\rho}_2 = \boldsymbol{\rho}$ であることがわかります。
 
-数学的には、これは「$\boldsymbol{\rho}$ を極値状態の和として何通りに表現できるか？」という問いになります。
-単一のクビットについて考えてみましょう。ブロッホ球の球面上にある状態が純粋状態であり、内部の点が混合状態です。ブロッホ球の中心点
+凸集合において、集合内の他のベクトルの線形結合として表現できないベクトルを、その集合の**極値点（extremal points）**と呼びます。私たちはたった今、純粋状態が密度行列の集合の極値点であることを示しました。さらに、純粋状態*のみ*が極値点です。なぜなら、任意の混合状態は対角化される基底において $\boldsymbol{\rho} = \sum_i p_i |i\rangle\langle i|$ と書くことができ、純粋状態の凸結合となるためです。
+
+私たちはブロッホ球の特別な場合の議論において、すでにこの構造に遭遇しました。密度演算子は、単位トレースを持つ $2 \times 2$ エルミート行列の3次元集合における（単位）球体であることを確認しました。球体は凸であり、その極値点は境界（球面）上の点です。同様に、$d \times d$ 密度演算子は、単位トレースを持つ $d \times d$ エルミート行列の $(d^2 - 1)$ 次元集合の凸部分集合であり、その集合の極値点が純粋状態です。 [📄 p.28](/assets/pdf/preskill/chap2.pdf#page=28)
+
+しかし、$2 \times 2$ の場合は1つの点において非典型的です：$d > 2$ の場合、密度行列の集合の境界上の点は必ずしも純粋状態ではありません。集合の境界は、少なくとも1つの固有値がゼロになるすべての密度行列から構成されます（負の固有値を持つ近傍の行列が存在するためです）。$d > 2$ の場合、非零の固有値の数は1を超えることができるため、そのような密度行列は純粋である必要はありません。
+
+### 2.5.2 アンサンブルの準備 (Ensemble preparation) [📄 p.28](/assets/pdf/preskill/chap2.pdf#page=28) {#sec-2.5.2-ensemble-preparation}
+
+密度行列の集合の凸性は、単純かつ示唆に富む物理的解釈を持ちます。準備者が2つの可能な状態のうちの1つを準備することに同意したとします；確率 $\lambda$ で状態 $\boldsymbol{\rho}_1$ が準備され、確率 $1-\lambda$ で状態 $\boldsymbol{\rho}_2$ が準備されます。（この選択を導くために乱数生成器が用いられるかもしれません。）任意の観測量 $\boldsymbol{M}$ の期待値を評価するために、私たちは準備の選択と量子測定の結果の*両方*について平均をとります：
 $$
-\boldsymbol{\rho} = \frac{1}{2} \boldsymbol{I}
+\begin{aligned}
+\langle\boldsymbol{M}\rangle &= \lambda \langle\boldsymbol{M}\rangle_1 + (1-\lambda)\langle\boldsymbol{M}\rangle_2 \\
+&= \lambda\,\text{tr}(\boldsymbol{M}\boldsymbol{\rho}_1) + (1-\lambda)\text{tr}(\boldsymbol{M}\boldsymbol{\rho}_2) \\
+&= \text{tr}(\boldsymbol{M}\boldsymbol{\rho}(\lambda)).
+\end{aligned}
+$$ {#eq-2.100}
+したがって、すべての期待値は、代わりに状態 $\boldsymbol{\rho}(\lambda)$ が準備されていた場合に得られるものと区別がつきません。このようにして、状態 $\boldsymbol{\rho}_1$ と $\boldsymbol{\rho}_2$ を準備する方法が与えられれば、任意の凸結合を準備するための操作的手順が得られます。
+
+実際、任意の混合状態 $\boldsymbol{\rho}$ に対して、$\boldsymbol{\rho}$ を他の状態の凸結合として表現する方法は無限に存在し、したがって $\boldsymbol{\rho}$ を準備するために採用できる手順も無限に存在します。これらはすべて、系の考えられるあらゆる観測に対して全く同一の結果をもたらします。しかし、純粋状態は異なります；それは一通りの方法でしか準備できません。（これが純粋状態の「純粋（pure）」たる所以です。）すべての純粋状態は何らかの観測量の固有状態であり、例えば状態 $\boldsymbol{\rho} = |\psi\rangle\langle\psi|$ に対して射影 $\boldsymbol{E} = |\psi\rangle\langle\psi|$ の測定は確実に結果 1 を得ます。（例えば、単一クビットのすべての純粋状態は何らかの軸に沿った「スピンアップ」であることを思い出してください。）$\boldsymbol{\rho}$ は $\boldsymbol{E}$ の測定結果が 100% の確率で 1 となる唯一の状態であるため、いくつかの可能な準備のうちの1つを選択することによってこの観測可能な性質を再現する方法はありません。したがって、純粋状態の準備は一意的（unambiguous）ですが（実験できる状態のコピーが多数あれば、一意の準備を推測できます）、混合状態の準備は常に曖昧（ambiguous）です。
+
+それはどれほど曖昧なのでしょうか？ 任意の $\boldsymbol{\rho}$ は純粋状態の和として表現できるため、「密度演算子はいくつの方法で純粋状態の凸結合として表現できるか？」という問いに注目を限定しましょう。 [📄 p.29](/assets/pdf/preskill/chap2.pdf#page=29)
+
+数学的には、これは「$\boldsymbol{\rho}$ を極値状態の和として何通りに書き表すことができるか？」という問いです。
+
+最初の例として、単一クビットの「完全混合（maximally mixed）」状態を考えます：
 $$
-を考えてみます。これは、純粋状態のアンサンブルとして無限のバリエーションで準備することができます。例えば、
+\boldsymbol{\rho} = \frac{1}{2}\boldsymbol{I}.
+$$ {#eq-2.101}
+これは実に、無限の多様な方法で純粋状態のアンサンブルとして準備できます。例えば、
 $$
 \boldsymbol{\rho} = \frac{1}{2} |\uparrow_z\rangle\langle\uparrow_z| + \frac{1}{2} |\downarrow_z\rangle\langle\downarrow_z|,
 $$ {#eq-2.102}
-とすれば、確率 $1/2$ ずつで $|\uparrow_z\rangle$ または $|\downarrow_z\rangle$ を準備することで $\boldsymbol{\rho}$ を得ることができます。しかし同時に、
+ですから、$|\uparrow_z\rangle$ または $|\downarrow_z\rangle$ のいずれかをそれぞれ確率 $1/2$ で準備すれば $\boldsymbol{\rho}$ が得られます。しかし、私たちには次もあります：
 $$
 \boldsymbol{\rho} = \frac{1}{2} |\uparrow_x\rangle\langle\uparrow_x| + \frac{1}{2} |\downarrow_x\rangle\langle\downarrow_x|,
 $$ {#eq-2.103}
-とすれば、確率 $1/2$ ずつで $|\uparrow_x\rangle$ または $|\downarrow_x\rangle$ を準備することでも $\boldsymbol{\rho}$ を得ることができます。これら2つの準備手順は明らかに異なります。しかし、スピンのいかなる観測を行っても、その違いを見分けることは不可能です。
+ですから、$|\uparrow_x\rangle$ または $|\downarrow_x\rangle$ のいずれかをそれぞれ確率 $1/2$ で準備しても $\boldsymbol{\rho}$ が得られます。これら2つの準備手順は紛れもなく異なります。しかし、スピンの観測を行うことによってその違いを見分ける方法は絶対にありません。
 
-より一般的に、ブロッホ球の中心点は、球面上の任意の2つの対蹠点（互いに反対側にある点）の和となります。すなわち、確率 $1/2$ で $|\uparrow_{\hat{n}}\rangle$ と $|\downarrow_{\hat{n}}\rangle$ のいずれかを準備すれば、$\boldsymbol{\rho} = \frac{1}{2}\boldsymbol{I}$ が生成されます。
+より一般的に、ブロッホ球の中心点は球面上の任意の2つの対蹠点（antipodal points）の和です――$|\uparrow_{\hat{n}}\rangle$ または $|\downarrow_{\hat{n}}\rangle$ のいずれかをそれぞれ確率 $1/2$ で準備すれば、$\boldsymbol{\rho} = \frac{1}{2}\boldsymbol{I}$ が生成されます。
 
-$\boldsymbol{\rho}$ が2つ（以上）の縮退した固有値を持つ場合にのみ、互いに直交する純粋状態のアンサンブルから $\boldsymbol{\rho}$ を生成する異なる方法が存在します。しかし、互いに直交する純粋状態のアンサンブルだけに注目を限定する正当な理由はありません。ブロッホ球の内部の点
+$\boldsymbol{\rho}$ が2つ（以上）の縮退した固有値を持つ場合にのみ、互いに直交する純粋状態のアンサンブルから $\boldsymbol{\rho}$ を生成する明確に異なる方法が存在しますが、互いに直交する純粋状態のアンサンブルだけに注目を限定する正当な理由はありません。ブロッホ球の中心点は次のように準備することもできます：
 $$
-\boldsymbol{\rho}(\vec{P}) = \frac{1}{2} (\boldsymbol{I} + \vec{P} \cdot \vec{\boldsymbol{\sigma}}),
+\boldsymbol{\rho}(\vec{P}) = \frac{1}{2}(\boldsymbol{I} + \vec{P} \cdot \vec{\boldsymbol{\sigma}})
 $$ {#eq-2.104}
-を考えてみましょう。ここで $0 < |\vec{P}| < 1$ です。これもまた
+ここで $0 < |\vec{P}| < 1$ です。 [📄 p.30](/assets/pdf/preskill/chap2.pdf#page=30) これは次のように表現することもできます：
 $$
-\boldsymbol{\rho}(\vec{P}) = \lambda \boldsymbol{\rho}(\hat{n}_1) + (1-\lambda) \boldsymbol{\rho}(\hat{n}_2),
+\boldsymbol{\rho}(\vec{P}) = \lambda \boldsymbol{\rho}(\hat{n}_1) + (1-\lambda) \boldsymbol{\rho}(\hat{n}_2)
 $$ {#eq-2.105}
-として表現できます。ただし、$\vec{P} = \lambda \hat{n}_1 + (1-\lambda) \hat{n}_2$ を満たすものとします（言い換えれば、$\vec{P}$ が球面上の点 $\hat{n}_1$ と $\hat{n}_2$ を結ぶ線分上のどこかにある場合）。明らかに、任意の $\vec{P}$ に対して、点 $\vec{P}$ を通るブロッホ球の任意の弦（chord）に関連付けられた純粋状態の凸結合として $\boldsymbol{\rho}(\vec{P})$ を表現することができます。そのようなすべての弦は2パラメータのファミリーを構成します。
+ただし $\vec{P} = \lambda \hat{n}_1 + (1-\lambda)\hat{n}_2$ を満たすものとします（言い換えれば、$\vec{P}$ が球面上の点 $\hat{n}_1$ と $\hat{n}_2$ を結ぶ線分上にある場合）。明らかに、任意の $\vec{P}$ に対して、$\vec{P}$ を通過するブロッホ球の任意の弦（chord）に関連付けられた純粋状態の凸結合として $\boldsymbol{\rho}(\vec{P})$ を表現できます。そのようなすべての弦は2パラメータのファミリーを構成します。
 
-## 2.5.2 アンサンブルの準備 (Ensemble preparation) [📄 p.28](/assets/pdf/preskill/chap2.pdf#page=28) {#sec-2.5.2-ensemble-preparation}
+混合量子状態の準備に関するこの高度に曖昧な性質は、古典的な確率分布とは極めて対照的な、量子情報の特徴的な性質の一つです。例えば、単一の古典ビットの確率分布を考えてみましょう。2つの極値分布は、0 または 1 が 100% の確率で発生する分布です。ビットの任意の確率分布は、これら2つの極値点の凸和です。同様に、$d$ 個の可能な状態がある場合、$d$ 個の極値分布が存在し、任意の確率分布は極値分布への**一意の分解**を持ちます（古典的確率分布の凸集合は、その $d$ 個の頂点の凸包である単体（simplex）です）。もし 0 が 21% の確率、1 が 33% の確率、2 が 46% の確率で発生する場合、この分布をもたらした「準備手順」は完全に一意です。
 
-この曖昧さを別の観点から考えることも有用です。システム $A$ の密度行列 $\boldsymbol{\rho}_A$ があるとします。この状態は、システム $A$ がシステム $B$ とエンタングルしているために生じていると考えることができます。（これについては 2.5.3 節で詳しく見ていきます。）
-
-システム $B$ を保持しているボブが、$B$ に対して測定を行うと仮定します。$B$ は $A$ とエンタングルしているため、ボブの測定は $A$ を何らかの状態に射影します。
-具体的には、ボブが $\mathcal{H}_B$ 上の直交射影演算子の集合 $\{\boldsymbol{E}_a\}$ によって記述される測定を $B$ に対して行うとします。ここで、
-$$
-\sum_a \boldsymbol{E}_a = \boldsymbol{I}
-$$ {#eq-2.107-prep1}
-です。もしボブが測定結果 $a$ を得た場合、システム $A$ は以下の状態に射影されます：
-$$
-\boldsymbol{\rho}_A(a) = \text{tr}_B(\boldsymbol{I}_A \otimes \boldsymbol{E}_a |\Psi\rangle\langle\Psi|_{AB}) / p_a
-$$ {#eq-2.107-prep2}
-ここで $|\Psi\rangle_{AB}$ は二部系 $AB$ の純粋状態であり、$p_a$ はボブが結果 $a$ を得る確率で、
-$$
-p_a = \text{tr}_{AB}(\boldsymbol{I}_A \otimes \boldsymbol{E}_a |\Psi\rangle\langle\Psi|_{AB})
-$$ {#eq-2.107-prep3}
-です。このように、ボブの測定は確率 $p_a$ でシステム $A$ を状態 $\boldsymbol{\rho}_A(a)$ に準備します。これは $\boldsymbol{\rho}_A$ のアンサンブル準備を定義します。なぜなら、
-$$
-\sum_a p_a \boldsymbol{\rho}_A(a) = \text{tr}_B(|\Psi\rangle\langle\Psi|_{AB}) = \boldsymbol{\rho}_A
-$$ {#eq-2.107-prep4}
-となるからです。
-
-次に、ボブが $B$ に対して別の測定を行うことを決定したと仮定します。これは $\mathcal{H}_B$ 上の直交射影演算子の別の集合 $\{\boldsymbol{F}_b\}$ によって記述され、
-$$
-\sum_b \boldsymbol{F}_b = \boldsymbol{I}
-$$ {#eq-2.107-prep5}
-を満たします。このとき、ボブの測定は確率 $q_b$ でシステム $A$ を状態 $\boldsymbol{\rho}_A(b)$ に準備します。ここで、
-$$
-q_b = \text{tr}_{AB}(\boldsymbol{I}_A \otimes \boldsymbol{F}_b |\Psi\rangle\langle\Psi|_{AB})
-$$ {#eq-2.107-prep6}
-です。これは $\boldsymbol{\rho}_A$ の異なるアンサンブル準備を定義します。なぜなら、
-$$
-\sum_b q_b \boldsymbol{\rho}_A(b) = \boldsymbol{\rho}_A
-$$ {#eq-2.107-prep7}
-となるからです。
-
-システム $A$ を保持しているアリスは、これら2つのアンサンブル準備を区別できるでしょうか？答えは「いいえ」です。なぜなら、どちらの場合でも、ボブの測定前におけるシステム $A$ の状態は密度行列 $\boldsymbol{\rho}_A$ によって記述されるからです。アリスはボブの測定結果にアクセスできないため、密度行列 $\boldsymbol{\rho}_A$ が彼女の持つシステム $A$ に関する唯一の記述です。彼女は、これら2つのアンサンブル準備を区別するような測定を $A$ に対して行うことはできません。
-
-これは、ボブが $B$ に対してどの測定を行うかを選択することによって、アリスのシステム $\boldsymbol{\rho}_A$ のどのアンサンブル準備を実現するかを選択できることを示しています。これは量子力学の非常に驚くべき性質です。それは、ボブが信号を送ることなく、離れた場所からアリスのシステムに影響を与えることができることを示唆しています。これについては 2.5.3 節でさらに詳しく掘り下げていきます。
-
-混合量子状態の準備に関するこの高度に曖昧な性質は、古典的な確率分布とは極めて対照的な、量子情報の特徴的な性質の一つです。例えば、単一の古典ビットの確率分布について考えてみましょう。2つの極値的な分布は、0または1が100%の確率で発生する分布です。ビットの任意の確率分布は、これら2つの極値点の凸和（結合）となります。同様に、$d$ 個の可能な状態が存在する場合、$d$ 個の極値分布が存在し、任意の確率分布は極値分布への**一意な分解**を持ちます（古典的な確率分布の凸集合は、その $d$ 個の頂点の凸包である**単体（simplex）**を構成します）。もし 0 が 21% の確率、1 が 33% の確率、2 が 46% の確率で発生する場合、この確率分布をもたらす「準備手順」は一意に定まります。
-
-## 2.5.3 光速より速い？ (Faster than light?) [📄 p.30](/assets/pdf/preskill/chap2.pdf#page=30) {#sec-2.5.3-faster-than-light}
+### 2.5.3 光速より速い？ (Faster than light?) [📄 p.30](/assets/pdf/preskill/chap2.pdf#page=30) {#sec-2.5.3-faster-than-light}
 
 系 $A$ の混合状態は、$A$ が系 $B$ とエンタングルしているから生じるという、以前の視点に戻りましょう。これを用いて、混合状態の準備が曖昧であることの含意をさらに検討します。もしクビット $A$ が密度行列
 $$
@@ -139,7 +129,7 @@ $$
 
 :::
 
-## 2.5.4 量子消去 (Quantum erasure) [📄 p.31](/assets/pdf/preskill/chap2.pdf#page=31) {#sec-2.5.4-quantum-erasure}
+### 2.5.4 量子消去 (Quantum erasure) [📄 p.31](/assets/pdf/preskill/chap2.pdf#page=31) {#sec-2.5.4-quantum-erasure}
 
 密度行列 $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$ は、純粋状態 $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ の非コヒーレントな混合状態にあるスピンを記述すると述べました。これは、これら状態のコヒーレントな重ね合わせとは区別されるべきです。例えば
 $$
@@ -147,11 +137,26 @@ $$
 $$ {#eq-2.109}
 コヒーレントな重ね合わせの場合、2つの状態の相対位相は観測可能な結果をもたらします（$|\uparrow_x\rangle$ と $|\downarrow_x\rangle$ を区別します）。非コヒーレントな混合状態の場合、相対位相は完全に観測不可能です。スピン $A$ が別のスピン $B$ とエンタングルし、スピン $B$ がアクセス不能になると、重ね合わせは非コヒーレントになります。
 
-発見的に言えば、状態 $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ が干渉できる（これらの状態の相対位相が観測できる）のは、スピン状態が $|\uparrow_z\rangle_A$ なのか $|\downarrow_z\rangle_A$ なのかについて、私たちが全く情報を持っていない場合のみです。スピン $A$ をスピン $B$ とエンタングルさせることは、スピン $B$ の適切な測定によってスピン $A$ が z軸に沿ってアップかダウンかを決定することが原理的に可能になるため、干渉を破壊します（スピン $A$ をデコヒーレンスさせます）。
+発見的に言えば、状態 $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ が干渉できる（これらの状態の相対位相が観測できる）のは、スピン状態が $|\uparrow_z\rangle_A$ なのか $|\downarrow_z\rangle_A$ なのかについて、私たちが全く情報を持っていない場合のみです。スピン $A$ をスピン $B$ とエンタングルさせることは、スピン $B$ の適切な測定によってスピン $A$ が $z$ 軸に沿ってアップかダウンかを決定することが原理的に可能になるため、干渉を破壊します（スピン $A$ をデコヒーレンスさせます）。
 
-しかし、「エンタングルメントがデコヒーレンスを引き起こす」という主張には条件が必要であることがわかりました。ボブがスピン $B$ を x軸に沿って測定し、結果 $|\uparrow_x\rangle_B$ または $|\downarrow_x\rangle_B$ のいずれかを得て、その測定結果をアリスに送信したとしましょう。すると、アリスのスピンは純粋状態（$|\uparrow_x\rangle_A$ または $|\downarrow_x\rangle_A$）になり、実際には $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ のコヒーレントな重ね合わせになります。デコヒーレンスの顎が閉じる前に、私たちはアリスのスピンの純粋性を回復することに成功したのです！
+しかし、「エンタングルメントがデコヒーレンスを引き起こす」という主張には条件が必要であることがわかりました。ボブがスピン $B$ を $\hat{x}$ 軸に沿って測定し、結果 $|\uparrow_x\rangle_B$ または $|\downarrow_x\rangle_B$ のいずれかを得て、その測定結果をアリスに送信したとしましょう。すると、アリスのスピンは純粋状態（$|\uparrow_x\rangle_A$ または $|\downarrow_x\rangle_A$）になり、実際には $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ のコヒーレントな重ね合わせになります。デコヒーレンスの顎が閉じる前に、私たちはアリスのスピンの純粋性を回復することに成功したのです！
 
-この状況は**量子消去（quantum eraser）**と呼ばれています。2つのスピンをエンタングルさせることは、スピン $B$ を観測することでスピン $A$ のアップダウンを知ることができるため、コヒーレンスが失われる「測定状況」を作り出します。しかし、スピン $B$ を x軸に沿って測定すると、この情報は「消去」されます。ボブの測定がアリスのスピンに関する「どの道（which way）」の情報を保持しないため、スピン $A$ は再びコヒーレントな重ね合わせとして振る舞うことが可能になります（そしてボブの結果をアリスが聞いた後、実際にそう振る舞います）。
+ボブが自分のスピンを $\hat{z}$ 軸に沿って配置されたシュテルン＝ゲルラッハ装置を通過させるとしましょう。もちろん、アリスのスピンは $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ のコヒーレントな重ね合わせとして振る舞うことはできません。ボブは自分のスピンがどちらに曲がったかを見るだけで、アリスのスピンが $\hat{z}$ に沿ってアップかダウンかを知ることができるからです。しかし、ボブが*見ない*と仮定しましょう。その代わりに、スピンが上下のどちらに曲がったかの記録を一切残さずに2つのビームを慎重に再収束（refocus）させ、続いて $\hat{x}$ 軸に沿って配置された第2のシュテルン＝ゲルラッハ装置を通過させます。今回は彼が見て、その $\boldsymbol{\sigma}_1$ 測定の結果をアリスに伝えます。これで、アリスのスピンのコヒーレンスは回復したのです！ [📄 p.32](/assets/pdf/preskill/chap2.pdf#page=32)
+
+この状況は**量子消去（quantum eraser）**と呼ばれています。2つのスピンをエンタングルさせることは、スピン $B$ を観測することでスピン $A$ が $\hat{z}$ に沿ってアップかダウンかを知ることができるため、$|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ のコヒーレンスが失われる「測定状況」を作り出します。しかし、スピン $B$ を $\hat{x}$ に沿って測定すると、この情報は「消去」されます。結果が $|\uparrow_x\rangle_B$ であるか $|\downarrow_x\rangle_B$ であるかは、スピン $A$ が $\hat{z}$ に沿ってアップかダウンかについて何も教えてくれません。なぜなら、ボブは第1のシュテルン＝ゲルラッハ装置を見ることで得られたかもしれない「どの道（which way）」の情報を保持しないよう注意したからです。したがって、スピン $A$ は再び $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ のコヒーレントな重ね合わせとして振る舞うことが可能になります（そしてボブの結果を聞いた後、アリスの手元で実際にそう振る舞います）。
+
+量子消去は、アンサンブルの観点から最もよく理解できます。アリスは $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$ によって記述されるアンサンブルから選ばれた多数のスピンを持っており、彼女が $|\uparrow_z\rangle_A$ と $|\downarrow_z\rangle_A$ の間の干渉を観測する方法はありません。ボブが $\hat{x}$ に沿って測定を行うと、アンサンブルの特定の準備が実現されます。しかし、これはアリスが感知できる効果を何も持ちません――彼女のスピンは依然として以前と同様に $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$ によって記述されます。しかし、アリスがボブからの電話（測定結果）を受け取ると、彼女はすべてが純粋状態 $|\uparrow_x\rangle_A$ にあるスピンのサブアンサンブルを選択できます。ボブが送る情報により、アリスは完全混合状態から純粋性を蒸留（distill）できるのです。 [📄 p.33](/assets/pdf/preskill/chap2.pdf#page=33)
+
+量子消去のもう一つの変形は、**遅延選択（delayed choice）**と呼ばれることがあります。これは単に、私たちが説明した状況がアリスとボブの間で完全に完全に対称的であり、どちらが先に測定しても何の違いも生じないことを意味します。（実際、アリスとボブの測定が空間的に分離された事象である場合、どちらが先だったかという客観的な意味は存在せず、観測者の参照系に依存します。）アリスは、ボブが自分のスピンをどのように測定するかを決める前に、今日自分のすべてのスピンを（例えば $\hat{x}$ に沿って）測定しておくことができます。来週になって、ボブはアリスのスピンを状態 $|\uparrow_{\hat{n}}\rangle_A$ および $|\downarrow_{\hat{n}}\rangle_A$ に「準備」することを決定できます（これが「遅延選択」です）。その後ボブはアリスにどのスピンが $|\uparrow_{\hat{n}}\rangle_A$ であったかを伝え、アリスは自身の測定記録をチェックして次を検証できます：
+$$
+\langle\sigma_1\rangle_{\hat{n}} = \hat{n} \cdot \hat{x}.
+$$ {#eq-2.110}
+ボブがスピンをアリスが測定する前または後のどちらで「準備」したかに関係なく、結果は同一です。
+
+私たちは、密度行列 $\boldsymbol{\rho}_A$ が部分系 $A$ の状態の完全な物理的記述を提供すると主張してきました。なぜなら、それは $A$ に対して実行可能なすべての可能な測定を特徴づけるからです。量子消去現象はこれと矛盾することを示しているのではないか、と異議を唱える人がいるかもしれません。ボブから受け取った情報によってアリスが混合状態から純粋状態を回復できるのであれば、アリスが $A$ について知り得るすべてが $\boldsymbol{\rho}_A$ に符号化されているとどうして主張できるのでしょうか？
+
+私は、量子消去が**「情報は物理的である（information is physical）」**という原理を例示していると言う方を好みます。系 $A$ の状態 $\boldsymbol{\rho}_A$ は、アリスがボブから受け取った情報を伴った $\boldsymbol{\rho}_A$ と同じものではありません。この情報（サブアンサンブルにラベルを付与するもの）は物理的記述を変更します。すなわち、アリスの系の記述にアリスの**「知識の状態（state of knowledge）」**を含めるべきなのです。各スピンがアップかダウンかについてアリスが何の情報も持っていないスピンのアンサンブルは、アリスがどのスピンがアップでどのスピンがダウンかを知っているアンサンブルとは*異なる*物理状態です。この「知識の状態」は、人間の精神の状態である必要は全くありません；サブアンサンブルにラベルを付けるいかなる（無生の）記録であっても十分です。
+
 
 ::: {.callout-note appearance="simple"}
 #### 【直感的解説】量子消去（Quantum Eraser）――「情報」を消すと「波」が復活する不可思議なメカニズム
@@ -197,7 +202,7 @@ $$
 
 :::
 
-## 2.5.5 HJW 定理 (The HJW theorem) [📄 p.34](/assets/pdf/preskill/chap2.pdf#page=34) {#sec-2.5.5-hjw-theorem}
+### 2.5.5 HJW 定理 (The HJW theorem) [📄 p.34](/assets/pdf/preskill/chap2.pdf#page=34) {#sec-2.5.5-hjw-theorem}
 
 これまでは、等確率の互いに直交する状態のアンサンブル（すなわち $\boldsymbol{\rho}_A = \frac{1}{2}\boldsymbol{I}$）によって記述される単一のクビットの文脈でのみ、量子消去を考えてきました。この議論は大幅に一般化できます。
 
