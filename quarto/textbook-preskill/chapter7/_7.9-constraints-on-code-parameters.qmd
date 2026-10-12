@@ -1,8 +1,8 @@
-## 7.9 符号パラメータに対するいくつかの制約 (Some Constraints on Code Parameters) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=31) {#sec-7.9-constraints-on-code-parameters}
+## 7.9 符号パラメータに対するいくつかの制約 (Some Constraints on Code Parameters) {#sec-7.9-constraints-on-code-parameters}
 
 Shor の符号は、ブロック内の9個の量子ビットのいずれか1つにおける誤りから1つの符号化された量子ビットを保護し、Steane の符号はブロックサイズを9から7へと削減します。私たちはさらに改善することができるでしょうか？
 
-### 7.9.1 量子ハミング限界 (The Quantum Hamming bound) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=31) {#sec-7.9.1-quantum-hamming-bound}
+### 7.9.1 量子ハミング限界 (The Quantum Hamming bound) {#sec-7.9.1-quantum-hamming-bound}
 
 私たちがどれほど改善できるかを理解するために、与えられた $n$ と $k$ に対して $[[n, k, d]]$ 量子符号の距離 $d = 2t + 1$ に対する限界を導出できるか見てみましょう。まず、生じ得る各誤りに相異なるシンドロームを割り当てる**非縮退（nondegenerate）**符号に注目を限定することにします。与えられた1つの量子ビット上には、3つの線形独立な誤り $\boldsymbol{X}, \boldsymbol{Y}, \boldsymbol{Z}$ が存在します。$n$ 個の量子ビットのブロックにおいて、誤りの影響を受ける $j$ 個の量子ビットを選ぶ方法は $\binom{n}{j}$ 通りあり、それらの各量子ビットに対して3通りの誤りが存在します。したがって、重み $t$ 以下の生じ得る誤りの総数は次のようになります：
 
@@ -26,7 +26,7 @@ $$ {#eq-7.110}
 
 これは $n \ge 5$ で満たされます。実際、$n = 5$ の場合は等号を飽和します（$1 + 15 = 16$）。非縮退 $[[5, 1, 3]]$ 量子符号が存在するとすれば、それは**完全符号（perfect code）**です。すなわち、すべての符号語に作用するすべての生じ得る1量子ビット誤りを収容するために、5量子ビットの32次元ヒルベルト空間全体が必要とされ、無駄な余白は一切ありません。
 
-### 7.9.2 複製不可能限界 (The no-cloning bound) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=31) {#sec-7.9.2-no-cloning-bound}
+### 7.9.2 複製不可能限界 (The no-cloning bound) {#sec-7.9.2-no-cloning-bound}
 
 しかし、1つの誤りを訂正できる**縮退した** $n = 4$ 符号が存在するのではないか、と疑問に思うかもしれません。実際には、そのような符号が存在し得ないことを容易に示すことができます。任意の位置にある $t$ 個の誤りを訂正する符号は、位置の判明している $2t$ 個の誤りを訂正するためにも使用できることを、私たちはすでに知っています。いま、[[4, 1, 3]] 量子符号が存在すると仮定しましょう。その場合、
 
@@ -42,7 +42,7 @@ $$
 n > 2(d - 1).
 $$ {#eq-7.111}
 
-### 7.9.3 量子シングルトン限界 (The quantum Singleton bound) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=32) {#sec-7.9.3-quantum-singleton-bound}
+### 7.9.3 量子シングルトン限界 (The quantum Singleton bound) {#sec-7.9.3-quantum-singleton-bound}
 
 式 @eq-7.111 のこの結果は、次のように強化することができます：
 

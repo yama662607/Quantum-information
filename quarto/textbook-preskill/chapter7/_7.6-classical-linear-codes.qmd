@@ -1,4 +1,4 @@
-## 7.6 古典線形符号 (Classical Linear Codes) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=24) {#sec-7.6-classical-linear-codes}
+## 7.6 古典線形符号 (Classical Linear Codes) {#sec-7.6-classical-linear-codes}
 
 量子誤り訂正符号は1990年代半ばに初めて考案されましたが、古典誤り訂正符号にははるかに長い歴史があります。1940年代に始まり、古典符号化理論の著しく美しく強力な理論が築き上げられてきました。この理論の多くを QECC の構築に役立てることができます。ここでは、2値線形符号（binary linear codes）に焦点を絞り、古典理論のいくつかの要素を手短に復習します。
 

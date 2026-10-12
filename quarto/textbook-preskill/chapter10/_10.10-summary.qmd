@@ -1,4 +1,4 @@
-## 10.10 要約 (Summary) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=84) {#sec-10.10-summary}
+## 10.10 要約 (Summary) {#sec-10.10-summary}
 
 **シャノン・エントロピーと古典データ圧縮 (Shannon entropy and classical data compression)**:  
 アンサンブル $X = \{x, p(x)\}$ の**シャノン・エントロピー（Shannon entropy）**は $H(X) := \mathbb{E}_X[-\log p(x)]$ であり、古典情報の圧縮可能性を定量化します。各文字が $X$ から独立に抽出される $n$ 文字のメッセージは、文字あたり $H(X)$ ビットまで圧縮可能であり（これ以上は圧縮不可能）、しかも $n \to \infty$ において任意に高い精度で復号できます。
@@ -42,7 +42,7 @@ $$ {#eq-10.376}
 **ファーザー・プロトコルとマザー・プロトコル (Father and mother protocols)**:  
 **ファーザー資源不等式（father resource inequality）**および**マザー資源不等式（mother resource inequality）**は、それぞれエンタングルメント支援量子通信および量子状態転送の達成可能レートを規定します。どちらも**デカップリング不等式（decoupling inequality）**から導かれます。デカップリング不等式は、3部混合状態における近似的デカップリングの十分条件を確立するものです。ファーザーおよびマザー・プロトコルを高密度符号化や量子テレポーテーションと組み合わせることで、エンタングルメント支援古典通信、量子通信、エンタングルメント蒸留、量子状態統合（state merging）など、他のプロトコルの達成可能レートを導出することができます。
 
-### ベン・シューマッハーへのオマージュ (Homage to Ben Schumacher) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=85) {#sec-10.10.1-homage}
+### ベン・シューマッハーへのオマージュ (Homage to Ben Schumacher) {#sec-10.10.1-homage}
 
 ::: {.callout-note appearance="simple" icon=false}
 **Homage to Ben Schumacher:**
@@ -126,7 +126,7 @@ qubit を収める方法を。
 
 :::
 
-## 10.11 文献ノート (Bibliographical Notes) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=86) {#sec-10.11-bibliographical-notes}
+## 10.11 文献ノート (Bibliographical Notes) {#sec-10.11-bibliographical-notes}
 
 Cover と Thomas [2] は古典情報理論に関する優れた教科書です。Shannon の原著論文 [3] は、今日でも読む価値が非常に高いものです。
 

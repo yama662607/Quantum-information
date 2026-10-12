@@ -1,4 +1,4 @@
-## 6.9 わずかにエンタングルした量子計算の古典シミュレーション (Classical simulation of slightly entangling quantum computations) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=48) {#sec-6.9-classical-simulation}
+## 6.9 わずかにエンタングルした量子計算の古典シミュレーション (Classical simulation of slightly entangling quantum computations) {#sec-6.9-classical-simulation}
 
 古典コンピュータを用いて量子コンピュータをシミュレートすることはどれほど困難なのでしょうか？ 明らかに、私たちは時間依存および時間非依存のシュレーディンガー方程式を解くことの古典的および量子的計算量をより深く理解したいと考えています。特に、古典的には困難でありながら量子計算では容易であるように思われるケースを特定したいと考えています。なぜなら、それらこそが量子コンピュータが有用な活躍の場を見出すケースだからです。
 

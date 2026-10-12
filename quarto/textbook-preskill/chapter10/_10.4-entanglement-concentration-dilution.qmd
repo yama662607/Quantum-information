@@ -1,4 +1,4 @@
-## 10.4 もつれ濃縮ともつれ希釈 (Entanglement Concentration and Dilution) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=37) {#sec-10-4}
+## 10.4 もつれ濃縮ともつれ希釈 (Entanglement Concentration and Dilution) {#sec-10-4}
 
 積状態でない任意の2体純粋状態はエンタングル（もつれ）しています。しかし、*どの程度*エンタングルしているのでしょうか？ 2つの状態を比較して、一方が他方よりも強くエンタングルしていると言うことができるでしょうか？
 

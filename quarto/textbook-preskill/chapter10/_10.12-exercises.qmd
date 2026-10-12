@@ -1,6 +1,6 @@
-## 10.12 演習問題 (Exercises) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=87) {#sec-10.12-exercises}
+## 10.12 演習問題 (Exercises) {#sec-10.12-exercises}
 
-### 演習 10.1 量子相対エントロピーの非負性 (Positivity of quantum relative entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=87) {#ex-10.1}
+### 演習 10.1 量子相対エントロピーの非負性 (Positivity of quantum relative entropy) {#ex-10.1}
 
 a) すべての正の実数 $x$ に対して $\ln x \le x - 1$ が成り立ち、等号成立は $x = 1$ のときに限ることを示せ。
 
@@ -44,7 +44,7 @@ $$ {#eq-10.382}
 
 f) $D(\boldsymbol{\rho}\|\boldsymbol{\sigma}) \ge 0$ であり、等号成立は $\boldsymbol{\rho} = \boldsymbol{\sigma}$ のときに限ることを示せ。
 
-### 演習 10.2 フォン・ノイマン・エントロピーの性質 (Properties of von Neumann entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=88) {#ex-10.2}
+### 演習 10.2 フォン・ノイマン・エントロピーの性質 (Properties of von Neumann entropy) {#ex-10.2}
 
 a) 量子相対エントロピーの非負性を用いて、フォン・ノイマン・エントロピーの**劣加法性（subadditivity）**
 $$
@@ -77,7 +77,7 @@ $$ {#eq-10.387}
 
 が成り立つのはすべての $\boldsymbol{\rho}_x$ が同一であるときに限ることを示せ。
 
-### 演習 10.3 量子相対エントロピーの単調性 (Monotonicity of quantum relative entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.3}
+### 演習 10.3 量子相対エントロピーの単調性 (Monotonicity of quantum relative entropy) {#ex-10.3}
 
 量子相対エントロピーは**単調性（monotonicity）**と呼ばれる性質を持ちます：
 $$
@@ -95,7 +95,7 @@ $$ {#eq-10.389}
 
 **ヒント:** 任意の量子チャネルは等長拡大を持つことを思い出せ。
 
-### 演習 10.4 仮説検定 (Hypothesis testing) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.4}
+### 演習 10.4 仮説検定 (Hypothesis testing) {#ex-10.4}
 
 （古典）相対エントロピー $D(p\|q)$ は、仮説検定に役立つ意味で分布 $p(x)$ と $q(x)$ の差異を特徴付けます。未知の分布から $n \gg 1$ 回サンプリングを行い、結果 $x$ が $np(x)$ 回生起したとします。私たちは、これらの結果が仮説の分布 $q(x)$ からのサンプリングと両立するかどうかを評価したいと考えます。§10.1.4 で議論したように、実際に $q(x)$ からサンプリングしている場合にこの結果が得られる確率は以下のように見積もられます：
 $$
@@ -120,7 +120,7 @@ c) コインを $n$ 回トスし、「表」が $n\left(\frac{1}{2} + \frac{\del
 
 d) コインが 100 万回トスされます。(c) の結果を用いて、コインに偏りがないと仮定した場合に表が 505,000 回出る確率を見積もれ。
 
-### 演習 10.5 可分性と優劣関係 (Separability and majorization) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=89) {#ex-10.5}
+### 演習 10.5 可分性と優劣関係 (Separability and majorization) {#ex-10.5}
 
 エンタングルメントの顕著な特徴は、エンタングルした状態では全体がその各部分よりもランダムではない（無秩序度が低い）という点にあります。しかし可分な状態では、相関は本質的に古典的であり、したがって「部分は全体よりも無秩序ではない」という古典的な原理に従うことが期待されます。この問題の目的は、2部（混合）状態 $\boldsymbol{\rho}_{AB}$ が可分であるならば
 $$
@@ -166,7 +166,7 @@ $$ {#eq-10.399}
 
 :::
 
-### 演習 10.6 スカッシュド・エンタングルメントの加法性 (Additivity of squashed entanglement) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=90) {#ex-10.6}
+### 演習 10.6 スカッシュド・エンタングルメントの加法性 (Additivity of squashed entanglement) {#ex-10.6}
 
 Alice がシステム $A, A'$ を保持し、Bob がシステム $B, B'$ を保持しているとします。$AA'$ と $BB'$ のエンタングルメントは、$A$ と $B$、および $A'$ と $B'$ のエンタングルメントとどのように関係しているでしょうか？ この問題では、スカッシュド・エンタングルメント（squashed entanglement）が超加法的（superadditive）であること、
 $$
@@ -199,7 +199,7 @@ $$ {#eq-10.404}
 
 が成り立つと結論付けよ。これが eq.(10.400) と組み合わさることで、eq.(10.401) が導かれます。
 
-### 演習 10.7 フォン・ノイマン・エントロピーの熱力学第1法則 (The first law of von Neumann entropy) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=91) {#ex-10.7}
+### 演習 10.7 フォン・ノイマン・エントロピーの熱力学第1法則 (The first law of von Neumann entropy) {#ex-10.7}
 
 §10.2.6 のように密度演算子を**モジュラー・ハミルトニアン（modular Hamiltonian）** $\boldsymbol{K}$ で表し、
 $$
@@ -226,7 +226,7 @@ $$
 \delta E = \delta\langle\boldsymbol{H}\rangle = T\delta S .
 $$ {#eq-10.409}
 
-### 演習 10.8 2つの非直交純粋状態の識別 (Distinguishing two nonorthogonal pure states) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=91) {#ex-10.8}
+### 演習 10.8 2つの非直交純粋状態の識別 (Distinguishing two nonorthogonal pure states) {#ex-10.8}
 
 a) 単一 qubit の2つの純粋状態
 $$
@@ -254,7 +254,7 @@ $$ {#eq-10.413}
 
 c) $\theta = \pi/2$ および $\theta = 2\pi/3$ に対して、$\boldsymbol{Z}$ および $\boldsymbol{Z}'$ を測定することによって得られる情報利得の数値（ビット単位）を求めよ。
 
-### 演習 10.9 ペレス・ウッターズ POVM (The Peres–Wootters POVM) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=92) {#ex-10.9}
+### 演習 10.9 ペレス・ウッターズ POVM (The Peres–Wootters POVM) {#ex-10.9}
 
 §10.6.4 で説明されたペレス・ウッターズ（Peres–Wootters）情報源を考えます。これは3つの状態
 $$
@@ -274,7 +274,7 @@ b) 3つのベクトル $|\Phi_a\rangle, a = 1, 2, 3$ に対して、eq.(10.232) 
 
 c) PGM の測定結果と状態準備の相互情報量を計算せよ。
 
-### 演習 10.10 適応プロトコル (An adaptive protocol) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=92) {#ex-10.10}
+### 演習 10.10 適応プロトコル (An adaptive protocol) {#ex-10.10}
 
 3つの 2-qubit 状態
 $$
@@ -288,7 +288,7 @@ $$ {#eq-10.417}
 
 を実行します。この測定は3つの状態のうち1つを除外しますが、残りの2つの状態を区別するための情報は提供しません。次に、第1の測定結果を条件として、第2の qubit に対する測定を行います。演習 10.8 の結果を参考にして、第2の qubit に行う最も情報量の多い測定を選択し、この適応手順によって達成される情報利得を計算せよ。§10.6.4 で説明された集団測定によって達成される情報利得と比較せよ。
 
-### 演習 10.11 4つの純粋状態のアンサンブル (An ensemble of four pure states) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) {#ex-10.11}
+### 演習 10.11 4つの純粋状態のアンサンブル (An ensemble of four pure states) {#ex-10.11}
 
 a) 単一 qubit の4つの純粋状態
 $$
@@ -299,7 +299,7 @@ $$ {#eq-10.418}
 
 b) 次に、$\theta = \pi/2$ に対する $\boldsymbol{Z}'$ を測定することによって得られる情報利得を計算せよ。(a) の結果と比較せよ。
 
-### 演習 10.12 無限アンサンブル (An infinite ensemble) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) {#ex-10.12}
+### 演習 10.12 無限アンサンブル (An infinite ensemble) {#ex-10.12}
 
 a) 無限個の可能な純粋状態を持つアンサンブル、すなわち $\theta \in [0, 2\pi)$ 上の一様分布を考えます。ここで
 $$
@@ -330,7 +330,7 @@ $$ {#eq-10.423}
 
 を確認し、この測定によって得られる情報利得を計算せよ。(a) の結果と比較せよ。
 
-### 演習 10.13 近似複製と脱分極チャネル (Approximate cloning and the depolarizing channel) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=93) {#ex-10.13}
+### 演習 10.13 近似複製と脱分極チャネル (Approximate cloning and the depolarizing channel) {#ex-10.13}
 
 正規直交基底に以下のように作用する等長拡大 $U_\theta^{A \to BEF}$ を持つ qubit チャネル $\mathcal{N}_\theta^{A \to B}$ を考えます：
 $$
@@ -370,7 +370,7 @@ $$ {#eq-10.429}
 
 d) $\theta \neq \theta_0$ の場合、$g(\theta) \neq 0$ であり、したがって近似複製機によって達成される忠実度は純粋状態入力 $|\psi\rangle$ に依存します。その場合、$\mathcal{N}^{A \to BE}$ への任意の純粋状態入力に対して達成される $F$ の最小値である最悪値忠実度 $F_{\min}(\theta)$ を考えることができます。この最悪値忠実度が可能な限り大きくなるような値 $\theta = \theta_1$ を求め、$F_{\min}(\theta_1)$ を計算せよ。（$g(\theta)$ が $\theta = \theta_0$ で符号を変えることを忘れずに考慮せよ。）
 
-### 演習 10.14 一様アンサンブルから選ばれた量子状態の情報利得 (Information gain for a quantum state drawn from the uniform ensemble) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=94) {#ex-10.14}
+### 演習 10.14 一様アンサンブルから選ばれた量子状態の情報利得 (Information gain for a quantum state drawn from the uniform ensemble) {#ex-10.14}
 
 Alice がアンサンブル $\{\boldsymbol{\rho}(x), p(x)\}$ から選ばれた量子状態を準備し、Bob が確率 $p(y|x) = \mathrm{tr}\,(\boldsymbol{E}(y)\boldsymbol{\rho}(x))$ で結果 $y$ を与える測定 $\{\boldsymbol{E}(y)\}$ を行うとします。§10.6.1 で述べたように、Alice の準備に関するBob の情報利得は相互情報量 $I(X; Y) = H(X) - H(X|Y)$ です。$x$ が連続変数で $y$ が離散変数である場合、相互情報量の対称性を用いて $I(X; Y) = H(Y) - H(Y|X)$ と書く方が便利です。ここで
 $$
@@ -437,7 +437,7 @@ $$ {#eq-10.439}
 
 :::
 
-### 演習 10.15 ファノの不等式 (Fano’s inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=96) {#ex-10.15}
+### 演習 10.15 ファノの不等式 (Fano’s inequality) {#ex-10.15}
 
 $X = \{x, p(x)\}$ を $d$ 個の可能な文字からなるアルファベットから選ばれた文字 $x$ の確率分布とし、$XY$ を $x$ と、$x$ と相関する別の確率変数 $y$ の同時分布とします。$y$ を受け取ったとき、私たちは関数 $\hat{x}(y)$ を評価することによって $x$ の値を推定します。私たちの推定が通常正しければ、条件付きエントロピー $H(X|Y)$ は小さくなければならないと予想されます。この問題ではその期待を確認します。
 
@@ -472,7 +472,7 @@ $$ {#eq-10.444}
 
 d) ファノの不等式を用いて eq.(10.55) を導出し、古典通信路容量 $C$ が、無視できる誤り確率を持つノイズのあるチャネルを介した通信の達成可能レートの上界であることを証明せよ。
 
-### 演習 10.16 量子版ファノの不等式 (A quantum version of Fano’s inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=97) {#ex-10.16}
+### 演習 10.16 量子版ファノの不等式 (A quantum version of Fano’s inequality) {#ex-10.16}
 
 a) $d$ 次元システムにおいて、密度演算子 $\boldsymbol{\rho}$ が純粋状態 $|\psi\rangle$ を忠実度
 $$
@@ -510,7 +510,7 @@ $$ {#eq-10.450}
 
 これは量子版ファノの不等式であり、$\mathcal{N}$ の量子通信路容量の上界を導出するために使用できます。
 
-### 演習 10.17 GHZ状態に対するマザー・プロトコル (Mother protocol for the GHZ state) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=97) {#ex-10.17}
+### 演習 10.17 GHZ状態に対するマザー・プロトコル (Mother protocol for the GHZ state) {#ex-10.17}
 
 マザー資源不等式は、Alice, Bob, Eve が純粋状態 $\phi_{ABE}$ の $n$ 個のコピーを共有している場合に達成できる漸近的資源変換を表現します：Bob に $\frac{n}{2}I(A; E)$ 個の量子ビットを送信することにより、Alice は彼女の状態と Eve の状態との相関を破壊することができ、それによって Bob だけが Eve の状態の浄化系を保持するようになり、さらにプロトコルの終了時に Alice と Bob は $\frac{n}{2}I(A; B)$ ebit のエンタングルメントを共有します。ここで $I(A; E)$ および $I(A; B)$ は状態 $\phi_{ABE}$ において評価された量子相互情報量を表します。
 
@@ -532,7 +532,7 @@ c) Alice, Bob, Eve が GHZ 状態 $\phi^{ABE}$ の 1 つのコピーだけを共
 
 d) 次に、Alice, Bob, Eve が GHZ 状態の 2 つのコピーから開始し、資源変換を触媒するために Alice と Bob が 1 ebit のエンタングルメントを借り（後で返却される）、それを利用できると仮定します。コヒーレント高密度符号化を用いて、eq. (10.452) の（触媒的）変換を**完全に（perfectly）**達成するプロトコルを構成せよ。
 
-### 演習 10.18 振幅減衰と消失の劣化可能性 (Degradability of amplitude damping and erasure) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=98) {#ex-10.18}
+### 演習 10.18 振幅減衰と消失の劣化可能性 (Degradability of amplitude damping and erasure) {#ex-10.18}
 
 §3.4.3 で議論された qubit 振幅減衰チャネル $\mathcal{N}_{\text{a.d.}}^{A \to B}(p)$ は、以下を満たす等長拡大 $\boldsymbol{U}^{A \to BE}$ を持ちます：
 $$
@@ -571,7 +571,7 @@ $$ {#eq-10.456}
 
 ここで $A$ は $d$ 次元であり、また $1/2 \le p \le 1$ に対して容量はゼロになることを示せ。
 
-### 演習 10.19 量子シングルトン限界 (Quantum Singleton bound) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) {#ex-10.19}
+### 演習 10.19 量子シングルトン限界 (Quantum Singleton bound) {#ex-10.19}
 
 第7章で述べたように、$[[n, k, d]]$ 量子誤り訂正符号（$n$ 量子ビットのブロック内で保護された $k$ 量子ビット、符号距離 $d$）は以下の制約に従わなければなりません：
 $$
@@ -594,7 +594,7 @@ $$ {#eq-10.459}
 
 b) eq.(10.459) から eq.(10.458) が従うことを示せ。
 
-### 演習 10.20 ノイズのある超高密度符号化とテレポーテーション (Noisy superdense coding and teleportation) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) {#ex-10.20}
+### 演習 10.20 ノイズのある超高密度符号化とテレポーテーション (Noisy superdense coding and teleportation) {#ex-10.20}
 
 a) マザー・プロトコルによって達成されたエンタングルメントを古典通信に変換することにより、ノイズのある超高密度符号化資源不等式を証明せよ：
 $$
@@ -610,7 +610,7 @@ $$ {#eq-10.461}
 
 $\phi$ が $AB$ の最大エンタングル状態であるとき、これが通常の無雑音テレポーテーション資源不等式と一致することを確認せよ。
 
-### 演習 10.21 消失の熱力学的コスト (The cost of erasure) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=99) {#ex-10.21}
+### 演習 10.21 消失の熱力学的コスト (The cost of erasure) {#ex-10.21}
 
 ビットの**消失（erasure）**とは、ビットの状態が 0 にリセットされるプロセスです。消失は**不可逆（irreversible）**です――消失後の最終状態 0 のみを知っていても、消失前の初期状態が 0 であったか 1 であったかを判断することはできません。この不可逆性は、消失が不可避の熱力学的コストを招くことを意味します。**ランダウアーの原理（Landauer's Principle）**によれば、温度 $T$ で 1 ビットを消去するには仕事 $W \ge kT \ln 2$ が必要です。この問題では、消失を達成する特定の手順がランダウアーの原理に従うことを検証します。
 
@@ -624,7 +624,7 @@ $\phi$ が $AB$ の最大エンタングル状態であるとき、これが通�
 
 (c) $\lambda$ が $\lambda = 0$ から $\lambda = \infty$ までゆっくりと増加するとき、費やされる仕事はいくらか？（解析的に計算できる積分を評価する必要があります。）
 
-### 演習 10.22 デカップリング不等式の証明 (Proof of the decoupling inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=100) {#ex-10.22}
+### 演習 10.22 デカップリング不等式の証明 (Proof of the decoupling inequality) {#ex-10.22}
 
 この問題では、§10.9.1 で概略を述べたデカップリング不等式の導出を完了します。
 

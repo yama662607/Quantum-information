@@ -1,8 +1,8 @@
-## 5.1 古典回路 (Classical Circuits) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=3) {#sec-5.1-classical-circuits}
+## 5.1 古典回路 (Classical Circuits) {#sec-5.1-classical-circuits}
 
 量子コンピュータの概念は第1章で導入されました。ここでは、量子計算のモデルをより正確に規定し、そのモデルのいくつかの基本的な性質を指摘します。後ほど、そのモデルの計算能力について調査します。しかし、量子コンピュータが何を行うかを説明する前に、まず古典コンピュータが何を行うかを述べておく必要があります。
 
-### 5.1.1 汎用ゲート (Universal gates) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=3) {#sec-5.1.1-universal-gates}
+### 5.1.1 汎用ゲート (Universal gates) {#sec-5.1.1-universal-gates}
 
 （決定論的な）古典コンピュータは関数を評価します。すなわち、$n$ ビットの入力が与えられると、入力によって一意に決定される $m$ ビットの出力を生成します。つまり、特定の指定された $n$ ビットの引数 $x$ に対して、関数
 $$
@@ -63,7 +63,7 @@ $$ {#eq-5.11}
 
 私たちはゲート集合 $\{\text{NOT}, \text{AND}, \text{OR}, \text{INPUT}\}$ を「**汎用（universal）**」であると言います。これは、これらの構成要素から回路を構築することによって任意の関数を評価できることを意味します。このような単純な基本要素を用いて任意の計算を実行できるということは、世界に関する驚くべき事実です。
 
-### 5.1.2 ほとんどの関数は巨大な回路を必要とする (Most functions require large circuits) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=5) {#sec-5.1.2-large-circuits}
+### 5.1.2 ほとんどの関数は巨大な回路を必要とする (Most functions require large circuits) {#sec-5.1.2-large-circuits}
 
 私たちの DNF 構成は、$n$ ビット入力を持つ任意のブール関数が、$2^n$ 個以下の OR ゲート、$n 2^n$ 個の AND ゲート、$n 2^n$ 個の NOT ゲート、および $n 2^n$ 個の INPUT ゲート（合計で $(3n + 1)2^n$ 個のゲート）を使用して評価できることを示しています。もちろん、一部の関数ははるかに小さな回路を使用して計算できますが、**ほとんど（most）**のブール関数については、その関数を評価する最小の回路は実に（$n$ に関して）指数関数的に巨大な数のゲートを持ちます。要点は、もし回路サイズ（すなわちゲート数）が $n$ に関して劣指数関数的（subexponential）であるならば、回路の数よりも関数の数がはるかに、はるかに多く存在するということです。
 
@@ -87,7 +87,7 @@ $$ {#eq-5.14}
 
 したがって、任意の正の $\varepsilon$ に対して、ほとんどのブール関数は少なくとも $(1 - \varepsilon)\frac{2^n}{2n}$ 個のゲートを持つ回路を必要とする、と結論づけられます。回路サイズがこれほど大きいのは、ほとんどの関数が、よりコンパクトな回路を構築するために利用できる構造を持っていないからです。すべての受理された文字列のリストを保存する「ルックアップテーブル」を参照する以上のことはほとんどできませんが、これは本質的に DNF が行っていることそのものです。
 
-### 5.1.3 回路計算量 (Circuit complexity) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=6) {#sec-5.1.3-circuit-complexity}
+### 5.1.3 回路計算量 (Circuit complexity) {#sec-5.1.3-circuit-complexity}
 
 これまでは、固定された（$n$ ビットの）サイズの入力に作用する計算のみを考えてきましたが、可変サイズの入力に作用する回路の**族（families）**を考えることもできます。回路族は、計算の**計算量（complexity）**を解析および分類するための有用な枠組みを提供します。この枠組みは、量子計算へと進む際にも自然な一般化を持ちます。
 
@@ -189,7 +189,7 @@ $\text{P} \neq \text{NP}$ と仮定すると、NP の中には中間の難しさ
 
 ここから、$\text{NP} \cup \text{co-NP}$ の構造に関する大まかな（予想される）描像が得られます。NP と co-NP は一致しませんが、自明でない共通部分を持ちます。P は $\text{NP} \cap \text{co-NP}$ の中に存在しますが、その共通部分には P に属さない問題（FACTORING など）も含まれます。NP完全問題や co-NP完全問題は、いずれも $\text{NP} \cap \text{co-NP}$ の中には存在しません。
 
-### 5.1.4 確率的計算 (Randomized computation) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=12) {#sec-5.1.4-randomized-computation}
+### 5.1.4 確率的計算 (Randomized computation) {#sec-5.1.4-randomized-computation}
 
 乱数生成器にアクセスできる**確率的回路（probabilistic circuits）**を考えることが有用な場合があります。例えば、確率的回路内のゲートは2つの動作のいずれかを実行することができ、公平なコインを投げてどちらの動作を実行するかを決定するかもしれません。このような回路は、1つの固定された入力に対して、多くの可能な計算パスをサンプリングできます。確率的回路によって実行されるアルゴリズムは「確率的（randomized）」であると言われます。
 

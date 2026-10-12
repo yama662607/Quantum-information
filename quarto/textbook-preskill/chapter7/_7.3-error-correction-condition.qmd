@@ -1,8 +1,8 @@
-## 7.3 誤り訂正条件のさらなる考察 (More about the error correction condition) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=14) {#sec-7.3-error-correction-condition}
+## 7.3 誤り訂正条件のさらなる考察 (More about the error correction condition) {#sec-7.3-error-correction-condition}
 
 条件式 @eq-7.17 は量子誤り訂正理論の基礎です。本節では、この誤り訂正条件の解釈と意味合いをさらに探求します。相補的な視点からこの条件を検討することで、量子誤り訂正がどのように、そしてなぜ機能するのかについての理解が深まります。
 
-### 7.3.1 直交符号状態の識別可能性 (Distinguishability of orthogonal code states) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=14) {#sec-7.3.1-distinguishability}
+### 7.3.1 直交符号状態の識別可能性 (Distinguishability of orthogonal code states) {#sec-7.3.1-distinguishability}
 
 符号化された量子情報をノイズから保護できるのは、ノイズが符号空間内の直交ベクトルの完全な識別可能性を保存する場合に限られます。したがって、$\boldsymbol{E}_a, \boldsymbol{E}_b$ が訂正可能集合 $\mathcal{E}$ 内の任意の2つの誤りであり、$|\varphi\rangle, |\psi\rangle$ が $\mathcal{H}_{\text{code}}$ 内の任意の2つの直交純粋状態である場合、$\boldsymbol{E}_a|\varphi\rangle$ と $\boldsymbol{E}_b|\psi\rangle$ もまた直交していなければなりません。そうでなければ、復元等長写像が $\boldsymbol{E}_a|\varphi\rangle$ と $\boldsymbol{E}_b|\psi\rangle$ を直交状態 $|\varphi\rangle$ と $|\psi\rangle$ に写すことは到底不可能です。
 
@@ -29,7 +29,7 @@ $$ {#eq-7.27}
 
 ノイズは符号状態 $|\bar{0}\rangle$ と $|\bar{1}\rangle$ を大幅に変形させるかもしれませんが、そのことは符号化された量子情報が取り返しのつかない形で失われたことを必ずしも意味しません。直交する符号ベクトルが系の識別可能な（混合）状態に写される限り、誤りからの復元は可能です。
 
-### 7.3.2 環境への情報の漏洩 (Leakage of information to the environment) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=15) {#sec-7.3.2-leakage}
+### 7.3.2 環境への情報の漏洩 (Leakage of information to the environment) {#sec-7.3.2-leakage}
 
 典型的な実験室環境では、量子メモリに保存された情報は外界から完全に隔離することができず、環境への情報の漏洩が不可逆なデヒーレンスを引き起こすため脆弱です。量子誤り訂正符号はこの漏洩を防ぎ、符号化された状態を保護することができます。
 
@@ -44,7 +44,7 @@ $$ {#eq-7.28}
 
 ここで最後の等号では誤り訂正条件 @eq-7.13 を用いました。したがって、誤り訂正条件が満たされているとき、環境の状態は符号化された量子状態から独立となります。その逆もまた成り立ちます――もし $\boldsymbol{\rho}_E$ が符号状態 $|\psi\rangle$ に依存しないならば、誤り訂正条件が満たされ、ノイズは訂正可能です。
 
-### 7.3.3 参照系のデカップリング (Decoupling a reference system) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=15) {#sec-7.3.3-decoupling}
+### 7.3.3 参照系のデカップリング (Decoupling a reference system) {#sec-7.3.3-decoupling}
 
 第3章で説明した相対状態法（relative state method）を適用することにより、誤り訂正条件を別の有用な形式に書き直すことができます。$\{|\bar{i}\rangle_S\}$ を符号空間 $\mathcal{H}_{\text{code}} \subset \mathcal{H}_S$ の正規直交基底とします。$\mathcal{H}_R$ の次元 $d_R$ が $\mathcal{H}_{\text{code}}$ の次元と等しい参照系 $R$ を導入し、状態
 
@@ -85,7 +85,7 @@ $$ {#eq-7.32}
 
 デカップリング条件は、**近似的（approximate）**量子誤り訂正への強力なアプローチを提供するため、極めて有用です。もし $\boldsymbol{\rho}_{RE}$ が積状態に近ければ、誤りをほぼ反転（修復）する復元写像が存在します。このアイデアは第10章で大いに活用します。
 
-### 7.3.4 消失誤りの訂正 (Correcting erasure errors) [📄 chap7.pdf](/assets/pdf/preskill/chap7.pdf#page=16) {#sec-7.3.4-erasure}
+### 7.3.4 消失誤りの訂正 (Correcting erasure errors) {#sec-7.3.4-erasure}
 
 量子系が**消失（erased）**したと言うとき、それは系が私たちの手の届かないところへ逃れ去り、もはやアクセスできなくなったことを意味します。さらに、私たちはその系が失われたことを**知っています**。数学的には、消失は次の TPCP 写像によって記述できます：
 

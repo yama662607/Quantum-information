@@ -1,8 +1,8 @@
-## 5.2 可逆計算 (Reversible computation) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=13) {#sec-5.2-reversible-computation}
+## 5.2 可逆計算 (Reversible computation) {#sec-5.2-reversible-computation}
 
 量子コンピュータのモデルを考案するにあたり、私たちは古典計算の回路モデルを一般化することになります。しかし、私たちの量子論理ゲートはユニタリ変換であり、したがって可逆（invertible）であるのに対し、AND ゲートのような古典論理ゲートは可逆ではありません。量子回路について議論する前に、**可逆（reversible）**な古典計算のいくつかの特徴を考察しておくことが有用です。
 
-### 5.2.1 ランダウアーの原理 (Landauer's principle) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=13) {#sec-5.2.1-landauer-principle}
+### 5.2.1 ランダウアーの原理 (Landauer's principle) {#sec-5.2.1-landauer-principle}
 
 量子計算への架け橋を提供するだけでなく、古典的な可逆計算は**ランダウアーの原理（Landauer's principle）**の観点からもそれ自体として興味深いものです。ランダウアーは、情報の消去が必然的に散逸的（dissipative）なプロセスであることを見出しました。彼の洞察は、情報の消去は常に位相空間の圧縮を伴うため、論理的だけでなく熱力学的にも不可逆であるという点にあります。
 
@@ -12,7 +12,7 @@
 
 しかし、コンピュータが可逆的に動作するならば、原理的には散逸も電力要件も必要ありません。私たちはタダで（for free）計算できます！ 今日の集積回路で消費される電力は論理ゲートあたり $kT$ を少なくとも3桁上回っているため、現在このアイデアには大きな実用的な重要性はありません。しかし、チップ上のスイッチが小型化し続けるにつれて、古典的な計算ハードウェアにおける散逸を削減するために、将来的に可逆計算が活用される可能性があります。
 
-### 5.2.2 可逆ゲート (Reversible gates) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=14) {#sec-5.2.2-reversible-gates}
+### 5.2.2 可逆ゲート (Reversible gates) {#sec-5.2.2-reversible-gates}
 
 可逆コンピュータは、$n$ ビットを $n$ ビットに対応づける可逆関数（invertible function）を評価します：
 $$
@@ -167,7 +167,7 @@ $$ {#eq-5.38}
 
 もちろん、2つの入力ビットを 1 に固定すれば、$\Lambda^2(\boldsymbol{X})$ ゲートで NOT を実行できます。したがって、入力ビットを固定し、出力ビットを破棄できるならば、トフォリゲート $\Lambda^2(\boldsymbol{X})$ は可逆計算に対して汎用です。
 
-### 5.2.3 空間の節約：ペブルゲーム (Saving space: the pebble game) [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=20) {#sec-5.2.3-pebble-game}
+### 5.2.3 空間の節約：ペブルゲーム (Saving space: the pebble game) {#sec-5.2.3-pebble-game}
 
 トフォリゲートと NOT ゲートを用いれば、ごくわずかなスクラッチ空間を使用して任意の可逆関数を計算できること、また一定の入力ビットを固定して出力ビットを無視することにより、可逆トフォリゲートのみを使用して任意の（不可逆）ブール回路をシミュレートできることを見てきました。しかし後者の場合、AND ゲートをシミュレートするたびに2ビットの「ゴミ（junk）」が発生します。私たちのメモリは徐々にゴミで満たされ、空間を空けるために一部のビットを消去しなければ計算を継続できない段階に達します。その段階で、ランダウアーが警告した通り、実行した計算に対する電力代を最終的に支払わなければならなくなります。
 

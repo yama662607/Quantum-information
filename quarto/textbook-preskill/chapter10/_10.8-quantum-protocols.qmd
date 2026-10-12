@@ -1,8 +1,8 @@
-## 10.8 量子プロトコル (Quantum Protocols) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=66) {#sec-10.8-quantum-protocols}
+## 10.8 量子プロトコル (Quantum Protocols) {#sec-10.8-quantum-protocols}
 
 i.i.d.（独立同分布）設定におけるデカップリング原理（decoupling principle）を用いることで、2つの基本的な量子プロトコルの達成可能レートを証明できます。これらは親しみを込めて **Father（ファーザー）プロトコル** および **Mother（マザー）プロトコル** と呼ばれています。そのように命名された理由は、それぞれが興味深い多くの系（子供たち）を生み出す（spawn）からです。本節ではこれらのプロトコルを定式化し、その「子供たち」のいくつかについて議論し、証明は §10.9 まで保留します。
 
-### 10.8.1 Father プロトコル：エンタングルメント支援量子通信 (Father: Entanglement-assisted quantum communication) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=66) {#sec-10.8.1-father-protocol}
+### 10.8.1 Father プロトコル：エンタングルメント支援量子通信 (Father: Entanglement-assisted quantum communication) {#sec-10.8.1-father-protocol}
 
 Father プロトコルは、エンタングルメント支援量子通信（entanglement-assisted quantum communication）のための方式です。ノイズのある量子通信路 $\mathcal{N}^{A \to B}$ を多数回使用することを通じて、このプロトコルはアリスからボブへ高忠実度で量子情報を伝送すると同時に、アリスとボブによって共有されている事前に準備された量子エンタングルメントの一部を消費します。このプロトコルによって実行されるタスクは、**Father 資源不等式（father resource inequality）**によって要約されます：
 $$
@@ -65,7 +65,7 @@ $$
 $$ {#eq-10.326}
 実際には、触媒作用を発動することなく、この同じレートが達成可能であることが示されます（§10.9.4 を参照）。ただし、§10.7.1 で既に議論したように、コヒーレント情報量の超加法性のために、この資源不等式は量子通信路容量 $Q(\mathcal{N})$ に対する一般的な単一文字公式を与えません。
 
-### 10.8.2 Mother プロトコル：量子状態転送 (Mother: Quantum state transfer) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=68) {#sec-10.8.2-mother-protocol}
+### 10.8.2 Mother プロトコル：量子状態転送 (Mother: Quantum state transfer) {#sec-10.8.2-mother-protocol}
 
 Mother プロトコルでは、アリス、ボブ、イブが最初に3部純粋状態 $\phi_{ABE}$ を共有しています。したがって、アリスとボブは一緒になってイブのシステム $E$ の浄化を保持しています。アリスは、可能な限り少ないノイズレス量子通信の量子ビットを用いて、この浄化の自分の持ち分をボブに送信したいと考えています。そのため、アリスは自分のシステム $A$ を2つのサブシステム $A_1$ と $A_2$ に分割します。ここで $A_1$ は可能な限り小さく、$A_2$ は $E$ と相関を持ちません。彼女は $A_2$ を手元に残し、$A_1$ をボブに送信します。$A_1$ を受け取った後、ボブは $A_1 B$ を2つのサブシステム $B_1$
 
@@ -150,7 +150,7 @@ Mother プロトコルと同様に、この状態結合プロトコルは、古�
 
 古典的には、$H(X|Y)$ は非負であり、ボブが既に $XY$ について確信を持っている場合にのみゼロになりますが、量子力学的には $H(A|B)$ は負になり得ます。ボブが $AB$ の量子状態についてどのようにして「負の不確実性（negative uncertainty）」を持つことができるのでしょうか？もし $H(A|B) < 0$、あるいは同値ですが $I(A; E) < I(A; B)$ であるならば、Mother プロトコルは消費する量子通信の量よりも多くの量子エンタングルメントを生み出します。したがって、$H(A|B)$ が負である場合（すなわち $I_c(A \rangle B)$ が正である場合）、Mother 資源不等式はハッシング不等式を含意し、アリスからボブへの古典通信が状態転送を達成するだけでなく、$\phi$ のコピーあたり $-H(A|B)$ ebit のエンタングルメントも蒸留することを主張します。これらの蒸留された ebit は「エンタングルメント銀行」に預け入れ、将来の状態結合のラウンドで必要に応じて引き出すことができ、それによって将来のラウンドの量子通信コストを削減できます。今日のボブの「負の不確実性」は、明日実行されるタスクの量子通信コストを削減するのです。
 
-### 10.8.3 強劣加法性の操作的意味 (Operational meaning of strong subadditivity) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=71) {#sec-10.8.3-operational-meaning-strong-subadditivity}
+### 10.8.3 強劣加法性の操作的意味 (Operational meaning of strong subadditivity) {#sec-10.8.3-operational-meaning-strong-subadditivity}
 
 $H(A|B)$ が状態結合の量子通信コストであるという観察により、フォン・ノイマン・エントロピーの強劣加法性（strong subadditivity）の単純な操作的証明を定式化することができます：
 $$
@@ -190,7 +190,7 @@ $$ {#eq-10.336}
 
 要約すると、私たちは高度な行列解析という伝統的な経路ではなく、より間接的な方法を介して強劣加法性を証明しました。この証明は、量子情報理論の2つの礎石 --- デカップリング原理と典型的部分空間の理論 --- に基づいて構築されており、これらは Mother 資源不等式の証明における本質的な要素です。
 
-### 10.8.4 熱力学における負の条件付きエントロピー (Negative conditional entropy in thermodynamics) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=73) {#sec-10.8.4-negative-conditional-entropy-thermodynamics}
+### 10.8.4 熱力学における負の条件付きエントロピー (Negative conditional entropy in thermodynamics) {#sec-10.8.4-negative-conditional-entropy-thermodynamics}
 
 デカップリング Mother 資源不等式のさらなる応用として、ここでランダウアーの原理（Landauer's Principle）を再訪し、負の量子条件付きエントロピーの含意に関する別の視点を展開します。ビットの消去（erasure）とは、初期値に関係なくそのビットを 0 に写像するプロセスであることを思い出してください。このプロセスは不可逆（irreversible）です --- 消去後の最終状態 0 だけを知っていても、消去前の初期状態が 0 であったか 1 であったかを特定することはできません。不可逆性は、消去が不可避な熱力学的コストを招くことを意味します。ランダウアーの原理によれば、温度 $T$ において1ビットを消去するには、少なくとも $W = kT \ln 2$ の仕事が必要です。
 

@@ -1,8 +1,8 @@
-## 3.4 3つの量子チャネル (Three quantum channels) [📄 p.24](/assets/pdf/preskill/chap3.pdf#page=24) {#sec-3.4-three-quantum-channels}
+## 3.4 3つの量子チャネル (Three quantum channels) {#sec-3.4-three-quantum-channels}
 
 量子チャネルの概念に慣れ親しむ最善の方法は、いくつかの例を研究することです。ここでは、単一の量子ビット（qubit）に作用するチャネルの（いずれも興味深く有用な）3つの例を考察します。好みに応じて、チャネル $\mathcal{E}$ は送信者から受信者へ何らかの忠実度（fidelity）の損失を伴って伝送される量子情報の運命を記述していると想像してもよいでしょう。あるいは、伝送が空間ではなく時間的になされる、すなわち $\mathcal{E}$ が環境と相互作用する量子系の時間発展を記述していると想像してもかまいません。
 
-### 3.4.1 脱分極チャネル (Depolarizing channel) [📄 p.24](/assets/pdf/preskill/chap3.pdf#page=24) {#sec-3.4.1-depolarizing-channel}
+### 3.4.1 脱分極チャネル (Depolarizing channel) {#sec-3.4.1-depolarizing-channel}
 
 脱分極チャネル（depolarizing channel）は、特に優れた対称性を持つデコヒーレンスを受ける量子ビットのモデルです。確率 $1-p$ で量子ビットはそのまま無傷で残り、確率 $p$ で「エラー」が発生すると記述できます。エラーは 3 つのタイプのいずれかであり得、各タイプのエラーは等確率で生じます。$\{|0\rangle, |1\rangle\}$ が量子ビットの正規直交基底である場合、これら 3 タイプのエラーは次のように特徴づけられます：
 
@@ -144,7 +144,7 @@ $$ {#eq-3.96}
 
 **可逆性？（Reversibility?）** なぜ私たちはチャネルが可逆でないと言うのでしょうか？ 明らかに、球の一様な収縮を一様な膨張によって逆転させることができます。しかし問題は、ブロッホ球の膨張は正値ではないためチャネルではないということです。膨張は $|\vec{P}| \le 1$ である $\vec{P}$ のいくつかの値を $|\vec{P}| > 1$ である値へと写してしまい、したがって密度演算子を負の固有値を持つ演算子へと写してしまいます。デコヒーレンスは球を縮小させることはできますが、いかなる物理的過程もそれを再び膨張させることはできません！ 時間を逆行するチャネルはチャネルではないのです。
 
-### 3.4.2 デファジングチャネル (Dephasing channel) [📄 p.27](/assets/pdf/preskill/chap3.pdf#page=27) {#sec-3.4.2-dephasing-channel}
+### 3.4.2 デファジングチャネル (Dephasing channel) {#sec-3.4.2-dephasing-channel}
 
 次の例はデファジングチャネル（dephasing channel）であり、**位相ダンピングチャネル（phase-damping channel）**とも呼ばれます。このケースは、本質的でない数学的詳細をすべて削ぎ落とした上で、現実的な物理的状況におけるデコヒーレンスの本質を明快に映し出す戯画（caricature）を提供してくれるため、特に有益です。
 
@@ -259,7 +259,7 @@ $$ {#eq-3.110}
 
 となります。原理的には、確率のこの時間依存性は、準備と測定の間の時間 $t$ を変化させ、各 $t$ に対して実験を多数回繰り返して高い統計的信頼度で確率を推定することによって測定できます。デコヒーレンスレート $\Gamma$ は、$\mathrm{Prob}(+, t)$ のコヒーレントな振動の低下していく可視性（visibility）を $t$ の減衰指数関数にフィッティングすることによって実験的に決定できます。
 
-### 3.4.3 振幅ダンピングチャネル (Amplitude-damping channel) [📄 p.31](/assets/pdf/preskill/chap3.pdf#page=31) {#sec-3.4.3-amplitude-damping-channel}
+### 3.4.3 振幅ダンピングチャネル (Amplitude-damping channel) {#sec-3.4.3-amplitude-damping-channel}
 
 振幅ダンピングチャネル（amplitude-damping channel）は、光子の自発放出に起因する（2 準位）原子の励起状態の崩壊の概略的なモデルです。放出された光子を検出する（「環境を観測する」）ことによって、原子の初期準備に関する情報を与えてくれる POVM を実行することができます。
 

@@ -1,4 +1,4 @@
-## 6.8 量子コンピュータを用いた量子物理のシミュレーション (Using quantum computers to simulate quantum physics) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=41) {#sec-6.8-simulating-quantum-physics}
+## 6.8 量子コンピュータを用いた量子物理のシミュレーション (Using quantum computers to simulate quantum physics) {#sec-6.8-simulating-quantum-physics}
 
 残念ながら、私たちは量子コンピュータには**できない**ことをいくつか知るようになりました。しかし喜ばしいことに、量子コンピュータに**できる**重要なこともいくつか存在します：
 
@@ -7,7 +7,7 @@
 
 他に何ができるのでしょうか？
 
-### 6.8.1 局所ハミルトニアンの時間発展のシミュレーション (Simulating time evolution of local Hamiltonians) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=41) {#sec-6.8.1-time-evolution}
+### 6.8.1 局所ハミルトニアンの時間発展のシミュレーション (Simulating time evolution of local Hamiltonians) {#sec-6.8.1-time-evolution}
 
 量子コンピュータの極めて重要な応用先の一つは、量子系の時間発展のシミュレーションです。ハミルトニアン $H$ が**局所的（local）**であるならば、このシミュレーションは効率的に実行できます。
 
@@ -176,7 +176,7 @@ $$ {#eq-6.208}
 
 重力効果が重要である物理過程については、私たちの理解はさらに不十分です。量子回路モデルは量子重力を効率的にシミュレートできるでしょうか？ もしそうであれば、量子コンピュータは量子重力の理解を深めるための強力なツールとなるかもしれません。もしそうでなければ、私たちは自然において潜在的に実現可能な計算能力を完全に捉える計算モデルをまだ見出していないことになります。
 
-### 6.8.2 エネルギー固有値の推定とエネルギー固有状態の準備 (Estimating energy eigenvalues and preparing energy eigenstates) [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=45) {#sec-6.8.2-energy-eigenvalues}
+### 6.8.2 エネルギー固有値の推定とエネルギー固有状態の準備 (Estimating energy eigenvalues and preparing energy eigenstates) {#sec-6.8.2-energy-eigenvalues}
 
 私たちは、量子コンピュータが局所ハミルトニアンをもつ量子系の時間発展を効率的にシミュレートできること、すなわち**時間依存シュレーディンガー方程式**を解くことができると論じてきました。物理学者や化学者が行いたいもう一つのことは、**時間非依存シュレーディンガー方程式**を解くこと、すなわちハミルトニアンのエネルギー固有値を計算することです。たとえば化学者は、分子の基底状態エネルギーを「化学的精度（chemical accuracy）」（約 100 万分の 1）で推定することが、化学反応の特性を予測する上で貴重であると言います。一般に、局所ハミルトニアンのエネルギー固有値を見つけることは、$n$ 量子ビットの系に対して $2^n \times 2^n$ 行列を対角化する必要があるため、古典的には困難な問題であると思われます。行列が非常に疎であり単純な構造をしている場合など、一部のケースでは容易な場合もありますが、物理的に重要な一部のケースでは効率的な古典アルゴリズムは知られていません。
 

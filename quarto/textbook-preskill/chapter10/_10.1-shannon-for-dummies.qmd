@@ -1,4 +1,4 @@
-## 10.1 シャノン理論入門 (Shannon for Dummies) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=7) {#sec-10.1-shannon}
+## 10.1 シャノン理論入門 (Shannon for Dummies) {#sec-10.1-shannon}
 
 量子情報科学は、20世紀の思想における3大潮流――量子物理学（quantum physics）、計算機科学（computer science）、そして情報理論（information theory）――の統合です。これまで、私たちはこの3つ組のうち情報理論の側面にあまり重きを置いてきませんでしたが、この見落としは今こそ正されるべきです。
 
@@ -23,7 +23,7 @@
 
 私はこの節を「シャノン理論入門（Shannon for Dummies）」と呼んでいます。なぜなら、煩わしい細部を最小限に抑えつつ、シャノンのアイデアを迅速に説明しようと試みるからです。そうすることで、古典情報理論を約13ページに圧縮することができます。
 
-### 10.1.1 シャノン・エントロピーとデータ圧縮 (Shannon entropy and data compression) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=8) {#sec-10.1.1-shannon-entropy}
+### 10.1.1 シャノン・エントロピーとデータ圧縮 (Shannon entropy and data compression) {#sec-10.1.1-shannon-entropy}
 
 メッセージとは文字の列（string of letters）であり、各文字は $k$ 個の可能な文字からなるアルファベットから選ばれます。私たちは、確率分布
 
@@ -146,7 +146,7 @@ $$ {#eq-10.15}
 
 私たちは圧縮符号の詳細についてはまったく議論しませんでした。各メッセージに一意の符号語を割り当て、その逆も行う巨大なルックアップテーブルを想像することもできますが、そのようなテーブルは $n$ に対して指数関数的なサイズを持つため、長いメッセージの圧縮と復元には全く実用的ではありません。ほぼ最適な圧縮レートを維持しながら符号化と復号をいかに効率的に行うかを研究することは魅力的であり、実際に何かを圧縮したい場合には極めて重要でもあります。しかし、古典圧縮理論のこの実践的な側面は本書の範囲を超えています。
 
-### 10.1.2 結合典型性、条件付きエントロピー、相互情報量 (Joint typicality, conditional entropy, and mutual information) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=10) {#sec-10.1.2-joint-typicality}
+### 10.1.2 結合典型性、条件付きエントロピー、相互情報量 (Joint typicality, conditional entropy, and mutual information) {#sec-10.1.2-joint-typicality}
 
 シャノン・エントロピーは、情報源の出力に関する1文字あたりの私の**無知（ignorance）**を定量化します。情報源 $X$ が $n$ 文字のメッセージを生成する場合、$n(H(X) + o(1))$ ビットあればメッセージの内容を伝達するのに十分ですが、$n(H(X) - \Omega(1))$ ビットでは不十分です。
 
@@ -213,7 +213,7 @@ $$ {#eq-10.22}
 
 となります。$X$ と $Y$ の間に相関がなければ、$Y$ を知っても $X$ について何もわかりません。
 
-### 10.1.3 分散情報源符号化 (Distributed source coding) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=12) {#sec-10.1.3-distributed-source-coding}
+### 10.1.3 分散情報源符号化 (Distributed source coding) {#sec-10.1.3-distributed-source-coding}
 
 条件付きエントロピーの運用の意味をより明確にするために、次の状況を考えます：結合分布 $XY$ が $n$ 回サンプリングされ、アリスが $n$ 文字のメッセージ $\vec{x}$ を受け取り、ボブが $n$ 文字のメッセージ $\vec{y}$ を受け取るとします。今、アリスはボブにメッセージを送り、ボブが高い成功確率で $\vec{x}$ を決定できるようにしたいと考えており、かつアリスはボブにできるだけ少ないビットを送りたいと考えています。このタスクは、符号化器と復号器が $\vec{y}$ の完全な知識を共有し、それに応じて $\vec{x}$ を圧縮する符号を選択できると仮定した §10.1.2 のシナリオよりも困難です。しかし、このより挑戦的な設定であっても、**スレピアン・ウルフ符号化（Slepian-Wolf coding）**と呼ばれる方法を用いることで、アリスはボブに送るメッセージを $n (H(X|Y) + o(1))$ ビットに圧縮できることがわかります。
 
@@ -249,7 +249,7 @@ $$ {#eq-10.26}
 
 このシナリオにおいて、アリスとボブは共同で $(x, y)$ を知っていますが、初期状態ではアリスもボブも共有された情報の全体にはアクセスできません。目標は、アリスからボブへの最小限の通信でボブの側にすべての情報を統合（merge）することであり、この目的には1文字あたり $H(X|Y) + o(1)$ ビットの通信で十分であることがわかりました。同様に、ボブからアリスへの1文字あたり $H(Y|X) + o(1)$ ビットの通信を用いることで、アリスの側に情報を統合することができます。符号全体での平均化に基づくこの議論は非構成的（nonconstructive）であることに注意してください。これは、そのような符号を具体的に提示することなく、言明された通信レートを達成する符号が存在することを証明しています。
 
-### 10.1.4 相対エントロピーと仮説検定 (Relative entropy and hypothesis testing) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=13) {#sec-10.1.4-relative-entropy}
+### 10.1.4 相対エントロピーと仮説検定 (Relative entropy and hypothesis testing) {#sec-10.1.4-relative-entropy}
 
 ここで、仮説検定（hypothesis testing）の文脈で現れるもうひとつの有用なエントロピー量である**相対エントロピー（relative entropy）**（カルバック・ライブラー情報量、Kullback-Leibler divergence とも呼ばれる）を簡単に紹介します。分布 $X = \{x, p(x)\}$ から $n$ 回サンプリングすると仮定します（$n$ は非常に大きい）。しかし、私たちは誤って、別の分布 $Y = \{x, q(x)\}$ からサンプリングしていると思い込んでいるとします。十分なサンプルがあれば、高い確率でこの誤った仮説を棄却できるはずです。
 
@@ -289,7 +289,7 @@ $$
 D(p\|q) \ge 0.
 $$ {#eq-10.31}
 
-### 10.1.5 通信路符号化定理 (The noisy channel coding theorem) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=14) {#sec-10.1.5-noisy-channel-coding}
+### 10.1.5 通信路符号化定理 (The noisy channel coding theorem) {#sec-10.1.5-noisy-channel-coding}
 
 アリスがボブにメッセージを送りたいと考えているが、アリスとボブを結ぶ通信チャネルにノイズがあると仮定します。チャネルを使用するたびに、アリスが文字 $x$ を送信したとき、ボブは確率 $p(y|x)$ で文字 $y$ を受信します。チャネルを $n \gg 1$ 回使用することで、アリスはボブに長いメッセージを送信したいと考えています。
 

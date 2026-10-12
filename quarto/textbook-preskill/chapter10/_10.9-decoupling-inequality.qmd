@@ -1,4 +1,4 @@
-## 10.9 デカップリング不等式 (The Decoupling Inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=74) {#sec-10.9-decoupling-inequality}
+## 10.9 デカップリング不等式 (The Decoupling Inequality) {#sec-10.9-decoupling-inequality}
 
 量子プロトコルの達成可能レートは、古典シャノン理論と非常によく似て、ランダム符号を用いることによって導出されます。しかし、古典シャノン理論と量子シャノン理論のこの類似性は表面的なものです --- より深い概念的レベルにおいて、量子プロトコルは古典的なものと本質的に異なります。実際、デカップリング原理は量子シャノン理論の多くの重要な発見の基礎となっており、多くの異なる結果を結びつける統一的なテーマを提供しています。特に、Mother および Father 資源不等式、したがって上記に列挙されたそれらのすべての子孫は、デカップリングのための十分条件を規定する1つの不等式から従います。
 
@@ -41,7 +41,7 @@ $$
 $$ {#eq-10.343}
 式 (@eq-10.343) は、$|A_2|/|A_1| \ll 1$ である2部系 $A = A_1 A_2$ のランダムに選ばれた純粋状態について、$A_2$ 上の密度作用素が高い確率で極めて高精度に最大混合状態となることを意味します。同様に、$A_1 A_2$ のエンタングルメント・エントロピーの期待値が最大値に非常に近いことを示すこともできます：$\mathbb{E}[H(A_2)] \ge \log_2 |A_2| - |A_2|/(2|A_1| \ln 2)$。したがって、例えば $A_2$ が 50 量子ビットで $A_1$ が 100 量子ビットである場合、典型的なエントロピーは最大値から約 $2^{-50} \approx 10^{-15}$ しか逸脱しません。
 
-### 10.9.1 デカップリング不等式の証明 (Proof of the decoupling inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=76) {#sec-10.9.1-proof-decoupling-inequality}
+### 10.9.1 デカップリング不等式の証明 (Proof of the decoupling inequality) {#sec-10.9.1-proof-decoupling-inequality}
 
 デカップリング不等式を証明するために、まず $\boldsymbol{\sigma}_{A_2 E}$ と積状態との距離を $L^2$ ノルムで評価し、次にコーシー・シュワルツの不等式を用いて $L^1$ 距離の上界を得ます。式 (@eq-10.341) は、
 $$
@@ -107,7 +107,7 @@ $$
 $$ {#eq-10.356}
 こうして所望の式 (@eq-10.349) が証明されました。
 
-### 10.9.2 Mother 不等式の証明 (Proof of the mother inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=77) {#sec-10.9.2-proof-mother-inequality}
+### 10.9.2 Mother 不等式の証明 (Proof of the mother inequality) {#sec-10.9.2-proof-mother-inequality}
 
 Mother 不等式 (@eq-10.327) は、i.i.d. 設定におけるデカップリング不等式 (@eq-10.341) から従います。アリス、ボブ、イブが純粋状態 $\phi_{ABE}^{\otimes n}$ を共有していると仮定します。このとき、$A^n, B^n, E^n$ の同時典型的部分空間が存在し、これらを $\bar{A}, \bar{B}, \bar{E}$ と表すと、次を満たします：
 $$
@@ -147,7 +147,7 @@ Mother 資源不等式で指定されたレートを達成する何らかのク�
 
 実際、圧縮の後、アリスはスタビライザー符号（クリフォード符号化器 $\boldsymbol{U}$ を持つ）を使用してボブに送信する量子情報を符号化し、$\bar{A}_1$ を受け取った後のボブのタスクは、$\bar{A}_2$ の消失（erasure）を訂正することです。ボブは消失した各量子ビットを標準状態 $|0\rangle$ に置き換え、次に符号の検査演算子を測定できます。高い確率で、ボブの状態を符号空間に復元する一意のパウリ演算子が消失した量子ビットに作用し、回復操作は線形代数を使用して効率的に計算できます。したがって、アリスのパートと同様に、ボブの Mother プロトコルのパートも効率的に実行できます。（典型的部分空間への射影は Mother 不等式の証明で使用されますが、プロトコル自体では使用されないため、これらの射影を効率的に実行できるかどうかを心配する必要はありません。）
 
-### 10.9.3 Father 不等式の証明 (Proof of the father inequality) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=79) {#sec-10.9.3-proof-father-inequality}
+### 10.9.3 Father 不等式の証明 (Proof of the father inequality) {#sec-10.9.3-proof-father-inequality}
 
 #### 単発バージョン (One-shot version)
 
@@ -215,7 +215,7 @@ n H(R) - \frac{n}{2} I(R; E) - o(n) = \frac{n}{2} I(R; B) - o(n)
 $$ {#eq-10.365}
 個の高忠実度量子ビットを伝送します。これにより Father 資源不等式が証明されます。
 
-### 10.9.4 量子通信路容量の再訪 (Quantum channel capacity revisited) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=81) {#sec-10.9.4-quantum-channel-capacity-revisited}
+### 10.9.4 量子通信路容量の再訪 (Quantum channel capacity revisited) {#sec-10.9.4-quantum-channel-capacity-revisited}
 
 §10.8.1 において、私たちはコヒーレント情報量がノイズのある量子通信路を通じた量子通信の達成可能レートであることを示しました。Father 資源不等式の系であるその導出は、送信者と受信者の間で共有されるエンタングルメントを借りて後で返済できる触媒的設定に適用されたものでした。触媒作用なしで同じレートが達成可能であることを理解することは有益であり、デカップリング不等式の別のバージョンから導出できます。
 
@@ -253,7 +253,7 @@ $$
 $$ {#eq-10.368}
 したがって、コヒーレント情報量はノイズのある通信路を通じた高忠実度量子通信の達成可能レートです。
 
-### 10.9.5 鏡としてのブラックホール (Black holes as mirrors) [📄 chap10.pdf](/assets/pdf/preskill/chap10.pdf#page=82) {#sec-10.9.5-black-holes-as-mirrors}
+### 10.9.5 鏡としてのブラックホール (Black holes as mirrors) {#sec-10.9.5-black-holes-as-mirrors}
 
 デカップリング不等式の最後の応用として、ブラックホールダイナミクスの高度に理想化されたモデルを考察します。アリスがボブから隠したい $k$ 量子ビット系 $A$ を保持していると仮定します。安全のために、彼女はボブが敢えて追跡してこないと知っている大きなブラックホールに投げ込むことによって、自分の量子ビットを破棄します。ブラックホール $B$ は $(n - k)$ 量子ビット系であり、$A$ と合体した後に $n$ 量子ビットに成長します。ここで $n$ は $k$ よりもはるかに大きいとします。
 
