@@ -109,6 +109,8 @@ $$
 ```{python}
 #| label: algorithms-density-hand-check
 #| code-summary: "手計算の行列積と、準備ごとの平均を照合する"
+from qiskit.visualization import array_to_latex
+
 rho = (DensityMatrix.from_label("0").data/3
        + 2*DensityMatrix.from_label("+").data/3)
 h_gate = QuantumCircuit(1)
@@ -116,8 +118,13 @@ h_gate.h(0)
 out = DensityMatrix(rho).evolve(h_gate)
 np.testing.assert_allclose(out.data, np.array([[5, 1], [1, 1]])/6, atol=1e-12)
 np.testing.assert_allclose(out.probabilities(), [5/6, 1/6], atol=1e-12)
-print("Hの後の密度行列:\n", np.round(out.data.real, 4))
-print("測定確率:", np.round(out.probabilities(), 4))
+matrix_tex = array_to_latex(out.data, source=True, prefix=r"\rho' = ")
+probability_tex = array_to_latex(
+    out.probabilities(), source=True,
+    prefix=r"\begin{bmatrix}p(0)&p(1)\end{bmatrix} = "
+)
+display(Markdown("Hの後の密度行列：\n\n$$\n" + matrix_tex.strip() + "\n$$"))
+display(Markdown("測定確率：\n\n$$\n" + probability_tex.strip() + "\n$$"))
 ```
 
 ::: {.callout-note appearance="minimal" icon="false" title="練習：準備の確率を変えて、二通りで計算する"}
