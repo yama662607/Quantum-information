@@ -67,6 +67,7 @@ book:
       chapters:
         - qiskit/index.qmd
         - qiskit/algorithms.qmd
+        - qiskit/composer.qmd
     - support/index.qmd
     # Note: Template files (templates/*.qmd) are excluded from build
     # They are reference documents for creating new content

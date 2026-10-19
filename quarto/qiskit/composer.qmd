@@ -1,0 +1,48 @@
+---
+title: "Composerの全26記号：図・式・手計算"
+subtitle: "ゲート、測定、制御構文、状態の可視化を読み分ける"
+jupyter: python3
+execute:
+  freeze: false
+  error: false
+  warning: false
+format:
+  html:
+    fig-format: png
+    fig-dpi: 150
+    include-in-header:
+      text: |
+        <style>
+        #quarto-document-content section, #quarto-document-content div.cell {
+          content-visibility: visible;
+          contain-intrinsic-size: none;
+        }
+        #quarto-document-content .katex-display {
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding-block: 0.25rem;
+        }
+        </style>
+---
+
+{{< include composer/_00-overview.qmd >}}
+
+```{python}
+#| label: composer-setup
+#| include: false
+import matplotlib.pyplot as plt
+import numpy as np
+from qiskit import QuantumCircuit, QuantumRegister, transpile
+from qiskit.quantum_info import DensityMatrix, Operator, Statevector
+from qiskit_aer import AerSimulator
+```
+
+{{< include composer/_01-basic-gates.qmd >}}
+
+{{< include composer/_02-phase-gates.qmd >}}
+
+{{< include composer/_03-multi-qubit-gates.qmd >}}
+
+{{< include composer/_04-rotations-and-roots.qmd >}}
+
+{{< include composer/_05-non-unitary-and-flow.qmd >}}

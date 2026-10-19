@@ -1,0 +1,47 @@
+## 4. 連続回転ゲートと平方根ゲート {#composer-rotations}
+
+### RX：X軸まわりの回転 {#composer-rx}
+
+![ComposerのRX](../assets/composer-icons/rx.svg){width=40}
+
+$$R_X(\theta) = e^{-i\theta X/2} = \begin{pmatrix} \cos(\theta/2) & -i\sin(\theta/2) \\ -i\sin(\theta/2) & \cos(\theta/2) \end{pmatrix}$$
+
+```{python}
+#| label: fig-composer-rx
+#| fig-cap: "RXゲート。"
+demo = QuantumCircuit(1)
+demo.rx(np.pi/3, 0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### RY：Y軸まわりの回転（実数振幅の回転） {#composer-ry}
+
+![ComposerのRY](../assets/composer-icons/ry.svg){width=40}
+
+$$R_Y(\theta) = e^{-i\theta Y/2} = \begin{pmatrix} \cos(\theta/2) & -\sin(\theta/2) \\ \sin(\theta/2) & \cos(\theta/2) \end{pmatrix}$$
+
+虚数単位 $i$ を含まないため、実数の振幅を別の実数振幅へ滑らかに傾ける操作としてよく使われます。
+
+```{python}
+#| label: fig-composer-ry
+#| fig-cap: "RYゲート。"
+demo = QuantumCircuit(1)
+demo.ry(np.pi/3, 0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### √X（SX）：Xゲートの平方根 {#composer-sx}
+
+![ComposerのSX](../assets/composer-icons/sx.svg){width=40}
+
+2回連続で作用させるとXゲートになるゲートです ($(\sqrt{X})^2 = X$)。超伝導量子ビットの実機で物理的に直接駆動されるネイティブゲートの一つです。
+
+$$\sqrt{X} = \frac{1}{2} \begin{pmatrix} 1+i & 1-i \\ 1-i & 1+i \end{pmatrix}$$
+
+```{python}
+#| label: fig-composer-sx
+#| fig-cap: "√X（SX）ゲート。"
+demo = QuantumCircuit(1)
+demo.sx(0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```

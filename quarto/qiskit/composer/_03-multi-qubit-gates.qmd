@@ -1,0 +1,71 @@
+## 3. 複数量子ビットゲート {#composer-multi-qubit}
+
+複数量子ビットを結びつけるゲートです。状態は上の線を $a$、中央を $b$、下を $c$ として扱います。
+
+### CNOT（CX）：制御付き反転 {#composer-cx}
+
+![ComposerのCX](../assets/composer-icons/cx.svg){width=40}
+
+2量子ビットの代表的な部品です。上の量子ビットが1の項のみ、下の量子ビットにXを掛けます。
+
+$$\mathrm{CNOT}\lvert ab\rangle = \lvert a,\ b\oplus a\rangle$$
+
+重ね合わせに作用させると、エンタングルメントを作ることができます。
+
+```{python}
+#| label: fig-composer-cx
+#| fig-cap: "CNOTゲート。aが1のときbを反転する。"
+demo = QuantumCircuit(2)
+demo.cx(1, 0)
+demo.draw(output="mpl", style="bw", reverse_bits=True, fold=-1)
+```
+
+### Toffoli（CCX）：2つの制御による反転 {#composer-ccx}
+
+![ComposerのToffoli](../assets/composer-icons/ccx.svg){width=40}
+
+2つの制御ビットがともに1の項のみ、標的ビットにXを掛けます。古典論理のAND演算を可逆に行う基本ゲートです。
+
+$$\mathrm{CCX}\lvert abc\rangle = \lvert a,\ b,\ c\oplus(a\wedge b)\rangle$$
+
+```{python}
+#| label: fig-composer-ccx
+#| fig-cap: "Toffoliゲート。aとbがともに1のときcを反転する。"
+demo = QuantumCircuit(3)
+demo.ccx(2, 1, 0)
+demo.draw(output="mpl", style="bw", reverse_bits=True, fold=-1)
+```
+
+### SWAP：2つの量子ビットの状態を入れ替える {#composer-swap}
+
+![ComposerのSWAP](../assets/composer-icons/swap.svg){width=40}
+
+2つの量子ビットの状態を交換します。
+
+$$\mathrm{SWAP}\lvert ab\rangle = \lvert ba\rangle$$
+
+CNOTを3つ組み合わせることでも作ることができます。
+
+```{python}
+#| label: fig-composer-swap
+#| fig-cap: "SWAPゲート。2本の線をつなぐバツ印で描かれる。"
+demo = QuantumCircuit(2)
+demo.swap(1, 0)
+demo.draw(output="mpl", style="bw", reverse_bits=True, fold=-1)
+```
+
+### 黒丸（Control修飾子）：任意のゲートを制御付きにする {#composer-control}
+
+![ComposerのControl](../assets/composer-icons/control.svg){width=40}
+
+Composerでは、この黒丸を他のゲートの上にドラッグすることで、任意のユニタリゲート $U$ を「制御付き $U$」に変換できます。
+
+$$C(U) = \lvert0\rangle\langle0\rvert\otimes I + \lvert1\rangle\langle1\rvert\otimes U$$
+
+```{python}
+#| label: fig-composer-cz
+#| fig-cap: "例：Zゲートに制御を付加したCZゲート。"
+demo = QuantumCircuit(2)
+demo.cz(1, 0)
+demo.draw(output="mpl", style="bw", reverse_bits=True, fold=-1)
+```

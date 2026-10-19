@@ -1,0 +1,36 @@
+## 画面の記号から、計算の意味を調べる {#composer-catalog}
+
+[量子回路の授業](algorithms.qmd)を読みながら、Composerで見つけた記号を調べるためのページです。画像にある26項目をすべて扱います。各項目では、画面のアイコン、回路図、作用を表す式、具体的な入力での計算を対応させます。
+
+![今回扱うComposerのパレット。ユーザー提供画像。](../assets/composer-palette.png){width=318 fig-alt="HからRYまでの25個のタイルと、最後の位相ディスク。"}
+
+**読み始めるときは、H・X・CX・測定の四つを実際に置いてみてください。** ほかの項目は、使う場面で参照できます。灰色のタイルには、状態を変える操作のほか、プログラムの分岐や繰り返しも含まれています。
+
+| 画像の行 | 左から順に並ぶ項目 |
+| :--- | :--- |
+| 1行目 | [H](#composer-h)、[X（⊕）](#composer-x)、[CX](#composer-cx)、[CCX](#composer-ccx)、[SWAP](#composer-swap)、[I](#composer-id) |
+| 2行目 | [T](#composer-t)、[S](#composer-s)、[Z](#composer-z)、[T†](#composer-tdg)、[S†](#composer-sdg)、[P](#composer-p) |
+| 3行目 | [RZ](#composer-rz)、[測定](#composer-measure)、[リセット](#composer-reset)、[バリア](#composer-barrier)、[黒丸の制御修飾子](#composer-control)、[if](#composer-if) |
+| 4行目 | [for](#composer-for)、[while](#composer-while)、[box](#composer-box)、[√X](#composer-sx)、[Y](#composer-y)、[RX](#composer-rx) |
+| 5行目 | [RY](#composer-ry)、[位相ディスク](#composer-phase-disk) |
+
+### このページで使う式と図の約束
+
+1量子ビットの入力は、$\lvert\psi\rangle=\alpha\lvert0\rangle+\beta\lvert1\rangle$ と書きます。列ベクトルなら $(\alpha,\beta)^{\mathsf T}$ で、$|\alpha|^2+|\beta|^2=1$ です。$i$ は $i^2=-1$ を満たす虚数単位、角度はラジアンです。
+
+ゲートの行列は入力ベクトルの左から掛けます。行列の第1列が $U\lvert0\rangle$、第2列が $U\lvert1\rangle$ です。例えば、出力が $(\beta,\alpha)^{\mathsf T}$ なら、二つの基底に対応する振幅を入れ替えています。
+
+2量子ビットの式は、上の線をa、下をbとして $\lvert ab\rangle$ の順です。3量子ビットなら上からa・b・cの順です。ここに掲載する図もその順にそろえています。**Composer本体の標準表示では、上の線が $q_0$ で、状態ベクトルのラベルでは右端の文字です。** Composerで確認するときは、線の番号も合わせて読みます。[IBM公式：ビット順序](https://quantum.cloud.ibm.com/docs/en/guides/bit-ordering)
+
+::: {.callout-note appearance="simple" title="操作の種類によって、使う計算が違う"}
+
+| 種類 | 状態やプログラムに対して行うこと |
+| :--- | :--- |
+| ユニタリゲート | $\lvert\psi\rangle\mapsto U\lvert\psi\rangle$。密度行列なら $\rho\mapsto U\rho U^\dagger$。 |
+| 測定・リセット | 結果に応じた状態変化や、情報を捨てる変化を扱う。 |
+| バリア・制御構文 | 操作のまとめ方、実行条件、繰り返しを指定する。 |
+| 位相ディスク | 計算された状態を表示する。回路に新たな物理操作を加えない。 |
+
+:::
+
+アイコンは2026年10月19日のComposer画面で確認しました。色や描画はテーマによって変わります。各項目の回路図はQiskitで生成しています。[IBM公式：Composerの操作一覧と可視化](https://quantum.cloud.ibm.com/docs/en/guides/composer#composer-operations-glossary)

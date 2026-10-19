@@ -1,0 +1,120 @@
+## 1. 基本の1量子ビットゲート {#composer-basic}
+
+この節のゲートはすべて $\mathbb C^2\to\mathbb C^2$ のユニタリ演算子です。入力の二つの振幅がどう変わるかを読みます。
+
+### H：和と差を作る {#composer-h}
+
+![ComposerのH](../assets/composer-icons/h.svg){width=40}
+
+アダマールゲートです。0の出力振幅に和、1の出力振幅に差を使います。
+
+$$
+H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+H\lvert\psi\rangle=\frac{\alpha+\beta}{\sqrt2}\lvert0\rangle
++\frac{\alpha-\beta}{\sqrt2}\lvert1\rangle.
+$$
+
+入力0なら $H\lvert0\rangle=(\lvert0\rangle+\lvert1\rangle)/\sqrt2=\lvert+\rangle$ です。もう一度Hを掛けると、0の振幅は $(1/\sqrt2+1/\sqrt2)/\sqrt2=1$、1の振幅は0となり、$\lvert0\rangle$ に戻ります。
+
+```{python}
+#| label: fig-composer-h
+#| fig-cap: "Hの回路記号。入力0をプラス状態へ変える。"
+#| code-summary: "Hの行列を照合し、図を描く"
+demo = QuantumCircuit(1)
+demo.h(0)
+np.testing.assert_allclose(Operator(demo).data, np.array([[1, 1], [1, -1]])/np.sqrt(2))
+demo.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+**Composerで試す**：Hを一つ、次に二つ並べます。最初は0と1が半々、二つ目の後は0が確率1になります。途中の計算は[Hの解説](algorithms.qmd#alg-h)にあります。
+
+### X（⊕）：0と1の振幅を交換する {#composer-x}
+
+![ComposerのX](../assets/composer-icons/x.svg){width=40}
+
+画像の1行目・左から2番目の⊕は、NOTとも呼ばれるXゲートです。Qiskitの図ではXの箱で描かれます。
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+X\lvert\psi\rangle=\beta\lvert0\rangle+\alpha\lvert1\rangle.
+$$
+
+例えば $X\lvert0\rangle=\lvert1\rangle$、$X\lvert1\rangle=\lvert0\rangle$ です。係数そのものを二乗せず、対応する基底を入れ替えます。
+
+```{python}
+#| label: fig-composer-x
+#| fig-cap: "Xを入力0に作用させると、出力は1になる。"
+demo = QuantumCircuit(1)
+demo.x(0)
+np.testing.assert_allclose(Operator(demo).data, [[0, 1], [1, 0]])
+demo.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+**Composerで試す**：Xを二つ並べると $X^2=I$ により元に戻ります。
+
+### Y：振幅の交換と、複素数の係数 {#composer-y}
+
+![ComposerのY](../assets/composer-icons/y.svg){width=40}
+
+$$
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+Y\lvert\psi\rangle=-i\beta\lvert0\rangle+i\alpha\lvert1\rangle.
+$$
+
+第1列から $Y\lvert0\rangle=i\lvert1\rangle$、第2列から $Y\lvert1\rangle=-i\lvert0\rangle$ と読めます。入力0の測定結果はXと同じく必ず1ですが、一般の入力での作用には係数 $i,-i$ も含まれます。
+
+例えば入力が $\lvert+\rangle$ なら、$Y\lvert+\rangle=(-i\lvert0\rangle+i\lvert1\rangle)/\sqrt2=-i\lvert-\rangle$ です。全体の $-i$ を除いても、二成分の間のマイナスは残ります。
+
+```{python}
+#| label: fig-composer-y
+#| fig-cap: "Yの回路。入力0への出力振幅は、0成分が0、1成分がi。"
+demo = QuantumCircuit(1)
+demo.y(0)
+np.testing.assert_allclose(Operator(demo).data, [[0, -1j], [1j, 0]])
+demo.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+**Composerで試す**：Hでプラス状態を作り、Yを掛け、最後にHを掛けます。出力は $-i\lvert1\rangle$ で、測定すると必ず1です。
+
+### Z：1の振幅の符号を変える {#composer-z}
+
+![ComposerのZ](../assets/composer-icons/z.svg){width=40}
+
+$$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+Z\lvert\psi\rangle=\alpha\lvert0\rangle-\beta\lvert1\rangle.
+$$
+
+入力 $\lvert+\rangle$ への作用は $Z\lvert+\rangle=(\lvert0\rangle-\lvert1\rangle)/\sqrt2=\lvert-\rangle$ です。直後の計算基底の確率は半々のままでも、最後にHを加えると必ず1になります。
+
+```{python}
+#| label: fig-composer-z
+#| fig-cap: "Z単体の記号。0と1の位置を交換せず、1成分の符号を変える。"
+demo = QuantumCircuit(1)
+demo.z(0)
+np.testing.assert_allclose(Operator(demo).data, [[1, 0], [0, -1]])
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：H→Z→Hと、H→Hを比べます。[途中状態の計算](algorithms.qmd#alg-phase-lab)では、符号が最後の結果へどう影響するかを追えます。
+
+### I：状態を保つ {#composer-id}
+
+![ComposerのI](../assets/composer-icons/id.svg){width=40}
+
+$$
+I=\begin{pmatrix}1&0\\0&1\end{pmatrix},\qquad I\lvert\psi\rangle=\lvert\psi\rangle.
+$$
+
+入力0は0のまま、入力プラス状態はプラス状態のままです。理想的な状態変換の計算では、Iを挟んでも結果は変わりません。
+
+```{python}
+#| label: fig-composer-id
+#| fig-cap: "Iは恒等ゲート。入力の二つの振幅をそのまま保つ。"
+demo = QuantumCircuit(1)
+demo.id(0)
+np.testing.assert_allclose(Operator(demo).data, np.eye(2))
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：H→I→HとH→Hを比べます。実機での待ち時間まで指定したい場合は、状態変換Iだけでは時間は決まらず、時間指定の命令やバックエンドの設定も関係します。

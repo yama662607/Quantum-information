@@ -1,0 +1,96 @@
+## 5. 非ユニタリ操作・古典制御・可視化 {#composer-operations-flow}
+
+### 測定（メーター） {#composer-measure}
+
+![Composerの測定](../assets/composer-icons/measure.svg){width=40}
+
+計算基底での射影測定を行います。結果（0または1）は古典レジスタに書き込まれます。
+
+```{python}
+#| label: fig-composer-measure
+#| fig-cap: "測定操作。量子ビットから古典レジスタへ矢印がつながる。"
+demo = QuantumCircuit(1, 1)
+demo.measure(0, 0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### リセット（|0⟩） {#composer-reset}
+
+![Composerのリセット](../assets/composer-icons/reset.svg){width=40}
+
+量子ビットが直前にどのような状態であっても、強制的に基底状態 $\lvert0\rangle$ へ戻します。ユニタリ逆変換ではなく、散逸を伴う不可逆操作です。
+
+```{python}
+#| label: fig-composer-reset
+#| fig-cap: "リセット操作。"
+demo = QuantumCircuit(1)
+demo.reset(0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### バリア（破線） {#composer-barrier}
+
+![Composerのバリア](../assets/composer-icons/barrier.svg){width=40}
+
+回路のコンパイラ（トランスパイラ）が前後のゲートを勝手に合体・キャンセルするのを防ぎます。また、途中の状態を確認する区切りとしても役立ちます。
+
+```{python}
+#| label: fig-composer-barrier
+#| fig-cap: "バリア。破線で表される。"
+demo = QuantumCircuit(1)
+demo.barrier()
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### if（条件分岐）：古典測定値に応じた操作 {#composer-if}
+
+![Composerのif](../assets/composer-icons/conditional.svg){width=40}
+
+「測定結果が1ならXを掛けて0に戻す」といった、古典フィードフォワード（動的回路）を実現します。
+
+```{python}
+#| label: fig-composer-if
+#| fig-cap: "ifブロック。古典レジスタの値に応じてゲートを実行する。"
+demo = QuantumCircuit(1, 1)
+demo.measure(0, 0)
+with demo.if_test((demo.clbits[0], 1)):
+    demo.x(0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### for / while（繰り返しループ） {#composer-for} {#composer-while}
+
+![Composerのfor](../assets/composer-icons/for.svg){width=40} ![Composerのwhile](../assets/composer-icons/while.svg){width=40}
+
+測定と条件判定を繰り返すアルゴリズムや、一連のゲート列を複数回反復する構文です。
+
+```{python}
+#| label: fig-composer-for
+#| fig-cap: "forループブロック。"
+demo = QuantumCircuit(1)
+with demo.for_loop(range(3)):
+    demo.x(0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### box：サブルーチンのカプセル化とタイミング境界 {#composer-box}
+
+![Composerのbox](../assets/composer-icons/box.svg){width=40}
+
+複数のゲートを1つのスコープとしてグループ化し、タイミングやコンパイルの最適化単位を定義します。
+
+```{python}
+#| label: fig-composer-box
+#| fig-cap: "box構文。"
+demo = QuantumCircuit(1)
+with demo.box():
+    demo.x(0)
+    demo.h(0)
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+### 位相ディスク（Phase disk）：1量子ビット状態の可視化 {#composer-phase-disk}
+
+![Composerの位相ディスク](../assets/composer-icons/phaseDiskAnnotation.svg){width=40}
+
+回路の終端や途中に挿入し、各量子ビットの局所状態を「青色の塗り面積＝1の確率 $p$」「針の向き＝位相角 $\varphi$」で視覚化するツールです。

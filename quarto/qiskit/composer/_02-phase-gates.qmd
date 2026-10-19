@@ -1,0 +1,176 @@
+## 2. 位相を変えるゲート {#composer-phase-gates}
+
+この節のゲートは、0と1の振幅の絶対値を保ち、その間の位相を変えます。入力0だけでは働きが見えにくいので、プラス状態に作用させて比べます。
+
+まず共通する計算を確認します。$D=\operatorname{diag}(1,e^{i\varphi})$、つまり対角成分が $1,e^{i\varphi}$ の行列なら、
+
+$$
+D\lvert\psi\rangle=\alpha\lvert0\rangle+e^{i\varphi}\beta\lvert1\rangle,
+\qquad
+D\lvert+\rangle=\frac{\lvert0\rangle+e^{i\varphi}\lvert1\rangle}{\sqrt2}.
+$$
+
+最後の状態にHを掛けると、0の振幅は $(1+e^{i\varphi})/2$ です。その測定確率は
+
+$$
+p(0)=\left|\frac{1+e^{i\varphi}}2\right|^2
+=\frac{1+\cos\varphi}{2}.
+$$
+
+このH→D→Hを、位相の違いを測定結果へ変える実験として使います。
+
+### T：1の振幅に45度の位相を付ける {#composer-t}
+
+![ComposerのT](../assets/composer-icons/t.svg){width=40}
+
+$$
+T=\begin{pmatrix}1&0\\0&e^{i\pi/4}\end{pmatrix},\qquad
+T\lvert\psi\rangle=\alpha\lvert0\rangle+e^{i\pi/4}\beta\lvert1\rangle.
+$$
+
+ここで $e^{i\pi/4}=(1+i)/\sqrt2$ です。例えば $T\lvert+\rangle=(\lvert0\rangle+e^{i\pi/4}\lvert1\rangle)/\sqrt2$。直後の確率は半々ですが、Hを加えると $p(0)=(2+\sqrt2)/4$ になります。
+
+```{python}
+#| label: fig-composer-t
+#| fig-cap: "Tの記号。1成分だけにπ/4の位相を加える。"
+demo = QuantumCircuit(1)
+demo.t(0)
+np.testing.assert_allclose(Operator(demo).data, np.diag([1, np.exp(1j*np.pi/4)]))
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：H→T→Hを作り、式から予想した確率と比べます。Tを2回通すと次のSになります。
+
+### S：1の振幅に90度の位相を付ける {#composer-s}
+
+![ComposerのS](../assets/composer-icons/s.svg){width=40}
+
+$$
+S=\begin{pmatrix}1&0\\0&i\end{pmatrix},\qquad
+S\lvert\psi\rangle=\alpha\lvert0\rangle+i\beta\lvert1\rangle.
+$$
+
+入力プラス状態は $(\lvert0\rangle+i\lvert1\rangle)/\sqrt2$ へ変わります。$i^2=-1$ なので $S^2=Z$、また $T^2=S$ です。
+
+```{python}
+#| label: fig-composer-s
+#| fig-cap: "Sの記号。Tを二つ続けた操作と同じ。"
+demo = QuantumCircuit(1)
+demo.s(0)
+np.testing.assert_allclose(Operator(demo).data, np.diag([1, 1j]))
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：H→S→S→HとH→Z→Hを比べます。どちらも出力は1です。
+
+### T†：Tで付けた位相を戻す {#composer-tdg}
+
+![ComposerのTdagger](../assets/composer-icons/tdg.svg){width=40}
+
+$\dagger$ は行列の複素共役転置です。ユニタリゲートでは逆操作にもなり、$T^\dagger T=I$ を満たします。
+
+$$
+T^\dagger=\begin{pmatrix}1&0\\0&e^{-i\pi/4}\end{pmatrix},\qquad
+T^\dagger\lvert\psi\rangle=\alpha\lvert0\rangle+e^{-i\pi/4}\beta\lvert1\rangle.
+$$
+
+プラス状態の1成分に付く位相は $-\pi/4$。Tと続ければ、二つの係数 $e^{i\pi/4}e^{-i\pi/4}=1$ により元に戻ります。Qiskitの名前は `tdg` です。
+
+```{python}
+#| label: fig-composer-tdg
+#| fig-cap: "T†はTの逆操作。位相の角度が逆向きになる。"
+demo = QuantumCircuit(1)
+demo.tdg(0)
+np.testing.assert_allclose(Operator(demo).data, np.diag([1, np.exp(-1j*np.pi/4)]))
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：H→T→T†→Hで必ず0になることを確かめます。
+
+### S†：Sで付けた位相を戻す {#composer-sdg}
+
+![ComposerのSdagger](../assets/composer-icons/sdg.svg){width=40}
+
+$$
+S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix},\qquad
+S^\dagger\lvert\psi\rangle=\alpha\lvert0\rangle-i\beta\lvert1\rangle.
+$$
+
+例えば $S^\dagger\lvert+\rangle=(\lvert0\rangle-i\lvert1\rangle)/\sqrt2$。Sの後に掛けると、1の係数は $(-i)i=1$ となり、元に戻ります。Qiskitの名前は `sdg` です。
+
+```{python}
+#| label: fig-composer-sdg
+#| fig-cap: "S†の記号。1成分に−π/2の位相を加える。"
+demo = QuantumCircuit(1)
+demo.sdg(0)
+np.testing.assert_allclose(Operator(demo).data, np.diag([1, -1j]))
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：H→S→S†→Hを作ります。このS†は、[固有位相のsinを読む回路](algorithms.qmd#alg-essential-design)にも登場します。
+
+### P：付ける位相を角度で指定する {#composer-p}
+
+![ComposerのP](../assets/composer-icons/p.svg){width=40}
+
+$$
+P(\theta)=\begin{pmatrix}1&0\\0&e^{i\theta}\end{pmatrix},\qquad
+P(\theta)\lvert\psi\rangle=\alpha\lvert0\rangle+e^{i\theta}\beta\lvert1\rangle.
+$$
+
+Pは、ここまでのT・S・Zを一つの式にまとめた部品です。
+
+$$
+P(\pi/4)=T,\quad P(\pi/2)=S,\quad P(\pi)=Z,\quad
+P(-\pi/4)=T^\dagger,\quad P(-\pi/2)=S^\dagger.
+$$
+
+例えば角度 $\pi/3$ なら、プラス状態の1成分に $e^{i\pi/3}$ が付きます。H→P($\pi/3$)→Hの0の確率は $(1+1/2)/2=3/4$ です。
+
+```{python}
+#| label: fig-composer-p
+#| fig-cap: "角度π/3を指定したPゲート。角度はゲートのパラメータ。"
+theta = np.pi/3
+demo = QuantumCircuit(1)
+demo.p(theta, 0)
+np.testing.assert_allclose(Operator(demo).data, np.diag([1, np.exp(1j*theta)]))
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：回路上のPを選び、編集画面で角度を `pi/3` に設定します。角度を変え、最後のHの後の確率を予想します。
+
+### RZ：二つの成分に逆向きの位相を付ける {#composer-rz}
+
+![ComposerのRZ](../assets/composer-icons/rz.svg){width=40}
+
+$$
+R_Z(\theta)=e^{-i\theta Z/2}
+=\begin{pmatrix}e^{-i\theta/2}&0\\0&e^{i\theta/2}\end{pmatrix},
+$$
+
+$$
+R_Z(\theta)\lvert\psi\rangle
+=e^{-i\theta/2}\alpha\lvert0\rangle+e^{i\theta/2}\beta\lvert1\rangle.
+$$
+
+0成分には $-\theta/2$、1成分には $+\theta/2$ の位相が付き、二成分の位相差は $\theta$ 変わります。プラス状態に掛けると、
+
+$$
+R_Z(\theta)\lvert+\rangle
+=e^{-i\theta/2}\frac{\lvert0\rangle+e^{i\theta}\lvert1\rangle}{\sqrt2}.
+$$
+
+Pとの関係は **$P(\theta)=e^{i\theta/2}R_Z(\theta)$** です。同じ行列ではなく、全体位相だけ異なります。1量子ビットに単独で掛け、その後に同じ操作・測定をする場合の統計は一致します。制御付きゲートへ置き換えるときは、その位相が制御側の相対位相になるため、この差も扱います。
+
+```{python}
+#| label: fig-composer-rz
+#| fig-cap: "RZも角度を指定する。Pと同じ相対位相を作るが、行列全体の位相が異なる。"
+theta = np.pi/3
+demo = QuantumCircuit(1)
+demo.rz(theta, 0)
+np.testing.assert_allclose(Operator(demo).data,
+                           np.diag([np.exp(-1j*theta/2), np.exp(1j*theta/2)]))
+demo.draw(output="mpl", style="bw", fold=-1)
+```
+
+**Composerで試す**：H→P($\pi/3$)→HとH→RZ($\pi/3$)→Hを比べます。どちらも0の確率は $3/4$ です。状態ベクトルの複素数は全体位相の分だけ異なり得ます。
