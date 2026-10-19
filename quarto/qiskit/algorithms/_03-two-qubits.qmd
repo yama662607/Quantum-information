@@ -14,6 +14,8 @@ $$
 
 両方を測って $ab$ が出る確率は $|c_{ab}|^2$ です。回路に2本の線があっても、一般には「各線に2成分ずつ」では状態を記録できません。**同じ時点の2本をまとめて、4個の振幅で記録します。**
 
+この式の $c_{00}$ は $\lvert00\rangle$ の係数、$c_{01}$ は $\lvert01\rangle$ の係数です。添字は、その振幅がどの基底状態に対応するかを示しています。右の列ベクトルは、同じ四つの係数を00・01・10・11の順に縦に並べたものです。$\longleftrightarrow$ は「同じ状態の二通りの書き方」を結んでおり、ここではゲートによる変化を表していません。
+
 二つを別々の状態に準備できる場合、その組み合わせを**テンソル積** $\otimes$ で書きます。$\lvert a\rangle\otimes\lvert b\rangle=\lvert ab\rangle$ と略記し、和に対して分配します。
 
 $$
@@ -52,18 +54,69 @@ $$
 
 ### CNOT：上が1の成分で、下を反転する [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=15) {#alg-cnot}
 
-二つの量子ビットを結び付ける部品を一つ導入します。**CNOT（制御NOT）**は、上を制御、下を標的として、次の四つの規則で定義します。
+二つの量子ビットにまたがる部品を一つ導入します。**CNOT（シーノット、制御NOT）**の記号だけを取り出すと、次の図になります。入力状態は省き、ゲートだけを示しています。
 
-| 入力 $\lvert ab\rangle$ | 上を見る | 下への作用 | 出力 |
+```{python}
+#| label: fig-alg-cnot-symbol
+#| fig-cap: "CNOT単体の記号。aの黒丸が制御、bの丸で囲んだ＋が標的。縦線も含めて一つのゲート。"
+#| fig-alt: "上のaの線の黒丸と、下のbの線の丸付きプラスが、縦線でつながったCNOTゲート。Hや区切り線はない。"
+#| code-summary: "CNOT単体を描く"
+symbol_b = QuantumRegister(1, "b")
+symbol_a = QuantumRegister(1, "a")
+cnot_symbol = QuantumCircuit(symbol_b, symbol_a)
+cnot_symbol.cx(symbol_a[0], symbol_b[0])
+cnot_symbol.draw(output="mpl", reverse_bits=True, style="bw",
+                 initial_state=False, fold=-1)
+```
+
+図の三つの部分を、次のように読みます。
+
+| 記号 | 名前と役割 |
+| :--- | :--- |
+| $a$ の線の黒丸 | **制御**。基底状態の $a$ が0か1かによって、標的への作用が決まる。 |
+| $b$ の線の丸で囲んだ＋（⊕） | **標的**。制御が1の項で、ここにXを作用させる。 |
+| 黒丸と⊕を結ぶ縦線 | 二つを合わせて一つのゲートであることを示す。 |
+
+黒丸の付いた線が制御です。この図では上にありますが、上下を逆に描くこともできます。また、縦線は量子ビットが上から下へ移る経路ではありません。操作の前後を通じて、$a$ は上の線、$b$ は下の線の量子ビットです。
+
+Xは0と1を入れ替えるゲートでした。CNOTは、**制御が0の項では標的をそのままにし、制御が1の項では標的にXを掛ける**操作です。基底状態に対する四つの作用を並べます。
+
+| 入力 $\lvert ab\rangle$ | 制御 $a$ の値 | 標的 $b$ への作用 | 出力 |
 | :--- | :--- | :--- | :--- |
 | $\lvert00\rangle$ | 0 | そのまま | $\lvert00\rangle$ |
 | $\lvert01\rangle$ | 0 | そのまま | $\lvert01\rangle$ |
 | $\lvert10\rangle$ | 1 | $0\to1$ | $\lvert11\rangle$ |
 | $\lvert11\rangle$ | 1 | $1\to0$ | $\lvert10\rangle$ |
 
-ここでの「上を見る」は作用を計算するための読み方で、上を実際に測定する手順ではありません。重ね合わせへの作用は、この表を各項に適用して足します。
+例えば $\lvert10\rangle$ では、最初の1が制御、次の0が標的です。制御が1なので標的の0を1に変え、出力は $\lvert11\rangle$ になります。$\lvert01\rangle$ では制御が0なので、標的が1でもそのままです。
 
-回路の記号では、**黒丸が制御、丸で囲んだ＋が標的へのX**です。間の縦線は、二つを合わせて一つのゲートであることを示します。
+この表は、次の一つの式にまとめられます。
+
+$$
+\mathrm{CNOT}:\mathbb C^4\longrightarrow\mathbb C^4,
+\qquad
+\mathrm{CNOT}\lvert ab\rangle=\lvert a,\ b\oplus a\rangle
+\quad(a,b\in\{0,1\}).
+$$
+
+式の $\oplus$ は、2で割った余りを取る足し算（XOR）です。$b\oplus0=b$、$b\oplus1=1-b$ なので、制御の $a$ を保ったまま、$a=1$ のときだけ標的の $b$ を反転する規則を表しています。出力のケット内のコンマは、二つのラベルを区切るためのものです。
+
+**この操作の途中で、制御を測定するわけではありません。** 重ね合わせへの作用は、この表を各項に適用して足すことで定まります。例えば入力が $\alpha\lvert00\rangle+\beta\lvert10\rangle$ なら、
+
+$$
+\begin{aligned}
+\mathrm{CNOT}(\alpha\lvert00\rangle+\beta\lvert10\rangle)
+&=\alpha\,\mathrm{CNOT}\lvert00\rangle
++\beta\,\mathrm{CNOT}\lvert10\rangle\\
+&=\alpha\lvert00\rangle+\beta\lvert11\rangle.
+\end{aligned}
+$$
+
+最初の等号は線形性、次の等号は表の00と10の行を使っています。元の振幅 $\alpha,\beta$ を保ったまま、対応する基底状態を変えています。
+
+#### HとCNOTを組み合わせた回路を、左端から読む
+
+次はHと区切り線も入った回路です。まず左端、次に位置1、最後に位置2の順に状態を書きます。
 
 ```{python}
 #| label: fig-alg-cnot-stages
@@ -82,7 +135,28 @@ bell.barrier(label="2")
 bell.draw(output="mpl", reverse_bits=True, style="bw", initial_state=True, fold=-1)
 ```
 
-①から②を計算しましょう。
+左端では両方が0なので、全体は
+
+$$
+\lvert\Psi_0\rangle=\lvert0\rangle_a\otimes\lvert0\rangle_b=\lvert00\rangle
+$$
+
+です。$\Psi_0$ は「最初の全体の状態」に付けた名前です。上のaにだけHを掛けると、位置1では
+
+$$
+\begin{aligned}
+\lvert\Psi_1\rangle
+&=(H\otimes I)\lvert00\rangle\\
+&=(H\lvert0\rangle_a)\otimes\lvert0\rangle_b\\
+&=\frac{\lvert0\rangle_a+\lvert1\rangle_a}{\sqrt2}
+\otimes\lvert0\rangle_b\\
+&=\frac{\lvert00\rangle+\lvert10\rangle}{\sqrt2}.
+\end{aligned}
+$$
+
+$H\otimes I$ は、aへのHと、bを変えない操作Iを組み合わせたものです。3行目で $H\lvert0\rangle=\lvert+\rangle$ を代入し、最後にテンソル積を二項へ分配しました。二項とも右の文字が0なのは、bにはまだ何も作用させていないからです。
+
+次に、位置1から位置2へ進みます。
 
 $$
 \begin{aligned}
@@ -94,6 +168,14 @@ $$
 $$
 
 線形性により、各項にCNOTを作用させても、元の係数 $1/\sqrt2$ は変わりません。出力の振幅を二乗すると、測定確率は $p(00)=p(11)=1/2$、$p(01)=p(10)=0$ になります。
+
+例えば00の振幅は $1/\sqrt2$ なので $p(00)=|1/\sqrt2|^2=1/2$、01の振幅は0なので $p(01)=|0|^2=0$ です。これは「位置2の後で両方を測ったら」という予測です。図の位置1・2の破線自体は測定を行いません。
+
+| 確認する位置 | 全体の状態 | 00・01・10・11の順の振幅 |
+| :--- | :--- | :--- |
+| 左端 | $\lvert00\rangle$ | $(1,0,0,0)$ |
+| 位置1：Hの後 | $(\lvert00\rangle+\lvert10\rangle)/\sqrt2$ | $(1,0,1,0)/\sqrt2$ |
+| 位置2：CNOTの後 | $(\lvert00\rangle+\lvert11\rangle)/\sqrt2$ | $(1,0,0,1)/\sqrt2$ |
 
 この出力は、二つの独立した状態の積にできません。例えば両方が $\lvert+\rangle$ なら、展開に01と10も出てしまいます。一般にも、積の係数 $\alpha\gamma$ と $\beta\delta$ がともに非零なら、$\alpha\delta$ と $\beta\gamma$ も非零となり、今回の出力にはできません。こうした積に分けられない純粋状態を**エンタングルした状態**と呼び、この例は **Bell状態**の一つです。
 

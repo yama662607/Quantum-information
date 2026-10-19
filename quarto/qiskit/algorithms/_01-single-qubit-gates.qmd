@@ -72,6 +72,29 @@ $$
 
 $\lvert-\rangle$ のマイナスは $\lvert1\rangle$ の係数だけに付いています。$-\lvert+\rangle$ のように両方の係数にマイナスが付く状態とは区別してください。
 
+Zの回路記号は、線の上の **Zと書かれた箱**です。
+
+```{python}
+#| label: fig-alg-z-symbol
+#| fig-cap: "Zゲートの記号。入力の0成分を保ち、1成分の振幅にマイナスを付ける。"
+#| fig-alt: "量子ビットaの線に、Zと書かれた箱を一つ置いた図。"
+#| code-summary: "Z単体の回路記号を描く"
+z_symbol = QuantumCircuit(QuantumRegister(1, "a"))
+z_symbol.z(0)
+z_symbol.draw(output="mpl", style="bw", initial_state=False, fold=-1)
+```
+
+この図はZという部品だけを示すため、左端の入力状態を省いています。例えば入力が $\lvert+\rangle$ なら、上で定義した式に代入して
+
+$$
+Z\lvert+\rangle
+=\frac{Z\lvert0\rangle+Z\lvert1\rangle}{\sqrt2}
+=\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}
+=\lvert-\rangle
+$$
+
+と読みます。最初の等号で、和の各項へZを作用させています。
+
 ### H：和と差を新しい振幅にする {#alg-h}
 
 Hは **Hadamard（アダマール）ゲート**と呼ばれます。行列と作用を並べると、計算の中身が分かります。
@@ -91,6 +114,20 @@ H\lvert0\rangle=\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2}=\lvert+\rangle,
 \qquad
 H\lvert1\rangle=\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}=\lvert-\rangle.
 $$
+
+```{python}
+#| label: fig-alg-h-symbol
+#| fig-cap: "Hと書かれた箱がアダマールゲート。この図の入力は0なので、出力はプラス状態になる。"
+#| fig-alt: "左端がケット0の量子ビットaに、Hの箱を一つ置いた回路。"
+#| code-summary: "Hの回路と入力0の計算を照合する"
+h_symbol = QuantumCircuit(QuantumRegister(1, "a"))
+h_symbol.h(0)
+np.testing.assert_allclose(Statevector.from_instruction(h_symbol).data,
+                           np.array([1, 1])/np.sqrt(2), atol=1e-12)
+h_symbol.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+図の左端の $\lvert0\rangle$ が入力、Hの右側が出力 $\lvert+\rangle$ です。行列の式に $\alpha=1,\beta=0$ を入れると、出力の二つの振幅はどちらも $1/\sqrt2$ になります。
 
 Hはいつでも測定結果を半々にする部品ではありません。例えば $\alpha=\beta=1/\sqrt2$ を代入すると、
 

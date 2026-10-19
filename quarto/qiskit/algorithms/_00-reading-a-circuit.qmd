@@ -48,30 +48,119 @@ $$
 
 **途中の状態を紙に書くことは、途中で測定することではありません。** 理論上の状態を計算しているだけです。実際に測定すると、結果0なら状態は $\lvert0\rangle$、結果1なら $\lvert1\rangle$ になります。
 
-### 線・箱・メーターを読む {#alg-circuit-symbols}
+### 線・箱・区切り・メーターを、一つずつ読む {#alg-circuit-symbols}
 
-下図の $U$ は「これから中身を指定する操作」の仮の名前です。
+#### 一本の線は、一つの量子ビットの時間経過
+
+まず、操作が一つもない回路を見ます。
+
+```{python}
+#| label: fig-alg-wire
+#| fig-cap: "aという名前の量子ビットを、0の状態に準備する。左から右へ同じ量子ビットを追う。"
+#| fig-alt: "左端にaとケット0、その右にゲートのない一本の横線。"
+#| code-summary: "量子ビットの線と初期状態を描く"
+from qiskit.circuit import Gate
+
+symbol_wire = QuantumCircuit(QuantumRegister(1, "a"))
+symbol_wire.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+左の $a$ は量子ビットの**名前**、$\lvert0\rangle$ は左端で準備した**状態**です。一本の横線に沿って、左から右へ時間が進みます。線の右端も同じ量子ビットです。この図には操作がないため、右端でも状態は $\lvert0\rangle$ のままです。
+
+横線は「値がずっと0」という印ではありません。途中にゲートを置けば状態は変わります。ゲートのない区間では、理想的な回路の計算上、その量子ビットへの操作はありません。
+
+#### 箱は、その位置で行う操作
+
+次に、線の途中へ一つだけ箱を置きます。$U$ は操作に付けた仮の名前です。X・Z・Hなど、具体的な中身は第1節で調べます。
+
+```{python}
+#| label: fig-alg-gate-symbol
+#| fig-cap: "Uの箱が置かれた位置で、量子ビットaにUを作用させる。"
+#| fig-alt: "0から始まるaの線にUの箱を一つ置いた回路。"
+#| code-summary: "一つのゲートを描く"
+symbol_gate = QuantumCircuit(QuantumRegister(1, "a"))
+symbol_gate.append(Gate("U", 1, []), [0])
+symbol_gate.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+この図を式で読むと、
+
+$$
+\underbrace{\lvert0\rangle}_{\text{箱に入る状態}}
+\ \xrightarrow{\ U\ }\
+\underbrace{U\lvert0\rangle}_{\text{箱を通った後の状態}}
+$$
+
+です。$U\lvert0\rangle$ は「演算子Uを、状態ベクトル $\lvert0\rangle$ に作用させる」という意味です。一般の入力 $\lvert\psi\rangle$ でも、出力は $U\lvert\psi\rangle$ と書きます。型は $U:\mathbb C^2\to\mathbb C^2$ です。
+
+#### 箱が二つなら、左の箱から順に計算する
+
+```{python}
+#| label: fig-alg-gate-order
+#| fig-cap: "Uを先に、Vを後に作用させる。式ではVUの順に並ぶ。"
+#| fig-alt: "aの線に左からU、Vの二つの箱が並ぶ回路。"
+#| code-summary: "ゲートの実行順を描く"
+symbol_order = QuantumCircuit(QuantumRegister(1, "a"))
+symbol_order.append(Gate("U", 1, []), [0])
+symbol_order.append(Gate("V", 1, []), [0])
+symbol_order.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+まずUの出力を求め、それをVの入力にします。
+
+$$
+\lvert0\rangle
+\xrightarrow{U}U\lvert0\rangle
+\xrightarrow{V}V\bigl(U\lvert0\rangle\bigr)
+=VU\lvert0\rangle.
+$$
+
+行列積 $VU$ の右側のUが先に作用するのは、Uが入力ベクトルのすぐ隣にあるからです。回路図の左から右という順番と、式の作用する順番を、このように対応させます。
+
+#### 灰色の破線は、途中の状態を確認する区切り
+
+```{python}
+#| label: fig-alg-barrier-symbol
+#| fig-cap: "同じ回路に、位置1・2の区切りを加えた。位置1はUの後、位置2はVの後。"
+#| fig-alt: "Uの後に1と書かれた灰色の破線、Vの後に2と書かれた灰色の破線がある回路。"
+#| code-summary: "状態を確認する位置を描く"
+symbol_barrier = QuantumCircuit(QuantumRegister(1, "a"))
+symbol_barrier.append(Gate("U", 1, []), [0])
+symbol_barrier.barrier(label="1")
+symbol_barrier.append(Gate("V", 1, []), [0])
+symbol_barrier.barrier(label="2")
+symbol_barrier.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+この授業では、灰色の帯に入った破線を、**状態を書き留める位置**として使います。Qiskitではバリア（barrier）という記号です。状態を変えるゲートや測定ではなく、上の二つの図は同じ状態変化を表します。
+
+数字1・2は、この授業で付けた位置の名前です。測定結果でも、作用させる行列でもありません。位置1の状態は $U\lvert0\rangle$、位置2の状態は $VU\lvert0\rangle$ です。後で2本の線にまたがる破線が出てきたら、**その位置での2量子ビット全体の状態**を書きます。
+
+#### メーターは測定、二重線は結果を保存する場所
 
 ```{python}
 #| label: fig-alg-circuit-grammar
 #| fig-cap: "回路の読み方。左端は準備した状態、一本線は量子ビット、箱は操作、メーターは測定。二重線 c には測定結果を記録する。"
 #| fig-alt: "0から始まる量子ビットにUという箱を通し、メーターで測り、古典ビットcに結果を保存する図。"
 #| code-summary: "回路の記号を描く"
-from qiskit.circuit import Gate
-
 grammar = QuantumCircuit(1, 1)
 grammar.append(Gate("U", 1, []), [0])
 grammar.measure(0, 0)
 grammar.draw(output="mpl", style="bw", initial_state=True, fold=-1)
 ```
 
-- **左から右へ**時間が進みます。同じ横線は同じ量子ビットの時間経過です。
-- **箱のない区間**では、その量子ビットには何も操作しません。
-- **箱（ゲート）**は状態を変換する操作です。1量子ビットなら、型は $U:\mathbb C^2\to\mathbb C^2$、計算は $\lvert\psi\rangle\mapsto U\lvert\psi\rangle$ です。
-- **メーター**が現れたら、そこまでに計算した振幅から測定確率を求めます。
-- **二重線**は、測定結果の0または1を保存する普通のビットです。
+この図では、Uの後にメーターの記号があります。ここで量子ビットを測定し、結果を矢印の先の二重線 $c$ に保存します。$c$ は、0か1を保存する**古典ビット**の名前です。
+
+例えばUの後の状態が $U\lvert0\rangle=\alpha\lvert0\rangle+\beta\lvert1\rangle$ なら、メーターの位置で $p(0)=|\alpha|^2$、$p(1)=|\beta|^2$ を求めます。実行1回ごとに、その確率に従って0か1の一方が $c$ に記録されます。
 
 図の二重線の斜線に付いた小さい1は、保存する古典ビットが1個あるという印です。測定矢印の先の小さい0は保存先の番号で、測定結果が0に決まっているという意味ではありません。
+
+| 見た記号 | 手計算で行うこと |
+| :--- | :--- |
+| 左端のケット | 入力状態を書く |
+| ゲートの箱 | 今の状態に、その演算子を作用させる |
+| 数字付きの破線 | そこまでの状態を式で書き留める |
+| メーター | その位置の状態から測定確率を求める |
 
 理想的なゲートの行列は $U^\dagger U=I$ を満たします。これを**ユニタリ**と呼びます。$\dagger$ は複素共役を取って転置すること、$I$ は何も変えない行列です。この条件のおかげで振幅の絶対値の二乗和が1に保たれ、逆操作 $U^\dagger$ で元に戻れます。具体的な箱の中身は次の節で一つずつ調べます。
 
