@@ -17,9 +17,9 @@ $$
 $$
 U_f:\mathbb C^2\otimes\mathbb C^2\to\mathbb C^2\otimes\mathbb C^2,
 \qquad U_f\lvert a,b\rangle=\lvert a,b\oplus f(a)\rangle
-$$
+$$ {#eq-alg-oracle-definition}
 
-と定義します。$\lvert a,b\rangle$ は見やすさのためコンマを入れた $\lvert ab\rangle$ と同じです。$f(a)=0$ の成分では下に何もせず、$f(a)=1$ の成分では下にXを掛ける規則です。
+と定義します。式 (@eq-alg-oracle-definition) の $\lvert a,b\rangle$ は見やすさのためコンマを入れた $\lvert ab\rangle$ と同じです。$f(a)=0$ の成分では下に何もせず、$f(a)=1$ の成分では下にXを掛ける規則です。
 
 下を0にして入力すれば $\lvert a,0\rangle\mapsto\lvert a,f(a)\rangle$。また同じ操作を2回行うと $b\oplus f(a)\oplus f(a)=b$ なので戻れます。この規則は四つの基底の並べ替えであり、線形に拡張するとユニタリになります。
 

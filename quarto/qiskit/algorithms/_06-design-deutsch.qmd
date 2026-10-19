@@ -35,9 +35,9 @@ X\lvert-\rangle
 =\frac{\lvert1\rangle-\lvert0\rangle}{\sqrt2}
 =-\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}
 =-\lvert-\rangle.
-$$
+$$ {#eq-alg-x-minus-state}
 
-この状態は、CNOTだけでなく四つの $U_f$ に共通して使えます。$f(a)=0$ なら下はそのまま、$f(a)=1$ ならXで符号が付き、二つの場合が一つの式にまとまります。
+式 (@eq-alg-x-minus-state) で確かめたこの性質は、CNOTだけでなく四つの $U_f$ に共通して使えます。$f(a)=0$ なら下はそのまま、$f(a)=1$ ならXで符号が付き、二つの場合が一つの式にまとまります。
 
 $$
 U_f(\lvert a\rangle\otimes\lvert-\rangle)
@@ -46,16 +46,16 @@ U_f(\lvert a\rangle\otimes\lvert-\rangle)
 -\lvert a\rangle\otimes\lvert-\rangle&f(a)=1
 \end{cases}
 =(-1)^{f(a)}\lvert a\rangle\otimes\lvert-\rangle.
-$$
+$$ {#eq-alg-phase-kickback-uf}
 
-上を $\lvert+\rangle$ にしておけば、0と1の両方の項にこの規則を適用できます。
+上を $\lvert+\rangle$ にしておけば、0と1の両方の項に式 (@eq-alg-phase-kickback-uf) の規則を適用できます。
 
 $$
 \frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2}\otimes\lvert-\rangle
 \xrightarrow{U_f}
 \frac{(-1)^{f(0)}\lvert0\rangle+(-1)^{f(1)}\lvert1\rangle}{\sqrt2}
 \otimes\lvert-\rangle.
-$$
+$$ {#eq-alg-deutsch-superposition-kickback}
 
 下は共通の $\lvert-\rangle$ としてくくれ、上の二つの振幅の符号に $f(0),f(1)$ が入ります。
 

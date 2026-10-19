@@ -10,11 +10,11 @@ $$
 \ \longleftrightarrow\
 \begin{pmatrix}c_{00}\\c_{01}\\c_{10}\\c_{11}\end{pmatrix}\in\mathbb C^4,
 \qquad\sum_{a,b\in\{0,1\}}|c_{ab}|^2=1.
-$$
+$$ {#eq-alg-two-qubit-state}
 
 両方を測って $ab$ が出る確率は $|c_{ab}|^2$ です。回路に2本の線があっても、一般には「各線に2成分ずつ」では状態を記録できません。**同じ時点の2本をまとめて、4個の振幅で記録します。**
 
-この式の $c_{00}$ は $\lvert00\rangle$ の係数、$c_{01}$ は $\lvert01\rangle$ の係数です。添字は、その振幅がどの基底状態に対応するかを示しています。右の列ベクトルは、同じ四つの係数を00・01・10・11の順に縦に並べたものです。$\longleftrightarrow$ は「同じ状態の二通りの書き方」を結んでおり、ここではゲートによる変化を表していません。
+式 (@eq-alg-two-qubit-state) の $c_{00}$ は $\lvert00\rangle$ の係数、$c_{01}$ は $\lvert01\rangle$ の係数です。添字は、その振幅がどの基底状態に対応するかを示しています。右の列ベクトルは、同じ四つの係数を00・01・10・11の順に縦に並べたものです。$\longleftrightarrow$ は「同じ状態の二通りの書き方」を結んでおり、ここではゲートによる変化を表していません。
 
 二つを別々の状態に準備できる場合、その組み合わせを**テンソル積** $\otimes$ で書きます。$\lvert a\rangle\otimes\lvert b\rangle=\lvert ab\rangle$ と略記し、和に対して分配します。
 
@@ -97,9 +97,9 @@ $$
 \qquad
 \mathrm{CNOT}\lvert ab\rangle=\lvert a,\ b\oplus a\rangle
 \quad(a,b\in\{0,1\}).
-$$
+$$ {#eq-alg-cnot-definition}
 
-式の $\oplus$ は、2で割った余りを取る足し算（XOR）です。$b\oplus0=b$、$b\oplus1=1-b$ なので、制御の $a$ を保ったまま、$a=1$ のときだけ標的の $b$ を反転する規則を表しています。出力のケット内のコンマは、二つのラベルを区切るためのものです。
+式 (@eq-alg-cnot-definition) の $\oplus$ は、2で割った余りを取る足し算（XOR）です。$b\oplus0=b$、$b\oplus1=1-b$ なので、制御の $a$ を保ったまま、$a=1$ のときだけ標的の $b$ を反転する規則を表しています。出力のケット内のコンマは、二つのラベルを区切るためのものです。
 
 **この操作の途中で、制御を測定するわけではありません。** 重ね合わせへの作用は、この表を各項に適用して足すことで定まります。例えば入力が $\alpha\lvert00\rangle+\beta\lvert10\rangle$ なら、
 
