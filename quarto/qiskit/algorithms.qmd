@@ -1,0 +1,91 @@
+---
+title: "量子回路を手で読み、目的から組み立てる"
+subtitle: "状態の記録 → 部品の作用 → 手計算 → 回路の設計 → Deutsch"
+jupyter: python3
+execute:
+  freeze: false
+  error: false
+  warning: false
+format:
+  html:
+    fig-format: png
+    fig-dpi: 150
+    include-in-header:
+      text: |
+        <style>
+        /* Keep lesson anchors stable while moving between theory and experiments. */
+        #quarto-document-content section.level2,
+        #quarto-document-content section.level3,
+        #quarto-document-content div.cell {
+          content-visibility: visible;
+          contain-intrinsic-size: none;
+        }
+        #quarto-document-content .katex-display {
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding-block: 0.25rem;
+        }
+        @media (max-width: 767.98px) {
+          #quarto-header nav.top-page-navigation { display: none; }
+          #title-block-header .code-tools-button { position: static; }
+          #quarto-document-content .katex-display { text-align: left; }
+        }
+        </style>
+---
+
+この授業では、**ゲートを一つ通るごとに状態を計算し、最後の測定でどの結果がどれだけの確率で出るかを求めること**を学びます。その上で、**欲しい出力から必要なゲートを選び、回路を組み立てること**を目指します。
+
+まず、回路の途中の状態をどう書き表すか確認します。続いてX・Z・Hなどのゲートを一つずつ取り上げ、入力した状態がどう変わるかを計算します。回路図を読み、練習問題を解いた後、Qiskitで手計算を確かめます。
+
+本文と緑の「計算の規則」「設計の考え方」を順に読み、練習では解答を開く前に紙で計算してください。「補足」は気になったときに開いて読む説明です。コードも折りたたんであり、回路図と手計算を確認した後で読めます。
+
+| 順序 | 自分でできるようになること | 主な作業 |
+| :--- | :--- | :--- |
+| 0 | 回路の途中に何を書けばよいか分かる | 状態・振幅・測定の区別 |
+| 1 | 1量子ビットの回路を一手ずつ読む | X・Z・Hと行列の掛け算 |
+| 2 | なぜ最後の答えが変わるのか説明する | 振幅を足す・引く、順番を替える |
+| 3 | 2本の線を一つの状態として読む | 4個の振幅、CNOT |
+| 4 | 欲しい状態や測定から回路を組む | 逆算、条件付き操作 |
+| 5 | 関数を計算する部品を作る | 入力を残す、出力先を用意する |
+| 6 | Deutsch の回路がなぜこの形か説明する | 読み出しから逆算して設計する |
+| 補講 | 第2・3章の理論で同じ計算を捉え直す | 混合状態、密度行列、測定の式 |
+| [読み物](#alg-essential) | 固有値が測定結果になる理由を理解する | 制御付き操作、干渉、位相推定への接続 |
+
+::: {.callout-note title="復習は、この三つから始めます"}
+必要なのは、列ベクトルの成分、行列とベクトルの掛け算、確率の合計が1になることです。ブラケット記法、線形性、2量子ビットの表し方は、使う直前に具体例で確認します。
+
+まずは理想的な回路と、毎回同じ状態を用意する場合を追います。確率的に異なる状態を用意する場合も、最後の補講で同じ小さな回路を使って比較します。
+
+:::
+
+```{python}
+#| label: algorithms-setup
+#| include: false
+#| code-summary: "実験で使うライブラリ"
+import matplotlib.pyplot as plt
+import numpy as np
+from IPython.display import Markdown, display
+from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister, transpile
+from qiskit.quantum_info import DensityMatrix, Operator, Statevector
+from qiskit_aer import AerSimulator
+
+np.set_printoptions(precision=4, suppress=True)
+```
+
+{{< include algorithms/_00-reading-a-circuit.qmd >}}
+
+{{< include algorithms/_01-single-qubit-gates.qmd >}}
+
+{{< include algorithms/_02-follow-the-amplitudes.qmd >}}
+
+{{< include algorithms/_03-two-qubits.qmd >}}
+
+{{< include algorithms/_04-design-small-circuits.qmd >}}
+
+{{< include algorithms/_05-computing-a-function.qmd >}}
+
+{{< include algorithms/_06-design-deutsch.qmd >}}
+
+{{< include algorithms/_07-theory-after-circuits.qmd >}}
+
+{{< include algorithms/_08-why-the-circuit-works.qmd >}}

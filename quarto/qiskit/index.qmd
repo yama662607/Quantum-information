@@ -8,6 +8,8 @@ number-sections: false
 
 # はじめに {.unnumbered}
 
+[**量子回路を手で読み、目的から組み立てる**](algorithms.qmd)では、状態の記録方法から始め、X・Z・H・CNOTを一つずつ手計算します。その後、欲しい状態や測定結果から回路を設計し、Deutschへ進みます。混合状態と密度行列は、同じ回路を計算する補講でつなぎます。
+
 ::: {.callout-note appearance="simple" title="このページで扱うこと"}
 このページは、量子情報の理論を読んだあとに「実際に手を動かす」ための入口です。
 

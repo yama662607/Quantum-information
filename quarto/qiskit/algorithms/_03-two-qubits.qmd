@@ -1,0 +1,214 @@
+## 3. 2本の線を、一つの状態として読む {#alg-controlled}
+
+### 振幅は2個から4個になる {#alg-two-qubit-state}
+
+上の量子ビットを $a$、下を $b$ と呼び、状態を常に $\lvert ab\rangle$ の順に書きます。例えば $\lvert10\rangle$ は「上が1、下が0」。基底は $\lvert00\rangle,\lvert01\rangle,\lvert10\rangle,\lvert11\rangle$ の四つです。
+
+$$
+\lvert\Psi\rangle=c_{00}\lvert00\rangle+c_{01}\lvert01\rangle
++c_{10}\lvert10\rangle+c_{11}\lvert11\rangle
+\ \longleftrightarrow\
+\begin{pmatrix}c_{00}\\c_{01}\\c_{10}\\c_{11}\end{pmatrix}\in\mathbb C^4,
+\qquad\sum_{a,b\in\{0,1\}}|c_{ab}|^2=1.
+$$
+
+両方を測って $ab$ が出る確率は $|c_{ab}|^2$ です。回路に2本の線があっても、一般には「各線に2成分ずつ」では状態を記録できません。**同じ時点の2本をまとめて、4個の振幅で記録します。**
+
+二つを別々の状態に準備できる場合、その組み合わせを**テンソル積** $\otimes$ で書きます。$\lvert a\rangle\otimes\lvert b\rangle=\lvert ab\rangle$ と略記し、和に対して分配します。
+
+$$
+\begin{aligned}
+(\alpha\lvert0\rangle+\beta\lvert1\rangle)\otimes
+(\gamma\lvert0\rangle+\delta\lvert1\rangle)
+&=\alpha\gamma\lvert00\rangle+\alpha\delta\lvert01\rangle\\
+&\quad+\beta\gamma\lvert10\rangle+\beta\delta\lvert11\rangle.
+\end{aligned}
+$$
+
+例えば $\lvert+\rangle_a\otimes\lvert0\rangle_b=(\lvert00\rangle+\lvert10\rangle)/\sqrt2$ です。添字の $a,b$ は、どちらの量子ビットの状態かを示します。
+
+上の線の量子ビット $a$ にHを掛けてみましょう。$\lvert ab\rangle$ では左の文字が $a$、右の文字が $b$ を表します。左の文字にHを作用させ、右の文字は変えないので、
+
+$$
+\lvert00\rangle\xrightarrow{\text{上にH}}
+(H\lvert0\rangle)\otimes\lvert0\rangle
+=\frac{\lvert00\rangle+\lvert10\rangle}{\sqrt2}.
+$$
+
+操作全体の行列名は $H\otimes I:\mathbb C^4\to\mathbb C^4$。下を変えないことを $I$ で表しています。4×4行列を毎回展開しなくても、各項の該当する文字に作用させて計算できます。
+
+::: {.callout-note collapse="true" title="補足：4項に展開するときの係数"}
+両方をプラス状態に準備した場合、外にある二つの $1/\sqrt2$ も掛け合わせます。
+
+$$
+\lvert+\rangle\otimes\lvert+\rangle
+=\frac1{\sqrt2}\frac1{\sqrt2}(\lvert0\rangle+\lvert1\rangle)\otimes(\lvert0\rangle+\lvert1\rangle)
+=\frac{\lvert00\rangle+\lvert01\rangle+\lvert10\rangle+\lvert11\rangle}{2}.
+$$
+
+各基底の振幅は $1/2$、確率は $1/4$ です。四つの確率を足すと1になります。分配するときは、括弧の中だけでなく外の係数も計算しましょう。
+
+:::
+
+### CNOT：上が1の成分で、下を反転する [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=15) {#alg-cnot}
+
+二つの量子ビットを結び付ける部品を一つ導入します。**CNOT（制御NOT）**は、上を制御、下を標的として、次の四つの規則で定義します。
+
+| 入力 $\lvert ab\rangle$ | 上を見る | 下への作用 | 出力 |
+| :--- | :--- | :--- | :--- |
+| $\lvert00\rangle$ | 0 | そのまま | $\lvert00\rangle$ |
+| $\lvert01\rangle$ | 0 | そのまま | $\lvert01\rangle$ |
+| $\lvert10\rangle$ | 1 | $0\to1$ | $\lvert11\rangle$ |
+| $\lvert11\rangle$ | 1 | $1\to0$ | $\lvert10\rangle$ |
+
+ここでの「上を見る」は作用を計算するための読み方で、上を実際に測定する手順ではありません。重ね合わせへの作用は、この表を各項に適用して足します。
+
+回路の記号では、**黒丸が制御、丸で囲んだ＋が標的へのX**です。間の縦線は、二つを合わせて一つのゲートであることを示します。
+
+```{python}
+#| label: fig-alg-cnot-stages
+#| fig-cap: "上のaにH、その後aを制御・bを標的にCNOT。①では00と10、②では00と11の振幅が残る。"
+#| fig-alt: "上のaと下のbはともに0。aにHを掛け、位置1の後にaの黒丸とbの丸付きプラスを縦線で結んだCNOT、続いて位置2。"
+#| code-summary: "式のab順と表示をそろえた2量子ビット回路"
+# Qiskitの状態配列はq1 q0順。b=q0、a=q1に割り当てる。
+b = QuantumRegister(1, "b")
+a = QuantumRegister(1, "a")
+bell = QuantumCircuit(b, a)
+bell.h(a[0])
+bell.barrier(label="1")
+bell.cx(a[0], b[0])
+bell.barrier(label="2")
+# 描画だけ上下を逆にし、aを上に表示。状態配列はab順のまま。
+bell.draw(output="mpl", reverse_bits=True, style="bw", initial_state=True, fold=-1)
+```
+
+①から②を計算しましょう。
+
+$$
+\begin{aligned}
+\frac{\lvert00\rangle+\lvert10\rangle}{\sqrt2}
+&\xrightarrow{\mathrm{CNOT}}
+\frac{\mathrm{CNOT}\lvert00\rangle+\mathrm{CNOT}\lvert10\rangle}{\sqrt2}\\
+&=\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}.
+\end{aligned}
+$$
+
+線形性により、各項にCNOTを作用させても、元の係数 $1/\sqrt2$ は変わりません。出力の振幅を二乗すると、測定確率は $p(00)=p(11)=1/2$、$p(01)=p(10)=0$ になります。
+
+この出力は、二つの独立した状態の積にできません。例えば両方が $\lvert+\rangle$ なら、展開に01と10も出てしまいます。一般にも、積の係数 $\alpha\gamma$ と $\beta\delta$ がともに非零なら、$\alpha\delta$ と $\beta\gamma$ も非零となり、今回の出力にはできません。こうした積に分けられない純粋状態を**エンタングルした状態**と呼び、この例は **Bell状態**の一つです。
+
+### 片側だけにHを掛け、片側だけを測る {#alg-one-side}
+
+Bell状態のように二つの状態の積に分けられなくても、上の量子ビット $a$ へのHは、各項の左の文字に作用させれば計算できます。例えば、
+
+$$
+\begin{aligned}
+(H\otimes I)\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}
+&=\frac{(H\lvert0\rangle)\otimes\lvert0\rangle
++(H\lvert1\rangle)\otimes\lvert1\rangle}{\sqrt2}\\
+&=\frac{(\lvert00\rangle+\lvert10\rangle)
++(\lvert01\rangle-\lvert11\rangle)}2.
+\end{aligned}
+$$
+
+第2項の符号は $H\lvert1\rangle=(\lvert0\rangle-\lvert1\rangle)/\sqrt2$ から来ます。一般の4個の振幅についても、**下の文字が同じものどうし**を組にします。下が0の組 $(c_{00},c_{10})$、下が1の組 $(c_{01},c_{11})$ のそれぞれに、Hの和と差の規則を使えます。
+
+では、下を測らずに**上だけ**を測る確率はどう求めるのでしょうか。上が0という結果には00と01、上が1という結果には10と11が含まれるので、
+
+$$
+p(a=0)=|c_{00}|^2+|c_{01}|^2,\qquad
+p(a=1)=|c_{10}|^2+|c_{11}|^2.
+$$
+
+ここは**確率を足します**。00と01は上の文字こそ同じですが、下が0と1で異なる、区別できる二つの基底状態です。下を測らないときも、上の結果の確率は、この二つの結果をまとめて計算できます。
+
+二つの別の例で、何を足しているのか比べましょう。
+
+::: {.grid}
+::: {.g-col-12 .g-col-lg-6}
+::: {.callout-note appearance="simple" title="振幅を足す：同じ全体の出力へ来る"}
+第2節の $H\lvert+\rangle$ で、出力1への寄与を考えます。
+
+$$
+p(1)=\left|\frac12-\frac12\right|^2=0.
+$$
+
+二つの寄与は、同じ $\lvert1\rangle$ への振幅なので、足してから二乗します。
+
+:::
+
+:::
+
+::: {.g-col-12 .g-col-lg-6}
+::: {.callout-note appearance="simple" title="確率を足す：異なる全体の結果をまとめる"}
+$(\lvert00\rangle-\lvert01\rangle)/\sqrt2$ の上だけを測り、0が出る確率を考えます。
+
+$$
+p(a=0)=\left|\frac1{\sqrt2}\right|^2+\left|-\frac1{\sqrt2}\right|^2=1.
+$$
+
+00と01は下の状態が異なります。それぞれの確率を求めてから足します。
+
+:::
+
+:::
+
+:::
+
+干渉の計算では**同じ全体の基底状態への寄与**を足し、上だけの測定では**異なる全体の結果の確率**をまとめます。
+
+**確認**：$(\lvert00\rangle-\lvert11\rangle)/\sqrt2$ の上にHを掛け、00・01・10・11の順に振幅を書いてください。その後、上だけを測ると0と1はそれぞれ何割でしょうか。
+
+::: {.callout-note collapse="true" title="答え：各項に作用させてから、確率をまとめる"}
+$$
+\frac{(\lvert00\rangle+\lvert10\rangle)-(\lvert01\rangle-\lvert11\rangle)}2
+=\frac{\lvert00\rangle-\lvert01\rangle+\lvert10\rangle+\lvert11\rangle}2.
+$$
+
+振幅は $(1,-1,1,1)/2$ です。上が0の確率も1の確率も $1/4+1/4=1/2$、つまり半々です。
+
+:::
+
+::: {.callout-note collapse="true" title="補足：4×4行列でも同じ作用を確認する"}
+基底の順を00、01、10、11に固定すると、
+
+$$
+\mathrm{CNOT}=\begin{pmatrix}
+1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0
+\end{pmatrix},\qquad
+\mathrm{CNOT}\begin{pmatrix}c_{00}\\c_{01}\\c_{10}\\c_{11}\end{pmatrix}
+=\begin{pmatrix}c_{00}\\c_{01}\\c_{11}\\c_{10}\end{pmatrix}.
+$$
+
+第3列は入力10の出力が11、第4列は入力11の出力が10であることを示します。一般の重ね合わせでも、列ベクトルの第3成分 $c_{10}$ と第4成分 $c_{11}$ を交換するだけです。
+
+:::
+
+```{python}
+#| label: algorithms-two-qubit-check
+#| code-summary: "4個の振幅と、CNOTの全入力を確認する"
+state = Statevector.from_instruction(bell)
+np.testing.assert_allclose(state.data, np.array([1, 0, 0, 1])/np.sqrt(2), atol=1e-12)
+print("基底の順: 00, 01, 10, 11")
+print("振幅:", np.round(state.data.real, 4))
+print("確率:", np.round(state.probabilities(), 4))
+cnot = QuantumCircuit(2)
+cnot.cx(1, 0)  # a=q1を制御、b=q0を標的
+for before, after in (("00", "00"), ("01", "01"), ("10", "11"), ("11", "10")):
+    np.testing.assert_allclose(Statevector.from_label(before).evolve(cnot).data,
+                               Statevector.from_label(after).data, atol=1e-12)
+```
+
+::: {.callout-note collapse="true" title="補足：Qiskitで式の順番を保つための約束"}
+このページでは、上の $a$ を `q1`、下の $b$ を `q0` に割り当てます。Qiskitの状態配列は $q_1q_0$ の順なので、式も配列も $ab$ にそろいます。図は `reverse_bits=True` で $a$ を上にしています。これは表示順だけの指定です。
+
+`cx(a[0], b[0])` の第1引数が制御、第2引数が標的です。2量子ビットになっても、手計算では $\lvert ab\rangle$ の順を固定してください。[Qiskit公式の順序の説明](https://quantum.cloud.ibm.com/docs/en/guides/bit-ordering)も参照できます。
+
+:::
+
+**確認**：CNOTに $\lvert01\rangle$ を入れたらどうなりますか。上の図のHを**下の線**に移した場合、出力はどうなりますか。
+
+::: {.callout-note collapse="true" title="答え：どちらの線が制御かを確認する"}
+$\lvert01\rangle$ は上が0なので変わりません。下にHを置くと、入力00は $(\lvert00\rangle+\lvert01\rangle)/\sqrt2$ になり、どちらの項も上が0なので、CNOTを通してもそのままです。
+
+:::

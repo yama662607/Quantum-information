@@ -1,0 +1,531 @@
+## 読み物：操作の違いを、測定できる答えに変える {#alg-essential}
+
+状態・演算子・測定を学んだところから、回路を設計する考え方へ進みましょう。ここで考えるのは、**ある操作を加えた状態と、加えなかった状態を、一つの回路の中で比較する方法**です。比較の結果を0と1の出る確率に変えられれば、操作の性質を調べる計算になります。
+
+具体的には、固有値の情報を読み出す小さな回路を作ります。固有状態、全体位相、テンソル積、測定の基底という既習事項が、どの段階で必要になるかを式で確かめます。これはPreskill第6章§6.4の位相推定の導入に対応します。[原文：chap6.pdf、物理25ページ](/assets/pdf/preskill/chap6.pdf#page=25)
+
+| この読み物で確かめること | 使う理論 |
+| :--- | :--- |
+| なぜUを掛けるだけでは固有値を読めないのか | 全体位相、密度行列 |
+| なぜ制御付きUなら固有値が確率に現れるのか | テンソル積、線形性、測定の基底 |
+| 固有状態でない入力では何が変わるのか | 内積、エンタングルメント、部分トレース |
+| この回路を何の計算に使えるのか | 関数の性質、固有値と時間発展、計算の費用 |
+
+### 1. 固有値を知りたいのに、状態は変わらない？ {#alg-essential-question}
+
+調べたい系を $B$ と呼び、$n$ 量子ビットの状態空間を $\mathcal B=(\mathbb C^2)^{\otimes n}$ とします。$U:\mathcal B\to\mathcal B$ はユニタリ演算子です。正規化された状態 $\lvert u\rangle\in\mathcal B$ が
+
+$$
+U\lvert u\rangle=\lambda\lvert u\rangle,
+\qquad \lambda=e^{i\theta},\qquad 0\leq\theta<2\pi
+$$
+
+を満たすとき、$\lvert u\rangle$ はUの固有状態、$\lambda$ はその固有値です。ユニタリ演算子はノルムを保つので、固有値の絶対値は1です。ここでは角度 $\theta$ をラジアンで表します。
+
+**Uを実行でき、$\lvert u\rangle$ を準備できるとして、対応する固有値を知りたい**と考えます。最初は $\lambda=+1$ か $-1$ のどちらかを判定する場合に絞っても構いません。
+
+Uをそのまま掛けると、$\lvert u\rangle$ 全体に $e^{i\theta}$ が付きます。任意の測定結果に対応する射影 $P$ に対して、
+
+$$
+\begin{aligned}
+p(P\mid U\lvert u\rangle)
+&=(e^{i\theta}\lvert u\rangle)^\dagger P(e^{i\theta}\lvert u\rangle)\\
+&=e^{-i\theta}e^{i\theta}\langle u\rvert P\lvert u\rangle
+=\langle u\rvert P\lvert u\rangle.
+\end{aligned}
+$$
+
+測定の確率は、Uを掛ける前と変わりません。密度行列でも
+
+$$
+(e^{i\theta}\lvert u\rangle)(e^{i\theta}\lvert u\rangle)^\dagger
+=\lvert u\rangle\langle u\rvert
+$$
+
+となります。**この系だけを測定しても、全体に掛かった位相は分かりません。**
+
+例えば $X\lvert-\rangle=-\lvert-\rangle$ ですが、Xの前後で下の量子ビットの測定統計は同じです。では、Uを掛けた場合を、掛けなかった場合と比較できるようにしたらどうでしょうか。
+
+### 2. 操作する場合としない場合を、重ね合わせにする {#alg-essential-control}
+
+比較のために、1量子ビット $A$ を追加します。図ではAを上、Bを下に置き、式も $\lvert a\rangle_A\otimes\lvert u\rangle_B$ の順で書きます。Aには $\lvert+\rangle$、Bには $\lvert u\rangle$ を用意します。
+
+ここで使う**制御付きU**は、Aが0の項ではBに何もせず、Aが1の項ではBにUを作用させる操作です。状態空間全体での型と式は
+
+$$
+C(U):\mathbb C^2\otimes\mathcal B\longrightarrow\mathbb C^2\otimes\mathcal B,
+\qquad
+C(U)=\lvert0\rangle\langle0\rvert_A\otimes I_B
++\lvert1\rangle\langle1\rvert_A\otimes U_B
+$$
+
+です。最初の項がAの0成分、次の項がAの1成分に作用します。両方を足した一つの演算子であり、途中でAを測定する操作は含みません。
+
+**ここからは、この制御付きUも実装できると仮定します。** Uだけを実行できるという条件に、操作する項としない項を重ね合わせのまま扱えるという条件を加えています。この違いと位相の扱いは、節末の補足でも確認します。
+
+入力の重ね合わせを二項に分け、定義どおりに作用させます。
+
+$$
+\begin{aligned}
+C(U)(\lvert+\rangle_A\otimes\lvert u\rangle_B)
+&=\frac{\lvert0\rangle_A\otimes\lvert u\rangle_B
++\lvert1\rangle_A\otimes U\lvert u\rangle_B}{\sqrt2}\\
+&=\frac{\lvert0\rangle_A\otimes\lvert u\rangle_B
++e^{i\theta}\lvert1\rangle_A\otimes\lvert u\rangle_B}{\sqrt2}\\
+&=\frac{\lvert0\rangle_A+e^{i\theta}\lvert1\rangle_A}{\sqrt2}
+\otimes\lvert u\rangle_B.
+\end{aligned}
+$$
+
+2行目で固有状態の性質を使い、3行目で共通のBの状態をくくりました。$e^{i\theta}$ という数はテンソル積のどちら側の係数にも書けるため、Aの $\lvert1\rangle$ の前に置けます。
+
+ここでは、Aが0の項の係数は変わらず、Aが1の項だけに $e^{i\theta}$ が付きました。**二つの項の係数の比が変わったので、AB全体の位相が一様に変わった場合とは異なります。** Aの二成分の相対位相として、Uの固有値が現れています。
+
+これは位相キックバックと呼ばれる作用です。「Bの位相が上へ飛ぶ」という言い方をすることもありますが、計算として行ったのは、固有値を係数として取り出し、共通の状態をくくることです。
+
+::: {.callout-note collapse="true" title="補足：全体位相は観測できない、という原理と矛盾しないか"}
+AB全体に同じ $e^{i\chi}$ を掛けても、測定確率は変わりません。上の回路では、Aが1の項だけをUで変えたため、Aが0の項との比較が可能になりました。
+
+また、Uを使えることと、制御付きUを使えることは異なる条件です。Uと $e^{i\chi}U$ はBだけに作用させると同じチャネルを与えますが、
+
+$$
+C(e^{i\chi}U)
+=\lvert0\rangle\langle0\rvert\otimes I
++e^{i\chi}\lvert1\rangle\langle1\rvert\otimes U
+$$
+
+は、一般には $e^{i\chi}C(U)$ と同じではありません。この読み物では、**Uを作用させる項と作用させない項の相対位相まで定まった、制御付きUを実装できる**と仮定しています。Bに対する未知のチャネルだけを渡されれば、自動的にこの比較ができる、という意味ではありません。
+
+:::
+
+### 3. 最後のHは、比較の結果を確率に変える {#alg-essential-readout}
+
+制御付きUの直後にAを計算基底で測っても、0と1の確率はどちらも $1/2$ です。係数 $1$ と $e^{i\theta}$ の絶対値が同じだからです。そこで、測る直前にAへHを掛け、二つの係数の和と差を作ります。
+
+$$
+\begin{aligned}
+H\frac{\lvert0\rangle+e^{i\theta}\lvert1\rangle}{\sqrt2}
+&=\frac12\bigl[(\lvert0\rangle+\lvert1\rangle)
++e^{i\theta}(\lvert0\rangle-\lvert1\rangle)\bigr]\\
+&=\frac{1+e^{i\theta}}2\lvert0\rangle
++\frac{1-e^{i\theta}}2\lvert1\rangle.
+\end{aligned}
+$$
+
+したがって、Aの測定確率は
+
+$$
+\begin{aligned}
+p_A(0)&=\frac{(1+e^{-i\theta})(1+e^{i\theta})}{4}
+=\frac{1+\cos\theta}{2},\\
+p_A(1)&=\frac{(1-e^{-i\theta})(1-e^{i\theta})}{4}
+=\frac{1-\cos\theta}{2}.
+\end{aligned}
+$$
+
+$\cos\theta$ は、二つの複素振幅を足してから絶対値を二乗したときに現れます。操作の情報が、測定で数えられる確率に変わりました。
+
+| Uの固有値 | Aに最後のHを掛ける前 | Hの後の $p_A(0),p_A(1)$ |
+| :--- | :--- | :--- |
+| $+1$（$\theta=0$） | $\lvert+\rangle$ | $1,0$ |
+| $-1$（$\theta=\pi$） | $\lvert-\rangle$ | $0,1$ |
+| $i$（$\theta=\pi/2$） | $(\lvert0\rangle+i\lvert1\rangle)/\sqrt2$ | $1/2,1/2$ |
+
+例えば $\theta=\pi/3$ なら $p_A(0)=3/4$ です。1回の測定で角度そのものが返るわけではありません。同じ準備と回路を繰り返し、0の出る割合から確率を推定します。固有値が $+1,-1$ のどちらかに限られる場合は、表の最初の二行のように、理想的な1回の測定で区別できます。
+
+一般の固有値について、この測定で分かるのは $\cos\theta$ までです。例えば $i$ と $-i$ はどちらも半々になり、何回繰り返してもこの測定だけでは区別できません。角度を特定するには、後で示すように測定前の操作をもう一通り用意します。
+
+#### Xで、回路と式を対応させる
+
+UをXにすると、制御付きUはCNOTです。Bに $\lvert+\rangle$ を準備した場合と $\lvert-\rangle$ を準備した場合を比べます。図の①は準備の後、②はCNOTの後、③は最後のHの後です。
+
+```{python}
+#| label: fig-alg-essential-x-readout
+#| fig-cap: "同じH→CNOT→HでXの固有値を読む。上の図ではBをプラス状態に準備してAの結果は0、下ではマイナス状態に準備して結果は1になる。状態の式は下の表と対応する。"
+#| fig-alt: "二つの2量子ビット回路。Aは上、Bは下。BをHまたはXの後にHで準備する。AにはH、BへのCNOTの制御、H、測定を順に置く。"
+#| code-summary: "Xの二つの固有状態で、読み出すビットを確かめる"
+def essential_x_readout(target_label, measure=False):
+    lower = QuantumRegister(1, "B")
+    upper = QuantumRegister(1, "A")
+    circuit = QuantumCircuit(lower, upper)
+    if target_label == "-":
+        circuit.x(lower[0])
+    if target_label in ("+", "-"):
+        circuit.h(lower[0])
+    circuit.h(upper[0])
+    circuit.barrier(label="1")
+    circuit.cx(upper[0], lower[0])
+    circuit.barrier(label="2")
+    circuit.h(upper[0])
+    circuit.barrier(label="3")
+    if measure:
+        answer = ClassicalRegister(1, "answer")
+        circuit.add_register(answer)
+        circuit.measure(upper[0], answer[0])
+    return circuit
+
+fig, axes = plt.subplots(2, 1, figsize=(9, 4.8))
+for label, answer, ax in zip(("+", "-"), (0, 1), axes):
+    circuit = essential_x_readout(label)
+    actual = Statevector.from_instruction(circuit)
+    expected = np.kron(np.eye(2)[answer], Statevector.from_label(label).data)
+    np.testing.assert_allclose(actual.data, expected, atol=1e-12)
+    essential_x_readout(label, measure=True).draw(
+        output="mpl", reverse_bits=True, ax=ax, style="bw",
+        initial_state=True, fold=-1
+    )
+    ax.set_title(rf"$U=X,\quad |u\rangle=|{label}\rangle$")
+plt.tight_layout()
+plt.show()
+```
+
+| Bの準備 | ①：AB全体 | ②：AB全体 | ③：AB全体 |
+| :--- | :--- | :--- | :--- |
+| $\lvert+\rangle$ | $\lvert+\rangle_A\otimes\lvert+\rangle_B$ | $\lvert+\rangle_A\otimes\lvert+\rangle_B$ | $\lvert0\rangle_A\otimes\lvert+\rangle_B$ |
+| $\lvert-\rangle$ | $\lvert+\rangle_A\otimes\lvert-\rangle_B$ | $\lvert-\rangle_A\otimes\lvert-\rangle_B$ | $\lvert1\rangle_A\otimes\lvert-\rangle_B$ |
+
+下の図の最後でBを測っても、0と1は半々です。固有値 $-1$ を示す結果1が得られるのは、比較用に追加したAです。
+
+::: {.callout-tip appearance="simple" title="回路を設計するときに、この三つを決める"}
+この回路では、最初のHで「Uを作用させない項」と「作用させる項」を用意し、制御付きUで両項に違いを付け、最後のHでその違いを測定確率に変えました。
+
+回路を読むときも、**何と何を比較しているか、どの操作が違いを付けるか、どの操作がそれを読める形にするか**を、途中状態の式に対応させてください。
+
+:::
+
+### 4. 固有状態を選ぶと、何が都合よいのか {#alg-essential-overlap}
+
+同じ回路に、Uの固有状態とは限らない正規化された $\lvert\psi\rangle_B$ を入れてみます。制御付きUの後は
+
+$$
+\frac{\lvert0\rangle_A\otimes\lvert\psi\rangle_B
++\lvert1\rangle_A\otimes U\lvert\psi\rangle_B}{\sqrt2}
+$$
+
+です。今度は、二つの項でBの状態が同じとは限りません。そのままAにHを掛けると、
+
+$$
+\frac12\lvert0\rangle_A\otimes(\lvert\psi\rangle+U\lvert\psi\rangle)_B
++\frac12\lvert1\rangle_A\otimes(\lvert\psi\rangle-U\lvert\psi\rangle)_B
+$$
+
+となります。Aの0に対応するBのベクトルは $(\lvert\psi\rangle+U\lvert\psi\rangle)/2$ です。Bのどの結果でもよいとしてAの0の確率を求めるには、このベクトルの各成分の絶対値を二乗して足します。つまりノルムの二乗を取ります。
+
+$$
+\begin{aligned}
+p_A(0)
+&=\frac14\left\|\lvert\psi\rangle+U\lvert\psi\rangle\right\|^2\\
+&=\frac14\bigl(\langle\psi|\psi\rangle
++\langle\psi|U|\psi\rangle
++\langle\psi|U^\dagger|\psi\rangle
++\langle\psi|U^\dagger U|\psi\rangle\bigr)\\
+&=\frac12\bigl(1+\operatorname{Re}\langle\psi|U|\psi\rangle\bigr).
+\end{aligned}
+$$
+
+$\operatorname{Re}$ は複素数の実部です。最後の行では、正規化と $U^\dagger U=I$ を使いました。中央の二項は互いに複素共役なので、その和は実部の2倍になります。
+
+**確率を決めているのは、操作前の状態と操作後の状態の内積**です。固有状態なら $\langle u|U|u\rangle=e^{i\theta}$ なので、前節の式に戻ります。操作で状態が別方向へ変わる場合も、同じ回路はその内積を調べています。このH→制御付きU→Hという回路は、Hadamardテストと呼ばれます。
+
+UをXに固定し、Bの準備だけを変えると違いが見えます。
+
+| Bの入力 | Xの後のB | 内積 $\langle\psi|X|\psi\rangle$ | 最後のAの $p_A(0)$ |
+| :--- | :--- | :--- | :--- |
+| $\lvert+\rangle$ | $\lvert+\rangle$ | $+1$ | $1$ |
+| $\lvert-\rangle$ | $-\lvert-\rangle$ | $-1$ | $0$ |
+| $\lvert0\rangle$ | $\lvert1\rangle$ | $0$ | $1/2$ |
+
+最後の行では、CNOTの後が $(\lvert00\rangle+\lvert11\rangle)/\sqrt2$ です。Aが0の項にはBの0、Aが1の項にはBの1が残ります。両項を分けるBの状態が直交しているため、上の内積の項は0です。AにHを掛けても0と1は半々になります。
+
+これに対し、固有状態を入れた場合、CNOTの後もABは積状態に分けられます。**ここで固有状態を使う利点は、Bの状態を共通に保ち、Uの作用をAの相対位相として取り出せること**です。制御付きゲートを使えば必ずエンタングルする、というわけではありません。
+
+::: {.callout-note collapse="true" title="理論との対応：部分トレースと混合状態でも同じ式になる"}
+制御付きUの後のABを $\lvert\Psi\rangle$ とし、$z=\langle\psi|U|\psi\rangle$ と置きます。Bを部分トレースすると、Aの密度行列は
+
+$$
+\rho_A=\operatorname{tr}_B(\lvert\Psi\rangle\langle\Psi\rvert)
+=\frac12\begin{pmatrix}1&z^*\\z&1\end{pmatrix}.
+$$
+
+対角成分はどちらも $1/2$ です。Uを作用させた状態とさせなかった状態の内積は、非対角成分に入っています。AにHを掛けた後の左上成分を計算すると、
+
+$$
+p_A(0)=(H\rho_AH^\dagger)_{00}
+=\frac{2+z+z^*}{4}
+=\frac{1+\operatorname{Re}z}{2}.
+$$
+
+先ほどの状態ベクトルの計算と一致します。密度行列を使うと、「Aだけを測るために、Bをどう扱えばよいか」を式にできます。
+
+Bが混合状態 $\rho_B=\sum_j w_j\lvert\psi_j\rangle\langle\psi_j\rvert$ の場合は、各準備での確率を平均します。$w_j$ は準備の確率です。
+
+$$
+\begin{aligned}
+p_A(0)
+&=\sum_j w_j\frac{1+\operatorname{Re}\langle\psi_j|U|\psi_j\rangle}{2}\\
+&=\frac{1+\operatorname{Re}\operatorname{tr}(U\rho_B)}{2}.
+\end{aligned}
+$$
+
+例えばU=Xで $\rho_B=I/2$ なら、$\operatorname{tr}(X\rho_B)=0$ なので半々です。これはBに $\lvert+\rangle$ と $\lvert-\rangle$ を半々で準備し、Aが必ず0になる場合と必ず1になる場合を平均しても求められます。
+
+```{python}
+#| label: algorithms-essential-overlap-check
+#| code-summary: "準備の違いと混合状態を、同じ回路で確かめる"
+from qiskit.quantum_info import partial_trace
+
+for label, p0 in (("+", 1), ("-", 0), ("0", .5)):
+    output = Statevector.from_instruction(essential_x_readout(label))
+    np.testing.assert_allclose(output.probabilities(qargs=[1]), [p0, 1-p0], atol=1e-12)
+
+# 配列はAB順。Aを0、BをI/2に準備する。
+mixed_input = DensityMatrix(np.kron(np.diag([1, 0]), np.eye(2)/2))
+test = QuantumCircuit(2)
+test.h(1)
+test.cx(1, 0)
+before_last_h = mixed_input.evolve(test)
+np.testing.assert_allclose(partial_trace(before_last_h, [0]).data, np.eye(2)/2, atol=1e-12)
+test.h(1)
+np.testing.assert_allclose(mixed_input.evolve(test).probabilities(qargs=[1]), [.5, .5], atol=1e-12)
+print("Bがプラス状態: Aは0、マイナス状態: Aは1、0またはI/2: Aは半々。")
+```
+
+:::
+
+### 5. 知りたい答えに合わせて、どの位相を読むか決める {#alg-essential-design}
+
+ここまでの回路は、Uの固有値や操作前後の内積を調べる方法でした。アルゴリズムにするには、**元の問題で知りたい量が、その固有値や内積に現れるように操作を選ぶ**必要があります。
+
+#### Deutschでは、二つの関数値の差を読む
+
+前の授業で使った関数計算の回路は、$f:\{0,1\}\to\{0,1\}$ に対し
+
+$$
+U_f\lvert a,b\rangle=\lvert a,b\oplus f(a)\rangle
+$$
+
+でした。$\oplus$ はXORで、$f(a)=1$ の項だけBにXを掛けます。Bを $\lvert-\rangle$ にすれば、Xの固有値 $-1$ を利用して
+
+$$
+U_f(\lvert+\rangle_A\otimes\lvert-\rangle_B)
+=\frac{(-1)^{f(0)}\lvert0\rangle_A+(-1)^{f(1)}\lvert1\rangle_A}{\sqrt2}
+\otimes\lvert-\rangle_B
+$$
+
+となります。Aの二項に付いた符号の比は、
+
+$$
+\frac{(-1)^{f(1)}}{(-1)^{f(0)}}
+=(-1)^{f(0)\oplus f(1)}
+$$
+
+です。二つの関数値が同じなら比は $+1$、違えば $-1$。そのため、Aへの最後のHと測定で「同じか違うか」を読めます。
+
+制御付きUの例では「Uを作用させない項」と「作用させる項」を比較しました。Deutschでは「入力0の項」と「入力1の項」に付く符号を比較しています。**測りたい関係が相対位相になり、Hで測定結果へ変わる**という点が共通です。
+
+#### 一般の角度を読みたいなら、測定方法を追加する
+
+固有状態を使った第3節の回路に戻ります。$i$ と $-i$ を区別するため、最後のHの直前に、Aだけへ
+
+$$
+S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix}
+$$
+
+を掛けます。0の係数はそのまま、1の係数には $-i$ が掛かるので、Hへの入力は $(\lvert0\rangle-i e^{i\theta}\lvert1\rangle)/\sqrt2$ です。今度の測定でAの0が出る確率を $p_{S^\dagger}(0)$ と書くと、
+
+$$
+p_{S^\dagger}(0)
+=\frac{|1-i e^{i\theta}|^2}{4}
+=\frac{1+\sin\theta}{2}.
+$$
+
+固有値 $i$ なら0が必ず出て、$-i$ なら1が必ず出ます。$S^\dagger$ を加えない実験で $\cos\theta$、$S^\dagger$ を加える別の実験で $\sin\theta$ を推定すれば、角度を $2\pi$ の周期の範囲で特定できます。二つの測定は、同じ入力を改めて準備して行います。
+
+次の図は、この二通りの回路の計算結果です。例えば $\theta=\pi/2$ と $3\pi/2$ は青の曲線ではどちらも $1/2$ ですが、橙の曲線では1と0に分かれます。
+
+```{python}
+#| label: fig-alg-essential-phase-probabilities
+#| fig-cap: "同じ固有位相を、二通りの測定で調べる。線は式による確率、点はQiskitの状態計算。二つの確率を組み合わせると、cosだけでは区別できなかった角度も区別できる。"
+#| fig-alt: "角度0から2πに対し、Sdaggerなしの0の確率は1から0を通って1へ、ありでは半分から1、半分、0、半分へ変わる。"
+#| code-summary: "一般の固有位相について、cosとsinの両方の式を照合する"
+# U=diag(1, exp(i theta))、B=|1>なら固有値はexp(i theta)。
+def essential_phase_readout(theta, with_sdg=False):
+    circuit = QuantumCircuit(2)
+    circuit.x(0)  # B=q0を|1>へ
+    circuit.h(1)  # A=q1を|+>へ
+    circuit.cp(theta, 1, 0)
+    if with_sdg:
+        circuit.sdg(1)
+    circuit.h(1)
+    return Statevector.from_instruction(circuit).probabilities(qargs=[1])[0]
+
+angles = np.linspace(0, 2*np.pi, 17)
+fig, ax = plt.subplots(figsize=(8, 3.7))
+dense_angles = np.linspace(0, 2*np.pi, 300)
+for use_sdg, trig, color, label in (
+    (False, np.cos, "#2463a6", r"$(1+\cos\theta)/2$"),
+    (True, np.sin, "#a64b14", r"$(1+\sin\theta)/2$"),
+):
+    numerical = np.array([essential_phase_readout(t, use_sdg) for t in angles])
+    np.testing.assert_allclose(numerical, (1+trig(angles))/2, atol=1e-12)
+    ax.plot(dense_angles, (1+trig(dense_angles))/2, color=color, label=label)
+    ax.scatter(angles, numerical, color=color, s=18)
+ax.set_xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
+              ["0", r"$\pi/2$", r"$\pi$", r"$3\pi/2$", r"$2\pi$"])
+ax.set_xlabel(r"$\theta$")
+ax.set_ylabel(r"$p_A(0)$")
+ax.set_ylim(-.05, 1.05)
+ax.grid(alpha=.2)
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+この図の点はシミュレータから得た確率で、有限回の測定で観測した頻度ではありません。実際の実験で曲線上の値を推定するには、測定を繰り返す必要があります。
+
+### 6. 暗号や分子の計算では、何をUに選ぶのか {#alg-essential-applications}
+
+一般の角度を高い精度で読むには、ここまでの小さな回路を発展させます。例えば $U^k$ を使えば、同じ固有状態に対して
+
+$$
+U^k\lvert u\rangle=e^{ik\theta}\lvert u\rangle
+$$
+
+となり、角度の違いが $k$ 倍されます。ただし位相は $2\pi$ ごとに繰り返すので、一つの大きな $k$ だけでは元の角度を決められません。U、$U^2$、$U^4$、…から得る情報を組み合わせ、角度を推定するのが**量子位相推定**です。複数の制御量子ビットに位相を記録し、逆量子フーリエ変換で推定値のビット列へ変える構成があります。その変換の回路は、次に学ぶ対象です。
+
+ここで理解しておきたいのは、元の課題から、どの操作のどの固有値を調べるべきかを決める部分です。
+
+#### 周期を調べる操作を作ると、因数分解へつながる
+
+小さい例として、15で割った余りを取りながら2を掛けます。
+
+$$
+1\longrightarrow2\longrightarrow4\longrightarrow8\longrightarrow1.
+$$
+
+1に戻る最小回数は4です。この回数を周期 $r$ と呼ぶと、この例では $r=4$ です。周期から
+
+$$
+\gcd(2^{r/2}-1,15)=\gcd(3,15)=3,\qquad
+\gcd(2^{r/2}+1,15)=\gcd(5,15)=5
+$$
+
+と因数を得られます。$\gcd$ は最大公約数です。一般の整数でも、このように周期から因数が得られる条件を調べることが、Shorのアルゴリズムの一部になります。
+
+この周期を量子回路で調べるため、$U_2\lvert x\rangle=\lvert2x\bmod15\rangle$ という操作を使います。$x=0,\ldots,14$ については基底の並べ替えです。4量子ビットで実装するときは、余った $\lvert15\rangle$ をそのままにする、と定めれば全空間でユニタリになります。
+
+上の四つの基底状態の重ね合わせ
+
+$$
+\lvert u_i\rangle=\frac{\lvert1\rangle-i\lvert2\rangle-\lvert4\rangle+i\lvert8\rangle}{2}
+$$
+
+に $U_2$ を作用させ、項を元の順に並べ直すと、
+
+$$
+U_2\lvert u_i\rangle
+=\frac{i\lvert1\rangle+\lvert2\rangle-i\lvert4\rangle-\lvert8\rangle}{2}
+=i\lvert u_i\rangle
+$$
+
+です。基底を一つ先へ送る操作の固有値に、$i=e^{2\pi i/4}$ という周期4に対応する位相が現れました。
+
+実際のアルゴリズムでは、未知の周期を使ってこの固有状態を先に作る必要はありません。用意しやすい $\lvert1\rangle$ が、この周期に対応する複数の固有状態の重ね合わせであることを利用します。
+
+ここでは、第4節の一つの制御量子ビットによる測定から、読み出す仕組みが一段進みます。十分な桁数を用意した理想的な位相推定では、それぞれの固有状態に対応する位相が、読み出し用の量子ビット列に区別できる形で記録されます。その量子ビット列を測ると、対応する位相の一つが得られます。この例の $\lvert1\rangle$ は四つの固有状態の等振幅の重ね合わせなので、理想的には $0,\pi/2,\pi,3\pi/2$ が各確率 $1/4$ で得られます。位相の平均値が一つ得られるわけではありません。この仕組み自体の導出は、位相推定の回路を学ぶ際に行います。
+
+得られた位相から周期の候補を求め、古典計算で検証します。一度の測定で周期が決まらない場合もあります。
+
+ここまでが、**余りを取る掛け算の回路を作り、その固有値を読むことが因数分解に関係する理由**です。大きな整数での算術回路、位相から周期を復元する処理、成功確率は、Shorを学ぶ際に確かめるべき残りの部分です。[原文：§6.4、物理24ページから](/assets/pdf/preskill/chap6.pdf#page=24)
+
+#### 時間発展を作ると、エネルギーを読める
+
+分子の計算では、採用したモデルのエネルギーを表すハミルトニアンを $\widehat H$ とします。これはエルミート演算子で、前に使ったアダマールゲートHとは別です。固有状態 $\lvert E\rangle$ のエネルギーを $E$ とすると、
+
+$$
+\widehat H\lvert E\rangle=E\lvert E\rangle,
+\qquad
+U(t)=e^{-i\widehat Ht/\hbar},
+\qquad
+U(t)\lvert E\rangle=e^{-iEt/\hbar}\lvert E\rangle.
+$$
+
+$t$ は時間、$\hbar$ は換算プランク定数です。今度は、**時間発展の固有位相にエネルギーが入ります。** $U(t)$ の制御付き操作を作れれば、同じ読み出しの考え方を使えます。定めたエネルギー基準に対し、位相 $\theta=-Et/\hbar$ を読む計算です。
+
+ただし一つの時間 $t$ で読む位相には周期があり、エネルギーは $2\pi\hbar/t$ だけ違っても同じ位相になります。求めるエネルギーの範囲と時間の選び方も、設計に含まれます。
+
+さらに、知りたいエネルギーの固有状態を準備できるとは限りません。初期状態に目的の固有状態がどれだけ含まれるかが、位相推定でそのエネルギーを得る確率に関係します。最低エネルギーを求めたい場合も、状態準備が計算の重要な部分です。[原文：§6.8.2、物理46〜47ページ](/assets/pdf/preskill/chap6.pdf#page=46)
+
+分子については、電子の状態を量子ビットへ対応させ、$U(t)$ をゲートに分解する仕事も必要です。この読み物でつながったのは、固有値・時間発展・測定という既習の理論が、エネルギーを求める回路の設計理由になるところです。
+
+### 7. 回路が正しいことと、効率がよいことを分けて確かめる {#alg-essential-cost}
+
+ここまでの式から、測定確率に知りたい情報が現れることを確認できました。効率を判断するには、その確率を得るための作業も数えます。
+
+| 数える作業 | この回路で確認すること |
+| :--- | :--- |
+| 状態の準備 | 必要な $\lvert u\rangle$ や、目的の固有状態を十分含む入力を、どのように用意するか |
+| Uと制御付きUの実装 | 箱一つを、実際には何個のゲートで実現するか |
+| 精度を上げるための操作 | $U^k$ を作る費用が、$k$ や問題の大きさにどう依存するか |
+| 測定の反復 | 必要な精度・成功確率に達するまで、何回準備し直して測るか |
+| 古典的な処理 | 測定値から、周期やエネルギーなどの答えをどう復元するか |
+
+例えば $U^{2^j}$ を「一つの箱」と描いても、Uをそのまま繰り返す実装なら $2^j$ 回分の費用が掛かります。Shorでは、余りを取る算術の構造を使って高いべきの操作を効率よく作れることも、高速化の理由の一部です。
+
+確率の推定にも費用があります。毎回同じ状態を準備し、独立に $M$ 回測定して0が出た割合を $\widehat p$ とすると、真の確率 $p$ に対する標準偏差は
+
+$$
+\sqrt{\operatorname{Var}(\widehat p)}
+=\sqrt{\frac{p(1-p)}{M}}.
+$$
+
+です。$p$ が0と1の間にある場合、この方法で標準偏差を半分にするには4倍の試行が必要です。状態ベクトルのシミュレータが表示する小数を、そのまま実機の1回の測定で得られる精度とは見なせません。
+
+Deutschについて示したのは、与えられた $U_f$ を1回使って、二つの関数値が同じか違うかを確実に判定できることです。一般の課題について効率を比較するには、同じ出力・精度・成功確率を求める古典的な方法と、上の費用を含めて比べます。
+
+::: {.callout-tip appearance="simple" title="この読み物から、回路を見るときに使えること"}
+知りたい答えがどの振幅・位相・内積に入るのかを探し、その情報が最後の測定確率に現れるまで式を追います。入力の準備や制御付き操作など、計算が成立する条件も一緒に確認します。その後で、各部品を実行する費用を数えます。
+
+:::
+
+### 手を動かして確かめる三つの問い {#alg-essential-questions}
+
+**問い1：** Uが $-I$ の場合、BだけにUを掛けても状態の密度行列は変わりません。では、Aを0から始めるH→制御付きU→Hの回路で、Aの測定結果はどうなりますか。AB全体の状態を一段階ずつ書いてください。
+
+::: {.callout-note collapse="true" title="問い1の答え：比較する項があると、マイナスを読める"}
+Bの任意の純粋状態 $\lvert\psi\rangle$ に対し、
+
+$$
+\lvert0\rangle_A\lvert\psi\rangle_B
+\xrightarrow{H_A}\lvert+\rangle_A\lvert\psi\rangle_B
+\xrightarrow{C(-I)}\lvert-\rangle_A\lvert\psi\rangle_B
+\xrightarrow{H_A}\lvert1\rangle_A\lvert\psi\rangle_B.
+$$
+
+Aの結果は必ず1です。$C(-I)=Z_A\otimes I_B$ なので、AB全体に $-1$ を掛ける操作とは違います。
+
+:::
+
+**問い2：** U=X、Bの入力が $\lvert0\rangle$ の場合、なぜAの測定は半々になりますか。第4節の内積の式を使う方法と、AB全体を4項に展開する方法の両方で確かめてください。
+
+::: {.callout-note collapse="true" title="問い2の答え：Bの異なる状態に対応する確率を足す"}
+$\langle0|X|0\rangle=\langle0|1\rangle=0$ なので、$p_A(0)=1/2$ です。状態を展開すると、
+
+$$
+\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}
+\xrightarrow{H_A}
+\frac{\lvert00\rangle+\lvert10\rangle+\lvert01\rangle-\lvert11\rangle}{2}.
+$$
+
+Aが0になる00と01の確率を足すと、$1/4+1/4=1/2$ です。Aが1になる10と11についても同じです。10と11はBの状態が異なるので、両者の振幅を足して打ち消す計算にはなりません。
+
+:::
+
+**問い3：** 固有位相が $\theta=\pi/3$ の場合、最後にHだけを掛ける実験と、$S^\dagger$→Hを掛ける実験で、Aの0が出る確率はいくつですか。それぞれを1回測定するだけで、この角度を確定できるでしょうか。
+
+::: {.callout-note collapse="true" title="問い3の答え：確率の式と、1回に得る結果を区別する"}
+Hだけなら $p_A(0)=(1+1/2)/2=3/4$。$S^\dagger$→Hなら $p_{S^\dagger}(0)=(1+\sqrt3/2)/2=(2+\sqrt3)/4$ です。
+
+各実験の1回の測定で得られるのは0または1です。その二つのビットだけでは、一般の角度を確定できません。確率の推定には反復が必要です。
+
+:::

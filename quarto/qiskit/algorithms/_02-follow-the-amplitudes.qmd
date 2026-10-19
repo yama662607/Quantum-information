@@ -1,0 +1,161 @@
+## 2. 部品をつないで、振幅を追う {#alg-phase-lab}
+
+### Hを2回：なぜ0に戻るのか {#alg-hh}
+
+回路を読むときは、箱の間でいったん止まります。
+
+$$
+\underbrace{\lvert0\rangle}_{\text{入力}}
+\xrightarrow{H}
+\underbrace{\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2}}_{\text{1個目のHの後}}
+\xrightarrow{H}
+\underbrace{\lvert0\rangle}_{\text{2個目のHの後}}.
+$$
+
+二つ目のHについて、途中を省略せずに展開します。
+
+$$
+\begin{aligned}
+H\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2}
+&=\frac1{\sqrt2}H\lvert0\rangle+\frac1{\sqrt2}H\lvert1\rangle\\
+&=\frac12(\lvert0\rangle+\lvert1\rangle)+\frac12(\lvert0\rangle-\lvert1\rangle)\\
+&=\left(\frac12+\frac12\right)\lvert0\rangle
++\left(\frac12-\frac12\right)\lvert1\rangle=\lvert0\rangle.
+\end{aligned}
+$$
+
+::: {.callout-tip appearance="simple" title="計算の規則：同じ出力への振幅を足してから二乗する"}
+0の確率は $|1/2+1/2|^2=1$、1の確率は $|1/2-1/2|^2=0$ です。最後の式では、$\lvert1\rangle$ の係数になる二つの項 $+1/2$ と $-1/2$ を足すと0になります。その0を二乗しているので、1が出る確率も0です。
+
+二つの項を先に二乗して $|1/2|^2+|-1/2|^2$ とすると、答えが $1/2$ に変わってしまいます。二乗するとマイナス符号が消え、足し算で打ち消し合うことを計算に含められないためです。
+
+:::
+
+振幅が加わって強め合ったり打ち消し合ったりすることを**干渉**と呼びます。
+
+### 間にZを挟むと、どちらが打ち消されるか {#alg-hzh}
+
+回路を左からH、Z、Hの順に通します。表の①〜③は、図の破線の位置に対応します。破線は状態を記録する目印で、追加の操作でも測定でもありません。
+
+```{python}
+#| label: fig-alg-hzh-stages
+#| fig-cap: "H → Z → H。各破線で止まり、下の表の対応する状態を書き込む。最後のメーターで初めて測定する。"
+#| fig-alt: "0からH、位置1、Z、位置2、H、位置3、測定の順につながった1量子ビット回路。"
+#| code-summary: "H・Z・Hの回路を描く"
+hzh = QuantumCircuit(1, 1)
+hzh.h(0)
+hzh.barrier(label="1")
+hzh.z(0)
+hzh.barrier(label="2")
+hzh.h(0)
+hzh.barrier(label="3")
+hzh.measure(0, 0)
+hzh.draw(output="mpl", style="bw", initial_state=True, fold=-1)
+```
+
+| 位置 | 今行った計算 | 状態 | もしここで測るなら $p(0),p(1)$ |
+| :--- | :--- | :--- | :--- |
+| 入力 | 0を準備 | $\lvert0\rangle$ | $1,0$ |
+| ① | Hで和と差を作る | $(\lvert0\rangle+\lvert1\rangle)/\sqrt2$ | $1/2,1/2$ |
+| ② | Zで1の振幅の符号を変える | $(\lvert0\rangle-\lvert1\rangle)/\sqrt2$ | $1/2,1/2$ |
+| ③ | Hで再び和と差を作る | $\lvert1\rangle$ | $0,1$ |
+
+②から③も展開します。
+
+$$
+\begin{aligned}
+H\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}
+&=\frac12(\lvert0\rangle+\lvert1\rangle)-\frac12(\lvert0\rangle-\lvert1\rangle)\\
+&=\left(\frac12-\frac12\right)\lvert0\rangle
++\left(\frac12+\frac12\right)\lvert1\rangle=\lvert1\rangle.
+\end{aligned}
+$$
+
+次の図は、**最後のHの内部の足し算だけ**を拡大したものです。線の数値は「入力の振幅 × Hの行列要素」で、右の同じ行き先へ来た二つを足します。青の実線は $+1/2$、橙の破線は $-1/2$。線は粒子の実際の軌道ではなく、計算の寄与を表します。
+
+```{python}
+#| label: fig-alg-amplitude-paths
+#| fig-cap: "最後のHの計算。上図では1への寄与が打ち消され、下図では0への寄与が打ち消される。符号を変えた効果を、同じ行き先への足し算で追える。"
+#| fig-alt: "Hにプラス状態を入れた場合とマイナス状態を入れた場合の二図。各入力から各出力への4本の線にプラスまたはマイナスの半分を表示し、出力側でその和を表示する。"
+#| code-summary: "Hの各行列要素を通る寄与を描き、Qiskitと照合する"
+fig, axes = plt.subplots(2, 1, figsize=(9, 7))
+h_matrix = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
+for ax, sign, name in zip(axes, (1, -1), ("+", "-")):
+    inputs = np.array([1, sign]) / np.sqrt(2)
+    contributions = h_matrix * inputs[np.newaxis, :]
+    gate = QuantumCircuit(1)
+    gate.h(0)
+    np.testing.assert_allclose(
+        contributions.sum(axis=1), Statevector(inputs).evolve(gate).data, atol=1e-12
+    )
+    for source in (0, 1):
+        for dest in (0, 1):
+            value = contributions[dest, source]
+            color = "#2463a6" if value > 0 else "#a64b14"
+            ax.annotate("", xy=(3, 1-dest), xytext=(1, 1-source),
+                        arrowprops=dict(arrowstyle="->", color=color, lw=2,
+                                        linestyle="-" if value > 0 else "--"))
+            fraction = .28 if source == 0 else .72
+            ax.text(1+2*fraction, 1-source+(source-dest)*fraction+.09,
+                    r"$+\frac{1}{2}$" if value > 0 else r"$-\frac{1}{2}$",
+                    color=color, ha="center", fontsize=14,
+                    bbox=dict(facecolor="white", edgecolor="none", pad=1))
+    for bit in (0, 1):
+        prefix = "+" if inputs[bit] > 0 else "-"
+        ax.text(.9, 1-bit, rf"${prefix}\frac{{1}}{{\sqrt{{2}}}}|{bit}\rangle$",
+                ha="right", va="center", fontsize=15)
+        terms = ["+1/2" if v > 0 else "-1/2" for v in contributions[bit]]
+        total = int(round(contributions[bit].sum()))
+        ax.text(3.12, 1-bit, rf"$|{bit}\rangle:\ {terms[0]}{terms[1]}={total}$",
+                va="center", fontsize=14)
+    ax.set_title(rf"$H|{name}\rangle$", fontsize=16)
+    ax.set_xlim(-.1, 5.4)
+    ax.set_ylim(-.45, 1.45)
+    ax.axis("off")
+plt.tight_layout()
+plt.show()
+```
+
+### 順番も回路の一部 {#alg-order}
+
+入力を0に固定して、Z→HとH→Zを比較しましょう。
+
+$$
+\begin{array}{lll}
+Z\to H:&\lvert0\rangle\xrightarrow{Z}\lvert0\rangle\xrightarrow{H}\lvert+\rangle,\\
+H\to Z:&\lvert0\rangle\xrightarrow{H}\lvert+\rangle\xrightarrow{Z}\lvert-\rangle.
+\end{array}
+$$
+
+同じ部品でも状態は異なります。さらにHを置けば、上は0、下は1になります。直後の測定確率が同じでも、回路として同じ働きとは限りません。
+
+::: {.callout-note appearance="minimal" icon="false" title="練習：回路全体の働きを見抜く"}
+入力を一般の $\alpha\lvert0\rangle+\beta\lvert1\rangle$ にして、H→Z→Hを追ってください。全体は、既に知っているどの部品と同じでしょうか。
+
+:::
+
+::: {.callout-note collapse="true" title="答え：入力0だけでなく、任意の入力で確認する"}
+$$
+\begin{pmatrix}\alpha\\\beta\end{pmatrix}
+\xrightarrow{H}\frac1{\sqrt2}\begin{pmatrix}\alpha+\beta\\\alpha-\beta\end{pmatrix}
+\xrightarrow{Z}\frac1{\sqrt2}\begin{pmatrix}\alpha+\beta\\-\alpha+\beta\end{pmatrix}
+\xrightarrow{H}\begin{pmatrix}\beta\\\alpha\end{pmatrix}.
+$$
+
+Xと同じ作用です。任意の入力について示したので $HZH=X$ と言えます。特定の一つの入力で結果が一致しただけでは、二つの回路全体の同一性は示せません。
+
+:::
+
+```{python}
+#| label: algorithms-hand-check
+#| code-summary: "各段階の振幅と、回路全体の行列を答え合わせする"
+check_circuit = QuantumCircuit(1)
+expected = [np.array([1, 1])/np.sqrt(2),
+            np.array([1, -1])/np.sqrt(2), np.array([0, 1])]
+for operation, target in zip(("h", "z", "h"), expected):
+    getattr(check_circuit, operation)(0)
+    state = Statevector.from_instruction(check_circuit)
+    np.testing.assert_allclose(state.data, target, atol=1e-12)
+    print(operation.upper(), "の後:", np.round(state.data.real, 4))
+np.testing.assert_allclose(Operator(check_circuit).data, [[0, 1], [1, 0]], atol=1e-12)
+```

@@ -1,0 +1,134 @@
+## 1. 三つの部品：X・Z・H [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=35) {#alg-gates}
+
+どの部品も、最初に $\lvert0\rangle$ と $\lvert1\rangle$ を入れたときの作用を調べます。それだけで一般の入力への作用も分かります。行列の計算には**線形性**
+
+$$
+U(\alpha\lvert0\rangle+\beta\lvert1\rangle)
+=\alpha U\lvert0\rangle+\beta U\lvert1\rangle
+$$
+
+があるからです。右辺では、まず基底状態に対する作用 $U\lvert0\rangle$ と $U\lvert1\rangle$ を計算し、元の係数 $\alpha,\beta$ を掛けて足しています。以下でも、この手順を使います。
+
+### X：二つの振幅の位置を交換する {#alg-x}
+
+Xゲートは $\lvert0\rangle\mapsto\lvert1\rangle$、$\lvert1\rangle\mapsto\lvert0\rangle$ と入れ替えます。
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+X\begin{pmatrix}\alpha\\\beta\end{pmatrix}
+=\begin{pmatrix}0\alpha+1\beta\\1\alpha+0\beta\end{pmatrix}
+=\begin{pmatrix}\beta\\\alpha\end{pmatrix}.
+$$
+
+ブラケットで同じ計算をすると、
+
+$$
+X(\alpha\lvert0\rangle+\beta\lvert1\rangle)
+=\alpha\lvert1\rangle+\beta\lvert0\rangle
+=\beta\lvert0\rangle+\alpha\lvert1\rangle.
+$$
+
+最後の並べ直しは、$\lvert0\rangle,\lvert1\rangle$ の順に係数を読むためです。$\alpha$ は $\lvert0\rangle$ から $\lvert1\rangle$ へ、$\beta$ は $\lvert1\rangle$ から $\lvert0\rangle$ へ移ります。係数の値は変わりません。例えば $(\sqrt3/2,1/2)$ は $(1/2,\sqrt3/2)$ になり、0と1の測定確率が交換されます。
+
+```{python}
+#| label: fig-alg-x
+#| fig-cap: "Xを一つ通すと0から1へ、二つ通すと0へ戻る。一本の線の左から右へ追う。"
+#| fig-alt: "上段は0からXを一つ通す回路、下段はXを二つ通す回路。"
+#| code-summary: "XとXXの回路・計算結果"
+fig, axes = plt.subplots(2, 1, figsize=(7, 3))
+for count, ax in zip((1, 2), axes):
+    circuit = QuantumCircuit(1)
+    for _ in range(count):
+        circuit.x(0)
+    circuit.draw(output="mpl", ax=ax, style="bw", initial_state=True, fold=-1)
+    actual = Statevector.from_instruction(circuit)
+    np.testing.assert_allclose(actual.data, [0, 1] if count == 1 else [1, 0])
+plt.tight_layout()
+plt.show()
+```
+
+行列の**第1列は $U\lvert0\rangle$、第2列は $U\lvert1\rangle$** です。Xの第1列 $(0,1)^{\mathsf T}$ を見れば、0が1になると読めます。ここで ${\mathsf T}$ は列になるよう転置する記号です。
+
+### Z：1に対応する振幅だけ符号を変える {#alg-z}
+
+$$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+Z\begin{pmatrix}\alpha\\\beta\end{pmatrix}
+=\begin{pmatrix}\alpha\\-\beta\end{pmatrix}.
+$$
+
+したがって $Z\lvert0\rangle=\lvert0\rangle$、$Z\lvert1\rangle=-\lvert1\rangle$。Xとは違い、0と1の位置は入れ替えません。直後の測定では $|-\beta|^2=|\beta|^2$ なので確率も同じです。それでも、符号が違えば、後で振幅を足すときの結果は変わります。
+
+ここで、以後よく使う二つの状態に短い名前を付けます。
+
+$$
+\lvert+\rangle=\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2},\qquad
+\lvert-\rangle=\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}.
+$$
+
+どちらも直接測れば半々ですが、$Z\lvert+\rangle=\lvert-\rangle$ です。二つの成分の**間**にある符号の違いは、相対位相の違いの一例です。一般の複素数なら角度の違いですが、今はプラスとマイナスを追えば十分です。
+
+一方、$\lvert\psi\rangle$ **全体**に $-1$ を掛けるのは全体位相の変化です。$\lvert\psi\rangle$ と $-\lvert\psi\rangle$ に同じゲート $V$ を作用させると、$V(-\lvert\psi\rangle)=-V\lvert\psi\rangle$ なので、出力の全成分に同じマイナスが付きます。絶対値の二乗は同じになり、測定確率は変わりません。
+
+$\lvert-\rangle$ のマイナスは $\lvert1\rangle$ の係数だけに付いています。$-\lvert+\rangle$ のように両方の係数にマイナスが付く状態とは区別してください。
+
+### H：和と差を新しい振幅にする {#alg-h}
+
+Hは **Hadamard（アダマール）ゲート**と呼ばれます。行列と作用を並べると、計算の中身が分かります。
+
+$$
+H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+H\begin{pmatrix}\alpha\\\beta\end{pmatrix}
+=\begin{pmatrix}(\alpha+\beta)/\sqrt2\\(\alpha-\beta)/\sqrt2\end{pmatrix}.
+$$
+
+0の新しい振幅は**和**、1の新しい振幅は**差**です。どちらも $\sqrt2$ で割ります。まず入力の二成分 $\alpha,\beta$ を紙に書き、その右に出力の二成分を計算しましょう。和の式にも差の式にも、**入力の $\alpha,\beta$** を使います。こう書き分ければ、先に計算した出力を、もう一方の式の入力と取り違えずに済みます。
+
+二つの基底を入れると、
+
+$$
+H\lvert0\rangle=\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2}=\lvert+\rangle,
+\qquad
+H\lvert1\rangle=\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}=\lvert-\rangle.
+$$
+
+Hはいつでも測定結果を半々にする部品ではありません。例えば $\alpha=\beta=1/\sqrt2$ を代入すると、
+
+$$
+H\lvert+\rangle
+=\begin{pmatrix}(1/\sqrt2+1/\sqrt2)/\sqrt2\\(1/\sqrt2-1/\sqrt2)/\sqrt2\end{pmatrix}
+=\begin{pmatrix}1\\0\end{pmatrix}=\lvert0\rangle.
+$$
+
+同様に、$\alpha=1/\sqrt2,\beta=-1/\sqrt2$ なら $H\lvert-\rangle=\lvert1\rangle$。**Hは重ね合わせを作ることにも、二つの重ね合わせの違いを0と1へ変えることにも使えます。**
+
+ここで、振幅と測定確率を区別する理由を確認できます。$\lvert+\rangle$ と $\lvert-\rangle$ は、今すぐ測るとどちらも0と1が半々です。しかしHを通してから測ると、前者では必ず0、後者では必ず1が出ます。振幅の符号が、Hの和と差の計算に影響するためです。途中で確率だけを記録すると、どちらも $(1/2,1/2)$ となり、回路の続きを計算するために必要な符号が分からなくなります。
+
+::: {.callout-tip appearance="simple" title="計算の規則：3つの部品を振幅の更新として読む"}
+
+| 箱 | 入力の振幅 | 出力の振幅 | 手で行う計算 |
+| :--- | :--- | :--- | :--- |
+| $X$ | $(\alpha,\beta)$ | $(\beta,\alpha)$ | 入れ替える |
+| $Z$ | $(\alpha,\beta)$ | $(\alpha,-\beta)$ | 下の符号を変える |
+| $H$ | $(\alpha,\beta)$ | $((\alpha+\beta)/\sqrt2,(\alpha-\beta)/\sqrt2)$ | 和と差を作る |
+
+:::
+
+三つとも $\mathbb C^2\to\mathbb C^2$ の演算子です。同じ2×2行列でも、ここでは「入力状態を変換する部品」という役割で使っています。
+
+::: {.callout-note appearance="minimal" icon="false" title="練習：半々ではない入力をHに通す"}
+$\lvert\psi\rangle=(\sqrt3/2)\lvert0\rangle+(1/2)\lvert1\rangle$ にHを掛け、二つの出力振幅と測定確率を計算してください。
+
+:::
+
+::: {.callout-note collapse="true" title="答え：半々ではない入力にも同じ規則を使う"}
+$$
+H\lvert\psi\rangle=
+\frac{\sqrt3+1}{2\sqrt2}\lvert0\rangle+
+\frac{\sqrt3-1}{2\sqrt2}\lvert1\rangle,
+\qquad p(0)=\frac{2+\sqrt3}{4},\quad p(1)=\frac{2-\sqrt3}{4}.
+$$
+
+確率の合計は1です。入力が変わっても、同じ和と差の規則で計算できます。
+
+:::

@@ -1,0 +1,229 @@
+## 補講：同じ回路を、第2・3章の言葉で読む {#alg-theory}
+
+ここまで、振幅を追うことで小さな回路を読み、設計しました。今度は**同じHの回路でも、準備が確率的ならどう計算するか**を考えます。ここで密度行列が役立ちます。
+
+### 混合した準備にHを掛ける {#alg-mixed-preparation}
+
+毎回、確率 $1/3$ で $\lvert0\rangle$、確率 $2/3$ で $\lvert+\rangle$ を用意するとします。このように、確率的に異なる状態を準備したものを**混合状態**として扱います。各試行の準備記録を参照せず、Hの後の0の確率を求めましょう。
+
+| 準備 | 準備される確率 | Hを通した状態 | そこから0が出る確率 |
+| :--- | :--- | :--- | :--- |
+| $\lvert0\rangle$ | $1/3$ | $\lvert+\rangle$ | $1/2$ |
+| $\lvert+\rangle$ | $2/3$ | $\lvert0\rangle$ | $1$ |
+
+準備ごとに、先ほどまでの手計算を使い、最後に確率の平均を取ります。
+
+$$
+p(0)=\frac13\times\frac12+\frac23\times1=\frac56,
+\qquad p(1)=\frac16.
+$$
+
+ゲートを通した後の状態は、**同じ基底状態の係数を足してまとめ、その絶対値を二乗**して測定確率を求めました。今回も、各準備についてはその手順で計算します。その上で、各準備から0が出る確率に、その準備を選ぶ確率を掛けて足しています。
+
+### 密度行列なら、準備の一覧を一つにまとめられる [📄 chap2.pdf](/assets/pdf/preskill/chap2.pdf#page=17) {#alg-density}
+
+列ベクトル $\lvert\psi\rangle$ の複素共役転置をブラ $\langle\psi\rvert$ と書きます。列と行の積 $\lvert\psi\rangle\langle\psi\rvert$ は行列です。準備の重みを $w_j$ とすると、密度行列は
+
+$$
+\rho=\sum_j w_j\lvert\psi_j\rangle\langle\psi_j\rvert,
+\qquad w_j\geq0,\quad\sum_j w_j=1
+$$
+
+です。$\rho$ は状態を表す演算子で、$\rho\geq0$、$\operatorname{tr}\rho=1$ を満たします。$\rho\geq0$ は任意のベクトル $v$ に対して $v^\dagger\rho v\geq0$ という意味です。トレース $\operatorname{tr}$ は対角成分の和です。
+
+今回の準備では、
+
+$$
+\rho=\frac13\begin{pmatrix}1&0\\0&0\end{pmatrix}
++\frac23\cdot\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+=\begin{pmatrix}2/3&1/3\\1/3&1/3\end{pmatrix}.
+$$
+
+Hを掛けた後は、各準備の $\lvert\psi_j\rangle$ を $H\lvert\psi_j\rangle$ に変えればよいので、
+
+$$
+\begin{aligned}
+\rho'&=\sum_j w_j(H\lvert\psi_j\rangle)(\langle\psi_j\rvert H^\dagger)
+=H\rho H^\dagger\\
+&=\frac12
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+\begin{pmatrix}2/3&1/3\\1/3&1/3\end{pmatrix}
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}\\
+&=\frac12
+\begin{pmatrix}1&2/3\\1/3&0\end{pmatrix}
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+=\begin{pmatrix}5/6&1/6\\1/6&1/6\end{pmatrix}.
+\end{aligned}
+$$
+
+なぜ、この行列から測定確率が分かるのでしょうか。Hを通した各状態を $\lvert\phi_j\rangle=H\lvert\psi_j\rangle=\alpha_j\lvert0\rangle+\beta_j\lvert1\rangle$ と書くと、列と行の積は
+
+$$
+\lvert\phi_j\rangle\langle\phi_j\rvert
+=\begin{pmatrix}\alpha_j\\\beta_j\end{pmatrix}
+\begin{pmatrix}\alpha_j^*&\beta_j^*\end{pmatrix}
+=\begin{pmatrix}|\alpha_j|^2&\alpha_j\beta_j^*\\\beta_j\alpha_j^*&|\beta_j|^2\end{pmatrix}
+$$
+
+です。左上成分は、この準備から0が出る確率 $|\alpha_j|^2$ です。これらの行列を準備の確率 $w_j$ で平均した $\rho'$ の左上成分は、$\sum_j w_j|\alpha_j|^2$。先ほど準備ごとに求めた確率の平均と同じです。
+
+この左上成分を、行列の式で取り出してみましょう。0への射影 $P_0=\lvert0\rangle\langle0\rvert=\begin{pmatrix}1&0\\0&0\end{pmatrix}$ を左から掛けると、第1行だけが残ります。さらに対角成分を足すと、左上成分だけが得られるので、
+
+$$
+p(0)=\operatorname{tr}(P_0\rho')
+=\operatorname{tr}\begin{pmatrix}5/6&1/6\\0&0\end{pmatrix}
+=\frac56+0=\frac56.
+$$
+
+準備ごとの平均と一致しました。ここで対角成分を読めるのは、**測定基底と行列を表示する基底が一致しているから**です。Hの前の左上 $2/3$ と、Hの後の左上 $5/6$ を取り違えないようにしましょう。
+
+::: {#density-methods-comparison .grid}
+::: {.g-col-12 .g-col-lg-6}
+::: {.callout-note appearance="simple" title="準備ごとに計算する"}
+各準備にHを掛け、それぞれの測定確率を準備の重みで平均します。
+
+$$
+p(0)=\frac13\times\frac12+\frac23\times1=\frac56.
+$$
+
+:::
+
+:::
+
+::: {.g-col-12 .g-col-lg-6}
+::: {.callout-note appearance="simple" title="密度行列にまとめて計算する"}
+準備を $\rho$ にまとめ、出力 $\rho'=H\rho H^\dagger$ から測定確率を求めます。
+
+$$
+p(0)=\operatorname{tr}(P_0\rho')=\frac56.
+$$
+
+:::
+
+:::
+
+:::
+
+二通りとも、実際の回路は**準備→H→測定**です。密度行列は準備の情報をまとめる記録方法で、追加の回路部品ではありません。式の右側の $H^\dagger$ は、変換後の列 $H\lvert\psi\rangle$ を共役転置した側から現れるもので、Hをもう一度通す指示ではありません。
+
+```{python}
+#| label: algorithms-density-hand-check
+#| code-summary: "手計算の行列積と、準備ごとの平均を照合する"
+rho = (DensityMatrix.from_label("0").data/3
+       + 2*DensityMatrix.from_label("+").data/3)
+h_gate = QuantumCircuit(1)
+h_gate.h(0)
+out = DensityMatrix(rho).evolve(h_gate)
+np.testing.assert_allclose(out.data, np.array([[5, 1], [1, 1]])/6, atol=1e-12)
+np.testing.assert_allclose(out.probabilities(), [5/6, 1/6], atol=1e-12)
+print("Hの後の密度行列:\n", np.round(out.data.real, 4))
+print("測定確率:", np.round(out.probabilities(), 4))
+```
+
+::: {.callout-note appearance="minimal" icon="false" title="練習：準備の確率を変えて、二通りで計算する"}
+確率 $1/4$ で $\lvert0\rangle$、確率 $3/4$ で $\lvert+\rangle$ を用意し、同じHを掛けます。
+
+1. 準備ごとの測定確率を平均して、$p(0)$ を求めてください。
+2. 入力の $\rho$、出力の $H\rho H^\dagger$、$\operatorname{tr}(P_0H\rho H^\dagger)$ を順に計算し、1と照合してください。
+
+:::
+
+::: {.callout-note collapse="true" title="答え：準備確率を変えても、二通りの計算は一致する"}
+確率の平均からは、
+
+$$
+p(0)=\frac14\times\frac12+\frac34\times1=\frac78.
+$$
+
+密度行列からは、
+
+$$
+\rho=\frac14\begin{pmatrix}1&0\\0&0\end{pmatrix}
++\frac34\cdot\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+=\frac18\begin{pmatrix}5&3\\3&3\end{pmatrix},
+$$
+
+$$
+H\rho H^\dagger=\frac18\begin{pmatrix}7&1\\1&1\end{pmatrix},
+\qquad\operatorname{tr}(P_0H\rho H^\dagger)=\frac78.
+$$
+
+今回は試行ごとに準備を選ぶので、$1/4,3/4$ は確率の重みです。これを状態ベクトルの係数として足すと、指定された確率的な準備とは異なるものを計算してしまいます。
+
+:::
+
+### ゲート・状態・チャネルは、何を入力し何を返すか [📄 chap3.pdf](/assets/pdf/preskill/chap3.pdf#page=14) {#alg-types}
+
+同じ行列の形に見えても、役割と型を分けます。$\mathcal L(\mathbb C^2)$ は $\mathbb C^2$ 上の線形演算子、つまり2×2複素行列の集合です。
+
+| 記号 | この回路での役割 | 型・計算 |
+| :--- | :--- | :--- |
+| $\lvert\psi\rangle$ | 純粋状態を記録する列 | $\mathbb C^2$ のベクトル |
+| $H$ | 状態ベクトルを変換するゲート | $\mathbb C^2\to\mathbb C^2$、$\lvert\psi\rangle\mapsto H\lvert\psi\rangle$ |
+| $\rho$ | 混合も含めた状態の記録 | $\mathcal L(\mathbb C^2)$ の要素、正でトレース1 |
+| $\mathcal H$ | Hの操作を密度行列に作用させるチャネル | $\mathcal L(\mathbb C^2)\to\mathcal L(\mathbb C^2)$、$A\mapsto HAH^\dagger$ |
+| $P_0$ | 測定結果0に対応する射影 | $\mathcal L(\mathbb C^2)$ の要素 |
+| $\rho\mapsto\operatorname{tr}(P_0\rho)$ | 状態から0の確率を計算する規則 | 密度行列を入力して $[0,1]$ の数を返す |
+
+ここまでのHと測定結果0の例を、一般の1量子ビットのユニタリゲート $U$ と測定結果 $y\in\{0,1\}$ に広げます。結果 $y$ に対応する射影を $P_y=\lvert y\rangle\langle y\rvert$ と書くと、
+
+$$
+\rho\longmapsto U\rho U^\dagger,\qquad
+p(y)=\operatorname{tr}(P_yU\rho U^\dagger)
+$$
+
+と表せます。左の式でゲートを通した後の状態を計算し、右の式で、その状態を測って結果 $y$ が出る確率を求めます。上の例では $U=H,y=0$ でした。準備が確率的に異なる場合も、密度行列を使えばこの二段階で計算できます。
+
+::: {.callout-note collapse="true" title="補足：Kraus表現で、符号が確率的に反転する例を読む"}
+ここまでは、準備する状態が試行ごとに異なっても、掛けるゲートは毎回Hでした。今度は、操作そのものが確率的に変わる例を考えます。
+
+確率 $1-q$ で何もせず、確率 $q$ でZを掛けるなら、出力の密度行列は、二つの操作の結果を確率で平均したものです。
+
+$$
+\mathcal E(\rho)=(1-q)\rho+qZ\rho Z^\dagger,\qquad0\leq q\leq1.
+$$
+
+この式を、各項が $K_j\rho K_j^\dagger$ という形になるように書き直します。
+
+$$
+K_0=\sqrt{1-q}\,I,\qquad K_1=\sqrt q\,Z,\qquad
+\mathcal E(\rho)=K_0\rho K_0^\dagger+K_1\rho K_1^\dagger.
+$$
+
+係数を平方根にするのは、左右から掛けるためです。例えば $K_1\rho K_1^\dagger$ では $\sqrt q$ が二つ掛かり、元の係数 $q$ になります。
+
+このように操作を行列 $K_j$ の組で表す方法を**Kraus表現**と呼び、$K_j$ をKraus演算子と呼びます。ここでは1量子ビットから1量子ビットへの操作を扱うので、$A,K_j\in\mathcal L(\mathbb C^2)$ として
+
+$$
+\mathcal E(A)=\sum_jK_jAK_j^\dagger,\qquad\sum_jK_j^\dagger K_j=I
+$$
+
+と書けます。右の条件は、入力のトレースが1なら出力も1になることを保証します。毎回同じHを掛ける操作も、Kraus演算子が1個 $K=H$ の場合として表せます。Kraus表現は、この例のようなゲートの確率的な切り替え以外にも使えます。
+
+先ほどのZを確率的に掛ける例に $\lvert+\rangle$ を入れると、確率 $1-q$ でプラス状態、確率 $q$ でマイナス状態になります。続けてHを掛ければ $p(0)=1-q,p(1)=q$。これは部品の働きからも、密度行列からも求められます。
+
+特に $q=1/2$ ではHの前の状態は $I/2$。直接測ればプラス状態と同じ半々ですが、Hの後は $I/2$ のままなので半々です。一方、純粋なプラス状態はHの後に必ず0です。「同じ確率の一覧でも次の計算結果が違う」ため、振幅や密度行列まで記録する必要があります。
+
+:::
+
+::: {.callout-note collapse="true" title="補足：CNOTの射影による式は、入力・出力表をまとめたもの"}
+$$
+\mathrm{CNOT}=\lvert0\rangle\langle0\rvert_a\otimes I_b
++\lvert1\rangle\langle1\rvert_a\otimes X_b.
+$$
+
+最初の項は上が0の成分を取り出して下を変えず、次の項は上が1の成分を取り出して下を反転します。**二つの項の振幅を足す**ので、この式は上の測定を意味しません。前節の入力・出力表を、一つの演算子として書いたものです。
+
+:::
+
+### 次へ進む前に、自分で回路を説明する {#alg-teach-back}
+
+次の三つを、図と途中式を見せながら説明できるか確認しましょう。
+
+1. H→Z→Hについて、各位置の振幅を書き、最後がXと同じになることを示す。
+2. 00から $(\lvert01\rangle+\lvert10\rangle)/\sqrt2$ を作る回路を設計し、部品を選んだ理由を説明する。
+3. Deutschの回路で、下のXとH、$U_f$、上の最後のHがそれぞれ何のために必要か説明する。
+
+今の段階で身に付けたいのは、**入力と欲しい出力を書く、途中に必要な状態を考える、既知の部品で変換する、各入力で確かめる**という設計の進め方です。任意の目的に効率のよい回路を自動で作れるわけではありません。大きなアルゴリズムでは、この手順に加えて、問題に固有の構造と計算コストの検討が必要になります。
+
+次の授業では、この読み方を使って「特定の答えの振幅を大きくしたい」というGroverの問題に進めます。基礎の回路を説明できることを確認してから、新しい部品を追加します。

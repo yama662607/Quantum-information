@@ -1,0 +1,126 @@
+## 5. 関数を計算する部品を作る {#alg-oracle}
+
+### 入力を消すと、戻れなくなる [📄 chap5.pdf](/assets/pdf/preskill/chap5.pdf#page=15) {#alg-reversible}
+
+次に、普通の1ビット関数 $f:\{0,1\}\to\{0,1\}$ を回路で計算したいとします。まず $\lvert a\rangle\mapsto\lvert f(a)\rangle$ とすればよさそうです。しかし、例えば $f(0)=f(1)=0$ では、0と1が同じ0へつぶれます。出力から入力を戻せず、ユニタリなゲートにはできません。
+
+そこで、**上に入力 $a$ を残し、下の $b$ に結果を書き込む**形を考えます。下は最初0に用意しますが、ゲート自体は下が1のときの作用も定義しなくてはいけません。
+
+ここで $\oplus$ は **XOR**、つまり2で割った余りの足し算です。
+
+$$
+0\oplus0=0,\quad0\oplus1=1,\quad1\oplus0=1,\quad1\oplus1=0.
+$$
+
+「0を足すとそのまま、1を足すと反転」と読めます。欲しい部品を
+
+$$
+U_f:\mathbb C^2\otimes\mathbb C^2\to\mathbb C^2\otimes\mathbb C^2,
+\qquad U_f\lvert a,b\rangle=\lvert a,b\oplus f(a)\rangle
+$$
+
+と定義します。$\lvert a,b\rangle$ は見やすさのためコンマを入れた $\lvert ab\rangle$ と同じです。$f(a)=0$ の成分では下に何もせず、$f(a)=1$ の成分では下にXを掛ける規則です。
+
+下を0にして入力すれば $\lvert a,0\rangle\mapsto\lvert a,f(a)\rangle$。また同じ操作を2回行うと $b\oplus f(a)\oplus f(a)=b$ なので戻れます。この規則は四つの基底の並べ替えであり、線形に拡張するとユニタリになります。
+
+### 四つの関数を、知っている部品で実装する {#alg-four-functions}
+
+1ビットを受け取り1ビットを返す関数は、$f(0),f(1)$ の組で決まり、次の四つだけです。
+
+| 関数 | $f(0),f(1)$ | 下にXを掛けたい条件 | 作る回路 |
+| :--- | :--- | :--- | :--- |
+| $f(a)=0$ | $0,0$ | 一度も掛けない | 何もしない |
+| $f(a)=1$ | $1,1$ | 上に関係なく掛ける | 下にX |
+| $f(a)=a$ | $0,1$ | 上が1 | 上から下へCNOT |
+| $f(a)=1\oplus a$ | $1,0$ | 上が0 | 上にX→CNOT→上にX |
+
+最後の行は、前節で設計した[0を条件にした制御](#alg-design-zero-control)です。関数名を見て暗記するより、**どの入力で下を反転すべきか**を表にしてから組み立てましょう。
+
+```{python}
+#| label: fig-alg-four-functions
+#| fig-cap: "四つの関数の実装。上が入力a、下が結果の書き込み先b。Iは何もしない操作。右下は上が0の場合だけ下を反転する。"
+#| fig-alt: "定数0は恒等操作I、定数1は下のX、f(a)=aはCNOT、f(a)=1 XOR aは上のXでCNOTを挟む四つの回路。"
+#| code-summary: "関数の値に応じた回路を作り、全入力で検証する"
+functions = [("f(a)=0", 0, 0), ("f(a)=1", 1, 1),
+             ("f(a)=a", 0, 1), ("f(a)=1 XOR a", 1, 0)]
+
+def make_oracle(f0, f1):
+    circuit = QuantumCircuit(b, a, name="Uf")
+    if (f0, f1) == (0, 0):
+        circuit.id(b[0])
+    elif (f0, f1) == (1, 1):
+        circuit.x(b[0])
+    elif (f0, f1) == (0, 1):
+        circuit.cx(a[0], b[0])
+    else:
+        circuit.x(a[0])
+        circuit.cx(a[0], b[0])
+        circuit.x(a[0])
+    return circuit
+
+fig, axes = plt.subplots(2, 2, figsize=(10, 5))
+for (name, f0, f1), ax in zip(functions, axes.flat):
+    oracle = make_oracle(f0, f1)
+    oracle.draw(output="mpl", reverse_bits=True, ax=ax, style="bw", fold=-1)
+    ax.set_title(name)
+    assert Operator(oracle).is_unitary()
+    for av in (0, 1):
+        for bv in (0, 1):
+            fx = f0 if av == 0 else f1
+            actual = Statevector.from_label(f"{av}{bv}").evolve(oracle)
+            np.testing.assert_allclose(actual.data,
+                Statevector.from_label(f"{av}{bv ^ fx}").data, atol=1e-12)
+plt.tight_layout()
+plt.show()
+```
+
+::: {.callout-note appearance="minimal" icon="false" title="練習：関数を計算する回路を、一箱ずつ読む"}
+$f(a)=1\oplus a$ を選びます。コードを開く前に、次を計算してください。
+
+1. $\lvert00\rangle,\lvert01\rangle,\lvert10\rangle,\lvert11\rangle$ のそれぞれが、$U_f$ でどこへ移るか表にする。
+2. 下が最初から1の $\lvert01\rangle$ と $\lvert11\rangle$ について、図の三つの箱を一つずつ追う。
+3. $(\lvert01\rangle+\lvert11\rangle)/\sqrt2$ を入力した場合の出力を求める。
+
+:::
+
+::: {.callout-note collapse="true" title="答え：下の値を上書きせず、XORで更新する"}
+この関数は $f(0)=1,f(1)=0$ です。変換表は $00\to01$、$01\to00$、$10\to10$、$11\to11$ となります。下が1の場合を各箱で追うと、
+
+$$
+\begin{aligned}
+\lvert01\rangle&\xrightarrow{X\text{を上に}}\lvert11\rangle
+\xrightarrow{\mathrm{CNOT}}\lvert10\rangle
+\xrightarrow{X\text{を上に}}\lvert00\rangle,\\
+\lvert11\rangle&\xrightarrow{X\text{を上に}}\lvert01\rangle
+\xrightarrow{\mathrm{CNOT}}\lvert01\rangle
+\xrightarrow{X\text{を上に}}\lvert11\rangle.
+\end{aligned}
+$$
+
+重ね合わせにも、この二つの変換をそのまま使います。
+
+$$
+U_f\frac{\lvert01\rangle+\lvert11\rangle}{\sqrt2}
+=\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}.
+$$
+
+$f(1)=0$ でも、入力 $\lvert11\rangle$ の下は0に上書きされません。$1\oplus0=1$ なので、そのまま1です。この区別が、次節で下に重ね合わせを入れるときにも必要になります。
+
+:::
+
+### 中身が未知の部品について、何を知りたいか {#alg-problem}
+
+ここから課題を変えます。今作った四つの $U_f$ のどれかが与えられますが、**どの関数かは知らされません**。中身を見ることはできず、入力を与えて部品を動かせます。このような問い合わせ用の部品を**オラクル**と呼びます。
+
+知りたいのは、$f(0)$ と $f(1)$ が**同じか、違うか**です。同じ場合を定数、違う場合を均衡と呼びます。答えを1ビット
+
+$$
+d=f(0)\oplus f(1)=
+\begin{cases}0&\text{同じ},\\1&\text{違う}\end{cases}
+$$
+
+で表しましょう。これが **Deutsch（ドイチュ）の問題**です。
+
+普通に $a=0$ として関数値を一つだけ聞いても、答えは決まりません。例えば $f(0)=0$ なら、$f(a)=0$ と $f(a)=a$ の両方が候補です。確実に判定するには $f(1)$ も聞く必要があります。次節では、重ね合わせにも作用する $U_f$ を使って、1回の問い合わせで答えを得る回路を設計します。
+
+ここで比べるコストは、**正解を確実に得るための問い合わせ回数**です。量子側には上で定義した $U_f$ が使えると仮定します。実装にかかる時間や、あらゆる問題の計算速度を比較しているわけではありません。
