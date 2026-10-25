@@ -1,0 +1,228 @@
+## 1. なぜ「重ね合わせ」だけでは速くならないのか？（第2・3章の理論回収） {#sec-part2-trap}
+
+::: {.scenario-note title="よくある疑問：『2^n 個の状態を同時に計算できるから速い』は本当か？"}
+ニュースや入門書で、「量子コンピュータは $0$ と $1$ の重ね合わせを使って、何億通りもの計算を一度に並列実行できるから速い」という説明を聞いたことがあるかもしれません。
+
+しかし、[前回の第6節](algorithms.qmd#alg-deutsch)で実際に手を動かして試したとおり、**ただ重ね合わせを作って関数 $U_f$ に通しただけでは、量子コンピュータは少しも速くなりませんでした**。
+
+なぜ「同時に計算できているはずなのに、答えを取り出せない」のでしょうか？ そして、私たちが教科書の第2章・第3章で苦労して学んだ**密度行列 $\rho$** や**部分トレース**は、回路を設計するときにどう役に立つのでしょうか？ ここで一気に伏線を回収します。
+
+:::
+
+### ステップ1：前回失敗した「素朴な回路」を、密度行列と部分トレースで解剖する {#sec-part2-partial-trace}
+
+前回の Deutsch の問題で、下の量子ビット $b$ を $\lvert0\rangle$ のままにして $f(a)=a$（中身はCNOT）に通したときのことを思い出してください。
+
+1. 上の量子ビット $a$ に $H$ を掛けて $\lvert+\rangle_a\otimes\lvert0\rangle_b$ にする。
+2. $U_f$（ここではCNOT）に通すと、2量子ビット全体の状態は **Bell状態**
+   $$
+   \lvert\Phi^+\rangle_{ab}=\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}
+   $$ {#eq-part2-bell}
+   になる。
+3. このあと、下の量子ビット $b$ は見ずに、**上の量子ビット $a$ だけに $H$ を掛けて測定**しようとしたら、干渉が起きずに確率が $1/2, 1/2$ になって失敗した。
+
+なぜ上の量子ビット $a$ で干渉が消えてしまったのかを、第2章で学んだ**密度行列（density matrix）**で見てみましょう。[状態ベクトル $\lvert\psi\rangle$（縦ベクトル）と、そのエルミート共役 $\langle\psi\rvert$（横ベクトル）を掛け合わせた $2\times 2$ 行列 $\rho=\lvert\psi\rangle\langle\psi\rvert$ が純粋状態の密度行列です。]{.aside}
+
+まず、CNOTを通す**前**の上の量子ビット $a$ は、純粋状態 $\lvert+\rangle=(\lvert0\rangle+\lvert1\rangle)/\sqrt2$ でした。この密度行列を計算すると、
+
+$$
+\rho_+=\lvert+\rangle\langle+\rvert
+=\begin{pmatrix}1/\sqrt2\\1/\sqrt2\end{pmatrix}
+\begin{pmatrix}1/\sqrt2&1/\sqrt2\end{pmatrix}
+=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix}
+$$ {#eq-part2-rho-plus}
+
+となります。一方、もし上の量子ビットが $\lvert-\rangle=(\lvert0\rangle-\lvert1\rangle)/\sqrt2$ なら、密度行列は
+
+$$
+\rho_-=\lvert-\rangle\langle-\rvert
+=\begin{pmatrix}1/\sqrt2\\-1/\sqrt2\end{pmatrix}
+\begin{pmatrix}1/\sqrt2&-1/\sqrt2\end{pmatrix}
+=\begin{pmatrix}1/2&-1/2\\-1/2&1/2\end{pmatrix}
+$$ {#eq-part2-rho-minus}
+
+です。式 (@eq-part2-rho-plus) と式 (@eq-part2-rho-minus) を見比べてください。
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.callout-note appearance="simple" title="対角成分（左上と右下）：測定確率"}
+どちらも左上は $1/2$、右下も $1/2$ です。これは「いまこのまま計算基底で測ったら、$0$ と $1$ が確率 $1/2$ ずつで出る」ことを表しています。
+
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.callout-tip appearance="simple" title="非対角成分（右上と左下）：干渉のタネ！"}
+$\rho_+$ では $+1/2$、$\rho_-$ では $-1/2$ です。**「$\lvert0\rangle$ と $\lvert1\rangle$ がプラスで重なっているか、マイナスで重なっているか（コヒーレンス）」は、すべて非対角成分に入っています！**
+
+:::
+:::
+:::
+
+実際に、$\rho_+$ や $\rho_-$ に外から $H$ を作用させると（ユニタリ変換 $H\rho H^\dagger$）、この**非対角成分の $\pm 1/2$ があるおかげで**、それぞれ $\lvert0\rangle\langle0\rvert=\begin{pmatrix}1&0\\0&0\end{pmatrix}$ と $\lvert1\rangle\langle1\rvert=\begin{pmatrix}0&0\\0&1\end{pmatrix}$ に分かれて $100\%$ 区別できます。
+
+では、素朴な回路でCNOTを通した後の式 (@eq-part2-bell) の Bell状態 $\lvert\Phi^+\rangle=(\lvert00\rangle+\lvert11\rangle)/\sqrt2$ では、上の量子ビット $a$ の密度行列 $\rho_a$ はどうなっているでしょうか？
+
+まず、2量子ビット全体の外積 $\lvert\Phi^+\rangle\langle\Phi^+\rvert$ を展開して、4つの項を書き出してみます。
+
+$$
+\begin{aligned}
+\lvert\Phi^+\rangle\langle\Phi^+\rvert
+&=\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}\cdot\frac{\langle00\rvert+\langle11\rvert}{\sqrt2}\\
+&=\frac12\Bigl(
+  \lvert0\rangle\langle0\rvert_a\otimes\underbrace{\lvert0\rangle\langle0\rvert_b}_{\operatorname{tr}=1}
+  +\lvert0\rangle\langle1\rvert_a\otimes\underbrace{\lvert0\rangle\langle1\rvert_b}_{\operatorname{tr}=\langle1|0\rangle=0}
+  +\lvert1\rangle\langle0\rvert_a\otimes\underbrace{\lvert1\rangle\langle0\rvert_b}_{\operatorname{tr}=\langle0|1\rangle=0}
+  +\lvert1\rangle\langle1\rvert_a\otimes\underbrace{\lvert1\rangle\langle1\rvert_b}_{\operatorname{tr}=1}
+\Bigr).
+\end{aligned}
+$$
+
+第2章・第3章で学んだとおり、「下の量子ビット $b$ を測定せずに無視して、上の量子ビット $a$ だけを見る」操作は、各項の右側（下 $b$ の部分）のトレースをとる**部分トレース $\operatorname{tr}_b$** です（一般に $\operatorname{tr}(\lvert b_1\rangle\langle b_2\rvert)=\langle b_2\vert b_1\rangle$）。
+
+すると驚くべきことが起きます。真ん中の2つの交差項（干渉のタネになる非対角項 $\lvert0\rangle\langle1\rvert_a$ と $\lvert1\rangle\langle0\rvert_a$）には、下の状態が $\lvert0\rangle_b$ と $\lvert1\rangle_b$ に分裂したせいで $\lvert0\rangle\langle1\rvert_b$ や $\lvert1\rangle\langle0\rvert_b$ がくっついています。これらは直交しているため、トレースをとると **$\langle1\vert0\rangle_b = 0$ となって道連れに消えてしまう**のです！
+
+$$
+\begin{aligned}
+\rho_a
+&=\operatorname{tr}_b\bigl(\lvert\Phi^+\rangle\langle\Phi^+\rvert\bigr)
+=\frac12\lvert0\rangle\langle0\rvert_a\cdot 1
++\frac12\lvert0\rangle\langle1\rvert_a\cdot 0
++\frac12\lvert1\rangle\langle0\rvert_a\cdot 0
++\frac12\lvert1\rangle\langle1\rvert_a\cdot 1\\
+&=\frac12\begin{pmatrix}1&0\\0&0\end{pmatrix}
++\frac12\begin{pmatrix}0&0\\0&1\end{pmatrix}
+=\begin{pmatrix}1/2&0\\0&1/2\end{pmatrix}=\frac{I}{2}.
+\end{aligned}
+$$ {#eq-part2-bell-partial-trace}
+
+式 (@eq-part2-bell-partial-trace) の結果を見てください！ **右上と左下の非対角成分が、完全に $0$ になって消えています！**
+
+これは、「最初から表と裏が確率 $1/2$ で出るただの古典的なコイン（完全混合状態 $I/2$）」とまったく同じ行列です。非対角成分が $0$ の行列 $\frac{I}{2}$ には、あとから上だけにどんなゲート $H$ を掛けても
+
+$$
+H\left(\frac{I}{2}\right)H^\dagger=\frac{HIH^\dagger}{2}=\frac{HH^\dagger}{2}=\frac{I}{2}
+$$
+
+となり、**二度と干渉を起こすことはできません**。これが、素朴な並列計算が失敗した数学的な正体です。図 (@fig-part2-coherence-heatmap) で、3つの状態の密度行列を見比べてみましょう。
+
+```{python}
+#| label: fig-part2-coherence-heatmap
+#| fig-cap: "上の量子ビットaの密度行列 ρ_a の比較。左（|+⟩）と中央（|−⟩：Deutschで位相キックバックを使った後）には右上・左下に非対角成分（±0.5）が生き残っているため、次のHゲートで100%の干渉が起きる。一方、右（素朴な回路で下が|0⟩と|1⟩に分裂したBell状態）では、部分トレースによって非対角成分が0に消滅し、どんなゲートを掛けても確率1/2から動かせなくなる。"
+#| fig-alt: "3つの2×2密度行列（|+⟩、|−⟩、Bell状態の部分トレースI/2）の要素の値を色と数値で比較したヒートマップ。"
+#| code-summary: "Qiskitのpartial_traceで上の量子ビットの密度行列を計算し、非対角成分を比較する"
+rho_plus = DensityMatrix.from_label("+").data.real
+rho_minus = DensityMatrix.from_label("-").data.real
+
+# 素朴な回路（H -> CNOT）の後の状態から、下(q0)を部分トレースして上(q1)を取り出す
+qc_bell = QuantumCircuit(2)
+qc_bell.h(1)
+qc_bell.cx(1, 0)
+rho_bell_upper = partial_trace(Statevector.from_instruction(qc_bell), [0]).data.real
+np.testing.assert_allclose(rho_bell_upper, 0.5 * np.eye(2), atol=1e-12)
+
+fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.4))
+matrices = [
+    (rho_plus, r"① 初期の重ね合わせ $|+\rangle\langle +|$" + "\n（非対角成分 +0.5：干渉できる）"),
+    (rho_minus, r"② Deutschの回路 $|-\rangle\langle -|$" + "\n（非対角成分 −0.5：1へ干渉！）"),
+    (rho_bell_upper, r"③ 素朴な回路 $\mathrm{tr}_b(|\Phi^+\rangle\langle\Phi^+|)$" + "\n（非対角成分 0：干渉が消滅！）"),
+]
+
+for ax, (mat, title) in zip(axes, matrices):
+    im = ax.imshow(mat, cmap="coolwarm", vmin=-0.6, vmax=0.6)
+    ax.set_xticks([0, 1], [r"$\langle 0|$", r"$\langle 1|$"], fontsize=11)
+    ax.set_yticks([0, 1], [r"$|0\rangle$", r"$|1\rangle$"], fontsize=11)
+    ax.set_title(title, fontsize=10, fontweight="bold")
+    for r in range(2):
+        for c in range(2):
+            val = mat[r, c]
+            kind = "対角(確率)" if r == c else "非対角(干渉)"
+            ax.text(c, r, f"{val:+.1f}\n({kind})", ha="center", va="center",
+                    fontsize=9.5, fontweight="bold",
+                    color="white" if abs(val) > 0.35 else "#111827")
+
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+### ステップ2：第2・3章で出てきた「行列や写像の型」をここで整理する {#sec-part2-types}
+
+第2章・第3章を読んだとき、似たような大文字の記号（$\rho, U, P_y, \mathcal{E}$ など）が次々に登場して、「どれが状態で、どれが操作で、どれが測定なのか」が混乱しやすかったと思います。いま私たちが回路で行った計算と対応させると、表 (@tbl-part2-types) のように役割の違いが一目で整理できます。
+
+| 記号と名前 | 数学の型 | 量子回路での役割 | 具体例 |
+| :--- | :--- | :--- | :--- |
+| **状態ベクトル $\lvert\psi\rangle$** | ベクトル $\in\mathcal{H}$ | 回路の途中を流れる純粋な状態（振幅の列） | $\lvert+\rangle=\frac{1}{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}$ |
+| **密度行列 $\rho$** | エルミート行列（$\rho\ge 0, \operatorname{tr}\rho=1$） | 混合状態や、片方の量子ビットだけを見た状態も含む**状態の完全な記録** | $\rho_+=\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix}$ |
+| **ユニタリ演算子 $U$** | 行列（$U^\dagger U=I$） | 回路の**ゲート（箱）**。ベクトルには $U\lvert\psi\rangle$、密度行列には $U\rho U^\dagger$ と両側から作用する | $X, Z, H, \mathrm{CNOT}$ |
+| **直交射影 $P_y$** | 行列（$P_y^2=P_y=P_y^\dagger$） | **測定メーター**の各結果 $y$ に対応するフィルター | $P_0=\lvert0\rangle\langle0\rvert=\begin{pmatrix}1&0\\0&0\end{pmatrix}$ |
+| **Born則 $\operatorname{tr}(P_y\rho)$** | 行列 $\to$ 実数 $\in[0,1]$ | 状態 $\rho$ を測ったときに結果 $y$ が出る**確率**を取り出す規則 | $p(0)=\operatorname{tr}(P_0\rho)=\rho_{00}$ |
+| **量子チャネル $\mathcal{E}$** | 行列 $\to$ 行列の写像 | ユニタリだけでなく、下を捨てる操作やノイズも含む**一般的な状態変化** | $\mathcal{E}(\rho)=\sum_k K_k\rho K_k^\dagger$ |
+
+: 第2・3章の理論記号と量子回路のパーツの対応表 {#tbl-part2-types}
+
+::: {.callout-note collapse="true" title="ミニ確認：混合状態に H ゲートを掛けて測る計算を、手計算とQiskitで照合する"}
+純粋状態だけでなく、「確率 $1/3$ で $\lvert0\rangle$、確率 $2/3$ で $\lvert+\rangle$ を準備する」という**混合状態**でも、表 (@tbl-part2-types) の規則でまったく同じように計算できます。
+
+1. **初期状態の密度行列 $\rho$**：
+   $$
+   \rho=\frac13\lvert0\rangle\langle0\rvert+\frac23\lvert+\rangle\langle+\rvert
+   =\frac13\begin{pmatrix}1&0\\0&0\end{pmatrix}
+   +\frac23\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix}
+   =\begin{pmatrix}2/3&1/3\\1/3&1/3\end{pmatrix}.
+   $$
+2. **$H$ ゲートを通した後の密度行列 $\rho'=H\rho H^\dagger$**：
+   $H\lvert0\rangle=\lvert+\rangle$、$H\lvert+\rangle=\lvert0\rangle$ なので、
+   $$
+   \rho'=H\rho H^\dagger
+   =\frac13\lvert+\rangle\langle+\rvert+\frac23\lvert0\rangle\langle0\rvert
+   =\begin{pmatrix}5/6&1/6\\1/6&1/6\end{pmatrix}.
+   $$
+3. **測定で $0$ が出る確率 $p(0)=\operatorname{tr}(P_0\rho')$**：
+   左上の成分を読んで $p(0)=5/6$（$1$ が出る確率は $1/6$）と求まります。
+
+```{python}
+#| label: part2-density-check
+#| code-summary: "混合状態の変換 HρH† と測定確率 tr(P0 HρH†) をLaTeX数式で検証する"
+rho_init = (1/3) * DensityMatrix.from_label("0").data + (2/3) * DensityMatrix.from_label("+").data
+H_mat = Operator.from_label("H").data
+rho_after_h = H_mat @ rho_init @ H_mat.conj().T
+P0 = np.array([[1, 0], [0, 0]])
+p0_val = np.trace(P0 @ rho_after_h).real
+
+np.testing.assert_allclose(rho_init, [[2/3, 1/3], [1/3, 1/3]], atol=1e-12)
+np.testing.assert_allclose(rho_after_h, [[5/6, 1/6], [1/6, 1/6]], atol=1e-12)
+np.testing.assert_allclose(p0_val, 5/6, atol=1e-12)
+
+l_init = array_to_latex(rho_init, source=True).strip()
+l_after = array_to_latex(rho_after_h, source=True).strip()
+display(Markdown(rf"$$\rho = {l_init} \xrightarrow{{\ H\ }} H\rho H^\dagger = {l_after}, \qquad p(0)=\operatorname{{tr}}(P_0 H\rho H^\dagger)=\frac{{5}}{{6}}$$"))
+```
+
+:::
+
+---
+
+### ステップ3：量子コンピュータで速くなるための「3つの黄金条件」 {#sec-part2-golden-rules}
+
+ここまでで、「なぜ素朴な並列計算では速くならないのか」が完全にわかりました。量子アルゴリズムが古典コンピュータに勝つには、必ず図 (@fig-part2-three-rules) の**3つのステップ**をセットで設計しなければなりません。
+
+```{mermaid}
+%%| label: fig-part2-three-rules
+%%| fig-cap: "量子アルゴリズムが成立するための3ステップ。①重ね合わせを作るだけでは不十分であり、②余計なエンタングルメントを残さずに位相（符号）へ特徴を書き込み、③最後に干渉させて正解の確率だけを1に近づける必要がある。"
+flowchart LR
+    Step1["① 重ね合わせで広げる<br/>H ゲートで全候補の経路を作る"] --> Step2["② 位相に特徴を刻む<br/>下の状態を共通に保ち（非対角成分を守り）<br/>答えの構造を符号 ±1 や e^(iθ) に載せる"]
+    Step2 --> Step3["③ 干渉で答えだけ残す<br/>最後の H や QFT で波をぶつけ<br/>不正解を相殺(0)・正解を増幅(1)する"]
+```
+
+::: {.important-point}
+**量子アルゴリズム設計の鉄則**
+
+1. **重ね合わせを作った直後に測っても、ランダムに1つ出るだけで何の得もしない。**
+2. **途中の計算で作業用の量子ビット（下）にゴミ情報を残してエンタングルさせてしまうと、部分トレースによって非対角成分が消え、干渉が起きなくなる。**
+3. **だから、固有状態（$\lvert-\rangle$ や $\lvert u\rangle$）を使って「下の状態は変えずに、前の位相（符号や角度）だけに情報を蹴り上げる」設計がすべての鍵になる！**
+
+:::
+
+この鉄則がわかれば、次節でいよいよ**「古典コンピュータなら100万回かかる問題を、たった1回で解く回路」**をあなた自身の手で作ることができます！

@@ -66,14 +66,16 @@ for (name, f0, f1), ax in zip(functions, axes.flat):
         txt = t.get_text()
         if "{a}" in txt:
             t.set_text(r"$a:\ |a\rangle$")
+            t.set_fontsize(11)
         elif "{b}" in txt:
             t.set_text(r"$b:\ |0\rangle$")
+            t.set_fontsize(11)
     xlim = ax.get_xlim()
     x_r = xlim[1] + 0.1
     ax.text(x_r, 0, r"$\longrightarrow |a\rangle$", va="center", ha="left", fontsize=11)
     ax.text(x_r, -1, r"$\longrightarrow |0\oplus f(a)\rangle = |f(a)\rangle$", va="center", ha="left", fontsize=11, fontweight="bold", color="#005fb8")
-    ax.set_xlim(xlim[0] - 0.1, xlim[1] + 2.3)
-    ax.set_title(name)
+    ax.set_xlim(-1.4, max(xlim[1] + 2.3, 4.4))
+    ax.set_title(name, fontweight="bold")
     assert Operator(oracle).is_unitary()
     for av in (0, 1):
         for bv in (0, 1):

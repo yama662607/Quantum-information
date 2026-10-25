@@ -23,6 +23,7 @@ research/partial-trace_reduction_purification_files/
 
 # Tool & OS files
 tools/.validation_cache.json
+quarto/assets/videos/.tts_cache/
 node_modules/
 .DS_Store
 .data/

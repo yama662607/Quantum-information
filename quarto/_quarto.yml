@@ -4,6 +4,7 @@ project:
   resources:
     - "assets/pdf/**/*.pdf"
     - "assets/*.png"
+    - "assets/videos/**/*"
   preview:
     watch-inputs: true
 
@@ -67,6 +68,7 @@ book:
       chapters:
         - qiskit/index.qmd
         - qiskit/algorithms.qmd
+        - qiskit/algorithms-part2.qmd
         - qiskit/composer.qmd
     - support/index.qmd
     # Note: Template files (templates/*.qmd) are excluded from build

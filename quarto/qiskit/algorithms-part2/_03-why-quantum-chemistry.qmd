@@ -1,0 +1,208 @@
+## 3. なぜ「創薬・材料開発」に量子コンピュータが必要なのか？ [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=46) {#sec-part2-chemistry}
+
+ここまでで、「関数の特徴を位相（$\pm 1$）に転写して干渉させる」ことで、古典コンピュータの $n$ 回を $1$ 回に短縮できることがわかりました。
+しかし、世の中の実際の課題では「誰かが作った人工的なブラックボックス $U_f$」が渡されるわけではありません。私たちが本当に解きたいのは、**新しい薬の開発（創薬）**や**触媒・バッテリー材料の設計**といった現実の科学・産業の課題です。
+
+なぜ今、世界中の製薬会社や化学メーカー、そして Google や IBM が「量子コンピュータの一番の使い道は創薬・量子化学だ」と口を揃えるのでしょうか？ 数式に入る前に、まずその理由を物語として押さえましょう。
+
+![標的タンパク質の結合ポケットと薬候補分子の電子雲（共有結合軌道）のイメージ](/assets/videos/img_drug_pocket.jpg){#fig-part2-drug-pocket-illust width="82%"}
+
+::: {.callout-tip collapse="true" title="🎬 セクション3〜5の解説動画を見る：第3話「創薬×量子コンピュータと位相時計」（2分35秒）"}
+
+```{=html}
+<div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:12px; margin:0.4rem 0;">
+  <video controls preload="metadata" poster="/assets/videos/ep3-drug-discovery-phase.jpg" style="width:100%; border-radius:8px; display:block;">
+    <source src="/assets/videos/ep3-drug-discovery-phase.mp4" type="video/mp4">
+    <track kind="captions" src="/assets/videos/ep3-drug-discovery-phase.vtt" srclang="ja" label="日本語字幕" default>
+  </video>
+</div>
+```
+
+:::
+
+---
+
+### ステップ1：薬が効くかどうかは「分子のエネルギー」で決まる {#sec-part2-drug-energy}
+
+::: {.scenario-note title="創薬の現場で起きていること：『鍵と鍵穴』の結合エネルギーを知りたい"}
+私たちが飲む薬の多くは、体の中で病気の原因になっている**標的タンパク質（鍵穴）**のポケットに、**薬の候補分子（鍵）**がピタッとはまり込むことで働きを止めます。
+
+このとき、「候補の分子Aと分子Bのどちらが標的タンパク質に強く結びつくか？」「どういう形で結合するのが一番安定か？」を実験室で何万通りも合成して試すには、何年もの歳月と何百億円もの費用がかかります。もしコンピュータの計算だけで**「分子とタンパク質が近づいたときのエネルギー」**を正確に計算できれば、一番よく効く薬の分子をコンピュータ上で設計できます。
+
+:::
+
+自然界の分子には、**「エネルギーが低い状態ほど安定して存在する」**という大原則があります。
+
+- 薬分子とタンパク質が離れた状態よりも、くっついた状態のほうが**エネルギーがぐっと下がる（安定化する）**なら、薬は標的タンパク質に強く結合します。
+- 逆にエネルギーが上がってしまうなら、すぐにはがれてしまい薬として効きません。
+
+つまり、創薬や化学反応のシミュレーションで一番知りたい答えは、**「その分子の電子たちが作る最も安定な状態（基底状態）のエネルギー $E$ はいくらか？」**という1つの数値なのです。
+
+---
+
+### ステップ2：なぜ世界最速のスパコンでも分子の計算がパンクするのか？（$2^N$ の壁） {#sec-part2-exponential-wall}
+
+「エネルギーを計算するだけなら、今のスーパーコンピュータ（富岳や Frontier など）で計算すればいいのでは？」と思いますよね。実際、小さな分子や大雑把な近似なら古典スパコンでも計算できます。
+ところが、**電子どうしが強く影響し合う重要な分子（酵素の活性中心や触媒、複雑な創薬ターゲット）**を正確に計算しようとした瞬間、古典コンピュータは絶対に越えられない壁にぶつかります。
+
+第1回の第3節で、量子ビットが増えたときに記録すべき振幅（成分）の数がどう増えるかを学びました。
+
+- 量子ビット **1本**（電子が入る場所が1つ）：振幅は $2^1 = 2$ 個
+- 量子ビット **2本**（電子が入る場所が2つ）：振幅は $2^2 = 4$ 個（$c_{00}, c_{01}, c_{10}, c_{11}$）
+- 量子ビット **$N$ 本**（分子の電子軌道が $N$ 個）：振幅は **$2^N$ 個**！
+
+分子の中の電子たちは互いに反発し合いながら**複雑にエンタングル（量子もつれ）**しています。そのため、「軌道1に電子がいるかどうか」と「軌道2に電子がいるかどうか」を別々に計算することはできず、$N$ 個の電子軌道全体の状態を **$2^N$ 個の複素数の列ベクトル**として丸ごと扱わなければなりません。[量子化学では、分子の電子が取り得る軌道（スピン軌道）ごとに「電子が入っている $\lvert1\rangle$」「空っぽ $\lvert0\rangle$」を1量子ビットに対応させます（Jordan–Wigner 変換など）。]{.aside}
+
+$N$ が増えたとき、$2^N$ がどれほど恐ろしい勢いで爆発するかを、表 (@tbl-part2-memory-wall) と図 (@fig-part2-exponential-wall) で見てみましょう。
+
+| 電子軌道（量子ビット）の数 $N$ | 状態を記録するのに必要な複素数の個数 $2^N$ | 古典コンピュータで必要なメモリ量（1個16バイト換算） | 量子コンピュータで必要な量子ビット数 |
+| :---: | :--- | :--- | :---: |
+| **$10$ 個** | $1,024$ 個 | 約 $16\text{ KB}$（スマホで一瞬） | **$10$ 量子ビット** |
+| **$30$ 個** | 約 $10\text{ 億}$ 個 | 約 $16\text{ GB}$（高性能PCのメモリ限界） | **$30$ 量子ビット** |
+| **$50$ 個** | 約 $1,125\text{ 兆}$ 個 | 約 **$18\text{ PB}$（世界トップ級スパコンのメモリ限界）** | **$50$ 量子ビット** |
+| **$80$ 個** | 約 $1.2 \times 10^{24}$ 個 | **地球上の全ストレージ合計を突破（絶対不可能）** | **$80$ 量子ビット** |
+| **$100$ 個** | 約 $1.3 \times 10^{30}$ 個 | 地球100万個分のメモリが必要 | **$100$ 量子ビット** |
+
+: 電子軌道数 $N$ に対する古典メモリ量と量子ビット数の比較 {#tbl-part2-memory-wall}
+
+```{python}
+#| label: fig-part2-exponential-wall
+#| fig-cap: "分子の電子軌道数Nに対する、状態を正確に記録するためのリソース比較。左（対数グラフ）：古典コンピュータの必要メモリは 2^N の指数関数で爆発し、N=50付近で世界最速スパコンの限界を超え、N=80で地球上の全データ容量を超える。右：同じ分子を表すのに必要な量子ビット数は N に比例する直線（N=100でもわずか100量子ビット）で済む。"
+#| fig-alt: "左はN=10から100に対する古典メモリ量の対数グラフとPC・スパコン・地球全容量の限界線、右は量子ビット数がNに比例する直線グラフ。"
+#| code-summary: "古典メモリの指数関数的な爆発（2^Nの壁）と量子ビット数のスケーリングを可視化する"
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.5, 3.9))
+
+n_orbitals = np.arange(10, 105, 5)
+bytes_needed = 16.0 * (2.0 ** n_orbitals)  # complex128 = 16 bytes
+
+ax1.semilogy(n_orbitals, bytes_needed, "o-", color="#dc2626", linewidth=2.5, label=r"古典メモリ量 $16 \times 2^N$ Byte")
+ax1.axhline(16e9, color="#64748b", linestyle="--", linewidth=1.2)
+ax1.text(38, 3.8e10, r"高性能PCの限界 (16 GB: $N\approx 30$)", fontsize=8.5, color="#475569",
+         bbox=dict(facecolor="white", alpha=0.88, edgecolor="none", pad=1.5))
+ax1.axhline(2e16, color="#d97706", linestyle="--", linewidth=1.4)
+ax1.text(11, 6.0e16, r"世界最速スパコンの限界 (約20 PB: $N\approx 50$)", fontsize=8.5, color="#b45309", fontweight="bold",
+         bbox=dict(facecolor="white", alpha=0.88, edgecolor="none", pad=1.5))
+ax1.axhline(1e24, color="#7c3aed", linestyle=":", linewidth=1.5)
+ax1.text(11, 3.5e24, r"地球上の全データ容量 ($N\approx 76$)", fontsize=8.5, color="#6d28d9", fontweight="bold",
+         bbox=dict(facecolor="white", alpha=0.88, edgecolor="none", pad=1.5))
+
+ax1.set_xlabel("分子の電子軌道数 N")
+ax1.set_ylabel("状態ベクトルの記録に必要なメモリ (Byte, 対数軸)")
+ax1.set_title(r"古典コンピュータ：$2^N$ のメモリ爆発", fontweight="bold")
+ax1.grid(alpha=0.25)
+ax1.legend(loc="lower right")
+
+ax2.plot(n_orbitals, n_orbitals, "s-", color="#2563eb", linewidth=2.5, label="必要な論理量子ビット数 (= N)")
+ax2.fill_between(n_orbitals, 0, n_orbitals, color="#dbeafe", alpha=0.45)
+ax2.set_xlabel("分子の電子軌道数 N")
+ax2.set_ylabel("必要な量子ビット数 (Qubits)")
+ax2.set_title("量子コンピュータ：量子状態にそのまま載せる", fontweight="bold")
+ax2.set_ylim(0, 118)
+ax2.grid(alpha=0.25)
+ax2.legend(loc="upper left")
+ax2.annotate("スパコンでも不可能な N=100 の分子が\nたった 100 量子ビットの回路に収まる！",
+             xy=(100, 100), xytext=(12, 74),
+             arrowprops=dict(arrowstyle="->", color="#1e40af", lw=1.5),
+             bbox=dict(facecolor="white", alpha=0.9, edgecolor="#bfdbfe", boxstyle="round,pad=0.3"),
+             fontsize=9.0, fontweight="bold", color="#1e40af")
+
+plt.tight_layout()
+plt.show()
+```
+
+これが、リチャード・ファインマンが「**自然（分子や物理系）は量子力学で動いているのだから、それをシミュレートするには量子力学で動くコンピュータを作るしかない**」と提唱した理由です。量子コンピュータなら、$2^N$ 個の数字を紙や古典メモリに書き出す代わりに、**$N$ 本の量子ビットそのものに分子の量子状態を直接再現**させることができます。
+
+---
+
+### ステップ3：【次節への重要な伏線】分子のエネルギー $E$ は、回路の「どこ」に現れるのか？ {#sec-part2-energy-as-phase}
+
+では、$N$ 本の量子ビットの上に分子の状態を用意できたとして、どうやってそこから**「エネルギー $E$」という数値**を取り出せばよいのでしょうか？
+
+ここで、量子力学の最も美しい基本法則（シュレーディンガー方程式）が登場します。名前はいかめしいですが、言っていることはたった1行の「固有状態のルール」です！
+
+::: {.physics-notes}
+**エネルギー $E$ とは、「時間を進めたときに状態が回転するスピード（位相の角度）」である！**
+
+分子のエネルギーを表す演算子を**ハミルトニアン $\widehat{H}$** と呼びます（アダマールゲート $H$ と区別するため、頭に山 $\widehat{\phantom{H}}$ を付けます）。
+エネルギーが $E$ で確定している分子の状態（固有状態）を $\lvert E\rangle$ と書くと、
+
+$$
+\widehat{H}\lvert E\rangle = E\lvert E\rangle
+$$ {#eq-part2-hamiltonian-eigen}
+
+です。この式 (@eq-part2-hamiltonian-eigen) の分子の状態を、時間 $t$ だけ進めるユニタリ操作（**時間発展演算子**）を $U(t)$ と書くと、量子力学の法則により、状態 $\lvert E\rangle$ の形はまったく変わらず、**前に複素数の位相 $e^{-iEt/\hbar}$ が掛かるだけ**になります！[ここで $\hbar$（エイチ・バー）はプランク定数という物理の定数です。計算するときは $\hbar=1$ という単位系を選ぶと、単に $\theta = -Et$ となってさらにシンプルになります。]{.aside}
+
+$$
+U(t)\lvert E\rangle = e^{-i\widehat{H}t/\hbar}\lvert E\rangle = e^{-iEt/\hbar}\lvert E\rangle.
+$$ {#eq-part2-time-evolution-phase}
+
+:::
+
+式 (@eq-part2-time-evolution-phase) を見て、ハッとしませんか？
+第1回で学んだ Deutsch の位相キックバックでは、
+
+$$
+X\lvert-\rangle = (-1)\lvert-\rangle = e^{i\pi}\lvert-\rangle
+$$
+
+のように、状態 $\lvert-\rangle$ の形は変わらず、前に $-1$（角度でいうと $\pi = 180^\circ$）が飛び出しました。
+まったく同じように、分子の固有状態 $\lvert E\rangle$ に「時間を $t$ 進めるゲート $U(t)$」を作用させると、状態 $\lvert E\rangle$ の形は変わらず、前に
+
+$$
+e^{i\theta}\qquad\left(\text{ただし角度 }\theta = -\frac{Et}{\hbar}\right)
+$$ {#eq-part2-theta-energy}
+
+という**複素数の回転（時計の針の角度 $\theta$）**が飛び出すのです（式 (@eq-part2-theta-energy)、図 (@fig-part2-energy-clocks)）！
+
+```{python}
+#| label: fig-part2-energy-clocks
+#| fig-cap: "分子のエネルギーEと位相の回転角θの関係。時間をtだけ進める操作 U(t) を作用させると、状態 |E⟩ の形は変わらず、エネルギー E に比例した速さで複素平面上の時計の針 e^(iθ)（θ = −Et/ℏ）が回転する。結合してエネルギーが低く安定した状態（左）はゆっくり回り、エネルギーが高い不安定な状態（右）は速く回る。"
+#| fig-alt: "複素平面の単位円上で、低エネルギー状態（小さい回転角）と高エネルギー状態（大きい回転角）の位相の針を比較した図。"
+#| code-summary: "エネルギーの違いが複素平面上の位相回転スピードの違いになる様子を描く"
+fig, axes = plt.subplots(1, 2, figsize=(9.4, 3.9))
+circle_t = np.linspace(0, 2 * np.pi, 200)
+
+configs = [
+    (axes[0], -np.pi / 3, "#2563eb", r"安定な結合状態（エネルギー $E$ が小さい）" + "\n" + r"$\rightarrow$ 針がゆっくり回る ($\theta = -\pi/3$)"),
+    (axes[1], -4 * np.pi / 3, "#dc2626", r"不安定な状態（エネルギー $E$ が大きい）" + "\n" + r"$\rightarrow$ 針が速く回る ($\theta = -4\pi/3$)"),
+]
+
+for ax, theta_val, color, title in configs:
+    ax.plot(np.cos(circle_t), np.sin(circle_t), color="#cbd5e1", lw=1.5)
+    ax.axhline(0, color="#e2e8f0", lw=1)
+    ax.axvline(0, color="#e2e8f0", lw=1)
+    # 基準の針 (t=0: 1)
+    ax.annotate("", xy=(1.0, 0.0), xytext=(0, 0),
+                arrowprops=dict(arrowstyle="->", color="#94a3b8", lw=2, ls="--"))
+    ax.text(1.03, -0.14, "基準 (1)", fontsize=8.5, color="#64748b",
+            bbox=dict(facecolor="white", alpha=0.85, edgecolor="none", pad=1.0))
+    # 回転後の針 exp(i*theta)
+    ax.annotate("", xy=(np.cos(theta_val), np.sin(theta_val)), xytext=(0, 0),
+                arrowprops=dict(arrowstyle="->", color=color, lw=3))
+    arc = np.linspace(0, theta_val, 60)
+    ax.plot(0.35 * np.cos(arc), 0.35 * np.sin(arc), color=color, lw=2)
+    ax.text(0.54 * np.cos(theta_val / 2), 0.54 * np.sin(theta_val / 2),
+            r"$\theta = -Et/\hbar$", fontsize=9.5, color=color, fontweight="bold",
+            ha="center", va="center",
+            bbox=dict(facecolor="white", alpha=0.88, edgecolor="none", pad=1.2))
+    ax.set_xlim(-1.38, 1.48)
+    ax.set_ylim(-1.28, 1.28)
+    ax.set_aspect("equal")
+    ax.set_title(title, fontsize=10, fontweight="bold")
+    ax.set_xlabel("実部 Re")
+    ax.set_ylabel("虚部 Im")
+
+plt.tight_layout()
+plt.show()
+```
+
+::: {.important-point}
+**これで「創薬の課題」が「量子回路の課題」に翻訳できた！**
+
+1. 私たちが知りたいのは、分子の**エネルギー $E$**。
+2. 分子の状態 $\lvert E\rangle$ に時間発展ゲート $U(t)$ を掛けると、エネルギー $E$ は **$U(t)\lvert E\rangle = e^{i\theta}\lvert E\rangle$（ただし $\theta = -Et/\hbar$）という位相の角度 $\theta$** として現れる。
+3. したがって、**「あるユニタリ操作 $U$ を掛けたときに飛び出す固有位相の角度 $\theta$ を、測定確率として読み出す回路」**を作れれば、分子のエネルギー $E$ が計算できる！
+
+:::
+
+では、どうやってこの「時計の針の角度 $\theta$」を量子回路で読み出せばよいのでしょうか？ 次節で、Deutsch の回路をほんの少し一般化するだけで、どんな角度 $\theta$ でも読み取れる万能の時計読み取り回路（**Hadamardテスト**）を作ります！

@@ -37,11 +37,11 @@ check: fmt-check lint typecheck validate-docs render-check test
 # 構文チェックのみの軽量レンダリング (compute blocks は実行しない)
 render-check:
     @echo "🧪 Quarto syntax check (no execute)..."
-    quarto render quarto --to html --execute-debug --no-execute
+    {{pm}} run quarto render quarto --to html --execute-debug --no-execute
 
 # Quarto HTML 実レンダリング
 render-site:
-    quarto render quarto --to html
+    {{pm}} run quarto render quarto --to html
 
 # 自動修正: フォーマット、Lint、およびドキュメントの構造エラーを自動修正
 fix: fmt lint-fix validate-docs-fix

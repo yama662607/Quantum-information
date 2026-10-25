@@ -1,0 +1,220 @@
+## 6. 同じ回路で「暗号解読（因数分解）」も解ける理由と、量子優位を見分ける直感マップ（2026最前線） {#sec-part2-shor-and-frontier}
+
+いよいよ最後のセクションです！
+前節で、私たちは「ユニタリ操作 $U$ の固有位相 $\theta$ を読み出す回路」を使って、創薬ターゲット分子のエネルギー $E$ を計算しました。
+
+実は、**まったく同じ回路の箱 $U$ を「分子の時間発展」から「余りの掛け算」に取り替えるだけで、インターネットのRSA暗号を破る「Shor（ショア）の因数分解アルゴリズム」になります**！
+その仕組みを小さな具体例で確認したあと、最後に**「自分が解きたい課題に出会ったとき、それが量子コンピュータで速くなるかどうかをどうやって見分けるか」**の直感マップをまとめます。
+
+![創薬の分子軌道エネルギー（左）と素因数分解の周期構造（右）を繋ぐ統一原理「位相の時計」](/assets/videos/img_phase_clock_hero.jpg){#fig-part2-phase-clock-hero width="82%"}
+
+::: {.callout-tip collapse="true" title="🎬 このセクションの解説動画を見る：第4話「Shorの因数分解・直感マップ・2026最前線」（2分29秒）"}
+
+```{=html}
+<div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:12px; margin:0.4rem 0;">
+  <video controls preload="metadata" poster="/assets/videos/ep4-shor-and-frontier.jpg" style="width:100%; border-radius:8px; display:block;">
+    <source src="/assets/videos/ep4-shor-and-frontier.mp4" type="video/mp4">
+    <track kind="captions" src="/assets/videos/ep4-shor-and-frontier.vtt" srclang="ja" label="日本語字幕" default>
+  </video>
+</div>
+```
+
+:::
+
+---
+
+### ステップ1：創薬の回路の箱 $U$ を「余りの掛け算」に替えると、因数分解になる！ [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=24) {#sec-part2-shor}
+
+なぜ「位相の角度 $\theta$ を測ること」で、巨大な整数 $N$ の素因数分解ができるのでしょうか？
+一番小さな合成数 **$N = 15$（$= 3 \times 5$）** を例にして、3ステップで見てみましょう。
+
+#### ① 因数分解は「掛け算の周期 $r$」がわかれば一撃で解ける
+
+$15$ と互いに素な数として、例えば $2$ を選びます。$1$ から始めて、次々に $2$ を掛けて **$15$ で割った余り（$\bmod 15$）** を計算していくと、式 (@eq-part2-mod15-cycle) のようになります。
+
+$$
+1 \xrightarrow{\times 2} 2 \xrightarrow{\times 2} 4 \xrightarrow{\times 2} 8 \xrightarrow{\times 2} 16 \equiv 1 \pmod{15}.
+$$ {#eq-part2-mod15-cycle}
+
+ちょうど **$r = 4$ 回** 掛けたところで、元の $1$ に戻りました！ この「$1$ に戻るまでの回数 $r$」を**周期（period）**と呼びます。
+$2^4 \equiv 1 \pmod{15}$ ということは、$2^4 - 1 = (2^{4/2}-1)(2^{4/2}+1) = 3 \times 5$ が $15$ の倍数になるということです（つまり $15$ の素因数 $3$ と $5$ が、左のカッコ $2^{r/2}-1$ と右のカッコ $2^{r/2}+1$ に分かれて入っています）。だから、周期 $r=4$ さえわかれば、ユークリッドの互除法（最大公約数 $\gcd$）を使って式 (@eq-part2-shor-gcd) のように
+
+$$
+\gcd(2^{r/2}-1,\ 15) = \gcd(3, 15) = \mathbf{3}, \qquad
+\gcd(2^{r/2}+1,\ 15) = \gcd(5, 15) = \mathbf{5}
+$$ {#eq-part2-shor-gcd}
+
+と、一瞬で $15 = 3 \times 5$ が因数分解できてしまいます！[桁数が数千桁の巨大な整数 $N$ でも、「最大公約数 $\gcd$ の計算」は古典コンピュータで一瞬で終わります。古典コンピュータにとって唯一絶望的に難しいのは、何百桁もある周期 $r$ を見つける部分だけです。]{.aside}
+
+#### ② 周期 $r=4$ を、ユニタリ操作 $U_2$ の「固有位相 $\theta$」に変える
+
+そこで、「入力 $x$ に $2$ を掛けて $15$ で割った余りへ移すユニタリゲート」を式 (@eq-part2-u2-def) のように作ります。
+
+$$
+U_2\lvert x\rangle = \lvert 2x \bmod 15\rangle.
+$$ {#eq-part2-u2-def}
+
+この $U_2$ は、$\lvert1\rangle \to \lvert2\rangle \to \lvert4\rangle \to \lvert8\rangle \to \lvert1\rangle$ と4つの状態を1ステップずつぐるぐる巡回させるゲートです。
+「4ステップで1周するサイクル」に対して、1ステップ進むごとに時計の針がちょうど $1/4$ 周（$+90^\circ$ すなわち $+i = e^{i(2\pi/4)}$）だけ回るような固有状態を作るにはどうすればよいでしょうか？
+サイクルの各状態 $\lvert1\rangle,\lvert2\rangle,\lvert4\rangle,\lvert8\rangle$ に、あらかじめ逆向きの $1/4$ 周ずつの重み $1, -i, -1, +i$（$= e^{-i(2\pi/4)\times 0,1,2,3}$）を付けて重ね合わせた状態（式 (@eq-part2-u2-eigenstate)）を考えてみましょう！
+
+$$
+\lvert u_1\rangle = \frac{\lvert1\rangle - i\lvert2\rangle - \lvert4\rangle + i\lvert8\rangle}{2}.
+$$ {#eq-part2-u2-eigenstate}
+
+この $\lvert u_1\rangle$ に $U_2$ を1回掛けると、式 (@eq-part2-u2-eigenvalue) のようになります。
+
+$$
+U_2\lvert u_1\rangle
+=\frac{\lvert2\rangle - i\lvert4\rangle - \lvert8\rangle + i\lvert1\rangle}{2}
+= i\left(\frac{\lvert1\rangle - i\lvert2\rangle - \lvert4\rangle + i\lvert8\rangle}{2}\right)
+= e^{i(2\pi/4)}\lvert u_1\rangle!
+$$ {#eq-part2-u2-eigenvalue}
+
+見てください！ 1つ先へずらすゲート $U_2$ を掛けただけで、**前に飛び出した固有位相の角度 $\theta = \frac{2\pi}{4}$ の分母に、知りたかった周期 $r = 4$ がそのまま現れています**！
+
+::: {.important-point}
+**創薬（エネルギー計算）と暗号解読（因数分解）は、量子回路としてはまったく同じ「位相測定」である！**
+
+| 応用分野 | 箱の中に入れる操作 $U$ | 飛び出す固有位相 $\theta$ | 位相 $\theta$ からわかる答え |
+| :--- | :--- | :---: | :--- |
+| **創薬・量子化学** | 分子の時間発展 $U(t) = e^{-i\widehat{H}t/\hbar}$ | $\theta = -\dfrac{Et}{\hbar}$ | **分子の結合エネルギー $E$** |
+| **暗号解読（Shor）** | 余りの掛け算 $U_a\lvert x\rangle = \lvert ax\bmod N\rangle$ | $\theta = \dfrac{2\pi k}{r}$ | **掛け算の周期 $r \longrightarrow N$ の素因数！** |
+
+:::
+
+```{python}
+#| label: part2-shor-mod15-check
+#| code-summary: "mod 15 の乗算演算子 U_2 の固有状態と固有位相 θ = 2πk/4 をQiskit/NumPyで検証する"
+# 4量子ビット空間（0〜15）で U_2 |x⟩ = |2x mod 15⟩（x=15はそのまま）を構成
+U2 = np.zeros((16, 16), dtype=complex)
+for x in range(16):
+    y = (2 * x) % 15 if x < 15 else 15
+    U2[y, x] = 1.0
+assert Operator(U2).is_unitary()
+
+# k = 0, 1, 2, 3 の4つの固有状態 |u_k⟩ を構成し、その和が簡単な初期状態 |1⟩ になることを確認
+cycle = [1, 2, 4, 8]
+eigenstates = []
+for k in range(4):
+    vec = np.zeros(16, dtype=complex)
+    for j, x_val in enumerate(cycle):
+        vec[x_val] = np.exp(-2j * np.pi * k * j / 4) / 2.0
+    eigenstates.append(vec)
+    # U2 |u_k⟩ = exp(2πi k / 4) |u_k⟩ を検証
+    np.testing.assert_allclose(U2 @ vec, np.exp(2j * np.pi * k / 4) * vec, atol=1e-12)
+
+# 4つの固有状態を平均すると、周期 r を知らなくても準備できる |1⟩ になる！
+ket_1 = np.zeros(16, dtype=complex)
+ket_1[1] = 1.0
+np.testing.assert_allclose(sum(eigenstates) / 2.0, ket_1, atol=1e-12)
+print("検証成功: |1⟩ = (|u_0⟩ + |u_1⟩ + |u_2⟩ + |u_3⟩) / 2 であり、各固有値 exp(2πi k / 4) から周期 r = 4 が読み出せる！")
+```
+
+上のコードの最後の行が示しているとおり、実際の Shor のアルゴリズムでは、未知の周期 $r$ を使って式 (@eq-part2-u2-eigenstate) の固有状態を事前に作る必要すらありません。誰でも簡単に用意できる **$\lvert1\rangle$ という状態が、ちょうど4つの固有状態 $\lvert u_0\rangle, \lvert u_1\rangle, \lvert u_2\rangle, \lvert u_3\rangle$ の均等な重ね合わせになっている**ため、そのまま下の線に $\lvert1\rangle$ を入れて位相推定回路を回すだけで、$\theta = 0, \frac{2\pi}{4}, \frac{4\pi}{4}, \frac{6\pi}{4}$ のどれかが飛び出し、分母から周期 $r=4$ がわかってしまうのです！
+
+::: {.callout-note collapse="true" title="式で確認：なぜ4つの固有状態を足すと |1⟩ になるのか？"}
+回転の速さ $k = 0, 1, 2, 3$ に対応する4つの固有状態 $\lvert u_k\rangle$ をすべて書き並べると、次のようになります。
+
+$$
+\begin{aligned}
+\lvert u_0\rangle &= \frac{\lvert1\rangle + \lvert2\rangle + \lvert4\rangle + \lvert8\rangle}{2} \qquad(\text{固有値 }e^{i\cdot 0} = +1),\\
+\lvert u_1\rangle &= \frac{\lvert1\rangle - i\lvert2\rangle - \lvert4\rangle + i\lvert8\rangle}{2} \qquad(\text{固有値 }e^{i(2\pi/4)} = +i),\\
+\lvert u_2\rangle &= \frac{\lvert1\rangle - \lvert2\rangle + \lvert4\rangle - \lvert8\rangle}{2} \qquad(\text{固有値 }e^{i(4\pi/4)} = -1),\\
+\lvert u_3\rangle &= \frac{\lvert1\rangle + i\lvert2\rangle - \lvert4\rangle - i\lvert8\rangle}{2} \qquad(\text{固有値 }e^{i(6\pi/4)} = -i).
+\end{aligned}
+$$
+
+この4本の式を縦に足し合わせると、$\lvert2\rangle, \lvert4\rangle, \lvert8\rangle$ の係数はプラスとマイナス（および $+i$ と $-i$）で綺麗に打ち消し合って $0$ になり、**先頭の $\lvert1\rangle$ だけが残って**
+
+$$
+\frac{\lvert u_0\rangle + \lvert u_1\rangle + \lvert u_2\rangle + \lvert u_3\rangle}{2} = \lvert1\rangle
+$$
+
+となります！ つまり、周期 $r$ をまったく知らない状態でただ $\lvert1\rangle$ を回路に入れるだけで、自動的に全固有状態の均等な重ね合わせを入れたことになるのです。
+
+:::
+
+---
+
+### ステップ2：「この問題は量子コンピュータで速くなるか？」を見分ける直感マップ {#sec-part2-intuition-map}
+
+授業の最初にあった**「解きたい課題に出会ったとき、この問題は量子コンピュータでやれば速く解けそうか、直感が働くようになりたい」**という目標に答えを出しましょう。
+
+量子コンピュータは「何でも魔法のように速くする機械」ではありません。**「間違った答えの経路どうしをプラスとマイナスで相殺させ、欲しい答えの経路だけを干渉で強め合わせる」**ための明確な構造が必要です。具体的には、あらゆる課題は図 (@fig-part2-quantum-advantage-map) と表 (@tbl-part2-advantage-criteria) の**4つの領域**に分類できます。
+
+```{mermaid}
+%%| label: fig-part2-quantum-advantage-map
+%%| fig-cap: "解きたい課題が量子コンピュータに向いているかを見分ける直感のフローチャート。最も劇的な指数関数的優位が出るのは『物理・化学シミュレーション（創薬・材料）』と『周期・代数的対称性（暗号・DQI）』の2領域である。"
+flowchart TD
+    Start["解きたい課題・タスクがある"] --> Q1{"課題の性質はどれに近いか？"}
+
+    Q1 -->|"① 分子・材料・量子物理の<br/>エネルギーや時間変化を知りたい"| Cat1["🌟 領域A：量子シミュレーション<br/>【指数関数的な優位！】<br/>・創薬（結合エネルギー・反応経路）<br/>・触媒・バッテリー材料設計<br/>・回路：時間発展 U(t) + 位相推定(QPE)"]
+
+    Q1 -->|"② 個々の値ではなく、隠れた周期・<br/>規則・全体の大域的構造を当てたい"| Cat2["🌟 領域B：周期・代数的干渉<br/>【指数関数的な優位！】<br/>・Shorの因数分解・離散対数（暗号解読）<br/>・Bernstein–Vazirani / Simon<br/>・Google DQI（代数的最適化）<br/>・回路：H^⊗n / QFT による波の干渉"]
+
+    Q1 -->|"③ 規則性はないが、答えを見れば<br/>条件を満たすかすぐ判定できる探索"| Cat3["⚡ 領域C：非構造探索・振幅増幅<br/>【二乗ルート √N の優位】<br/>・Groverの探索アルゴリズム<br/>・100万個から1000回で見つける<br/>（速くなるが指数関数的ではない）"]
+
+    Q1 -->|"④ 大量のテキスト処理・日常のDB集計・<br/>構造のない順番通りの逐次計算"| Cat4["💻 領域D：古典コンピュータの独壇場<br/>【量子優位なし】<br/>・入出力（データを量子状態に読む）だけで<br/>時間がかかり、干渉させる構造がない"]
+```
+
+| 分類 | どんな問題か？（見分けるキーワード） | 古典の計算量 vs 量子の計算量 | なぜ量子で速くなるのか（直感の核心） |
+| :--- | :--- | :---: | :--- |
+| **🌟 領域A<br>分子・物理シミュレーション** | 創薬、タンパク質と薬の結合、触媒、超伝導、量子多体系の時間発展 | $O(2^N) \longrightarrow \mathbf{O(\mathrm{poly}(N))}$<br>**（指数関数的優位）** | 古典ではメモリに乗り切らない $2^N$ 次元のエンタングル状態を $N$ 量子ビットに直接載せ、固有位相 $\theta=-Et/\hbar$ からエネルギーを測れるから。 |
+| **🌟 領域B<br>周期・対称性・大域的構造** | 因数分解、周期発見、隠れたXORマスク、有限体上の多項式フィッティング | $O(2^n)\text{ や }O(n) \longrightarrow \mathbf{O(\mathrm{poly}(n))\text{ や }1}$<br>**（指数関数的優位）** | 1個ずつの値ではなく「全体の周期や傾き」が位相の波として現れるため、$H^{\otimes n}$ や量子フーリエ変換で**周期と合う波だけを1点に集中（強め合う干渉）**できるから。 |
+| **⚡ 領域C<br>闇雲な探索問題** | 鍵の総当たり、充足可能性問題（SAT）、条件を満たすデータの探索 | $O(N) \longrightarrow \mathbf{O(\sqrt{N})}$<br>**（二乗ルートの優位）** | 規則性がないため1回では当てられないが、「正解の符号だけ反転 → 平均の周りで折り返す（**Groverの振幅増幅**）」を繰り返すと、約 $\sqrt{N}$ 回で正解の確率を $100\%$ に育てられるから。 |
+| **💻 領域D<br>大量データI/O・逐次処理** | 一般のWebサービス、通常の画像・言語処理、前のステップの結果が次に必須な計算 | 古典と同等以下<br>（量子優位なし） | 巨大な古典データを量子状態に詰め込む（ロードする）だけで時間がかかり、波を干渉させて相殺させる数学的構造がないから。 |
+
+: 「この問題は量子で速くなるか？」を判断する4つの物差し {#tbl-part2-advantage-criteria}
+
+::: {.callout-note collapse="true" title="コラム：なぜ領域C（Groverの探索）は『1回』ではなく『√N 回』かかるのか？"}
+第2節の Bernstein–Vazirani では、関数 $f_s(x)=s\cdot x$ が「すべての入力 $x$ にわたって規則正しい縞模様の符号 $(-1)^{s\cdot x}$ を作る」という大域的な構造を持っていたため、$H^{\otimes n}$ を1回掛けるだけで全エネルギーが $\lvert s\rangle$ の1点に集まりました。
+
+一方、「$N=2^n$ 個の箱のうち、規則性なくランダムに選ばれたたった1個の当たり $x_0$ だけ $f(x_0)=1$ になる」という**構造のない探索問題（Groverの問題）**では、1回オラクルに通しても、$N$ 個のうちたった1個の振幅の符号がマイナスになるだけです。$N$ が100万個なら、1個だけ符号が変わっても全体の状態はほとんど変化しません。
+そこで Grover のアルゴリズム（[Preskill 第6章 §6.6](../textbook-preskill/chapter6.qmd#sec-6.6-quantum-searching)）では、**「①正解の符号だけ反転する $\to$ ②全振幅の平均値の周りで折り返す」**という2ステップを1セットとして何度も繰り返し、正解の振幅を少しずつ太らせていきます。振幅が $1/\sqrt{N}$ から $1$ に育つまでの回数が約 $\frac{\pi}{4}\sqrt{N}$ 回（100万個なら約785回）であり、これが構造のない探索に対する量子力学の限界（最適性、§6.7）であることが証明されています。
+
+:::
+
+---
+
+### ステップ3：現在世界で最も注目されている最新動向（2025〜2026年） {#sec-part2-frontier-2026}
+
+最後に、今日私たちが手で計算した「位相キックバック」「$H^{\otimes n}$ による干渉」「時間発展 $U(t)$ の位相測定」が、**2025〜2026年の世界の最前線**でどう花開いているかを見ておきましょう。実は、最新のニュースで報じられているブレークスルーはすべて、今日学んだ基本パーツの延長線上にあります！
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-4}
+::: {.callout-tip appearance="simple" title="① Google『DQI（復号量子干渉法）』"}
+**第2節（Bernstein–Vazirani）の直系進化！**
+Google Quantum AI らが発表した新しい量子アルゴリズム **Decoded Quantum Interferometry (DQI)** は、複雑な組み合わせ最適化や多項式フィッティング問題を、私たちが第2節で使った **$H^{\otimes n}$（フーリエ変換）の干渉** によって「誤り訂正符号の復号問題」へと変換し、特定の代数的最適化問題で古典に対する指数関数的スピードアップを実現して世界を驚かせました。
+
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.callout-note appearance="simple" title="② Google『Willow』と Quantum Echoes"}
+**第3〜5節（時間発展と干渉）の実機実証！**
+105量子ビットの最新チップ **Willow** は、量子ビットを増やすほどエラーが減る「閾値以下（below threshold）」の誤り訂正を達成しました。さらに、時間を進める $U(t)$ と戻す操作を組み合わせて干渉を測る **Quantum Echoes（OTOC）** 実験により、単なる乱数生成ではなく「物理系の実測可能で検証可能な計算」において、世界最速スパコンの約13,000倍の高速化を実証しました。
+
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.callout-warning appearance="simple" title="③ IBM 論理量子回路と創薬・HPC融合"}
+**第5節（量子化学・創薬）の実用化へ！**
+IBM はスパコン（富岳などを含むHPC）と量子コンピュータを組み合わせる **量子中心のスーパーコンピューティング** と、エラー訂正符号で守られた数十論理量子ビットでの実証を推進しています。製薬企業や材料メーカーと共同で、まさに第5節で扱ったような分子の基底状態エネルギー計算を実機とスパコンのハイブリッドで解く研究が最前線で進んでいます。
+
+:::
+:::
+:::
+
+---
+
+### 第2回ゼミのまとめ：私たちが手に入れた視点 {#sec-part2-summary}
+
+この2回の授業を通して、量子回路はもはや「意味のわからないパズル」ではなくなりました。
+
+1. **回路の設計理由がわかる**：なぜ下に $\lvert-\rangle$ や固有状態 $\lvert u\rangle$ を置くのか？ $\longrightarrow$ 下の量子ビットが変化してエンタングルする（部分トレースで非対角成分が消える）のを防ぎ、**答えの特徴を上の量子ビットの「位相（符号や角度 $\theta$）」だけに蹴り上げて干渉させるため**。
+2. **なぜ古典より圧倒的に速くなるかがわかる**：Bernstein–Vazirani のように、位相キックバックを使えば $n$ 本の量子ビットの位相に一斉に構造を転写し、最後の $H^{\otimes n}$ の干渉で **$n$ 回の質問を $1$ 回に凝縮**できる。
+3. **創薬や暗号解読とのつながりがわかる**：分子のエネルギー $E$ も、暗号の周期 $r$ も、すべてユニタリ操作 $U$ の**固有位相 $\theta$** に現れるため、Hadamardテストや量子位相推定（QPE）という同じ時計読み取り回路で計算できる。
+
+これで、[Preskill 講義ノートの第6章（Quantum Algorithms）](../textbook-preskill/chapter6.qmd) のどの節を開いても、「いまこの式は、どの位相に情報を載せて、どうやって干渉させようとしているのか」が自分の目と手で読み解けるはずです！

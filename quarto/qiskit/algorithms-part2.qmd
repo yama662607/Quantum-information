@@ -1,0 +1,175 @@
+---
+title: "なぜ量子コンピュータは速いのか？：干渉・秘密の鍵・創薬エネルギー計算"
+subtitle: "重ね合わせの罠 → 100万桁を1回で抜く回路 → 分子の時間発展と位相測定 → 世界の最前線"
+crossref:
+  eq-prefix: "式"
+jupyter: python3
+execute:
+  freeze: false
+  error: false
+  warning: false
+format:
+  html:
+    fig-format: png
+    fig-dpi: 150
+    include-in-header:
+      text: |
+        <style>
+        /* Keep lesson anchors stable while moving between theory and experiments. */
+        #quarto-document-content section.level2,
+        #quarto-document-content section.level3,
+        #quarto-document-content div.cell {
+          content-visibility: visible;
+          contain-intrinsic-size: none;
+        }
+        #quarto-document-content .katex-display {
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding-block: 0.25rem;
+        }
+        @media (max-width: 767.98px) {
+          #quarto-header nav.top-page-navigation { display: none; }
+          #title-block-header .code-tools-button { position: static; }
+          #quarto-document-content .katex-display { text-align: left; }
+        }
+        </style>
+---
+
+[前回の授業（第1回）](algorithms.qmd)では、量子回路のゲートを一つずつ手計算で追い、「素朴な回路の失敗」から出発して Deutsch の回路を組み立てました。しかし、1ビットの関数判定は「古典で2回かかるところが1回になった（$2\to 1$）」だけなので、それだけでは**「なぜ世界中の研究者や製薬会社が量子コンピュータに熱狂しているのか」**という本当の威力はまだ実感しにくいと思います。
+
+この第2回の授業では、前回身につけた手計算の道具（$X, Z, H, \mathrm{CNOT}$ と固有状態 $\lvert+\rangle, \lvert-\rangle$）だけを使って、**「量子コンピュータが古典コンピュータを圧倒する瞬間」**と**「創薬（分子のエネルギー計算）や暗号解読がなぜ量子回路で解けるのか」**を一歩ずつ自分の手で確かめます。
+
+| 順序 | この節で解き明かす疑問 | 手計算と実験で体験すること |
+| :--- | :--- | :--- |
+| **1** | なぜ「重ね合わせで並列計算する」だけでは速くならないのか？ | 第2・3章の**密度行列と部分トレース**で、エンタングルメントが干渉を消す現象を確認する |
+| **2** | 古典なら100万回かかる暗証番号を、なぜ**たった1回**で抜けるのか？ | 3桁のミニパズルから出発し、**Bernstein–Vazirani アルゴリズム**を手計算とQiskitで実証する |
+| **3** | なぜ**創薬（分子の計算）**に量子コンピュータが不可欠なのか？ | 古典スパコンが絶望する「$2^N$ の壁」と、分子のエネルギーが時間発展の**位相（時計の針）**に現れる仕組み |
+| **4** | 測ると消えてしまう「位相の角度 $\theta$」をどうやって読み出すのか？ | **Hadamardテスト**（$H\to\text{制御}U\to H$）で角度を確率の波 $\cos\theta, \sin\theta$ に変えるアニメーション |
+| **5** | **【実践例題】** 薬の候補分子が結合して安定するエネルギーをどう測るか？ | 化学結合（共鳴）の最小モデルを量子回路に入れ、測定確率の波から**結合エネルギー**を逆算する |
+| **6** | 同じ回路でなぜ**暗号解読（因数分解）**ができ、どんな問題が速くなるのか？ | Shorの周期発見への接続、**量子優位を見分ける3大パターン表**、2025–2026年の世界最前線 |
+
+::: {.callout-note appearance="simple" title="このページの読み方と約束"}
+- 難しい数式や新しい概念が出る前には、必ず**1分で解ける小さな準備パズルや視覚図**を置いています。順番に読んでいけば、途中で迷子にならずに最後まで登り切れます。
+- 2量子ビット以上の回路では、前回と同じく**一番上の線を左端の文字**（Qiskitでは番号の大きい量子ビット、`reverse_bits=True`）にそろえ、手計算の式と画面の表示が完全に一致するようにしています。
+
+:::
+
+## 🎬 第2回ゼミ 解説動画シアター（全4話・音声＆字幕付き） {#sec-part2-video-theater}
+
+ゼミの冒頭でまず**第1話（前回の復習＆Deutschの必然性）**を再生し、その後は各セクションに進む前（またはセクションのまとめ）に**第2話〜第4話**を流すことで、数式に入る前に直感的なイメージを全員で共有できます。すべての動画に日本語ナレーション（48 kHz）と字幕がついています。
+
+::: {.panel-tabset}
+
+### 第1話：前回の復習＆Deutschの必然 (3分23秒)
+
+**テーマ**：量子回路の読み方（$X\cdot Z\cdot H$ と量子干渉）を振り返り、「下を $\lvert0\rangle$ にした素朴な回路」がエンタングルメントで干渉を失う理由を第2・3章の密度行列・部分トレースで可視化し、固有状態 $\lvert-\rangle$ による位相キックバックの必然性を導きます。
+
+```{=html}
+<div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:14px; margin:0.5rem 0;">
+  <video controls preload="metadata" poster="/assets/videos/ep1-recap-and-deutsch.jpg" style="width:100%; border-radius:8px; display:block;">
+    <source src="/assets/videos/ep1-recap-and-deutsch.mp4" type="video/mp4">
+    <track kind="captions" src="/assets/videos/ep1-recap-and-deutsch.vtt" srclang="ja" label="日本語字幕" default>
+  </video>
+  <div style="margin-top:8px; font-size:0.88rem; color:#A8B7CD;">
+    <strong>チャプター：</strong>
+    00:00 基本ゲート(X・Z・H)と量子干渉 ／
+    00:51 素朴な回路が失敗する理由 ／
+    01:45 密度行列と部分トレースで見る干渉消滅 ／
+    02:14 固有状態 |−⟩ と位相キックバック ／
+    03:05 完成した Deutsch 回路
+  </div>
+</div>
+```
+
+### 第2話：100万桁の秘密の鍵を1回で抜く (2分38秒)
+
+**テーマ**：「ターゲットを $\lvert-\rangle$ に固定した $\mathrm{CNOT}$ は上の量子ビットに対する $Z$ ゲートになる」というパズルから出発し、古典なら100万回かかる暗証番号 $s$ をたった1回の問い合わせで魚拓のように一括転写する **Bernstein–Vazirani アルゴリズム**を視覚化します。
+
+```{=html}
+<div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:14px; margin:0.5rem 0;">
+  <video controls preload="metadata" poster="/assets/videos/ep2-secret-key-bv.jpg" style="width:100%; border-radius:8px; display:block;">
+    <source src="/assets/videos/ep2-secret-key-bv.mp4" type="video/mp4">
+    <track kind="captions" src="/assets/videos/ep2-secret-key-bv.vtt" srclang="ja" label="日本語字幕" default>
+  </video>
+  <div style="margin-top:8px; font-size:0.88rem; color:#A8B7CD;">
+    <strong>チャプター：</strong>
+    00:00 伏線パズル：下を |−⟩ にした CNOT の正体 ／
+    00:52 秘密の鍵 s = 101 を1回で転写する BV 回路 ／
+    02:11 古典 n 回 vs 量子 1 回：魚拓のように全桁を一括転写
+  </div>
+</div>
+```
+
+### 第3話：創薬×量子コンピュータと位相時計 (2分35秒)
+
+**テーマ**：なぜ創薬の分子エネルギー計算で古典スパコンが $2^N$ の壁にぶつかるのか？ シュレーディンガー方程式の時間発展 $e^{-iEt/\hbar}$ を「位相の時計」として捉え、**Hadamardテスト**で位相角 $\theta$ を確率の波 $\frac{1+\cos\theta}{2}$ に変換して結合エネルギーを測る仕組みをアニメーションで解説します。
+
+```{=html}
+<div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:14px; margin:0.5rem 0;">
+  <video controls preload="metadata" poster="/assets/videos/ep3-drug-discovery-phase.jpg" style="width:100%; border-radius:8px; display:block;">
+    <source src="/assets/videos/ep3-drug-discovery-phase.mp4" type="video/mp4">
+    <track kind="captions" src="/assets/videos/ep3-drug-discovery-phase.vtt" srclang="ja" label="日本語字幕" default>
+  </video>
+  <div style="margin-top:8px; font-size:0.88rem; color:#A8B7CD;">
+    <strong>チャプター：</strong>
+    00:00 創薬の「鍵と鍵穴」と 2^N の壁 ／
+    00:41 エネルギー E ＝「位相の時計」の回転速度 ／
+    01:03 グローバル位相の罠と Hadamard テスト回路 ／
+    01:44 位相が確率の波に変わる瞬間 (cos θ と sin θ) ／
+    02:06 創薬ポケットの最小量子モデル H = −gX
+  </div>
+</div>
+```
+
+### 第4話：Shorの因数分解・直感マップ・2026最前線 (2分29秒)
+
+**テーマ**：創薬の位相時計の箱 $U$ を「余りの掛け算 $U_2\lvert x\rangle = \lvert 2x\bmod 15\rangle$」に差し替えるだけで **Shor の素因数分解**になることを示し、どんな課題が量子で速くなるかを見抜く **4分類マップ** と **2025〜2026年の世界最前線（Google DQI / Willow / IBM×理研）** をまとめます。
+
+```{=html}
+<div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:14px; margin:0.5rem 0;">
+  <video controls preload="metadata" poster="/assets/videos/ep4-shor-and-frontier.jpg" style="width:100%; border-radius:8px; display:block;">
+    <source src="/assets/videos/ep4-shor-and-frontier.mp4" type="video/mp4">
+    <track kind="captions" src="/assets/videos/ep4-shor-and-frontier.vtt" srclang="ja" label="日本語字幕" default>
+  </video>
+  <div style="margin-top:8px; font-size:0.88rem; color:#A8B7CD;">
+    <strong>チャプター：</strong>
+    00:00 創薬の時計を「倍々ゲーム」に差し替える (Shorの周期発見) ／
+    00:55 「量子で速くなる問題」を見抜く 4 分類マップ ／
+    01:58 2025〜2026年の最前線と量子アルゴリズムの統一視点
+  </div>
+</div>
+```
+
+:::
+
+```{python}
+#| label: part2-setup
+#| include: false
+#| code-summary: "実験と可視化で使うライブラリと日本語フォント設定"
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+from IPython.display import HTML, Markdown, display
+from matplotlib import font_manager
+from matplotlib.animation import FuncAnimation
+from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister, transpile
+from qiskit.quantum_info import DensityMatrix, Kraus, Operator, Statevector, partial_trace
+from qiskit.visualization import array_to_latex
+from qiskit_aer import AerSimulator
+
+matplotlib.rcParams["font.sans-serif"] = ["Hiragino Sans", "BIZ UDGothic", "Yu Gothic", "Noto Sans CJK JP", "DejaVu Sans"]
+matplotlib.rcParams["axes.unicode_minus"] = False
+np.set_printoptions(precision=4, suppress=True)
+```
+
+{{< include algorithms-part2/_01-trap-of-superposition.qmd >}}
+
+{{< include algorithms-part2/_02-secret-key-bv.qmd >}}
+
+{{< include algorithms-part2/_03-why-quantum-chemistry.qmd >}}
+
+{{< include algorithms-part2/_04-measuring-phase-clock.qmd >}}
+
+{{< include algorithms-part2/_05-drug-discovery-example.qmd >}}
+
+{{< include algorithms-part2/_06-shor-and-frontier-2026.qmd >}}

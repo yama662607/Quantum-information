@@ -1,0 +1,233 @@
+## 6. Deutschの回路を、読み出しから逆算する [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=8) {#alg-deutsch}
+
+### 最後の測定の直前に、何が必要か {#alg-deutsch-backwards}
+
+上の $a$ を測って、答え $d=f(0)\oplus f(1)$ を得たいとします。設計1と同じように、最後から考えます。
+
+| 関数の性質 | 測定で欲しい答え | 測定直前に欲しい上の状態 | 最後にHを置くなら、その直前に欲しい状態 |
+| :--- | :--- | :--- | :--- |
+| 二つの値が同じ | 0 | $\lvert0\rangle$ | $\lvert+\rangle$ |
+| 二つの値が違う | 1 | $\lvert1\rangle$ | $\lvert-\rangle$ |
+
+つまり、関数値が同じなら上を $\lvert+\rangle$、違うなら $\lvert-\rangle$ にできれば、最後のHと測定で答えが得られます。次は、$U_f$ を使ってこの二つの状態を作る方法を考えます。
+
+### 下の状態を選んで、関数値を符号にする {#alg-kickback}
+
+$U_f$ が直接操作するのは下の量子ビットです。その操作を、どう上の振幅の符号につなげるのでしょうか。下に用意する状態を $\lvert s\rangle$ と呼び、まず例として $f(a)=a$ を考えます。この $U_f$ はCNOTでした。
+
+上をプラス状態にすると、入力は $(\lvert0\rangle\otimes\lvert s\rangle+\lvert1\rangle\otimes\lvert s\rangle)/\sqrt2$ です。二つの項を、次のように変えたいのです。
+
+| 上の成分 | CNOTが下に行う操作 | 設計上、欲しい出力 |
+| :--- | :--- | :--- |
+| $\lvert0\rangle$ の項 | 何もしない | $\lvert0\rangle\otimes\lvert s\rangle$ |
+| $\lvert1\rangle$ の項 | Xを掛ける | $-\lvert1\rangle\otimes\lvert s\rangle$ |
+
+目標は、**下の状態を両項で共通に保ち、上が1の項の係数だけを反転すること**です。下を $\lvert0\rangle$ にすると、CNOTの出力は $(\lvert00\rangle+\lvert11\rangle)/\sqrt2$ になります。下の状態が項ごとに異なり、目標の $\lvert-\rangle_a\otimes\lvert s\rangle_b$ の形にはなりません。そこで、下にXが作用したときに符号だけが変わるよう、
+
+$$
+X\lvert s\rangle=-\lvert s\rangle
+$$
+
+という条件を置きます。$\lvert s\rangle=\gamma\lvert0\rangle+\eta\lvert1\rangle$ と書くと、Xは二つの係数を交換するので、$\eta=-\gamma$ なら条件を満たします。振幅の絶対値の二乗和が1になるように選ぶと、その一つが $\lvert-\rangle$ です。
+
+$$
+X\lvert-\rangle
+=\frac{\lvert1\rangle-\lvert0\rangle}{\sqrt2}
+=-\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}
+=-\lvert-\rangle.
+$$ {#eq-alg-x-minus-state}
+
+式 (@eq-alg-x-minus-state) で確かめたこの性質は、CNOTだけでなく四つの $U_f$ に共通して使えます。$f(a)=0$ なら下はそのまま、$f(a)=1$ ならXで符号が付き、二つの場合が一つの式にまとまります。
+
+$$
+U_f(\lvert a\rangle\otimes\lvert-\rangle)
+=\begin{cases}
+\lvert a\rangle\otimes\lvert-\rangle&f(a)=0,\\
+-\lvert a\rangle\otimes\lvert-\rangle&f(a)=1
+\end{cases}
+=(-1)^{f(a)}\lvert a\rangle\otimes\lvert-\rangle.
+$$ {#eq-alg-phase-kickback-uf}
+
+上を $\lvert+\rangle$ にしておけば、0と1の両方の項に式 (@eq-alg-phase-kickback-uf) の規則を適用できます。
+
+$$
+\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt2}\otimes\lvert-\rangle
+\xrightarrow{U_f}
+\frac{(-1)^{f(0)}\lvert0\rangle+(-1)^{f(1)}\lvert1\rangle}{\sqrt2}
+\otimes\lvert-\rangle.
+$$ {#eq-alg-deutsch-superposition-kickback}
+
+下は共通の $\lvert-\rangle$ としてくくれ、上の二つの振幅の符号に $f(0),f(1)$ が入ります。
+
+ここで全体位相との違いを確認しましょう。上を1に固定した入力では、CNOTの出力 $-\lvert1\rangle\lvert-\rangle$ のマイナスは全体の符号なので、入力と同じ測定確率です。しかし上がプラス状態なら、**0の項はそのまま、1の項だけがマイナス**になり、上はマイナス状態に変わります。上にHを掛ければ、この違いを0と1として区別できます。重ね合わせの各項の符号を、それぞれ勝手に捨てることはできません。
+
+このように、下への条件付きの操作によって、上の振幅に符号の違いが付く仕組みを**位相キックバック**と呼びます。ここでは $X\lvert-\rangle=-\lvert-\rangle$ を使い、下の共通の状態をくくり出すことで確かめました。第2・3章の言葉では「$\lvert-\rangle$ はXの固有値 $-1$ の固有状態」という性質を利用しています。
+
+### 一つの関数で、4項すべてを手計算する {#alg-deutsch-expanded}
+
+例として $f(a)=a$ を選びます。この場合の $U_f$ はCNOTです。入力を展開すると、
+
+$$
+\lvert+\rangle_a\lvert-\rangle_b
+=\frac12(\lvert00\rangle-\lvert01\rangle+\lvert10\rangle-\lvert11\rangle).
+$$
+
+CNOTの表から、00と01はそのまま、10と11は交換します。
+
+$$
+\begin{aligned}
+U_f\lvert+\rangle_a\lvert-\rangle_b
+&=\frac12(\lvert00\rangle-\lvert01\rangle+\lvert11\rangle-\lvert10\rangle)\\
+&=\frac12(\lvert00\rangle-\lvert01\rangle-\lvert10\rangle+\lvert11\rangle)\\
+&=\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}
+\otimes\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}
+=\lvert-\rangle_a\lvert-\rangle_b.
+\end{aligned}
+$$
+
+上にHを掛けると $\lvert1\rangle_a\lvert-\rangle_b$ になります。上の測定は必ず1なので、二つの関数値が違うと判定できます。ここまでの計算は、CNOTの表で4項を入れ替え、二つの状態の積にまとめてから、上にHを掛ける手順でした。
+
+### 準備から測定まで、回路を完成させる {#alg-deutsch-circuit}
+
+必要な準備は、上が $\lvert+\rangle$、下が $\lvert-\rangle$ です。00から始めるなら、上にはH、下にはXの後にHを掛けます。2本をまとめた状態で、一箱ずつ追いましょう。
+
+$$
+\begin{aligned}
+\lvert00\rangle
+&\xrightarrow{X\text{を下に}}\lvert01\rangle\\
+&\xrightarrow{H\text{を上に}}\frac{\lvert01\rangle+\lvert11\rangle}{\sqrt2}\\
+&\xrightarrow{H\text{を下に}}
+\frac{\lvert0\rangle\otimes\lvert-\rangle+\lvert1\rangle\otimes\lvert-\rangle}{\sqrt2}
+=\lvert+\rangle_a\otimes\lvert-\rangle_b.
+\end{aligned}
+$$
+
+図では上のHと下のXが同じ縦位置にあります。この二つは別々の量子ビットに作用するので、どちらを先に計算しても同じ準備になります。一方、下の線のXとHは、図の左から**X→Hの順**です。箱のない線には、その段階で操作を加えません。
+
+::: {.callout-tip appearance="simple" title="設計の考え方：この回路の部品を選んだ理由"}
+
+| 部品 | 欲しかった働き |
+| :--- | :--- |
+| 上の最初のH | 入力0と1に対応する二つの項を用意する |
+| 下のX→H | Xを受けると符号が反転する $\lvert-\rangle$ を準備する |
+| $U_f$ | 下の状態の性質を使い、関数値を各項の符号に反映する |
+| 上の最後のH | 符号がそろうか逆になるかを、0と1へ変換する |
+| 上の測定 | 欲しかった答え $d=f(0)\oplus f(1)$ を得る |
+
+:::
+
+```{python}
+#| label: fig-alg-deutsch-circuit
+#| fig-cap: "①準備、②関数を1回使った後、③上にHで読み出し。上下にまたがる箱は一つの部品。箱の中の小さな1と0は接続する端子の番号で、状態や測定値ではない。下は測定しない。"
+#| fig-alt: "上aにH、下bにXの後H、破線1、二量子ビットのUf、破線2、上aにH、破線3、上aのみを測定する回路。"
+#| code-summary: "設計した手順をQiskitで一行ずつ実装する"
+def make_deutsch(f0, f1, measure=False):
+    circuit = QuantumCircuit(b, a)
+    circuit.x(b[0])
+    circuit.h(a[0])
+    circuit.h(b[0])
+    circuit.barrier(label="1")
+    circuit.append(make_oracle(f0, f1).to_gate(label=r"$U_f$"), [b[0], a[0]])
+    circuit.barrier(label="2")
+    circuit.h(a[0])
+    circuit.barrier(label="3")
+    if measure:
+        answer = ClassicalRegister(1, "answer")
+        circuit.add_register(answer)
+        circuit.measure(a[0], answer[0])
+    return circuit
+
+make_deutsch(0, 1, measure=True).draw(output="mpl", reverse_bits=True,
+    style="bw", initial_state=True, fold=-1)
+```
+
+| 図の位置 | 2量子ビット全体の状態 |
+| :--- | :--- |
+| 入力 | $\lvert00\rangle$ |
+| ① | $\lvert+\rangle_a\otimes\lvert-\rangle_b$ |
+| ② | $[(-1)^{f(0)}\lvert0\rangle+(-1)^{f(1)}\lvert1\rangle]/\sqrt2\otimes\lvert-\rangle_b$ |
+| ③ | $(-1)^{f(0)}\lvert d\rangle_a\otimes\lvert-\rangle_b$、ただし $d=f(0)\oplus f(1)$ |
+
+③は、Hで**和と差を作った結果**をまとめたものです。上の状態だけについて途中式を書くと、
+
+$$
+\begin{aligned}
+H\frac{(-1)^{f(0)}\lvert0\rangle+(-1)^{f(1)}\lvert1\rangle}{\sqrt2}
+&=\frac{(-1)^{f(0)}+(-1)^{f(1)}}2\lvert0\rangle\\
+&\quad+\frac{(-1)^{f(0)}-(-1)^{f(1)}}2\lvert1\rangle.
+\end{aligned}
+$$
+
+四つの場合を代入すれば、表の③と一致することを確認できます。
+
+| $f(0),f(1)$ | ②の上の状態 | ③の上の状態 | 測定で得る答え |
+| :--- | :--- | :--- | :--- |
+| $0,0$ | $\lvert+\rangle$ | $\lvert0\rangle$ | 0：同じ |
+| $1,1$ | $-\lvert+\rangle$ | $-\lvert0\rangle$ | 0：同じ |
+| $0,1$ | $\lvert-\rangle$ | $\lvert1\rangle$ | 1：違う |
+| $1,0$ | $-\lvert-\rangle$ | $-\lvert1\rangle$ | 1：違う |
+
+2行目と4行目の全体のマイナス符号は、確率を変えません。上の測定結果は必ず $d=f(0)\oplus f(1)$ です。**同じか違うかを読む回路**なので、関数が四つのどれかまで判別する回路にはなっていません。
+
+### Qiskitで、手計算の全4ケースを照合する {#alg-deutsch-check}
+
+下の表は、シミュレータの状態計算から求める正確な確率です。上の量子ビット $a$ は `q1` なので、`qargs=[1]` で上だけの確率を取り出します。これは実機から振幅を読み出す操作ではありません。
+
+```{python}
+#| label: algorithms-deutsch-probabilities
+#| code-summary: "全ケースの状態と測定確率を検証する"
+rows = ["| 関数 | 上が0の確率 | 上が1の確率 | 判定 |",
+        "| :--- | :---: | :---: | :--- |"]
+for name, f0, f1 in functions:
+    state = Statevector.from_instruction(make_deutsch(f0, f1))
+    d = f0 ^ f1
+    upper = np.array([1, 0]) if d == 0 else np.array([0, 1])
+    expected = (-1)**f0 * np.kron(upper, np.array([1, -1])/np.sqrt(2))
+    np.testing.assert_allclose(state.data, expected, atol=1e-12)
+    p = state.probabilities(qargs=[1])
+    rows.append(f"| {name} | {p[0]:.0f} | {p[1]:.0f} | {'同じ' if d == 0 else '違う'} |")
+display(Markdown("\n".join(rows)))
+```
+
+::: {.callout-note collapse="true" title="補足：測定を繰り返した回数も確認する"}
+1回の判定で使う $U_f$ は1回です。動作確認のために回路全体を1024回実行するなら、$U_f$ も合計1024回使います。次の実験はノイズのないシミュレータなので、各ケースで全試行が正答になります。
+
+```{python}
+#| label: algorithms-deutsch-shots
+#| code-summary: "測定命令を入れて、各回路を1024回実行する"
+simulator = AerSimulator()
+circuits = [make_deutsch(f0, f1, measure=True) for _, f0, f1 in functions]
+result = simulator.run(transpile(circuits, simulator, seed_transpiler=7),
+                       shots=1024, seed_simulator=7).result()
+for index, (name, f0, f1) in enumerate(functions):
+    counts = result.get_counts(index)
+    assert counts == {str(f0 ^ f1): 1024}
+    print(name, counts)
+```
+
+:::
+
+::: {.callout-note appearance="minimal" icon="false" title="練習：部品を変えたときの影響を予測する"}
+次の三つを、別々の変更として考えてください。それぞれ、どこで設計が成り立たなくなるでしょうか。
+
+1. 上の最後のHを外す。
+2. 下の準備を $\lvert0\rangle$ に替える。
+3. 下の準備を $\lvert+\rangle$ に替える。
+
+:::
+
+::: {.callout-note collapse="true" title="答え：部品を外した影響を、状態で確認する"}
+最後のHがないと、上の符号の違いが確率の違いへ変換されず、どの関数でも上の測定は半々です。
+
+下を0にすると、例えば $f(a)=a$ では $\lvert+\rangle\lvert0\rangle$ がBell状態になります。最後のHは、各項の左の文字が表す上の量子ビットに作用するので、
+
+$$
+(H\otimes I)\frac{\lvert00\rangle+\lvert11\rangle}{\sqrt2}
+=\frac{(\lvert00\rangle+\lvert10\rangle)+(\lvert01\rangle-\lvert11\rangle)}2.
+$$
+
+上が0の確率も1の確率も、対応する二項の確率の和 $1/4+1/4=1/2$ です。関数値が下の違いとして残り、欲しい符号だけの変換になりません。
+
+下をプラス状態にすると、$X\lvert+\rangle=\lvert+\rangle$ なので、どの関数でも入力の $\lvert+\rangle_a\lvert+\rangle_b$ が変わりません。最後に上へHを掛けると常に0になります。これがマイナス状態を選ぶ理由です。
+
+:::

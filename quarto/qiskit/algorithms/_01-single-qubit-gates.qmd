@@ -35,12 +35,14 @@ $$
 #| fig-cap: "Xを一つ通すと0から1へ、二つ通すと0へ戻る。一本の線の左から右へ追う。"
 #| fig-alt: "上段は0からXを一つ通す回路、下段はXを二つ通す回路。"
 #| code-summary: "XとXXの回路・計算結果"
-fig, axes = plt.subplots(2, 1, figsize=(7, 3))
+fig, axes = plt.subplots(2, 1, figsize=(7.5, 3.2))
 for count, ax in zip((1, 2), axes):
     circuit = QuantumCircuit(1)
     for _ in range(count):
         circuit.x(0)
     circuit.draw(output="mpl", ax=ax, style="bw", initial_state=True, fold=-1)
+    xlim = ax.get_xlim()
+    ax.set_xlim(xlim[0] - 0.35, xlim[1] + 0.15)
     actual = Statevector.from_instruction(circuit)
     np.testing.assert_allclose(actual.data, [0, 1] if count == 1 else [1, 0])
 plt.tight_layout()

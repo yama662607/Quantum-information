@@ -22,7 +22,17 @@ def run_dev_server():
         sys.executable,
         str(project_root / "tools" / "utils" / "quarto_watcher.py"),
     ]
-    quarto_cmd = [quarto_bin, "preview", "quarto", "--port", "4312", "--render", "html"]
+    quarto_cmd = [
+        quarto_bin,
+        "preview",
+        "quarto",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "4312",
+        "--render",
+        "html",
+    ]
 
     print("🚀 Starting dev server (Watcher + Quarto Preview)...")
 

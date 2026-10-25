@@ -1,0 +1,287 @@
+## 4. 見えない「位相の角度 $\theta$」を確率に変える時計読み取り回路（Hadamardテスト） [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=25) {#sec-part2-hadamard-test}
+
+前節で、分子のエネルギー $E$ を知るには、ユニタリ操作 $U$ の固有状態 $\lvert u\rangle$ に $U$ を掛けたときに飛び出す**位相の角度 $\theta$**（式 (@eq-part2-eigenphase)）
+
+$$
+U\lvert u\rangle = e^{i\theta}\lvert u\rangle \qquad (0 \le \theta < 2\pi)
+$$ {#eq-part2-eigenphase}
+
+を読み出せばよいことがわかりました。[複素数 $e^{i\theta}$ はオイラーの公式 $e^{i\theta}=\cos\theta+i\sin\theta$ で表される、絶対値 $1$・角度 $\theta$ の複素数です。特に $\theta=0$ なら $e^{i0}=+1$、$\theta=\pi$（$180^\circ$）なら $e^{i\pi}=-1$、$\theta=\pi/2$（$90^\circ$）なら $e^{i\pi/2}=i$ になります。]{.aside}
+
+ところが、ここでもう一つ壁があります。
+
+---
+
+### ステップ1：なぜ $U$ をそのまま掛けるだけでは角度 $\theta$ が読めないのか？ {#sec-part2-global-phase}
+
+もし分子の量子ビット $B$（状態 $\lvert u\rangle$）だけにそのまま $U$ を掛けて、状態が $e^{i\theta}\lvert u\rangle$ になったとします。この状態を測定すると、どの結果が出る確率も
+
+$$
+|e^{i\theta}|^2 = (\cos^2\theta + \sin^2\theta) = 1
+$$
+
+が掛かるだけなので、**$U$ を掛ける前と測定確率がまったく変わりません**！
+式 (@eq-part2-global-phase-cancel) のように密度行列で書いても、
+
+$$
+(e^{i\theta}\lvert u\rangle)(e^{i\theta}\lvert u\rangle)^\dagger
+= e^{i\theta}e^{-i\theta}\lvert u\rangle\langle u\rvert
+= \lvert u\rangle\langle u\rvert
+$$ {#eq-part2-global-phase-cancel}
+
+となり、全体に掛かった位相（**全体位相**）は跡形もなく消えてしまいます。
+
+::: {.scenario-note title="どうすれば解決できるか？：ストップウォッチには『基準の針』が必要！"}
+時計の針がどれだけ回ったかを知るには、**「動かさなかった基準の針（角度 $0$、つまり $1$）」**と**「$U$ を掛けて回した針（角度 $\theta$、つまり $e^{i\theta}$）」**の**2本を同じ回路の中に並べて比較**しなければなりません！
+
+では、どうすれば「$U$ を掛けない経路」と「$U$ を掛ける経路」を重ね合わせにできるでしょうか？
+
+:::
+
+---
+
+### ステップ2：比較用の1量子ビット $A$ を足して「制御付き $U$」を使う {#sec-part2-controlled-u}
+
+ここで、[第1回の第3節](algorithms.qmd#alg-cnot)で学んだ **CNOT（制御NOT）** を思い出してください。CNOT は「上の量子ビット $A$ が $\lvert0\rangle$ なら下に何もせず、$\lvert1\rangle$ なら下に $X$ を掛ける」というゲートでした。
+
+その $X$ を、調べたい操作 $U$ に置き換えたものを**制御付き $U$（Controlled-$U$、記号は $C(U)$）**と呼びます（式 (@eq-part2-cu-action)）！
+
+$$
+C(U)\bigl(\lvert0\rangle_A\otimes\lvert u\rangle_B\bigr) = \lvert0\rangle_A\otimes\lvert u\rangle_B \quad(\text{上が }0\text{ なら何もしない}),
+$$
+$$
+C(U)\bigl(\lvert1\rangle_A\otimes\lvert u\rangle_B\bigr) = \lvert1\rangle_A\otimes U\lvert u\rangle_B = e^{i\theta}\lvert1\rangle_A\otimes\lvert u\rangle_B \quad(\text{上が }1\text{ なら }U\text{ を掛ける}).
+$$ {#eq-part2-cu-action}
+
+これを使えば、「何もしない基準の針」と「$U$ で回した針」を一つの状態の中に並べる手順は、Deutsch の回路とまったく同じ3ステップで作れます（図 (@fig-part2-hadamard-test-circuit)）！[下のレジスタ $B$ が分子を表す何十本もの量子ビットであっても、上の比較用（プローブ）量子ビット $A$ は**たった1本**足すだけで、全体位相だった $e^{i\theta}$ を $A$ の相対位相として引き出せます。]{.aside}
+
+1. **① 準備**：上の比較用量子ビット $A$ に $H$ を掛けて $\lvert+\rangle_A = (\lvert0\rangle_A+\lvert1\rangle_A)/\sqrt2$ にし、下に固有状態 $\lvert u\rangle_B$ を用意する。
+2. **② 制御付き $U$ で位相キックバック**：$C(U)$ を通すと、上が $\lvert0\rangle_A$ の項はそのまま、上が $\lvert1\rangle_A$ の項にだけ $e^{i\theta}$ が掛かる。下の $\lvert u\rangle_B$ は両方の項で同じなので、右側に共通にくくり出せる！
+   $$
+   \begin{aligned}
+   C(U)\bigl(\lvert+\rangle_A\otimes\lvert u\rangle_B\bigr)
+   &=\frac{\lvert0\rangle_A\otimes\lvert u\rangle_B+\lvert1\rangle_A\otimes U\lvert u\rangle_B}{\sqrt2}\\
+   &=\frac{\lvert0\rangle_A\otimes\lvert u\rangle_B+e^{i\theta}\lvert1\rangle_A\otimes\lvert u\rangle_B}{\sqrt2}\\
+   &=\left(\frac{\lvert0\rangle_A+e^{i\theta}\lvert1\rangle_A}{\sqrt2}\right)\otimes\lvert u\rangle_B.
+   \end{aligned}
+   $$ {#eq-part2-cu-kickback}
+3. **③ 上の量子ビット $A$ に $H$ を掛けて干渉させる**：
+   式 (@eq-part2-cu-kickback) のまま $A$ を測っても、$|1/\sqrt2|^2=1/2$ と $|e^{i\theta}/\sqrt2|^2=1/2$ で半々になってしまいます。そこで、測る直前に上の $A$ へもう一度 $H$ を掛けて、**基準の針 $1$ と回った針 $e^{i\theta}$ の「和」と「差」**を作ります！
+
+$$
+\begin{aligned}
+H\left(\frac{\lvert0\rangle_A+e^{i\theta}\lvert1\rangle_A}{\sqrt2}\right)
+&=\frac12\bigl[(\lvert0\rangle_A+\lvert1\rangle_A)+e^{i\theta}(\lvert0\rangle_A-\lvert1\rangle_A)\bigr]\\
+&=\underbrace{\left(\frac{1+e^{i\theta}}{2}\right)}_{\lvert0\rangle_A\text{ の振幅}}\lvert0\rangle_A
++\underbrace{\left(\frac{1-e^{i\theta}}{2}\right)}_{\lvert1\rangle_A\text{ の振幅}}\lvert1\rangle_A.
+\end{aligned}
+$$ {#eq-part2-hadamard-interference}
+
+この $H \to C(U) \to H$ というシンプルで美しい回路を **Hadamardテスト（アダマール・テスト）** と呼びます。
+
+```{python}
+#| label: fig-part2-hadamard-test-circuit
+#| fig-cap: "Hadamardテストの回路構造。①上の比較用量子ビットAをHで |+⟩ にし、②制御付きユニタリゲート C(U) で固有位相 e^(iθ) を上の量子ビットAへ蹴り上げ（位相キックバック）、③最後のHゲートで基準の針 1 と回転した針 e^(iθ) を干渉させて測定確率に変える。"
+#| fig-alt: "上の比較用量子ビットprobe_Aと下のターゲットtarget_Bの2量子ビット回路。AにH、破線1、AからBへの制御付きU(θ)、破線2、AにHと測定。"
+#| code-summary: "Hadamardテストの基本回路（H → C(U) → H）を描画する"
+target_b = QuantumRegister(1, "target_B")
+probe_a = QuantumRegister(1, "probe_A")
+c_reg = ClassicalRegister(1, "c")
+qc_ht = QuantumCircuit(target_b, probe_a, c_reg)
+
+qc_ht.x(target_b[0])  # 下の線に固有状態 |u⟩（ここでは |1⟩）をセット
+qc_ht.h(probe_a[0])   # ① 上の比較用ビットAを |+⟩ にする
+qc_ht.barrier(label="1")
+
+qc_ht.cp(np.pi / 3, probe_a[0], target_b[0])  # ② 制御付きUで位相 e^(iθ) をAへキックバック
+qc_ht.barrier(label="2")
+
+qc_ht.h(probe_a[0])   # ③ 最後のHで 1 と e^(iθ) を干渉させる
+qc_ht.barrier(label="3")
+qc_ht.measure(probe_a[0], c_reg[0])
+
+qc_ht.draw(output="mpl", reverse_bits=True, style="bw", initial_state=True, fold=-1)
+```
+
+---
+
+### ステップ3：測定確率を計算すると、$\cos\theta$ の波が現れる！ {#sec-part2-cos-sin-formula}
+
+式 (@eq-part2-hadamard-interference) の振幅の絶対値を二乗して、上の量子ビット $A$ を測定したときに $0$ が出る確率 $p_A(0)$ と $1$ が出る確率 $p_A(1)$ を計算してみましょう。$(1+e^{i\theta})$ の複素共役は $(1+e^{-i\theta})$ であり、$e^{i\theta}+e^{-i\theta}=2\cos\theta$ なので、
+
+$$
+\begin{aligned}
+p_A(0)
+&=\left|\frac{1+e^{i\theta}}{2}\right|^2
+=\frac{(1+e^{-i\theta})(1+e^{i\theta})}{4}
+=\frac{1+e^{i\theta}+e^{-i\theta}+1}{4}
+=\frac{1+\cos\theta}{2}=\cos^2\left(\frac{\theta}{2}\right),\\
+p_A(1)
+&=\left|\frac{1-e^{i\theta}}{2}\right|^2
+=\frac{1-\cos\theta}{2}=\sin^2\left(\frac{\theta}{2}\right).
+\end{aligned}
+$$ {#eq-part2-hadamard-prob-cos}
+
+見事に、**消えていたはずの位相の角度 $\theta$ が、測定確率 $\frac{1+\cos\theta}{2}$ という目に見える数字に変わりました！**
+
+特に、Deutsch のアルゴリズムは、この式 (@eq-part2-hadamard-prob-cos) の特別な場合（$\theta=0$ か $\theta=\pi$ かの2択）だったことがわかります。
+
+| 固有値 $e^{i\theta}$ | 位相の角度 $\theta$ | $p_A(0)=\frac{1+\cos\theta}{2}$ | $p_A(1)=\frac{1-\cos\theta}{2}$ | 意味 |
+| :---: | :---: | :---: | :---: | :--- |
+| $+1$ | $\theta=0$ | **$1$（100%）** | $0$ | 2本の針が同じ向きで完全に強め合う |
+| $e^{i\pi/3}$ | $\theta=\pi/3\ (60^\circ)$ | **$3/4$（75%）** | $1/4$（25%） | 0が多く出て、割合から角度がわかる |
+| $i$ | $\theta=\pi/2\ (90^\circ)$ | **$1/2$（50%）** | $1/2$（50%） | 直角なので0と1が半々になる |
+| $-1$ | $\theta=\pi\ (180^\circ)$ | **$0$** | **$1$（100%）** | 2本の針が逆向きで0が完全に打ち消える |
+
+: 位相角 $\theta$ と Hadamardテストの測定確率の対応 {#tbl-part2-phase-prob}
+
+#### もう一工夫：$+\theta$（上向き）と $-\theta$（下向き）も見分けるには？
+
+表 (@tbl-part2-phase-prob) を見ると、1つだけ弱点があります。$\cos(-\theta)=\cos\theta$ なので、例えば $\theta=+\pi/2$（固有値 $+i$）と $\theta=-\pi/2$（固有値 $-i$）は、どちらも $\cos\theta=0$ で確率が $1/2$ になり、$\cos\theta$ だけでは「時計回りか反時計回りか」が区別できません。
+
+そこで、別の測定パターンとして、最後の $H$ の直前に上の量子ビット $A$ へ **$S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix}$**（$\lvert0\rangle$ はそのままにし、$\lvert1\rangle$ の項の針だけを $-90^\circ$ すなわち $-i = e^{-i\pi/2}$ だけ戻すゲート）を1個だけ挟んでみます。[Composerパレットの解説](composer.qmd#comp-sdg)でも登場したゲートです。すると、$H$ の直前の状態は
+
+$$
+\frac{\lvert0\rangle_A + e^{i\theta}\lvert1\rangle_A}{\sqrt2}
+\xrightarrow{\ S^\dagger\ }
+\frac{\lvert0\rangle_A - i e^{i\theta}\lvert1\rangle_A}{\sqrt2}
+=\frac{\lvert0\rangle_A + e^{i(\theta-\pi/2)}\lvert1\rangle_A}{\sqrt2}
+$$
+
+と角度が $\theta$ から $\theta-\frac{\pi}{2}$ に置き換わるため、式 (@eq-part2-hadamard-prob-cos) の $\cos\theta$ がそのまま $\cos\bigl(\theta-\frac{\pi}{2}\bigr)=\sin\theta$ に変わり、
+
+$$
+p_{S^\dagger}(0) = \frac{1+\sin\theta}{2}, \qquad
+p_{S^\dagger}(1) = \frac{1-\sin\theta}{2}
+$$ {#eq-part2-hadamard-prob-sin}
+
+が得られます！ 以下では分かりやすくするため、そのまま $H$ で測った確率を $p_{\cos}(0)\equiv p_A(0)$、$S^\dagger$ を挟んで測った確率を $p_{\sin}(0)\equiv p_{S^\dagger}(0)$ と書くことにします。
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.callout-note appearance="simple" title="実験1：そのまま H で測る（実部 cos θ）"}
+`H → C(U) → H` を繰り返して $0$ が出る割合から **$\cos\theta$** を求める。
+
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.callout-tip appearance="simple" title="実験2：S† を挟んで H で測る（虚部 sin θ）"}
+`H → C(U) → S† → H` を繰り返して $0$ が出る割合から **$\sin\theta$** を求める。
+
+:::
+:::
+:::
+
+$\cos\theta$ と $\sin\theta$ の両方がわかれば、$0 \le \theta < 2\pi$ のどの角度であっても**1点の曇りもなく完全に特定**できます！
+
+---
+
+### アニメーションで体感：針の回転 $\theta$ がそのまま測定確率の波になる！ {#sec-part2-phase-animation}
+
+下の再生ボタンを押して（またはスライダーを左右にコマ送りして）、位相の角度 $\theta$ が $0$ から $2\pi$（$360^\circ$）までぐるっと1周するときに、**左側の「複素平面上の2本の針の合成 $\frac{1+e^{i\theta}}{2}$」**と、**右側の「測定確率 $p(0)$ のグラフ」**がどう連動するかを観察してみてください。
+
+```{python}
+#| label: part2-phase-clock-anim
+#| code-summary: "位相角θの回転とHadamardテストの測定確率の連動アニメーションを生成する"
+num_frames = 37
+thetas = np.linspace(0, 2 * np.pi, num_frames)
+dense_t = np.linspace(0, 2 * np.pi, 300)
+
+# Qiskitでも各角度の確率が理論式 (1+cos θ)/2, (1+sin θ)/2 と一致することを検証
+for th in thetas[::4]:
+    for use_sdg, expected_p0 in ((False, (1 + np.cos(th)) / 2), (True, (1 + np.sin(th)) / 2)):
+        qc_check = QuantumCircuit(2)
+        qc_check.x(0)
+        qc_check.h(1)
+        qc_check.cp(th, 1, 0)
+        if use_sdg:
+            qc_check.sdg(1)
+        qc_check.h(1)
+        p0_qiskit = Statevector.from_instruction(qc_check).probabilities(qargs=[1])[0]
+        np.testing.assert_allclose(p0_qiskit, expected_p0, atol=1e-12)
+
+fig_anim, (ax_c, ax_p) = plt.subplots(1, 2, figsize=(10.2, 4.0))
+circle_phi = np.linspace(0, 2 * np.pi, 180)
+
+def update_frame(idx):
+    th = thetas[idx]
+    ax_c.clear()
+    ax_p.clear()
+
+    # 左：複素平面上の針 (基準 1/2 と 回転 exp(i*th)/2 の合成)
+    ax_c.plot(np.cos(circle_phi), np.sin(circle_phi), color="#e2e8f0", ls="--", lw=1.2, label="単位円")
+    ax_c.axhline(0, color="#cbd5e1", lw=1)
+    ax_c.axvline(0, color="#cbd5e1", lw=1)
+    # 基準の針 1/2
+    ax_c.annotate("", xy=(0.5, 0), xytext=(0, 0),
+                  arrowprops=dict(arrowstyle="->", color="#64748b", lw=2.2))
+    # そこからの回転針 exp(i*th)/2
+    end_x = 0.5 + 0.5 * np.cos(th)
+    end_y = 0.5 * np.sin(th)
+    ax_c.annotate("", xy=(end_x, end_y), xytext=(0.5, 0),
+                  arrowprops=dict(arrowstyle="->", color="#dc2626", lw=2.2))
+    # 合成ベクトル (1 + exp(i*th))/2 = |0> の振幅
+    ax_c.annotate("", xy=(end_x, end_y), xytext=(0, 0),
+                  arrowprops=dict(arrowstyle="->", color="#2563eb", lw=3.0))
+    ax_c.scatter([end_x], [end_y], color="#2563eb", s=45, zorder=5)
+    ax_c.set_xlim(-1.15, 1.15)
+    ax_c.set_ylim(-1.15, 1.15)
+    ax_c.set_aspect("equal")
+    deg = int(round(np.degrees(th)))
+    p0_cos = (1 + np.cos(th)) / 2
+    p0_sin = (1 + np.sin(th)) / 2
+    ax_c.set_title(f"① 2本の針の合成振幅 ($\\theta = {deg}^\\circ$)\n青矢印の長さ$^2 = p(0) = {p0_cos:.2f}$", fontsize=10, fontweight="bold")
+    ax_c.set_xlabel(r"実部 Re (灰色: 基準 $1/2$, 赤: $e^{i\theta}/2$)")
+    ax_c.set_ylabel("虚部 Im")
+
+    # 右：測定確率の波
+    ax_p.plot(dense_t, (1 + np.cos(dense_t)) / 2, color="#2563eb", lw=2.2, label=r"$p_A(0) = (1+\cos\theta)/2$ ($H$のみ)")
+    ax_p.plot(dense_t, (1 + np.sin(dense_t)) / 2, color="#d97706", lw=2.0, ls="--", label=r"$p_{S^\dagger}(0) = (1+\sin\theta)/2$ ($S^\dagger\rightarrow H$)")
+    ax_p.axvline(th, color="#94a3b8", lw=1.2, ls=":")
+    ax_p.scatter([th], [p0_cos], color="#2563eb", s=65, zorder=5)
+    ax_p.scatter([th], [p0_sin], color="#d97706", s=65, zorder=5)
+    ax_p.set_xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
+                    ["0", "π/2\n(90°)", "π\n(180°)", "3π/2\n(270°)", "2π\n(360°)"])
+    ax_p.set_ylim(-0.05, 1.08)
+    ax_p.set_xlabel(r"固有位相の角度 $\theta$")
+    ax_p.set_ylabel("上の量子ビット A で 0 が出る確率")
+    ax_p.set_title(f"② 測定確率の推移: cos型={p0_cos:.2f}, sin型={p0_sin:.2f}", fontsize=10, fontweight="bold")
+    ax_p.grid(alpha=0.25)
+    ax_p.legend(loc="lower left", fontsize=8.5)
+
+plt.tight_layout()
+anim = FuncAnimation(fig_anim, update_frame, frames=num_frames, interval=180)
+plt.close(fig_anim)
+HTML(anim.to_jshtml())
+```
+
+アニメーションを動かすと、次のことが一目瞭然になります。
+
+- $\theta=0^\circ$ のとき：灰色の針（$\frac12$）と赤の針（$\frac12 e^{i\theta}$）がまっすぐ同じ向きに並び、合成した青い矢印の長さが $1$ になるため、$p_A(0)=1$（100%）。
+- $\theta=180^\circ$（$\pi$）のとき：赤の針が真逆に折り返して灰色の針を打ち消すため、青い矢印の長さが $0$ になり、$p_A(0)=0$（つまり確実に $1$ が出る）。
+- その間のどんな角度 $\theta$ でも、青い曲線とオレンジの曲線の高さから角度 $\theta$ を読み取ることができます！
+
+::: {.callout-note collapse="true" title="補足：もし下が固有状態ではなく、一般の状態 |ψ⟩ だったらどうなる？"}
+分子の状態 $\lvert\psi\rangle_B$ が1つの固有状態ではなく、いくつかの固有状態の重ね合わせだったり一般の状態だったりする場合も、Hadamardテストの確率はきれいな式になります。
+$C(U)$ の後の状態 $\frac{1}{\sqrt2}(\lvert0\rangle_A\lvert\psi\rangle_B+\lvert1\rangle_A U\lvert\psi\rangle_B)$ の上に $H$ を掛けると、
+
+$$
+\frac12\lvert0\rangle_A\otimes\bigl(\lvert\psi\rangle+U\lvert\psi\rangle\bigr)_B
++\frac12\lvert1\rangle_A\otimes\bigl(\lvert\psi\rangle-U\lvert\psi\rangle\bigr)_B
+$$
+
+となり、上で $0$ が出る確率はベクトル $\frac12(\lvert\psi\rangle+U\lvert\psi\rangle)$ の長さの二乗
+
+$$
+p_A(0)
+=\frac14\bigl\|\lvert\psi\rangle+U\lvert\psi\rangle\bigr\|^2
+=\frac{1+\operatorname{Re}\langle\psi\rvert U\lvert\psi\rangle}{2}
+$$ {#eq-part2-hadamard-general-overlap}
+
+になります。式 (@eq-part2-hadamard-general-overlap) が示すとおり、Hadamardテストは**「操作前の状態 $\lvert\psi\rangle$ と操作後の状態 $U\lvert\psi\rangle$ がどれだけ重なっているか（内積 $\langle\psi\rvert U\lvert\psi\rangle$）」を測る万能の干渉計**なのです。固有状態 $\lvert u\rangle$ を入れた場合は $\langle u\rvert U\lvert u\rangle = e^{i\theta}$ なので、そのまま式 (@eq-part2-hadamard-prob-cos) の $\frac{1+\cos\theta}{2}$ になります。
+
+:::
+
+これで、**「操作 $U$ の固有位相 $\theta$ を確率として読み出す時計」**が手に入りました。
+次節では、この時計の中にいよいよ**「創薬ターゲット分子のモデル」**を入れて、薬分子が結合して安定するエネルギーを自分の手で測定してみましょう！

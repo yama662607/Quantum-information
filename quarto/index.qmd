@@ -46,7 +46,8 @@ John Watrous 教授の教科書に基づいた旧ノートです。
 
 ## 実装ノート (Implementation)
 
-- [**量子回路を手で読み、目的から組み立てる**](qiskit/algorithms.qmd): X・Z・H・CNOTの手計算から、小さな回路の設計、Deutschへ進む授業。
+- [**量子回路を手で読み、目的から組み立てる（第1回）**](qiskit/algorithms.qmd): X・Z・H・CNOTの手計算から、小さな回路の設計、Deutschの回路を素朴な失敗から発明する授業。
+- [**なぜ量子は速いのか？秘密の鍵・創薬・最前線（第2回）**](qiskit/algorithms-part2.qmd): 重ね合わせの罠（密度行列・部分トレース）から、100万桁の暗証番号を1回で抜く回路、創薬ターゲット分子の結合エネルギー計算、暗号解読と2026最前線へ進む授業。
 - [**Composerの全26記号：図・式・手計算**](qiskit/composer.qmd): IBM Quantum Composerのパレットにある全26個のゲート・制御構文・可視化ツールの解説。
 - [**量子コンピューティングをQiskitで実装**](qiskit/index.qmd): Qiskit を使って、最小回路、状態ベクトル、測定、Bell状態、量子チャネルまでを基礎から辿ります。
 
