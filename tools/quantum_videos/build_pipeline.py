@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 from fractions import Fraction
+from difflib import SequenceMatcher
+import unicodedata
+import re
 import hashlib
 import json
 import math
@@ -15,9 +18,19 @@ import wave
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-ANIMA_PYTHON = Path("~/Code/Projects/anima/.venv/bin/python").expanduser()
-MANIM_PROJECT = Path("~/Code/Skills/learning/tools/manim-learning-video").expanduser()
-MANIM_PYTHON = MANIM_PROJECT / ".venv" / "bin" / "python"
+ANIMA_PYTHON = Path(
+    os.environ.get("QUANTUM_TTS_PYTHON", "~/Code/Projects/anima/.venv/bin/python")
+).expanduser()
+MANIM_PROJECT = Path(
+    os.environ.get(
+        "QUANTUM_MANIM_PROJECT", "~/Code/Skills/learning/tools/manim-learning-video"
+    )
+).expanduser()
+MANIM_PYTHON = Path(
+    os.environ.get(
+        "QUANTUM_MANIM_PYTHON", str(MANIM_PROJECT / ".venv" / "bin" / "python")
+    )
+).expanduser()
 MANIM_SRC = MANIM_PROJECT / "src"
 OUTPUT_DIR = REPO_ROOT / "quarto" / "assets" / "videos"
 CACHE_DIR = REPO_ROOT / "quarto" / "assets" / "videos" / ".tts_cache"
@@ -188,7 +201,8 @@ def synthesize_and_verify_cues(
                     res = subprocess.run(
                         [
                             "curl",
-                            "-s",
+                            "--fail-with-body",
+                            "--silent",
                             "http://127.0.0.1:8001/v1/audio/transcriptions",
                             "-F",
                             f"file=@{polished_wav}",
@@ -203,15 +217,35 @@ def synthesize_and_verify_cues(
                     if res.returncode == 0 and res.stdout.strip():
                         asr_text = json.loads(res.stdout).get("text", "").strip()
                         asr_cache.write_text(asr_text, encoding="utf-8")
-                except Exception:
-                    pass
+                except (OSError, subprocess.TimeoutExpired, ValueError) as exc:
+                    print(f"ASR unavailable for {item['id']}: {exc}", flush=True)
 
+        # ASR is a screening aid, not a proof of correct pronunciation or meaning.
+        def normalize(value):
+            return re.sub(r"[^\w]", "", unicodedata.normalize("NFKC", value))
+
+        similarity = (
+            SequenceMatcher(None, normalize(tts_text), normalize(asr_text)).ratio()
+            if asr_text
+            else None
+        )
+        asr_status = (
+            "unavailable"
+            if not asr_text
+            else ("review_required" if similarity < 0.65 else "screened")
+        )
+        if asr_status != "screened":
+            print(
+                f"ASR {asr_status}: {item['id']} (similarity={similarity})", flush=True
+            )
         timed_cues.append(
             {
                 "id": item["id"],
                 "display": item["display"],
                 "tts": tts_text,
                 "asr": asr_text,
+                "asr_status": asr_status,
+                "asr_similarity": similarity,
                 "wav": str(polished_wav),
                 "duration": dur,
             }
@@ -372,6 +406,10 @@ def build_voiced_lesson(
                     f"Voice overlap detected at cue {cid}: starts at {start_sec:.2f}s before previous ended at {prev_voice_end:.2f}s"
                 )
             prev_voice_end = start_sec + clip_dur
+            if prev_voice_end > total_dur + 1 / fps:
+                raise RuntimeError(f"Voice clip {cid} exceeds the video duration")
+            if cid != cues_spec[idx]["id"] or rec_cue["text"] != c_info["display"]:
+                raise RuntimeError(f"Scene and narration differ at cue {cid}")
 
             s_idx = int(round(start_sec * sr))
             e_idx = min(total_samples, s_idx + len(clip))
@@ -380,6 +418,8 @@ def build_voiced_lesson(
             rec_cue["cue_id"] = cid
             rec_cue["voice_duration"] = round(clip_dur, 3)
             rec_cue["asr"] = c_info["asr"]
+            rec_cue["asr_status"] = c_info["asr_status"]
+            rec_cue["asr_similarity"] = c_info["asr_similarity"]
 
         # Trim master audio to exact video duration
         exact_samples = int(round(total_dur * sr))
@@ -476,6 +516,8 @@ def build_voiced_lesson(
             "chapters": scene_meta.get("chapters", []),
             "cues": recorded_cues,
             "render": info,
+            "source_sha256": hashlib.sha256(source_py.read_bytes()).hexdigest(),
+            "asr_note": "Automatic screening only; unavailable and review_required are not passes.",
         }
         json_path.write_text(
             json.dumps(lesson_meta, ensure_ascii=False, indent=2) + "\n",

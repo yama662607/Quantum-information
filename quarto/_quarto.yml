@@ -5,6 +5,8 @@ project:
     - "assets/pdf/**/*.pdf"
     - "assets/*.png"
     - "assets/videos/**/*"
+    - "assets/fonts/**/*"
+    - "assets/js/quantum-video-chapters.js"
   preview:
     watch-inputs: true
 

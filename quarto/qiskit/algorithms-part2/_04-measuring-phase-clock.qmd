@@ -53,6 +53,17 @@ $$
 C(U)\bigl(\lvert1\rangle_A\otimes\lvert u\rangle_B\bigr) = \lvert1\rangle_A\otimes U\lvert u\rangle_B = e^{i\theta}\lvert1\rangle_A\otimes\lvert u\rangle_B \quad(\text{上が }1\text{ なら }U\text{ を掛ける}).
 $$ {#eq-part2-cu-action}
 
+::: {.callout-note title="前提：位相の基準を決めた制御 U を実装できること"}
+$U:\mathbb C^{2^N}\to\mathbb C^{2^N}$ をユニタリとし、
+
+$$
+C(U)=|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes U
+$$
+
+を使えると仮定します。未知のブラックボックス $U$ が使えるだけで、自動的に $C(U)$ も作れるわけではありません。$U$ と $e^{i\alpha}U$ は単独では全体位相の違いですが、制御すると $|1\rangle_A$ の枝に $e^{i\alpha}$ が加わり、結果が変わります。時間発展の回路ではハミルトニアンの定数項、すなわちエネルギーのゼロも指定します。
+
+:::
+
 これを使えば、「何もしない基準の針」と「$U$ で回した針」を一つの状態の中に並べる手順は、Deutsch の回路とまったく同じ3ステップで作れます（図 (@fig-part2-hadamard-test-circuit)）！[下のレジスタ $B$ が分子を表す何十本もの量子ビットであっても、上の比較用（プローブ）量子ビット $A$ は**たった1本**足すだけで、全体位相だった $e^{i\theta}$ を $A$ の相対位相として引き出せます。]{.aside}
 
 1. **① 準備**：上の比較用量子ビット $A$ に $H$ を掛けて $\lvert+\rangle_A = (\lvert0\rangle_A+\lvert1\rangle_A)/\sqrt2$ にし、下に固有状態 $\lvert u\rangle_B$ を用意する。
@@ -81,8 +92,8 @@ $$ {#eq-part2-hadamard-interference}
 
 ```{python}
 #| label: fig-part2-hadamard-test-circuit
-#| fig-cap: "Hadamardテストの回路構造。①上の比較用量子ビットAをHで |+⟩ にし、②制御付きユニタリゲート C(U) で固有位相 e^(iθ) を上の量子ビットAへ蹴り上げ（位相キックバック）、③最後のHゲートで基準の針 1 と回転した針 e^(iθ) を干渉させて測定確率に変える。"
-#| fig-alt: "上の比較用量子ビットprobe_Aと下のターゲットtarget_Bの2量子ビット回路。AにH、破線1、AからBへの制御付きU(θ)、破線2、AにHと測定。"
+#| fig-cap: "具体例 U=P(π/3)=diag(1,exp(iπ/3)), |u⟩=|1⟩ のHadamardテスト。①上の比較用量子ビットAをHで |+⟩ にし、②制御付きユニタリゲート C(U) で固有位相 e^(iθ) を上の量子ビットAへ蹴り上げ（位相キックバック）、③最後のHゲートで基準の針 1 と回転した針 e^(iθ) を干渉させて測定確率に変える。"
+#| fig-alt: "上の比較用量子ビットprobe_Aと下のターゲットtarget_Bの2量子ビット回路。AにH、破線1、AからBへの制御位相P(π/3)、破線2、AにHと測定。"
 #| code-summary: "Hadamardテストの基本回路（H → C(U) → H）を描画する"
 target_b = QuantumRegister(1, "target_B")
 probe_a = QuantumRegister(1, "probe_A")
@@ -139,7 +150,7 @@ $$ {#eq-part2-hadamard-prob-cos}
 
 表 (@tbl-part2-phase-prob) を見ると、1つだけ弱点があります。$\cos(-\theta)=\cos\theta$ なので、例えば $\theta=+\pi/2$（固有値 $+i$）と $\theta=-\pi/2$（固有値 $-i$）は、どちらも $\cos\theta=0$ で確率が $1/2$ になり、$\cos\theta$ だけでは「時計回りか反時計回りか」が区別できません。
 
-そこで、別の測定パターンとして、最後の $H$ の直前に上の量子ビット $A$ へ **$S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix}$**（$\lvert0\rangle$ はそのままにし、$\lvert1\rangle$ の項の針だけを $-90^\circ$ すなわち $-i = e^{-i\pi/2}$ だけ戻すゲート）を1個だけ挟んでみます。[Composerパレットの解説](composer.qmd#comp-sdg)でも登場したゲートです。すると、$H$ の直前の状態は
+そこで、別の測定パターンとして、最後の $H$ の直前に上の量子ビット $A$ へ **$S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix}$**（$\lvert0\rangle$ はそのままにし、$\lvert1\rangle$ の項の針だけを $-90^\circ$ すなわち $-i = e^{-i\pi/2}$ だけ戻すゲート）を1個だけ挟んでみます。[Composerパレットの解説](composer.qmd#composer-sdg)でも登場したゲートです。すると、$H$ の直前の状態は
 
 $$
 \frac{\lvert0\rangle_A + e^{i\theta}\lvert1\rangle_A}{\sqrt2}
@@ -173,24 +184,30 @@ $$ {#eq-part2-hadamard-prob-sin}
 :::
 :::
 
-$\cos\theta$ と $\sin\theta$ の両方がわかれば、$0 \le \theta < 2\pi$ のどの角度であっても**1点の曇りもなく完全に特定**できます！
+理想確率が正確に既知なら、$\cos\theta$ と $\sin\theta$ から $\theta\bmod2\pi$ が定まります。実機では各回の出力は0か1であり、$M$ 回の独立測定から頻度 $\hat p=k/M$ を得ます。標準偏差は $\sqrt{p(1-p)/M}$ なので、有限回で位相を完全に決定することはできません。後の Statevector の数値は理想確率、ブラウザ実験の点は有限ショットの推定です。
 
 ---
 
-### アニメーションで体感：針の回転 $\theta$ がそのまま測定確率の波になる！ {#sec-part2-phase-animation}
+### スライダーで比較：位相の針と測定確率 {#sec-part2-phase-animation}
 
-下の再生ボタンを押して（またはスライダーを左右にコマ送りして）、位相の角度 $\theta$ が $0$ から $2\pi$（$360^\circ$）までぐるっと1周するときに、**左側の「複素平面上の2本の針の合成 $\frac{1+e^{i\theta}}{2}$」**と、**右側の「測定確率 $p(0)$ のグラフ」**がどう連動するかを観察してみてください。
+角度を変える前に、$\theta=0,\pi/2,\pi$ で二つの確率がどうなるかを予想してください。左の青い矢印は $|0\rangle$ の**振幅** $(1+e^{i\theta})/2$ で、その長さの二乗が右の青い確率です。オレンジは $S^\dagger$ を入れた別の回路の確率です。狭い画面では図が縦に並びます。
+
+```{ojs}
+//| echo: false
+viewof phase_degrees = Inputs.range([0, 360], {label: "位相 θ（度）", step: 1, value: 90})
+import {phaseClock} from "./phase-clock.js"
+phase_clock = phaseClock(phase_degrees)
+```
+
+- $\theta=0$：基準と回転した針がそろい、$p_{\cos}(0)=1$。
+- $\theta=\pi$：二つの針が打ち消し合い、$p_{\cos}(0)=0$。
+- $\theta=\pi/2$ と $3\pi/2$：余弦型は両方 $1/2$。正弦型はそれぞれ $1,0$ で区別できます。
 
 ```{python}
-#| label: part2-phase-clock-anim
-#| code-summary: "位相角θの回転とHadamardテストの測定確率の連動アニメーションを生成する"
-num_frames = 37
-thetas = np.linspace(0, 2 * np.pi, num_frames)
-dense_t = np.linspace(0, 2 * np.pi, 300)
-
-# Qiskitでも各角度の確率が理論式 (1+cos θ)/2, (1+sin θ)/2 と一致することを検証
-for th in thetas[::4]:
-    for use_sdg, expected_p0 in ((False, (1 + np.cos(th)) / 2), (True, (1 + np.sin(th)) / 2)):
+#| label: part2-hadamard-sign-check
+#| include: false
+for th in np.linspace(-2*np.pi, 2*np.pi, 17):
+    for use_sdg in (False, True):
         qc_check = QuantumCircuit(2)
         qc_check.x(0)
         qc_check.h(1)
@@ -198,69 +215,9 @@ for th in thetas[::4]:
         if use_sdg:
             qc_check.sdg(1)
         qc_check.h(1)
-        p0_qiskit = Statevector.from_instruction(qc_check).probabilities(qargs=[1])[0]
-        np.testing.assert_allclose(p0_qiskit, expected_p0, atol=1e-12)
-
-fig_anim, (ax_c, ax_p) = plt.subplots(1, 2, figsize=(10.2, 4.0))
-circle_phi = np.linspace(0, 2 * np.pi, 180)
-
-def update_frame(idx):
-    th = thetas[idx]
-    ax_c.clear()
-    ax_p.clear()
-
-    # 左：複素平面上の針 (基準 1/2 と 回転 exp(i*th)/2 の合成)
-    ax_c.plot(np.cos(circle_phi), np.sin(circle_phi), color="#e2e8f0", ls="--", lw=1.2, label="単位円")
-    ax_c.axhline(0, color="#cbd5e1", lw=1)
-    ax_c.axvline(0, color="#cbd5e1", lw=1)
-    # 基準の針 1/2
-    ax_c.annotate("", xy=(0.5, 0), xytext=(0, 0),
-                  arrowprops=dict(arrowstyle="->", color="#64748b", lw=2.2))
-    # そこからの回転針 exp(i*th)/2
-    end_x = 0.5 + 0.5 * np.cos(th)
-    end_y = 0.5 * np.sin(th)
-    ax_c.annotate("", xy=(end_x, end_y), xytext=(0.5, 0),
-                  arrowprops=dict(arrowstyle="->", color="#dc2626", lw=2.2))
-    # 合成ベクトル (1 + exp(i*th))/2 = |0> の振幅
-    ax_c.annotate("", xy=(end_x, end_y), xytext=(0, 0),
-                  arrowprops=dict(arrowstyle="->", color="#2563eb", lw=3.0))
-    ax_c.scatter([end_x], [end_y], color="#2563eb", s=45, zorder=5)
-    ax_c.set_xlim(-1.15, 1.15)
-    ax_c.set_ylim(-1.15, 1.15)
-    ax_c.set_aspect("equal")
-    deg = int(round(np.degrees(th)))
-    p0_cos = (1 + np.cos(th)) / 2
-    p0_sin = (1 + np.sin(th)) / 2
-    ax_c.set_title(f"① 2本の針の合成振幅 ($\\theta = {deg}^\\circ$)\n青矢印の長さ$^2 = p(0) = {p0_cos:.2f}$", fontsize=10, fontweight="bold")
-    ax_c.set_xlabel(r"実部 Re (灰色: 基準 $1/2$, 赤: $e^{i\theta}/2$)")
-    ax_c.set_ylabel("虚部 Im")
-
-    # 右：測定確率の波
-    ax_p.plot(dense_t, (1 + np.cos(dense_t)) / 2, color="#2563eb", lw=2.2, label=r"$p_A(0) = (1+\cos\theta)/2$ ($H$のみ)")
-    ax_p.plot(dense_t, (1 + np.sin(dense_t)) / 2, color="#d97706", lw=2.0, ls="--", label=r"$p_{S^\dagger}(0) = (1+\sin\theta)/2$ ($S^\dagger\rightarrow H$)")
-    ax_p.axvline(th, color="#94a3b8", lw=1.2, ls=":")
-    ax_p.scatter([th], [p0_cos], color="#2563eb", s=65, zorder=5)
-    ax_p.scatter([th], [p0_sin], color="#d97706", s=65, zorder=5)
-    ax_p.set_xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
-                    ["0", "π/2\n(90°)", "π\n(180°)", "3π/2\n(270°)", "2π\n(360°)"])
-    ax_p.set_ylim(-0.05, 1.08)
-    ax_p.set_xlabel(r"固有位相の角度 $\theta$")
-    ax_p.set_ylabel("上の量子ビット A で 0 が出る確率")
-    ax_p.set_title(f"② 測定確率の推移: cos型={p0_cos:.2f}, sin型={p0_sin:.2f}", fontsize=10, fontweight="bold")
-    ax_p.grid(alpha=0.25)
-    ax_p.legend(loc="lower left", fontsize=8.5)
-
-plt.tight_layout()
-anim = FuncAnimation(fig_anim, update_frame, frames=num_frames, interval=180)
-plt.close(fig_anim)
-HTML(anim.to_jshtml())
+        expected = (1 + (np.sin(th) if use_sdg else np.cos(th))) / 2
+        np.testing.assert_allclose(Statevector.from_instruction(qc_check).probabilities(qargs=[1])[0], expected, atol=1e-12)
 ```
-
-アニメーションを動かすと、次のことが一目瞭然になります。
-
-- $\theta=0^\circ$ のとき：灰色の針（$\frac12$）と赤の針（$\frac12 e^{i\theta}$）がまっすぐ同じ向きに並び、合成した青い矢印の長さが $1$ になるため、$p_A(0)=1$（100%）。
-- $\theta=180^\circ$（$\pi$）のとき：赤の針が真逆に折り返して灰色の針を打ち消すため、青い矢印の長さが $0$ になり、$p_A(0)=0$（つまり確実に $1$ が出る）。
-- その間のどんな角度 $\theta$ でも、青い曲線とオレンジの曲線の高さから角度 $\theta$ を読み取ることができます！
 
 ::: {.callout-note collapse="true" title="補足：もし下が固有状態ではなく、一般の状態 |ψ⟩ だったらどうなる？"}
 分子の状態 $\lvert\psi\rangle_B$ が1つの固有状態ではなく、いくつかの固有状態の重ね合わせだったり一般の状態だったりする場合も、Hadamardテストの確率はきれいな式になります。
@@ -284,4 +241,4 @@ $$ {#eq-part2-hadamard-general-overlap}
 :::
 
 これで、**「操作 $U$ の固有位相 $\theta$ を確率として読み出す時計」**が手に入りました。
-次節では、この時計の中にいよいよ**「創薬ターゲット分子のモデル」**を入れて、薬分子が結合して安定するエネルギーを自分の手で測定してみましょう！
+次節では、この時計に**二状態モデルの時間発展**を組み込み、二状態モデルの固有エネルギーを推定してみましょう。

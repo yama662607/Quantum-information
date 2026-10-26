@@ -1,27 +1,31 @@
-## 5. 【オリジナル実践例題】創薬ターゲット分子の「結合エネルギー」を量子回路で測定する {#sec-part2-drug-example}
+## 5. 【オリジナル実践例題】二状態モデルの固有エネルギーを量子回路で推定する {#sec-part2-drug-example}
 
-ここまでの階段をすべてつなげて、いよいよ**創薬（量子化学計算）のミニチュア実験**を自分の手で行ってみましょう！
-難しい化学の知識は一切いりません。私たちがすでに知っている **$X$ ゲート、固有状態 $\lvert+\rangle,\lvert-\rangle$、そして前節の Hadamardテスト** だけで、「なぜ分子が結合するとエネルギーが下がって安定するのか」と「そのエネルギーをどうやって量子回路で測るのか」が完全に体験できます。
+前節の Hadamard テストで、手計算できるモデルの固有エネルギーを推定します。非局在化によるエネルギーの分裂を学ぶ例であり、薬とタンパク質の結合自由エネルギーを再現するものではありません。
 
----
+### ステップ1：二つの場所を占める一電子のモデル {#sec-part2-bonding-model}
 
-### ステップ1：なぜ分子がくっつくとエネルギーが下がるのか？（化学結合の1量子ビットモデル） {#sec-part2-bonding-model}
-
-::: {.scenario-note title="例題の設定：薬の候補分子が標的ポケットに近づいたときの電子のふるまい"}
-標的タンパク質のポケット（場所 $0$：状態 $\lvert0\rangle$）に、薬の候補分子（場所 $1$：状態 $\lvert1\rangle$）が近づいたとします。1個の注目している電子が、この2つの場所のどちらかにいる状況を1量子ビットで表します。
-
-- **くっつく前（遠く離れているとき）**：電子は場所 $\lvert0\rangle$ か場所 $\lvert1\rangle$ の片方に閉じ込められており、基準のエネルギーは $E_{\text{base}} = 0$ です。
-- **ピタッと近づいたとき（化学結合・水素結合の形成）**：2つの場所の間を電子が**強さ $g > 0$ で行き来（ジャンプ）**できるようになります！
-
-:::
-
-「場所 $\lvert0\rangle$ と場所 $\lvert1\rangle$ を入れ替える操作」は、量子回路では何ゲートだったでしょうか？
-そう、**$X$ ゲート（$\lvert0\rangle\leftrightarrow\lvert1\rangle$）**です！
-量子力学では、電子が2つの場所を行き来してエネルギーが下がる現象（**共鳴・非局在化**）を表すハミルトニアン（エネルギー演算子）$\widehat{H}$ は、この $X$ を使って式 (@eq-part2-bonding-hamiltonian) のたった1項で書けます。[量子力学の粒子（電子）は「波」の性質を持つため、1つの狭い場所に閉じ込められるよりも、2つの場所（$\lvert0\rangle$ と $\lvert1\rangle$）を滑らかに行き来して広がったほうが波の曲がり具合（運動エネルギー）が小さくなり、その分だけエネルギーが下がります。そのため、ジャンプの項にはマイナスの符号（$-g < 0$）が付きます。]{.aside}
+直交する局在状態 $|0\rangle,|1\rangle$ を基底として、一電子のハミルトニアンを
 
 $$
-\widehat{H} = -g X \qquad (g > 0).
+\widehat H=\begin{pmatrix}\epsilon_0&-g\\-g&\epsilon_1\end{pmatrix}
+=\epsilon_0|0\rangle\langle0|+\epsilon_1|1\rangle\langle1|
+-g(|0\rangle\langle1|+|1\rangle\langle0|)
+$$
+
+と置きます。$\epsilon_0,\epsilon_1$ は各場所のエネルギー、$g>0$ は場所間の結合の強さ（エネルギーの単位）です。非対角項は**時間発展を生む演算子の係数**であり、電子に突然 $X$ ゲートをかけて位置を交換するという意味ではありません。二状態では基底の位相を選ぶことで実数の負の結合 $-g$ と表せます。
+
+ここでは **$\epsilon_0=\epsilon_1$ を仮定し、共通値をエネルギーのゼロに選ぶ**ので、
+
+$$
+\widehat H=-gX\qquad(g>0)
 $$ {#eq-part2-bonding-hamiltonian}
+
+となります。核間反発、多電子相互作用、溶媒などは省いています。現実の水素結合や薬の結合を、この1項だけで説明することはできません。
+
+::: {.callout-note title="第3節の『軌道ごとに1ビット』との関係"}
+第3節の占有数表現では二つのモードに2ビットを使います。一電子だけの部分空間 $\{|10\rangle_{\mathrm{occ}},|01\rangle_{\mathrm{occ}}\}$ に制限し、ここでは $|10\rangle_{\mathrm{occ}}\mapsto|0\rangle$、$|01\rangle_{\mathrm{occ}}\mapsto|1\rangle$ と1ビットに符号化しています。後者の $|0\rangle$ は「電子がいない」という意味ではありません。
+
+:::
 
 では、このハミルトニアン $\widehat{H} = -g X$ の**固有状態（エネルギーが確定した状態）**と、そのときの**エネルギー（固有値）**を求めてみましょう！
 第1回から何度も使ってきた2つの状態 $\lvert+\rangle$ と $\lvert-\rangle$ に $X$ を作用させると、
@@ -35,35 +39,35 @@ $$
 
 ::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
-::: {.callout-tip appearance="simple" title="① 結合状態 |+⟩ = (|0⟩+|1⟩)/√2（安定！）"}
+::: {.callout-tip appearance="simple" title="① 低い準位 |+⟩ = (|0⟩+|1⟩)/√2"}
 $$
 \widehat{H}\lvert+\rangle = -g(X\lvert+\rangle) = -g\lvert+\rangle.
 $$
 **エネルギー：$E_+ = -g < 0$**
-電子が2つの場所にプラスの同符号で広がって共有されると、単独でいたとき（$0$）よりも**エネルギーが $g$ だけ下がり、分子がピタッと結合して安定化**します！（これを化学で**結合性軌道**と呼びます）。
+この基底の位相規約では、同符号の重ね合わせが低い固有エネルギーを持ちます。結合性の組合せに対応するモデルです。ただし負の固有値だけで実際の分子の結合安定性は決まりません。
 
 :::
 :::
 
 ::: {.g-col-12 .g-col-md-6}
-::: {.callout-warning appearance="simple" title="② 反結合状態 |−⟩ = (|0⟩−|1⟩)/√2（不安定！）"}
+::: {.callout-warning appearance="simple" title="② 高い準位 |−⟩ = (|0⟩−|1⟩)/√2"}
 $$
 \widehat{H}\lvert-\rangle = -g(X\lvert-\rangle) = +g\lvert-\rangle.
 $$
 **エネルギー：$E_- = +g > 0$**
-真ん中で符号が反転して打ち消し合う状態では、逆に**エネルギーが $+g$ だけ上がって反発**し、不安定になります（これを**反結合性軌道**と呼びます）。
+逆符号の重ね合わせは高い準位となり、二準位のエネルギー差は $E_- - E_+=2g$ です。反結合性の組合せに対応するモデルです。
 
 :::
 :::
 :::
 
-「第1回で回路のパズルとして使っていた $\lvert+\rangle$ と $\lvert-\rangle$ が、実は分子の『安定な結合状態』と『不安定な反結合状態』そのものだった！」ということに気づくと、量子情報と化学が一気につながります。
+第1回で使った $|+\rangle,|-\rangle$ が、このモデルのエネルギー固有状態として再登場しました。以後「結合性・反結合性」はこの二状態モデル内の呼び名とします。
 
 ---
 
 ### ステップ2：時間発展 $U(t)$ を量子ゲートで作る {#sec-part2-time-evolution-gate}
 
-それでは、この分子を時間 $t$ だけ進める時間発展ゲート $U(t) = e^{-i\widehat{H}t}$（計算しやすいよう $\hbar=1$ の単位系にします）を回路に組み込みましょう。
+それでは、この分子を時間 $t$ だけ進める時間発展ゲート $U(t) = e^{-i\widehat{H}t}$（以後 $\hbar=1$、エネルギーと時間は対応する単位を使います）を回路に組み込みましょう。
 
 固有状態 $\lvert E_\pm\rangle = \lvert\pm\rangle$ に時間発展 $U(t)$ を作用させると、第3節の式 (@eq-part2-time-evolution-phase) により、式 (@eq-part2-bonding-phase) のとおりエネルギー $E_\pm$ がそのまま位相の角度 $\theta(t) = -E_\pm t$ になります。
 
@@ -74,7 +78,7 @@ $$
 U(t)\lvert-\rangle = e^{-i E_- t}\lvert-\rangle = e^{-igt}\lvert-\rangle \qquad(\text{位相角 }\theta_- = -E_- t = -gt).
 $$ {#eq-part2-bonding-phase}
 
-ちなみに、$\widehat{H}=-gX$ のとき、時間発展演算子 $U(t) = e^{-i(-gX)t} = e^{+igtX}$ は、[Composerの26記号一覧](composer.qmd#comp-rx)で登場した **$X$ 軸回転ゲート $R_X(\phi) = e^{-i(\phi/2)X}$** と指数部分を見比べると、
+ちなみに、$\widehat{H}=-gX$ のとき、時間発展演算子 $U(t) = e^{-i(-gX)t} = e^{+igtX}$ は、[Composerの26記号一覧](composer.qmd#composer-rx)で登場した **$X$ 軸回転ゲート $R_X(\phi) = e^{-i(\phi/2)X}$** と指数部分を見比べると、
 
 $$
 e^{-i(\phi/2)X} = e^{+igtX}
@@ -82,11 +86,11 @@ e^{-i(\phi/2)X} = e^{+igtX}
 \iff \phi = -2gt
 $$
 
-で完全に一致します！ だから、「制御付き $U(t)$」は Qiskit に最初から用意されている**制御付き $R_X$ ゲート（`crx(-2*g*t, control, target)`）1個**でそのまま図 (@fig-part2-drug-circuit) のように実装できます。
+で一致します。したがって、「制御付き $U(t)$」は Qiskit に最初から用意されている**制御付き $R_X$ ゲート（`crx(-2*g*t, control, target)`）1個**でそのまま図 (@fig-part2-drug-circuit) のように実装できます。
 
 ```{python}
 #| label: fig-part2-drug-circuit
-#| fig-cap: "創薬モデルの分子エネルギーを測定するHadamardテスト回路。下の量子ビットBに分子の結合状態 |+⟩（または反結合状態 |−⟩）を準備し、上の比較用量子ビットAから制御付き時間発展ゲート C(U(t)) = CRX(−2gt) を作用させ、最後のH（またはS†→H）でエネルギーに比例する位相角 θ = −Et を測定確率に変える。"
+#| fig-cap: "二状態モデルの固有エネルギーを推定するHadamardテスト回路。下の量子ビットBにモデルの結合性状態 |+⟩（または反結合状態 |−⟩）を準備し、上の比較用量子ビットAから制御付き時間発展ゲート C(U(t)) = CRX(−2gt) を作用させ、最後のH（またはS†→H）でエネルギーに比例する位相角 θ = −Et を測定確率に変える。"
 #| fig-alt: "上Aと下Bの2量子ビット回路。準備のH、破線1、AからBへの制御付きRXゲート、破線2、上AのHと測定。"
 #| code-summary: "分子モデルのエネルギー位相を読み出すHadamardテスト回路を作る"
 def make_molecule_energy_circuit(g_val, t_val, state_type="+", measure_sin=False, with_measure=False):
@@ -126,23 +130,23 @@ make_molecule_energy_circuit(g_val=1.2, t_val=0.5, state_type="+", with_measure=
 
 ---
 
-### ステップ3：実際に動かして、測定確率の波から「結合エネルギー $E$」を逆算する！ {#sec-part2-energy-experiment}
+### ステップ3：実際に動かして、測定確率の波から「固有エネルギー $E$」を逆算する！ {#sec-part2-energy-experiment}
 
-さあ、実験してみましょう！
-いま、2つの薬の候補分子 **候補1（弱い結合：$g_1 = 0.8$）** と **候補2（強い結合：$g_2 = 1.6$）** があるとします。私たちは回路の外からは $g$ の値を知らないものとして、時間 $t$ を少しずつ変えながら、前節の式 (@eq-part2-hadamard-prob-cos)・式 (@eq-part2-hadamard-prob-sin) に $\theta = -Et$ を代入した上の量子ビット $A$ の測定確率（式 (@eq-part2-energy-oscillation)）
+2組のモデル係数 $g_1=0.8,\ g_2=1.6$ を比較します。**今回は $g$ も答え $E_\pm=\mp g$ も既知**で、回路から同じ値を回収できるかを検証する実験です。現実の電子構造計算でもハミルトニアンの係数は入力として既知ですが、大きい行列の固有値・固有状態を求めることが難しくなります。
 
+前節の確率に $\theta=-Et$ を代入すると、
 $$
 p_{\cos}(0) = \frac{1+\cos\theta}{2} = \frac{1+\cos(Et)}{2}, \qquad
 p_{\sin}(0) = \frac{1+\sin\theta}{2} = \frac{1-\sin(Et)}{2} \quad(\theta = -Et)
 $$ {#eq-part2-energy-oscillation}
 
-を測定し、その波から分子のエネルギー $E$（符号も含めた正確な値！）を逆算してみます。[特に安定な結合状態（$E_+ = -g < 0$）では、位相角は $\theta_+ = -E_+ t = +gt > 0$（反時計回り）になるため、$p_{\sin}(0) = \frac{1+\sin(gt)}{2}$ は $t=0$ の直後に $0.5$ から**上向きに増加**します。逆に不安定な反結合状態（$E_- = +g > 0$）では $\theta_- = -gt < 0$ なので $0.5$ から**下向きに減少**します。]{.aside}
+を得ます。ここでは Statevector から理想確率を求め、後の実験室で有限回の測定を試します。[特に低い準位の結合性状態（$E_+ = -g < 0$）では、位相角は $\theta_+ = -E_+ t = +gt > 0$（反時計回り）になるため、$p_{\sin}(0) = \frac{1+\sin(gt)}{2}$ は $t=0$ の直後に $0.5$ から**上向きに増加**します。逆に高い準位の反結合性状態（$E_- = +g > 0$）では $\theta_- = -gt < 0$ なので $0.5$ から**下向きに減少**します。]{.aside}
 
 ```{python}
 #| label: fig-part2-drug-energy-simulation
-#| fig-cap: "量子回路で測定した分子モデルの確率振動とエネルギーの逆算。左：安定な結合状態 |+⟩ について、候補1（E = −0.8）と候補2（E = −1.6：より強く結合して安定）の測定確率 p_cos(0) を時間 t に対してプロットしたもの。強く結合してエネルギーが大きく下がる分子ほど、速い周期で波打つ。右：候補2（g = 1.6）について、S†を入れた測定確率 p_sin(0) を使うと、安定な結合状態（E_+ = −1.6 < 0：最初に確率が上がる青線）と不安定な反結合状態（E_- = +1.6 > 0：最初に確率が下がる赤線）の符号まで一目で判別できる。"
-#| fig-alt: "左は時間tに対する候補1と候補2の余弦波状の確率振動の比較、右は結合状態(E<0)と反結合状態(E>0)の正弦波状の確率振動の比較グラフ。"
-#| code-summary: "時間tを掃引してHadamardテストを実行し、測定確率から結合エネルギーEを逆算・検証する"
+#| fig-cap: "量子回路で測定した分子モデルの確率振動とエネルギーの逆算。左：低い準位の結合性状態 |+⟩ について、モデル1（E = −0.8）とモデル2（E = −1.6：このモデルで低い準位）の測定確率 p_cos(0) を時間 t に対してプロットしたもの。同じ基準で |E| が大きいほど、速い周期で波打つ。右：モデル2（g = 1.6）について、S†を入れた測定確率 p_sin(0) を使うと、低い準位の結合性状態（E_+ = −1.6 < 0：最初に確率が上がる青線）と高い準位の反結合性状態（E_- = +1.6 > 0：最初に確率が下がる赤線）の符号まで一目で判別できる。"
+#| fig-alt: "左は時間tに対するモデル1とモデル2の余弦波状の確率振動の比較、右は結合状態(E<0)と反結合状態(E>0)の正弦波状の確率振動の比較グラフ。"
+#| code-summary: "時間tを掃引してHadamardテストを実行し、測定確率から固有エネルギーEを逆算・検証する"
 t_grid = np.linspace(0, 4.0, 81)
 
 def simulate_prob_curve(g_val, state_type="+", measure_sin=False):
@@ -171,11 +175,11 @@ for g_true in (0.8, 1.6):
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.6, 4.1))
 
-# 左パネル：候補1 (g=0.8) vs 候補2 (g=1.6) の cos 振動（速さ＝エネルギーの絶対値 |E|）
+# 左パネル：モデル1 (g=0.8) vs モデル2 (g=1.6) の cos 振動（速さ＝エネルギーの絶対値 |E|）
 p_cand1 = simulate_prob_curve(0.8, state_type="+", measure_sin=False)
 p_cand2 = simulate_prob_curve(1.6, state_type="+", measure_sin=False)
-ax1.plot(t_grid, p_cand1, "--", color="#64748b", lw=2.2, label=r"候補1：弱い結合 ($E = -0.8$)")
-ax1.plot(t_grid, p_cand2, "-", color="#2563eb", lw=2.6, label=r"候補2：強い結合 ($E = -1.6$、より安定！)")
+ax1.plot(t_grid, p_cand1, "--", color="#64748b", lw=2.2, label=r"モデル1：小さい結合係数 ($E = -0.8$)")
+ax1.plot(t_grid, p_cand2, "-", color="#2563eb", lw=2.6, label=r"モデル2：大きい結合係数 ($E = -1.6$、低い準位)")
 ax1.set_xlabel("時間発展の長さ t")
 ax1.set_ylabel(r"測定確率 $p_{\cos}(0) = (1 + \cos(Et)) / 2$")
 ax1.set_title(r"① 波の周期から結合の強さ $|E|$ がわかる", fontweight="bold")
@@ -186,12 +190,12 @@ ax1.legend(loc="upper right", fontsize=8.8, framealpha=0.92)
 # 右パネル：結合状態 (E = -1.6) vs 反結合状態 (E = +1.6) の sin 振動（符号の判別）
 p_bond_sin = simulate_prob_curve(1.6, state_type="+", measure_sin=True)
 p_anti_sin = simulate_prob_curve(1.6, state_type="-", measure_sin=True)
-ax2.plot(t_grid, p_bond_sin, "-", color="#2563eb", lw=2.5, label=r"結合状態 $|+\rangle$ ($E = -1.6 < 0$：安定化)")
-ax2.plot(t_grid, p_anti_sin, "-", color="#dc2626", lw=2.5, label=r"反結合状態 $|-\rangle$ ($E = +1.6 > 0$：不安定化)")
+ax2.plot(t_grid, p_bond_sin, "-", color="#2563eb", lw=2.5, label=r"結合状態 $|+\rangle$ ($E = -1.6 < 0$：低い準位)")
+ax2.plot(t_grid, p_anti_sin, "-", color="#dc2626", lw=2.5, label=r"反結合状態 $|-\rangle$ ($E = +1.6 > 0$：高い準位)")
 ax2.axhline(0.5, color="#94a3b8", ls=":", lw=1)
 ax2.set_xlabel("時間発展の長さ t")
 ax2.set_ylabel(r"$S^\dagger$ 測定確率 $p_{\sin}(0) = (1 - \sin(Et)) / 2$")
-ax2.set_title(r"② $S^\dagger$ を挟むとエネルギーの符号（安定/不安定）までわかる", fontweight="bold")
+ax2.set_title(r"② $S^\dagger$ を挟むとエネルギーの符号（同じ基準）までわかる", fontweight="bold")
 ax2.set_ylim(-0.06, 1.32)
 ax2.grid(alpha=0.25)
 ax2.legend(loc="upper right", fontsize=8.8, framealpha=0.92)
@@ -200,42 +204,182 @@ plt.tight_layout()
 plt.show()
 ```
 
-グラフ (@fig-part2-drug-energy-simulation) を見てください！
+左の波の速さは $|E|$ に比例します。ただし $\cos(Et)=\cos(-Et)$ なので、余弦だけでは $+g$ と $-g$ を区別できません。右の正弦型の測定を合わせると、位相の向きを推定できます。
 
-1. **左のグラフ（`H` のみ）**：強く結合してエネルギーが大きく下がる「候補2（$E=-1.6$）」は、弱い「候補1（$E=-0.8$）」のちょうど**2倍の速さ（半分の周期）**で確率の波が振動します。
-2. **右のグラフ（`S† → H`）**：時刻 $t=0$ から少し時間を進めたとき、エネルギーが負で安定化する**結合状態 $\lvert+\rangle$（青線）は確率が $0.5$ から上に上がり**、エネルギーが正で不安定な**反結合状態 $\lvert-\rangle$（赤線）は確率が $0.5$ から下に下がります**。
-3. 実際に $t=0.5$ の1点での2つの確率 $(p_{\cos}(0), p_{\sin}(0))$ から $\cos\theta = 2p_{\cos}(0)-1$、$\sin\theta = 2p_{\sin}(0)-1$ を求め、逆三角関数 $\theta = \operatorname{atan2}(\sin\theta, \cos\theta)$ から $E = -\theta/t$ を計算するだけで、**$E_+ = -1.6000$ と小数点以下までピタリと結合エネルギーが逆算**できました！
+$t=0.5$ で得た理想確率を、途中の値も含めて表示します。
+
+```{python}
+#| label: part2-energy-reconstruction
+#| output: asis
+print("| g | 状態 | p_cos(0) | p_sin(0) | atan2 の位相 | E 推定値 |")
+print("| ---: | :---: | ---: | ---: | ---: | ---: |")
+for g_val in (0.8, 1.6):
+    for state in ("+", "-"):
+        pc, ps = [Statevector.from_instruction(make_molecule_energy_circuit(
+            g_val, 0.5, state, measure_sin=use_sin
+        )).probabilities(qargs=[1])[0] for use_sin in (False, True)]
+        angle = np.arctan2(2*ps-1, 2*pc-1)
+        print(f"| {g_val} | {state} | {pc:.6f} | {ps:.6f} | {angle:.6f} | {-angle/0.5:.6f} |")
+```
+
+::: {.callout-important title="同じ針の向きになる別のエネルギーを区別するには"}
+$\operatorname{atan2}$ が返すのは主値 $\theta_{\mathrm{pr}}\in(-\pi,\pi]$ です。同じ2確率を与えるエネルギーは
+
+$$
+E_k=-\frac{\theta_{\mathrm{pr}}+2\pi k}{t},\qquad k\in\mathbb Z
+$$
+
+と無数にあり、間隔は $2\pi/t$ です。今回は事前に $|E|\le2$ とわかっており、$t=0.5$ なら $|Et|\le1<\pi$ なので主値から一意に戻せます。一般には事前のエネルギー区間に合わせて $t$ を選ぶか、複数時刻の結果で枝を選びます（位相のアンラップ）。
+
+例えば $t=4$ では $E=-1.6$ と $E'=-1.6+2\pi/4\simeq-0.0292$ が同じ確率を与えます。ショット数を増やすだけでは、この曖昧さは解消しません。
+
+:::
 
 ---
 
-### ステップ4：1ビットの時計から「量子位相推定（QPE）」へ ── 一度の測定で何桁も読み出す仕組み {#sec-part2-qpe-bridge}
+### ブラウザ実験室：時間・状態・ショット数を変える {#sec-part2-energy-lab}
 
-いま行った Hadamardテストでは、比較用の量子ビット $A$ が **1本** だけだったので、確率 $p(0)=\frac{1+\cos\theta}{2}$ を小数点以下まで精密に知るには、同じ回路を何度も繰り返して割合を数える必要がありました。
+各回路を同じ回数ずつ測り、有限ショットの揺らぎと位相の折り返しを観察します。理想確率からの二項サンプリングで、装置ノイズは含めていません。Qiskit は使わず NumPy で計算するので、ブラウザ内で動きます。初回は Python の読み込みに時間がかかります。
 
-そこで、「比較用の量子ビット $A$ を1本ではなく $m$ 本並べ、1本目には $U^1$、2本目には $U^2$、3本目には $U^4$、… と**時間を2倍・4倍・8倍にした制御付き操作**を繋いで、最後にまとめて干渉（逆量子フーリエ変換）させたらどうなるか？」と考えたのが、Preskill 第6章 §6.4 の**量子位相推定（Quantum Phase Estimation: QPE）**です（図 (@fig-part2-hadamard-to-qpe)）！
+1. $g=1.6,\ t=0.5,\ |+\rangle$ のまま、各回路のショット数を100から10000へ。誤差棒とエネルギー推定を比べます。
+2. $|+\rangle$ から $|-\rangle$ へ。余弦の確率は同じで、正弦の確率の上下が入れ替わります。
+3. $|+\rangle,\ t=4$ へ。多数回測っても主値のエネルギーは $-1.6$ に戻りません。前述のエイリアシングです。
+4. $|0\rangle=(|+\rangle+|-\rangle)/\sqrt2$ へ。固有状態でないとき、内積 $\langle0|U|0\rangle=\cos(gt)$ を測るので、1個の固有エネルギーとして逆算しません。
+
+```{ojs}
+//| echo: false
+viewof lab_g = Inputs.select([0.8, 1.6], {label: "結合係数 g", value: 1.6})
+viewof lab_time = Inputs.range([0.1, 4], {label: "時間 t（ℏ=1）", step: 0.1, value: 0.5})
+viewof lab_state = Inputs.select(["+", "-", "0"], {label: "入力状態 |…⟩", value: "+"})
+viewof lab_shots = Inputs.select([100, 1000, 10000], {label: "各回路のショット数", value: 1000})
+viewof lab_seed = Inputs.range([1, 100], {label: "乱数の種（変更すると再測定）", step: 1, value: 42})
+lab_font_url = new URL("../assets/fonts/NotoSansJP-Regular.ttf", window.location.href).href
+```
+
+```{pyodide}
+#| label: part2-shot-lab
+#| autorun: true
+#| edit: false
+#| echo: false
+#| input: [lab_g, lab_time, lab_state, lab_shots, lab_seed, lab_font_url]
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import font_manager
+from pyodide.http import pyfetch
+
+if not os.path.exists("/tmp/NotoSansJP.ttf"):
+    response = await pyfetch(lab_font_url)
+    if not response.ok:
+        raise RuntimeError("日本語フォントを読み込めませんでした")
+    with open("/tmp/NotoSansJP.ttf", "wb") as font_file:
+        font_file.write(await response.bytes())
+font_manager.fontManager.addfont("/tmp/NotoSansJP.ttf")
+plt.rcParams.update({"font.family": "Noto Sans JP", "axes.unicode_minus": False})
+
+energy = -lab_g if lab_state == "+" else lab_g
+z = np.cos(lab_g*lab_time) if lab_state == "0" else np.exp(-1j*energy*lab_time)
+ideal = np.array([(1+z.real)/2, (1+z.imag)/2])
+rng = np.random.default_rng(int(lab_seed))
+shots = int(lab_shots)
+counts = rng.binomial(shots, np.clip(ideal, 0, 1))
+frequency = counts / shots
+# Wilson score intervals: finite and nonzero even when every observed bit is identical.
+z95 = 1.95996398454
+center = (frequency + z95**2/(2*shots))/(1+z95**2/shots)
+half = z95*np.sqrt(frequency*(1-frequency)/shots+z95**2/(4*shots**2))/(1+z95**2/shots)
+low, high = center-half, center+half
+fig, ax = plt.subplots(figsize=(4.2, 3.4), dpi=110)
+ax.scatter([0, 1], ideal, marker="_", s=280, color="#dc2626", label="理想確率", zorder=3)
+ax.errorbar([0, 1], frequency, yerr=[np.maximum(0,frequency-low), np.maximum(0,high-frequency)],
+            fmt="o", capsize=6, color="#2563eb", label="頻度・95% Wilson区間")
+ax.set(xticks=[0, 1], xticklabels=["H のみ（cos）", "S† → H（sin）"],
+       ylim=(-0.08, 1.18), ylabel="0が出る確率 / 頻度")
+ax.legend(loc="upper right", fontsize=8)
+ax.grid(axis="y", alpha=0.25)
+fig.tight_layout()
+plt.show()
+print(f"各 {shots} 回（合計 {2*shots} 回）、t = {lab_time:.1f}")
+for name, p, count, freq in zip(("cos", "sin"), ideal, counts, frequency):
+    print(f"{name}: 理想 {p:.4f} / 0 の回数 {count} / 頻度 {freq:.4f}")
+if lab_state == "0":
+    print("入力は固有状態ではありません。単一の E の逆算は行いません。")
+else:
+    estimated_z = (2*frequency[0]-1) + 1j*(2*frequency[1]-1)
+    if abs(estimated_z) < 1e-12:
+        print("今回の頻度では位相を推定できません。再測定してください。")
+    else:
+        theta_hat = np.angle(estimated_z)
+        print(f"主値の位相推定 = {theta_hat:.4f} rad")
+        print(f"主値の E 推定 = {-theta_hat/lab_time:.4f}")
+        print(f"既知のモデル固有値 = {energy:.4f}")
+        print(f"同じ確率を与える E の間隔 = {2*np.pi/lab_time:.4f}")
+        if abs(energy*lab_time) >= np.pi:
+            print("位相が主値区間の外です。枝の選択に追加情報が必要です。")
+```
+
+誤差棒は各確率についての近似的な95%信頼区間で、エネルギーの95%区間ではありません。枝の境界付近では小さな測定誤差でも主値が大きく跳びます。
+
+### ステップ4：1ビットの時計から量子位相推定（QPE）へ {#sec-part2-qpe-bridge}
+
+Hadamard テストは各回の測定で1ビットを得て、繰り返しから確率を推定します。QPE は複数の比較ビットに異なる速さの位相を記録してからまとめて読みます。まず、角度そのものではなく**正規化位相**
+
+$$
+\varphi=\frac{\theta\bmod2\pi}{2\pi}\in[0,1),\qquad U|u\rangle=e^{2\pi i\varphi}|u\rangle
+$$
+
+を2進数で知りたい、と目標を定めます。
+
+**なぜ $U,U^2,U^4,\ldots$ なのか。** 比較レジスタの整数を $x=\sum_{j=0}^{m-1}2^jx_j$ と書き、ビット $x_j$ が1のときだけ $U^{2^j}$ をかけます。位相は掛け算されるので $\prod_j e^{2\pi i\varphi 2^jx_j}=e^{2\pi i\varphi x}$ となり、比較レジスタは
+
+$$
+\frac1{\sqrt{2^m}}\sum_{x=0}^{2^m-1}e^{2\pi i\varphi x}|x\rangle
+$$
+
+になります。位相が $x$ に比例して進む、規則正しいパターンです。
+
+**なぜ最後は $H$ ではなく逆 QFT なのか。** $M=2^m$ とし、$F_M|y\rangle=M^{-1/2}\sum_x e^{2\pi ixy/M}|x\rangle$ と定義します。$\varphi=y/M$ なら上の状態はちょうど $F_M|y\rangle$ です。そこで $F_M^\dagger$ をかければ $|y\rangle$ に戻ります。$H^{\otimes m}$ が作る符号列では、一般のこの位相パターンを復号できません。
+
+::: {.callout-tip title="2ビットで手計算：θ=π/2 の時計を読む"}
+$m=2,\ \varphi=1/4$ のとき、$U$ と $U^2$ によって
+
+$$
+\frac12(|0\rangle+i|1\rangle-|2\rangle-i|3\rangle)
+=F_4|1\rangle\xrightarrow{F_4^\dagger}|1\rangle=|01\rangle
+$$
+
+となります。測ったビット列 `01` は $y=1$、したがって $\varphi=1/4=0.01_2$、$\theta=2\pi\varphi=\pi/2$ です。
+
+:::
+
+一般の $\varphi$ はちょうど $m$ 桁で表せないため、結果 $y$ は確率的です。
+
+$$
+P(y)=\frac1{M^2}\left|\sum_{x=0}^{M-1}e^{2\pi ix(\varphi-y/M)}\right|^2.
+$$
+
+$y/M$ が $\varphi$ に近い値に分布が集中します。反復や追加ビットで成功確率を高めます。比較ビットが $m$ 本でも、$U$ を単純反復してべき乗を作るなら合計 $2^m-1$ 回相当の呼び出しが必要です。精度を上げる時間発展の費用を無視できません。
 
 ```{mermaid}
 %%| label: fig-part2-hadamard-to-qpe
-%%| fig-cap: "Hadamardテスト（左）から量子位相推定 QPE（右）への発展。Hadamardテストは時計の『長針1本』の角度を確率の統計から読むのに対し、QPEは 1倍・2倍・4倍・8倍… の速さで回る複数の針（U, U^2, U^4, ...）を並べて逆量子フーリエ変換（QFT†）に通すことで、一度の測定でエネルギー位相 θ の2進数（各桁のビット列）を直接読み出す。"
-flowchart LR
-    subgraph HT["第4・5節：Hadamardテスト（1量子ビットの時計）"]
-        H1["比較ビット 1本<br/>H → C(U) → H"] --> H2["確率 p(0) = (1+cos θ)/2<br/>何回も測って角度 θ を推定"]
-    end
-    HT ==>|"比較ビットを m 本に増やし<br/>U, U^2, U^4, ... を並べる！"| QPE
-    subgraph QPE["発展：量子位相推定 QPE（m 桁のデジタル時計）"]
-        Q1["比較ビット m 本<br/>C(U), C(U^2), C(U^4), ..."] --> Q2["逆量子フーリエ変換 (QFT†)<br/>1回の測定で θ の2進数ビット列が直接出る！"]
-    end
+%%| fig-cap: "Hadamardテストは確率の統計、QPEは規則的な位相パターンの逆フーリエ変換から位相を推定する。"
+flowchart TD
+    A["固有状態と位相基準を定めた制御 U"] --> B["比較ビット1本：H → C(U) → H または S† → H"]
+    B --> C["繰り返し測定で cos θ, sin θ を推定"]
+    A --> D["比較ビット m 本：制御 U, U², U⁴, …"]
+    D --> E["位相 exp(2πiφx) のパターン → 逆 QFT"]
+    E --> F["ビット列 y を測定：y / 2^m ≈ φ"]
 ```
 
-::: {.callout-note collapse="true" title="補足：もし分子の正確な固有状態 |E⟩ を最初から用意できないときは？"}
-「エネルギーを知りたいのに、最初からその固有状態 $\lvert E\rangle$ を準備できるのか？」という疑問はとても鋭いです。
-実は、完全な固有状態 $\lvert E_0\rangle$ がわからなくても、化学的に近い近似状態（ハートリー・フォック状態など）$\lvert\psi_{\text{init}}\rangle = c_0\lvert E_0\rangle + c_1\lvert E_1\rangle + \dots$ を入れて量子位相推定（QPE）を実行すると、**確率 $|c_0|^2$ で基底状態 $\lvert E_0\rangle$ に射影され、そのときの最低エネルギー $E_0$ がそのまま測定結果として得られます**！
-したがって、初期状態が本物の基底状態と少しでも十分な重なり $|c_0|^2$ を持っていれば、正確な基底状態エネルギーを取り出すことができます（詳細は [Preskill 第6章 §6.8.2](../textbook-preskill/chapter6.qmd#sec-6.8-simulating-quantum-physics) を参照）。
+::: {.callout-note title="固有状態を正確に用意できない場合と成功確率"}
+初期状態 $|\psi\rangle=\sum_j c_j|E_j\rangle$ を入れると、十分な分解能の理想的な位相測定では各準位のピークの重みは $|c_j|^2$ になります。有限精度の QPE は近い位相を完全には分離できず、一般には厳密な固有状態への射影ではありません。
+
+基底状態を得るには重なり $|c_0|^2$ が重要で、独立に準備・測定する回数は概ね $1/|c_0|^2$ に依存します。重なりが指数的に小さければ容易ではありません。効率的な準備、十分な重なり、必要な分解能での制御時間発展がそろって初めて効率性を議論できます（[Preskill §6.8.2](/assets/pdf/preskill/chap6.pdf#page=47)）。
 
 :::
 
 ::: {.callout-note appearance="minimal" icon="false" title="練習：測定された確率から分子のエネルギーを当ててみよう"}
-ある分子モデルの固有状態 $\lvert u\rangle$ に対して、時間 $t = \pi/3$ で Hadamardテストを行ったところ、
+事前に $-3<E<3$ とわかっているモデルの固有状態 $\lvert u\rangle$ に対して、時間 $t = \pi/3$ で Hadamardテストを行ったところ、
 
 - `H → C(U) → H` で上が $0$ になる確率は $p_{\cos}(0) = 1/2$
 - `H → C(U) → S† → H` で上が $0$ になる確率は $p_{\sin}(0) = 1$
@@ -248,6 +392,6 @@ flowchart LR
 1. $p_{\cos}(0) = \frac{1+\cos\theta}{2} = \frac12$ より $\cos\theta = 0$。
 2. $p_{\sin}(0) = \frac{1+\sin\theta}{2} = 1$ より $\sin\theta = +1$。
 3. $\cos\theta=0$ かつ $\sin\theta=+1$ となる角度は $\theta = +\frac{\pi}{2}$ です。
-4. したがって、エネルギーは $E = -\frac{\theta}{t} = -\frac{\pi/2}{\pi/3} = -\frac32 = -1.5$（エネルギーが下がって安定化した結合状態！）と求まります。
+4. したがって、エネルギーは $E = -\frac{\theta}{t} = -\frac{\pi/2}{\pi/3} = -\frac32 = -1.5$（指定された基準で負のエネルギー）と求まります。
 
 :::

@@ -44,6 +44,7 @@ from learning_video.theme import (
     panel,
     text,
 )
+from quantum_videos.phase_math import hadamard_probability
 from quantum_videos.voiced_engine import (
     CARD_ALT,
     CARD_BG,
@@ -61,7 +62,7 @@ DRUG_IMG_PATH = REPO_ROOT / "quarto" / "assets" / "videos" / "img_drug_pocket.jp
 
 LESSON_ID = "ep3-drug-discovery-phase"
 TITLE = "第3話：創薬×量子コンピュータ — 分子エネルギーを「位相の時計」で測る"
-DESCRIPTION = "なぜ創薬で量子コンピュータが注目されるのか？2^Nの壁からシュレーディンガー方程式の位相回転、Hadamardテストによる結合エネルギー測定までを視覚化する。"
+DESCRIPTION = "なぜ創薬で量子コンピュータが注目されるのか？2^Nの壁からシュレーディンガー方程式の位相回転、Hadamardテストによるモデル固有エネルギー推定までを視覚化する。"
 DOMAIN = "量子化学・位相推定・Hadamardテスト"
 
 CUES_EP3: list[dict[str, str]] = [
@@ -72,33 +73,33 @@ CUES_EP3: list[dict[str, str]] = [
     },
     {
         "id": "ep3_c02",
-        "display": "薬が標的タンパク質のポケットにピタッと結合するかどうかは、基底状態のエネルギー E で決まります。",
-        "tts": "薬が標的タンパク質のポケットにピタッと結合するかどうかは、基底状態のエネルギー、イーで決まります。",
+        "display": "結合の平衡は自由エネルギー ΔG° で決まります。電子エネルギー ΔE はその一部で、溶媒やエントロピーも必要です。",
+        "tts": "結合の平衡は自由エネルギーで決まります。電子エネルギーはその一部で、溶媒やエントロピーも必要です。結合の強さだけでは、薬の効き目は決まりません。",
     },
     {
         "id": "ep3_c03",
-        "display": "しかし電子の軌道が N 個あると状態数は 2 の N 乗に爆発し、60軌道で古典スパコンのメモリ限界を超えます。",
-        "tts": "しかし、電子の軌道がエヌ個あると、状態数は二のエヌ乗に爆発し、六十軌道で古典スパコンのメモリ限界を超えます。",
+        "display": "N スピン軌道の全振幅を保存すると 16×2^N バイト。これは密な状態ベクトルの費用で、古典手法全般の下限ではありません。",
+        "tts": "全ての振幅を、複素数一個あたり十六バイトで保存すると、容量は軌道の数とともに指数関数的に増えます。ただし古典計算では、対称性や近似によって、費用を減らせる場合もあります。",
     },
     {
         "id": "ep3_c04",
-        "display": "一方、量子コンピュータなら N 個の量子ビットに分子の状態をそのまま載せて時間発展させることができます。",
-        "tts": "一方、量子コンピュータなら、エヌ個の量子ビットに分子の状態をそのまま載せて、時間発展させることができます。",
+        "display": "占有数の表現には N 論理量子ビット。さらに状態準備、時間発展、精度、補助ビット、誤り訂正の費用がかかります。",
+        "tts": "占有数の表現には、エヌ個の論理量子ビットを使います。さらに状態準備、時間発展、精度、補助ビット、誤り訂正の費用がかかります。",
     },
     {
         "id": "ep3_c05",
         "display": "シュレーディンガー方程式によれば、エネルギー E の状態は、時間 t で位相が θ = -E t / ℏ だけ回ります。",
-        "tts": "シュレーディンガー方程式によれば、エネルギー、イーの状態は、時間ティーで、位相がシータ・イコール・マイナス・イー・ティー割るエイチバーだけ回ります。",
+        "tts": "固有状態では、時間を進めると、位相だけが回転します。その角度は、エネルギーと時間の積にマイナスを付けて、エイチバーで割った値です。",
     },
     {
         "id": "ep3_c06",
-        "display": "つまり分子のエネルギー E とは、複素平面の「位相の時計」の針が回るスピードそのものなのです。",
-        "tts": "つまり、分子のエネルギー、イーとは、複素平面の「位相の時計」の針が回るスピードそのものなのです。",
+        "display": "基準を固定すると角速度は −E/ℏ、速さは |E|/ℏ。負の E では、低いエネルギーほど速く反時計回りに進みます。",
+        "tts": "基準を固定すると、角速度はマイナスイー割るエイチバー、速さはエネルギーの絶対値割るエイチバーです。負のエネルギーでは、低いほど速く反時計回りに進みます。",
     },
     {
         "id": "ep3_c07",
-        "display": "ところが、分子の量子状態だけを直接測定しても、絶対値の2乗は 1 になり、位相角 θ は消えてしまいます。",
-        "tts": "ところが、分子の量子状態だけを直接測定しても、絶対値の二乗はイチになり、位相角シータは消えてしまいます。",
+        "display": "全体位相 e^(iθ) の絶対値の二乗は 1。固有状態だけの測定確率は、時間発展の前後で変わりません。",
+        "tts": "全体位相の絶対値の二乗は一です。固有状態だけの測定確率は、時間発展の前後で変わりません。",
     },
     {
         "id": "ep3_c08",
@@ -107,33 +108,33 @@ CUES_EP3: list[dict[str, str]] = [
     },
     {
         "id": "ep3_c09",
-        "display": "これを実現するのが Hadamard テストです。補助ビットが |1⟩ のときだけ分子を時間発展させます。",
-        "tts": "これを実現するのがアダマールテストです。補助ビットがイチのときだけ、分子を時間発展させます。",
+        "display": "Hadamard テストは、位相の基準を定めた制御 U を使います。補助ビットが |1⟩ の枝だけを時間発展させます。",
+        "tts": "アダマールテストは、位相の基準を定めた制御ユーを使います。補助ビットがイチの枝だけを時間発展させます。",
     },
     {
         "id": "ep3_c10",
         "display": "最後に補助ビットへ H ゲートをかけると、基準の針 1 と回転した針 e^(iθ) が足し合わされます。",
-        "tts": "最後に補助ビットへエイチゲートを掛けると、基準の針イチと、回転した針、エクスポネンシャル・アイ・シータが足し合わされます。",
+        "tts": "最後に、補助ビットへエイチゲートをかけます。すると、動かさなかった枝と、時間を進めた枝の振幅が、足し引きされます。",
     },
     {
         "id": "ep3_c11",
-        "display": "位相角 θ が 0 から 2π まで回ると、0 が測られる確率 p(0) = (1 + cos θ)/2 が波のように変化します！",
-        "tts": "位相角シータがゼロから二パイまで回ると、ゼロが測られる確率、二分の一プラス・コサイン・シータが、波のように変化します！",
+        "display": "p_cos(0)=(1+cos θ)/2。繰り返し測定した 0 の割合から推定します。",
+        "tts": "まず、コサインシータに、一を足します。それを二で割ると、ゼロが出る確率です。繰り返し測定したゼロの割合から、この確率を推定します。",
     },
     {
         "id": "ep3_c12",
-        "display": "さらに Sダガーゲートを挟めば sin θ も測れるため、角度の符号まで一意に特定できます。",
-        "tts": "さらにエスダガーゲートを挟めば、サイン・シータも測れるため、角度の符号まで一意に特定できます。",
+        "display": "S† を挟むと p_sin(0)=(1+sin θ)/2。θ は 2π の周期を持つので、E の範囲と t を決めて読み戻します。",
+        "tts": "エスダガーを挟むと、サインシータに一を足して、二で割った確率になります。ただし位相の一周分は区別できません。エネルギーの範囲と時間を決めて、読み戻します。",
     },
     {
         "id": "ep3_c13",
-        "display": "では創薬ポケットの最小モデル H = -g X で実験しましょう。電子が共有される結合性状態 |+⟩ はエネルギー -g で安定化します。",
-        "tts": "では、創薬ポケットの最小モデル、マイナス・ジー・エックスで実験しましょう。電子が共有される結合性状態、プラス状態は、エネルギー、マイナス・ジーで安定化します。",
+        "display": "H=−gX は等しいサイトエネルギーを 0 にした一電子・二状態モデル。|+⟩ の E=−g は、このモデルの基底エネルギーです。",
+        "tts": "これは電子を一個だけ含む、二つの状態のモデルです。二つの場所のエネルギーを、同じゼロに取ります。このとき、プラス状態が最も低いエネルギー、マイナスジーを持ちます。",
     },
     {
         "id": "ep3_c14",
-        "display": "Hadamard テストで CRX(-2gt) を動かせば、結合性状態と反結合性状態のエネルギー差がコサインの波として直接読み出せます。",
-        "tts": "アダマールテストでシーアールエックスゲートを動かせば、結合性状態と反結合性状態のエネルギー差が、コサインの波として直接読み出せます。",
+        "display": "CRX(−2gt) で時間発展を実装。cos は E=±g を区別できず、sin も測って符号を推定します。準位差は 2g です。",
+        "tts": "制御エックス回転で時間発展を実装します。コサインだけではプラスジーとマイナスジーを区別できず、サインも測って符号を推定します。二つの準位の差は二ジーです。",
     },
 ]
 
@@ -154,12 +155,12 @@ def run_checks() -> None:
         # |0⟩ -> (|0⟩ + e^(i theta)|1⟩)/sqrt(2) -> H -> ((1+e^(i theta))/2)|0⟩ + ((1-e^(i theta))/2)|1⟩
         amp0_cos = 0.5 * (1.0 + np.exp(1j * theta))
         p0_cos = abs(amp0_cos) ** 2
-        assert abs(p0_cos - 0.5 * (1.0 + math.cos(theta))) < 1e-12
+        assert abs(p0_cos - hadamard_probability(theta)) < 1e-12
 
         # With S^\dagger (-i on |1⟩):
         amp0_sin = 0.5 * (1.0 - 1j * np.exp(1j * theta))
         p0_sin = abs(amp0_sin) ** 2
-        assert abs(p0_sin - 0.5 * (1.0 + math.sin(theta))) < 1e-12
+        assert abs(p0_sin - hadamard_probability(theta, sine=True)) < 1e-12
 
 
 class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
@@ -187,7 +188,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             fill_opacity=0.95,
         ).move_to([-3.55, -0.35, 0])
         img_caption = text(
-            "標的タンパク質ポケットと薬分子の電子雲（共有結合軌道）",
+            "薬とタンパク質の概念図（実際の軌道計算ではない）",
             17,
             CYAN,
             max_width=5.4,
@@ -202,13 +203,13 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         right_card = panel(6.6, 4.0, [3.10, -0.35, 0])
         right_title = text(
-            "結合エネルギー ΔE と計算量の壁", 23, AMBER, max_width=6.0
+            "結合自由エネルギーと電子エネルギー", 23, AMBER, max_width=6.0
         ).move_to([3.10, 1.25, 0])
         delta_e_eq = text(
-            "ΔE = E(複合体) − [ E(タンパク質) + E(薬) ]", 20, WHITE, max_width=5.9
+            "ΔG° = −RT ln Ka°  /  ΔE は電子的な寄与", 20, WHITE, max_width=5.9
         ).move_to([3.10, 0.68, 0])
         delta_e_sub = text(
-            "ΔE < 0 が大きくなるほど、薬がポケットに強く安定結合！",
+            "温度・溶媒・エントロピーを含めて結合を評価",
             17,
             MINT,
             max_width=5.9,
@@ -216,7 +217,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c01",
-            "第2話で見た「計算を位相の角度に刻んでHゲートで読み出す」発想は、創薬でどう役立つのでしょうか？",
+            CUES_EP3[0]["display"],
         )
         self.play(
             FadeIn(img_frame), FadeIn(drug_img), FadeIn(img_caption), run_time=1.0
@@ -225,7 +226,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c02",
-            "薬が標的タンパク質のポケットにピタッと結合するかどうかは、基底状態のエネルギー E で決まります。",
+            CUES_EP3[1]["display"],
         )
         self.play(
             FadeIn(right_card),
@@ -248,7 +249,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                     fill_color=BLUE,
                     fill_opacity=0.6,
                 ).move_to([2.40, -0.35, 0]),
-                text("2^20 ≈ 100万 (PCで一瞬)", 16, BLUE, max_width=3.0).move_to(
+                text("16 × 2^20 ≈ 17 MB", 16, BLUE, max_width=3.0).move_to(
                     [4.55, -0.35, 0]
                 ),
             ),
@@ -262,7 +263,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                     fill_color=AMBER,
                     fill_opacity=0.6,
                 ).move_to([2.82, -0.92, 0]),
-                text("2^50 ≈ 18 PB (スパコン限界)", 16, AMBER, max_width=2.3).move_to(
+                text("16 × 2^50 ≈ 18 PB", 16, AMBER, max_width=2.3).move_to(
                     [4.98, -0.92, 0]
                 ),
             ),
@@ -276,7 +277,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                     fill_color=RED,
                     fill_opacity=0.75,
                 ).move_to([3.15, -1.48, 0]),
-                text("2^60 ≈ 18 EB (メモリ崩壊)", 16, RED, max_width=1.8).move_to(
+                text("16 × 2^60 ≈ 18 EB", 16, RED, max_width=1.8).move_to(
                     [5.35, -1.48, 0]
                 ),
             ),
@@ -284,7 +285,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c03",
-            "しかし電子の軌道が N 個あると状態数は 2 の N 乗に爆発し、60軌道で古典スパコンのメモリ限界を超えます。",
+            CUES_EP3[2]["display"],
         )
         self.play(
             FadeIn(scale_rows[0]),
@@ -304,7 +305,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             fill_opacity=0.95,
         ).move_to([3.10, -2.02, 0])
         q_rescue_txt = text(
-            "量子コンピュータ：N = 60 軌道 → たった 60 量子ビットで直接表現！",
+            "データ表現 N ビット ＋ 準備・精度・誤り訂正の費用",
             18,
             MINT,
             max_width=5.85,
@@ -312,7 +313,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c04",
-            "一方、量子コンピュータなら N 個の量子ビットに分子の状態をそのまま載せて時間発展させることができます。",
+            CUES_EP3[3]["display"],
         )
         self.play(
             FadeOut(scale_rows[2][2]),
@@ -339,7 +340,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
         # =====================================================================
         # CHAPTER 2: Energy E = Rotation Speed of the Phase Clock
         # =====================================================================
-        self.mark_chapter("エネルギー E ＝「位相の時計」の回転速度")
+        self.mark_chapter("エネルギーと位相：角速度は −E/ℏ")
 
         top_formula_card = panel(12.6, 1.15, [0.0, 1.45, 0])
         top_formula = text(
@@ -349,7 +350,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             max_width=12.0,
         ).move_to([0.0, 1.62, 0])
         top_formula_sub = text(
-            "位相角 θ = −E t / ℏ  （エネルギー E が大きいほど、時間 t で位相の針が速く回る！）",
+            "θ = −Et / ℏ  /  角速度 −E/ℏ、速さ |E|/ℏ（基準を固定）",
             19,
             SOFT_WHITE,
             max_width=12.0,
@@ -359,11 +360,11 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
         left_clock_panel = panel(6.0, 3.35, [-3.3, -1.05, 0])
         right_clock_panel = panel(6.0, 3.35, [3.3, -1.05, 0])
 
-        lc_title = text(
-            "安定な結合状態（エネルギー E_1 が低い）", 20, MINT, max_width=5.6
-        ).move_to([-3.3, 0.25, 0])
+        lc_title = text("E₁ = −0.8（ℏ = 1）", 20, MINT, max_width=5.6).move_to(
+            [-3.3, 0.25, 0]
+        )
         rc_title = text(
-            "不安定な反発状態（エネルギー E_2 が高い）", 20, RED, max_width=5.6
+            "E₂ = −1.6（同じ基準で、より低い）", 20, RED, max_width=5.6
         ).move_to([3.3, 0.25, 0])
 
         c1_center = np.array([-3.3, -1.20, 0.0])
@@ -405,8 +406,8 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                 + rad
                 * np.array(
                     [
-                        math.cos(0.9 * time_tracker.get_value()),
-                        math.sin(0.9 * time_tracker.get_value()),
+                        math.cos(0.8 * time_tracker.get_value()),
+                        math.sin(0.8 * time_tracker.get_value()),
                         0.0,
                     ]
                 ),
@@ -423,8 +424,8 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                 + rad
                 * np.array(
                     [
-                        math.cos(-2.7 * time_tracker.get_value()),
-                        math.sin(-2.7 * time_tracker.get_value()),
+                        math.cos(1.6 * time_tracker.get_value()),
+                        math.sin(1.6 * time_tracker.get_value()),
                         0.0,
                     ]
                 ),
@@ -439,7 +440,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c05",
-            "シュレーディンガー方程式によれば、エネルギー E の状態は、時間 t で位相が θ = -E t / ℏ だけ回ります。",
+            CUES_EP3[4]["display"],
         )
         self.play(
             FadeIn(top_formula_card),
@@ -463,7 +464,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c06",
-            "つまり分子のエネルギー E とは、複素平面の「位相の時計」の針が回るスピードそのものなのです。",
+            CUES_EP3[5]["display"],
         )
         self.play(time_tracker.animate.set_value(2.4), run_time=3.4)
         self.finish_cue("ep3_c06")
@@ -502,7 +503,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             fill_opacity=0.92,
         ).move_to([0.0, 1.50, 0])
         trap_txt = text(
-            "罠：分子レジスタ e^(iθ)|ψ⟩ をそのまま測定しても、確率 |e^(iθ)|^2 = 1 となり角度 θ は完全に消える！",
+            "罠：分子レジスタ e^(iθ)|ψ⟩ をそのまま測定しても、位相因子の絶対値² = 1 となり角度 θ は完全に消える！",
             21,
             RED,
             max_width=12.1,
@@ -510,7 +511,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c07",
-            "ところが、分子の量子状態だけを直接測定しても、絶対値の2乗は 1 になり、位相角 θ は消えてしまいます。",
+            CUES_EP3[6]["display"],
         )
         self.play(FadeIn(trap_box), FadeIn(trap_txt), run_time=0.9)
         self.finish_cue("ep3_c07")
@@ -581,7 +582,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c08",
-            "角度 θ を測るには「回っていない基準の針 |0⟩」と「θ だけ回った針 |1⟩」を干渉させる必要があります。",
+            CUES_EP3[7]["display"],
         )
         self.play(
             FadeIn(ht_panel),
@@ -597,7 +598,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c09",
-            "これを実現するのが Hadamard テストです。補助ビットが |1⟩ のときだけ分子を時間発展させます。",
+            CUES_EP3[8]["display"],
         )
         self.play(
             FadeIn(ctrl_line),
@@ -611,7 +612,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c10",
-            "最後に補助ビットへ H ゲートをかけると、基準の針 1 と回転した針 e^(iθ) が足し合わされます。",
+            CUES_EP3[9]["display"],
         )
         self.play(
             FadeIn(h2_gate),
@@ -696,7 +697,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                 uc_center
                 + np.array(
                     [
-                        uc_rad * 0.5 * (1.0 + math.cos(theta_tracker.get_value())),
+                        uc_rad * hadamard_probability(theta_tracker.get_value()),
                         uc_rad * 0.5 * math.sin(theta_tracker.get_value()),
                         0.0,
                     ]
@@ -713,7 +714,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                 uc_center
                 + np.array(
                     [
-                        uc_rad * 0.5 * (1.0 + math.cos(theta_tracker.get_value())),
+                        uc_rad * hadamard_probability(theta_tracker.get_value()),
                         uc_rad * 0.5 * math.sin(theta_tracker.get_value()),
                         0.0,
                     ]
@@ -727,7 +728,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
                 uc_center
                 + np.array(
                     [
-                        uc_rad * 0.5 * (1.0 + math.cos(theta_tracker.get_value())),
+                        uc_rad * hadamard_probability(theta_tracker.get_value()),
                         uc_rad * 0.5 * math.sin(theta_tracker.get_value()),
                         0.0,
                     ]
@@ -759,8 +760,8 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
         cos_curve = VGroup(
             *[
                 Line(
-                    pt_on_plot(thetas[i], 0.5 * (1.0 + math.cos(thetas[i]))),
-                    pt_on_plot(thetas[i + 1], 0.5 * (1.0 + math.cos(thetas[i + 1]))),
+                    pt_on_plot(thetas[i], hadamard_probability(thetas[i])),
+                    pt_on_plot(thetas[i + 1], hadamard_probability(thetas[i + 1])),
                     stroke_color=MINT,
                     stroke_width=3.8,
                 )
@@ -770,8 +771,10 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
         sin_curve = VGroup(
             *[
                 Line(
-                    pt_on_plot(thetas[i], 0.5 * (1.0 - math.sin(thetas[i]))),
-                    pt_on_plot(thetas[i + 1], 0.5 * (1.0 - math.sin(thetas[i + 1]))),
+                    pt_on_plot(thetas[i], hadamard_probability(thetas[i], sine=True)),
+                    pt_on_plot(
+                        thetas[i + 1], hadamard_probability(thetas[i + 1], sine=True)
+                    ),
                     stroke_color=VIOLET,
                     stroke_width=3.0,
                     stroke_opacity=0.85,
@@ -784,7 +787,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             lambda: Dot(
                 pt_on_plot(
                     theta_tracker.get_value(),
-                    0.5 * (1.0 + math.cos(theta_tracker.get_value())),
+                    hadamard_probability(theta_tracker.get_value()),
                 ),
                 radius=0.11,
                 color=MINT,
@@ -794,12 +797,12 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             "実部テスト: p_cos(0) = (1 + cos θ)/2", 18, MINT, max_width=6.0
         ).move_to([2.95, 1.12, 0])
         sin_legend = text(
-            "虚部テスト(S†追加): p_sin(0) = (1 − sin θ)/2", 17, VIOLET, max_width=6.0
+            "虚部テスト(S†追加): p_sin(0) = (1 + sin θ)/2", 17, VIOLET, max_width=6.0
         ).move_to([2.95, -2.28, 0])
 
         self.say_cue(
             "ep3_c11",
-            "位相角 θ が 0 から 2π まで回ると、0 が測られる確率 p(0) = (1 + cos θ)/2 が波のように変化します！",
+            CUES_EP3[10]["display"],
         )
         self.play(
             FadeIn(left_wave_panel),
@@ -830,7 +833,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c12",
-            "さらに Sダガーゲートを挟めば sin θ も測れるため、角度の符号まで一意に特定できます。",
+            CUES_EP3[11]["display"],
         )
         self.play(FadeIn(sin_curve), FadeIn(sin_legend), run_time=1.0)
         self.finish_cue("ep3_c12")
@@ -865,11 +868,11 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
         # =====================================================================
         # CHAPTER 5: Minimal Drug Pocket Model H = -gX
         # =====================================================================
-        self.mark_chapter("創薬ポケットの最小量子モデル H = −gX")
+        self.mark_chapter("非局在化を学ぶ二状態モデル H = −gX")
 
         model_panel = panel(12.6, 4.5, [0.0, -0.35, 0])
         model_title = text(
-            "練習問題：ポケットと薬の間を電子が飛び移る最小モデル  H = −g X",
+            "練習：等しいサイトエネルギーの一電子・二状態モデル  H = −g X",
             23,
             AMBER,
             max_width=12.0,
@@ -891,7 +894,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             [-3.1, 0.05, 0]
         )
         bond_t3 = text(
-            "電子雲が共有されエネルギー低下 → 安定結合！", 18, MINT, max_width=5.2
+            "この二状態モデルの基底状態：E = −g", 18, MINT, max_width=5.2
         ).move_to([-3.1, -0.55, 0])
 
         anti_card = RoundedRectangle(
@@ -910,7 +913,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             [3.1, 0.05, 0]
         )
         anti_t3 = text(
-            "電子雲の符号が反転し反発 → 不安定化！", 18, RED, max_width=5.2
+            "この二状態モデルの励起状態：E = +g", 18, RED, max_width=5.2
         ).move_to([3.1, -0.55, 0])
 
         qiskit_bar = RoundedRectangle(
@@ -929,7 +932,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
             max_width=11.2,
         ).move_to([0.0, -1.65, 0])
         qiskit_txt2 = text(
-            "次話：この「位相の時計」の箱 U を、素因数分解の周期発見に差し替えると Shor のアルゴリズムになる！",
+            "次話：剰余乗算の QPE ＋ 古典後処理・再試行で因数分解へ",
             18,
             AMBER,
             max_width=11.2,
@@ -937,7 +940,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c13",
-            "では創薬ポケットの最小モデル H = -g X で実験しましょう。電子が共有される結合性状態 |+⟩ はエネルギー -g で安定化します。",
+            CUES_EP3[12]["display"],
         )
         self.play(
             FadeIn(model_panel),
@@ -956,7 +959,7 @@ class Ep3DrugDiscoveryPhaseScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep3_c14",
-            "Hadamard テストで CRX(-2gt) を動かせば、結合性状態と反結合性状態のエネルギー差がコサインの波として直接読み出せます。",
+            CUES_EP3[13]["display"],
         )
         self.play(
             FadeIn(qiskit_bar), FadeIn(qiskit_txt1), FadeIn(qiskit_txt2), run_time=1.0

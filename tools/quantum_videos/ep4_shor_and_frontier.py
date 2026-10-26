@@ -55,8 +55,8 @@ DOMAIN = "Shorのアルゴリズム・量子優位性・2026最前線"
 CUES_EP4: list[dict[str, str]] = [
     {
         "id": "ep4_c01",
-        "display": "第3話では、分子の時間発展 U(t) が回る角度 θ から創薬の結合エネルギーを読み出しました。",
-        "tts": "第三話では、分子の時間発展、ユー・ティーが回る角度シータから、創薬の結合エネルギーを読み出しました。",
+        "display": "第3話では、制御時間発展の位相から二状態モデルの固有エネルギーを推定しました。",
+        "tts": "第三話では、制御時間発展の位相から、二状態モデルの固有エネルギーを推定しました。",
     },
     {
         "id": "ep4_c02",
@@ -70,28 +70,28 @@ CUES_EP4: list[dict[str, str]] = [
     },
     {
         "id": "ep4_c04",
-        "display": "このサイクルの固有状態を作ると、1ステップごとに位相が θ = 2πk / r だけ回る「位相の時計」になります！",
-        "tts": "このサイクルの固有状態を作ると、一ステップごとに位相が、シータ・イコール・二パイ・ケー割るアールだけ回る、位相の時計になります！",
+        "display": "|1⟩ は4つの固有状態の重ね合わせ。QPE は正規化位相 k/4 を 00, 01, 10, 11 のいずれかとして測ります。",
+        "tts": "イチ状態は四つの固有状態の重ね合わせです。位相推定は、正規化した位相、ケー割る四を、二ビットのいずれかとして測ります。",
     },
     {
         "id": "ep4_c05",
-        "display": "位相推定で周期 r = 4 を読み出せば、最大公約数 gcd(2^2 ± 1, 15) から 15 = 3 × 5 と一瞬で因数分解できます。これが Shor のアルゴリズムです。",
-        "tts": "位相推定で周期四を読み出せば、最大公約数の計算から、十五は三かける五だと、一瞬で因数分解できます。これがショアのアルゴリズムです。",
+        "display": "01, 11 は分母 4。00 は情報なし、10 は分母 2 なので再試行。2^4 mod 15=1 を確認して gcd(4±1,15)=3,5。",
+        "tts": "測定結果の分母は、約分で小さくなる場合もあります。図の例では、ゼロイチか、イチイチが出れば、周期の候補は四です。それ以外なら再試行します。候補が本当に周期かを確かめ、最大公約数を計算すると、三と五が得られます。",
     },
     {
         "id": "ep4_c06",
-        "display": "では、私たちが解きたい課題に出会ったとき、量子で速くなるかをどう見抜けばよいでしょうか？ 4つの分類で整理しましょう。",
+        "display": "では、私たちが解きたい課題に出会ったとき、量子で速くなるかをどう見抜けばよいでしょうか？ 四つの観点で整理しましょう。",
         "tts": "では、私たちが解きたい課題に出会ったとき、量子で速くなるかをどう見抜けばよいでしょうか？四つの分類で整理しましょう。",
     },
     {
         "id": "ep4_c07",
-        "display": "第1は「量子シミュレーション」。創薬・触媒・電池など、相手自体が量子力学で動く問題は 2^N の壁を直接突破できます。",
-        "tts": "第一は、量子シミュレーション。創薬・触媒・電池など、相手自体が量子力学で動く問題は、二のエヌ乗の壁を直接突破できます。",
+        "display": "量子シミュレーションでは、構造ある時間発展を効率よく実装できます。基底状態の準備まで容易とは限りません。",
+        "tts": "量子シミュレーションでは、構造ある時間発展を効率よく実装できます。ただし基底状態の準備まで容易とは限りません。",
     },
     {
         "id": "ep4_c08",
-        "display": "第2は「周期・代数的構造と大域的干渉」。Shor の因数分解や、2024年に Google が発表した DQI がここに入ります。",
-        "tts": "第二は、周期・代数的構造と大域的干渉。ショアの因数分解や、二千二十四年にグーグルが発表したディー・キュー・アイがここに入ります。",
+        "display": "周期・代数的構造を使う Shor や DQI。加速の種類は問題ごとに異なり、BV は n 対 1 のクエリ比較です。",
+        "tts": "周期や代数的構造を使う方法では、問題ごとに加速の種類が異なります。因数分解と、パリティ関数の問い合わせ回数の違いを、同じ指数加速と呼ぶことはできません。",
     },
     {
         "id": "ep4_c09",
@@ -100,18 +100,18 @@ CUES_EP4: list[dict[str, str]] = [
     },
     {
         "id": "ep4_c10",
-        "display": "第4は「古典ビッグデータ処理や逐次計算」。データの読み込み自体がボトルネックになるため、ここは古典GPUの独壇場です。",
-        "tts": "第四は、古典ビッグデータ処理や逐次計算。データの読み込み自体がボトルネックになるため、ここは古典ジー・ピー・ユーの独壇場です。",
+        "display": "大量データの入出力には費用がかかります。応用名だけで優位を断定せず、最良の古典手法と全体費用を比べます。",
+        "tts": "大量データの入出力には費用がかかります。応用名だけで優位を断定せず、最良の古典手法と全体費用を比べます。",
     },
     {
         "id": "ep4_c11",
-        "display": "そして2025年から2026年、Google の Willow チップによる誤り訂正実証や Quantum Echoes、IBM の創薬向けハイブリッド計算など、実用化への扉が開き始めています。",
-        "tts": "そして二千二十五年から二千二十六年、グーグルのウィロウ・チップによる誤り訂正実証や、クォンタム・エコーズ、アイ・ビー・エムの創薬向けハイブリッド計算など、実用化への扉が開き始めています。",
+        "display": "DQI は特定問題の理論的加速、Echoes は特定の OTOC 実験。IBM×理研は SQD による Heron・富岳の連携で、QPE とは異なります。",
+        "tts": "ディーキューアイは特定問題の理論的な加速、エコーズは特定の相関関数の実験です。アイビーエムと理研は、サンプルに基づく対角化で、ヘロンと富岳を連携しました。位相推定とは異なる方式です。",
     },
     {
         "id": "ep4_c12",
-        "display": "「重ね合わせで広げ、位相に答えを刻み、干渉で1点に絞る」——この統一視点こそが、すべての量子アルゴリズムの心臓部です！",
-        "tts": "重ね合わせで広げ、位相に答えを刻み、干渉で一点に絞る。この統一視点こそが、すべての量子アルゴリズムの心臓部です！",
+        "display": "構造を位相に記録し、干渉から必要な情報を読む。今日の例をつなぐ視点と、各手法の前提を持ち帰りましょう。",
+        "tts": "構造を位相に記録し、干渉から必要な情報を読む。今日の例をつなぐ視点と、各手法の前提を持ち帰りましょう。",
     },
 ]
 
@@ -198,7 +198,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep4_c01",
-            "第3話では、分子の時間発展 U(t) が回る角度 θ から創薬の結合エネルギーを読み出しました。",
+            CUES_EP4[0]["display"],
         )
         self.play(
             FadeIn(hero_frame), FadeIn(hero_img), FadeIn(hero_caption), run_time=1.0
@@ -207,7 +207,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep4_c02",
-            "もしこの箱 U を、分子ではなく「2倍して15で割った余り」を計算する箱 U_2 に差し替えたらどうなるでしょうか？",
+            CUES_EP4[1]["display"],
         )
         self.play(FadeIn(cycle_panel), FadeIn(cycle_title), run_time=0.9)
         self.finish_cue("ep4_c02")
@@ -263,7 +263,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep4_c03",
-            "|1⟩ から始めると、1 → 2 → 4 → 8 → 1 と 4ステップ周期 (r = 4) でぐるぐる回ります。",
+            CUES_EP4[2]["display"],
         )
         self.play(
             FadeIn(node_1),
@@ -297,7 +297,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep4_c04",
-            "このサイクルの固有状態を作ると、1ステップごとに位相が θ = 2πk / r だけ回る「位相の時計」になります！",
+            CUES_EP4[3]["display"],
         )
         self.play(FadeIn(eig_bar), FadeIn(eig_txt), run_time=0.9)
         self.finish_cue("ep4_c04")
@@ -310,7 +310,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
         ).move_to([3.10, -2.02, 0])
         self.say_cue(
             "ep4_c05",
-            "位相推定で周期 r = 4 を読み出せば、最大公約数 gcd(2^2 ± 1, 15) から 15 = 3 × 5 と一瞬で因数分解できます。これが Shor のアルゴリズムです。",
+            CUES_EP4[4]["display"],
         )
         self.play(
             Transform(eig_txt, gcd_txt),
@@ -342,7 +342,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
         # =====================================================================
         # CHAPTER 2: The 4-Category Quantum Advantage Intuition Map
         # =====================================================================
-        self.mark_chapter("「量子で速くなる問題」を見抜く 4 分類マップ")
+        self.mark_chapter("「量子で速くなる問題」を見抜く 四つの観点")
 
         map_intro = text(
             "どんな課題なら量子コンピュータで速くなるのか？ — 4つの質問で見抜く直感マップ",
@@ -372,7 +372,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
             d_txt = text(desc_str, 16, SOFT_WHITE, max_width=5.8).move_to(
                 [center[0], center[1] - 0.25, 0]
             )
-            s_txt = code_text(speed_str, 17, border_col).move_to(
+            s_txt = text(speed_str, 17, border_col, max_width=5.8).move_to(
                 [center[0], center[1] - 0.66, 0]
             )
             return VGroup(card, b_txt, t_txt, d_txt, s_txt)
@@ -380,18 +380,18 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
         q_a = make_quadrant(
             [-3.25, 0.42, 0],
             MINT,
-            "分類 A ★最有力（指数加速）",
+            "観点 A：量子シミュレーション",
             "量子シミュレーション（創薬・触媒・材料・化学）",
             "対象自体が量子力学で動く問題。2^N の状態空間を N 量子ビットに直載せ",
-            "古典 O(2^N)  →  量子 O(poly(N))",
+            "局所的な時間発展は効率化可能 / 状態準備は別問題",
         )
         q_b = make_quadrant(
             [3.25, 0.42, 0],
             CYAN,
-            "分類 B ★指数〜超多項式加速",
+            "観点 B：周期・代数的構造",
             "周期・代数的構造・大域的干渉（Shor / BV / DQI）",
             "巨大な重ね合わせの位相に周期や代数構造を刻み、フーリエ変換等で1点集中",
-            "古典 指数時間  →  量子 O(poly(n))",
+            "Shor：既知の古典法との加速 / BV：n 対 1 クエリ",
         )
         q_c = make_quadrant(
             [-3.25, -1.68, 0],
@@ -404,43 +404,43 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
         q_d = make_quadrant(
             [3.25, -1.68, 0],
             RED,
-            "分類 D ✕量子優位なし（古典圧勝）",
+            "観点 D：入出力と全体費用",
             "古典ビッグデータ処理・日常業務・逐次計算",
             "巨大な古典データのI/Oがボトルネックになる問題や並列化できない逐次処理",
-            "古典 GPU / スパコンが圧倒的に高速",
+            "最良の古典手法と全体費用を比較する",
         )
 
         self.say_cue(
             "ep4_c06",
-            "では、私たちが解きたい課題に出会ったとき、量子で速くなるかをどう見抜けばよいでしょうか？ 4つの分類で整理しましょう。",
+            CUES_EP4[5]["display"],
         )
         self.play(FadeIn(map_intro), run_time=0.8)
         self.finish_cue("ep4_c06")
 
         self.say_cue(
             "ep4_c07",
-            "第1は「量子シミュレーション」。創薬・触媒・電池など、相手自体が量子力学で動く問題は 2^N の壁を直接突破できます。",
+            CUES_EP4[6]["display"],
         )
         self.play(FadeIn(q_a), run_time=0.9)
         self.finish_cue("ep4_c07")
 
         self.say_cue(
             "ep4_c08",
-            "第2は「周期・代数的構造と大域的干渉」。Shor の因数分解や、2024年に Google が発表した DQI がここに入ります。",
+            CUES_EP4[7]["display"],
         )
         self.play(FadeIn(q_b), run_time=0.9)
         self.finish_cue("ep4_c08")
 
         self.say_cue(
             "ep4_c09",
-            "第3は「構造のない探索（Grover）」。√N 回の二次加速が得られますが、誤り訂正のオーバーヘッドには注意が必要です。",
+            CUES_EP4[8]["display"],
         )
         self.play(FadeIn(q_c), run_time=0.9)
         self.finish_cue("ep4_c09")
 
         self.say_cue(
             "ep4_c10",
-            "第4は「古典ビッグデータ処理や逐次計算」。データの読み込み自体がボトルネックになるため、ここは古典GPUの独壇場です。",
+            CUES_EP4[9]["display"],
         )
         self.play(FadeIn(q_d), run_time=0.9)
         self.finish_cue("ep4_c10")
@@ -466,21 +466,21 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
                 CYAN,
                 "Google DQI (2024–2025)",
                 "復号化量子干渉法",
-                "代数的構造（誤り訂正復号）を位相干渉に\n変換し、最適化問題で古典を超える！",
+                "特定の有限体問題で既知の古典法に対する\n超多項式加速を理論提案（汎用最適化ではない）",
             ),
             (
                 0.0,
                 MINT,
                 "Google Willow & Echoes (2025)",
                 "閾値下誤り訂正 ＆ OTOC 干渉",
-                "量子ビットを増やすほどエラーが減る実証と\n分子分光(NMR)に繋がる量子エコー観測！",
+                "符号距離を増す誤り訂正の実証と\n特定の OTOC 測定（創薬全体の加速ではない）",
             ),
             (
                 4.25,
                 AMBER,
                 "IBM × 理研 創薬・化学 (2025–2026)",
                 "量子中心スーパーコンピューティング",
-                "量子プロセッサとスパコン「富岳」を密結合し\n鉄硫黄クラスター等の強相関分子を計算！",
+                "Heron と富岳による SQD 化学計算\nQPE や数十論理ビットの実証とは別",
             ),
         ]
         for cx, col, tag, head, body in frontier_specs:
@@ -509,7 +509,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep4_c11",
-            "そして2025年から2026年、Google の Willow チップによる誤り訂正実証や Quantum Echoes、IBM の創薬向けハイブリッド計算など、実用化への扉が開き始めています。",
+            CUES_EP4[10]["display"],
         )
         self.play(
             FadeIn(f_cards[0]), FadeIn(f_cards[1]), FadeIn(f_cards[2]), run_time=1.1
@@ -526,13 +526,13 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
             fill_opacity=0.95,
         ).move_to([0.0, -1.78, 0])
         finale_t1 = text(
-            "量子アルゴリズムの黄金律：① 重ね合わせで広げ → ② 位相に答えを刻み → ③ 干渉で1点に絞る",
+            "今日の例を読む視点：① 重ね合わせで広げ → ② 位相に答えを刻み → ③ 干渉で1点に絞る",
             22,
             MINT,
             max_width=12.0,
         ).move_to([0.0, -1.52, 0])
         finale_t2 = text(
-            "Deutsch / Bernstein–Vazirani / 創薬の位相推定 / Shor / DQI —— すべてはこの1本の幹で繋がっている！",
+            "Deutsch / Bernstein–Vazirani / 創薬の位相推定 / Shor / DQI —— 構造・精度・費用の前提も確かめよう",
             18,
             WHITE,
             max_width=12.0,
@@ -540,7 +540,7 @@ class Ep4ShorAndFrontierScene(VoicedTeachingScene):
 
         self.say_cue(
             "ep4_c12",
-            "「重ね合わせで広げ、位相に答えを刻み、干渉で1点に絞る」——この統一視点こそが、すべての量子アルゴリズムの心臓部です！",
+            CUES_EP4[11]["display"],
         )
         self.play(
             FadeIn(finale_banner), FadeIn(finale_t1), FadeIn(finale_t2), run_time=1.0
