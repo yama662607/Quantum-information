@@ -1,5 +1,7 @@
 # 量子アルゴリズム教材・個別授業の引き継ぎ
 
+> **【2026年10月26日 追記】第1回 Deutsch 改訂・第2回教材 (`algorithms-part2.qmd`) 新設・音声解説動画4本制作の実施記録＆レビュー依頼書**：[QUANTUM_ALGORITHMS_PART2_REVIEW_DOC.md](QUANTUM_ALGORITHMS_PART2_REVIEW_DOC.md) に全変更内容とレビュー観点をまとめています。レビューを行うエージェントはまずそちらを参照してください。
+
 作成日：2026年10月24日  
 対象：このユーザーと量子情報・量子回路・量子アルゴリズムの学習、教材の改訂、ゼミの準備を続けるエージェント  
 作業場所：/Users/daisukeyamashiki/Code/Learning/Quantum-information
