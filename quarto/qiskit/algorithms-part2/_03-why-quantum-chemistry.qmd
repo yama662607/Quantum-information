@@ -1,17 +1,17 @@
 ## 3. なぜ創薬・材料開発で量子計算が研究されるのか？ [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=46) {#sec-part2-chemistry}
 
 ここまでで、「関数の特徴を位相（$\pm 1$）に転写して干渉させる」ことで、古典コンピュータの $n$ 回を $1$ 回に短縮できることがわかりました。
-しかし、世の中の実際の課題では「誰かが作った人工的なブラックボックス $U_f$」が渡されるわけではありません。私たちが本当に解きたいのは、**新しい薬の開発（創薬）**や**触媒・バッテリー材料の設計**といった現実の科学・産業の課題です。
+しかし、世の中の実際の課題では「誰かが作った人工的なブラックボックス $U_f$」が渡されるわけではありません。私たちが本当に解きたいのは、新しい薬の開発（創薬）や触媒・バッテリー材料の設計といった現実の科学・産業の課題です。
 
 量子化学は量子計算の有望な応用候補の一つです。まず、電子のエネルギーを求めることが創薬のどの部分に役立つのかを整理します。
 
 ![薬候補とタンパク質の結合ポケットの概念図。実測構造や計算された軌道を示すものではない](/assets/videos/img_drug_pocket.jpg){#fig-part2-drug-pocket-illust width="82%"}
 
-::: {.callout-tip collapse="true" title="🎬 セクション3〜5の解説動画を見る：第3話「創薬×量子コンピュータと位相時計」"}
+::: {.callout-tip collapse="true" title="セクション3〜5の解説動画を見る：第3話「創薬×量子コンピュータと位相時計」"}
 
 ```{=html}
 <div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:12px; margin:0.4rem 0;">
-  <video controls preload="metadata" poster="/assets/videos/ep3-drug-discovery-phase.jpg" style="width:100%; border-radius:8px; display:block;">
+  <video controls preload="metadata" poster="../assets/videos/ep3-drug-discovery-phase.jpg" style="width:100%; border-radius:8px; display:block;">
     <source src="/assets/videos/ep3-drug-discovery-phase.mp4" type="video/mp4">
     <track kind="captions" src="/assets/videos/ep3-drug-discovery-phase.vtt" srclang="ja" label="日本語字幕">
   </video>
@@ -32,13 +32,13 @@ $$
 
 ここで $R$ は気体定数、$T$ は絶対温度、$K_a^\circ=a_{PL}/(a_Pa_L)$ は平衡時の無次元の活量で定義した結合定数です。同じ条件で $\Delta G^\circ$ が低いほど、結合が平衡で有利になります。
 
-一方、量子化学で求める電子基底エネルギーは、**核配置と電子のモデルを固定したときの最小固有値**です。例えば
+一方、量子化学で求める電子基底エネルギーは、核配置と電子のモデルを固定したときの最小固有値です。例えば
 
 $$
 \Delta E_{\mathrm{el}}=E_{\mathrm{el}}(PL)-E_{\mathrm{el}}(P)-E_{\mathrm{el}}(L)
 $$
 
-は電子エネルギーの差ですが、これだけでは $\Delta G^\circ$ は求まりません。核間反発、振動、溶媒、温度、エントロピー、複数の配座の統計を含める必要があります。**結合親和性が高いことと、薬として効くことも同じではありません**。体内での動きや副作用なども評価対象です。
+は電子エネルギーの差ですが、これだけでは $\Delta G^\circ$ は求まりません。核間反発、振動、溶媒、温度、エントロピー、複数の配座の統計を含める必要があります。結合親和性が高いことと、薬として効くことも同じではありません。体内での動きや副作用なども評価対象です。
 
 ```{mermaid}
 flowchart TD
@@ -48,15 +48,15 @@ flowchart TD
     D --> E["薬物動態・毒性・実験などと合わせて候補を評価"]
 ```
 
-次の節で扱うのは、この図の **$E_{\mathrm{el}}$ のような固有エネルギーを回路で推定する原理**です。1量子ビットの例題はその練習用モデルで、実際の薬の優劣を判定する計算ではありません。
+次の節で扱うのは、この図の $E_{\mathrm{el}}$ のような固有エネルギーを回路で推定する原理です。1量子ビットの例題はその練習用モデルで、実際の薬の優劣を判定する計算ではありません。
 
 ---
 
 ### ステップ2：全振幅を保存する場合の $2^N$ の壁 {#sec-part2-exponential-wall}
 
-$N$ 個の**スピン軌道**について、各軌道を空なら $|0\rangle$、電子が占有していれば $|1\rangle$ と表します。この占有数表現の空間は $2^N$ 次元です。ただし電子数を $\eta$ に固定すると、使う部分空間の次元は $\binom{N}{\eta}$ です。
+$N$ 個のスピン軌道について、各軌道を空なら $|0\rangle$、電子が占有していれば $|1\rangle$ と表します。この占有数表現の空間は $2^N$ 次元です。ただし電子数を $\eta$ に固定すると、使う部分空間の次元は $\binom{N}{\eta}$ です。
 
-全空間の状態ベクトルを密に保存する場合、複素数を1個16バイトとして $16\times2^N$ バイト必要です。これは**一つの表現方法の記憶量**であり、エネルギーを計算するすべての古典アルゴリズムの下限ではありません。古典計算では対称性、密度汎関数法、結合クラスター法、テンソルネットワークなどを使い、系や要求精度に応じて費用を減らします。強い電子相関などのために近似が難しい領域が、量子計算の研究対象になります。
+全空間の状態ベクトルを密に保存する場合、複素数を1個16バイトとして $16\times2^N$ バイト必要です。これは一つの表現方法の記憶量であり、エネルギーを計算するすべての古典アルゴリズムの下限ではありません。古典計算では対称性、密度汎関数法、結合クラスター法、テンソルネットワークなどを使い、系や要求精度に応じて費用を減らします。強い電子相関などのために近似が難しい領域が、量子計算の研究対象になります。
 
 | スピン軌道数 $N$ | 全空間の複素振幅数 $2^N$ | 密な保存のバイト数（十進単位、概算） | 占有数を表すデータ量子ビット |
 | :---: | :---: | :---: | :---: |
@@ -66,7 +66,7 @@ $N$ 個の**スピン軌道**について、各軌道を空なら $|0\rangle$、
 | $80$ | $1.21\times10^{24}$ | $1.93\times10^{25}$ | $80$ |
 | $100$ | $1.27\times10^{30}$ | $2.03\times10^{31}$ | $100$ |
 
-: 密な状態ベクトルの保存と、占有数表現に使うデータ量子ビットの比較。計算全体の費用ではない。 {#tbl-part2-memory-wall}
+: 密な状態ベクトルの保存と、占有数表現に使うデータ量子ビットの比較。計算全体の費用ではない {#tbl-part2-memory-wall}
 
 ```{python}
 #| label: fig-part2-exponential-wall
@@ -75,36 +75,36 @@ $N$ 個の**スピン軌道**について、各軌道を空なら $|0\rangle$、
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.5, 3.6))
 n_orbitals = np.arange(10, 105, 5)
 ax1.semilogy(n_orbitals, 16.0 * 2.0**n_orbitals, "o-", color="#dc2626")
-ax1.set(xlabel="スピン軌道数 N", ylabel="密な保存量 (Byte)", title="全振幅を保存する場合")
+ax1.set(xlabel="Number of spin orbitals N", ylabel="Dense storage (bytes)", title="Storing all amplitudes")
 ax2.plot(n_orbitals, n_orbitals, "s-", color="#2563eb")
-ax2.set(xlabel="スピン軌道数 N", ylabel="データ量子ビット数", title="占有数の表現に必要な本数")
+ax2.set(xlabel="Number of spin orbitals N", ylabel="Data qubits", title="Occupation-number encoding")
 for ax in (ax1, ax2):
     ax.grid(alpha=0.25)
 plt.tight_layout()
 plt.show()
 ```
 
-量子計算では $N$ 本の論理量子ビットにこの状態を表せますが、**表せることと、作れる・計算できる・読み出せることは別**です。状態準備、制御時間発展のゲート数、測定精度、補助量子ビット、誤り訂正の物理量子ビットが別途必要です。局所的などの構造を持つハミルトニアンの時間発展を効率よく近似できても、任意の基底状態が効率よく求まるとは限りません（[Preskill §6.8.2](/assets/pdf/preskill/chap6.pdf#page=47)）。
+量子計算では $N$ 本の論理量子ビットにこの状態を表せますが、表せることと、作れる・計算できる・読み出せることは別です。状態準備、制御時間発展のゲート数、測定精度、補助量子ビット、誤り訂正の物理量子ビットが別途必要です。局所的などの構造を持つハミルトニアンの時間発展を効率よく近似できても、任意の基底状態が効率よく求まるとは限りません（[Preskill §6.8.2](/assets/pdf/preskill/chap6.pdf#page=47)）。
 
 ---
 
-### ステップ3：【次節への重要な伏線】分子のエネルギー $E$ は、回路の「どこ」に現れるのか？ {#sec-part2-energy-as-phase}
+### ステップ3：分子のエネルギー $E$ は、回路のどこに現れるのか？ {#sec-part2-energy-as-phase}
 
-では、$N$ 本の量子ビットの上に分子の状態を用意できたとして、どうやってそこから**「エネルギー $E$」という数値**を取り出せばよいのでしょうか？
+では、$N$ 本の量子ビットの上に分子の状態を用意できたとして、どうやってそこから「エネルギー $E$」という数値を取り出せばよいのでしょうか？
 
 ここでシュレーディンガー方程式を、エネルギー固有状態に適用します。
 
 ::: {.physics-notes}
-**エネルギーの基準を固定すると、固有状態の位相の角速度は $-E/\hbar$ である。**
+エネルギーの基準を固定すると、固有状態の位相の角速度は $-E/\hbar$ である。
 
-分子のエネルギーを表す演算子を**ハミルトニアン $\widehat{H}$** と呼びます（アダマールゲート $H$ と区別するため、頭に山 $\widehat{\phantom{H}}$ を付けます）。
+分子のエネルギーを表す演算子をハミルトニアン $\widehat{H}$ と呼びます（アダマールゲート $H$ と区別するため、頭に山 $\widehat{\phantom{H}}$ を付けます）。
 エネルギーが $E$ で確定している分子の状態（固有状態）を $\lvert E\rangle$ と書くと、
 
 $$
 \widehat{H}\lvert E\rangle = E\lvert E\rangle
 $$ {#eq-part2-hamiltonian-eigen}
 
-です。この式 (@eq-part2-hamiltonian-eigen) の分子の状態を、時間 $t$ だけ進めるユニタリ操作（**時間発展演算子**）を $U(t)$ と書くと、量子力学の法則により、状態 $\lvert E\rangle$ の形はまったく変わらず、**前に複素数の位相 $e^{-iEt/\hbar}$ が掛かるだけ**になります！[ここで $\hbar$（エイチ・バー）はプランク定数という物理の定数です。計算するときは $\hbar=1$ という単位系を選ぶと、単に $\theta = -Et$ となってさらにシンプルになります。]{.aside}
+です。この状態を時間 $t$ だけ進めるユニタリ操作を、時間発展演算子 $U(t)$ と書きます。式 (@eq-part2-hamiltonian-eigen) の固有状態 $\lvert E\rangle$ に作用させると、状態の形は変わらず、係数 $e^{-iEt/\hbar}$ が掛かります。[ここで $\hbar$（エイチ・バー）はプランク定数という物理の定数です。計算するときは $\hbar=1$ という単位系を選ぶと、単に $\theta = -Et$ となってさらにシンプルになります。]{.aside}
 
 $$
 U(t)\lvert E\rangle = e^{-i\widehat{H}t/\hbar}\lvert E\rangle = e^{-iEt/\hbar}\lvert E\rangle.
@@ -119,14 +119,14 @@ $$
 X\lvert-\rangle = (-1)\lvert-\rangle = e^{i\pi}\lvert-\rangle
 $$
 
-のように、状態 $\lvert-\rangle$ の形は変わらず、前に $-1$（角度でいうと $\pi = 180^\circ$）が飛び出しました。
+のように、状態 $\lvert-\rangle$ の形は変わらず、係数 $-1$（角度でいうと $\pi = 180^\circ$）が掛かりました。
 まったく同じように、分子の固有状態 $\lvert E\rangle$ に「時間を $t$ 進めるゲート $U(t)$」を作用させると、状態 $\lvert E\rangle$ の形は変わらず、前に
 
 $$
 e^{i\theta}\qquad\left(\text{ただし角度 }\theta = -\frac{Et}{\hbar}\right)
 $$ {#eq-part2-theta-energy}
 
-という**複素数の回転（時計の針の角度 $\theta$）**が飛び出すのです（式 (@eq-part2-theta-energy)、図 (@fig-part2-energy-clocks)）！
+という係数が掛かります。この複素数の位相を、角度 $\theta$ の時計の針として表したものが図 (@fig-part2-energy-clocks) です（式 (@eq-part2-theta-energy)）。
 
 ```{python}
 #| label: fig-part2-energy-clocks
@@ -137,8 +137,8 @@ fig, axes = plt.subplots(1, 2, figsize=(9.4, 3.9))
 circle_t = np.linspace(0, 2 * np.pi, 200)
 
 configs = [
-    (axes[0], 0.8, "#2563eb", r"$E=-0.8,\ t=1,\ \hbar=1$" + "\n" + r"$\theta=+0.8$（反時計回り）"),
-    (axes[1], 1.6, "#dc2626", r"$E=-1.6,\ t=1,\ \hbar=1$" + "\n" + r"$\theta=+1.6$（反時計回り、速さ2倍）"),
+    (axes[0], 0.8, "#2563eb", r"$E=-0.8,\ t=1,\ \hbar=1$" + "\n" + r"$\theta=+0.8$ (counterclockwise)"),
+    (axes[1], 1.6, "#dc2626", r"$E=-1.6,\ t=1,\ \hbar=1$" + "\n" + r"$\theta=+1.6$ (counterclockwise, twice as fast)"),
 ]
 
 for ax, theta_val, color, title in configs:
@@ -148,7 +148,7 @@ for ax, theta_val, color, title in configs:
     # 基準の針 (t=0: 1)
     ax.annotate("", xy=(1.0, 0.0), xytext=(0, 0),
                 arrowprops=dict(arrowstyle="->", color="#94a3b8", lw=2, ls="--"))
-    ax.text(1.03, -0.14, "基準 (1)", fontsize=8.5, color="#64748b",
+    ax.text(1.03, -0.14, "Ref. (1)", fontsize=8.5, color="#64748b",
             bbox=dict(facecolor="white", alpha=0.85, edgecolor="none", pad=1.0))
     # 回転後の針 exp(i*theta)
     ax.annotate("", xy=(np.cos(theta_val), np.sin(theta_val)), xytext=(0, 0),
@@ -163,8 +163,8 @@ for ax, theta_val, color, title in configs:
     ax.set_ylim(-1.28, 1.28)
     ax.set_aspect("equal")
     ax.set_title(title, fontsize=10, fontweight="bold")
-    ax.set_xlabel("実部 Re")
-    ax.set_ylabel("虚部 Im")
+    ax.set_xlabel("Real part")
+    ax.set_ylabel("Imaginary part")
 
 plt.tight_layout()
 plt.show()
@@ -173,12 +173,12 @@ plt.show()
 同じ基準なら角速度は $-E/\hbar$、その大きさは $|E|/\hbar$ です。「低エネルギーほど遅い」とは限りません。また $\widehat H\mapsto\widehat H+cI$ と基準をずらすと全固有値も位相もずれます。後で使う制御時間発展では、この基準を固定しておきます。
 
 ::: {.important-point}
-**これで「創薬の課題」が「量子回路の課題」に翻訳できた！**
+固有エネルギーの推定を、位相の読み出しとして考える
 
-1. 私たちが知りたいのは、分子の**エネルギー $E$**。
-2. 分子の状態 $\lvert E\rangle$ に時間発展ゲート $U(t)$ を掛けると、エネルギー $E$ は **$U(t)\lvert E\rangle = e^{i\theta}\lvert E\rangle$（ただし $\theta = -Et/\hbar$）という位相の角度 $\theta$** として現れる。
-3. したがって、**「あるユニタリ操作 $U$ を掛けたときに飛び出す固有位相の角度 $\theta$ を、測定確率として読み出す回路」**を作れれば、選んだモデルの固有エネルギー $E$ を推定できる。ただし角度は $2\pi$ 周期なので、エネルギーの範囲と測定時間も指定する。
+1. 私たちが知りたいのは、分子のエネルギー $E$。
+2. 分子の状態 $\lvert E\rangle$ に時間発展ゲート $U(t)$ を掛けると、エネルギー $E$ は $U(t)\lvert E\rangle = e^{i\theta}\lvert E\rangle$（ただし $\theta = -Et/\hbar$）という位相の角度 $\theta$ として現れる。
+3. したがって、ユニタリ操作 $U$ の固有位相の角度 $\theta$ を測定確率から読み出す回路を作れれば、選んだモデルの固有エネルギー $E$ を推定できる。ただし角度は $2\pi$ 周期なので、エネルギーの範囲と測定時間も指定する。
 
 :::
 
-では、どうやってこの「時計の針の角度 $\theta$」を量子回路で読み出せばよいのでしょうか？ 次節で、Deutsch の回路をほんの少し一般化するだけで、どんな角度 $\theta$ でも読み取れる万能の時計読み取り回路（**Hadamardテスト**）を作ります！
+では、この時計の針の角度 $\theta$ をどう読み出せばよいのでしょうか？ 次節では Deutsch の回路を一般化した Hadamardテストを使い、任意の角度 $\theta$ と測定確率の関係を調べます。

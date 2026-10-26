@@ -1,4 +1,4 @@
-## 5. 【オリジナル実践例題】二状態モデルの固有エネルギーを量子回路で推定する {#sec-part2-drug-example}
+## 5. 実践例題：二状態モデルの固有エネルギーを量子回路で推定する {#sec-part2-drug-example}
 
 前節の Hadamard テストで、手計算できるモデルの固有エネルギーを推定します。非局在化によるエネルギーの分裂を学ぶ例であり、薬とタンパク質の結合自由エネルギーを再現するものではありません。
 
@@ -12,9 +12,9 @@ $$
 -g(|0\rangle\langle1|+|1\rangle\langle0|)
 $$
 
-と置きます。$\epsilon_0,\epsilon_1$ は各場所のエネルギー、$g>0$ は場所間の結合の強さ（エネルギーの単位）です。非対角項は**時間発展を生む演算子の係数**であり、電子に突然 $X$ ゲートをかけて位置を交換するという意味ではありません。二状態では基底の位相を選ぶことで実数の負の結合 $-g$ と表せます。
+と置きます。$\epsilon_0,\epsilon_1$ は各場所のエネルギー、$g>0$ は場所間の結合の強さ（エネルギーの単位）です。非対角項は時間発展を生む演算子の係数であり、電子に突然 $X$ ゲートをかけて位置を交換するという意味ではありません。二状態では基底の位相を選ぶことで実数の負の結合 $-g$ と表せます。
 
-ここでは **$\epsilon_0=\epsilon_1$ を仮定し、共通値をエネルギーのゼロに選ぶ**ので、
+ここでは $\epsilon_0=\epsilon_1$ を仮定し、共通値をエネルギーのゼロに選ぶので、
 
 $$
 \widehat H=-gX\qquad(g>0)
@@ -27,7 +27,7 @@ $$ {#eq-part2-bonding-hamiltonian}
 
 :::
 
-では、このハミルトニアン $\widehat{H} = -g X$ の**固有状態（エネルギーが確定した状態）**と、そのときの**エネルギー（固有値）**を求めてみましょう！
+では、このハミルトニアン $\widehat{H} = -g X$ の固有状態（エネルギーが確定した状態）と、そのときのエネルギー（固有値）を求めてみましょう。
 第1回から何度も使ってきた2つの状態 $\lvert+\rangle$ と $\lvert-\rangle$ に $X$ を作用させると、
 
 $$
@@ -35,7 +35,7 @@ X\lvert+\rangle = +\lvert+\rangle,\qquad
 X\lvert-\rangle = -\lvert-\rangle
 $$
 
-でした。したがって、両辺に $-g$ を掛けるだけで、2つの固有状態のエネルギーがすぐに出てきます！
+でした。したがって、両辺に $-g$ を掛けるだけで、2つの固有状態のエネルギーがすぐに出てきます。
 
 ::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
@@ -43,7 +43,7 @@ $$
 $$
 \widehat{H}\lvert+\rangle = -g(X\lvert+\rangle) = -g\lvert+\rangle.
 $$
-**エネルギー：$E_+ = -g < 0$**
+エネルギー：$E_+ = -g < 0$
 この基底の位相規約では、同符号の重ね合わせが低い固有エネルギーを持ちます。結合性の組合せに対応するモデルです。ただし負の固有値だけで実際の分子の結合安定性は決まりません。
 
 :::
@@ -54,7 +54,7 @@ $$
 $$
 \widehat{H}\lvert-\rangle = -g(X\lvert-\rangle) = +g\lvert-\rangle.
 $$
-**エネルギー：$E_- = +g > 0$**
+エネルギー：$E_- = +g > 0$
 逆符号の重ね合わせは高い準位となり、二準位のエネルギー差は $E_- - E_+=2g$ です。反結合性の組合せに対応するモデルです。
 
 :::
@@ -67,7 +67,7 @@ $$
 
 ### ステップ2：時間発展 $U(t)$ を量子ゲートで作る {#sec-part2-time-evolution-gate}
 
-それでは、この分子を時間 $t$ だけ進める時間発展ゲート $U(t) = e^{-i\widehat{H}t}$（以後 $\hbar=1$、エネルギーと時間は対応する単位を使います）を回路に組み込みましょう。
+以後は $\hbar=1$ とし、エネルギーと時間は対応する単位を使います。このモデルを時間 $t$ だけ進める時間発展ゲート $U(t) = e^{-i\widehat{H}t}$ を、回路に組み込みましょう。
 
 固有状態 $\lvert E_\pm\rangle = \lvert\pm\rangle$ に時間発展 $U(t)$ を作用させると、第3節の式 (@eq-part2-time-evolution-phase) により、式 (@eq-part2-bonding-phase) のとおりエネルギー $E_\pm$ がそのまま位相の角度 $\theta(t) = -E_\pm t$ になります。
 
@@ -78,7 +78,7 @@ $$
 U(t)\lvert-\rangle = e^{-i E_- t}\lvert-\rangle = e^{-igt}\lvert-\rangle \qquad(\text{位相角 }\theta_- = -E_- t = -gt).
 $$ {#eq-part2-bonding-phase}
 
-ちなみに、$\widehat{H}=-gX$ のとき、時間発展演算子 $U(t) = e^{-i(-gX)t} = e^{+igtX}$ は、[Composerの26記号一覧](composer.qmd#composer-rx)で登場した **$X$ 軸回転ゲート $R_X(\phi) = e^{-i(\phi/2)X}$** と指数部分を見比べると、
+$\widehat{H}=-gX$ の時間発展演算子 $U(t) = e^{-i(-gX)t} = e^{+igtX}$ を、[Composerの26記号一覧](composer.qmd#composer-rx)で扱った $X$ 軸回転ゲート $R_X(\phi) = e^{-i(\phi/2)X}$ と比べます。指数部分は、
 
 $$
 e^{-i(\phi/2)X} = e^{+igtX}
@@ -86,7 +86,7 @@ e^{-i(\phi/2)X} = e^{+igtX}
 \iff \phi = -2gt
 $$
 
-で一致します。したがって、「制御付き $U(t)$」は Qiskit に最初から用意されている**制御付き $R_X$ ゲート（`crx(-2*g*t, control, target)`）1個**でそのまま図 (@fig-part2-drug-circuit) のように実装できます。
+で一致します。したがって、「制御付き $U(t)$」は Qiskit に最初から用意されている制御付き $R_X$ ゲート（`crx(-2*g*t, control, target)`）1個でそのまま図 (@fig-part2-drug-circuit) のように実装できます。
 
 ```{python}
 #| label: fig-part2-drug-circuit
@@ -130,9 +130,9 @@ make_molecule_energy_circuit(g_val=1.2, t_val=0.5, state_type="+", with_measure=
 
 ---
 
-### ステップ3：実際に動かして、測定確率の波から「固有エネルギー $E$」を逆算する！ {#sec-part2-energy-experiment}
+### ステップ3：測定確率の波から固有エネルギー $E$ を逆算する {#sec-part2-energy-experiment}
 
-2組のモデル係数 $g_1=0.8,\ g_2=1.6$ を比較します。**今回は $g$ も答え $E_\pm=\mp g$ も既知**で、回路から同じ値を回収できるかを検証する実験です。現実の電子構造計算でもハミルトニアンの係数は入力として既知ですが、大きい行列の固有値・固有状態を求めることが難しくなります。
+2組のモデル係数 $g_1=0.8,\ g_2=1.6$ を比較します。今回は $g$ も答え $E_\pm=\mp g$ も既知で、回路から同じ値を回収できるかを検証する実験です。現実の電子構造計算でもハミルトニアンの係数は入力として既知ですが、大きい行列の固有値・固有状態を求めることが難しくなります。
 
 前節の確率に $\theta=-Et$ を代入すると、
 $$
@@ -140,7 +140,7 @@ p_{\cos}(0) = \frac{1+\cos\theta}{2} = \frac{1+\cos(Et)}{2}, \qquad
 p_{\sin}(0) = \frac{1+\sin\theta}{2} = \frac{1-\sin(Et)}{2} \quad(\theta = -Et)
 $$ {#eq-part2-energy-oscillation}
 
-を得ます。ここでは Statevector から理想確率を求め、後の実験室で有限回の測定を試します。[特に低い準位の結合性状態（$E_+ = -g < 0$）では、位相角は $\theta_+ = -E_+ t = +gt > 0$（反時計回り）になるため、$p_{\sin}(0) = \frac{1+\sin(gt)}{2}$ は $t=0$ の直後に $0.5$ から**上向きに増加**します。逆に高い準位の反結合性状態（$E_- = +g > 0$）では $\theta_- = -gt < 0$ なので $0.5$ から**下向きに減少**します。]{.aside}
+を得ます。ここでは Statevector から理想確率を求め、後の実験室で有限回の測定を試します。[特に低い準位の結合性状態（$E_+ = -g < 0$）では、位相角は $\theta_+ = -E_+ t = +gt > 0$（反時計回り）になるため、$p_{\sin}(0) = \frac{1+\sin(gt)}{2}$ は $t=0$ の直後に $0.5$ から上向きに増加します。逆に高い準位の反結合性状態（$E_- = +g > 0$）では $\theta_- = -gt < 0$ なので $0.5$ から下向きに減少します。]{.aside}
 
 ```{python}
 #| label: fig-part2-drug-energy-simulation
@@ -178,11 +178,11 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.6, 4.1))
 # 左パネル：モデル1 (g=0.8) vs モデル2 (g=1.6) の cos 振動（速さ＝エネルギーの絶対値 |E|）
 p_cand1 = simulate_prob_curve(0.8, state_type="+", measure_sin=False)
 p_cand2 = simulate_prob_curve(1.6, state_type="+", measure_sin=False)
-ax1.plot(t_grid, p_cand1, "--", color="#64748b", lw=2.2, label=r"モデル1：小さい結合係数 ($E = -0.8$)")
-ax1.plot(t_grid, p_cand2, "-", color="#2563eb", lw=2.6, label=r"モデル2：大きい結合係数 ($E = -1.6$、低い準位)")
-ax1.set_xlabel("時間発展の長さ t")
-ax1.set_ylabel(r"測定確率 $p_{\cos}(0) = (1 + \cos(Et)) / 2$")
-ax1.set_title(r"① 波の周期から結合の強さ $|E|$ がわかる", fontweight="bold")
+ax1.plot(t_grid, p_cand1, "--", color="#64748b", lw=2.2, label=r"Model 1: $g=0.8$, $E=-0.8$")
+ax1.plot(t_grid, p_cand2, "-", color="#2563eb", lw=2.6, label=r"Model 2: $g=1.6$, $E=-1.6$")
+ax1.set_xlabel("Evolution time t")
+ax1.set_ylabel(r"$p_{\cos}(0) = (1 + \cos(Et)) / 2$")
+ax1.set_title(r"1. Oscillation period reveals $|E|$", fontweight="bold")
 ax1.set_ylim(-0.06, 1.32)
 ax1.grid(alpha=0.25)
 ax1.legend(loc="upper right", fontsize=8.8, framealpha=0.92)
@@ -190,12 +190,12 @@ ax1.legend(loc="upper right", fontsize=8.8, framealpha=0.92)
 # 右パネル：結合状態 (E = -1.6) vs 反結合状態 (E = +1.6) の sin 振動（符号の判別）
 p_bond_sin = simulate_prob_curve(1.6, state_type="+", measure_sin=True)
 p_anti_sin = simulate_prob_curve(1.6, state_type="-", measure_sin=True)
-ax2.plot(t_grid, p_bond_sin, "-", color="#2563eb", lw=2.5, label=r"結合状態 $|+\rangle$ ($E = -1.6 < 0$：低い準位)")
-ax2.plot(t_grid, p_anti_sin, "-", color="#dc2626", lw=2.5, label=r"反結合状態 $|-\rangle$ ($E = +1.6 > 0$：高い準位)")
+ax2.plot(t_grid, p_bond_sin, "-", color="#2563eb", lw=2.5, label=r"Lower state $|+\rangle$: $E=-1.6$")
+ax2.plot(t_grid, p_anti_sin, "-", color="#dc2626", lw=2.5, label=r"Upper state $|-\rangle$: $E=+1.6$")
 ax2.axhline(0.5, color="#94a3b8", ls=":", lw=1)
-ax2.set_xlabel("時間発展の長さ t")
-ax2.set_ylabel(r"$S^\dagger$ 測定確率 $p_{\sin}(0) = (1 - \sin(Et)) / 2$")
-ax2.set_title(r"② $S^\dagger$ を挟むとエネルギーの符号（同じ基準）までわかる", fontweight="bold")
+ax2.set_xlabel("Evolution time t")
+ax2.set_ylabel(r"$p_{\sin}(0) = (1 - \sin(Et)) / 2$")
+ax2.set_title(r"2. $S^\dagger$ reveals the sign of $E$ (fixed zero)", fontweight="bold")
 ax2.set_ylim(-0.06, 1.32)
 ax2.grid(alpha=0.25)
 ax2.legend(loc="upper right", fontsize=8.8, framealpha=0.92)
@@ -253,7 +253,6 @@ viewof lab_time = Inputs.range([0.1, 4], {label: "時間 t（ℏ=1）", step: 0.
 viewof lab_state = Inputs.select(["+", "-", "0"], {label: "入力状態 |…⟩", value: "+"})
 viewof lab_shots = Inputs.select([100, 1000, 10000], {label: "各回路のショット数", value: 1000})
 viewof lab_seed = Inputs.range([1, 100], {label: "乱数の種（変更すると再測定）", step: 1, value: 42})
-lab_font_url = new URL("../assets/fonts/NotoSansJP-Regular.ttf", window.location.href).href
 ```
 
 ```{pyodide}
@@ -261,21 +260,11 @@ lab_font_url = new URL("../assets/fonts/NotoSansJP-Regular.ttf", window.location
 #| autorun: true
 #| edit: false
 #| echo: false
-#| input: [lab_g, lab_time, lab_state, lab_shots, lab_seed, lab_font_url]
-import os
+#| input: [lab_g, lab_time, lab_state, lab_shots, lab_seed]
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import font_manager
-from pyodide.http import pyfetch
 
-if not os.path.exists("/tmp/NotoSansJP.ttf"):
-    response = await pyfetch(lab_font_url)
-    if not response.ok:
-        raise RuntimeError("日本語フォントを読み込めませんでした")
-    with open("/tmp/NotoSansJP.ttf", "wb") as font_file:
-        font_file.write(await response.bytes())
-font_manager.fontManager.addfont("/tmp/NotoSansJP.ttf")
-plt.rcParams.update({"font.family": "Noto Sans JP", "axes.unicode_minus": False})
+plt.rcParams.update({"font.family": "DejaVu Sans", "axes.unicode_minus": False})
 
 energy = -lab_g if lab_state == "+" else lab_g
 z = np.cos(lab_g*lab_time) if lab_state == "0" else np.exp(-1j*energy*lab_time)
@@ -290,11 +279,11 @@ center = (frequency + z95**2/(2*shots))/(1+z95**2/shots)
 half = z95*np.sqrt(frequency*(1-frequency)/shots+z95**2/(4*shots**2))/(1+z95**2/shots)
 low, high = center-half, center+half
 fig, ax = plt.subplots(figsize=(4.2, 3.4), dpi=110)
-ax.scatter([0, 1], ideal, marker="_", s=280, color="#dc2626", label="理想確率", zorder=3)
+ax.scatter([0, 1], ideal, marker="_", s=280, color="#dc2626", label="Exact probability", zorder=3)
 ax.errorbar([0, 1], frequency, yerr=[np.maximum(0,frequency-low), np.maximum(0,high-frequency)],
-            fmt="o", capsize=6, color="#2563eb", label="頻度・95% Wilson区間")
-ax.set(xticks=[0, 1], xticklabels=["H のみ（cos）", "S† → H（sin）"],
-       ylim=(-0.08, 1.18), ylabel="0が出る確率 / 頻度")
+            fmt="o", capsize=6, color="#2563eb", label="Frequency / 95% Wilson interval")
+ax.set(xticks=[0, 1], xticklabels=["H only (cos)", r"$S^\dagger$ + H (sin)"],
+       ylim=(-0.08, 1.18), ylabel="Probability / frequency of outcome 0")
 ax.legend(loc="upper right", fontsize=8)
 ax.grid(axis="y", alpha=0.25)
 fig.tight_layout()
@@ -330,7 +319,7 @@ $$
 
 を2進数で知りたい、と目標を定めます。
 
-**なぜ $U,U^2,U^4,\ldots$ なのか。** 比較レジスタの整数を $x=\sum_{j=0}^{m-1}2^jx_j$ と書き、ビット $x_j$ が1のときだけ $U^{2^j}$ をかけます。位相は掛け算されるので $\prod_j e^{2\pi i\varphi 2^jx_j}=e^{2\pi i\varphi x}$ となり、比較レジスタは
+なぜ $U,U^2,U^4,\ldots$ なのか。 比較レジスタの整数を $x=\sum_{j=0}^{m-1}2^jx_j$ と書き、ビット $x_j$ が1のときだけ $U^{2^j}$ をかけます。位相は掛け算されるので $\prod_j e^{2\pi i\varphi 2^jx_j}=e^{2\pi i\varphi x}$ となり、比較レジスタは
 
 $$
 \frac1{\sqrt{2^m}}\sum_{x=0}^{2^m-1}e^{2\pi i\varphi x}|x\rangle
@@ -338,7 +327,7 @@ $$
 
 になります。位相が $x$ に比例して進む、規則正しいパターンです。
 
-**なぜ最後は $H$ ではなく逆 QFT なのか。** $M=2^m$ とし、$F_M|y\rangle=M^{-1/2}\sum_x e^{2\pi ixy/M}|x\rangle$ と定義します。$\varphi=y/M$ なら上の状態はちょうど $F_M|y\rangle$ です。そこで $F_M^\dagger$ をかければ $|y\rangle$ に戻ります。$H^{\otimes m}$ が作る符号列では、一般のこの位相パターンを復号できません。
+なぜ最後は $H$ ではなく逆 QFT なのか。 $M=2^m$ とし、$F_M|y\rangle=M^{-1/2}\sum_x e^{2\pi ixy/M}|x\rangle$ と定義します。$\varphi=y/M$ なら上の状態はちょうど $F_M|y\rangle$ です。そこで $F_M^\dagger$ をかければ $|y\rangle$ に戻ります。$H^{\otimes m}$ が作る符号列では、一般のこの位相パターンを復号できません。
 
 ::: {.callout-tip title="2ビットで手計算：θ=π/2 の時計を読む"}
 $m=2,\ \varphi=1/4$ のとき、$U$ と $U^2$ によって

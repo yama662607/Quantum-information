@@ -1,14 +1,14 @@
-## 6. Deutschの回路を、「素朴な失敗」から発明する [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=8) {#alg-deutsch}
+## 6. 素朴な回路の問題点から、Deutschの回路を導く [📄 chap6.pdf](/assets/pdf/preskill/chap6.pdf#page=8) {#alg-deutsch}
 
 ここまでの知識を使って、いよいよ最初の量子アルゴリズムを自分の手で組み立ててみましょう。
 まず下を $|0\rangle$ にする案を計算し、上だけを測ったときに何が読めないかを調べます。その結果から、下の初期状態をどう選ぶかを考えます。
 
-::: {.callout-tip title="🎬 音声付き解説動画：量子回路の読み方と、Deutsch回路の設計理由"}
-ゼミの導入や復習として、基本ゲート（$X\cdot Z\cdot H$）による量子干渉から、素朴な回路がエンタングルメントで失敗する理由、そして固有状態 $\lvert-\rangle$ による位相キックバックまでをアニメーションとナレーションで一気に掴めます。
+::: {.callout-tip title="音声付き解説動画：量子回路の読み方と、Deutsch回路の設計理由"}
+基本ゲート（$X\cdot Z\cdot H$）による量子干渉、素朴な回路で上だけの干渉項が失われる理由、固有状態 $\lvert-\rangle$ による位相キックバックを解説する動画です。ゼミの導入や復習に使ってください。
 
 ```{=html}
 <div style="background:#101827; border:1px solid #354762; border-radius:12px; padding:14px; margin:0.6rem 0;">
-  <video controls preload="metadata" poster="/assets/videos/ep1-recap-and-deutsch.jpg" style="width:100%; border-radius:8px; display:block;">
+  <video controls preload="metadata" poster="../assets/videos/ep1-recap-and-deutsch.jpg" style="width:100%; border-radius:8px; display:block;">
     <source src="/assets/videos/ep1-recap-and-deutsch.mp4" type="video/mp4">
     <track kind="captions" src="/assets/videos/ep1-recap-and-deutsch.vtt" srclang="ja" label="日本語字幕">
   </video>
@@ -42,9 +42,9 @@ $$
 \frac{\lvert0,f(0)\rangle+\lvert1,f(1)\rangle}{\sqrt2}.
 $$ {#eq-alg-naive-parallel}
 
-確かに、式 (@eq-alg-naive-parallel) の一つの状態の中に $f(0)$ と $f(1)$ の**両方**が並んでいます！[このように、重ね合わせ状態を入力して複数の入力に対する関数値を一つの状態の中に同時に出現させる働きを**量子並列性（quantum parallelism）**と呼びます。]{.aside}
+確かに、式 (@eq-alg-naive-parallel) の一つの状態の中に $f(0)$ と $f(1)$ の両方が並んでいます。[このように、重ね合わせ状態を入力して複数の入力に対する関数値を一つの状態の中に同時に出現させる働きを**量子並列性**（quantum parallelism）と呼びます。]{.aside}
 
-「やった、これで1回の問い合わせで両方わかった！」と思いたくなります。しかし、私たちが最後にできるのは、状態ベクトルを直接覗き見ることではなく**測定して0か1を受け取ること**だけです。この状態を測定すると何が起きるでしょうか？
+一つの状態に両方の関数値が含まれていても、状態ベクトルを直接読むことはできません。読み出せるのは、各量子ビットを測定した結果の0か1です。この状態を測定すると何が起きるでしょうか？
 
 #### 壁1：そのまま測定しても、片方の結果しか出ない
 
@@ -53,11 +53,11 @@ $$ {#eq-alg-naive-parallel}
 - 確率 $1/2$ で $\bigl(0,f(0)\bigr)$ が出現し、状態は $\lvert0,f(0)\rangle$ に確定する（$f(1)$ の項は消える）。
 - 確率 $1/2$ で $\bigl(1,f(1)\bigr)$ が出現し、状態は $\lvert1,f(1)\rangle$ に確定する（$f(0)$ の項は消える）。
 
-1回測定してわかるのは $f(0)$ か $f(1)$ の**どちらか片方だけ**です。これでは、最初からコイントスで0か1を決めて古典的に1回質問したのとまったく同じで、2つの値が「同じか違うか」は絶対にわかりません。
+1回測定してわかるのは $f(0)$ か $f(1)$ のどちらか片方だけです。これでは、最初からコイントスで0か1を決めて古典的に1回質問したのとまったく同じで、2つの値が「同じか違うか」は絶対にわかりません。
 
-#### 壁2：上に $H$ を掛けて「足し引き（干渉）」させようとしても失敗する！
+#### 壁2：上に $H$ を掛けて干渉させても、確実には判定できない
 
-「そのまま測るのがダメなら、第2節や第4節でやったように、測る前に上へ $H$ を掛けて二つの項を足し引き（干渉）させればいいのでは？」と考えるのが自然な次の一手です。実際に図 (@fig-alg-deutsch-naive) の**素朴な回路（上に $H \to U_f \to$ 上に $H$）**を組んで、何が起きるか見てみましょう。
+「そのまま測るのがダメなら、第2節や第4節でやったように、測る前に上へ $H$ を掛けて二つの項を足し引き（干渉）させればいいのでは？」と考えるのが自然な次の一手です。実際に図 (@fig-alg-deutsch-naive) の素朴な回路（上に $H \to U_f \to$ 上に $H$）を組んで、何が起きるか見てみましょう。
 
 ```{python}
 #| label: fig-alg-deutsch-naive
@@ -100,18 +100,18 @@ $$
 \end{aligned}
 $$
 
-です。**下の量子ビットが両方の項で同じ $\lvert0\rangle_b$** なので、右側に $\otimes\lvert0\rangle_b$ として共通にくくり出せます。そのため、上に最後の $H$ を掛けると
+です。下の量子ビットが両方の項で同じ $\lvert0\rangle_b$ なので、右側に $\otimes\lvert0\rangle_b$ として共通にくくり出せます。そのため、上に最後の $H$ を掛けると
 
 $$
 (H\lvert+\rangle_a)\otimes\lvert0\rangle_b=\lvert0\rangle_a\otimes\lvert0\rangle_b
 $$
 
-となり、上を測ると **確率 $1$ で $0$** が出ます。ここまでは順調に見えます。
+となり、上を測ると 確率 $1$ で $0$ が出ます。ここまでは順調に見えます。
 
 :::
 
 ::: {.g-col-12 .g-col-lg-6}
-#### 均衡関数 $f(a)=a$ のとき（失敗する！）
+#### 均衡関数 $f(a)=a$ のとき（失敗する）
 
 では、二つの値が違う $f(0)=0, f(1)=1$ ではどうなるでしょうか？ ②（$U_f$ の直後）の状態は
 
@@ -119,7 +119,7 @@ $$
 \frac{\lvert0,0\rangle+\lvert1,1\rangle}{\sqrt2}
 $$
 
-になります。これは第3節で計算した **Bell状態** です！
+になります。これは第3節で計算した **Bell状態** です。
 ここに最後の「上の $H$」を作用させると、第3節の[片側だけにHを掛ける計算](#alg-one-side)とまったく同じことが起きます。
 
 $$
@@ -130,7 +130,7 @@ $$
 \end{aligned}
 $$
 
-見てください！ $\lvert10\rangle$ の振幅 $+1/2$ と、$\lvert11\rangle$ の振幅 $-1/2$ は、符号が逆なのに**打ち消し合うことができません**。なぜなら、片方は「下が $0$（$\lvert10\rangle$）」、もう片方は「下が $1$（$\lvert11\rangle$）」という**別々の基底状態**だからです！
+$\lvert10\rangle$ の振幅 $+1/2$ と、$\lvert11\rangle$ の振幅 $-1/2$ は、符号が逆でも打ち消し合いません。前者は下が $0$、後者は下が $1$ であり、別々の基底状態に対応する振幅だからです。
 
 上だけを測ったとき、$0$ が出る確率も $1$ が出る確率も
 
@@ -141,36 +141,36 @@ p(a=1)&=\left|\frac12\right|^2+\left|-\frac12\right|^2=\frac12.
 \end{aligned}
 $$
 
-となり、**完全に半々（コイントス）**になってしまいます！
+となり、完全に半々（コイントス）になってしまいます。
 
 :::
 
 :::
 
 ::: {.important-point}
-**なぜ素朴な回路は失敗したのか？（設計の急所）**
+なぜ素朴な回路は失敗したのか？（設計の急所）
 
-この例では、下に残った $|0\rangle_b,|1\rangle_b$ が直交しているので、**上だけの測定では二つの経路の干渉項がゼロ**になります。全体系の重ね合わせそのものが消えたわけではありません。下の状態を同じに保てば、上で最大限の干渉を使えます。部分的に重なる下の状態なら、干渉は弱まって残ります。
+この例では、下に残った $|0\rangle_b,|1\rangle_b$ が直交しているので、上だけの測定では二つの経路の干渉項がゼロになります。全体系の重ね合わせそのものが消えたわけではありません。下の状態を同じに保てば、上で最大限の干渉を使えます。部分的に重なる下の状態なら、干渉は弱まって残ります。
 
 :::
 
 ---
 
-### ステップ2：失敗から逆転の発想へ ── どうすれば「下の状態を変えずに」情報を残せるか？ {#alg-kickback}
+### ステップ2：下の状態を変えずに、関数の情報を残すには？ {#alg-kickback}
 
-素朴な回路が失敗した理由がわかれば、解決するために何をすべきかがはっきりします。私たちが欲しいのは、次の**2つの条件を同時に満たす**下の初期状態 $\lvert s\rangle$ です。
+素朴な回路が失敗した理由がわかれば、解決するために何をすべきかがはっきりします。私たちが欲しいのは、次の2つの条件を同時に満たす下の初期状態 $\lvert s\rangle$ です。
 
-1. **干渉を壊さない条件**：$U_f$ を通ったあとも、下の量子ビットは元の状態 $\lvert s\rangle$ のまま形を変えず、最後に $\otimes\lvert s\rangle$ として共通にくくり出せること。
-2. **関数値 $f(a)$ を反映する条件**：それでも $f(a)=0$（下に何も起きない）と $f(a)=1$（下に $X$ が掛かる）の違いが、**前に出る係数（符号）の違い**として残ること。
+1. 干渉を壊さない条件：$U_f$ を通ったあとも、下の量子ビットは元の状態 $\lvert s\rangle$ のまま形を変えず、最後に $\otimes\lvert s\rangle$ として共通にくくり出せること。
+2. 関数値 $f(a)$ を反映する条件：それでも $f(a)=0$（下に何も起きない）と $f(a)=1$（下に $X$ が掛かる）の違いが、前に出る係数（符号）の違いとして残ること。
 
 まず係数を決めずに $X|s\rangle=\lambda|s\rangle$ と置きます。$X^2=I$ なので、もう一度 $X$ をかけると $|s\rangle=\lambda^2|s\rangle$、すなわち $\lambda=+1$ または $-1$ です。
 
 - $\lambda=+1$：$X|+\rangle=|+\rangle$ なので下は保てますが、$f(a)=0,1$ のどちらでも係数は $+1$。関数の情報が残りません。
 - $\lambda=-1$：$f(a)=0$ では $+1$、$f(a)=1$ では $-1$。下を保ちながら違いを符号に残せます。
 
-この設計で必要なのは、したがって $X|s\rangle=-|s\rangle$ を満たす**固有状態**です。
+この設計で必要なのは、したがって $X|s\rangle=-|s\rangle$ を満たす固有状態です。
 
-そんな都合のよい状態 $\lvert s\rangle=\gamma\lvert0\rangle+\eta\lvert1\rangle$ はあるでしょうか？ $X$ は $\lvert0\rangle$ と $\lvert1\rangle$ の係数を入れ替えるゲートなので、入れ替えると符号が逆になる（$\eta=-\gamma$）ように選べば、まさに私たちがよく知っている**マイナス状態 $\lvert-\rangle$** になります！
+$\lvert s\rangle=\gamma\lvert0\rangle+\eta\lvert1\rangle$ で、この条件を満たす状態はあるでしょうか？$X$ は $\lvert0\rangle$ と $\lvert1\rangle$ の係数を入れ替えるため、入れ替え後に符号が逆になる条件は $\eta=-\gamma$ です。正規化すると、すでに使ったマイナス状態 $\lvert-\rangle$ が得られます。
 
 $$
 X\lvert-\rangle
@@ -186,12 +186,12 @@ $$ {#eq-alg-x-minus-state}
 | $|+\rangle$ | $|+\rangle$ のまま | 関数値に依存する位相が残らない |
 | $|-\rangle$ | $-|-\rangle$ | 下は共通で、上の相対符号に関数の特徴が残る |
 
-式 (@eq-alg-x-minus-state) の性質を使うと、下を $\lvert-\rangle$ にして $U_f$ に通したときの変化が劇的に変わります。
+式 (@eq-alg-x-minus-state) を使って、下を $\lvert-\rangle$ にしたときの $U_f$ の作用を調べます。
 
 - $f(a)=0$ のとき：下には何も起きないので、$\lvert a\rangle\otimes\lvert-\rangle$ のまま（係数は $+1$）。
 - $f(a)=1$ のとき：下に $X$ が掛かり、$X\lvert-\rangle=-\lvert-\rangle$ となるので、$-\lvert a\rangle\otimes\lvert-\rangle$ になる（係数は $-1$）。
 
-どちらの場合も、**下の状態は $\lvert-\rangle$ のまま一切変わらず**、関数の値 $f(a)\in\{0,1\}$ がそのまま $(-1)^{f(a)}$ という符号になって前に飛び出します！
+どちらの場合も下の状態は $\lvert-\rangle$ のままで、関数値 $f(a)\in\{0,1\}$ の違いが係数 $(-1)^{f(a)}$ に現れます。
 
 $$
 U_f(\lvert a\rangle\otimes\lvert-\rangle)
@@ -202,7 +202,7 @@ U_f(\lvert a\rangle\otimes\lvert-\rangle)
 =(-1)^{f(a)}\lvert a\rangle\otimes\lvert-\rangle.
 $$ {#eq-alg-phase-kickback-uf}
 
-それでは、上を $\lvert+\rangle=(\lvert0\rangle+\lvert1\rangle)/\sqrt2$、下を $\lvert-\rangle$ にして $U_f$ に通してみましょう。$a=0$ の項と $a=1$ の項の両方に式 (@eq-alg-phase-kickback-uf) を当てはめると、下の $\lvert-\rangle$ が共通にくくり出せます！
+それでは、上を $\lvert+\rangle=(\lvert0\rangle+\lvert1\rangle)/\sqrt2$、下を $\lvert-\rangle$ にして $U_f$ に通してみましょう。$a=0$ の項と $a=1$ の項の両方に式 (@eq-alg-phase-kickback-uf) を当てはめると、下の $\lvert-\rangle$ が共通にくくり出せます。
 
 $$
 \begin{aligned}
@@ -228,12 +228,12 @@ flowchart TD
     end
 ```
 
-図 (@fig-alg-deutsch-comparison-flow) のように、下の量子ビットを固有状態 $\lvert-\rangle$ にしておくことで、下への操作を「上の量子ビットの符号（位相）の変化」として跳ね返す仕組みを**位相キックバック（phase kickback）**と呼びます。ここでは「下を同じ状態に保つ」と「関数値を係数に残す」という二つの条件から、この選択にたどり着きました。
+図 (@fig-alg-deutsch-comparison-flow) のように、下の量子ビットを固有状態 $\lvert-\rangle$ にしておくことで、下への操作を「上の量子ビットの符号（位相）の変化」として跳ね返す仕組みを**位相キックバック**（phase kickback）と呼びます。ここでは「下を同じ状態に保つ」と「関数値を係数に残す」という二つの条件から、この選択にたどり着きました。
 
 ::: {.physics-notes}
-**全体位相と相対位相の違いに注意**
+全体位相と相対位相の違いに注意
 
-もし上を $\lvert1\rangle$ に固定して入れたら、出力 $-\lvert1\rangle\otimes\lvert-\rangle$ のマイナスは状態全体に掛かる符号（全体位相）なので、測定確率には影響しません。しかし上を $\lvert+\rangle$（$0$ と $1$ の重ね合わせ）にしたことで、**$\lvert0\rangle$ の項には $(-1)^{f(0)}$、$\lvert1\rangle$ の項には $(-1)^{f(1)}$ が別々に掛かり、二つの項のあいだの符号の比（相対位相）が変わります**。この「二項のあいだの符号が同じか逆か」こそが、次の $H$ で $0$ と $1$ として読み出せる情報です。
+もし上を $\lvert1\rangle$ に固定して入れたら、出力 $-\lvert1\rangle\otimes\lvert-\rangle$ のマイナスは状態全体に掛かる符号（全体位相）なので、測定確率には影響しません。しかし上を $\lvert+\rangle$（$0$ と $1$ の重ね合わせ）にしたことで、$\lvert0\rangle$ の項には $(-1)^{f(0)}$、$\lvert1\rangle$ の項には $(-1)^{f(1)}$ が別々に掛かり、二つの項のあいだの符号の比（相対位相）が変わります。この「二項のあいだの符号が同じか逆か」こそが、次の $H$ で $0$ と $1$ として読み出せる情報です。
 
 :::
 
@@ -243,21 +243,21 @@ flowchart TD
 
 あとは、この状態を $\lvert00\rangle$ から準備して最後に測定するだけです。
 
-1. **準備（①まで）**：上を $\lvert+\rangle$ にするために上へ $H$ を掛けます。下を $\lvert-\rangle$ にするために、下へ $X$ を掛けて $\lvert1\rangle$ にしてから $H$ を掛けます。
-2. **オラクル（①→②）**：$U_f$ を1回だけ通します。式 (@eq-alg-deutsch-superposition-kickback) のとおり、上の量子ビットに符号 $(-1)^{f(0)}, (-1)^{f(1)}$ が書き込まれます。
-3. **干渉と読み出し（②→③）**：上の量子ビットを見ると、
-   - **$f(0)=f(1)$（同じ）のとき**：2つの項の符号がそろうため、上は $\pm\lvert+\rangle$ です。ここに $H$ を掛けると $\pm\lvert0\rangle$ になり、測定すると**必ず $0$** が出ます。
-   - **$f(0)\neq f(1)$（違う）のとき**：2つの項の符号が逆になるため、上は $\pm\lvert-\rangle$ です。ここに $H$ を掛けると $\pm\lvert1\rangle$ になり、測定すると**必ず $1$** が出ます。
+1. 準備（①まで）：上を $\lvert+\rangle$ にするために上へ $H$ を掛けます。下を $\lvert-\rangle$ にするために、下へ $X$ を掛けて $\lvert1\rangle$ にしてから $H$ を掛けます。
+2. オラクル（①→②）：$U_f$ を1回だけ通します。式 (@eq-alg-deutsch-superposition-kickback) のとおり、上の量子ビットに符号 $(-1)^{f(0)}, (-1)^{f(1)}$ が書き込まれます。
+3. 干渉と読み出し（②→③）：上の量子ビットを見ると、
+   - $f(0)=f(1)$（同じ）のとき：2つの項の符号がそろうため、上は $\pm\lvert+\rangle$ です。ここに $H$ を掛けると $\pm\lvert0\rangle$ になり、測定すると必ず $0$ が出ます。
+   - $f(0)\neq f(1)$（違う）のとき：2つの項の符号が逆になるため、上は $\pm\lvert-\rangle$ です。ここに $H$ を掛けると $\pm\lvert1\rangle$ になり、測定すると必ず $1$ が出ます。
 
 ::: {.callout-tip appearance="simple" title="設計のまとめ：各ゲートが置かれている理由"}
 
 | 部品 | なぜこの部品が必要だったか |
 | :--- | :--- |
-| **上の最初の $H$** | $a=0$ と $a=1$ の両方の経路を同時に調べるため、上を $\lvert+\rangle$ にする |
-| **下の $X \to H$** | 下の状態が変化して干渉を壊すのを防ぐため、$X\lvert-\rangle=-\lvert-\rangle$ となる固有状態 $\lvert-\rangle$ を下に用意する |
-| **$U_f$（1回）** | 位相キックバックにより、関数値 $f(0), f(1)$ を上の2項の符号 $(-1)^{f(a)}$ に転写する |
-| **上の最後の $H$** | 符号が「同じ（$\pm\lvert+\rangle$）」か「逆（$\pm\lvert-\rangle$）」かを干渉させ、$\lvert0\rangle$ と $\lvert1\rangle$ に変換する |
-| **上の測定** | $0$ なら「同じ（定数）」、$1$ なら「違う（均衡）」という答え $d=f(0)\oplus f(1)$ を確率100%で受け取る |
+| 上の最初の $H$ | $a=0$ と $a=1$ の両方の経路を同時に調べるため、上を $\lvert+\rangle$ にする |
+| 下の $X \to H$ | 下の状態が変化して干渉を壊すのを防ぐため、$X\lvert-\rangle=-\lvert-\rangle$ となる固有状態 $\lvert-\rangle$ を下に用意する |
+| $U_f$（1回） | 位相キックバックにより、関数値 $f(0), f(1)$ を上の2項の符号 $(-1)^{f(a)}$ に転写する |
+| 上の最後の $H$ | 符号が「同じ（$\pm\lvert+\rangle$）」か「逆（$\pm\lvert-\rangle$）」かを干渉させ、$\lvert0\rangle$ と $\lvert1\rangle$ に変換する |
+| 上の測定 | $0$ なら「同じ（定数）」、$1$ なら「違う（均衡）」という答え $d=f(0)\oplus f(1)$ を確率100%で受け取る |
 
 :::
 
@@ -307,10 +307,10 @@ $$ {#eq-alg-deutsch-final-h}
 
 | $f(0),f(1)$ | 関数の種類 | ②の上の状態 | ③の上の状態 | 上を測定して得る答え |
 | :--- | :--- | :---: | :---: | :--- |
-| $0,0$ | 定数（同じ） | $\lvert+\rangle$ | $\lvert0\rangle$ | **0**（確率 100%：同じ） |
-| $1,1$ | 定数（同じ） | $-\lvert+\rangle$ | $-\lvert0\rangle$ | **0**（確率 100%：同じ） |
-| $0,1$ | 均衡（違う） | $\lvert-\rangle$ | $\lvert1\rangle$ | **1**（確率 100%：違う） |
-| $1,0$ | 均衡（違う） | $-\lvert-\rangle$ | $-\lvert1\rangle$ | **1**（確率 100%：違う） |
+| $0,0$ | 定数（同じ） | $\lvert+\rangle$ | $\lvert0\rangle$ | 0（確率 100%：同じ） |
+| $1,1$ | 定数（同じ） | $-\lvert+\rangle$ | $-\lvert0\rangle$ | 0（確率 100%：同じ） |
+| $0,1$ | 均衡（違う） | $\lvert-\rangle$ | $\lvert1\rangle$ | 1（確率 100%：違う） |
+| $1,0$ | 均衡（違う） | $-\lvert-\rangle$ | $-\lvert1\rangle$ | 1（確率 100%：違う） |
 
 ::: {.callout-note collapse="true" title="確認：4項すべてを展開して手計算しても同じ結果になる（f(a)=a の例）"}
 くくり出す計算に慣れないうちは、4個の基底（00, 01, 10, 11）にすべて展開してCNOTの表（式 (@eq-alg-cnot-definition)）を当てはめても確かめられます。$f(a)=a$（CNOT）のとき、①の入力を展開すると
@@ -320,7 +320,7 @@ $$
 =\frac12(\lvert00\rangle-\lvert01\rangle+\lvert10\rangle-\lvert11\rangle)
 $$
 
-です。CNOTは 00 と 01 をそのままにし、**10 と 11 を入れ替える**ので、
+です。CNOTは 00 と 01 をそのままにし、10 と 11 を入れ替えるので、
 
 $$
 \begin{aligned}
@@ -333,15 +333,15 @@ U_f(\lvert+\rangle_a\otimes\lvert-\rangle_b)
 \end{aligned}
 $$
 
-1行目から2行目で、$\lvert11\rangle-\lvert10\rangle = -\lvert10\rangle+\lvert11\rangle$ と順番を並べ直しただけで、確かに上の量子ビットの符号がマイナスに変わっています！
+1行目から2行目で、$\lvert11\rangle-\lvert10\rangle = -\lvert10\rangle+\lvert11\rangle$ と順番を並べ直しただけで、確かに上の量子ビットの符号がマイナスに変わっています。
 
 :::
 
 ---
 
-### ステップ4：「素朴な回路」と「Deutschの回路」をQiskitで対決させる {#alg-deutsch-check}
+### ステップ4：「素朴な回路」と「Deutschの回路」をQiskitで比較する {#alg-deutsch-check}
 
-最後に、最初の「素朴な回路（下を $\lvert0\rangle$ にした回路）」と、私たちが発明した「Deutschの回路（下を $\lvert-\rangle$ にした回路）」の測定確率を図 (@fig-alg-deutsch-vs-naive-plot) で並べて比較しましょう。
+最後に、下を $\lvert0\rangle$ にした素朴な回路と、下を $\lvert-\rangle$ にした Deutsch の回路の測定確率を、図 (@fig-alg-deutsch-vs-naive-plot) で比較しましょう。
 
 ```{python}
 #| label: fig-alg-deutsch-vs-naive-plot
@@ -350,17 +350,17 @@ $$
 #| code-summary: "素朴な回路とDeutschの回路を全4ケースで比較・検証する"
 fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.1), sharey=True)
 func_labels = [
-    "f(a)=0\n(同じ)",
-    "f(a)=1\n(同じ)",
-    "f(a)=a\n(違う)",
-    r"$f(a)=1\oplus a$" + "\n(違う)",
+    "f(a)=0\n(constant)",
+    "f(a)=1\n(constant)",
+    "f(a)=a\n(balanced)",
+    r"$f(a)=1\oplus a$" + "\n(balanced)",
 ]
 y_pos = np.arange(len(functions))
 
 for ax, builder, title in zip(
     axes,
     (make_naive_deutsch, make_deutsch),
-    (r"[失敗] 素朴な回路（下を $|0\rangle$ に準備）", r"[成功] Deutschの回路（下を $|-\rangle$ に準備）"),
+    (r"Naive circuit: target $|0\rangle$", r"Deutsch circuit: target $|-\rangle$"),
 ):
     p0_list, p1_list = [], []
     for (_, f0, f1) in functions:
@@ -374,11 +374,11 @@ for ax, builder, title in zip(
             expected = (-1)**f0 * np.kron(upper, np.array([1, -1])/np.sqrt(2))
             np.testing.assert_allclose(sv.data, expected, atol=1e-12)
 
-    b0 = ax.barh(y_pos - 0.17, p0_list, height=0.32, color="#2563eb", label="p(a=0)：「同じ」と判定")
-    b1 = ax.barh(y_pos + 0.17, p1_list, height=0.32, color="#dc2626", label="p(a=1)：「違う」と判定")
+    b0 = ax.barh(y_pos - 0.17, p0_list, height=0.32, color="#2563eb", label="p(a=0): predict constant")
+    b1 = ax.barh(y_pos + 0.17, p1_list, height=0.32, color="#dc2626", label="p(a=1): predict balanced")
     ax.set_yticks(y_pos, func_labels)
     ax.set_xlim(0, 1.18)
-    ax.set_xlabel("上の量子ビット a の測定確率")
+    ax.set_xlabel("Measurement probability of qubit a")
     ax.set_title(title, fontweight="bold", fontsize=10.5)
     ax.grid(axis="x", alpha=0.25)
     for idx, (p0, p1) in enumerate(zip(p0_list, p1_list)):
@@ -412,7 +412,7 @@ for index, (name, f0, f1) in enumerate(functions):
 
 ::: {.callout-note appearance="minimal" icon="false" title="練習：もし下の準備を |+⟩ に替えたらどうなるか？"}
 下の準備を $\lvert0\rangle$ ではなく $\lvert-\rangle$ にしたのは、$X\lvert-\rangle=-\lvert-\rangle$ によって符号を反転させるためでした。
-では、もし下の準備を**プラス状態 $\lvert+\rangle$**（上の $H$ と下の $H$ だけ）にしたら、4つの関数に対して最後の上の測定結果はどうなるでしょうか？ 計算する前に理由を予想してみてください。
+では、もし下の準備をプラス状態 $\lvert+\rangle$（上の $H$ と下の $H$ だけ）にしたら、4つの関数に対して最後の上の測定結果はどうなるでしょうか？ 計算する前に理由を予想してみてください。
 
 :::
 
@@ -435,6 +435,6 @@ Deutsch では、関数値そのものを全部読む代わりに、二つの値
 
 [第2回：干渉・パリティ・分子エネルギーの推定](algorithms-part2.qmd)では、次の三点を確かめます。
 
-1. **パリティ・オラクルの問い合わせ回数**：隠れた $n$ ビットを調べる BV 回路で、古典 $n$ 回と量子1回を比較します。通常のパスワード照合とは別の問題です。
-2. **分子エネルギー計算につながる原理**：電子エネルギー計算が創薬のどの部分を支援するかを整理し、二状態モデルの固有エネルギーを位相から推定します。
-3. **位数推定と最前線の条件**：Shor の量子回路と古典後処理をつなぎ、どの入力・精度・費用のもとで優位を議論できるかを考えます。
+1. パリティ・オラクルの問い合わせ回数：隠れた $n$ ビットを調べる BV 回路で、古典 $n$ 回と量子1回を比較します。通常のパスワード照合とは別の問題です。
+2. 分子エネルギー計算につながる原理：電子エネルギー計算が創薬のどの部分を支援するかを整理し、二状態モデルの固有エネルギーを位相から推定します。
+3. 位数推定と最前線の条件：Shor の量子回路と古典後処理をつなぎ、どの入力・精度・費用のもとで優位を議論できるかを考えます。

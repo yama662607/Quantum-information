@@ -49,7 +49,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-行列の**第1列は $U\lvert0\rangle$、第2列は $U\lvert1\rangle$** です。Xの第1列 $(0,1)^{\mathsf T}$ を見れば、0が1になると読めます。ここで ${\mathsf T}$ は列になるよう転置する記号です。
+行列の第1列は $U\lvert0\rangle$、第2列は $U\lvert1\rangle$ です。Xの第1列 $(0,1)^{\mathsf T}$ を見れば、0が1になると読めます。ここで ${\mathsf T}$ は列になるよう転置する記号です。
 
 ### Z：1に対応する振幅だけ符号を変える {#alg-z}
 
@@ -68,13 +68,13 @@ $$
 \lvert-\rangle=\frac{\lvert0\rangle-\lvert1\rangle}{\sqrt2}.
 $$ {#eq-alg-plus-minus-states}
 
-どちらも直接測れば半々ですが、式 (@eq-alg-z-matrix) を適用すると $Z\lvert+\rangle=\lvert-\rangle$ となります。二つの成分の**間**にある符号の違いは、相対位相の違いの一例です。一般の複素数なら角度の違いですが、今はプラスとマイナスを追えば十分です。
+どちらも直接測れば半々ですが、式 (@eq-alg-z-matrix) を適用すると $Z\lvert+\rangle=\lvert-\rangle$ となります。二つの成分の間にある符号の違いは、相対位相の違いの一例です。一般の複素数なら角度の違いですが、今はプラスとマイナスを追えば十分です。
 
-一方、$\lvert\psi\rangle$ **全体**に $-1$ を掛けるのは全体位相の変化です。$\lvert\psi\rangle$ と $-\lvert\psi\rangle$ に同じゲート $V$ を作用させると、$V(-\lvert\psi\rangle)=-V\lvert\psi\rangle$ なので、出力の全成分に同じマイナスが付きます。絶対値の二乗は同じになり、測定確率は変わりません。
+一方、$\lvert\psi\rangle$ 全体に $-1$ を掛けるのは全体位相の変化です。$\lvert\psi\rangle$ と $-\lvert\psi\rangle$ に同じゲート $V$ を作用させると、$V(-\lvert\psi\rangle)=-V\lvert\psi\rangle$ なので、出力の全成分に同じマイナスが付きます。絶対値の二乗は同じになり、測定確率は変わりません。
 
 $\lvert-\rangle$ のマイナスは $\lvert1\rangle$ の係数だけに付いています。$-\lvert+\rangle$ のように両方の係数にマイナスが付く状態とは区別してください。
 
-Zの回路記号は、線の上の **Zと書かれた箱**です。
+Zの回路記号は、線の上の Zと書かれた箱です。
 
 ```{python}
 #| label: fig-alg-z-symbol
@@ -99,7 +99,7 @@ $$
 
 ### H：和と差を新しい振幅にする {#alg-h}
 
-Hは **Hadamard（アダマール）ゲート**と呼ばれます。行列と作用を並べると、計算の中身が分かります。
+Hは Hadamard（アダマール）ゲートと呼ばれます。行列と作用を並べると、計算の中身が分かります。
 
 $$
 H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
@@ -107,7 +107,7 @@ H\begin{pmatrix}\alpha\\\beta\end{pmatrix}
 =\begin{pmatrix}(\alpha+\beta)/\sqrt2\\(\alpha-\beta)/\sqrt2\end{pmatrix}.
 $$ {#eq-alg-h-matrix}
 
-式 (@eq-alg-h-matrix) が示すように、0の新しい振幅は**和**、1の新しい振幅は**差**です。どちらも $\sqrt2$ で割ります。まず入力の二成分 $\alpha,\beta$ を紙に書き、その右に出力の二成分を計算しましょう。和の式にも差の式にも、**入力の $\alpha,\beta$** を使います。こう書き分ければ、先に計算した出力を、もう一方の式の入力と取り違えずに済みます。
+式 (@eq-alg-h-matrix) が示すように、0の新しい振幅は和、1の新しい振幅は差です。どちらも $\sqrt2$ で割ります。まず入力の二成分 $\alpha,\beta$ を紙に書き、その右に出力の二成分を計算しましょう。和の式にも差の式にも、入力の $\alpha,\beta$ を使います。こう書き分ければ、先に計算した出力を、もう一方の式の入力と取り違えずに済みます。
 
 二つの基底を入れると、
 
@@ -139,7 +139,7 @@ H\lvert+\rangle
 =\begin{pmatrix}1\\0\end{pmatrix}=\lvert0\rangle.
 $$
 
-同様に、$\alpha=1/\sqrt2,\beta=-1/\sqrt2$ なら $H\lvert-\rangle=\lvert1\rangle$。**Hは重ね合わせを作ることにも、二つの重ね合わせの違いを0と1へ変えることにも使えます。**
+同様に、$\alpha=1/\sqrt2,\beta=-1/\sqrt2$ なら $H\lvert-\rangle=\lvert1\rangle$。Hは重ね合わせを作ることにも、二つの重ね合わせの違いを0と1へ変えることにも使えます。
 
 ここで、振幅と測定確率を区別する理由を確認できます。$\lvert+\rangle$ と $\lvert-\rangle$ は、今すぐ測るとどちらも0と1が半々です。しかしHを通してから測ると、前者では必ず0、後者では必ず1が出ます。振幅の符号が、Hの和と差の計算に影響するためです。途中で確率だけを記録すると、どちらも $(1/2,1/2)$ となり、回路の続きを計算するために必要な符号が分からなくなります。
 

@@ -38,7 +38,7 @@ format:
         </style>
 ---
 
-この授業では、**ゲートを一つ通るごとに状態を計算し、最後の測定でどの結果がどれだけの確率で出るかを求めること**を学びます。その上で、**欲しい出力から必要なゲートを選び、回路を組み立てること**を目指します。
+この授業では、ゲートを一つ通るごとに状態を計算し、最後の測定でどの結果がどれだけの確率で出るかを求めることを学びます。その上で、欲しい出力から必要なゲートを選び、回路を組み立てることを目指します。
 
 まず、回路の途中の状態をどう書き表すか確認します。続いてX・Z・Hなどのゲートを一つずつ取り上げ、入力した状態がどう変わるかを計算します。回路図を読み、練習問題を解いた後、Qiskitで手計算を確かめます。
 
@@ -52,8 +52,8 @@ format:
 | 3 | 2本の線を一つの状態として読む | 4個の振幅、CNOT |
 | 4 | 欲しい状態や測定から回路を組む | 逆算、条件付き操作 |
 | 5 | 関数を計算する部品を作る | 入力を残す、出力先を用意する |
-| 6 | Deutsch の回路を素朴な失敗から発明する | 上だけの干渉が失われる例と位相キックバック |
-| [第2回へ進む](algorithms-part2.qmd) | なぜ量子は速いのか？秘密の鍵・創薬・最前線 | 密度行列・Bernstein–Vazirani・分子エネルギー計算・Shor |
+| 6 | 素朴な回路の問題点から Deutsch の回路を導く | 上だけの干渉が失われる例と位相キックバック |
+| [第2回へ進む](algorithms-part2.qmd) | 量子計算はどんな条件で速くなるのか？ | 密度行列・Bernstein–Vazirani・分子エネルギー計算・Shor |
 | [全ゲート一覧](composer.qmd) | Composerの全26記号を調べる | 図・行列式・手計算・制御構文・可視化 |
 
 ::: {.callout-note title="復習は、この三つから始めます"}
@@ -75,7 +75,7 @@ from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister, transpile
 from qiskit.quantum_info import DensityMatrix, Operator, Statevector
 from qiskit_aer import AerSimulator
 
-matplotlib.rcParams["font.sans-serif"] = ["Hiragino Sans", "BIZ UDGothic", "Yu Gothic", "Noto Sans CJK JP", "DejaVu Sans"]
+matplotlib.rcParams["font.family"] = "DejaVu Sans"
 matplotlib.rcParams["axes.unicode_minus"] = False
 np.set_printoptions(precision=4, suppress=True)
 ```
